@@ -188,7 +188,7 @@
                       <name>Confluence</name>
                       <id>confluence</id>
                     </type>
-                    <version>1.0</version>
+                    <version>1.1</version>
                   </org.xwiki.rendering.syntax.Syntax>
                 </entry>
               </metadata>
@@ -603,7 +603,7 @@
                       <name>Confluence</name>
                       <id>confluence</id>
                     </type>
-                    <version>1.0</version>
+                    <version>1.1</version>
                   </org.xwiki.rendering.syntax.Syntax>
                 </entry>
               </metadata>
@@ -19372,7 +19372,7 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                       <name>Confluence</name>
                       <id>confluence</id>
                     </type>
-                    <version>1.0</version>
+                    <version>1.1</version>
                   </org.xwiki.rendering.syntax.Syntax>
                 </entry>
               </metadata>

@@ -1,0 +1,19 @@
+.#-----------------------------------------------------
+.input|confluence/1.0
+.streaming
+.#-----------------------------------------------------
+This is *bold*
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+beginParagraph
+onWord [This]
+onSpace
+onWord [is]
+onSpace
+beginFormat [BOLD]
+onWord [bold]
+endFormat [BOLD]
+endParagraph
+endDocument

@@ -1,1 +1,1 @@
-org.xwiki.rendering.internal.parser.confluencexhtml.ConfluenceXHTMLParser
+org.xwiki.contrib.confluence.parser.xhtml.internal.ConfluenceXHTMLParser

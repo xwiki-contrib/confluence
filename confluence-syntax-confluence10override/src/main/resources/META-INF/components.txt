@@ -1,0 +1,2 @@
+org.xwiki.contrib.confluence.parser.confluence.internal.Confluence10OverrideParser
+org.xwiki.contrib.confluence.parser.confluence.internal.Confluence10OverrideStreamParser

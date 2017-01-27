@@ -23,40 +23,104 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.xwiki.rendering</groupId>
-    <artifactId>xwiki-rendering-syntaxes</artifactId>
-    <version>9.1-SNAPSHOT</version>
+    <groupId>org.xwiki.contrib.confluence</groupId>
+    <artifactId>confluence</artifactId>
+    <version>9.0-SNAPSHOT</version>
   </parent>
-  <artifactId>xwiki-rendering-syntax-confluence</artifactId>
-  <name>XWiki Rendering - Syntax - Confluence</name>
-  <description>XWiki Rendering - Syntax - Confluence</description>
+  <artifactId>confluence-syntax-confluence</artifactId>
+  <name>Confluence - Syntax - Confluence</name>
+  <description>Old Confluence wiki syntax</description>
   <properties>
-    <xwiki.jacoco.instructionRatio>1.00</xwiki.jacoco.instructionRatio>
+    <xwiki.jacoco.instructionRatio>0.00</xwiki.jacoco.instructionRatio>
   </properties>
   <dependencies>
     <dependency>
       <groupId>org.xwiki.rendering</groupId>
+      <artifactId>xwiki-rendering-wikimodel</artifactId>
+      <version>${rendering.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.rendering</groupId>
       <artifactId>xwiki-rendering-syntax-wikimodel</artifactId>
-      <version>${project.version}</version>
+      <version>${rendering.version}</version>
     </dependency>
     <dependency>
       <groupId>org.xwiki.rendering</groupId>
       <artifactId>xwiki-rendering-syntax-plain</artifactId>
-      <version>${project.version}</version>
+      <version>${rendering.version}</version>
     </dependency>
 
     <!-- Test Dependencies -->
     <dependency>
       <groupId>org.xwiki.rendering</groupId>
       <artifactId>xwiki-rendering-test</artifactId>
-      <version>${project.version}</version>
+      <version>${rendering.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.xwiki.rendering</groupId>
       <artifactId>xwiki-rendering-syntax-event</artifactId>
-      <version>${project.version}</version>
+      <version>${rendering.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>javacc-maven-plugin</artifactId>
+        <version>2.6</version>
+        <executions>
+          <execution>
+            <id>javacc</id>
+            <goals>
+              <goal>javacc</goal>
+            </goals>
+          </execution>
+        </executions>
+        <dependencies>
+          <dependency>
+            <groupId>net.java.dev.javacc</groupId>
+            <artifactId>javacc</artifactId>
+            <version>6.1.2</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      <!-- Add specific excludes for this module for license checks -->
+      <plugin>
+        <groupId>com.mycila</groupId>
+        <artifactId>license-maven-plugin</artifactId>
+        <configuration>
+          <excludes>
+            <!-- Unfortunately we need to copy some excludes from the top level POM since Maven or the License plugin
+                 don't merge excludes apparently... -->
+            <exclude>**/components.txt</exclude>
+            <!-- Exclude *.dtd files since they're not under XWiki's license headers -->
+            <exclude>**/*.dtd</exclude>
+          </excludes>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <executions>
+          <execution>
+            <!-- Specify the "default" execution id so that the "blocker" one is always executed -->
+            <id>default</id>
+            <configuration>
+              <excludes>
+                org/xwiki/contrib/confluence/parser/confluence/internal/ConfluenceXHTMLParser.java,
+                org/xwiki/contrib/confluence/parser/confluence/internal/wikimodel/ConfluenceImageWikiReferenceParser.java,
+                org/xwiki/contrib/confluence/parser/confluence/internal/wikimodel/ConfluenceInternalWikiScannerContext.java,
+                org/xwiki/contrib/confluence/parser/confluence/internal/wikimodel/ConfluenceWikiParser.java,
+                org/xwiki/contrib/confluence/parser/confluence/internal/wikimodel/ConfluenceWikiReferenceParser.java,
+                org/xwiki/contrib/confluence/parser/confluence/internal/wikimodel/ConfluenceWikiScannerContext.java,
+                org/xwiki/contrib/confluence/parser/confluence/internal/wikimodel/javacc/*
+              </excludes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>

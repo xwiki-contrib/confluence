@@ -23,13 +23,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.xwiki.rendering</groupId>
-    <artifactId>xwiki-rendering-syntaxes</artifactId>
-    <version>9.1-SNAPSHOT</version>
+    <groupId>org.xwiki.contrib.confluence</groupId>
+    <artifactId>confluence</artifactId>
+    <version>9.0-SNAPSHOT</version>
   </parent>
-  <artifactId>xwiki-rendering-syntax-confluencexhtml</artifactId>
-  <name>XWiki Rendering - Syntax - Confluence XHTML</name>
-  <description>XWiki Rendering - Syntax - Confluence XHTML</description>
+  <artifactId>confluence-syntax-xhtml</artifactId>
+  <name>Confluence - Syntax - XHTML</name>
+  <description>XHTML based Concluence syntax</description>
   <properties>
     <xwiki.jacoco.instructionRatio>0.96</xwiki.jacoco.instructionRatio>
   </properties>
@@ -37,7 +37,7 @@
     <dependency>
       <groupId>org.xwiki.rendering</groupId>
       <artifactId>xwiki-rendering-syntax-xhtml</artifactId>
-      <version>${project.version}</version>
+      <version>${rendering.version}</version>
     </dependency>
     <dependency>
       <groupId>com.google.guava</groupId>
@@ -52,13 +52,13 @@
     <dependency>
       <groupId>org.xwiki.rendering</groupId>
       <artifactId>xwiki-rendering-test</artifactId>
-      <version>${project.version}</version>
+      <version>${rendering.version}</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.xwiki.rendering</groupId>
       <artifactId>xwiki-rendering-syntax-event</artifactId>
-      <version>${project.version}</version>
+      <version>${rendering.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
@@ -73,26 +73,26 @@
             <id>default</id>
             <configuration>
               <excludes>
-                org/xwiki/rendering/internal/parser/confluencexhtml/ConfluenceXHTMLParser.java,
-                org/xwiki/rendering/internal/parser/confluencexhtml/wikimodel/AttachmentContainer.java,
-                org/xwiki/rendering/internal/parser/confluencexhtml/wikimodel/AttachmentTagHandler.java,
-                org/xwiki/rendering/internal/parser/confluencexhtml/wikimodel/ConfluenceImageWikiReference.java,
-                org/xwiki/rendering/internal/parser/confluencexhtml/wikimodel/ConfluenceLinkWikiReference.java,
-                org/xwiki/rendering/internal/parser/confluencexhtml/wikimodel/ConfluenceXWikiGeneratorListener.java,
-                org/xwiki/rendering/internal/parser/confluencexhtml/wikimodel/ImageTagHandler.java,
-                org/xwiki/rendering/internal/parser/confluencexhtml/wikimodel/LabelContainer.java,
-                org/xwiki/rendering/internal/parser/confluencexhtml/wikimodel/LinkTagHandler.java,
-                org/xwiki/rendering/internal/parser/confluencexhtml/wikimodel/MacroTagHandler.java,
-                org/xwiki/rendering/internal/parser/confluencexhtml/wikimodel/PageContainer.java,
-                org/xwiki/rendering/internal/parser/confluencexhtml/wikimodel/PageTagHandler.java,
-                org/xwiki/rendering/internal/parser/confluencexhtml/wikimodel/ParameterTagHandler.java,
-                org/xwiki/rendering/internal/parser/confluencexhtml/wikimodel/PlainTextBodyTagHandler.java,
-                org/xwiki/rendering/internal/parser/confluencexhtml/wikimodel/PlainTextLinkBodyTagHandler.java,
-                org/xwiki/rendering/internal/parser/confluencexhtml/wikimodel/RichTextBodyTagHandler.java,
-                org/xwiki/rendering/internal/parser/confluencexhtml/wikimodel/SpaceContainer.java,
-                org/xwiki/rendering/internal/parser/confluencexhtml/wikimodel/SpaceTagHandler.java,
-                org/xwiki/rendering/internal/parser/confluencexhtml/wikimodel/UserContainer.java,
-                org/xwiki/rendering/internal/parser/confluencexhtml/wikimodel/UserTagHandler.java
+                org/xwiki/contrib/confluence/parser/xhtml/internal/ConfluenceXHTMLParser.java,
+                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/AttachmentContainer.java,
+                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/AttachmentTagHandler.java,
+                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/ConfluenceImageWikiReference.java,
+                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/ConfluenceLinkWikiReference.java,
+                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/ConfluenceXWikiGeneratorListener.java,
+                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/ImageTagHandler.java,
+                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/LabelContainer.java,
+                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/LinkTagHandler.java,
+                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/MacroTagHandler.java,
+                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/PageContainer.java,
+                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/PageTagHandler.java,
+                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/ParameterTagHandler.java,
+                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/PlainTextBodyTagHandler.java,
+                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/PlainTextLinkBodyTagHandler.java,
+                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/RichTextBodyTagHandler.java,
+                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/SpaceContainer.java,
+                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/SpaceTagHandler.java,
+                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/UserContainer.java,
+                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/UserTagHandler.java
               </excludes>
             </configuration>
           </execution>
