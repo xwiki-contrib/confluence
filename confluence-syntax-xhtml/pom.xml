@@ -29,7 +29,7 @@
   </parent>
   <artifactId>confluence-syntax-xhtml</artifactId>
   <name>Confluence - Syntax - XHTML</name>
-  <description>XHTML based Concluence syntax</description>
+  <description>XHTML based Confluence syntax</description>
   <properties>
     <xwiki.jacoco.instructionRatio>0.96</xwiki.jacoco.instructionRatio>
 
