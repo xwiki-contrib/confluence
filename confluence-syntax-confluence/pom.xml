@@ -32,6 +32,9 @@
   <description>Old Confluence wiki syntax</description>
   <properties>
     <xwiki.jacoco.instructionRatio>0.00</xwiki.jacoco.instructionRatio>
+
+    <!-- Name to display by the Extension Manager -->
+    <xwiki.extension.name>Confluence Syntax 1.1</xwiki.extension.name>
   </properties>
   <dependencies>
     <dependency>

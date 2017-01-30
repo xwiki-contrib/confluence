@@ -32,6 +32,9 @@
   <description>XHTML based Concluence syntax</description>
   <properties>
     <xwiki.jacoco.instructionRatio>0.96</xwiki.jacoco.instructionRatio>
+
+    <!-- Name to display by the Extension Manager -->
+    <xwiki.extension.name>Confluence XHTML Syntax</xwiki.extension.name>
   </properties>
   <dependencies>
     <dependency>

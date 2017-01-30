@@ -34,7 +34,10 @@
     <xwiki.jacoco.instructionRatio>0.80</xwiki.jacoco.instructionRatio>
 
     <!-- Replace old Confluence syntax parser -->
-    <xwiki.extension.features>org.xwiki.rendering:xwiki-rendering-syntax-confluence/9.0</xwiki.extension.features>
+    <xwiki.extension.features>org.xwiki.rendering:xwiki-rendering-syntax-confluence</xwiki.extension.features>
+
+    <!-- Name to display by the Extension Manager -->
+    <xwiki.extension.name>Confluence Syntax 1.0</xwiki.extension.name>
   </properties>
   <dependencies>
     <dependency>
