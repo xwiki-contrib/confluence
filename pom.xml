@@ -25,7 +25,7 @@
   <parent>
     <groupId>org.xwiki.contrib</groupId>
     <artifactId>parent-platform</artifactId>
-    <version>8.4-1</version>
+    <version>8.4-4</version>
   </parent>
   <groupId>org.xwiki.contrib.confluence</groupId>
   <artifactId>confluence</artifactId>
@@ -33,16 +33,17 @@
   <name>Confluence - Parent POM</name>
   <description>Parent POM for Concluence modules</description>
   <packaging>pom</packaging>
+  <properties>
+    <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
+    <xwiki.issueManagement.system>jira</xwiki.issueManagement.system>
+    <xwiki.issueManagement.url>http://jira.xwiki.org/browse/CONFLUENCE</xwiki.issueManagement.url>
+  </properties>
   <scm>
     <connection>scm:git:git://github.com/xwiki-contrib/confluence.git</connection>
     <developerConnection>scm:git:git@github.com:xwiki-contrib/confluence.git</developerConnection>
     <url>https://github.com/xwiki-contrib/confluence/tree/master</url>
     <tag>HEAD</tag>
   </scm>
-  <issueManagement>
-    <system>jira</system>
-    <url>http://jira.xwiki.org/browse/CONFLUENCE</url>
-  </issueManagement>
   <developers>
     <developer>
       <id>tmortagne</id>
