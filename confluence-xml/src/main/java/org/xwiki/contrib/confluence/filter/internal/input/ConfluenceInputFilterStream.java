@@ -282,6 +282,13 @@ public class ConfluenceInputFilterStream
         if (this.properties.getDefaultLocale() != null) {
             documentParameters.put(WikiDocumentFilter.PARAMETER_LOCALE, this.properties.getDefaultLocale());
         }
+ 
+        // We should not imported pages from the Trash
+        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS)) {
+            String contentStatus = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS);
+            if (contentStatus.equals("deleted"))
+               return;
+        }
 
         // > WikiDocument
         proxyFilter.beginWikiDocument(documentName, documentParameters);
