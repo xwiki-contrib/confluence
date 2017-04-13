@@ -11,4 +11,4 @@ Various tools to manipulate Atlassian Confluence datas (wiki importer, syntax pa
 * License: LGPL 2.1
 * Translations: N/A
 * Sonar Dashboard: N/A
-* Continuous Integration Status: [![Build Status](http://ci.xwiki.org/buildStatus/icon?job=XWiki Contrib/confluence/master)](http://ci.xwiki.org/job/XWiki%20Contrib/job/confluence/job/master/)
+* Continuous Integration Status: [![Build Status](http://ci.xwiki.org/job/XWiki%20Contrib/job/confluence/job/master/badge/icon)](http://ci.xwiki.org/job/XWiki%20Contrib/job/confluence/job/master/)
