@@ -23,14 +23,14 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.contrib.confluence.filter.internal.ConfluenceFilter;
-import org.xwiki.filter.confluence.input.ConfluenceInputProperties;
 import org.xwiki.filter.input.AbstractBeanInputFilterStreamFactory;
 import org.xwiki.filter.type.FilterStreamType;
 
 /**
- * A generic xml output filter implementation. This class can be used as a test bench to validate various
- * XMLInputStream wiki parsers.
+ * A generic xml output filter implementation. This class can be used as a test bench to validate various XMLInputStream
+ * wiki parsers.
  * 
  * @version $Id$
  * @since 9.0
@@ -38,8 +38,8 @@ import org.xwiki.filter.type.FilterStreamType;
 @Component
 @Named(ConfluenceInputFilterStreamFactory.ROLEHINT)
 @Singleton
-public class ConfluenceInputFilterStreamFactory extends
-    AbstractBeanInputFilterStreamFactory<ConfluenceInputProperties, ConfluenceFilter>
+public class ConfluenceInputFilterStreamFactory
+    extends AbstractBeanInputFilterStreamFactory<ConfluenceInputProperties, ConfluenceFilter>
 {
     /**
      * The role hint of that component.

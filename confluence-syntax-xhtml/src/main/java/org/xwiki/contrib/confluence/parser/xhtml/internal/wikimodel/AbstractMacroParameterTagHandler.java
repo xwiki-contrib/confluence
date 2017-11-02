@@ -20,25 +20,21 @@
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroTagHandler.ConfluenceMacro;
-import org.xwiki.rendering.wikimodel.WikiParameter;
 import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
- * Handles parameters.
- * <p>
- * Example:
- * <p>
- * {@code
- * <ac:parameter ac:name="title">State default macro</ac:parameter>
- * }
- *
+ * Base class for various kind of macro parameters.
+ * 
  * @version $Id$
- * @since 9.0
+ * @since 9.1
  */
-public class ParameterTagHandler extends TagHandler implements ConfluenceTagHandler
+public abstract class AbstractMacroParameterTagHandler extends TagHandler implements ConfluenceTagHandler
 {
-    public ParameterTagHandler()
+    /**
+     * Default constructor.
+     */
+    public AbstractMacroParameterTagHandler()
     {
         super(true);
     }
@@ -55,13 +51,9 @@ public class ParameterTagHandler extends TagHandler implements ConfluenceTagHand
         ConfluenceMacro macro = (ConfluenceMacro) context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
 
         if (macro != null) {
-            WikiParameter nameParameter = context.getParams().getParameter("ac:name");
-
-            if (nameParameter != null) {
-                String value = context.getContent();
-
-                macro.parameters = macro.parameters.setParameter(nameParameter.getValue(), value);
-            }
+            setParameter(macro, context);
         }
     }
+
+    protected abstract void setParameter(ConfluenceMacro macro, TagContext context);
 }

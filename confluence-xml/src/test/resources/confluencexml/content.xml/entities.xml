@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic>
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">31653889</id>
+    <property name="name"><![CDATA[TestSpace]]></property>
+    <property name="key"><![CDATA[TestSpace]]></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">51741193</id>
+    <property name="space" class="Space"
+      package="com.atlassian.confluence.spaces">
+      <id name="id">31653889</id>
+    </property>
+    <property name="title"><![CDATA[TestContent]]></property>
+    <collection name="bodyContents" class="java.util.Collection">
+      <element class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">51773961</id>
+      </element>
+    </collection>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">51773961</id>
+    <property name="body">
+      <![CDATA[
+        <p>
+          <ac:macro ac:name="anchor">
+            <ac:default-parameter>name</ac:default-parameter>
+          </ac:macro>
+        </p>
+      ]]>
+    </property>
+    <property name="content" class="Page"
+      package="com.atlassian.confluence.pages">
+      <id name="id">51741193</id>
+    </property>
+    <property name="bodyType">2</property>
+  </object>
+</hibernate-generic>

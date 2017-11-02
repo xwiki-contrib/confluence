@@ -49,6 +49,8 @@ public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
         public WikiParameters parameters = new WikiParameters();
 
         public String content;
+
+        public int index = -1;
     }
 
     public MacroTagHandler()

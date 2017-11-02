@@ -17,21 +17,41 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.confluence.filter;
+package org.xwiki.contrib.confluence.filter.internal.macros;
 
-import org.junit.runner.RunWith;
-import org.xwiki.filter.test.integration.FilterTestSuite;
-import org.xwiki.test.annotation.AllComponents;
+import java.util.Map;
+
+import javax.inject.Named;
+import javax.inject.Singleton;
+
+import org.xwiki.component.annotation.Component;
 
 /**
- * Run all tests found in the classpath. These {@code *.test} files must follow the conventions described in
- * {@link org.xwiki.filter.test.integration.TestDataParser}.
+ * Convert Confluence anchor macro.
  * 
  * @version $Id$
+ * @since 9.1
  */
-@RunWith(FilterTestSuite.class)
-@AllComponents
-//@FilterTestSuite.Scope(value = "confluencexml", pattern = "content.test")
-public class IntegrationTests
+@Component
+@Singleton
+@Named("anchor")
+public class AnchorMacroConverter extends AbstractMacroConverter
 {
+    @Override
+    protected String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
+        boolean inline)
+    {
+        return "id";
+    }
+
+    @Override
+    protected String toXWikiParameterName(String confluenceParameterName, String id,
+        Map<String, String> confluenceParameters, String confluenceContent)
+    {
+        if (confluenceParameterName.equals("0")) {
+            return "name";
+        }
+
+        return super.toXWikiParameterName(confluenceParameterName, id, confluenceParameters, confluenceContent);
+    }
 }

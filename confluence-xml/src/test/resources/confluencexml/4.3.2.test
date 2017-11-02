@@ -20565,10 +20565,17 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                     </parameters>
                   </p>
                 </macro>
-                <paragraph>
-                  <word>anchor</word>
-                </paragraph>
-                <macro id="anchor"></macro>
+                <paragraph></paragraph>
+                <macro id="id">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>name</string>
+                        <string>anchor</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
                 <macro id="code" content="Content of bloc code">
                   <p>
                     <parameters>
@@ -20625,10 +20632,17 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                     </parameters>
                   </p>
                 </macro>
-                <paragraph>
-                  <word>admin</word>
-                </paragraph>
-                <macro id="content-by-user"></macro>
+                <paragraph></paragraph>
+                <macro id="content-by-user">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>0</string>
+                        <string>admin</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
                 <paragraph></paragraph>
                 <macro id="contributors"></macro>
                 <paragraph></paragraph>
@@ -20647,15 +20661,17 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                 </macro>
                 <paragraph></paragraph>
                 <macro id="favpages"></macro>
-                <paragraph>
-                  <word>Admin</word>
-                </paragraph>
+                <paragraph></paragraph>
                 <macro id="im">
                   <p>
                     <parameters>
                       <entry>
                         <string>service</string>
                         <string>jabber</string>
+                      </entry>
+                      <entry>
+                        <string>0</string>
+                        <string>Admin</string>
                       </entry>
                     </parameters>
                   </p>
@@ -20722,14 +20738,28 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                   <space></space>
                   <word>document</word>
                 </paragraph>
-                <paragraph>
-                  <word>tag1</word>
-                </paragraph>
-                <macro id="navmap"></macro>
-                <paragraph>
-                  <word>following</word>
-                </paragraph>
-                <macro id="network"></macro>
+                <paragraph></paragraph>
+                <macro id="navmap">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>0</string>
+                        <string>tag1</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
+                <paragraph></paragraph>
+                <macro id="network">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>0</string>
+                        <string>following</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
                 <macro id="note" content="content of the macro">
                   <p>
                     <parameters>
@@ -21530,10 +21560,17 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                     </parameters>
                   </p>
                 </macro>
-                <paragraph>
-                  <word>anchor</word>
-                </paragraph>
-                <macro id="anchor"></macro>
+                <paragraph></paragraph>
+                <macro id="id">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>name</string>
+                        <string>anchor</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
                 <macro id="code" content="Content of bloc code">
                   <p>
                     <parameters>
@@ -21590,10 +21627,17 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                     </parameters>
                   </p>
                 </macro>
-                <paragraph>
-                  <word>admin</word>
-                </paragraph>
-                <macro id="content-by-user"></macro>
+                <paragraph></paragraph>
+                <macro id="content-by-user">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>0</string>
+                        <string>admin</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
                 <paragraph></paragraph>
                 <macro id="contributors"></macro>
                 <paragraph></paragraph>
@@ -21612,15 +21656,17 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                 </macro>
                 <paragraph></paragraph>
                 <macro id="favpages"></macro>
-                <paragraph>
-                  <word>Admin</word>
-                </paragraph>
+                <paragraph></paragraph>
                 <macro id="im">
                   <p>
                     <parameters>
                       <entry>
                         <string>service</string>
                         <string>jabber</string>
+                      </entry>
+                      <entry>
+                        <string>0</string>
+                        <string>Admin</string>
                       </entry>
                     </parameters>
                   </p>
@@ -21687,14 +21733,28 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                   <space></space>
                   <word>document</word>
                 </paragraph>
-                <paragraph>
-                  <word>tag1</word>
-                </paragraph>
-                <macro id="navmap"></macro>
-                <paragraph>
-                  <word>following</word>
-                </paragraph>
-                <macro id="network"></macro>
+                <paragraph></paragraph>
+                <macro id="navmap">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>0</string>
+                        <string>tag1</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
+                <paragraph></paragraph>
+                <macro id="network">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>0</string>
+                        <string>following</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
                 <macro id="note" content="content of the macro">
                   <p>
                     <parameters>
@@ -22495,10 +22555,17 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                     </parameters>
                   </p>
                 </macro>
-                <paragraph>
-                  <word>anchor</word>
-                </paragraph>
-                <macro id="anchor"></macro>
+                <paragraph></paragraph>
+                <macro id="id">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>name</string>
+                        <string>anchor</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
                 <macro id="code" content="Content of bloc code">
                   <p>
                     <parameters>
@@ -22555,10 +22622,17 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                     </parameters>
                   </p>
                 </macro>
-                <paragraph>
-                  <word>admin</word>
-                </paragraph>
-                <macro id="content-by-user"></macro>
+                <paragraph></paragraph>
+                <macro id="content-by-user">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>0</string>
+                        <string>admin</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
                 <paragraph></paragraph>
                 <macro id="contributors"></macro>
                 <paragraph></paragraph>
@@ -22577,15 +22651,17 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                 </macro>
                 <paragraph></paragraph>
                 <macro id="favpages"></macro>
-                <paragraph>
-                  <word>Admin</word>
-                </paragraph>
+                <paragraph></paragraph>
                 <macro id="im">
                   <p>
                     <parameters>
                       <entry>
                         <string>service</string>
                         <string>jabber</string>
+                      </entry>
+                      <entry>
+                        <string>0</string>
+                        <string>Admin</string>
                       </entry>
                     </parameters>
                   </p>
@@ -22652,14 +22728,28 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                   <space></space>
                   <word>document</word>
                 </paragraph>
-                <paragraph>
-                  <word>tag1</word>
-                </paragraph>
-                <macro id="navmap"></macro>
-                <paragraph>
-                  <word>following</word>
-                </paragraph>
-                <macro id="network"></macro>
+                <paragraph></paragraph>
+                <macro id="navmap">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>0</string>
+                        <string>tag1</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
+                <paragraph></paragraph>
+                <macro id="network">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>0</string>
+                        <string>following</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
                 <macro id="note" content="content of the macro">
                   <p>
                     <parameters>
@@ -23431,10 +23521,17 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                     </parameters>
                   </p>
                 </macro>
-                <paragraph>
-                  <word>anchor</word>
-                </paragraph>
-                <macro id="anchor"></macro>
+                <paragraph></paragraph>
+                <macro id="id">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>name</string>
+                        <string>anchor</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
                 <macro id="code" content="Content of bloc code">
                   <p>
                     <parameters>
@@ -23491,10 +23588,17 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                     </parameters>
                   </p>
                 </macro>
-                <paragraph>
-                  <word>admin</word>
-                </paragraph>
-                <macro id="content-by-user"></macro>
+                <paragraph></paragraph>
+                <macro id="content-by-user">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>0</string>
+                        <string>admin</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
                 <paragraph></paragraph>
                 <macro id="contributors"></macro>
                 <paragraph></paragraph>
@@ -23513,15 +23617,17 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                 </macro>
                 <paragraph></paragraph>
                 <macro id="favpages"></macro>
-                <paragraph>
-                  <word>Admin</word>
-                </paragraph>
+                <paragraph></paragraph>
                 <macro id="im">
                   <p>
                     <parameters>
                       <entry>
                         <string>service</string>
                         <string>jabber</string>
+                      </entry>
+                      <entry>
+                        <string>0</string>
+                        <string>Admin</string>
                       </entry>
                     </parameters>
                   </p>
@@ -23588,14 +23694,28 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                   <space></space>
                   <word>document</word>
                 </paragraph>
-                <paragraph>
-                  <word>tag1</word>
-                </paragraph>
-                <macro id="navmap"></macro>
-                <paragraph>
-                  <word>following</word>
-                </paragraph>
-                <macro id="network"></macro>
+                <paragraph></paragraph>
+                <macro id="navmap">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>0</string>
+                        <string>tag1</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
+                <paragraph></paragraph>
+                <macro id="network">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>0</string>
+                        <string>following</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
                 <macro id="note" content="content of the macro">
                   <p>
                     <parameters>
@@ -24382,10 +24502,17 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                     </parameters>
                   </p>
                 </macro>
-                <paragraph>
-                  <word>anchor</word>
-                </paragraph>
-                <macro id="anchor"></macro>
+                <paragraph></paragraph>
+                <macro id="id">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>name</string>
+                        <string>anchor</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
                 <macro id="code" content="Content of bloc code">
                   <p>
                     <parameters>
@@ -24442,10 +24569,17 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                     </parameters>
                   </p>
                 </macro>
-                <paragraph>
-                  <word>admin</word>
-                </paragraph>
-                <macro id="content-by-user"></macro>
+                <paragraph></paragraph>
+                <macro id="content-by-user">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>0</string>
+                        <string>admin</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
                 <paragraph></paragraph>
                 <macro id="contributors"></macro>
                 <paragraph></paragraph>
@@ -24464,15 +24598,17 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                 </macro>
                 <paragraph></paragraph>
                 <macro id="favpages"></macro>
-                <paragraph>
-                  <word>Admin</word>
-                </paragraph>
+                <paragraph></paragraph>
                 <macro id="im">
                   <p>
                     <parameters>
                       <entry>
                         <string>service</string>
                         <string>jabber</string>
+                      </entry>
+                      <entry>
+                        <string>0</string>
+                        <string>Admin</string>
                       </entry>
                     </parameters>
                   </p>
@@ -24539,14 +24675,28 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                   <space></space>
                   <word>document</word>
                 </paragraph>
-                <paragraph>
-                  <word>tag1</word>
-                </paragraph>
-                <macro id="navmap"></macro>
-                <paragraph>
-                  <word>following</word>
-                </paragraph>
-                <macro id="network"></macro>
+                <paragraph></paragraph>
+                <macro id="navmap">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>0</string>
+                        <string>tag1</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
+                <paragraph></paragraph>
+                <macro id="network">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>0</string>
+                        <string>following</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
                 <macro id="note" content="content of the macro">
                   <p>
                     <parameters>
@@ -25352,10 +25502,17 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                     </parameters>
                   </p>
                 </macro>
-                <paragraph>
-                  <word>anchor</word>
-                </paragraph>
-                <macro id="anchor"></macro>
+                <paragraph></paragraph>
+                <macro id="id">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>name</string>
+                        <string>anchor</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
                 <macro id="code" content="Content of bloc code">
                   <p>
                     <parameters>
@@ -25412,10 +25569,17 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                     </parameters>
                   </p>
                 </macro>
-                <paragraph>
-                  <word>admin</word>
-                </paragraph>
-                <macro id="content-by-user"></macro>
+                <paragraph></paragraph>
+                <macro id="content-by-user">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>0</string>
+                        <string>admin</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
                 <paragraph></paragraph>
                 <macro id="contributors"></macro>
                 <paragraph></paragraph>
@@ -25434,15 +25598,17 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                 </macro>
                 <paragraph></paragraph>
                 <macro id="favpages"></macro>
-                <paragraph>
-                  <word>Admin</word>
-                </paragraph>
+                <paragraph></paragraph>
                 <macro id="im">
                   <p>
                     <parameters>
                       <entry>
                         <string>service</string>
                         <string>jabber</string>
+                      </entry>
+                      <entry>
+                        <string>0</string>
+                        <string>Admin</string>
                       </entry>
                     </parameters>
                   </p>
@@ -25509,14 +25675,28 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
                   <space></space>
                   <word>document</word>
                 </paragraph>
-                <paragraph>
-                  <word>tag1</word>
-                </paragraph>
-                <macro id="navmap"></macro>
-                <paragraph>
-                  <word>following</word>
-                </paragraph>
-                <macro id="network"></macro>
+                <paragraph></paragraph>
+                <macro id="navmap">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>0</string>
+                        <string>tag1</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
+                <paragraph></paragraph>
+                <macro id="network">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>0</string>
+                        <string>following</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                </macro>
                 <macro id="note" content="content of the macro">
                   <p>
                     <parameters>

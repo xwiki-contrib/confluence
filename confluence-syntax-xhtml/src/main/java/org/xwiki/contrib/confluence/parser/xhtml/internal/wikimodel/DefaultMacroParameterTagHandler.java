@@ -17,21 +17,30 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.confluence.filter;
+package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
-import org.junit.runner.RunWith;
-import org.xwiki.filter.test.integration.FilterTestSuite;
-import org.xwiki.test.annotation.AllComponents;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroTagHandler.ConfluenceMacro;
+import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
- * Run all tests found in the classpath. These {@code *.test} files must follow the conventions described in
- * {@link org.xwiki.filter.test.integration.TestDataParser}.
- * 
+ * Handles parameters.
+ * <p>
+ * Example:
+ * <p>
+ * {@code
+ * <ac:default-parameter>Some value</ac:default-parameter>
+ * }
+ *
  * @version $Id$
+ * @since 9.1
  */
-@RunWith(FilterTestSuite.class)
-@AllComponents
-//@FilterTestSuite.Scope(value = "confluencexml", pattern = "content.test")
-public class IntegrationTests
+public class DefaultMacroParameterTagHandler extends AbstractMacroParameterTagHandler implements ConfluenceTagHandler
 {
+    @Override
+    protected void setParameter(ConfluenceMacro macro, TagContext context)
+    {
+        String value = context.getContent();
+
+        macro.parameters = macro.parameters.setParameter(String.valueOf(++macro.index), value);
+    }
 }

@@ -24,6 +24,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,8 +54,10 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.CloseShieldInputStream;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.xwiki.filter.FilterException;
+import org.xwiki.filter.input.FileInputSource;
 import org.xwiki.filter.input.InputSource;
 import org.xwiki.filter.input.InputStreamInputSource;
+import org.xwiki.filter.input.URLInputSource;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.xml.stax.StAXUtils;
@@ -67,6 +70,10 @@ import com.google.common.base.Strings;
  */
 public class ConfluenceXMLPackage
 {
+    public static final String FILE_ENTITIES = "entities.xml";
+
+    public static final String FILE_DESCRIPTOR = "exportDescriptor.properties";
+
     public static final String KEY_SPACE_NAME = "name";
 
     public static final String KEY_SPACE_DESCRIPTION = "description";
@@ -233,53 +240,77 @@ public class ConfluenceXMLPackage
 
     private File descriptor;
 
+    private boolean temporaryDirectory;
+
     private File tree;
 
     private Map<Integer, List<Integer>> pages = new LinkedHashMap<>();
 
-    public ConfluenceXMLPackage(InputSource source)
-        throws IOException, FilterException, XMLStreamException, FactoryConfigurationError, ConfigurationException
+    public ConfluenceXMLPackage(InputSource source) throws IOException, FilterException, XMLStreamException,
+        FactoryConfigurationError, ConfigurationException, URISyntaxException
     {
-        InputStream stream;
-
-        if (source instanceof InputStreamInputSource) {
-            stream = ((InputStreamInputSource) source).getInputStream();
+        if (source instanceof FileInputSource) {
+            fromFile(((FileInputSource) source).getFile());
+        } else if (source instanceof URLInputSource
+            && ((URLInputSource) source).getURL().getProtocol().equals("file")) {
+            fromFile(new File(((URLInputSource) source).getURL().toURI()));
         } else {
-            throw new FilterException(
-                String.format("Unsupported input source of type [%s]", source.getClass().getName()));
-        }
-
-        try {
-            // Get temporary folder
-            this.directory = File.createTempFile("confluencexml", "");
-            this.directory.delete();
-            this.directory.mkdir();
-            this.directory.deleteOnExit();
-
-            // Extract the zip
-            ZipArchiveInputStream zais = new ZipArchiveInputStream(stream);
-            for (ZipArchiveEntry zipEntry = zais.getNextZipEntry(); zipEntry != null; zipEntry =
-                zais.getNextZipEntry()) {
-                if (!zipEntry.isDirectory()) {
-                    String path = zipEntry.getName();
-                    File file = new File(this.directory, path);
-
-                    if (path.equals("entities.xml")) {
-                        this.entities = file;
-                    } else if (path.equals("exportDescriptor.properties")) {
-                        this.descriptor = file;
-                    }
-
-                    FileUtils.copyInputStreamToFile(new CloseShieldInputStream(zais), file);
+            try {
+                if (source instanceof InputStreamInputSource) {
+                    fromStream((InputStreamInputSource) source);
+                } else {
+                    throw new FilterException(
+                        String.format("Unsupported input source of type [%s]", source.getClass().getName()));
                 }
+            } finally {
+                source.close();
             }
-        } finally {
-            source.close();
         }
+
+        this.entities = new File(this.directory, FILE_ENTITIES);
+        this.descriptor = new File(this.directory, FILE_DESCRIPTOR);
 
         // Initialize
 
         createTree();
+    }
+
+    private void fromFile(File file) throws IOException
+    {
+        if (file.isDirectory()) {
+            this.directory = file;
+        } else {
+            try (FileInputStream stream = new FileInputStream(file)) {
+                fromStream(stream);
+            }
+        }
+    }
+
+    private void fromStream(InputStreamInputSource source) throws IOException
+    {
+        try (InputStream stream = source.getInputStream()) {
+            fromStream(stream);
+        }
+    }
+
+    private void fromStream(InputStream stream) throws IOException
+    {
+        // Get temporary folder
+        this.directory = File.createTempFile("confluencexml", "");
+        this.directory.delete();
+        this.directory.mkdir();
+        this.temporaryDirectory = false;
+
+        // Extract the zip
+        ZipArchiveInputStream zais = new ZipArchiveInputStream(stream);
+        for (ZipArchiveEntry zipEntry = zais.getNextZipEntry(); zipEntry != null; zipEntry = zais.getNextZipEntry()) {
+            if (!zipEntry.isDirectory()) {
+                String path = zipEntry.getName();
+                File file = new File(this.directory, path);
+
+                FileUtils.copyInputStreamToFile(new CloseShieldInputStream(zais), file);
+            }
+        }
     }
 
     private PropertiesConfiguration newProperties()
@@ -400,7 +431,12 @@ public class ConfluenceXMLPackage
     private void createTree()
         throws XMLStreamException, FactoryConfigurationError, IOException, ConfigurationException, FilterException
     {
-        this.tree = new File(this.directory, "tree");
+        if (this.temporaryDirectory) {
+            this.tree = new File(this.directory, "tree");
+        } else {
+            this.tree = File.createTempFile("confluencexml-tree", "");
+            this.tree.delete();
+        }
         this.tree.mkdir();
 
         try (InputStream stream = new FileInputStream(getEntities())) {
@@ -512,7 +548,7 @@ public class ConfluenceXMLPackage
             pageId = properties.getInteger(KEY_ATTACHMENT_CONTENT, null);
         }
 
-        return pageId; 
+        return pageId;
     }
 
     private void readSpaceObject(XMLStreamReader xmlReader)
@@ -1033,6 +1069,10 @@ public class ConfluenceXMLPackage
     {
         if (this.tree != null) {
             FileUtils.deleteDirectory(this.tree);
+        }
+
+        if (this.temporaryDirectory && this.directory.exists()) {
+            FileUtils.deleteDirectory(this.directory);
         }
     }
 

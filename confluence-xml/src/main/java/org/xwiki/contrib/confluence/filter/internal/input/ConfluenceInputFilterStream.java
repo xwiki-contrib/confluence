@@ -32,6 +32,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Provider;
 
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
@@ -40,13 +41,13 @@ import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.contrib.confluence.filter.internal.ConfluenceFilter;
 import org.xwiki.contrib.confluence.filter.internal.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.parser.confluence.internal.ConfluenceParser;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.ConfluenceXHTMLParser;
 import org.xwiki.filter.FilterEventParameters;
 import org.xwiki.filter.FilterException;
-import org.xwiki.filter.confluence.input.ConfluenceInputProperties;
 import org.xwiki.filter.event.model.WikiAttachmentFilter;
 import org.xwiki.filter.event.model.WikiDocumentFilter;
 import org.xwiki.filter.event.user.GroupFilter;
@@ -76,6 +77,9 @@ public class ConfluenceInputFilterStream
     @Inject
     @Named(ConfluenceXHTMLParser.SYNTAX_STRING)
     private StreamParser confluenceXHTMLParser;
+
+    @Inject
+    private Provider<ConfluenceConverterListener> converterProvider;
 
     private ConfluenceXMLPackage confluencePackage;
 
@@ -282,12 +286,12 @@ public class ConfluenceInputFilterStream
         if (this.properties.getDefaultLocale() != null) {
             documentParameters.put(WikiDocumentFilter.PARAMETER_LOCALE, this.properties.getDefaultLocale());
         }
- 
+
         // We should not imported pages from the Trash
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS)) {
             String contentStatus = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS);
             if (contentStatus.equals("deleted"))
-               return;
+                return;
         }
 
         // > WikiDocument
@@ -425,13 +429,21 @@ public class ConfluenceInputFilterStream
 
         // Content
         if (filter instanceof Listener && bodyContent != null && bodySyntax != null) {
+            Listener listener = proxyFilter;
+
+            if (this.properties.isConvertToXWiki()) {
+                ConfluenceConverterListener converter = this.converterProvider.get();
+                converter.setWrappedListener(listener);
+                listener = converter;
+            }
+
             try {
                 switch (bodyType) {
                     case 0:
-                        this.confluenceWIKIParser.parse(new StringReader(bodyContent), proxyFilter);
+                        this.confluenceWIKIParser.parse(new StringReader(bodyContent), listener);
                         break;
                     case 2:
-                        this.confluenceXHTMLParser.parse(new StringReader(bodyContent), proxyFilter);
+                        this.confluenceXHTMLParser.parse(new StringReader(bodyContent), listener);
                         break;
                     default:
                         break;

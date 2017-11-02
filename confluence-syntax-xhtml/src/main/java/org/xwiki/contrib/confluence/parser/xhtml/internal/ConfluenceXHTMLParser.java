@@ -33,11 +33,12 @@ import org.apache.commons.io.IOUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXWikiGeneratorListener;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.DefaultMacroParameterTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ImageTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.LinkTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.PageTagHandler;
-import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ParameterTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroParameterTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.PlainTextBodyTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.PlainTextLinkBodyTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.RichTextBodyTagHandler;
@@ -129,7 +130,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         parser.setNamespacesEnabled(false);
 
         // Override some of the WikiModel XHTML parser tag handlers to introduce our own logic.
-        Map<String, TagHandler> handlers = new HashMap<String, TagHandler>();
+        Map<String, TagHandler> handlers = new HashMap<>();
 
         TagHandler handler = new XWikiHeaderTagHandler();
         handlers.put("h1", handler);
@@ -142,7 +143,8 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
 
         handlers.put("ac:macro", new MacroTagHandler());
         handlers.put("ac:structured-macro", new MacroTagHandler());
-        handlers.put("ac:parameter", new ParameterTagHandler());
+        handlers.put("ac:default-parameter", new DefaultMacroParameterTagHandler());
+        handlers.put("ac:parameter", new MacroParameterTagHandler());
         handlers.put("ac:plain-text-body", new PlainTextBodyTagHandler());
         handlers.put("ac:rich-text-body", new RichTextBodyTagHandler());
 

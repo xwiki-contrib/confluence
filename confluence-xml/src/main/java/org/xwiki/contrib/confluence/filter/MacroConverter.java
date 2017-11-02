@@ -19,19 +19,28 @@
  */
 package org.xwiki.contrib.confluence.filter;
 
-import org.junit.runner.RunWith;
-import org.xwiki.filter.test.integration.FilterTestSuite;
-import org.xwiki.test.annotation.AllComponents;
+import java.util.Map;
+
+import org.xwiki.component.annotation.Role;
+import org.xwiki.rendering.listener.Listener;
 
 /**
- * Run all tests found in the classpath. These {@code *.test} files must follow the conventions described in
- * {@link org.xwiki.filter.test.integration.TestDataParser}.
+ * Converter Confluence standard macros to XWiki equivalent.
  * 
  * @version $Id$
+ * @since 9.1
  */
-@RunWith(FilterTestSuite.class)
-@AllComponents
-//@FilterTestSuite.Scope(value = "confluencexml", pattern = "content.test")
-public class IntegrationTests
+@Role
+public interface MacroConverter
 {
+    /**
+     * Convert passed macro to the XWiki equivalent.
+     * 
+     * @param id the macro id (eg "toc" for the TOC macro)
+     * @param parameters the macro parameters
+     * @param content the macro content
+     * @param inline if true the macro is located in a inline content (like paragraph, etc.)
+     * @param listener the listener to send events to
+     */
+    void toXWiki(String id, Map<String, String> parameters, String content, boolean inline, Listener listener);
 }

@@ -1,0 +1,53 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Content conversions
+.#------------------------------------------------------------------------------
+<wikiSpace name="TestSpace">
+  <wikiDocument name="TestContent">
+    <wikiDocumentLocale>
+      <wikiDocumentRevision>
+        <p>
+          <parameters>
+            <entry>
+              <string>title</string>
+              <string>TestContent</string>
+            </entry>
+          </parameters>
+        </p>
+        <document>
+          <p>
+            <metadata>
+              <metadata>
+                <entry>
+                  <string>syntax</string>
+                  <org.xwiki.rendering.syntax.Syntax>
+                    <type>
+                      <name>Confluence</name>
+                      <id>confluence+xhtml</id>
+                    </type>
+                    <version>1.0</version>
+                  </org.xwiki.rendering.syntax.Syntax>
+                </entry>
+              </metadata>
+            </metadata>
+          </p>
+          <paragraph></paragraph>
+          <macro id="id">
+            <p>
+              <parameters>
+                <entry>
+                  <string>name</string>
+                  <string>name</string>
+                </entry>
+              </parameters>
+            </p>
+          </macro>
+        </document>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=content.xml
+.#------------------------------------------------------------------------------
