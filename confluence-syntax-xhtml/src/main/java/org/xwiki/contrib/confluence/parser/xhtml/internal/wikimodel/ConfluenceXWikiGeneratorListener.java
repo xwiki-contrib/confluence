@@ -141,12 +141,15 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
                 }
 
                 resourceReference = userResourceReference;
+            } else if (confluenceReference.getAnchor() != null) {
+                DocumentResourceReference documentResourceReference = new DocumentResourceReference("");
+                documentResourceReference.setAnchor(confluenceReference.getAnchor());
+                resourceReference = documentResourceReference;
             }
 
             if (resourceReference != null) {
                 // Since WikiModel doesn't handle syntax in link labels and thus doesn't have begin/end events for
-                // links, we
-                // need to call the XWiki events and use an inline parser to parse the syntax in the label.
+                // links, we need to call the XWiki events and use an inline parser to parse the syntax in the label.
                 getListener().beginLink(resourceReference, false, Collections.<String, String>emptyMap());
                 if (reference.getLabel() != null) {
                     try {

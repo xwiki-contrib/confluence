@@ -1,0 +1,13 @@
+.#-----------------------------------------------------
+.input|confluence+xhtml/1.0
+.#-----------------------------------------------------
+<ac:link ac:anchor="anchor"/>
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+beginParagraph
+beginLink [Typed = [true] Type = [doc] Reference = [] Parameters = [[anchor] = [anchor]]] [false]
+endLink [Typed = [true] Type = [doc] Reference = [] Parameters = [[anchor] = [anchor]]] [false]
+endParagraph
+endDocument
