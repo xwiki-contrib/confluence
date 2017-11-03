@@ -49,5 +49,5 @@
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
-.configuration.source=content.xml
+.configuration.source=content
 .#------------------------------------------------------------------------------
