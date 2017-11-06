@@ -244,7 +244,7 @@ public class ConfluenceXMLPackage
 
     private File tree;
 
-    private Map<Integer, List<Integer>> pages = new LinkedHashMap<>();
+    private Map<Long, List<Long>> pages = new LinkedHashMap<>();
 
     public ConfluenceXMLPackage(InputSource source) throws IOException, FilterException, XMLStreamException,
         FactoryConfigurationError, ConfigurationException, URISyntaxException
@@ -329,12 +329,12 @@ public class ConfluenceXMLPackage
         return str != null ? DATE_FORMAT.parse(str) : null;
     }
 
-    public List<Integer> getIntegertList(PropertiesConfiguration properties, String key)
+    public List<Long> getLongList(PropertiesConfiguration properties, String key)
     {
-        return getIntegertList(properties, key, null);
+        return getLongList(properties, key, null);
     }
 
-    public List<Integer> getIntegertList(PropertiesConfiguration properties, String key, List<Integer> def)
+    public List<Long> getLongList(PropertiesConfiguration properties, String key, List<Long> def)
     {
         List<Object> list = properties.getList(key, null);
 
@@ -346,13 +346,13 @@ public class ConfluenceXMLPackage
             return Collections.emptyList();
         }
 
-        if (list.get(0) instanceof Integer) {
+        if (list.get(0) instanceof Long) {
             return (List) list;
         }
 
-        List<Integer> integerList = new ArrayList<>(list.size());
+        List<Long> integerList = new ArrayList<>(list.size());
         for (Object element : list) {
-            integerList.add(Integer.valueOf(element.toString()));
+            integerList.add(Long.valueOf(element.toString()));
         }
 
         return integerList;
@@ -361,14 +361,14 @@ public class ConfluenceXMLPackage
     public PropertiesConfiguration getContentProperties(PropertiesConfiguration properties, String key)
         throws ConfigurationException
     {
-        List<Integer> elements = getIntegertList(properties, key);
+        List<Long> elements = getLongList(properties, key);
 
         if (elements == null) {
             return null;
         }
 
         PropertiesConfiguration contentProperties = new PropertiesConfiguration();
-        for (Integer element : elements) {
+        for (Long element : elements) {
             PropertiesConfiguration contentProperty = getObjectProperties(element);
             if (contentProperty != null) {
                 String name = contentProperty.getString("name");
@@ -396,12 +396,12 @@ public class ConfluenceXMLPackage
     public EntityReference getReferenceFromId(PropertiesConfiguration currentProperties, String key)
         throws ConfigurationException
     {
-        Integer pageId = currentProperties.getInteger(key, null);
+        Long pageId = currentProperties.getLong(key, null);
         if (pageId != null) {
-            PropertiesConfiguration pageProperties = getPageProperties(pageId);
+            PropertiesConfiguration pageProperties = getPageProperties(pageId, true);
 
-            int spaceId = pageProperties.getInt(KEY_PAGE_SPACE);
-            int currentSpaceId = currentProperties.getInt(KEY_PAGE_SPACE);
+            long spaceId = pageProperties.getInt(KEY_PAGE_SPACE);
+            long currentSpaceId = currentProperties.getInt(KEY_PAGE_SPACE);
 
             EntityReference spaceReference;
             if (spaceId != currentSpaceId) {
@@ -416,14 +416,14 @@ public class ConfluenceXMLPackage
         return null;
     }
 
-    public String getSpaceName(int spaceId) throws ConfigurationException
+    public String getSpaceName(long spaceId) throws ConfigurationException
     {
         PropertiesConfiguration spaceProperties = getSpaceProperties(spaceId);
 
         return spaceProperties.getString(KEY_SPACE_NAME);
     }
 
-    public Map<Integer, List<Integer>> getPages()
+    public Map<Long, List<Long>> getPages()
     {
         return this.pages;
     }
@@ -483,7 +483,7 @@ public class ConfluenceXMLPackage
             } else {
                 PropertiesConfiguration properties = newProperties();
 
-                int id = readObjectProperties(xmlReader, properties);
+                long id = readObjectProperties(xmlReader, properties);
 
                 // Save page
                 saveObjectProperties(properties, id);
@@ -491,10 +491,10 @@ public class ConfluenceXMLPackage
         }
     }
 
-    private int readObjectProperties(XMLStreamReader xmlReader, PropertiesConfiguration properties)
+    private long readObjectProperties(XMLStreamReader xmlReader, PropertiesConfiguration properties)
         throws XMLStreamException, FilterException
     {
-        int id = -1;
+        long id = -1;
 
         for (xmlReader.nextTag(); xmlReader.isStartElement(); xmlReader.nextTag()) {
             String elementName = xmlReader.getLocalName();
@@ -503,7 +503,7 @@ public class ConfluenceXMLPackage
                 String idName = xmlReader.getAttributeValue(null, "name");
 
                 if (idName != null && idName.equals("id")) {
-                    id = Integer.valueOf(xmlReader.getElementText());
+                    id = Long.valueOf(xmlReader.getElementText());
 
                     properties.setProperty("id", id);
                 } else {
@@ -530,9 +530,9 @@ public class ConfluenceXMLPackage
     {
         PropertiesConfiguration properties = newProperties();
 
-        int attachmentId = readObjectProperties(xmlReader, properties);
+        long attachmentId = readObjectProperties(xmlReader, properties);
 
-        Integer pageId = getAttachmentPageId(properties);
+        Long pageId = getAttachmentPageId(properties);
 
         if (pageId != null) {
             // Save attachment
@@ -540,12 +540,12 @@ public class ConfluenceXMLPackage
         }
     }
 
-    private Integer getAttachmentPageId(PropertiesConfiguration properties)
+    private Long getAttachmentPageId(PropertiesConfiguration properties)
     {
-        Integer pageId = getInteger(properties, KEY_ATTACHMENT_CONTAINERCONTENT, null);
+        Long pageId = getLong(properties, KEY_ATTACHMENT_CONTAINERCONTENT, null);
 
         if (pageId == null) {
-            pageId = properties.getInteger(KEY_ATTACHMENT_CONTENT, null);
+            pageId = properties.getLong(KEY_ATTACHMENT_CONTENT, null);
         }
 
         return pageId;
@@ -556,13 +556,13 @@ public class ConfluenceXMLPackage
     {
         PropertiesConfiguration properties = newProperties();
 
-        int spaceId = readObjectProperties(xmlReader, properties);
+        long spaceId = readObjectProperties(xmlReader, properties);
 
         // Save page
         saveSpaceProperties(properties, spaceId);
 
         // Register space
-        List<Integer> spacePages = this.pages.get(spaceId);
+        List<Long> spacePages = this.pages.get(spaceId);
         if (spacePages == null) {
             spacePages = new LinkedList<>();
             this.pages.put(spaceId, spacePages);
@@ -574,7 +574,7 @@ public class ConfluenceXMLPackage
     {
         PropertiesConfiguration properties = newProperties();
 
-        int descriptionId = readObjectProperties(xmlReader, properties);
+        long descriptionId = readObjectProperties(xmlReader, properties);
 
         properties.setProperty(KEY_PAGE_HOMEPAGE, true);
 
@@ -587,9 +587,9 @@ public class ConfluenceXMLPackage
     {
         PropertiesConfiguration properties = newProperties();
 
-        int permissionId = readObjectProperties(xmlReader, properties);
+        long permissionId = readObjectProperties(xmlReader, properties);
 
-        Integer spaceId = properties.getInteger("space", null);
+        Long spaceId = properties.getLong("space", null);
         if (spaceId != null) {
             // Save attachment
             saveSpacePermissionsProperties(properties, spaceId, permissionId);
@@ -604,7 +604,7 @@ public class ConfluenceXMLPackage
 
         readObjectProperties(xmlReader, properties);
 
-        Integer pageId = properties.getInteger("content", null);
+        Long pageId = properties.getLong("content", null);
         if (pageId != null) {
             savePageProperties(properties, pageId);
         }
@@ -615,16 +615,16 @@ public class ConfluenceXMLPackage
     {
         PropertiesConfiguration properties = newProperties();
 
-        int pageId = readObjectProperties(xmlReader, properties);
+        long pageId = readObjectProperties(xmlReader, properties);
 
         // Save page
         savePageProperties(properties, pageId);
 
         // Register only current pages (they will take care of handling there history)
-        Integer originalVersion = (Integer) properties.getProperty("originalVersion");
+        Long originalVersion = (Long) properties.getProperty("originalVersion");
         if (originalVersion == null) {
-            Integer spaceId = (Integer) properties.getInteger("space", null);
-            List<Integer> spacePages = this.pages.get(spaceId);
+            Long spaceId = (Long) properties.getLong("space", null);
+            List<Long> spacePages = this.pages.get(spaceId);
             if (spacePages == null) {
                 spacePages = new LinkedList<>();
                 this.pages.put(spaceId, spacePages);
@@ -638,7 +638,7 @@ public class ConfluenceXMLPackage
     {
         PropertiesConfiguration properties = newProperties();
 
-        int pageId = readObjectProperties(xmlReader, properties);
+        long pageId = readObjectProperties(xmlReader, properties);
 
         // Save page
         saveObjectProperties("users", properties, pageId);
@@ -649,7 +649,7 @@ public class ConfluenceXMLPackage
     {
         PropertiesConfiguration properties = newProperties();
 
-        int pageId = readObjectProperties(xmlReader, properties);
+        long pageId = readObjectProperties(xmlReader, properties);
 
         // Save page
         saveObjectProperties("groups", properties, pageId);
@@ -662,25 +662,25 @@ public class ConfluenceXMLPackage
 
         readObjectProperties(xmlReader, properties);
 
-        Integer parentGroup = properties.getInteger("parentGroup", null);
+        Long parentGroup = properties.getLong("parentGroup", null);
 
         if (parentGroup != null) {
             PropertiesConfiguration groupProperties = getGroupProperties(parentGroup);
 
-            Integer userMember = properties.getInteger("userMember", null);
+            Long userMember = properties.getLong("userMember", null);
 
             if (userMember != null) {
-                List<Integer> users = new ArrayList<>(
-                    getIntegertList(groupProperties, KEY_GROUP_MEMBERUSERS, Collections.<Integer>emptyList()));
+                List<Long> users =
+                    new ArrayList<>(getLongList(groupProperties, KEY_GROUP_MEMBERUSERS, Collections.<Long>emptyList()));
                 users.add(userMember);
                 groupProperties.setProperty(KEY_GROUP_MEMBERUSERS, users);
             }
 
-            Integer groupMember = properties.getInteger("groupMember", null);
+            Long groupMember = properties.getLong("groupMember", null);
 
             if (groupMember != null) {
-                List<Integer> groups = new ArrayList<>(
-                    getIntegertList(groupProperties, KEY_GROUP_MEMBERGROUPS, Collections.<Integer>emptyList()));
+                List<Long> groups = new ArrayList<>(
+                    getLongList(groupProperties, KEY_GROUP_MEMBERGROUPS, Collections.<Long>emptyList()));
                 groups.add(groupMember);
                 groupProperties.setProperty(KEY_GROUP_MEMBERGROUPS, groups);
             }
@@ -725,7 +725,7 @@ public class ConfluenceXMLPackage
         return FIND_BROKEN_CDATA_PATTERN.matcher(elementText).replaceAll(REPAIRED_CDATA_END);
     }
 
-    private Integer readObjectReference(XMLStreamReader xmlReader) throws FilterException, XMLStreamException
+    private Long readObjectReference(XMLStreamReader xmlReader) throws FilterException, XMLStreamException
     {
         xmlReader.nextTag();
 
@@ -734,7 +734,7 @@ public class ConfluenceXMLPackage
                 String.format("Was expecting id element but found [%s]", xmlReader.getLocalName()));
         }
 
-        Integer id = Integer.valueOf(xmlReader.getElementText());
+        Long id = Long.valueOf(xmlReader.getElementText());
 
         xmlReader.nextTag();
 
@@ -768,7 +768,7 @@ public class ConfluenceXMLPackage
         return new File(this.tree, "spaces");
     }
 
-    private File getSpaceFolder(int spaceId)
+    private File getSpaceFolder(long spaceId)
     {
         return new File(getSpacesFolder(), String.valueOf(spaceId));
     }
@@ -793,42 +793,42 @@ public class ConfluenceXMLPackage
         return getObjectsFolder("groups");
     }
 
-    private File getPageFolder(int pageId)
+    private File getPageFolder(long pageId)
     {
         return new File(getPagesFolder(), String.valueOf(pageId));
     }
 
-    private File getObjectFolder(String folderName, int objectId)
+    private File getObjectFolder(String folderName, long objectId)
     {
         return new File(getObjectsFolder(folderName), String.valueOf(objectId));
     }
 
-    private File getPagePropertiesFile(int pageId)
+    private File getPagePropertiesFile(long pageId)
     {
         File folder = getPageFolder(pageId);
 
         return new File(folder, "properties.properties");
     }
 
-    private File getObjectPropertiesFile(String folderName, int propertyId)
+    private File getObjectPropertiesFile(String folderName, long propertyId)
     {
         File folder = getObjectFolder(folderName, propertyId);
 
         return new File(folder, "properties.properties");
     }
 
-    public Collection<Integer> getAttachments(int pageId)
+    public Collection<Long> getAttachments(long pageId)
     {
         File folder = getAttachmentsFolder(pageId);
 
-        Collection<Integer> attachments;
+        Collection<Long> attachments;
         if (folder.exists()) {
             String[] attachmentFolders = folder.list();
 
             attachments = new TreeSet<>();
             for (String attachmentIdString : attachmentFolders) {
-                if (NumberUtils.isNumber(attachmentIdString)) {
-                    attachments.add(Integer.valueOf(attachmentIdString));
+                if (NumberUtils.isCreatable(attachmentIdString)) {
+                    attachments.add(Long.valueOf(attachmentIdString));
                 }
             }
         } else {
@@ -838,64 +838,64 @@ public class ConfluenceXMLPackage
         return attachments;
     }
 
-    private File getAttachmentsFolder(int pageId)
+    private File getAttachmentsFolder(long pageId)
     {
         return new File(getPageFolder(pageId), "attachments");
     }
 
-    private File getSpacePermissionsFolder(int spaceId)
+    private File getSpacePermissionsFolder(long spaceId)
     {
         return new File(getSpaceFolder(spaceId), "permissions");
     }
 
-    private File getAttachmentFolder(int pageId, int attachmentId)
+    private File getAttachmentFolder(long pageId, long attachmentId)
     {
         return new File(getAttachmentsFolder(pageId), String.valueOf(attachmentId));
     }
 
-    private File getSpacePermissionFolder(int spaceId, int permissionId)
+    private File getSpacePermissionFolder(long spaceId, long permissionId)
     {
         return new File(getSpacePermissionsFolder(spaceId), String.valueOf(permissionId));
     }
 
-    private File getAttachmentPropertiesFile(int pageId, int attachmentId)
+    private File getAttachmentPropertiesFile(long pageId, long attachmentId)
     {
         File folder = getAttachmentFolder(pageId, attachmentId);
 
         return new File(folder, "properties.properties");
     }
 
-    private File getSpacePermissionPropertiesFile(int spaceId, int permissionId)
+    private File getSpacePermissionPropertiesFile(long spaceId, long permissionId)
     {
         File folder = getSpacePermissionFolder(spaceId, permissionId);
 
         return new File(folder, "properties.properties");
     }
 
-    private File getSpacePropertiesFile(int spaceId)
+    private File getSpacePropertiesFile(long spaceId)
     {
         File folder = getSpaceFolder(spaceId);
 
         return new File(folder, "properties.properties");
     }
 
-    public PropertiesConfiguration getPageProperties(int pageId) throws ConfigurationException
+    public PropertiesConfiguration getPageProperties(long pageId, boolean create) throws ConfigurationException
     {
         File file = getPagePropertiesFile(pageId);
 
-        return new PropertiesConfiguration(file);
+        return create || file != null && file.exists() ? new PropertiesConfiguration(file) : null;
     }
 
-    public PropertiesConfiguration getObjectProperties(Integer objectId) throws ConfigurationException
+    public PropertiesConfiguration getObjectProperties(Long objectId) throws ConfigurationException
     {
         return getObjectProperties("objects", objectId);
     }
 
-    public PropertiesConfiguration getObjectProperties(String folder, Integer objectId) throws ConfigurationException
+    public PropertiesConfiguration getObjectProperties(String folder, Long objectId) throws ConfigurationException
     {
-        int id;
+        long id;
         if (objectId != null) {
-            id = (Integer) objectId;
+            id = (Long) objectId;
         } else {
             return null;
         }
@@ -905,23 +905,23 @@ public class ConfluenceXMLPackage
         return new PropertiesConfiguration(file);
     }
 
-    public PropertiesConfiguration getUserProperties(Integer userId) throws ConfigurationException
+    public PropertiesConfiguration getUserProperties(Long userId) throws ConfigurationException
     {
         return getObjectProperties("users", userId);
     }
 
-    public Collection<Integer> getUsers()
+    public Collection<Long> getUsers()
     {
         File folder = getUsersFolder();
 
-        Collection<Integer> users;
+        Collection<Long> users;
         if (folder.exists()) {
             String[] userFolders = folder.list();
 
             users = new TreeSet<>();
             for (String userIdString : userFolders) {
-                if (NumberUtils.isNumber(userIdString)) {
-                    users.add(Integer.valueOf(userIdString));
+                if (NumberUtils.isCreatable(userIdString)) {
+                    users.add(Long.valueOf(userIdString));
                 }
             }
         } else {
@@ -931,18 +931,18 @@ public class ConfluenceXMLPackage
         return users;
     }
 
-    public Collection<Integer> getGroups()
+    public Collection<Long> getGroups()
     {
         File folder = getGroupsFolder();
 
-        Collection<Integer> groups;
+        Collection<Long> groups;
         if (folder.exists()) {
             String[] groupFolders = folder.list();
 
             groups = new TreeSet<>();
             for (String groupIdString : groupFolders) {
-                if (NumberUtils.isNumber(groupIdString)) {
-                    groups.add(Integer.valueOf(groupIdString));
+                if (NumberUtils.isCreatable(groupIdString)) {
+                    groups.add(Long.valueOf(groupIdString));
                 }
             }
         } else {
@@ -952,19 +952,19 @@ public class ConfluenceXMLPackage
         return groups;
     }
 
-    public PropertiesConfiguration getGroupProperties(Integer groupId) throws ConfigurationException
+    public PropertiesConfiguration getGroupProperties(Long groupId) throws ConfigurationException
     {
         return getObjectProperties("groups", groupId);
     }
 
-    public PropertiesConfiguration getAttachmentProperties(int pageId, int attachmentId) throws ConfigurationException
+    public PropertiesConfiguration getAttachmentProperties(long pageId, long attachmentId) throws ConfigurationException
     {
         File file = getAttachmentPropertiesFile(pageId, attachmentId);
 
         return new PropertiesConfiguration(file);
     }
 
-    public PropertiesConfiguration getSpacePermissionProperties(int spaceId, int permissionId)
+    public PropertiesConfiguration getSpacePermissionProperties(long spaceId, long permissionId)
         throws ConfigurationException
     {
         File file = getSpacePermissionPropertiesFile(spaceId, permissionId);
@@ -972,28 +972,28 @@ public class ConfluenceXMLPackage
         return new PropertiesConfiguration(file);
     }
 
-    public PropertiesConfiguration getSpaceProperties(int spaceId) throws ConfigurationException
+    public PropertiesConfiguration getSpaceProperties(long spaceId) throws ConfigurationException
     {
         File file = getSpacePropertiesFile(spaceId);
 
         return new PropertiesConfiguration(file);
     }
 
-    private void savePageProperties(PropertiesConfiguration properties, int pageId) throws ConfigurationException
+    private void savePageProperties(PropertiesConfiguration properties, long pageId) throws ConfigurationException
     {
-        PropertiesConfiguration fileProperties = getPageProperties(pageId);
+        PropertiesConfiguration fileProperties = getPageProperties(pageId, true);
 
         fileProperties.copy(properties);
 
         fileProperties.save();
     }
 
-    private void saveObjectProperties(PropertiesConfiguration properties, int objectId) throws ConfigurationException
+    private void saveObjectProperties(PropertiesConfiguration properties, long objectId) throws ConfigurationException
     {
         saveObjectProperties("objects", properties, objectId);
     }
 
-    private void saveObjectProperties(String folder, PropertiesConfiguration properties, int objectId)
+    private void saveObjectProperties(String folder, PropertiesConfiguration properties, long objectId)
         throws ConfigurationException
     {
         PropertiesConfiguration fileProperties = getObjectProperties(folder, objectId);
@@ -1003,7 +1003,7 @@ public class ConfluenceXMLPackage
         fileProperties.save();
     }
 
-    private void saveAttachmentProperties(PropertiesConfiguration properties, int pageId, int attachmentId)
+    private void saveAttachmentProperties(PropertiesConfiguration properties, long pageId, long attachmentId)
         throws ConfigurationException
     {
         PropertiesConfiguration fileProperties = getAttachmentProperties(pageId, attachmentId);
@@ -1013,7 +1013,7 @@ public class ConfluenceXMLPackage
         fileProperties.save();
     }
 
-    private void saveSpacePermissionsProperties(PropertiesConfiguration properties, int spaceId, int permissionId)
+    private void saveSpacePermissionsProperties(PropertiesConfiguration properties, long spaceId, long permissionId)
         throws ConfigurationException
     {
         PropertiesConfiguration fileProperties = getSpacePermissionProperties(spaceId, permissionId);
@@ -1023,7 +1023,7 @@ public class ConfluenceXMLPackage
         fileProperties.save();
     }
 
-    private void saveSpaceProperties(PropertiesConfiguration properties, int spaceId) throws ConfigurationException
+    private void saveSpaceProperties(PropertiesConfiguration properties, long spaceId) throws ConfigurationException
     {
         PropertiesConfiguration fileProperties = getSpaceProperties(spaceId);
 
@@ -1042,7 +1042,7 @@ public class ConfluenceXMLPackage
         return this.descriptor;
     }
 
-    public File getAttachmentFile(int pageId, int attachmentId, int version) throws FileNotFoundException
+    public File getAttachmentFile(long pageId, long attachmentId, long version) throws FileNotFoundException
     {
         File attachmentsFolder = new File(this.directory, "attachments");
         File attachmentsPageFolder = new File(attachmentsFolder, String.valueOf(pageId));
@@ -1086,28 +1086,28 @@ public class ConfluenceXMLPackage
         return attachmentName;
     }
 
-    public Integer getAttachementVersion(PropertiesConfiguration attachmentProperties)
+    public Long getAttachementVersion(PropertiesConfiguration attachmentProperties)
     {
-        Integer version = getInteger(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_VERSION, null);
+        Long version = getLong(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_VERSION, null);
         if (version == null) {
-            version = getInteger(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_ATTACHMENTVERSION, null);
+            version = getLong(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_ATTACHMENTVERSION, null);
         }
 
         return version;
     }
 
-    public int getAttachmentOriginalVersionId(PropertiesConfiguration attachmentProperties, int def)
+    public long getAttachmentOriginalVersionId(PropertiesConfiguration attachmentProperties, long def)
     {
-        Integer originalRevisionId =
-            getInteger(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_ORIGINALVERSIONID, null);
+        Long originalRevisionId =
+            getLong(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_ORIGINALVERSIONID, null);
         return originalRevisionId != null ? originalRevisionId
-            : getInteger(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_ORIGINALVERSION, def);
+            : getLong(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_ORIGINALVERSION, def);
     }
 
-    public Integer getInteger(PropertiesConfiguration properties, String key, Integer def)
+    public Long getLong(PropertiesConfiguration properties, String key, Long def)
     {
         try {
-            return properties.getInteger(key, def);
+            return properties.getLong(key, def);
         } catch (Exception e) {
             // Usually mean the field does not have the expected format
 

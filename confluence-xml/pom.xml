@@ -108,6 +108,7 @@
             <configuration>
               <excludes>
                 org/xwiki/contrib/confluence/filter/internal/ConfluenceXMLPackage.java,
+                org/xwiki/contrib/confluence/filter/internal/input/ConfluenceConverterListener.java,
                 org/xwiki/contrib/confluence/filter/internal/input/ConfluenceInputFilterStream.java
               </excludes>
             </configuration>

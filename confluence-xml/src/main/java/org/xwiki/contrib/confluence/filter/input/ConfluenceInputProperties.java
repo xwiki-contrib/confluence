@@ -19,6 +19,8 @@
  */
 package org.xwiki.contrib.confluence.filter.input;
 
+import java.net.URL;
+import java.util.List;
 import java.util.Locale;
 
 import org.xwiki.filter.DefaultFilterStreamProperties;
@@ -54,6 +56,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @see #getSpacePageName()
      */
     private String spacePageName = "WebHome";
+
+    /**
+     * @see #getBaseURLs()
+     */
+    private List<URL> baseURLs;
 
     /**
      * @return The source to load the wiki from
@@ -127,5 +134,26 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setSpacePageName(String spacePageName)
     {
         this.spacePageName = spacePageName;
+    }
+
+    /**
+     * @return the base URLs
+     * @since 9.1
+     */
+    @PropertyName("Base URLs")
+    @PropertyDescription("The list of base URLs leading to the Confluence instance."
+        + " They are used to convert wrongly entered absoulte URL into wiki links.")
+    public List<URL> getBaseURLs()
+    {
+        return this.baseURLs;
+    }
+
+    /**
+     * @param baseURLs the base URLs
+     * @since 9.1
+     */
+    public void setBaseURLs(List<URL> baseURLs)
+    {
+        this.baseURLs = baseURLs;
     }
 }

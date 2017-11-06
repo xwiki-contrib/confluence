@@ -18,8 +18,7 @@
     <property name="creationDate">2014-07-29 21:11:24.000</property>
     <property name="lastModifierName"><![CDATA[408010]]></property>
     <property name="lastModificationDate">2016-04-14 17:59:20.000</property>
-    <property name="versionComment"><![CDATA[comment 3]]>
-    </property>
+    <property name="versionComment"><![CDATA[comment 3]]></property>
     <collection name="historicalVersions" class="java.util.Collection">
       <element class="Page" package="com.atlassian.confluence.pages">
         <id name="id">123241619</id>
@@ -43,8 +42,7 @@
     <property name="creationDate">2014-07-29 21:11:24.000</property>
     <property name="lastModifierName"><![CDATA[496262]]></property>
     <property name="lastModificationDate">2015-06-08 13:44:07.000</property>
-    <property name="versionComment"><![CDATA[comment 1]]>
-    </property>
+    <property name="versionComment"><![CDATA[comment 1]]></property>
     <property name="originalVersion" class="Page"
       package="com.atlassian.confluence.pages">
       <id name="id">95917606</id>
@@ -73,8 +71,7 @@
     <property name="creationDate">2014-07-29 21:11:24.000</property>
     <property name="lastModifierName"><![CDATA[496262]]></property>
     <property name="lastModificationDate">2015-06-18 18:37:41.000</property>
-    <property name="versionComment"><![CDATA[comment 2]]>
-    </property>
+    <property name="versionComment"><![CDATA[comment 2]]></property>
     <property name="originalVersion" class="Page"
       package="com.atlassian.confluence.pages">
       <id name="id">95917606</id>

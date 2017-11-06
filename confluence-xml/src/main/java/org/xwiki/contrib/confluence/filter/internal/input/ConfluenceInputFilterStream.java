@@ -100,7 +100,7 @@ public class ConfluenceInputFilterStream
         }
 
         // Generate users events
-        for (int userInt : this.confluencePackage.getUsers()) {
+        for (long userInt : this.confluencePackage.getUsers()) {
             PropertiesConfiguration userProperties;
             try {
                 userProperties = this.confluencePackage.getUserProperties(userInt);
@@ -145,7 +145,7 @@ public class ConfluenceInputFilterStream
         }
 
         // Generate users events
-        for (int groupInt : this.confluencePackage.getGroups()) {
+        for (long groupInt : this.confluencePackage.getGroups()) {
             PropertiesConfiguration groupProperties;
             try {
                 groupProperties = this.confluencePackage.getGroupProperties(groupInt);
@@ -180,9 +180,9 @@ public class ConfluenceInputFilterStream
 
             // Members users
             if (groupProperties.containsKey(ConfluenceXMLPackage.KEY_GROUP_MEMBERUSERS)) {
-                List<Integer> users =
-                    this.confluencePackage.getIntegertList(groupProperties, ConfluenceXMLPackage.KEY_GROUP_MEMBERUSERS);
-                for (Integer memberInt : users) {
+                List<Long> users =
+                    this.confluencePackage.getLongList(groupProperties, ConfluenceXMLPackage.KEY_GROUP_MEMBERUSERS);
+                for (Long memberInt : users) {
                     FilterEventParameters memberParameters = new FilterEventParameters();
 
                     try {
@@ -202,9 +202,9 @@ public class ConfluenceInputFilterStream
 
             // Members groups
             if (groupProperties.containsKey(ConfluenceXMLPackage.KEY_GROUP_MEMBERGROUPS)) {
-                List<Integer> groups = this.confluencePackage.getIntegertList(groupProperties,
-                    ConfluenceXMLPackage.KEY_GROUP_MEMBERGROUPS);
-                for (Integer memberInt : groups) {
+                List<Long> groups =
+                    this.confluencePackage.getLongList(groupProperties, ConfluenceXMLPackage.KEY_GROUP_MEMBERGROUPS);
+                for (Long memberInt : groups) {
                     FilterEventParameters memberParameters = new FilterEventParameters();
 
                     try {
@@ -231,8 +231,8 @@ public class ConfluenceInputFilterStream
         }
 
         // Generate documents events
-        for (Map.Entry<Integer, List<Integer>> entry : this.confluencePackage.getPages().entrySet()) {
-            int spaceId = entry.getKey();
+        for (Map.Entry<Long, List<Long>> entry : this.confluencePackage.getPages().entrySet()) {
+            long spaceId = entry.getKey();
 
             PropertiesConfiguration spaceProperties;
             try {
@@ -248,13 +248,13 @@ public class ConfluenceInputFilterStream
             proxyFilter.beginWikiSpace(spaceName, spaceParameters);
 
             // Main page
-            Integer descriptionId = spaceProperties.getInteger(ConfluenceXMLPackage.KEY_SPACE_DESCRIPTION, null);
+            Long descriptionId = spaceProperties.getLong(ConfluenceXMLPackage.KEY_SPACE_DESCRIPTION, null);
             if (descriptionId != null) {
                 readPage(descriptionId, filter, proxyFilter);
             }
 
             // Other pages
-            for (int pageId : entry.getValue()) {
+            for (long pageId : entry.getValue()) {
                 readPage(pageId, filter, proxyFilter);
             }
 
@@ -271,9 +271,14 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void readPage(int pageId, Object filter, ConfluenceFilter proxyFilter) throws FilterException
+    private void readPage(long pageId, Object filter, ConfluenceFilter proxyFilter) throws FilterException
     {
         PropertiesConfiguration pageProperties = getPageProperties(pageId);
+
+        if (pageProperties == null) {
+            this.logger.warn("Can't find page with id [{}]", pageId);
+            return;
+        }
 
         String documentName;
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
@@ -324,9 +329,9 @@ public class ConfluenceInputFilterStream
 
         // Revisions
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISIONS)) {
-            List<Integer> revisions =
-                this.confluencePackage.getIntegertList(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISIONS);
-            for (Integer revisionId : revisions) {
+            List<Long> revisions =
+                this.confluencePackage.getLongList(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISIONS);
+            for (Long revisionId : revisions) {
                 readPageRevision(revisionId, filter, proxyFilter);
             }
         }
@@ -341,23 +346,28 @@ public class ConfluenceInputFilterStream
         proxyFilter.endWikiDocument(documentName, documentParameters);
     }
 
-    private PropertiesConfiguration getPageProperties(Integer pageId) throws FilterException
+    private PropertiesConfiguration getPageProperties(Long pageId) throws FilterException
     {
         try {
-            return this.confluencePackage.getPageProperties(pageId);
+            return this.confluencePackage.getPageProperties(pageId, false);
         } catch (ConfigurationException e) {
             throw new FilterException("Failed to get page properties", e);
         }
     }
 
-    private void readPageRevision(Integer pageId, Object filter, ConfluenceFilter proxyFilter) throws FilterException
+    private void readPageRevision(Long pageId, Object filter, ConfluenceFilter proxyFilter) throws FilterException
     {
         PropertiesConfiguration pageProperties = getPageProperties(pageId);
+
+        if (pageProperties == null) {
+            this.logger.warn("Can't find page revision with id [{}]", pageId);
+            return;
+        }
 
         readPageRevision(pageId, pageProperties, filter, proxyFilter);
     }
 
-    private void readPageRevision(int pageId, PropertiesConfiguration pageProperties, Object filter,
+    private void readPageRevision(long pageId, PropertiesConfiguration pageProperties, Object filter,
         ConfluenceFilter proxyFilter) throws FilterException
     {
         String revision = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION);
@@ -433,7 +443,7 @@ public class ConfluenceInputFilterStream
 
             if (this.properties.isConvertToXWiki()) {
                 ConfluenceConverterListener converter = this.converterProvider.get();
-                converter.setWrappedListener(listener);
+                converter.initialize(this.confluencePackage, this.properties, listener);
                 listener = converter;
             }
 
@@ -455,7 +465,7 @@ public class ConfluenceInputFilterStream
 
         // Attachments
         Map<String, PropertiesConfiguration> pageAttachments = new LinkedHashMap<>();
-        for (int attachmentId : this.confluencePackage.getAttachments(pageId)) {
+        for (long attachmentId : this.confluencePackage.getAttachments(pageId)) {
             PropertiesConfiguration attachmentProperties;
             try {
                 attachmentProperties = this.confluencePackage.getAttachmentProperties(pageId, attachmentId);
@@ -467,8 +477,8 @@ public class ConfluenceInputFilterStream
 
             PropertiesConfiguration currentAttachmentProperties = pageAttachments.get(attachmentName);
             if (currentAttachmentProperties != null) {
-                int version = this.confluencePackage.getAttachementVersion(attachmentProperties);
-                int currentVersion = this.confluencePackage.getAttachementVersion(currentAttachmentProperties);
+                long version = this.confluencePackage.getAttachementVersion(attachmentProperties);
+                long currentVersion = this.confluencePackage.getAttachementVersion(currentAttachmentProperties);
 
                 if (version > currentVersion) {
                     pageAttachments.put(attachmentName, attachmentProperties);
@@ -486,7 +496,7 @@ public class ConfluenceInputFilterStream
         proxyFilter.endWikiDocumentRevision(revision, documentRevisionParameters);
     }
 
-    private void readAttachment(int pageId, PropertiesConfiguration attachmentProperties, Object filter,
+    private void readAttachment(long pageId, PropertiesConfiguration attachmentProperties, Object filter,
         ConfluenceFilter proxyFilter) throws FilterException
     {
         String contentStatus = attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTSTATUS, null);
@@ -495,7 +505,7 @@ public class ConfluenceInputFilterStream
             return;
         }
 
-        int attachmentId = attachmentProperties.getInt("id");
+        long attachmentId = attachmentProperties.getInt("id");
 
         String attachmentName = this.confluencePackage.getAttachmentName(attachmentProperties);
 
@@ -517,9 +527,9 @@ public class ConfluenceInputFilterStream
             }
         }
 
-        Integer version = this.confluencePackage.getAttachementVersion(attachmentProperties);
+        Long version = this.confluencePackage.getAttachementVersion(attachmentProperties);
 
-        int originalRevisionId =
+        long originalRevisionId =
             this.confluencePackage.getAttachmentOriginalVersionId(attachmentProperties, attachmentId);
         File contentFile;
         try {

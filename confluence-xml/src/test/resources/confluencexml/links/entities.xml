@@ -25,9 +25,16 @@
     <property name="body">
       <![CDATA[
         <p>
-          <ac:macro ac:name="anchor">
-            <ac:default-parameter>name</ac:default-parameter>
-          </ac:macro>
+          <a href="https://baseurl1.com/display/OtherSpace/OtherPage?param=value#anchor"><span param="value">link1</span></a>
+        </p>
+        <p>
+          <a href="https://baseurl2.com/pages/viewpage.action?pageId=11&amp;param=value#anchor"><span param="value">link2</span></a>
+        </p>
+        <p>
+          <a href="https://baseurl3.com/download/attachments/11/attachment.png?param=value#anchor"><span param="value">link3</span></a>
+        </p>
+        <p>
+          <a href="https://baseurl4.com/images/icons/emoticons/icon.png?param=value#anchor"><span param="value">link4</span></a>
         </p>
       ]]>
     </property>
@@ -36,6 +43,21 @@
       <id name="id">10</id>
     </property>
     <property name="bodyType">2</property>
+  </object>
+
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">101</id>
+    <property name="name"><![CDATA[OtherSpace]]></property>
+    <property name="key"><![CDATA[OtherSpace]]></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">11</id>
+    <property name="space" class="Space"
+      package="com.atlassian.confluence.spaces">
+      <id name="id">101</id>
+    </property>
+    <property name="title"><![CDATA[OtherPage]]></property>
   </object>
 
 </hibernate-generic>
