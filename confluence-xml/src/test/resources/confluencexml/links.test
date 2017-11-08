@@ -70,6 +70,36 @@
                 <word>link1</word>
               </format>
             </link>
+            <space></space>
+            <link>
+              <p>
+                <reference>
+                  <isTyped>true</isTyped>
+                  <reference>OtherSpace.OtherPage</reference>
+                  <type>
+                    <scheme>doc</scheme>
+                  </type>
+                  <parameters></parameters>
+                </reference>
+                <parameters>
+                  <entry>
+                    <string>shape</string>
+                    <string>rect</string>
+                  </entry>
+                </parameters>
+              </p>
+              <format>
+                <p>
+                  <parameters>
+                    <entry>
+                      <string>param</string>
+                      <string>value</string>
+                    </entry>
+                  </parameters>
+                </p>
+                <word>link1</word>
+              </format>
+            </link>
           </paragraph>
           <paragraph>
             <link>
@@ -90,6 +120,36 @@
                       <string>anchor</string>
                     </entry>
                   </parameters>
+                </reference>
+                <parameters>
+                  <entry>
+                    <string>shape</string>
+                    <string>rect</string>
+                  </entry>
+                </parameters>
+              </p>
+              <format>
+                <p>
+                  <parameters>
+                    <entry>
+                      <string>param</string>
+                      <string>value</string>
+                    </entry>
+                  </parameters>
+                </p>
+                <word>link2</word>
+              </format>
+            </link>
+            <space></space>
+            <link>
+              <p>
+                <reference>
+                  <isTyped>true</isTyped>
+                  <reference>OtherSpace.OtherPage</reference>
+                  <type>
+                    <scheme>doc</scheme>
+                  </type>
+                  <parameters></parameters>
                 </reference>
                 <parameters>
                   <entry>
@@ -150,8 +210,68 @@
                 <word>link3</word>
               </format>
             </link>
+            <space></space>
+            <link>
+              <p>
+                <reference>
+                  <isTyped>true</isTyped>
+                  <reference>OtherSpace.OtherPage@attachment.png</reference>
+                  <type>
+                    <scheme>attach</scheme>
+                  </type>
+                  <parameters></parameters>
+                </reference>
+                <parameters>
+                  <entry>
+                    <string>shape</string>
+                    <string>rect</string>
+                  </entry>
+                </parameters>
+              </p>
+              <format>
+                <p>
+                  <parameters>
+                    <entry>
+                      <string>param</string>
+                      <string>value</string>
+                    </entry>
+                  </parameters>
+                </p>
+                <word>link3</word>
+              </format>
+            </link>
           </paragraph>
           <paragraph>
+            <link>
+              <p>
+                <reference>
+                  <isTyped>true</isTyped>
+                  <reference>icon</reference>
+                  <type>
+                    <scheme>icon</scheme>
+                  </type>
+                  <parameters></parameters>
+                </reference>
+                <parameters>
+                  <entry>
+                    <string>shape</string>
+                    <string>rect</string>
+                  </entry>
+                </parameters>
+              </p>
+              <format>
+                <p>
+                  <parameters>
+                    <entry>
+                      <string>param</string>
+                      <string>value</string>
+                    </entry>
+                  </parameters>
+                </p>
+                <word>link4</word>
+              </format>
+            </link>
+            <space></space>
             <link>
               <p>
                 <reference>

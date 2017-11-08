@@ -107,6 +107,10 @@ public class ConfluenceConverterListener extends WrappingListener
 
     private List<String[]> parseURLParameters(String queryString)
     {
+        if (queryString == null) {
+            return null;
+        }
+
         String[] elements = StringUtils.split(queryString, '&');
 
         List<String[]> parameters = new ArrayList<>(elements.length);

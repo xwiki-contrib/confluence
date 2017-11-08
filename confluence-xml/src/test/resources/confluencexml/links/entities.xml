@@ -26,15 +26,19 @@
       <![CDATA[
         <p>
           <a href="https://baseurl1.com/display/OtherSpace/OtherPage?param=value#anchor"><span param="value">link1</span></a>
+          <a href="https://baseurl1.com/display/OtherSpace/OtherPage"><span param="value">link1</span></a>
         </p>
         <p>
           <a href="https://baseurl2.com/pages/viewpage.action?pageId=11&amp;param=value#anchor"><span param="value">link2</span></a>
+          <a href="https://baseurl2.com/pages/viewpage.action?pageId=11"><span param="value">link2</span></a>
         </p>
         <p>
           <a href="https://baseurl3.com/download/attachments/11/attachment.png?param=value#anchor"><span param="value">link3</span></a>
+          <a href="https://baseurl3.com/download/attachments/11/attachment.png"><span param="value">link3</span></a>
         </p>
         <p>
           <a href="https://baseurl4.com/images/icons/emoticons/icon.png?param=value#anchor"><span param="value">link4</span></a>
+          <a href="https://baseurl4.com/images/icons/emoticons/icon.png"><span param="value">link4</span></a>
         </p>
       ]]>
     </property>
