@@ -19,8 +19,11 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.input;
 
+import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -65,12 +68,14 @@ public class ConfluenceConverterListener extends WrappingListener
 {
     private static final Pattern PATTERN_URL_DISPLAY = Pattern.compile("^/display/(.+)/([^\\?#]+)(\\?.*)?$");
 
-    private static final Pattern PATTERN_URL_VIEWPAGE = Pattern.compile("^/pages/viewpage.action\\?pageId=(\\d+)(&.*)?$");
+    private static final Pattern PATTERN_URL_VIEWPAGE =
+        Pattern.compile("^/pages/viewpage.action\\?pageId=(\\d+)(&.*)?$");
 
     private static final Pattern PATTERN_URL_ATTACHMENT =
         Pattern.compile("^/download/attachments/(\\d+)/([^\\?#]+)(\\?.*)?$");
 
-    private static final Pattern PATTERN_URL_EMOTICON = Pattern.compile("^/images/icons/emoticons/([^\\?#]+)(\\....)(\\?.*)?$");
+    private static final Pattern PATTERN_URL_EMOTICON =
+        Pattern.compile("^/images/icons/emoticons/([^\\?#]+)(\\....)(\\?.*)?$");
 
     @Inject
     private MacroConverter macroConverter;
@@ -275,12 +280,23 @@ public class ConfluenceConverterListener extends WrappingListener
         }
     }
 
+    private String decode(String encoded)
+    {
+        try {
+            return URLDecoder.decode(encoded, StandardCharsets.UTF_8.toString());
+        } catch (UnsupportedEncodingException e) {
+            // If this happen we are is big trouble...
+            throw new RuntimeException(e);
+        }
+    }
+
     private ResourceReference fixReference(String pattern, List<String[]> urlParameters, String urlAnchor)
     {
         // Try /display
         Matcher matcher = PATTERN_URL_DISPLAY.matcher(pattern);
         if (matcher.matches()) {
-            LocalDocumentReference documentReference = new LocalDocumentReference(matcher.group(1), matcher.group(2));
+            LocalDocumentReference documentReference =
+                new LocalDocumentReference(decode(matcher.group(1)), decode(matcher.group(2)));
 
             return createDocumentResourceReference(documentReference, urlParameters, urlAnchor);
         }
@@ -314,7 +330,7 @@ public class ConfluenceConverterListener extends WrappingListener
             }
 
             EntityReference attachmentReference =
-                new EntityReference(matcher.group(2), EntityType.ATTACHMENT, documentReference);
+                new EntityReference(decode(matcher.group(2)), EntityType.ATTACHMENT, documentReference);
 
             return createAttachmentResourceReference(attachmentReference, urlParameters, urlAnchor);
         }
@@ -322,7 +338,7 @@ public class ConfluenceConverterListener extends WrappingListener
         // emoticons
         matcher = PATTERN_URL_EMOTICON.matcher(pattern);
         if (matcher.matches()) {
-            return new ResourceReference(matcher.group(1), ResourceType.ICON);
+            return new ResourceReference(decode(matcher.group(1)), ResourceType.ICON);
         }
 
         return null;

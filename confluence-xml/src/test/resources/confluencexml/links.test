@@ -36,7 +36,7 @@
               <p>
                 <reference>
                   <isTyped>true</isTyped>
-                  <reference>OtherSpace.OtherPage</reference>
+                  <reference>Other Space.Other Page</reference>
                   <type>
                     <scheme>doc</scheme>
                   </type>
@@ -75,7 +75,7 @@
               <p>
                 <reference>
                   <isTyped>true</isTyped>
-                  <reference>OtherSpace.OtherPage</reference>
+                  <reference>Other Space.Other Page</reference>
                   <type>
                     <scheme>doc</scheme>
                   </type>
@@ -106,7 +106,7 @@
               <p>
                 <reference>
                   <isTyped>true</isTyped>
-                  <reference>OtherSpace.OtherPage</reference>
+                  <reference>Other Space.Other Page</reference>
                   <type>
                     <scheme>doc</scheme>
                   </type>
@@ -145,7 +145,7 @@
               <p>
                 <reference>
                   <isTyped>true</isTyped>
-                  <reference>OtherSpace.OtherPage</reference>
+                  <reference>Other Space.Other Page</reference>
                   <type>
                     <scheme>doc</scheme>
                   </type>
@@ -176,7 +176,7 @@
               <p>
                 <reference>
                   <isTyped>true</isTyped>
-                  <reference>OtherSpace.OtherPage@attachment.png</reference>
+                  <reference>Other Space.Other Page@attachment.png</reference>
                   <type>
                     <scheme>attach</scheme>
                   </type>
@@ -215,7 +215,7 @@
               <p>
                 <reference>
                   <isTyped>true</isTyped>
-                  <reference>OtherSpace.OtherPage@attachment.png</reference>
+                  <reference>Other Space.Other Page@attachment.png</reference>
                   <type>
                     <scheme>attach</scheme>
                   </type>
@@ -307,15 +307,15 @@
     </wikiDocumentLocale>
   </wikiDocument>
 </wikiSpace>
-<wikiSpace name="OtherSpace">
-  <wikiDocument name="OtherPage">
+<wikiSpace name="Other Space">
+  <wikiDocument name="Other Page">
     <wikiDocumentLocale>
       <wikiDocumentRevision>
         <p>
           <parameters>
             <entry>
               <string>title</string>
-              <string>OtherPage</string>
+              <string>Other Page</string>
             </entry>
           </parameters>
         </p>

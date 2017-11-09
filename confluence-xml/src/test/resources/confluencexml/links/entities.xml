@@ -25,8 +25,8 @@
     <property name="body">
       <![CDATA[
         <p>
-          <a href="https://baseurl1.com/display/OtherSpace/OtherPage?param=value#anchor"><span param="value">link1</span></a>
-          <a href="https://baseurl1.com/display/OtherSpace/OtherPage"><span param="value">link1</span></a>
+          <a href="https://baseurl1.com/display/Other+Space/Other+Page?param=value#anchor"><span param="value">link1</span></a>
+          <a href="https://baseurl1.com/display/Other+Space/Other+Page"><span param="value">link1</span></a>
         </p>
         <p>
           <a href="https://baseurl2.com/pages/viewpage.action?pageId=11&amp;param=value#anchor"><span param="value">link2</span></a>
@@ -51,8 +51,8 @@
 
   <object class="Space" package="com.atlassian.confluence.spaces">
     <id name="id">101</id>
-    <property name="name"><![CDATA[OtherSpace]]></property>
-    <property name="key"><![CDATA[OtherSpace]]></property>
+    <property name="name"><![CDATA[Other Space]]></property>
+    <property name="key"><![CDATA[Other Space]]></property>
   </object>
 
   <object class="Page" package="com.atlassian.confluence.pages">
@@ -61,7 +61,7 @@
       package="com.atlassian.confluence.spaces">
       <id name="id">101</id>
     </property>
-    <property name="title"><![CDATA[OtherPage]]></property>
+    <property name="title"><![CDATA[Other Page]]></property>
   </object>
 
 </hibernate-generic>
