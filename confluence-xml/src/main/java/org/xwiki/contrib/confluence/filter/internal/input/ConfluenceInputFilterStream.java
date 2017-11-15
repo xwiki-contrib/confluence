@@ -277,6 +277,7 @@ public class ConfluenceInputFilterStream
 
         if (pageProperties == null) {
             this.logger.warn("Can't find page with id [{}]", pageId);
+
             return;
         }
 
@@ -285,6 +286,12 @@ public class ConfluenceInputFilterStream
             documentName = this.properties.getSpacePageName();
         } else {
             documentName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
+        }
+
+        if (StringUtils.isEmpty(documentName)) {
+            this.logger.warn("Found a page without name of title (id={}). Skipping it.", pageId);
+
+            return;
         }
 
         FilterEventParameters documentParameters = new FilterEventParameters();

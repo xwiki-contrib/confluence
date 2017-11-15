@@ -40,6 +40,8 @@
     <xwiki.extension.features>
       org.xwiki.platform:xwiki-platform-filter-stream-confluencexml
     </xwiki.extension.features>
+
+    <xwiki.surefire.captureconsole.skip>true</xwiki.surefire.captureconsole.skip>
   </properties>
   <dependencies>
     <dependency>
