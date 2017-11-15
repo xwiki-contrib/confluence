@@ -8,6 +8,7 @@
 beginDocument
 beginParagraph
 beginLink [Typed = [true] Type = [doc] Reference = [] Parameters = [[anchor] = [anchor]]] [false]
+onWord [anchor]
 endLink [Typed = [true] Type = [doc] Reference = [] Parameters = [[anchor] = [anchor]]] [false]
 endParagraph
 endDocument

@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import org.apache.commons.lang3.StringUtils;
 import org.xwiki.rendering.wikimodel.WikiParameter;
 import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
@@ -76,6 +77,12 @@ public class LinkTagHandler extends TagHandler implements ConfluenceTagHandler
     {
         ConfluenceLinkWikiReference link =
             (ConfluenceLinkWikiReference) context.getTagStack().popStackParameter(CONFLUENCE_CONTAINER);
+
+        // Make sure to have a label for local anchors
+        if (StringUtils.isNotEmpty(link.getAnchor()) && link.getLabel() == null && link.getPage() == null
+            && link.getSpace() == null && link.getUser() == null && link.getAttachment() == null) {
+            link.setLabel(link.getAnchor());
+        }
 
         context.getScannerContext().onReference(link);
     }
