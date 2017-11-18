@@ -543,7 +543,7 @@ public class ConfluenceInputFilterStream
             contentFile = this.confluencePackage.getAttachmentFile(pageId, originalRevisionId, version);
         } catch (FileNotFoundException e) {
             throw new FilterException(
-                String.format("Filed to find file corresponding to version [%s] attachment [%s] in page [%s]", version,
+                String.format("Failed to find file corresponding to version [%s] attachment [%s] in page [%s]", version,
                     attachmentName, pageId),
                 e);
         }
