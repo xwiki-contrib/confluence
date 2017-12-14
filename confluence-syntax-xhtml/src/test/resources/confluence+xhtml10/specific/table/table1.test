@@ -1,0 +1,59 @@
+.#-----------------------------------------------------
+.input|confluence+xhtml/1.0
+.# Make sure a group is put inside each table cell to be safe
+.#-----------------------------------------------------
+<table>
+  <tbody>
+    <tr>
+      <th>
+        <pre>
+          th line 1
+
+
+          th line 2
+        </pre>
+      </th>
+    </tr>
+    <tr>
+      <td>
+        <pre>
+          td line 1
+
+
+          td line 2
+        </pre>
+      </td>
+    </tr>
+  </tbody>
+</table>
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+beginTable
+beginTableRow
+beginTableHeadCell
+beginGroup
+onVerbatim [
+          th line 1
+
+
+          th line 2
+        ] [false]
+endGroup
+endTableHeadCell
+endTableRow
+beginTableRow
+beginTableCell
+beginGroup
+onVerbatim [
+          td line 1
+
+
+          td line 2
+        ] [false]
+endGroup
+endTableCell
+endTableRow
+endTable
+endDocument

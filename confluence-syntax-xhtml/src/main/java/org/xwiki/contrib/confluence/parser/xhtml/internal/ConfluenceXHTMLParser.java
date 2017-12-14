@@ -36,13 +36,15 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXW
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.DefaultMacroParameterTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ImageTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.LinkTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroParameterTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.PageTagHandler;
-import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroParameterTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.PlainTextBodyTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.PlainTextLinkBodyTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.RichTextBodyTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.SpaceTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TableCellTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TableHeadTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.URLTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.UserTagHandler;
 import org.xwiki.rendering.internal.parser.wikimodel.AbstractWikiModelParser;
@@ -81,8 +83,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
      * The parser used for the link label parsing. For (x)html parsing, this will be an xwiki 2.0 parser, since it's
      * more convenient to pass link labels in xwiki syntax. See referred resource for more details.
      *
-     * @see XWikiCommentHandler#handleLinkCommentStop(String,
-     *      org.xwiki.rendering.wikimodel.xhtml.impl.TagStack)
+     * @see XWikiCommentHandler#handleLinkCommentStop(String, org.xwiki.rendering.wikimodel.xhtml.impl.TagStack)
      */
     @Inject
     @Named("xdom+xml/current")
@@ -159,6 +160,9 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
 
         handlers.put("ri:attachment", new AttachmentTagHandler());
 
+        handlers.put("th", new TableHeadTagHandler());
+        handlers.put("td", new TableCellTagHandler());
+
         parser.setExtraHandlers(handlers);
 
         return parser;
@@ -178,9 +182,8 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         content = "<void>" + content + "</void>";
 
         // Add XHTML entities
-        content =
-            "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\""
-                + " \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">" + content;
+        content = "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\""
+            + " \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">" + content;
 
         super.parse(new StringReader(content), listener, idGenerator);
     }

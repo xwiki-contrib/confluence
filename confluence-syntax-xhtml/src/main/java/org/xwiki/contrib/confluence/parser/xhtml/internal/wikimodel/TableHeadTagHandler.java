@@ -17,19 +17,32 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.confluence.parser.confluence.internal;
+package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
-import org.junit.runner.RunWith;
-import org.xwiki.rendering.test.integration.RenderingTestSuite;
+import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XWikiTableDataTagHandler;
+import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
- * Run all specific tests found in {@code *.test} files located in the classpath. These {@code *.test} files must follow
- * the conventions described in {@link org.xwiki.rendering.test.integration.TestDataParser}.
- *
+ * Make sure to produce something that won't break xwiki/2.x table. See https://jira.xwiki.org/browse/XRENDERING-488
+ * 
  * @version $Id$
+ * @since 9.1.5
  */
-@RunWith(RenderingTestSuite.class)
-@RenderingTestSuite.Scope(value = "confluence+xhtml10.specific"/*, pattern = "table1.test"*/)
-public class ConfluenceXHTMLSpecificTest
+public class TableHeadTagHandler extends XWikiTableDataTagHandler
 {
+    @Override
+    protected void begin(TagContext context)
+    {
+        super.begin(context);
+
+        beginDocument(context, context.getParams());
+    }
+
+    @Override
+    protected void end(TagContext context)
+    {
+        endDocument(context);
+
+        super.end(context);
+    }
 }
