@@ -29,7 +29,7 @@ import org.xwiki.rendering.test.integration.RenderingTestSuite;
  * @version $Id$
  */
 @RunWith(RenderingTestSuite.class)
-@RenderingTestSuite.Scope(value = "confluence+xhtml10.specific"/*, pattern = "table1.test"*/)
+@RenderingTestSuite.Scope(value = "confluence+xhtml10.specific"/*, pattern = "link9.test"*/)
 public class ConfluenceXHTMLSpecificTest
 {
 }

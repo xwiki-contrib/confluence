@@ -1,0 +1,17 @@
+.#-----------------------------------------------------
+.input|confluence+xhtml/1.0
+.#-----------------------------------------------------
+content <ac:link><ri:space ri:space-key="space" /></ac:link> toto
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+beginParagraph
+onWord [content]
+onSpace
+beginLink [Typed = [true] Type = [doc] Reference = [space.WebHome]] [false]
+endLink [Typed = [true] Type = [doc] Reference = [space.WebHome]] [false]
+onSpace
+onWord [toto]
+endParagraph
+endDocument

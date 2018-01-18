@@ -28,10 +28,14 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.commons.io.IOUtils;
+import org.xml.sax.XMLReader;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXHTMLWhitespaceXMLFilter;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXWikiGeneratorListener;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.DefaultMacroParameterTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ImageTagHandler;
@@ -61,6 +65,8 @@ import org.xwiki.rendering.syntax.Syntax;
 import org.xwiki.rendering.util.IdGenerator;
 import org.xwiki.rendering.wikimodel.IWikiParser;
 import org.xwiki.rendering.wikimodel.xhtml.XhtmlParser;
+import org.xwiki.rendering.wikimodel.xhtml.filter.AccumulationXMLFilter;
+import org.xwiki.rendering.wikimodel.xhtml.filter.DTDXMLFilter;
 import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 
 /**
@@ -165,7 +171,32 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
 
         parser.setExtraHandlers(handlers);
 
+        try {
+            parser.setXmlReader(createXMLReader());
+        } catch (Exception e) {
+            throw new ParseException("Failed to create XMLReader", e);
+        }
+
         return parser;
+    }
+
+    private XMLReader createXMLReader() throws Exception
+    {
+        SAXParserFactory parserFactory = SAXParserFactory.newInstance();
+        SAXParser parser = parserFactory.newSAXParser();
+        XMLReader xmlReader = parser.getXMLReader();
+
+        // Ignore SAX callbacks when the parser parses the DTD
+        DTDXMLFilter dtdFilter = new DTDXMLFilter(xmlReader);
+
+        // Add a XML Filter to accumulate onCharacters() calls since SAX
+        // parser may call it several times.
+        AccumulationXMLFilter accumulationFilter = new AccumulationXMLFilter(dtdFilter);
+
+        // Add a XML Filter to remove non-semantic white spaces. We need to
+        // do that since all WikiModel
+        // events contain only semantic information.
+        return new ConfluenceXHTMLWhitespaceXMLFilter(accumulationFilter);
     }
 
     @Override
