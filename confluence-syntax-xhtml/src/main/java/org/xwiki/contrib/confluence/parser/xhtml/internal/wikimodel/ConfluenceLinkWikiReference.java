@@ -26,14 +26,14 @@ import org.xwiki.rendering.wikimodel.WikiReference;
  * @version $Id$
  * @since 9.0
  */
-public class ConfluenceLinkWikiReference extends WikiReference implements UserContainer, AttachmentContainer,
-    PageContainer, SpaceContainer, LabelContainer
+public class ConfluenceLinkWikiReference extends WikiReference
+    implements UserContainer, AttachmentContainer, PageContainer, SpaceContainer, LabelContainer
 {
     private String anchor;
 
     private ConfluenceAttachment attachment;
 
-    private String page;
+    private String document;
 
     private String space;
 
@@ -89,15 +89,15 @@ public class ConfluenceLinkWikiReference extends WikiReference implements UserCo
         this.space = space;
     }
 
-    public String getPage()
+    public String getDocument()
     {
-        return this.page;
+        return this.document;
     }
 
     @Override
-    public void setPage(String page)
+    public void setDocument(String document)
     {
-        this.page = page;
+        this.document = document;
     }
 
     @Override

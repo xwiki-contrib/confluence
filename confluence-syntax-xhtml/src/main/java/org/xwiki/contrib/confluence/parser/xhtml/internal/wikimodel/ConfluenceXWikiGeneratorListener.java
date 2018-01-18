@@ -21,6 +21,7 @@ package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
 import java.util.Collections;
 
+import org.apache.commons.lang3.StringUtils;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler.ConfluenceAttachment;
 import org.xwiki.rendering.internal.parser.wikimodel.WikiModelParserUtils;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XHTMLXWikiGeneratorListener;
@@ -46,6 +47,18 @@ import org.xwiki.rendering.wikimodel.WikiReference;
  */
 public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListener
 {
+    // Not using model API to not trigger a dependency on platform
+    // TODO: Should probably introduce a component implemented on confluence-xml module side but based on actual model
+    // API this time to be safe at least in this use case
+
+    private static final String[] REPLACE_DOCUMENT_PREVIOUS = new String[] { "\\", "." };
+
+    private static final String[] REPLACE_DOCUMENT_NEXT = new String[] { "\\\\", "\\." };
+
+    private static final String[] REPLACE_SPACE_PREVIOUS = new String[] { "\\", ".", ":" };
+
+    private static final String[] REPLACE_SPACE_NEXT = new String[] { "\\\\", "\\.", "\\:" };
+
     private StreamParser plainParser;
 
     /**
@@ -67,6 +80,16 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         this.plainParser = plainParser;
     }
 
+    private String escapeSpace(String space)
+    {
+        return StringUtils.replaceEach(space, REPLACE_SPACE_PREVIOUS, REPLACE_SPACE_NEXT);
+    }
+
+    private String escapeDocument(String document)
+    {
+        return StringUtils.replaceEach(document, REPLACE_DOCUMENT_PREVIOUS, REPLACE_DOCUMENT_NEXT);
+    }
+
     @Override
     public void onReference(WikiReference reference)
     {
@@ -75,14 +98,14 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
 
             ResourceReference resourceReference = null;
 
-            if (confluenceReference.getPage() != null) {
+            if (confluenceReference.getDocument() != null) {
                 StringBuilder str = new StringBuilder();
                 if (confluenceReference.getSpace() != null) {
-                    str.append(confluenceReference.getSpace());
+                    str.append(escapeSpace(confluenceReference.getSpace()));
                     str.append('.');
                 }
-                if (confluenceReference.getPage() != null) {
-                    str.append(confluenceReference.getPage());
+                if (confluenceReference.getDocument() != null) {
+                    str.append(escapeDocument(confluenceReference.getDocument()));
                 } else if (confluenceReference.getSpace() != null) {
                     str.append("WebHome");
                 }
@@ -96,7 +119,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
                 resourceReference = documentResourceReference;
             } else if (confluenceReference.getSpace() != null) {
                 DocumentResourceReference documentResourceReference =
-                    new DocumentResourceReference(confluenceReference.getSpace() + ".WebHome");
+                    new DocumentResourceReference(escapeSpace(confluenceReference.getSpace()) + ".WebHome");
 
                 if (confluenceReference.getAnchor() != null) {
                     documentResourceReference.setAnchor(confluenceReference.getAnchor());

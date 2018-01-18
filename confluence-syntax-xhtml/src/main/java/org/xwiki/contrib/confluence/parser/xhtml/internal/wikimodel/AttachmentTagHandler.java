@@ -55,7 +55,7 @@ public class AttachmentTagHandler extends TagHandler implements ConfluenceTagHan
         }
 
         @Override
-        public void setPage(String page)
+        public void setDocument(String page)
         {
             this.page = page;
         }

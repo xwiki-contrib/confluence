@@ -40,6 +40,10 @@
           <a href="https://baseurl4.com/images/icons/emoticons/icon.png?param=value#anchor"><span param="value">link4</span></a>
           <a href="https://baseurl4.com/images/icons/emoticons/icon.png"><span param="value">link4</span></a>
         </p>
+        <p>
+          <a href="https://baseurl5.com/spaces/Other+Space/pages/11/Other+Page?param=value#anchor"><span param="value">link5</span></a>
+          <a href="https://baseurl5.com/spaces/Other+Space/pages/11/Other+Page"><span param="value">link5</span></a>
+        </p>
       ]]>
     </property>
     <property name="content" class="Page"

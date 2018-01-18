@@ -79,7 +79,7 @@ public class LinkTagHandler extends TagHandler implements ConfluenceTagHandler
             (ConfluenceLinkWikiReference) context.getTagStack().popStackParameter(CONFLUENCE_CONTAINER);
 
         // Make sure to have a label for local anchors
-        if (StringUtils.isNotEmpty(link.getAnchor()) && link.getLabel() == null && link.getPage() == null
+        if (StringUtils.isNotEmpty(link.getAnchor()) && link.getLabel() == null && link.getDocument() == null
             && link.getSpace() == null && link.getUser() == null && link.getAttachment() == null) {
             link.setLabel(link.getAnchor());
         }

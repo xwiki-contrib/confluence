@@ -71,6 +71,9 @@ public class ConfluenceConverterListener extends WrappingListener
     private static final Pattern PATTERN_URL_VIEWPAGE =
         Pattern.compile("^/pages/viewpage.action\\?pageId=(\\d+)(&.*)?$");
 
+    private static final Pattern PATTERN_URL_SPACES =
+        Pattern.compile("^/spaces/(.+)/pages/\\d+/([^\\?#]+)(\\?.*)?$");
+
     private static final Pattern PATTERN_URL_ATTACHMENT =
         Pattern.compile("^/download/attachments/(\\d+)/([^\\?#]+)(\\?.*)?$");
 
@@ -301,6 +304,16 @@ public class ConfluenceConverterListener extends WrappingListener
             return createDocumentResourceReference(documentReference, urlParameters, urlAnchor);
         }
 
+        // Try /spaces
+
+        matcher = PATTERN_URL_SPACES.matcher(pattern);
+        if (matcher.matches()) {
+            LocalDocumentReference documentReference =
+                new LocalDocumentReference(decode(matcher.group(1)), decode(matcher.group(2)));
+
+            return createDocumentResourceReference(documentReference, urlParameters, urlAnchor);
+        }
+        
         // Try viewpage.action
         matcher = PATTERN_URL_VIEWPAGE.matcher(pattern);
         if (matcher.matches()) {
