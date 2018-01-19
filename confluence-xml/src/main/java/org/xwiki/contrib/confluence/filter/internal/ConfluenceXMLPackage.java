@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -75,6 +76,8 @@ public class ConfluenceXMLPackage
     public static final String FILE_DESCRIPTOR = "exportDescriptor.properties";
 
     public static final String KEY_SPACE_NAME = "name";
+
+    public static final String KEY_SPACE_KEY = "key";
 
     public static final String KEY_SPACE_DESCRIPTION = "description";
 
@@ -246,6 +249,8 @@ public class ConfluenceXMLPackage
 
     private Map<Long, List<Long>> pages = new LinkedHashMap<>();
 
+    private Map<String, Long> spacesByKey = new HashMap<>();
+
     public ConfluenceXMLPackage(InputSource source) throws IOException, FilterException, XMLStreamException,
         FactoryConfigurationError, ConfigurationException, URISyntaxException
     {
@@ -405,7 +410,7 @@ public class ConfluenceXMLPackage
 
             EntityReference spaceReference;
             if (spaceId != currentSpaceId) {
-                spaceReference = new EntityReference(getSpaceName(currentSpaceId), EntityType.SPACE);
+                spaceReference = new EntityReference(getSpaceKey(currentSpaceId), EntityType.SPACE);
             } else {
                 spaceReference = null;
             }
@@ -421,6 +426,27 @@ public class ConfluenceXMLPackage
         PropertiesConfiguration spaceProperties = getSpaceProperties(spaceId);
 
         return spaceProperties.getString(KEY_SPACE_NAME);
+    }
+
+    public static String getSpaceName(PropertiesConfiguration spaceProperties)
+    {
+        String key = spaceProperties.getString(KEY_SPACE_NAME);
+
+        return key != null ? key : spaceProperties.getString(KEY_SPACE_KEY);
+    }
+
+    public String getSpaceKey(long spaceId) throws ConfigurationException
+    {
+        PropertiesConfiguration spaceProperties = getSpaceProperties(spaceId);
+
+        return spaceProperties.getString(KEY_SPACE_KEY);
+    }
+
+    public static String getSpaceKey(PropertiesConfiguration spaceProperties)
+    {
+        String key = spaceProperties.getString(KEY_SPACE_KEY);
+
+        return key != null ? key : spaceProperties.getString(KEY_SPACE_NAME);
     }
 
     public Map<Long, List<Long>> getPages()
@@ -561,11 +587,17 @@ public class ConfluenceXMLPackage
         // Save page
         saveSpaceProperties(properties, spaceId);
 
-        // Register space
+        // Register space by id
         List<Long> spacePages = this.pages.get(spaceId);
         if (spacePages == null) {
             spacePages = new LinkedList<>();
             this.pages.put(spaceId, spacePages);
+        }
+
+        // Register space by key
+        String spaceKey = properties.getString("key");
+        if (spaceKey != null) {
+            this.spacesByKey.put(spaceKey, spaceId);
         }
     }
 

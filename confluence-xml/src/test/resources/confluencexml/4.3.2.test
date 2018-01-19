@@ -137,7 +137,7 @@
     </parameters>
   </p>
 </groupContainer>
-<wikiSpace name="privatespace">
+<wikiSpace name="PRIV">
   <wikiDocument name="WebHome">
     <wikiDocumentLocale>
       <p>
@@ -552,7 +552,7 @@
     </wikiDocumentLocale>
   </wikiDocument>
 </wikiSpace>
-<wikiSpace name="space2">
+<wikiSpace name="SPACE2">
   <wikiDocument name="WebHome">
     <wikiDocumentLocale>
       <p>
@@ -19323,7 +19323,7 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
     </wikiDocumentLocale>
   </wikiDocument>
 </wikiSpace>
-<wikiSpace name="space1">
+<wikiSpace name="SPACE1">
   <wikiDocument name="WebHome">
     <wikiDocumentLocale>
       <p>

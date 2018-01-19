@@ -241,11 +241,11 @@ public class ConfluenceInputFilterStream
                 throw new FilterException("Failed to get space properties", e);
             }
 
-            String spaceName = spaceProperties.getString(ConfluenceXMLPackage.KEY_SPACE_NAME);
+            String spaceKey = ConfluenceXMLPackage.getSpaceKey(spaceProperties);
             FilterEventParameters spaceParameters = new FilterEventParameters();
 
             // > WikiSpace
-            proxyFilter.beginWikiSpace(spaceName, spaceParameters);
+            proxyFilter.beginWikiSpace(spaceKey, spaceParameters);
 
             // Main page
             Long descriptionId = spaceProperties.getLong(ConfluenceXMLPackage.KEY_SPACE_DESCRIPTION, null);
@@ -259,7 +259,7 @@ public class ConfluenceInputFilterStream
             }
 
             // < WikiSpace
-            proxyFilter.endWikiSpace(spaceName, spaceParameters);
+            proxyFilter.endWikiSpace(spaceKey, spaceParameters);
         }
 
         // Cleanup

@@ -6,7 +6,7 @@
 .# XWIKI-9922 - When attachment author/creator is not provided parser send null author/creator
 .# XWIKI-10014 - Failed to import attachments with multiple versions in some version of Confluence
 .#------------------------------------------------------------------------------
-<wikiSpace name="Test XWIKI-9803">
+<wikiSpace name="TestSpace">
   <wikiDocument name="WebHome">
     <wikiDocumentLocale>
       <p>

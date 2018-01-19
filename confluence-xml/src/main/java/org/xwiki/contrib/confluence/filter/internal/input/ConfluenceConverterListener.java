@@ -216,11 +216,11 @@ public class ConfluenceConverterListener extends WrappingListener
 
             Long spaceId = pageProperties.getLong("space", null);
 
-            String spaceName = this.confluencePackage.getSpaceName(spaceId);
+            String spaceKey = this.confluencePackage.getSpaceKey(spaceId);
 
             // Reference
 
-            return new LocalDocumentReference(spaceName, documentName);
+            return new LocalDocumentReference(spaceKey, documentName);
         }
 
         return null;
