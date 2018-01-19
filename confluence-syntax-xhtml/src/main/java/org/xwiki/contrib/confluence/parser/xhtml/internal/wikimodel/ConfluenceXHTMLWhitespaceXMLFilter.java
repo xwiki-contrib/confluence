@@ -25,7 +25,10 @@ import java.util.Set;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+import org.xml.sax.SAXNotRecognizedException;
+import org.xml.sax.SAXNotSupportedException;
 import org.xml.sax.XMLReader;
+import org.xml.sax.ext.LexicalHandler;
 import org.xwiki.rendering.wikimodel.xhtml.filter.XHTMLWhitespaceXMLFilter;
 
 /**
@@ -41,12 +44,26 @@ public class ConfluenceXHTMLWhitespaceXMLFilter extends XHTMLWhitespaceXMLFilter
     private static final Set<String> EMPTYVISIBLE_ELEMENTS =
         new HashSet<>(Arrays.asList("ri:page", "ri:space", "ri:user"));
 
+    private LexicalHandler lexicalHandler;
+
     /**
      * @param reader the XML reader
      */
     public ConfluenceXHTMLWhitespaceXMLFilter(XMLReader reader)
     {
         super(reader);
+    }
+
+    @Override
+    public void setProperty(String name, Object value) throws SAXNotRecognizedException, SAXNotSupportedException
+    {
+        // We save the lexical handler so that we can use it in the
+        // implementation of the LexicalHandler interface methods.
+        if (SAX_LEXICAL_HANDLER_PROPERTY.equals(name)) {
+            this.lexicalHandler = (LexicalHandler) value;
+        } else {
+            super.setProperty(name, value);
+        }
     }
 
     @Override
@@ -72,5 +89,21 @@ public class ConfluenceXHTMLWhitespaceXMLFilter extends XHTMLWhitespaceXMLFilter
         } else {
             super.endElement(uri, localName, qName);
         }
+    }
+
+    @Override
+    public void startCDATA() throws SAXException
+    {
+        startEmptyVisibleElement();
+
+        this.lexicalHandler.startCDATA();
+    }
+
+    @Override
+    public void endCDATA() throws SAXException
+    {
+        endEmptyVisibleElement();
+
+        this.lexicalHandler.endCDATA();
     }
 }

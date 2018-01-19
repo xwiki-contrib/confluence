@@ -1,7 +1,7 @@
 .#-----------------------------------------------------
 .input|confluence+xhtml/1.0
 .#-----------------------------------------------------
-before <ac:link><ri:space ri:space-key="space" /></ac:link> after
+before <ac:link><ri:page ri:content-title="Title"/><ac:plain-text-link-body><![CDATA[cdata]]></ac:plain-text-link-body></ac:link> after
 .#-----------------------------------------------------
 .expect|event/1.0
 .#-----------------------------------------------------
@@ -9,8 +9,9 @@ beginDocument
 beginParagraph
 onWord [before]
 onSpace
-beginLink [Typed = [true] Type = [doc] Reference = [space.WebHome]] [false]
-endLink [Typed = [true] Type = [doc] Reference = [space.WebHome]] [false]
+beginLink [Typed = [true] Type = [doc] Reference = [Title]] [false]
+onWord [cdata]
+endLink [Typed = [true] Type = [doc] Reference = [Title]] [false]
 onSpace
 onWord [after]
 endParagraph

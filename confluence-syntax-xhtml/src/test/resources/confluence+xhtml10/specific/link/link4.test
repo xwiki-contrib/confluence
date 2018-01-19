@@ -12,6 +12,7 @@ beginParagraph
 beginLink [Typed = [true] Type = [user] Reference = [user] Parameters = [[anchor] = [anchor]]] [false]
 onWord [label]
 endLink [Typed = [true] Type = [user] Reference = [user] Parameters = [[anchor] = [anchor]]] [false]
+onSpace
 beginLink [Typed = [true] Type = [user] Reference = [user]] [false]
 endLink [Typed = [true] Type = [user] Reference = [user]] [false]
 endParagraph
