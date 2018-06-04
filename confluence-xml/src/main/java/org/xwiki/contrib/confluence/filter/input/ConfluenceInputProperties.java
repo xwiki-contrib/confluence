@@ -30,7 +30,7 @@ import org.xwiki.properties.annotation.PropertyMandatory;
 import org.xwiki.properties.annotation.PropertyName;
 
 /**
- * Confluence XMLL input properties.
+ * Confluence XML input properties.
  * 
  * @version $Id$
  * @since 9.0
