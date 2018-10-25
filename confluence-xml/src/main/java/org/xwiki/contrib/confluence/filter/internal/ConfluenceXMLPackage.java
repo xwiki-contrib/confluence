@@ -535,11 +535,7 @@ public class ConfluenceXMLPackage
                 } else {
                     StAXUtils.skipElement(xmlReader);
                 }
-            } else if (elementName.equals("property")) {
-                String propertyName = xmlReader.getAttributeValue(null, "name");
-
-                properties.setProperty(propertyName, readProperty(xmlReader));
-            } else if (elementName.equals("collection")) {
+            } else if (elementName.equals("property") || elementName.equals("collection")) {
                 String propertyName = xmlReader.getAttributeValue(null, "name");
 
                 properties.setProperty(propertyName, readProperty(xmlReader));
@@ -655,7 +651,7 @@ public class ConfluenceXMLPackage
         // Register only current pages (they will take care of handling there history)
         Long originalVersion = (Long) properties.getProperty("originalVersion");
         if (originalVersion == null) {
-            Long spaceId = (Long) properties.getLong("space", null);
+            Long spaceId = properties.getLong("space", null);
             List<Long> spacePages = this.pages.get(spaceId);
             if (spacePages == null) {
                 spacePages = new LinkedList<>();

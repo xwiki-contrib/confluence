@@ -415,12 +415,14 @@ public class ConfluenceInputFilterStream
         Syntax bodySyntax = null;
         int bodyType = -1;
 
-        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_BODY)
-            && pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_BODY_TYPE)) {
+        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_BODY)) {
             bodyContent = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_BODY);
-            bodyType = pageProperties.getInt(ConfluenceXMLPackage.KEY_PAGE_BODY_TYPE);
+            bodyType = pageProperties.getInt(ConfluenceXMLPackage.KEY_PAGE_BODY_TYPE, -1);
 
             switch (bodyType) {
+                // Not bodyType means old Confluence syntax
+                case -1:
+                    bodyType = 0;
                 case 0:
                     bodySyntax = ConfluenceParser.SYNTAX;
                     break;
