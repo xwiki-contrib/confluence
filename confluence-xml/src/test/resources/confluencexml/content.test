@@ -37,7 +37,17 @@
               <parameters>
                 <entry>
                   <string>name</string>
+                  <string>value1</string>
+                </entry>
+              </parameters>
+            </p>
+          </macro>
+          <macro id="id">
+            <p>
+              <parameters>
+                <entry>
                   <string>name</string>
+                  <string>value2</string>
                 </entry>
               </parameters>
             </p>

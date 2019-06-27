@@ -26,8 +26,11 @@
       <![CDATA[
         <p>
           <ac:macro ac:name="anchor">
-            <ac:default-parameter>name</ac:default-parameter>
+            <ac:default-parameter>value1</ac:default-parameter>
           </ac:macro>
+          <ac:structured-macro ac:name="anchor">
+            <ac:parameter ac:name="">value2</ac:parameter>
+          </ac:structured-macro>
         </p>
       ]]>
     </property>

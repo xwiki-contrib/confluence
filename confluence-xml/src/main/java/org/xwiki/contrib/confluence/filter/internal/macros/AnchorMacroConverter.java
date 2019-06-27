@@ -48,7 +48,7 @@ public class AnchorMacroConverter extends AbstractMacroConverter
     protected String toXWikiParameterName(String confluenceParameterName, String id,
         Map<String, String> confluenceParameters, String confluenceContent)
     {
-        if (confluenceParameterName.equals("0")) {
+        if (confluenceParameterName.equals("0") || confluenceParameterName.isEmpty()) {
             return "name";
         }
 
