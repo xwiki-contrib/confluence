@@ -405,8 +405,8 @@ public class ConfluenceXMLPackage
         if (pageId != null) {
             PropertiesConfiguration pageProperties = getPageProperties(pageId, true);
 
-            long spaceId = pageProperties.getInt(KEY_PAGE_SPACE);
-            long currentSpaceId = currentProperties.getInt(KEY_PAGE_SPACE);
+            long spaceId = pageProperties.getLong(KEY_PAGE_SPACE);
+            long currentSpaceId = currentProperties.getLong(KEY_PAGE_SPACE);
 
             EntityReference spaceReference;
             if (spaceId != currentSpaceId) {
