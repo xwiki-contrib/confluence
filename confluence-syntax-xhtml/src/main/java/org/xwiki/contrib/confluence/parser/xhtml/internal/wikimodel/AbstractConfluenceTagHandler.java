@@ -27,7 +27,7 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  * Workaround a few weird stuff in TagHandler.
  * 
  * @version $Id$
- * @since 9.2.4
+ * @since 9.2.5
  */
 public abstract class AbstractConfluenceTagHandler extends TagHandler
 {
