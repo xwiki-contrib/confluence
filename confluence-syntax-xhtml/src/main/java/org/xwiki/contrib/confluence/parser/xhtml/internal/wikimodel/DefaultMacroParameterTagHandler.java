@@ -39,7 +39,7 @@ public class DefaultMacroParameterTagHandler extends AbstractMacroParameterTagHa
     @Override
     protected void setParameter(ConfluenceMacro macro, TagContext context)
     {
-        String value = context.getContent();
+        String value = getContent(context);
 
         macro.parameters = macro.parameters.setParameter(String.valueOf(++macro.index), value);
     }

@@ -19,7 +19,6 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
-import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
@@ -34,7 +33,7 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  * @version $Id$
  * @since 9.0
  */
-public class PlainTextLinkBodyTagHandler extends TagHandler implements ConfluenceTagHandler
+public class PlainTextLinkBodyTagHandler extends AbstractConfluenceTagHandler implements ConfluenceTagHandler
 {
     public PlainTextLinkBodyTagHandler()
     {
@@ -53,7 +52,7 @@ public class PlainTextLinkBodyTagHandler extends TagHandler implements Confluenc
         Object container = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
 
         if (container instanceof LabelContainer) {
-            ((LabelContainer) container).setLabel(context.getContent());
+            ((LabelContainer) container).setLabel(getContent(context));
         }
     }
 }

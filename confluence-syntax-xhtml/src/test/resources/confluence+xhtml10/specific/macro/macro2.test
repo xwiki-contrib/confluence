@@ -1,0 +1,11 @@
+.#-----------------------------------------------------
+.input|confluence+xhtml/1.0
+.# CONFLUENCE-54: Less/greater-than symbols in code blocks become &#x3c;/&#x3e;
+.#-----------------------------------------------------
+<ac:structured-macro ac:name="code"><ac:plain-text-body><![CDATA[<> ]]></ac:plain-text-body></ac:structured-macro>
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+onMacroStandalone [code] [] [<> ]
+endDocument

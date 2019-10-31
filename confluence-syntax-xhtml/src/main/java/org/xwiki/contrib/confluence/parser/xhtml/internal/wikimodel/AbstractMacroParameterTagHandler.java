@@ -20,7 +20,6 @@
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroTagHandler.ConfluenceMacro;
-import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
@@ -29,7 +28,8 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  * @version $Id$
  * @since 9.1
  */
-public abstract class AbstractMacroParameterTagHandler extends TagHandler implements ConfluenceTagHandler
+public abstract class AbstractMacroParameterTagHandler extends AbstractConfluenceTagHandler
+    implements ConfluenceTagHandler
 {
     /**
      * Default constructor.

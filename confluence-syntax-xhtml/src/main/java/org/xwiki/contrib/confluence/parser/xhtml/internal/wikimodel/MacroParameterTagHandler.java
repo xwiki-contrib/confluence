@@ -43,7 +43,7 @@ public class MacroParameterTagHandler extends AbstractMacroParameterTagHandler i
         WikiParameter nameParameter = context.getParams().getParameter("ac:name");
 
         if (nameParameter != null) {
-            String value = context.getContent();
+            String value = getContent(context);
 
             macro.parameters = macro.parameters.setParameter(nameParameter.getValue(), value);
         }

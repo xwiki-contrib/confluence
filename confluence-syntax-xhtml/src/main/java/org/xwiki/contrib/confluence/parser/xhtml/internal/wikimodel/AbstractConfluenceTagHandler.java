@@ -19,41 +19,31 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
-import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroTagHandler.ConfluenceMacro;
+import org.apache.commons.lang.StringEscapeUtils;
+import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
- * Handles plain text content.
- * <p>
- * Example:
- * <p>
- * {@code
- * <ac:plain-text-body><![CDATA[Content of bloc code]]></ac:plain-text-body>
- * }
- *
+ * Workaround a few weird stuff in TagHandler.
+ * 
  * @version $Id$
- * @since 9.0
+ * @since 9.2.4
  */
-public class PlainTextBodyTagHandler extends AbstractConfluenceTagHandler implements ConfluenceTagHandler
+public abstract class AbstractConfluenceTagHandler extends TagHandler
 {
-    public PlainTextBodyTagHandler()
+    /**
+     * @param contentContainer when false, text content is dropped.
+     */
+    public AbstractConfluenceTagHandler(boolean contentContainer)
     {
-        super(true);
+        super(contentContainer);
     }
 
-    @Override
-    protected void begin(TagContext context)
+    protected String getContent(TagContext context)
     {
-        setAccumulateContent(true);
-    }
+        String escapedContent = context.getContent();
+        // Not really sure why but TagContext#getContent() escape the content
+        return StringEscapeUtils.unescapeXml(escapedContent);
 
-    @Override
-    protected void end(TagContext context)
-    {
-        ConfluenceMacro macro = (ConfluenceMacro) context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
-
-        if (macro != null) {
-            macro.content = getContent(context);
-        }
     }
 }
