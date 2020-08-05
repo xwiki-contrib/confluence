@@ -1,1 +1,3 @@
+org.xwiki.contrib.confluence.parser.xhtml.internal.ConfluenceXHTMLInputFilterStream
+org.xwiki.contrib.confluence.parser.xhtml.internal.ConfluenceXHTMLInputFilterStreamFactory
 org.xwiki.contrib.confluence.parser.xhtml.internal.ConfluenceXHTMLParser

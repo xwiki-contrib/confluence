@@ -31,12 +31,17 @@
   <name>Confluence - Syntax - XHTML</name>
   <description>XHTML based Confluence syntax</description>
   <properties>
-    <xwiki.jacoco.instructionRatio>0.96</xwiki.jacoco.instructionRatio>
+    <xwiki.jacoco.instructionRatio>0.95</xwiki.jacoco.instructionRatio>
 
     <!-- Name to display by the Extension Manager -->
     <xwiki.extension.name>Confluence XHTML Syntax</xwiki.extension.name>
   </properties>
   <dependencies>
+    <dependency>
+      <groupId>org.xwiki.commons</groupId>
+      <artifactId>xwiki-commons-filter-api</artifactId>
+      <version>${commons.version}</version>
+    </dependency>
     <dependency>
       <groupId>org.xwiki.rendering</groupId>
       <artifactId>xwiki-rendering-syntax-xhtml</artifactId>
@@ -62,6 +67,18 @@
       <groupId>org.xwiki.rendering</groupId>
       <artifactId>xwiki-rendering-syntax-event</artifactId>
       <version>${rendering.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.commons</groupId>
+      <artifactId>xwiki-commons-filter-test</artifactId>
+      <version>${commons.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.commons</groupId>
+      <artifactId>xwiki-commons-filter-stream-xml</artifactId>
+      <version>${commons.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>

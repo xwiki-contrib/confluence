@@ -27,6 +27,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -34,6 +35,9 @@ import javax.xml.parsers.SAXParserFactory;
 import org.apache.commons.io.IOUtils;
 import org.xml.sax.XMLReader;
 import org.xwiki.component.annotation.Component;
+import org.xwiki.component.manager.ComponentLookupException;
+import org.xwiki.component.manager.ComponentManager;
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceXHTMLInputProperties;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXHTMLWhitespaceXMLFilter;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXWikiGeneratorListener;
@@ -53,7 +57,6 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.URLTagHandle
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.UserTagHandler;
 import org.xwiki.rendering.internal.parser.wikimodel.AbstractWikiModelParser;
 import org.xwiki.rendering.internal.parser.wikimodel.XWikiGeneratorListener;
-import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XWikiCommentHandler;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XWikiHeaderTagHandler;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XWikiReferenceTagHandler;
 import org.xwiki.rendering.listener.Listener;
@@ -83,14 +86,8 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
     /**
      * The identifier of the syntax.
      */
-    public static final String SYNTAX_STRING = "confluence+xhtml/1.0";
+    public static final String SYNTAX_STRING = ConfluenceXHTMLInputProperties.FILTER_STREAM_TYPE_STRING;
 
-    /**
-     * The parser used for the link label parsing. For (x)html parsing, this will be an xwiki 2.0 parser, since it's
-     * more convenient to pass link labels in xwiki syntax. See referred resource for more details.
-     *
-     * @see XWikiCommentHandler#handleLinkCommentStop(String, org.xwiki.rendering.wikimodel.xhtml.impl.TagStack)
-     */
     @Inject
     @Named("xdom+xml/current")
     private StreamParser xmlParser;
@@ -116,6 +113,12 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
     @Inject
     @Named("plain/1.0")
     private StreamParser plainParser;
+
+    @Inject
+    @Named("context")
+    private Provider<ComponentManager> componentManagerProvider;
+
+    private PrintRendererFactory macroContentRendererFactory;
 
     @Override
     public Syntax getSyntax()
@@ -153,7 +156,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("ac:default-parameter", new DefaultMacroParameterTagHandler());
         handlers.put("ac:parameter", new MacroParameterTagHandler());
         handlers.put("ac:plain-text-body", new PlainTextBodyTagHandler());
-        handlers.put("ac:rich-text-body", new RichTextBodyTagHandler());
+        handlers.put("ac:rich-text-body", new RichTextBodyTagHandler(this));
 
         handlers.put("ac:image", new ImageTagHandler());
         handlers.put("ri:url", new URLTagHandler());
@@ -236,5 +239,27 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
     {
         return new ConfluenceXWikiGeneratorListener(getLinkLabelParser(), listener, getLinkReferenceParser(),
             getImageReferenceParser(), this.plainRendererFactory, idGenerator, getSyntax(), this.plainParser);
+    }
+
+    /**
+     * @param macroContentSyntax the syntax to use to convert rich macro content
+     * @throws ComponentLookupException when failing to find a rendering factory conrresponding to the provider syntax
+     */
+    public void setMacroContentSyntax(Syntax macroContentSyntax) throws ComponentLookupException
+    {
+        if (macroContentSyntax != null) {
+            this.macroContentRendererFactory = this.componentManagerProvider.get()
+                .getInstance(PrintRendererFactory.class, macroContentSyntax.toIdString());
+        } else {
+            this.macroContentRendererFactory = null;
+        }
+    }
+
+    /**
+     * @return the macroContentRendererFactory the rendering factory to use to convert rich macro content
+     */
+    public PrintRendererFactory getMacroContentRendererFactory()
+    {
+        return this.macroContentRendererFactory;
     }
 }

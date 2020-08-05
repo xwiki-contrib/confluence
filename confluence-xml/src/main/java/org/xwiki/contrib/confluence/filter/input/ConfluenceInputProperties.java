@@ -28,6 +28,7 @@ import org.xwiki.filter.input.InputSource;
 import org.xwiki.properties.annotation.PropertyDescription;
 import org.xwiki.properties.annotation.PropertyMandatory;
 import org.xwiki.properties.annotation.PropertyName;
+import org.xwiki.rendering.syntax.Syntax;
 
 /**
  * Confluence XML input properties.
@@ -48,6 +49,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private Locale defaultLocale;
 
     /**
+     * @see #isContentEvents()
+     */
+    private boolean contentEvents;
+
+    /**
      * @see #isConvertToXWiki()
      */
     private boolean convertToXWiki = true;
@@ -61,6 +67,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @see #getBaseURLs()
      */
     private List<URL> baseURLs;
+
+    /**
+     * @see #getMacroContentSyntax()
+     */
+    private Syntax macroContentSyntax;
 
     /**
      * @return The source to load the wiki from
@@ -97,6 +108,26 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setDefaultLocale(Locale defaultLocale)
     {
         this.defaultLocale = defaultLocale;
+    }
+
+    /**
+     * @return if true, the content will be parsed to produce rendering events
+     * @since 9.3
+     */
+    @PropertyName("Produce rendering events for the content")
+    @PropertyDescription("Parse the content to produce rendering events (if the output filter supports them)")
+    public boolean isContentEvents()
+    {
+        return this.contentEvents;
+    }
+
+    /**
+     * @param contentEvents if true, the content will be parsed to produce rendering events
+     * @since 9.3
+     */
+    public void setContentEvents(boolean contentEvents)
+    {
+        this.contentEvents = contentEvents;
     }
 
     /**
@@ -155,5 +186,25 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setBaseURLs(List<URL> baseURLs)
     {
         this.baseURLs = baseURLs;
+    }
+
+    /**
+     * @return the macroContentSyntax the syntax to use to convert rich macro content
+     * @since 9.3
+     */
+    @PropertyName("Macro content syntax")
+    @PropertyDescription("The syntax to use to convert rich macro content. The default is current default syntax.")
+    public Syntax getMacroContentSyntax()
+    {
+        return this.macroContentSyntax;
+    }
+
+    /**
+     * @param macroContentSyntax the syntax to use to convert rich macro content
+     * @since 9.3
+     */
+    public void setMacroContentSyntax(Syntax macroContentSyntax)
+    {
+        this.macroContentSyntax = macroContentSyntax;
     }
 }

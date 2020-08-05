@@ -25,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
 import java.text.ParseException;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -45,6 +46,7 @@ import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.contrib.confluence.filter.internal.ConfluenceFilter;
 import org.xwiki.contrib.confluence.filter.internal.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.parser.confluence.internal.ConfluenceParser;
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceXHTMLInputProperties;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.ConfluenceXHTMLParser;
 import org.xwiki.filter.FilterEventParameters;
 import org.xwiki.filter.FilterException;
@@ -53,8 +55,16 @@ import org.xwiki.filter.event.model.WikiDocumentFilter;
 import org.xwiki.filter.event.user.GroupFilter;
 import org.xwiki.filter.event.user.UserFilter;
 import org.xwiki.filter.input.AbstractBeanInputFilterStream;
+import org.xwiki.filter.input.BeanInputFilterStream;
+import org.xwiki.filter.input.BeanInputFilterStreamFactory;
+import org.xwiki.filter.input.InputFilterStreamFactory;
+import org.xwiki.filter.input.StringInputSource;
+import org.xwiki.job.event.status.JobProgressManager;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.parser.StreamParser;
+import org.xwiki.rendering.renderer.PrintRenderer;
+import org.xwiki.rendering.renderer.PrintRendererFactory;
+import org.xwiki.rendering.renderer.printer.DefaultWikiPrinter;
 import org.xwiki.rendering.syntax.Syntax;
 
 /**
@@ -76,10 +86,17 @@ public class ConfluenceInputFilterStream
 
     @Inject
     @Named(ConfluenceXHTMLParser.SYNTAX_STRING)
-    private StreamParser confluenceXHTMLParser;
+    private InputFilterStreamFactory confluenceXHTMLParserFactory;
 
     @Inject
     private Provider<ConfluenceConverterListener> converterProvider;
+
+    @Inject
+    private JobProgressManager progress;
+
+    @Inject
+    @Named("xwiki/2.1")
+    private PrintRendererFactory xwiki21Factory;
 
     private ConfluenceXMLPackage confluencePackage;
 
@@ -99,8 +116,17 @@ public class ConfluenceInputFilterStream
             throw new FilterException("Failed to read package", e);
         }
 
+        Collection<Long> users = this.confluencePackage.getUsers();
+        Collection<Long> groups = this.confluencePackage.getGroups();
+        Map<Long, List<Long>> pages = this.confluencePackage.getPages();
+
+        this.progress.pushLevelProgress(users.size() + groups.size() + pages.size()
+            + pages.entrySet().stream().mapToInt(e -> e.getValue().size()).sum(), this);
+
         // Generate users events
-        for (long userInt : this.confluencePackage.getUsers()) {
+        for (long userInt : users) {
+            this.progress.startStep(this);
+
             PropertiesConfiguration userProperties;
             try {
                 userProperties = this.confluencePackage.getUserProperties(userInt);
@@ -142,10 +168,14 @@ public class ConfluenceInputFilterStream
 
             // < User
             proxyFilter.endUser(userId, userParameters);
+
+            this.progress.endStep(this);
         }
 
-        // Generate users events
-        for (long groupInt : this.confluencePackage.getGroups()) {
+        // Generate groups events
+        for (long groupInt : groups) {
+            this.progress.startStep(this);
+
             PropertiesConfiguration groupProperties;
             try {
                 groupProperties = this.confluencePackage.getGroupProperties(groupInt);
@@ -180,9 +210,9 @@ public class ConfluenceInputFilterStream
 
             // Members users
             if (groupProperties.containsKey(ConfluenceXMLPackage.KEY_GROUP_MEMBERUSERS)) {
-                List<Long> users =
+                List<Long> groupMembers =
                     this.confluencePackage.getLongList(groupProperties, ConfluenceXMLPackage.KEY_GROUP_MEMBERUSERS);
-                for (Long memberInt : users) {
+                for (Long memberInt : groupMembers) {
                     FilterEventParameters memberParameters = new FilterEventParameters();
 
                     try {
@@ -202,9 +232,9 @@ public class ConfluenceInputFilterStream
 
             // Members groups
             if (groupProperties.containsKey(ConfluenceXMLPackage.KEY_GROUP_MEMBERGROUPS)) {
-                List<Long> groups =
+                List<Long> groupMembers =
                     this.confluencePackage.getLongList(groupProperties, ConfluenceXMLPackage.KEY_GROUP_MEMBERGROUPS);
-                for (Long memberInt : groups) {
+                for (Long memberInt : groupMembers) {
                     FilterEventParameters memberParameters = new FilterEventParameters();
 
                     try {
@@ -228,10 +258,12 @@ public class ConfluenceInputFilterStream
 
             // < Group
             proxyFilter.endGroupContainer(groupName, groupParameters);
+
+            this.progress.endStep(this);
         }
 
         // Generate documents events
-        for (Map.Entry<Long, List<Long>> entry : this.confluencePackage.getPages().entrySet()) {
+        for (Map.Entry<Long, List<Long>> entry : pages.entrySet()) {
             long spaceId = entry.getKey();
 
             PropertiesConfiguration spaceProperties;
@@ -250,17 +282,23 @@ public class ConfluenceInputFilterStream
             // Main page
             Long descriptionId = spaceProperties.getLong(ConfluenceXMLPackage.KEY_SPACE_DESCRIPTION, null);
             if (descriptionId != null) {
+                this.progress.startStep(this);
                 readPage(descriptionId, filter, proxyFilter);
+                this.progress.endStep(this);
             }
 
             // Other pages
             for (long pageId : entry.getValue()) {
+                this.progress.startStep(this);
                 readPage(pageId, filter, proxyFilter);
+                this.progress.endStep(this);
             }
 
             // < WikiSpace
             proxyFilter.endWikiSpace(spaceKey, spaceParameters);
         }
+
+        this.progress.popLevelProgress(this);
 
         // Cleanup
 
@@ -437,39 +475,32 @@ public class ConfluenceInputFilterStream
             }
         }
 
-        // If target filter does not support rendering events, pass the content as it is
-        if (!(filter instanceof Listener) && bodyContent != null && bodySyntax != null) {
-            documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_CONTENT, bodyContent);
-            documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, bodySyntax);
-        }
-
-        // > WikiDocumentRevision
-        proxyFilter.beginWikiDocumentRevision(revision, documentRevisionParameters);
-
         // Content
-        if (filter instanceof Listener && bodyContent != null && bodySyntax != null) {
-            Listener listener = proxyFilter;
+        if (bodyContent != null) {
+            if (this.properties.isContentEvents() && filter instanceof Listener) {
+                // > WikiDocumentRevision
+                proxyFilter.beginWikiDocumentRevision(revision, documentRevisionParameters);
 
-            if (this.properties.isConvertToXWiki()) {
-                ConfluenceConverterListener converter = this.converterProvider.get();
-                converter.initialize(this.confluencePackage, this.properties, listener);
-                listener = converter;
-            }
+                parse(bodyContent, bodyType, this.properties.getMacroContentSyntax(), proxyFilter);
+            } else if (this.properties.isConvertToXWiki()) {
+                // Convert content to XWiki syntax
+                documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_CONTENT,
+                    convertToXWiki21(bodyContent, bodyType));
+                documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, Syntax.XWIKI_2_1);
 
-            try {
-                switch (bodyType) {
-                    case 0:
-                        this.confluenceWIKIParser.parse(new StringReader(bodyContent), listener);
-                        break;
-                    case 2:
-                        this.confluenceXHTMLParser.parse(new StringReader(bodyContent), listener);
-                        break;
-                    default:
-                        break;
-                }
-            } catch (org.xwiki.rendering.parser.ParseException e) {
-                throw new FilterException(String.format("Failed parser content [%s]", bodyContent), e);
+                // > WikiDocumentRevision
+                proxyFilter.beginWikiDocumentRevision(revision, documentRevisionParameters);
+            } else {
+                // Keep Confluence syntax
+                documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_CONTENT, bodyContent);
+                documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, bodySyntax);
+
+                // > WikiDocumentRevision
+                proxyFilter.beginWikiDocumentRevision(revision, documentRevisionParameters);
             }
+        } else {
+            // > WikiDocumentRevision
+            proxyFilter.beginWikiDocumentRevision(revision, documentRevisionParameters);
         }
 
         // Attachments
@@ -503,6 +534,58 @@ public class ConfluenceInputFilterStream
 
         // < WikiDocumentRevision
         proxyFilter.endWikiDocumentRevision(revision, documentRevisionParameters);
+    }
+
+    private String convertToXWiki21(String bodyContent, int bodyType) throws FilterException
+    {
+        DefaultWikiPrinter printer = new DefaultWikiPrinter();
+        PrintRenderer renderer = this.xwiki21Factory.createRenderer(printer);
+
+        parse(bodyContent, bodyType, Syntax.XWIKI_2_1, renderer);
+
+        return printer.toString();
+    }
+
+    private Listener wrap(Listener proxyFilter)
+    {
+        if (this.properties.isConvertToXWiki()) {
+            ConfluenceConverterListener converter = this.converterProvider.get();
+            converter.initialize(this.confluencePackage, this.properties, proxyFilter);
+            return converter;
+        }
+
+        return proxyFilter;
+    }
+
+    private void parse(String bodyContent, int bodyType, Syntax macroContentSyntax, Listener listener)
+        throws FilterException
+    {
+        try {
+            switch (bodyType) {
+                case 0:
+                    this.confluenceWIKIParser.parse(new StringReader(bodyContent), wrap(listener));
+                    break;
+                case 2:
+                    createSyntaxFilter(bodyContent, macroContentSyntax).read(wrap(listener));
+                    break;
+                default:
+                    break;
+            }
+        } catch (org.xwiki.rendering.parser.ParseException e) {
+            throw new FilterException(String.format("Failed parser content [%s]", bodyContent), e);
+        }
+    }
+
+    private BeanInputFilterStream<ConfluenceXHTMLInputProperties> createSyntaxFilter(String bodyContent,
+        Syntax macroContentSyntax) throws FilterException
+    {
+        ConfluenceXHTMLInputProperties filterProperties = new ConfluenceXHTMLInputProperties();
+        filterProperties.setSource(new StringInputSource(bodyContent));
+        filterProperties.setMacroContentSyntax(macroContentSyntax);
+        BeanInputFilterStreamFactory<ConfluenceXHTMLInputProperties> syntaxFilterFactory =
+            ((BeanInputFilterStreamFactory<ConfluenceXHTMLInputProperties>) this.confluenceXHTMLParserFactory);
+
+        return syntaxFilterFactory.createInputFilterStream(filterProperties);
     }
 
     private void readAttachment(long pageId, PropertiesConfiguration attachmentProperties, Object filter,

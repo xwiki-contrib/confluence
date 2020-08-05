@@ -12,47 +12,34 @@
               <string>title</string>
               <string>TestContent</string>
             </entry>
+            <entry>
+              <string>content</string>
+              <string>
+
+{{id name="value1"/}}
+
+{{id name="value2"/}}
+
+{{macro 0="defaultparameter" parameter="value"}}
+rich **text** here
+{{/macro}}
+
+{{macro}}
+simple content
+{{/macro}}</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
           </parameters>
         </p>
-        <document>
-          <p>
-            <metadata>
-              <metadata>
-                <entry>
-                  <string>syntax</string>
-                  <org.xwiki.rendering.syntax.Syntax>
-                    <type>
-                      <name>Confluence</name>
-                      <id>confluence+xhtml</id>
-                    </type>
-                    <version>1.0</version>
-                  </org.xwiki.rendering.syntax.Syntax>
-                </entry>
-              </metadata>
-            </metadata>
-          </p>
-          <paragraph></paragraph>
-          <macro id="id">
-            <p>
-              <parameters>
-                <entry>
-                  <string>name</string>
-                  <string>value1</string>
-                </entry>
-              </parameters>
-            </p>
-          </macro>
-          <macro id="id">
-            <p>
-              <parameters>
-                <entry>
-                  <string>name</string>
-                  <string>value2</string>
-                </entry>
-              </parameters>
-            </p>
-          </macro>
-        </document>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>

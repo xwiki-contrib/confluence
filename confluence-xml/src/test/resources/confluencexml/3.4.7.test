@@ -39,26 +39,22 @@
               <string>title</string>
               <string></string>
             </entry>
+            <entry>
+              <string>content</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
           </parameters>
         </p>
-        <document>
-          <p>
-            <metadata>
-              <metadata>
-                <entry>
-                  <string>syntax</string>
-                  <org.xwiki.rendering.syntax.Syntax>
-                    <type>
-                      <name>Confluence</name>
-                      <id>confluence</id>
-                    </type>
-                    <version>1.1</version>
-                  </org.xwiki.rendering.syntax.Syntax>
-                </entry>
-              </metadata>
-            </metadata>
-          </p>
-        </document>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
@@ -99,132 +95,14 @@
               <string>title</string>
               <string>Home</string>
             </entry>
-          </parameters>
-        </p>
-        <document>
-          <p>
-            <metadata>
-              <metadata>
-                <entry>
-                  <string>syntax</string>
-                  <org.xwiki.rendering.syntax.Syntax>
-                    <type>
-                      <name>Confluence</name>
-                      <id>confluence</id>
-                    </type>
-                    <version>1.1</version>
-                  </org.xwiki.rendering.syntax.Syntax>
-                </entry>
-              </metadata>
-            </metadata>
-          </p>
-          <paragraph>
-            <word>This</word>
-            <space></space>
-            <word>is</word>
-            <space></space>
-            <word>the</word>
-            <space></space>
-            <word>home</word>
-            <space></space>
-            <word>of</word>
-            <space></space>
-            <word>the</word>
-            <space></space>
-            <word>TestDemo</word>
-            <space></space>
-            <word>space</word>
-            <specialSymbol>.</specialSymbol>
-          </paragraph>
-          <paragraph>
-            <word>To</word>
-            <space></space>
-            <word>help</word>
-            <space></space>
-            <word>you</word>
-            <space></space>
-            <word>on</word>
-            <space></space>
-            <word>your</word>
-            <space></space>
-            <word>way</word>
-            <specialSymbol>,</specialSymbol>
-            <space></space>
-            <word>we</word>
-            <specialSymbol>'</specialSymbol>
-            <word>ve</word>
-            <space></space>
-            <word>inserted</word>
-            <space></space>
-            <word>some</word>
-            <space></space>
-            <word>of</word>
-            <space></space>
-            <word>our</word>
-            <space></space>
-            <word>favourite</word>
-            <space></space>
-            <word>macros</word>
-            <space></space>
-            <word>on</word>
-            <space></space>
-            <word>this</word>
-            <space></space>
-            <word>home</word>
-            <space></space>
-            <word>page</word>
-            <specialSymbol>.</specialSymbol>
-            <space></space>
-            <word>As</word>
-            <space></space>
-            <word>you</word>
-            <space></space>
-            <word>start</word>
-            <space></space>
-            <word>creating</word>
-            <space></space>
-            <word>pages</word>
-            <specialSymbol>,</specialSymbol>
-            <space></space>
-            <word>blogging</word>
-            <space></space>
-            <word>and</word>
-            <space></space>
-            <word>commenting</word>
-            <space></space>
-            <word>you</word>
-            <specialSymbol>'</specialSymbol>
-            <word>ll</word>
-            <space></space>
-            <word>see</word>
-            <space></space>
-            <word>the</word>
-            <space></space>
-            <word>macros</word>
-            <space></space>
-            <word>below</word>
-            <space></space>
-            <word>fill</word>
-            <space></space>
-            <word>up</word>
-            <space></space>
-            <word>with</word>
-            <space></space>
-            <word>all</word>
-            <space></space>
-            <word>the</word>
-            <space></space>
-            <word>activity</word>
-            <space></space>
-            <word>in</word>
-            <space></space>
-            <word>your</word>
-            <space></space>
-            <word>space</word>
-            <specialSymbol>.</specialSymbol>
-            <space></space>
-          </paragraph>
-          <macro id="section" content="
+            <entry>
+              <string>content</string>
+              <string>This is the home of the TestDemo space.
+
+To help you on your way, we've inserted some of our favourite macros on this home page. As you start creating pages, blogging and commenting you'll see the macros below fill up with all the activity in your space. 
+
+{{section}}
+
 {column:width=60%}
 {recently-updated}
 {column}
@@ -235,8 +113,21 @@ h6. Navigate space
 {pagetreesearch}
 {pagetree}
 {column}
-"></macro>
-        </document>
+
+{{/section}}</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
@@ -284,306 +175,41 @@ h6. Navigate space
               <string>title</string>
               <string>Test demo in Confluence 3.4.7</string>
             </entry>
+            <entry>
+              <string>content</string>
+              <string>==== Project: Test demo ====
+
+==== Developer: dev1 ====
+
+==== Tasks Completed or Worked On: ====
+
+|= JIRA Link |= Status |= Summary |= Remarks |=
+ | [[TICKET-1&gt;&gt;http://www.aspose.com]] | Open |  test ticket 1 |  | 
+
+==== Developer: dev2 ====
+
+==== Tasks Completed or Worked On: ====
+
+|= JIRA Link |= Status |= Summary |= Remarks |=
+ | [[TICKET-2&gt;&gt;http://www.aspose.com]] | Open |  test ticket 2 |  | 
+
+==== Next Week Tasks: ====
+
+|= JIRA Link |= Status |= Summary |= Remarks |=
+ | [[TICKET-3&gt;&gt;http://www.aspose.com]] | Open |  test ticket 3 |  </string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
           </parameters>
         </p>
-        <document>
-          <p>
-            <metadata>
-              <metadata>
-                <entry>
-                  <string>syntax</string>
-                  <org.xwiki.rendering.syntax.Syntax>
-                    <type>
-                      <name>Confluence</name>
-                      <id>confluence</id>
-                    </type>
-                    <version>1.1</version>
-                  </org.xwiki.rendering.syntax.Syntax>
-                </entry>
-              </metadata>
-            </metadata>
-          </p>
-          <section>
-            <section>
-              <section>
-                <section>
-                  <header level="4" id="HProject:Testdemo">
-                    <word>Project</word>
-                    <specialSymbol>:</specialSymbol>
-                    <space></space>
-                    <word>Test</word>
-                    <space></space>
-                    <word>demo</word>
-                  </header>
-                </section>
-                <section>
-                  <header level="4" id="HDeveloper:dev1">
-                    <word>Developer</word>
-                    <specialSymbol>:</specialSymbol>
-                    <space></space>
-                    <word>dev1</word>
-                  </header>
-                </section>
-                <section>
-                  <header level="4" id="HTasksCompletedorWorkedOn:">
-                    <word>Tasks</word>
-                    <space></space>
-                    <word>Completed</word>
-                    <space></space>
-                    <word>or</word>
-                    <space></space>
-                    <word>Worked</word>
-                    <space></space>
-                    <word>On</word>
-                    <specialSymbol>:</specialSymbol>
-                  </header>
-                  <table>
-                    <tableRow>
-                      <tableHeadCell>
-                        <space></space>
-                        <word>JIRA</word>
-                        <space></space>
-                        <word>Link</word>
-                        <space></space>
-                      </tableHeadCell>
-                      <tableHeadCell>
-                        <space></space>
-                        <word>Status</word>
-                        <space></space>
-                      </tableHeadCell>
-                      <tableHeadCell>
-                        <space></space>
-                        <word>Summary</word>
-                        <space></space>
-                      </tableHeadCell>
-                      <tableHeadCell>
-                        <space></space>
-                        <word>Remarks</word>
-                        <space></space>
-                      </tableHeadCell>
-                      <tableHeadCell>
-                        <newLine></newLine>
-                        <space></space>
-                      </tableHeadCell>
-                      <tableCell>
-                        <space></space>
-                        <link>
-                          <p>
-                            <reference>
-                              <isTyped>false</isTyped>
-                              <reference>http://www.aspose.com</reference>
-                              <type>
-                                <scheme>url</scheme>
-                              </type>
-                              <parameters></parameters>
-                            </reference>
-                          </p>
-                          <word>TICKET</word>
-                          <specialSymbol>-</specialSymbol>
-                          <word>1</word>
-                        </link>
-                        <space></space>
-                      </tableCell>
-                      <tableCell>
-                        <space></space>
-                        <word>Open</word>
-                        <space></space>
-                      </tableCell>
-                      <tableCell>
-                        <space></space>
-                        <space></space>
-                        <word>test</word>
-                        <space></space>
-                        <word>ticket</word>
-                        <space></space>
-                        <word>1</word>
-                        <space></space>
-                      </tableCell>
-                      <tableCell>
-                        <space></space>
-                        <space></space>
-                      </tableCell>
-                      <tableCell>
-                        <space></space>
-                      </tableCell>
-                    </tableRow>
-                  </table>
-                </section>
-                <section>
-                  <header level="4" id="HDeveloper:dev2">
-                    <word>Developer</word>
-                    <specialSymbol>:</specialSymbol>
-                    <space></space>
-                    <word>dev2</word>
-                  </header>
-                </section>
-                <section>
-                  <header level="4" id="HTasksCompletedorWorkedOn:-1">
-                    <word>Tasks</word>
-                    <space></space>
-                    <word>Completed</word>
-                    <space></space>
-                    <word>or</word>
-                    <space></space>
-                    <word>Worked</word>
-                    <space></space>
-                    <word>On</word>
-                    <specialSymbol>:</specialSymbol>
-                  </header>
-                  <table>
-                    <tableRow>
-                      <tableHeadCell>
-                        <space></space>
-                        <word>JIRA</word>
-                        <space></space>
-                        <word>Link</word>
-                        <space></space>
-                      </tableHeadCell>
-                      <tableHeadCell>
-                        <space></space>
-                        <word>Status</word>
-                        <space></space>
-                      </tableHeadCell>
-                      <tableHeadCell>
-                        <space></space>
-                        <word>Summary</word>
-                        <space></space>
-                      </tableHeadCell>
-                      <tableHeadCell>
-                        <space></space>
-                        <word>Remarks</word>
-                        <space></space>
-                      </tableHeadCell>
-                      <tableHeadCell>
-                        <newLine></newLine>
-                        <space></space>
-                      </tableHeadCell>
-                      <tableCell>
-                        <space></space>
-                        <link>
-                          <p>
-                            <reference>
-                              <isTyped>false</isTyped>
-                              <reference>http://www.aspose.com</reference>
-                              <type>
-                                <scheme>url</scheme>
-                              </type>
-                              <parameters></parameters>
-                            </reference>
-                          </p>
-                          <word>TICKET</word>
-                          <specialSymbol>-</specialSymbol>
-                          <word>2</word>
-                        </link>
-                        <space></space>
-                      </tableCell>
-                      <tableCell>
-                        <space></space>
-                        <word>Open</word>
-                        <space></space>
-                      </tableCell>
-                      <tableCell>
-                        <space></space>
-                        <space></space>
-                        <word>test</word>
-                        <space></space>
-                        <word>ticket</word>
-                        <space></space>
-                        <word>2</word>
-                        <space></space>
-                      </tableCell>
-                      <tableCell>
-                        <space></space>
-                        <space></space>
-                      </tableCell>
-                      <tableCell>
-                        <space></space>
-                      </tableCell>
-                    </tableRow>
-                  </table>
-                </section>
-                <section>
-                  <header level="4" id="HNextWeekTasks:">
-                    <word>Next</word>
-                    <space></space>
-                    <word>Week</word>
-                    <space></space>
-                    <word>Tasks</word>
-                    <specialSymbol>:</specialSymbol>
-                  </header>
-                  <table>
-                    <tableRow>
-                      <tableHeadCell>
-                        <space></space>
-                        <word>JIRA</word>
-                        <space></space>
-                        <word>Link</word>
-                        <space></space>
-                      </tableHeadCell>
-                      <tableHeadCell>
-                        <space></space>
-                        <word>Status</word>
-                        <space></space>
-                      </tableHeadCell>
-                      <tableHeadCell>
-                        <space></space>
-                        <word>Summary</word>
-                        <space></space>
-                      </tableHeadCell>
-                      <tableHeadCell>
-                        <space></space>
-                        <word>Remarks</word>
-                        <space></space>
-                      </tableHeadCell>
-                      <tableHeadCell>
-                        <newLine></newLine>
-                        <space></space>
-                      </tableHeadCell>
-                      <tableCell>
-                        <space></space>
-                        <link>
-                          <p>
-                            <reference>
-                              <isTyped>false</isTyped>
-                              <reference>http://www.aspose.com</reference>
-                              <type>
-                                <scheme>url</scheme>
-                              </type>
-                              <parameters></parameters>
-                            </reference>
-                          </p>
-                          <word>TICKET</word>
-                          <specialSymbol>-</specialSymbol>
-                          <word>3</word>
-                        </link>
-                        <space></space>
-                      </tableCell>
-                      <tableCell>
-                        <space></space>
-                        <word>Open</word>
-                        <space></space>
-                      </tableCell>
-                      <tableCell>
-                        <space></space>
-                        <space></space>
-                        <word>test</word>
-                        <space></space>
-                        <word>ticket</word>
-                        <space></space>
-                        <word>3</word>
-                        <space></space>
-                      </tableCell>
-                      <tableCell>
-                        <space></space>
-                        <space></space>
-                      </tableCell>
-                    </tableRow>
-                  </table>
-                </section>
-              </section>
-            </section>
-          </section>
-        </document>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
