@@ -38,6 +38,7 @@ import javax.inject.Provider;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
@@ -283,14 +284,18 @@ public class ConfluenceInputFilterStream
             Long descriptionId = spaceProperties.getLong(ConfluenceXMLPackage.KEY_SPACE_DESCRIPTION, null);
             if (descriptionId != null) {
                 this.progress.startStep(this);
-                readPage(descriptionId, filter, proxyFilter);
+                if (this.properties.isIncluded(descriptionId)) {
+                    readPage(descriptionId, filter, proxyFilter);
+                }
                 this.progress.endStep(this);
             }
 
             // Other pages
             for (long pageId : entry.getValue()) {
                 this.progress.startStep(this);
-                readPage(pageId, filter, proxyFilter);
+                if (this.properties.isIncluded(pageId)) {
+                    readPage(pageId, filter, proxyFilter);
+                }
                 this.progress.endStep(this);
             }
 
@@ -627,10 +632,10 @@ public class ConfluenceInputFilterStream
         try {
             contentFile = this.confluencePackage.getAttachmentFile(pageId, originalRevisionId, version);
         } catch (FileNotFoundException e) {
-            throw new FilterException(
-                String.format("Failed to find file corresponding to version [%s] attachment [%s] in page [%s]", version,
-                    attachmentName, pageId),
-                e);
+            this.logger.warn("Failed to find file corresponding to version [{}] attachment [{}] in page [{}]: {}",
+                version, attachmentName, pageId, ExceptionUtils.getRootCauseMessage(e));
+
+            return;
         }
 
         FilterEventParameters attachmentParameters = new FilterEventParameters();

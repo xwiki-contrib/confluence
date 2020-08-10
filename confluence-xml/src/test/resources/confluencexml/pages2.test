@@ -1,0 +1,25 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.#------------------------------------------------------------------------------
+<wikiSpace name="SpaceA">
+  <wikiDocument name="Page1">
+    <wikiDocumentLocale>
+      <wikiDocumentRevision>
+        <p>
+          <parameters>
+            <entry>
+              <string>title</string>
+              <string>Page1</string>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+<wikiSpace name="SpaceB"></wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=pages
+.configuration.excludedPages=0,10
+.#------------------------------------------------------------------------------

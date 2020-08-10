@@ -22,7 +22,9 @@ package org.xwiki.contrib.confluence.filter.input;
 import java.net.URL;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.xwiki.filter.DefaultFilterStreamProperties;
 import org.xwiki.filter.input.InputSource;
 import org.xwiki.properties.annotation.PropertyDescription;
@@ -72,6 +74,16 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @see #getMacroContentSyntax()
      */
     private Syntax macroContentSyntax;
+
+    /**
+     * @see #getIncludedPages()
+     */
+    private Set<Long> includedPages;
+
+    /**
+     * @see #getExcludedPages()
+     */
+    private Set<Long> excludedPages;
 
     /**
      * @return The source to load the wiki from
@@ -206,5 +218,63 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setMacroContentSyntax(Syntax macroContentSyntax)
     {
         this.macroContentSyntax = macroContentSyntax;
+    }
+
+    /**
+     * @return the Confluence identifiers of the pages to read from the input package
+     * @since 9.4
+     */
+    @PropertyName("Included pages")
+    @PropertyDescription("The Confluence identifiers of the pages to read from the input package.")
+    public Set<Long> getIncludedPages()
+    {
+        return this.includedPages;
+    }
+
+    /**
+     * @param includedPages the Confluence identifiers of the pages to read from the input package
+     * @since 9.4
+     */
+    public void setIncludedPages(Set<Long> includedPages)
+    {
+        this.includedPages = includedPages;
+    }
+
+    /**
+     * @return the Confluence identifiers of the pages to skip from the input package
+     * @since 9.4
+     */
+    @PropertyName("Excluded pages")
+    @PropertyDescription("The Confluence identifiers of the pages to skip from the input package.")
+    public Set<Long> getExcludedPages()
+    {
+        return this.excludedPages;
+    }
+
+    /**
+     * @param excludedPages the Confluence identifiers of the pages to skip from the input package
+     * @since 9.4
+     */
+    public void setExcludedPages(Set<Long> excludedPages)
+    {
+        this.excludedPages = excludedPages;
+    }
+
+    /**
+     * @param pageId the Confluence identifier of the page
+     * @return true if the page should be read, false otherwise
+     * @since 9.4
+     */
+    public boolean isIncluded(long pageId)
+    {
+        if (CollectionUtils.isNotEmpty(this.includedPages)) {
+            return this.includedPages.contains(pageId);
+        }
+
+        if (CollectionUtils.isNotEmpty(this.excludedPages)) {
+            return !this.excludedPages.contains(pageId);
+        }
+
+        return true;
     }
 }
