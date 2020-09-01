@@ -24,8 +24,10 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
+import java.io.StringWriter;
 import java.text.ParseException;
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -522,11 +524,18 @@ public class ConfluenceInputFilterStream
 
             PropertiesConfiguration currentAttachmentProperties = pageAttachments.get(attachmentName);
             if (currentAttachmentProperties != null) {
-                long version = this.confluencePackage.getAttachementVersion(attachmentProperties);
-                long currentVersion = this.confluencePackage.getAttachementVersion(currentAttachmentProperties);
+                try {
+                    Date date = this.confluencePackage.getDate(attachmentProperties,
+                        ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE);
+                    Date currentDate = this.confluencePackage.getDate(currentAttachmentProperties,
+                        ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE);
 
-                if (version > currentVersion) {
-                    pageAttachments.put(attachmentName, attachmentProperties);
+                    if (date.after(currentDate)) {
+                        pageAttachments.put(attachmentName, attachmentProperties);
+                    }
+                } catch (ParseException e) {
+                    this.logger.warn("Failed to parse the date of attachment with id [{}], skipping it", attachmentId,
+                        e);
                 }
             } else {
                 pageAttachments.put(attachmentName, attachmentProperties);
