@@ -280,13 +280,15 @@ public class ConfluenceXMLPackage
         createTree();
     }
 
-    private void fromFile(File file) throws IOException
+    private void fromFile(File file) throws XMLStreamException
     {
         if (file.isDirectory()) {
             this.directory = file;
         } else {
             try (FileInputStream stream = new FileInputStream(file)) {
                 fromStream(stream);
+            } catch (IOException e) {
+                throw new XMLStreamException("Failed to read Confluence package in file [" + file + "]");
             }
         }
     }
