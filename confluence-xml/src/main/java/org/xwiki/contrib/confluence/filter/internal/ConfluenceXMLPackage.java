@@ -53,7 +53,10 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.CloseShieldInputStream;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xwiki.filter.FilterException;
 import org.xwiki.filter.input.FileInputSource;
 import org.xwiki.filter.input.InputSource;
@@ -237,6 +240,8 @@ public class ConfluenceXMLPackage
 
     private static final XMLInputFactory XML_INPUT_FACTORY = XMLInputFactory.newInstance();
 
+    protected static final Logger LOGGER = LoggerFactory.getLogger(ConfluenceXMLPackage.class);
+
     private File directory;
 
     private File entities;
@@ -401,23 +406,31 @@ public class ConfluenceXMLPackage
     }
 
     public EntityReference getReferenceFromId(PropertiesConfiguration currentProperties, String key)
-        throws ConfigurationException
+        throws ConfigurationException, FilterException
     {
         Long pageId = currentProperties.getLong(key, null);
         if (pageId != null) {
             PropertiesConfiguration pageProperties = getPageProperties(pageId, true);
 
             long spaceId = pageProperties.getLong(KEY_PAGE_SPACE);
-            long currentSpaceId = currentProperties.getLong(KEY_PAGE_SPACE);
+            String pageTitle = pageProperties.getString(KEY_PAGE_TITLE);
 
-            EntityReference spaceReference;
-            if (spaceId != currentSpaceId) {
-                spaceReference = new EntityReference(getSpaceKey(currentSpaceId), EntityType.SPACE);
+            if (StringUtils.isNotEmpty(pageTitle)) {
+                long currentSpaceId = currentProperties.getLong(KEY_PAGE_SPACE);
+
+                EntityReference spaceReference = null;
+                if (spaceId != currentSpaceId) {
+                    String spaceName = getSpaceKey(currentSpaceId);
+                    if (spaceName != null) {
+                        spaceReference = new EntityReference(spaceName, EntityType.SPACE);
+                    }
+                }
+
+                return new EntityReference(pageTitle, EntityType.DOCUMENT, spaceReference);
             } else {
-                spaceReference = null;
+                throw new FilterException("Cannot create a reference to the page with id [" + pageId
+                    + "] because it does not have any title");
             }
-
-            return new EntityReference(pageProperties.getString(KEY_PAGE_TITLE), EntityType.DOCUMENT, spaceReference);
         }
 
         return null;

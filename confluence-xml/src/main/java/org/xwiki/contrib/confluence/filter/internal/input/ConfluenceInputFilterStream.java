@@ -21,11 +21,8 @@ package org.xwiki.contrib.confluence.filter.internal.input;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
-import java.io.StringWriter;
-import java.text.ParseException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -64,6 +61,7 @@ import org.xwiki.filter.input.InputFilterStreamFactory;
 import org.xwiki.filter.input.StringInputSource;
 import org.xwiki.job.event.status.JobProgressManager;
 import org.xwiki.rendering.listener.Listener;
+import org.xwiki.rendering.parser.ParseException;
 import org.xwiki.rendering.parser.StreamParser;
 import org.xwiki.rendering.renderer.PrintRenderer;
 import org.xwiki.rendering.renderer.PrintRendererFactory;
@@ -158,7 +156,7 @@ public class ConfluenceInputFilterStream
                     this.confluencePackage.getDate(userProperties, ConfluenceXMLPackage.KEY_USER_REVISION_DATE));
                 userParameters.put(UserFilter.PARAMETER_CREATION_DATE,
                     this.confluencePackage.getDate(userProperties, ConfluenceXMLPackage.KEY_USER_CREATION_DATE));
-            } catch (ParseException e) {
+            } catch (Exception e) {
                 if (this.properties.isVerbose()) {
                     this.logger.error("Failed to parse date", e);
                 }
@@ -202,7 +200,7 @@ public class ConfluenceInputFilterStream
                     this.confluencePackage.getDate(groupProperties, ConfluenceXMLPackage.KEY_GROUP_REVISION_DATE));
                 groupParameters.put(GroupFilter.PARAMETER_CREATION_DATE,
                     this.confluencePackage.getDate(groupProperties, ConfluenceXMLPackage.KEY_GROUP_CREATION_DATE));
-            } catch (ParseException e) {
+            } catch (Exception e) {
                 if (this.properties.isVerbose()) {
                     this.logger.error("Failed to parse date", e);
                 }
@@ -227,7 +225,7 @@ public class ConfluenceInputFilterStream
                         }
 
                         proxyFilter.onGroupMemberGroup(memberId, memberParameters);
-                    } catch (ConfigurationException e) {
+                    } catch (Exception e) {
                         this.logger.error("Failed to get user properties", e);
                     }
                 }
@@ -253,7 +251,7 @@ public class ConfluenceInputFilterStream
                         }
 
                         proxyFilter.onGroupMemberGroup(memberId, memberParameters);
-                    } catch (ConfigurationException e) {
+                    } catch (Exception e) {
                         this.logger.error("Failed to get group properties", e);
                     }
                 }
@@ -334,7 +332,7 @@ public class ConfluenceInputFilterStream
         }
 
         if (StringUtils.isEmpty(documentName)) {
-            this.logger.warn("Found a page without name of title (id={}). Skipping it.", pageId);
+            this.logger.warn("Found a page without a name or title (id={}). Skipping it.", pageId);
 
             return;
         }
@@ -365,7 +363,7 @@ public class ConfluenceInputFilterStream
             try {
                 documentLocaleParameters.put(WikiDocumentFilter.PARAMETER_CREATION_DATE,
                     this.confluencePackage.getDate(pageProperties, ConfluenceXMLPackage.KEY_PAGE_CREATION_DATE));
-            } catch (ParseException e) {
+            } catch (Exception e) {
                 if (this.properties.isVerbose()) {
                     this.logger.error("Failed to parse date", e);
                 }
@@ -429,7 +427,7 @@ public class ConfluenceInputFilterStream
             try {
                 documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_PARENT,
                     this.confluencePackage.getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT));
-            } catch (ConfigurationException e) {
+            } catch (Exception e) {
                 if (this.properties.isVerbose()) {
                     this.logger.error("Failed to parse parent", e);
                 }
@@ -443,7 +441,7 @@ public class ConfluenceInputFilterStream
             try {
                 documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_REVISION_DATE,
                     this.confluencePackage.getDate(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISION_DATE));
-            } catch (ParseException e) {
+            } catch (Exception e) {
                 if (this.properties.isVerbose()) {
                     this.logger.error("Failed to parse date", e);
                 }
@@ -488,12 +486,20 @@ public class ConfluenceInputFilterStream
                 // > WikiDocumentRevision
                 proxyFilter.beginWikiDocumentRevision(revision, documentRevisionParameters);
 
-                parse(bodyContent, bodyType, this.properties.getMacroContentSyntax(), proxyFilter);
+                try {
+                    parse(bodyContent, bodyType, this.properties.getMacroContentSyntax(), proxyFilter);
+                } catch (Exception e) {
+                   this.logger.error("Failed to parse content of page with id [{}]", pageId, e);
+                }
             } else if (this.properties.isConvertToXWiki()) {
                 // Convert content to XWiki syntax
-                documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_CONTENT,
-                    convertToXWiki21(bodyContent, bodyType));
-                documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, Syntax.XWIKI_2_1);
+                try {
+                    documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_CONTENT,
+                        convertToXWiki21(bodyContent, bodyType));
+                    documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, Syntax.XWIKI_2_1);
+                } catch (Exception e) {
+                    this.logger.error("Failed to convert content of the page with id [{}]", pageId, e);
+                }
 
                 // > WikiDocumentRevision
                 proxyFilter.beginWikiDocumentRevision(revision, documentRevisionParameters);
@@ -533,7 +539,7 @@ public class ConfluenceInputFilterStream
                     if (date.after(currentDate)) {
                         pageAttachments.put(attachmentName, attachmentProperties);
                     }
-                } catch (ParseException e) {
+                } catch (Exception e) {
                     this.logger.warn("Failed to parse the date of attachment with id [{}], skipping it", attachmentId,
                         e);
                 }
@@ -550,7 +556,7 @@ public class ConfluenceInputFilterStream
         proxyFilter.endWikiDocumentRevision(revision, documentRevisionParameters);
     }
 
-    private String convertToXWiki21(String bodyContent, int bodyType) throws FilterException
+    private String convertToXWiki21(String bodyContent, int bodyType) throws FilterException, ParseException
     {
         DefaultWikiPrinter printer = new DefaultWikiPrinter();
         PrintRenderer renderer = this.xwiki21Factory.createRenderer(printer);
@@ -572,21 +578,17 @@ public class ConfluenceInputFilterStream
     }
 
     private void parse(String bodyContent, int bodyType, Syntax macroContentSyntax, Listener listener)
-        throws FilterException
+        throws FilterException, ParseException
     {
-        try {
-            switch (bodyType) {
-                case 0:
-                    this.confluenceWIKIParser.parse(new StringReader(bodyContent), wrap(listener));
-                    break;
-                case 2:
-                    createSyntaxFilter(bodyContent, macroContentSyntax).read(wrap(listener));
-                    break;
-                default:
-                    break;
-            }
-        } catch (org.xwiki.rendering.parser.ParseException e) {
-            throw new FilterException(String.format("Failed parser content [%s]", bodyContent), e);
+        switch (bodyType) {
+            case 0:
+                this.confluenceWIKIParser.parse(new StringReader(bodyContent), wrap(listener));
+                break;
+            case 2:
+                createSyntaxFilter(bodyContent, macroContentSyntax).read(wrap(listener));
+                break;
+            default:
+                break;
         }
     }
 
@@ -640,7 +642,7 @@ public class ConfluenceInputFilterStream
         File contentFile;
         try {
             contentFile = this.confluencePackage.getAttachmentFile(pageId, originalRevisionId, version);
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
             this.logger.warn("Failed to find file corresponding to version [{}] attachment [{}] in page [{}]: {}",
                 version, attachmentName, pageId, ExceptionUtils.getRootCauseMessage(e));
 
@@ -659,7 +661,7 @@ public class ConfluenceInputFilterStream
             try {
                 attachmentParameters.put(WikiAttachmentFilter.PARAMETER_CREATION_DATE, this.confluencePackage
                     .getDate(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_CREATION_DATE));
-            } catch (ParseException e) {
+            } catch (Exception e) {
                 if (this.properties.isVerbose()) {
                     this.logger.error("Failed to parse date", e);
                 }
@@ -675,7 +677,7 @@ public class ConfluenceInputFilterStream
             try {
                 attachmentParameters.put(WikiAttachmentFilter.PARAMETER_REVISION_DATE, this.confluencePackage
                     .getDate(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE));
-            } catch (ParseException e) {
+            } catch (Exception e) {
                 if (this.properties.isVerbose()) {
                     this.logger.error("Failed to parse date", e);
                 }
