@@ -221,6 +221,8 @@ public class ConfluenceXMLPackage
     public static final String KEY_USER_EMAIL = "emailAddress";
 
     public static final String KEY_USER_PASSWORD = "credential";
+    
+    public static final String KEY_LABELLING_CONTENT = "content";
 
     /**
      * 2012-03-07 17:16:48.158
@@ -237,6 +239,13 @@ public class ConfluenceXMLPackage
      * replacement to repair the CDATA
      */
     private static final String REPAIRED_CDATA_END = "]]";
+    
+    /**
+     * possible content types for labellings (CONTENT for pages, ATTACHMENT for attachments) 
+     */
+    private static final String LABELLING_CONTENT_TYPE_CONTENT = "CONTENT";
+    
+    private static final String LABELLING_CONTENT_TYPE_ATTACHMENT = "ATTACHMENT";
 
     private static final XMLInputFactory XML_INPUT_FACTORY = XMLInputFactory.newInstance();
 
@@ -521,6 +530,8 @@ public class ConfluenceXMLPackage
                 readSpacePermissionObject(xmlReader);
             } else if (type.equals("Attachment")) {
                 readAttachmentObject(xmlReader);
+            } else if (type.equals("Labelling")) {
+                readLabellingObject(xmlReader);
             } else {
                 PropertiesConfiguration properties = newProperties();
 
@@ -587,6 +598,36 @@ public class ConfluenceXMLPackage
 
         return pageId;
     }
+    
+    private void readLabellingObject(XMLStreamReader xmlReader)
+            throws XMLStreamException, FilterException, ConfigurationException
+        {
+            PropertiesConfiguration properties = newProperties();
+
+            long labellingId = readObjectProperties(xmlReader, properties);
+            
+            // check if the labelling connects the label to a page (labelabletype=CONTENT) or an attachment (labelabletype=ATTACHMENT)
+            
+            String contentType = properties.getString(KEY_LABELLING_CONTENT, null);
+            		
+            Long contentId = getLabellingContentId(properties);
+
+            if (contentId != null) {
+                // Save attachment
+                saveLabellingProperties(properties, contentId, contentType, labellingId);
+            }
+        }
+
+    private Long getLabellingContentId(PropertiesConfiguration properties)
+        {
+            Long pageId = getLong(properties, KEY_LABELLING_CONTENT, null);
+
+            if (pageId == null) {
+                pageId = properties.getLong(KEY_LABELLING_CONTENT, null);
+            }
+
+            return pageId;
+        }
 
     private void readSpaceObject(XMLStreamReader xmlReader)
         throws XMLStreamException, FilterException, ConfigurationException
@@ -885,6 +926,15 @@ public class ConfluenceXMLPackage
     {
         return new File(getPageFolder(pageId), "attachments");
     }
+    
+    private File getLabellingFolder(long contentId, String contentType)
+    {
+    	if (contentType.equals(LABELLING_CONTENT_TYPE_ATTACHMENT)) {
+    		return new File(getAttachmentsFolder(contentId), "labelling");
+    	} else {
+    		return new File(getPageFolder(contentId), "labelling");
+    	}
+    }
 
     private File getSpacePermissionsFolder(long spaceId)
     {
@@ -895,6 +945,11 @@ public class ConfluenceXMLPackage
     {
         return new File(getAttachmentsFolder(pageId), String.valueOf(attachmentId));
     }
+    
+    private File getLabellingFolder(long contentId, String contentType, long labellingId)
+    {
+        return new File(getLabellingFolder(contentId, contentType), String.valueOf(labellingId));
+    }
 
     private File getSpacePermissionFolder(long spaceId, long permissionId)
     {
@@ -904,6 +959,13 @@ public class ConfluenceXMLPackage
     private File getAttachmentPropertiesFile(long pageId, long attachmentId)
     {
         File folder = getAttachmentFolder(pageId, attachmentId);
+
+        return new File(folder, "properties.properties");
+    }
+    
+    private File getLabellingPropertiesFile(long contentId, String contentType, long labellingId)
+    {
+        File folder = getLabellingFolder(contentId, contentType, labellingId);
 
         return new File(folder, "properties.properties");
     }
@@ -1006,6 +1068,13 @@ public class ConfluenceXMLPackage
 
         return new PropertiesConfiguration(file);
     }
+    
+    public PropertiesConfiguration getLabellingProperties(long contentId, String contentType, long labellingId) throws ConfigurationException
+    {
+        File file = getLabellingPropertiesFile(contentId, contentType, labellingId);
+
+        return new PropertiesConfiguration(file);
+    }
 
     public PropertiesConfiguration getSpacePermissionProperties(long spaceId, long permissionId)
         throws ConfigurationException
@@ -1050,6 +1119,16 @@ public class ConfluenceXMLPackage
         throws ConfigurationException
     {
         PropertiesConfiguration fileProperties = getAttachmentProperties(pageId, attachmentId);
+
+        fileProperties.copy(properties);
+
+        fileProperties.save();
+    }
+    
+    private void saveLabellingProperties(PropertiesConfiguration properties, long contentId, String contentType, long labellingId)
+            throws ConfigurationException
+    {
+        PropertiesConfiguration fileProperties = getLabellingProperties(contentId, contentType, labellingId);
 
         fileProperties.copy(properties);
 
