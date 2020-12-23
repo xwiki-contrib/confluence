@@ -744,7 +744,7 @@ public class ConfluenceXMLPackage
             return readSetProperty(xmlReader);
         } else if (propertyClass.equals("Page") || propertyClass.equals("Space") || propertyClass.equals("BodyContent")
             || propertyClass.equals("Attachment") || propertyClass.equals("SpaceDescription")
-            || propertyClass.equals("Labelling") || propertyClass.equals("SpacePermission")
+            || propertyClass.equals("Labelling") || propertyClass.equals("Label") || propertyClass.equals("SpacePermission")
             || propertyClass.equals("InternalGroup") || propertyClass.equals("InternalUser")
             || propertyClass.equals("Comment") || propertyClass.equals("ContentProperty")) {
             return readObjectReference(xmlReader);
