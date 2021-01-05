@@ -613,7 +613,7 @@ public class ConfluenceInputFilterStream
             return;
         }
 
-        long attachmentId = attachmentProperties.getInt("id");
+        long attachmentId = attachmentProperties.getLong("id");
 
         String attachmentName = this.confluencePackage.getAttachmentName(attachmentProperties);
 
