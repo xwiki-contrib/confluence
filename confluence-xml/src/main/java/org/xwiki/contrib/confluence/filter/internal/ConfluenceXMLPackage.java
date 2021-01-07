@@ -74,7 +74,7 @@ import com.google.common.base.Strings;
  */
 public class ConfluenceXMLPackage
 {
-    public static final String FILE_ENTITIES = "entities.xml";
+	public static final String FILE_ENTITIES = "entities.xml";
 
     public static final String FILE_DESCRIPTOR = "exportDescriptor.properties";
 
@@ -187,6 +187,8 @@ public class ConfluenceXMLPackage
     public static final String KEY_ATTACHMENT_ORIGINALVERSIONID = "originalVersionId";
 
     public static final String KEY_ATTACHMENT_DTO = "imageDetailsDTO";
+    
+    public static final String KEY_LABELLING_LABELABLE_TYPE = "labelableType";
 
     public static final String KEY_GROUP_NAME = "name";
 
@@ -608,7 +610,7 @@ public class ConfluenceXMLPackage
             
             // check if the labelling connects the label to a page (labelabletype=CONTENT) or an attachment (labelabletype=ATTACHMENT)
             
-            String contentType = properties.getString(KEY_LABELLING_CONTENT, null);
+            String contentType = properties.getString(KEY_LABELLING_LABELABLE_TYPE, null);
             		
             Long contentId = getLabellingContentId(properties);
 
