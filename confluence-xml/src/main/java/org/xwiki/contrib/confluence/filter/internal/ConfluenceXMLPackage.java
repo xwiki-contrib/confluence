@@ -188,6 +188,8 @@ public class ConfluenceXMLPackage
 
     public static final String KEY_ATTACHMENT_DTO = "imageDetailsDTO";
     
+    public static final String KEY_LABEL_NAME = "name";
+    
     public static final String KEY_LABELLING_LABEL = "label";
     
     public static final String KEY_LABELLING_CONTENT = "content";
@@ -1254,12 +1256,19 @@ public class ConfluenceXMLPackage
             : getLong(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_ORIGINALVERSION, def);
     }
     
-    public String getTagName(PropertiesConfiguration attachmentProperties)
+    public String getTagName(PropertiesConfiguration labellingProperties)
     {
-        Long tagId = attachmentProperties.getLong(ConfluenceXMLPackage.KEY_LABELLING_LABEL, null);
+        Long tagId = labellingProperties.getLong(ConfluenceXMLPackage.KEY_LABELLING_LABEL, null);
+        String tagName = tagId.toString();
+        
+        try {
+			 PropertiesConfiguration labelProperties = getObjectProperties(tagId);
+			 tagName = labelProperties.getString(KEY_LABEL_NAME);
+		} catch (NumberFormatException | ConfigurationException e) {
+			LOGGER.warn("Unable to get tag name, using id instead.");
+		}
 
-     // TODO: Get the proper tag name instead of returning id
-        return tagId.toString();
+        return tagName;
     }
 
     public Long getLong(PropertiesConfiguration properties, String key, Long def)
