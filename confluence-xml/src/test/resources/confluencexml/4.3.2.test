@@ -514,6 +514,40 @@ Link to page 1 [[here&gt;&gt;doc:SPACE1.Page 1]]</string>
             </entry>
           </parameters>
         </p>
+        <wikiObject name="space2 Home.Page 2.WebHome">
+          <p>
+            <parameters>
+              <entry>
+                <string>number</string>
+                <int>0</int>
+              </entry>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.TagClass</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiClass>
+            <wikiClassProperty name="tags" type="com.xpn.xwiki.objects.classes.StaticListClass">
+              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
+              <wikiClassPropertyField name="freeText" value="forbidden"></wikiClassPropertyField>
+              <wikiClassPropertyField name="largeStorage" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="multiSelect" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="tags"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Tags"></wikiClassPropertyField>
+              <wikiClassPropertyField name="relationalStorage" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separator" value="|"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separators" value="|,"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="values"></wikiClassPropertyField>
+            </wikiClassProperty>
+          </wikiClass>
+          <wikiObjectProperty name="tags" value="tag1|favourite"></wikiObjectProperty>
+        </wikiObject>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
@@ -18863,6 +18897,40 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
             </parameters>
           </p>
         </wikiAttachment>
+        <wikiObject name="space2.space2 Home.WebHome">
+          <p>
+            <parameters>
+              <entry>
+                <string>number</string>
+                <int>0</int>
+              </entry>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.TagClass</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiClass>
+            <wikiClassProperty name="tags" type="com.xpn.xwiki.objects.classes.StaticListClass">
+              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
+              <wikiClassPropertyField name="freeText" value="forbidden"></wikiClassPropertyField>
+              <wikiClassPropertyField name="largeStorage" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="multiSelect" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="tags"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Tags"></wikiClassPropertyField>
+              <wikiClassPropertyField name="relationalStorage" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separator" value="|"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separators" value="|,"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="values"></wikiClassPropertyField>
+            </wikiClassProperty>
+          </wikiClass>
+          <wikiObjectProperty name="tags" value="tag1"></wikiObjectProperty>
+        </wikiObject>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
@@ -18921,6 +18989,40 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
             </entry>
           </parameters>
         </p>
+        <wikiObject name="space1.WebHome">
+          <p>
+            <parameters>
+              <entry>
+                <string>number</string>
+                <int>0</int>
+              </entry>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.TagClass</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiClass>
+            <wikiClassProperty name="tags" type="com.xpn.xwiki.objects.classes.StaticListClass">
+              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
+              <wikiClassPropertyField name="freeText" value="forbidden"></wikiClassPropertyField>
+              <wikiClassPropertyField name="largeStorage" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="multiSelect" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="tags"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Tags"></wikiClassPropertyField>
+              <wikiClassPropertyField name="relationalStorage" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separator" value="|"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separators" value="|,"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="values"></wikiClassPropertyField>
+            </wikiClassProperty>
+          </wikiClass>
+          <wikiObjectProperty name="tags" value="favourite"></wikiObjectProperty>
+        </wikiObject>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
