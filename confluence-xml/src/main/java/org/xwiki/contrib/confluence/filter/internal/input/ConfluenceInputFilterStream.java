@@ -555,10 +555,11 @@ public class ConfluenceInputFilterStream
         
         // Tags
         Map<String, PropertiesConfiguration> pageTags = new LinkedHashMap<>();
-        for (long tagId : this.confluencePackage.getTags(pageId)) {
+        for (Object tagIdStringObject : pageProperties.getList(ConfluenceXMLPackage.KEY_PAGE_LABELLINGS)) {
+        	long tagId = Long.valueOf((String) tagIdStringObject);
             PropertiesConfiguration tagProperties;
             try {
-                tagProperties = this.confluencePackage.getPageTagProperties(pageId, tagId);
+                tagProperties = this.confluencePackage.getObjectProperties(tagId);
             } catch (ConfigurationException e) {
                 throw new FilterException("Failed to get tag properties", e);
             }

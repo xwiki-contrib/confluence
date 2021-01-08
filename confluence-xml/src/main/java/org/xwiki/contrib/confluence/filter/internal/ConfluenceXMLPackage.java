@@ -113,6 +113,8 @@ public class ConfluenceXMLPackage
     public static final String KEY_PAGE_BODY = "body";
 
     public static final String KEY_PAGE_BODY_TYPE = "bodyType";
+    
+    public static final String KEY_PAGE_LABELLINGS = "labellings";
 
     /**
      * Old property to indicate attachment name.
@@ -191,10 +193,6 @@ public class ConfluenceXMLPackage
     public static final String KEY_LABEL_NAME = "name";
     
     public static final String KEY_LABELLING_LABEL = "label";
-    
-    public static final String KEY_LABELLING_CONTENT = "content";
-    
-    public static final String KEY_LABELLING_LABELABLE_TYPE = "labelableType";
 
     public static final String KEY_GROUP_NAME = "name";
 
@@ -245,13 +243,6 @@ public class ConfluenceXMLPackage
      * replacement to repair the CDATA
      */
     private static final String REPAIRED_CDATA_END = "]]";
-    
-    /**
-     * possible content types for labellings (CONTENT for pages, ATTACHMENT for attachments) 
-     */
-    private static final String LABELLING_CONTENT_TYPE_CONTENT = "CONTENT";
-    
-    private static final String LABELLING_CONTENT_TYPE_ATTACHMENT = "ATTACHMENT";
 
     private static final XMLInputFactory XML_INPUT_FACTORY = XMLInputFactory.newInstance();
 
@@ -536,8 +527,6 @@ public class ConfluenceXMLPackage
                 readSpacePermissionObject(xmlReader);
             } else if (type.equals("Attachment")) {
                 readAttachmentObject(xmlReader);
-            } else if (type.equals("Labelling")) {
-                readLabellingObject(xmlReader);
             } else {
                 PropertiesConfiguration properties = newProperties();
 
@@ -604,38 +593,6 @@ public class ConfluenceXMLPackage
 
         return pageId;
     }
-    
-    private void readLabellingObject(XMLStreamReader xmlReader)
-            throws XMLStreamException, FilterException, ConfigurationException
-        {
-            PropertiesConfiguration properties = newProperties();
-
-            long labellingId = readObjectProperties(xmlReader, properties);
-            
-            // Check if the labelling connects the label to a page (labelabletype=CONTENT) or an attachment (labelabletype=ATTACHMENT)       
-            String contentType = properties.getString(KEY_LABELLING_LABELABLE_TYPE, null);
-            	
-            // Page or attachment id
-            Long contentId = getLabellingContentId(properties);
-
-            if (contentId != null) {
-            	// TODO: XWiki currently only supports page tags, skip attachment tags
-            	if (contentType.equals(LABELLING_CONTENT_TYPE_CONTENT)) {
-	                savePageTagProperties(properties, contentId, labellingId);
-            	}
-            }
-        }
-
-    private Long getLabellingContentId(PropertiesConfiguration properties)
-        {
-            Long pageId = getLong(properties, KEY_LABELLING_CONTENT, null);
-
-            if (pageId == null) {
-                pageId = properties.getLong(KEY_LABELLING_CONTENT, null);
-            }
-
-            return pageId;
-        }
 
     private void readSpaceObject(XMLStreamReader xmlReader)
         throws XMLStreamException, FilterException, ConfigurationException
@@ -894,11 +851,6 @@ public class ConfluenceXMLPackage
     {
         return new File(getObjectsFolder(folderName), String.valueOf(objectId));
     }
-    
-    private File getPageObjectsFolder(long pageId)
-    {
-    	return new File(getPageFolder(pageId), "objects");
-    }
 
     private File getPagePropertiesFile(long pageId)
     {
@@ -934,36 +886,10 @@ public class ConfluenceXMLPackage
 
         return attachments;
     }
-    
-    public Collection<Long> getTags(long pageId)
-    {
-        File folder = getPageTagsFolder(pageId);
-
-        Collection<Long> tags;
-        if (folder.exists()) {
-            String[] tagFolders = folder.list();
-
-            tags = new TreeSet<>();
-            for (String tagIdString : tagFolders) {
-                if (NumberUtils.isCreatable(tagIdString)) {
-                    tags.add(Long.valueOf(tagIdString));
-                }
-            }
-        } else {
-            tags = Collections.emptyList();
-        }
-
-        return tags;
-    }
 
     private File getAttachmentsFolder(long pageId)
     {
         return new File(getPageFolder(pageId), "attachments");
-    }
-    
-    private File getPageTagsFolder(long pageId)
-    {
-		return new File(getPageObjectsFolder(pageId), "XWiki.TagClass");  		
     }
 
     private File getSpacePermissionsFolder(long spaceId)
@@ -975,11 +901,6 @@ public class ConfluenceXMLPackage
     {
         return new File(getAttachmentsFolder(pageId), String.valueOf(attachmentId));
     }
-    
-    private File getPageTagFolder(long pageId, long tagId)
-    {
-        return new File(getPageTagsFolder(pageId), String.valueOf(tagId));
-    }
 
     private File getSpacePermissionFolder(long spaceId, long permissionId)
     {
@@ -989,13 +910,6 @@ public class ConfluenceXMLPackage
     private File getAttachmentPropertiesFile(long pageId, long attachmentId)
     {
         File folder = getAttachmentFolder(pageId, attachmentId);
-
-        return new File(folder, "properties.properties");
-    }
-    
-    private File getPageTagPropertiesFile(long pageId, long tagId)
-    {
-        File folder = getPageTagFolder(pageId, tagId);
 
         return new File(folder, "properties.properties");
     }
@@ -1098,13 +1012,6 @@ public class ConfluenceXMLPackage
 
         return new PropertiesConfiguration(file);
     }
-    
-    public PropertiesConfiguration getPageTagProperties(long pageId, long tagId) throws ConfigurationException
-    {
-        File file = getPageTagPropertiesFile(pageId, tagId);
-
-        return new PropertiesConfiguration(file);
-    }
 
     public PropertiesConfiguration getSpacePermissionProperties(long spaceId, long permissionId)
         throws ConfigurationException
@@ -1149,16 +1056,6 @@ public class ConfluenceXMLPackage
         throws ConfigurationException
     {
         PropertiesConfiguration fileProperties = getAttachmentProperties(pageId, attachmentId);
-
-        fileProperties.copy(properties);
-
-        fileProperties.save();
-    }
-    
-    private void savePageTagProperties(PropertiesConfiguration properties, long pageId, long tagId)
-            throws ConfigurationException
-    {
-        PropertiesConfiguration fileProperties = getPageTagProperties(pageId, tagId);
 
         fileProperties.copy(properties);
 
@@ -1263,7 +1160,7 @@ public class ConfluenceXMLPackage
         
         try {
 			 PropertiesConfiguration labelProperties = getObjectProperties(tagId);
-			 tagName = labelProperties.getString(KEY_LABEL_NAME);
+			 tagName = labelProperties.getString(ConfluenceXMLPackage.KEY_LABEL_NAME);
 		} catch (NumberFormatException | ConfigurationException e) {
 			LOGGER.warn("Unable to get tag name, using id instead.");
 		}
