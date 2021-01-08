@@ -308,7 +308,7 @@ public class ConfluenceXMLPackage
             try (FileInputStream stream = new FileInputStream(file)) {
                 fromStream(stream);
             } catch (IOException e) {
-                throw new XMLStreamException("Failed to read Confluence package in file [" + file + "]");
+                throw new XMLStreamException(String.format("Failed to read Confluence package in file [%s]", file), e);
             }
         }
     }
