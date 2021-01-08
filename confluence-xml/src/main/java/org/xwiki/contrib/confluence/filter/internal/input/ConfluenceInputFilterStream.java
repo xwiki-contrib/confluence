@@ -569,96 +569,7 @@ public class ConfluenceInputFilterStream
         }
 
         if (!pageTags.isEmpty()) {
-	        FilterEventParameters pageTagsParameters = new FilterEventParameters();
-	
-	        // name      
-	        // get parent name from reference
-	        String parentName = "";
-	        try {
-	            parentName = this.confluencePackage.getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT).getName();
-	        } catch (Exception e) {
-	            if (this.properties.isVerbose()) {
-	                this.logger.warn("Failed to parse parent", e);
-	            }
-	        }
-	        
-	        // use space name if there is no parent
-	        if (parentName.isEmpty()) {
-	        	try {
-					parentName = this.confluencePackage.getSpaceName(Long.valueOf(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_SPACE)));
-				} catch (NumberFormatException | ConfigurationException e) {
-					this.logger.warn("Failed to parse space", e);
-				}
-	        }
-	        
-	        // get page name
-	        String pageName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
-	        
-	        // create full page name from parent + title + WebHome
-	        StringBuilder nameBuilder = new StringBuilder();
-	        if (!parentName.isEmpty()) {
-	        	nameBuilder.append(parentName);
-	        	nameBuilder.append(".");
-	        }
-	        if (!pageName.isEmpty()) {
-	        	nameBuilder.append(pageName);
-	        	nameBuilder.append(".");
-	        }
-	        nameBuilder.append("WebHome");
-	        
-	        String fullName = nameBuilder.toString();
-	        
-	        // set object parameters
-	        pageTagsParameters.put(WikiObjectFilter.PARAMETER_NUMBER, 0);
-	        pageTagsParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, "XWiki.TagClass");
-	        //pageTagsParameters.put(WikiObjectFilter.PARAMETER_GUID, generateGUID());
-	        
-	        proxyFilter.beginWikiObject(fullName, pageTagsParameters);
-	        
-	        FilterEventParameters tagClassParameters = new FilterEventParameters();
-	        
-	        // All class parameters seem to be empty for tags - except name but that is not provided by the WikiClassFilter so we leave it out for now
-	        
-	        proxyFilter.beginWikiClass(tagClassParameters);
-	        
-	        // <tags> class property
-	        FilterEventParameters tagClassPropertyParameters = new FilterEventParameters();
-	        proxyFilter.beginWikiClassProperty("tags", "com.xpn.xwiki.objects.classes.StaticListClass", tagClassPropertyParameters);
-	        
-	        // property fields
-	        proxyFilter.onWikiClassPropertyField("cache", "0", new FilterEventParameters());
-	        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
-	        proxyFilter.onWikiClassPropertyField("displayType", "input", new FilterEventParameters());
-	        proxyFilter.onWikiClassPropertyField("freeText", "forbidden", new FilterEventParameters());
-	        proxyFilter.onWikiClassPropertyField("largeStorage", "0", new FilterEventParameters());
-	        proxyFilter.onWikiClassPropertyField("multiSelect", "1", new FilterEventParameters());
-	        proxyFilter.onWikiClassPropertyField("name", "tags", new FilterEventParameters());
-	        proxyFilter.onWikiClassPropertyField("number", "1", new FilterEventParameters());
-	        proxyFilter.onWikiClassPropertyField("prettyName", "Tags", new FilterEventParameters());
-	        proxyFilter.onWikiClassPropertyField("relationalStorage", "1", new FilterEventParameters());
-	        proxyFilter.onWikiClassPropertyField("separator", "|", new FilterEventParameters());
-	        proxyFilter.onWikiClassPropertyField("separators", "|,", new FilterEventParameters());
-	        proxyFilter.onWikiClassPropertyField("size", "30", new FilterEventParameters());
-	        proxyFilter.onWikiClassPropertyField("unmodifiable", "0", new FilterEventParameters());
-	        proxyFilter.onWikiClassPropertyField("values", null, new FilterEventParameters());
-	        
-	        proxyFilter.endWikiClassProperty("tags", "com.xpn.xwiki.objects.classes.StaticListClass", tagClassPropertyParameters);
-	        
-	        proxyFilter.endWikiClass(tagClassParameters);
-	        
-	        // get page tags separated by | as string
-	        StringBuilder tagBuilder = new StringBuilder();
-	        String prefix = "";
-	        for (String tag : pageTags.keySet()) {
-	        	tagBuilder.append(prefix);
-	        	tagBuilder.append(tag);
-	            prefix = "|";
-	        }
-	        
-	        // <property><tags> object property
-	        proxyFilter.onWikiObjectProperty("tags", tagBuilder.toString(), new FilterEventParameters());
-	        
-	        proxyFilter.endWikiObject(fullName, pageTagsParameters);
+        	readPageTags(pageProperties, proxyFilter, pageTags);
         }
 
         // < WikiDocumentRevision
@@ -810,6 +721,94 @@ public class ConfluenceInputFilterStream
         } catch (Exception e) {
             throw new FilterException("Failed to read attachment", e);
         }
+    }
+    
+    private void readPageTags(PropertiesConfiguration pageProperties, ConfluenceFilter proxyFilter,
+    		Map<String, PropertiesConfiguration> pageTags) throws FilterException {
+    	FilterEventParameters pageTagsParameters = new FilterEventParameters();
+    	    
+        // get parent name from reference
+        String parentName = "";
+        try {
+            parentName = this.confluencePackage.getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT).getName();
+        } catch (Exception e) {
+            if (this.properties.isVerbose()) {
+                this.logger.warn("Failed to parse parent");
+            }
+        }
+        
+        // use space name if there is no parent
+        if (parentName.isEmpty()) {
+        	try {
+				parentName = this.confluencePackage.getSpaceName(Long.valueOf(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_SPACE)));
+			} catch (NumberFormatException | ConfigurationException e) {
+				this.logger.warn("Failed to parse space");
+			}
+        }
+        
+        // get page name
+        String pageName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
+        
+        // create full page name from parent + title + WebHome
+        StringBuilder nameBuilder = new StringBuilder();
+        if (!parentName.isEmpty()) {
+        	nameBuilder.append(parentName);
+        	nameBuilder.append(".");
+        }
+        if (!pageName.isEmpty()) {
+        	nameBuilder.append(pageName);
+        	nameBuilder.append(".");
+        }
+        nameBuilder.append("WebHome");       
+        String fullName = nameBuilder.toString();
+        
+        // Tag object
+        pageTagsParameters.put(WikiObjectFilter.PARAMETER_NUMBER, 0);
+        pageTagsParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, "XWiki.TagClass");        
+        proxyFilter.beginWikiObject(fullName, pageTagsParameters);
+        
+        // Tag class
+        FilterEventParameters tagClassParameters = new FilterEventParameters();
+        proxyFilter.beginWikiClass(tagClassParameters);
+        
+        // <tags> class property
+        FilterEventParameters tagClassPropertyParameters = new FilterEventParameters();
+        proxyFilter.beginWikiClassProperty("tags", "com.xpn.xwiki.objects.classes.StaticListClass", tagClassPropertyParameters);
+        
+        // property fields
+        proxyFilter.onWikiClassPropertyField("cache", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("displayType", "input", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("freeText", "forbidden", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("largeStorage", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("multiSelect", "1", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("name", "tags", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("number", "1", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("prettyName", "Tags", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("relationalStorage", "1", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("separator", "|", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("separators", "|,", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("size", "30", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("unmodifiable", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("values", null, new FilterEventParameters());
+        
+        proxyFilter.endWikiClassProperty("tags", "com.xpn.xwiki.objects.classes.StaticListClass", tagClassPropertyParameters);
+        
+        proxyFilter.endWikiClass(tagClassParameters);
+        
+        // get page tags separated by | as string
+        StringBuilder tagBuilder = new StringBuilder();
+        String prefix = "";
+        for (String tag : pageTags.keySet()) {
+        	tagBuilder.append(prefix);
+        	tagBuilder.append(tag);
+            prefix = "|";
+        }
+        
+        // <tags> object property
+        proxyFilter.onWikiObjectProperty("tags", tagBuilder.toString(), new FilterEventParameters());
+        
+        proxyFilter.endWikiObject(fullName, pageTagsParameters);
     }
 
     public PropertiesConfiguration getContentProperties(PropertiesConfiguration properties, String key)
