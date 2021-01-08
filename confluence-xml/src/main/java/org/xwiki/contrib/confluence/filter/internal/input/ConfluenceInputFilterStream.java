@@ -578,7 +578,7 @@ public class ConfluenceInputFilterStream
 	            parentName = this.confluencePackage.getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT).getName();
 	        } catch (Exception e) {
 	            if (this.properties.isVerbose()) {
-	                this.logger.error("Failed to parse parent", e);
+	                this.logger.warn("Failed to parse parent", e);
 	            }
 	        }
 	        
@@ -587,7 +587,7 @@ public class ConfluenceInputFilterStream
 	        	try {
 					parentName = this.confluencePackage.getSpaceName(Long.valueOf(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_SPACE)));
 				} catch (NumberFormatException | ConfigurationException e) {
-					this.logger.error("Failed to parse space", e);
+					this.logger.warn("Failed to parse space", e);
 				}
 	        }
 	        
@@ -626,14 +626,21 @@ public class ConfluenceInputFilterStream
 	        proxyFilter.beginWikiClassProperty("tags", "com.xpn.xwiki.objects.classes.StaticListClass", tagClassPropertyParameters);
 	        
 	        // property fields
+	        proxyFilter.onWikiClassPropertyField("cache", "0", new FilterEventParameters());
 	        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
+	        proxyFilter.onWikiClassPropertyField("displayType", "input", new FilterEventParameters());
+	        proxyFilter.onWikiClassPropertyField("freeText", "forbidden", new FilterEventParameters());
+	        proxyFilter.onWikiClassPropertyField("largeStorage", "0", new FilterEventParameters());
+	        proxyFilter.onWikiClassPropertyField("multiSelect", "1", new FilterEventParameters());
 	        proxyFilter.onWikiClassPropertyField("name", "tags", new FilterEventParameters());
 	        proxyFilter.onWikiClassPropertyField("number", "1", new FilterEventParameters());
 	        proxyFilter.onWikiClassPropertyField("prettyName", "Tags", new FilterEventParameters());
+	        proxyFilter.onWikiClassPropertyField("relationalStorage", "1", new FilterEventParameters());
 	        proxyFilter.onWikiClassPropertyField("separator", "|", new FilterEventParameters());
 	        proxyFilter.onWikiClassPropertyField("separators", "|,", new FilterEventParameters());
 	        proxyFilter.onWikiClassPropertyField("size", "30", new FilterEventParameters());
 	        proxyFilter.onWikiClassPropertyField("unmodifiable", "0", new FilterEventParameters());
+	        proxyFilter.onWikiClassPropertyField("values", null, new FilterEventParameters());
 	        
 	        proxyFilter.endWikiClassProperty("tags", "com.xpn.xwiki.objects.classes.StaticListClass", tagClassPropertyParameters);
 	        
