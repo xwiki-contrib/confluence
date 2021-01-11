@@ -115,6 +115,8 @@ public class ConfluenceXMLPackage
     public static final String KEY_PAGE_BODY_TYPE = "bodyType";
     
     public static final String KEY_PAGE_LABELLINGS = "labellings";
+    
+    public static final String KEY_PAGE_COMMENTS = "comments";
 
     /**
      * Old property to indicate attachment name.
@@ -1166,6 +1168,21 @@ public class ConfluenceXMLPackage
 		}
 
         return tagName;
+    }
+    
+    public String getCommentText(PropertiesConfiguration commentProperties, Long commentId)
+    {
+    	String commentText = commentId.toString();
+    	// Long commentContentId = Long.valueOf((String) commentProperties.getList("bodyContents").get(0));
+        try {
+        	// BodyContent objects are stored in page properties under the content id
+			PropertiesConfiguration commentContent = getPageProperties(commentId, false);
+			commentText = commentContent.getString("body");
+		} catch (ConfigurationException e) {
+			LOGGER.warn("Unable to get comment text, using id instead.");
+		}
+
+        return commentText;
     }
 
     public Long getLong(PropertiesConfiguration properties, String key, Long def)
