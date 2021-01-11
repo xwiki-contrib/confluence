@@ -119,6 +119,7 @@ public class ConfluenceInputFilterStream
         }
 
         Collection<Long> users = this.confluencePackage.getUsers();
+        // TODO get users in new format (this.confluencePackage.getAllUsers())
         Collection<Long> groups = this.confluencePackage.getGroups();
         Map<Long, List<Long>> pages = this.confluencePackage.getPages();
 
@@ -751,8 +752,24 @@ public class ConfluenceInputFilterStream
             
             // object properties
             PropertiesConfiguration commentProperties = pageComments.get(commentId);
-            // TODO resolve user reference
-            String commentCreator = "xwiki:XWiki." + commentProperties.getString("creator");
+            String commentCreator;
+            if (commentProperties.containsKey("creatorName")) {
+            	// old creator reference by name
+            	commentCreator = commentProperties.getString("creatorName");
+            } else {
+            	// new creator reference by key
+            	commentCreator = commentProperties.getString("creator");
+            	try {
+					PropertiesConfiguration creatorProperties = this.confluencePackage.getUserProperties(commentCreator);
+					// replace dots in user names with underlines for XWiki compatibility
+					commentCreator = creatorProperties.getString("name").replace(".", "_");
+				} catch (ConfigurationException e) {
+					if (this.properties.isVerbose()) {
+	                    this.logger.warn("Unable to get comment creator name, using id instead.", e);
+	                }
+				}
+            }
+            String commentCreatorReference = "xwiki:XWiki." + commentCreator;
       
             String commentBodyContent = this.confluencePackage.getCommentText(commentProperties, commentId);
             int commentBodyType = this.confluencePackage.getCommentBodyType(commentProperties, commentId);
@@ -774,7 +791,7 @@ public class ConfluenceInputFilterStream
                 }
 			}		
             
-            proxyFilter.onWikiObjectProperty("author", commentCreator, new FilterEventParameters());
+            proxyFilter.onWikiObjectProperty("author", commentCreatorReference, new FilterEventParameters());
             proxyFilter.onWikiObjectProperty("comment", commentText, new FilterEventParameters());
             proxyFilter.onWikiObjectProperty("date", commentDate, new FilterEventParameters());
             proxyFilter.onWikiObjectProperty("highlight", "", new FilterEventParameters());
