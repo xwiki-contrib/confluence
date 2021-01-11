@@ -1173,7 +1173,6 @@ public class ConfluenceXMLPackage
     public String getCommentText(PropertiesConfiguration commentProperties, Long commentId)
     {
     	String commentText = commentId.toString();
-    	// Long commentContentId = Long.valueOf((String) commentProperties.getList("bodyContents").get(0));
         try {
         	// BodyContent objects are stored in page properties under the content id
 			PropertiesConfiguration commentContent = getPageProperties(commentId, false);
@@ -1183,6 +1182,19 @@ public class ConfluenceXMLPackage
 		}
 
         return commentText;
+    }
+    
+    public Integer getCommentBodyType(PropertiesConfiguration commentProperties, Long commentId)
+    {
+    	Integer bodyType = -1;
+        try {
+			PropertiesConfiguration commentContent = getPageProperties(commentId, false);
+			bodyType = commentContent.getInt("bodyType");
+		} catch (ConfigurationException e) {
+			LOGGER.warn("Unable to get comment body type.");
+		}
+
+        return bodyType;
     }
 
     public Long getLong(PropertiesConfiguration properties, String key, Long def)

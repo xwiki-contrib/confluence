@@ -753,8 +753,18 @@ public class ConfluenceInputFilterStream
             PropertiesConfiguration commentProperties = pageComments.get(commentId);
             // TODO resolve user reference
             String commentCreator = "xwiki:XWiki." + commentProperties.getString("creator");
-            // TODO parse comment content (currently plain HTML)
-            String commentText = this.confluencePackage.getCommentText(commentProperties, commentId);
+      
+            String commentBodyContent = this.confluencePackage.getCommentText(commentProperties, commentId);
+            int commentBodyType = this.confluencePackage.getCommentBodyType(commentProperties, commentId);
+            String commentText = commentBodyContent;
+            if (commentBodyContent != null && this.properties.isConvertToXWiki()) {
+                try {
+                	commentText = convertToXWiki21(commentBodyContent, commentBodyType);
+                } catch (Exception e) {
+                    this.logger.error("Failed to convert content of the comment with id [{}]", commentId, e);
+                }
+            }          
+            
             Date commentDate = null;
 			try {
 				commentDate = this.confluencePackage.getDate(commentProperties, "creationDate");
