@@ -41,6 +41,7 @@ import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceXHTMLInputProperties;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXHTMLWhitespaceXMLFilter;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXWikiGeneratorListener;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TimeTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.DefaultMacroParameterTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ImageTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.LinkTagHandler;
@@ -174,6 +175,8 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("td", new TableCellTagHandler());
         
         handlers.put("pre", new PreformattedTagHandler());
+        
+        handlers.put("time", new TimeTagHandler());
 
         parser.setExtraHandlers(handlers);
 
