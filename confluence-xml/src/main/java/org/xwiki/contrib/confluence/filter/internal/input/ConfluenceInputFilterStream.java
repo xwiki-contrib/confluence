@@ -575,6 +575,8 @@ public class ConfluenceInputFilterStream
         
         // Comments
         Map<Long, PropertiesConfiguration> pageComments = new LinkedHashMap<>();
+        Map<Long, Long> commentIndeces = new LinkedHashMap<>();
+        int commentIndex = 0;
         for (Object commentIdStringObject : pageProperties.getList(ConfluenceXMLPackage.KEY_PAGE_COMMENTS)) {
         	long commentId = Long.valueOf((String) commentIdStringObject);
             PropertiesConfiguration commentProperties;
@@ -585,16 +587,17 @@ public class ConfluenceInputFilterStream
             }
 
             pageComments.put(commentId, commentProperties);
+            commentIndeces.put(commentId, Long.valueOf(commentIndex));
+            commentIndex++;
         }
 
-        int commentIndex = 0;
         for (Long commentId : pageComments.keySet()) {
         	//readComment(pageProperties, proxyFilter, pageTags);
         	String objectName = getObjectName(pageProperties);
         	FilterEventParameters commentParameters = new FilterEventParameters();               
             
             // Comment object
-            commentParameters.put(WikiObjectFilter.PARAMETER_NUMBER, commentIndex);
+            commentParameters.put(WikiObjectFilter.PARAMETER_NUMBER, commentIndeces.get(commentId));
             commentParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, "XWiki.XWikiComments");        
             proxyFilter.beginWikiObject(objectName, commentParameters);
             
@@ -752,6 +755,8 @@ public class ConfluenceInputFilterStream
             
             // object properties
             PropertiesConfiguration commentProperties = pageComments.get(commentId);
+            
+            // creator
             String commentCreator;
             if (commentProperties.containsKey("creatorName")) {
             	// old creator reference by name
@@ -770,7 +775,8 @@ public class ConfluenceInputFilterStream
 				}
             }
             String commentCreatorReference = "xwiki:XWiki." + commentCreator;
-      
+            
+            // content
             String commentBodyContent = this.confluencePackage.getCommentText(commentProperties, commentId);
             int commentBodyType = this.confluencePackage.getCommentBodyType(commentProperties, commentId);
             String commentText = commentBodyContent;
@@ -782,6 +788,7 @@ public class ConfluenceInputFilterStream
                 }
             }          
             
+            // creation date
             Date commentDate = null;
 			try {
 				commentDate = this.confluencePackage.getDate(commentProperties, "creationDate");
@@ -789,15 +796,21 @@ public class ConfluenceInputFilterStream
 				if (this.properties.isVerbose()) {
                     this.logger.error("Failed to parse date", e);
                 }
-			}		
+			}
+			
+			// parent (replyto)
+			Long parentIndex = null;
+			if (commentProperties.containsKey("parent")) {
+				Long parentId = commentProperties.getLong("parent");
+				parentIndex = commentIndeces.get(parentId);
+			}
             
             proxyFilter.onWikiObjectProperty("author", commentCreatorReference, new FilterEventParameters());
             proxyFilter.onWikiObjectProperty("comment", commentText, new FilterEventParameters());
             proxyFilter.onWikiObjectProperty("date", commentDate, new FilterEventParameters());
             proxyFilter.onWikiObjectProperty("highlight", "", new FilterEventParameters());
             proxyFilter.onWikiObjectProperty("originalSelection", "", new FilterEventParameters());
-            // TODO get message id that was replied to
-            proxyFilter.onWikiObjectProperty("replyto", null, new FilterEventParameters());
+            proxyFilter.onWikiObjectProperty("replyto", parentIndex, new FilterEventParameters());
             proxyFilter.onWikiObjectProperty("selection", "", new FilterEventParameters());
             proxyFilter.onWikiObjectProperty("selectionLeftContext", "", new FilterEventParameters());
             proxyFilter.onWikiObjectProperty("selectionRightContext", "", new FilterEventParameters());
@@ -805,8 +818,6 @@ public class ConfluenceInputFilterStream
             proxyFilter.onWikiObjectProperty("target", "", new FilterEventParameters());
             
             proxyFilter.endWikiObject(objectName, commentParameters); 
-            
-            commentIndex++;
         }
 
         // < WikiDocumentRevision
