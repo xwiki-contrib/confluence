@@ -49,6 +49,7 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroTagHand
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.PageTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.PlainTextBodyTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.PlainTextLinkBodyTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.PreformattedTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.RichTextBodyTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.SpaceTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TableCellTagHandler;
@@ -171,6 +172,8 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
 
         handlers.put("th", new TableHeadTagHandler());
         handlers.put("td", new TableCellTagHandler());
+        
+        handlers.put("pre", new PreformattedTagHandler());
 
         parser.setExtraHandlers(handlers);
 
