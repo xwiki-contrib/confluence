@@ -51,5 +51,11 @@ public class UserTagHandler extends TagHandler implements ConfluenceTagHandler
         if (usernameParameter != null && container instanceof UserContainer) {
             ((UserContainer) container).setUser(usernameParameter.getValue());
         }
+        
+        // new user reference format (by key)
+        WikiParameter userkeyParameter = context.getParams().getParameter("ri:userkey");
+        if (userkeyParameter != null && container instanceof UserContainer) {
+            ((UserContainer) container).setUser(userkeyParameter.getValue());
+        }
     }
 }
