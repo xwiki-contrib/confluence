@@ -74,7 +74,7 @@ import com.google.common.base.Strings;
  */
 public class ConfluenceXMLPackage
 {
-	public static final String FILE_ENTITIES = "entities.xml";
+    public static final String FILE_ENTITIES = "entities.xml";
 
     public static final String FILE_DESCRIPTOR = "exportDescriptor.properties";
 
@@ -113,9 +113,9 @@ public class ConfluenceXMLPackage
     public static final String KEY_PAGE_BODY = "body";
 
     public static final String KEY_PAGE_BODY_TYPE = "bodyType";
-    
+
     public static final String KEY_PAGE_LABELLINGS = "labellings";
-    
+
     public static final String KEY_PAGE_COMMENTS = "comments";
 
     /**
@@ -191,9 +191,9 @@ public class ConfluenceXMLPackage
     public static final String KEY_ATTACHMENT_ORIGINALVERSIONID = "originalVersionId";
 
     public static final String KEY_ATTACHMENT_DTO = "imageDetailsDTO";
-    
+
     public static final String KEY_LABEL_NAME = "name";
-    
+
     public static final String KEY_LABELLING_LABEL = "label";
 
     public static final String KEY_GROUP_NAME = "name";
