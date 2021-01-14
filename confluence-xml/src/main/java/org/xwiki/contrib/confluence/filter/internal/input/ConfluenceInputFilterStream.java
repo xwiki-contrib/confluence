@@ -1002,20 +1002,20 @@ public class ConfluenceInputFilterStream
         
         // creation date
         Date commentDate = null;
-		try {
-			commentDate = this.confluencePackage.getDate(commentProperties, "creationDate");
-		} catch (java.text.ParseException e) {
-			if (this.properties.isVerbose()) {
+        try {
+        	commentDate = this.confluencePackage.getDate(commentProperties, "creationDate");
+        } catch (java.text.ParseException e) {
+        	if (this.properties.isVerbose()) {
                 this.logger.error("Failed to parse date", e);
             }
-		}
-		
-		// parent (replyto)
-		Long parentIndex = null;
-		if (commentProperties.containsKey("parent")) {
-			Long parentId = commentProperties.getLong("parent");
-			parentIndex = commentIndeces.get(parentId);
-		}
+        }
+        
+        // parent (replyto)
+        Long parentIndex = null;
+        if (commentProperties.containsKey("parent")) {
+        	Long parentId = commentProperties.getLong("parent");
+        	parentIndex = commentIndeces.get(parentId);
+        }
         
         proxyFilter.onWikiObjectProperty("author", commentCreatorReference, new FilterEventParameters());
         proxyFilter.onWikiObjectProperty("comment", commentText, new FilterEventParameters());
