@@ -800,7 +800,7 @@ public class ConfluenceXMLPackage
             || propertyClass.equals("Comment") || propertyClass.equals("ContentProperty")) {
             return readObjectReference(xmlReader);
         } else if (propertyClass.equals("ConfluenceUserImpl")) {
-        	return readImplObjectReference(xmlReader);
+            return readImplObjectReference(xmlReader);
         } else {
             StAXUtils.skipElement(xmlReader);
         }
@@ -1083,7 +1083,7 @@ public class ConfluenceXMLPackage
 
             users = new TreeSet<>();
             for (String userIdString : userFolders) {
-            	users.add(userIdString);
+                users.add(userIdString);
             }
         } else {
             users = Collections.emptyList();
@@ -1281,38 +1281,38 @@ public class ConfluenceXMLPackage
         String tagName = tagId.toString();
         
         try {
-			 PropertiesConfiguration labelProperties = getObjectProperties(tagId);
-			 tagName = labelProperties.getString(ConfluenceXMLPackage.KEY_LABEL_NAME);
-		} catch (NumberFormatException | ConfigurationException e) {
-			LOGGER.warn("Unable to get tag name, using id instead.");
-		}
+             PropertiesConfiguration labelProperties = getObjectProperties(tagId);
+             tagName = labelProperties.getString(ConfluenceXMLPackage.KEY_LABEL_NAME);
+        } catch (NumberFormatException | ConfigurationException e) {
+            LOGGER.warn("Unable to get tag name, using id instead.");
+        }
 
         return tagName;
     }
     
     public String getCommentText(PropertiesConfiguration commentProperties, Long commentId)
     {
-    	String commentText = commentId.toString();
+        String commentText = commentId.toString();
         try {
-        	// BodyContent objects are stored in page properties under the content id
-			PropertiesConfiguration commentContent = getPageProperties(commentId, false);
-			commentText = commentContent.getString("body");
-		} catch (ConfigurationException e) {
-			LOGGER.warn("Unable to get comment text, using id instead.");
-		}
+            // BodyContent objects are stored in page properties under the content id
+            PropertiesConfiguration commentContent = getPageProperties(commentId, false);
+            commentText = commentContent.getString("body");
+        } catch (ConfigurationException e) {
+            LOGGER.warn("Unable to get comment text, using id instead.");
+        }
 
         return commentText;
     }
     
     public Integer getCommentBodyType(PropertiesConfiguration commentProperties, Long commentId)
     {
-    	Integer bodyType = -1;
+        Integer bodyType = -1;
         try {
-			PropertiesConfiguration commentContent = getPageProperties(commentId, false);
-			bodyType = commentContent.getInt("bodyType");
-		} catch (ConfigurationException e) {
-			LOGGER.warn("Unable to get comment body type.");
-		}
+            PropertiesConfiguration commentContent = getPageProperties(commentId, false);
+            bodyType = commentContent.getInt("bodyType");
+        } catch (ConfigurationException e) {
+            LOGGER.warn("Unable to get comment body type.");
+        }
 
         return bodyType;
     }

@@ -557,7 +557,7 @@ public class ConfluenceInputFilterStream
         // Tags
         Map<String, PropertiesConfiguration> pageTags = new LinkedHashMap<>();
         for (Object tagIdStringObject : pageProperties.getList(ConfluenceXMLPackage.KEY_PAGE_LABELLINGS)) {
-        	long tagId = Long.valueOf((String) tagIdStringObject);
+            long tagId = Long.valueOf((String) tagIdStringObject);
             PropertiesConfiguration tagProperties;
             try {
                 tagProperties = this.confluencePackage.getObjectProperties(tagId);
@@ -570,7 +570,7 @@ public class ConfluenceInputFilterStream
         }
 
         if (!pageTags.isEmpty()) {
-        	readPageTags(pageProperties, proxyFilter, pageTags);
+            readPageTags(pageProperties, proxyFilter, pageTags);
         }
         
         // Comments
@@ -578,7 +578,7 @@ public class ConfluenceInputFilterStream
         Map<Long, Long> commentIndeces = new LinkedHashMap<>();
         int commentIndex = 0;
         for (Object commentIdStringObject : pageProperties.getList(ConfluenceXMLPackage.KEY_PAGE_COMMENTS)) {
-        	long commentId = Long.valueOf((String) commentIdStringObject);
+            long commentId = Long.valueOf((String) commentIdStringObject);
             PropertiesConfiguration commentProperties;
             try {
                 commentProperties = this.confluencePackage.getObjectProperties(commentId);
@@ -592,7 +592,7 @@ public class ConfluenceInputFilterStream
         }
 
         for (Long commentId : pageComments.keySet()) {
-        	readPageComment(pageProperties, proxyFilter, commentId, pageComments, commentIndeces);
+            readPageComment(pageProperties, proxyFilter, commentId, pageComments, commentIndeces);
         }
 
         // < WikiDocumentRevision
@@ -747,9 +747,9 @@ public class ConfluenceInputFilterStream
     }
     
     private void readPageTags(PropertiesConfiguration pageProperties, ConfluenceFilter proxyFilter,
-    		Map<String, PropertiesConfiguration> pageTags) throws FilterException 
+            Map<String, PropertiesConfiguration> pageTags) throws FilterException 
     {
-    	FilterEventParameters pageTagsParameters = new FilterEventParameters();     
+        FilterEventParameters pageTagsParameters = new FilterEventParameters();     
         String objectName = getObjectName(pageProperties);
         
         // Tag object
@@ -790,8 +790,8 @@ public class ConfluenceInputFilterStream
         StringBuilder tagBuilder = new StringBuilder();
         String prefix = "";
         for (String tag : pageTags.keySet()) {
-        	tagBuilder.append(prefix);
-        	tagBuilder.append(tag);
+            tagBuilder.append(prefix);
+            tagBuilder.append(tag);
             prefix = "|";
         }
         
@@ -802,11 +802,11 @@ public class ConfluenceInputFilterStream
     }
     
     private void readPageComment (PropertiesConfiguration pageProperties, ConfluenceFilter proxyFilter, 
-    		Long commentId, Map<Long, PropertiesConfiguration> pageComments, Map<Long, Long> commentIndeces)
-    		throws FilterException
+            Long commentId, Map<Long, PropertiesConfiguration> pageComments, Map<Long, Long> commentIndeces)
+            throws FilterException
     {
-    	String objectName = getObjectName(pageProperties);
-    	FilterEventParameters commentParameters = new FilterEventParameters();               
+        String objectName = getObjectName(pageProperties);
+        FilterEventParameters commentParameters = new FilterEventParameters();               
         
         // Comment object
         commentParameters.put(WikiObjectFilter.PARAMETER_NUMBER, commentIndeces.get(commentId));
@@ -971,20 +971,20 @@ public class ConfluenceInputFilterStream
         // creator
         String commentCreator;
         if (commentProperties.containsKey("creatorName")) {
-        	// old creator reference by name
-        	commentCreator = commentProperties.getString("creatorName");
+            // old creator reference by name
+            commentCreator = commentProperties.getString("creatorName");
         } else {
-        	// new creator reference by key
-        	commentCreator = commentProperties.getString("creator");
-        	try {
-				PropertiesConfiguration creatorProperties = this.confluencePackage.getUserProperties(commentCreator);
-				// replace dots in user names with underlines for XWiki compatibility
-				commentCreator = creatorProperties.getString("name").replace(".", "_");
-			} catch (ConfigurationException e) {
-				if (this.properties.isVerbose()) {
+            // new creator reference by key
+            commentCreator = commentProperties.getString("creator");
+            try {
+                PropertiesConfiguration creatorProperties = this.confluencePackage.getUserProperties(commentCreator);
+                // replace dots in user names with underlines for XWiki compatibility
+                commentCreator = creatorProperties.getString("name").replace(".", "_");
+            } catch (ConfigurationException e) {
+                if (this.properties.isVerbose()) {
                     this.logger.warn("Unable to get comment creator name, using id instead.", e);
                 }
-			}
+            }
         }
         String commentCreatorReference = "xwiki:XWiki." + commentCreator;
         
@@ -994,7 +994,7 @@ public class ConfluenceInputFilterStream
         String commentText = commentBodyContent;
         if (commentBodyContent != null && this.properties.isConvertToXWiki()) {
             try {
-            	commentText = convertToXWiki21(commentBodyContent, commentBodyType);
+                commentText = convertToXWiki21(commentBodyContent, commentBodyType);
             } catch (Exception e) {
                 this.logger.error("Failed to convert content of the comment with id [{}]", commentId, e);
             }
@@ -1003,9 +1003,9 @@ public class ConfluenceInputFilterStream
         // creation date
         Date commentDate = null;
         try {
-        	commentDate = this.confluencePackage.getDate(commentProperties, "creationDate");
+            commentDate = this.confluencePackage.getDate(commentProperties, "creationDate");
         } catch (java.text.ParseException e) {
-        	if (this.properties.isVerbose()) {
+            if (this.properties.isVerbose()) {
                 this.logger.error("Failed to parse date", e);
             }
         }
@@ -1013,8 +1013,8 @@ public class ConfluenceInputFilterStream
         // parent (replyto)
         Long parentIndex = null;
         if (commentProperties.containsKey("parent")) {
-        	Long parentId = commentProperties.getLong("parent");
-        	parentIndex = commentIndeces.get(parentId);
+            Long parentId = commentProperties.getLong("parent");
+            parentIndex = commentIndeces.get(parentId);
         }
         
         proxyFilter.onWikiObjectProperty("author", commentCreatorReference, new FilterEventParameters());
@@ -1034,7 +1034,7 @@ public class ConfluenceInputFilterStream
     
     private String getObjectName(PropertiesConfiguration pageProperties)
     {
-    	// get parent name from reference
+        // get parent name from reference
         String parentName = "";
         try {
             parentName = this.confluencePackage.getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT).getName();
@@ -1046,13 +1046,13 @@ public class ConfluenceInputFilterStream
         
         // use space name if there is no parent
         if (parentName.isEmpty()) {
-        	try {
-				parentName = this.confluencePackage.getSpaceName(Long.valueOf(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_SPACE)));
-			} catch (NumberFormatException | ConfigurationException e) {
-				if (this.properties.isVerbose()) {
-					this.logger.warn("Failed to parse space");
-				}
-			}
+            try {
+                parentName = this.confluencePackage.getSpaceName(Long.valueOf(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_SPACE)));
+            } catch (NumberFormatException | ConfigurationException e) {
+                if (this.properties.isVerbose()) {
+                    this.logger.warn("Failed to parse space");
+                }
+            }
         }
         
         // get page name
@@ -1061,12 +1061,12 @@ public class ConfluenceInputFilterStream
         // create full page name from parent + title + WebHome
         StringBuilder nameBuilder = new StringBuilder();
         if (!parentName.isEmpty()) {
-        	nameBuilder.append(parentName);
-        	nameBuilder.append(".");
+            nameBuilder.append(parentName);
+            nameBuilder.append(".");
         }
         if (!pageName.isEmpty()) {
-        	nameBuilder.append(pageName);
-        	nameBuilder.append(".");
+            nameBuilder.append(pageName);
+            nameBuilder.append(".");
         }
         nameBuilder.append("WebHome");
         
