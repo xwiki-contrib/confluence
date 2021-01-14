@@ -22,7 +22,13 @@ package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
- * Base class for task properties (id, status, body).
+ * Handles task status.
+ * <p>
+ * Example (ending tags written with backslash instead of normal slash because of checkstyle):
+ * <p>
+ * {@code
+ * <ac:task-status>complete<\ac:task-status>
+ * }
  * 
  * @version $Id$
  * @since 9.4.5

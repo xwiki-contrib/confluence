@@ -36,7 +36,7 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  * }
  *
  * @version $Id$
- * @since 9.0
+ * @since 9.4.5
  */
 public class TaskTagHandler extends TagHandler implements ConfluenceTagHandler
 {
