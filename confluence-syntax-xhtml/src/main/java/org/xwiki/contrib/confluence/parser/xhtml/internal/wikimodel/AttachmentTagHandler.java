@@ -84,10 +84,10 @@ public class AttachmentTagHandler extends TagHandler implements ConfluenceTagHan
             attachment.filename = filenameParameter.getValue();
             
             // set attachment filename as macro parameter if the attachment tag is part of a macro
-            Object macro_obj = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
+            Object macroObject = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
             
-            if (macro_obj instanceof ConfluenceMacro) {
-            	ConfluenceMacro macro = (ConfluenceMacro) macro_obj;
+            if (macroObject instanceof ConfluenceMacro) {
+            	ConfluenceMacro macro = (ConfluenceMacro) macroObject;
             	macro.parameters = macro.parameters.setParameter("att--filename", attachment.filename);
             }
         }
