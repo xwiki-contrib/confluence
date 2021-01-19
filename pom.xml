@@ -29,7 +29,7 @@
   </parent>
   <groupId>org.xwiki.contrib.confluence</groupId>
   <artifactId>confluence</artifactId>
-  <version>9.4.5-SNAPSHOT</version>
+  <version>9.5</version>
   <name>Confluence - Parent POM</name>
   <description>Parent POM for Concluence modules</description>
   <packaging>pom</packaging>
@@ -41,7 +41,7 @@
     <connection>scm:git:git://github.com/xwiki-contrib/confluence.git</connection>
     <developerConnection>scm:git:git@github.com:xwiki-contrib/confluence.git</developerConnection>
     <url>https://github.com/xwiki-contrib/confluence/tree/master</url>
-    <tag>HEAD</tag>
+    <tag>confluence-9.5</tag>
   </scm>
   <developers>
     <developer>
