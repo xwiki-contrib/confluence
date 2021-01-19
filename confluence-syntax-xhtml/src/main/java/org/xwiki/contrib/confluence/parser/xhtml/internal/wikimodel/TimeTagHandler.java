@@ -32,7 +32,7 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  * }
  *
  * @version $Id$
- * @since 9.4.5
+ * @since 9.5
  */
 public class TimeTagHandler extends TagHandler implements ConfluenceTagHandler
 {

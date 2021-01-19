@@ -29,7 +29,7 @@ package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
  * }
  * 
  * @version $Id$
- * @since 9.4.5
+ * @since 9.5
  */
 public class TaskIdTagHandler extends AbstractConfluenceTagHandler
     implements ConfluenceTagHandler
