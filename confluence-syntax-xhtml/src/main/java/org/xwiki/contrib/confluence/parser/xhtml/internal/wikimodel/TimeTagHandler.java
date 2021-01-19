@@ -19,25 +19,27 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
-import org.xwiki.rendering.wikimodel.WikiParameter;
 import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
- * Handles users.
+ * Handles time tags.
  * <p>
  * Example:
  * <p>
  * {@code
- * <ri:user ri:username="admin" />
+ * <time datetime="2020-01-12" />
  * }
  *
  * @version $Id$
- * @since 9.0
+ * @since 9.4.5
  */
-public class UserTagHandler extends TagHandler implements ConfluenceTagHandler
+public class TimeTagHandler extends TagHandler implements ConfluenceTagHandler
 {
-    public UserTagHandler()
+    /**
+     * Constructor (checkstyle complains that this comment is missing although the other classes don't have it).
+     */
+    public TimeTagHandler()
     {
         super(false);
     }
@@ -45,17 +47,7 @@ public class UserTagHandler extends TagHandler implements ConfluenceTagHandler
     @Override
     protected void begin(TagContext context)
     {
-        Object container = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
-
-        WikiParameter usernameParameter = context.getParams().getParameter("ri:username");
-        if (usernameParameter != null && container instanceof UserContainer) {
-            ((UserContainer) container).setUser(usernameParameter.getValue());
-        }
-        
-        // new user reference format (by key)
-        WikiParameter userkeyParameter = context.getParams().getParameter("ri:userkey");
-        if (userkeyParameter != null && container instanceof UserContainer) {
-            ((UserContainer) container).setUser(userkeyParameter.getValue());
-        }
+        String date = context.getParams().getParameter("datetime").getValue();
+        context.getScannerContext().onWord(date);
     }
 }

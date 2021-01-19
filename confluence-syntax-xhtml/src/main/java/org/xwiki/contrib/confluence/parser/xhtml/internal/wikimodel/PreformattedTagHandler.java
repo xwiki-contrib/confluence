@@ -19,43 +19,39 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
-import org.xwiki.rendering.wikimodel.WikiParameter;
-import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
- * Handles users.
+ * Handles preformatted text content. Without this macros in preformatted blocks are lost.
  * <p>
  * Example:
  * <p>
  * {@code
- * <ri:user ri:username="admin" />
+ * <pre>Preformatted text</pre>
  * }
  *
  * @version $Id$
- * @since 9.0
+ * @since 9.4.5
  */
-public class UserTagHandler extends TagHandler implements ConfluenceTagHandler
+public class PreformattedTagHandler extends AbstractConfluenceTagHandler implements ConfluenceTagHandler
 {
-    public UserTagHandler()
+    /**
+     * Constructor (checkstyle complains that this comment is missing although the other classes don't have it).
+     */
+    public PreformattedTagHandler()
     {
-        super(false);
+        super(true);
     }
 
     @Override
     protected void begin(TagContext context)
     {
-        Object container = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
+        setAccumulateContent(true);
+    }
 
-        WikiParameter usernameParameter = context.getParams().getParameter("ri:username");
-        if (usernameParameter != null && container instanceof UserContainer) {
-            ((UserContainer) container).setUser(usernameParameter.getValue());
-        }
-        
-        // new user reference format (by key)
-        WikiParameter userkeyParameter = context.getParams().getParameter("ri:userkey");
-        if (userkeyParameter != null && container instanceof UserContainer) {
-            ((UserContainer) container).setUser(userkeyParameter.getValue());
-        }
+    @Override
+    protected void end(TagContext context)
+    {
+        context.getScannerContext().onVerbatim(context.getContent(), false);
     }
 }

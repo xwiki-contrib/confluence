@@ -19,43 +19,47 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
-import org.xwiki.rendering.wikimodel.WikiParameter;
-import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
- * Handles users.
+ * Handles task status.
  * <p>
- * Example:
+ * Example (ending tags written with backslash instead of normal slash because of checkstyle):
  * <p>
  * {@code
- * <ri:user ri:username="admin" />
+ * <ac:task-status>complete<\ac:task-status>
  * }
- *
+ * 
  * @version $Id$
- * @since 9.0
+ * @since 9.4.5
  */
-public class UserTagHandler extends TagHandler implements ConfluenceTagHandler
+public class TaskStatusTagHandler extends AbstractConfluenceTagHandler
+    implements ConfluenceTagHandler
 {
-    public UserTagHandler()
+    /**
+     * Default constructor.
+     */
+    public TaskStatusTagHandler()
     {
-        super(false);
+        super(true);
     }
 
     @Override
     protected void begin(TagContext context)
     {
-        Object container = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
+        setAccumulateContent(true);
+    }
 
-        WikiParameter usernameParameter = context.getParams().getParameter("ri:username");
-        if (usernameParameter != null && container instanceof UserContainer) {
-            ((UserContainer) container).setUser(usernameParameter.getValue());
+    @Override
+    protected void end(TagContext context)
+    {
+        // write ticked or unticked checkbox depending on status
+        String status = getContent(context);
+        if (status.equals("complete")) {
+            context.getScannerContext().onWord("\u2611");
+        } else {
+            context.getScannerContext().onWord("\u2610");
         }
-        
-        // new user reference format (by key)
-        WikiParameter userkeyParameter = context.getParams().getParameter("ri:userkey");
-        if (userkeyParameter != null && container instanceof UserContainer) {
-            ((UserContainer) container).setUser(userkeyParameter.getValue());
-        }
+        context.getScannerContext().onSpace(" ");
     }
 }

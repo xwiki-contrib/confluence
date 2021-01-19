@@ -19,25 +19,37 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
-import org.xwiki.rendering.wikimodel.WikiParameter;
-import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
- * Handles users.
+ * Handles task-list tags using a normal list.
  * <p>
- * Example:
+ * Example (ending tags written with backslash instead of normal slash because of checkstyle):
  * <p>
  * {@code
- * <ri:user ri:username="admin" />
+ * <ac:task-list>
+ * <ac:task>
+ * <ac:task-id>1<\ac:task-id>
+ * <ac:task-status>complete<\ac:task-status>
+ * <ac:task-body>First task<\ac:task-body>
+ * <\ac:task>
+ * <ac:task>
+ * <ac:task-id>2<\ac:task-id>
+ * <ac:task-status>incomplete<\ac:task-status>
+ * <ac:task-body>Second task<\ac:task-body>
+ * <\ac:task>
+ * <\ac:task-list>
  * }
  *
  * @version $Id$
- * @since 9.0
+ * @since 9.4.5
  */
-public class UserTagHandler extends TagHandler implements ConfluenceTagHandler
+public class TaskListTagHandler extends AbstractConfluenceTagHandler implements ConfluenceTagHandler
 {
-    public UserTagHandler()
+    /**
+     * Constructor (checkstyle complains that this comment is missing although the other classes don't have it).
+     */
+    public TaskListTagHandler()
     {
         super(false);
     }
@@ -45,17 +57,12 @@ public class UserTagHandler extends TagHandler implements ConfluenceTagHandler
     @Override
     protected void begin(TagContext context)
     {
-        Object container = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
+        context.getScannerContext().beginList();
+    }
 
-        WikiParameter usernameParameter = context.getParams().getParameter("ri:username");
-        if (usernameParameter != null && container instanceof UserContainer) {
-            ((UserContainer) container).setUser(usernameParameter.getValue());
-        }
-        
-        // new user reference format (by key)
-        WikiParameter userkeyParameter = context.getParams().getParameter("ri:userkey");
-        if (userkeyParameter != null && container instanceof UserContainer) {
-            ((UserContainer) container).setUser(userkeyParameter.getValue());
-        }
+    @Override
+    protected void end(TagContext context)
+    {
+        context.getScannerContext().endList();
     }
 }

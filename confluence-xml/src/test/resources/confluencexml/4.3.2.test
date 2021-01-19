@@ -352,6 +352,159 @@ To help you on your way, we've inserted some of our favourite macros on this hom
             </entry>
           </parameters>
         </p>
+        <wikiObject name="privatespace.privatespace Home.WebHome">
+          <p>
+            <parameters>
+              <entry>
+                <string>number</string>
+                <long>0</long>
+              </entry>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.XWikiComments</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiClass>
+            <wikiClassProperty name="author" type="com.xpn.xwiki.objects.classes.UsersClass">
+              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
+              <wikiClassPropertyField name="multiSelect" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="author"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Author"></wikiClassPropertyField>
+              <wikiClassPropertyField name="relationalStorage" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separator" value=" "></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="comment" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="comment"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Comment"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="date" type="com.xpn.xwiki.objects.classes.DateClass">
+              <wikiClassPropertyField name="dateFormat" value="dd/MM/yyyy HH:mm:ss"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="emptyIsToday" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="date"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="2"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Date"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="20"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="highlight" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="highlight"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="3"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Highlighted Text"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="2"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="originalSelection" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="originalSelection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="6"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Original Selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="replyto" type="com.xpn.xwiki.objects.classes.NumberClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="replyto"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="4"></wikiClassPropertyField>
+              <wikiClassPropertyField name="numberType" value="Integer"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Reply To"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selection" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="3"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selectionLeftContext" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selectionLeftContext"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="4"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection Left Context"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selectionRightContext" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selectionRightContext"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection Right Context"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="state" type="com.xpn.xwiki.objects.classes.StringClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="state"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="8"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="State"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="target" type="com.xpn.xwiki.objects.classes.PageClass">
+              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="classname"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
+              <wikiClassPropertyField name="freeText" value="discouraged"></wikiClassPropertyField>
+              <wikiClassPropertyField name="multiSelect" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="target"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="7"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Target"></wikiClassPropertyField>
+              <wikiClassPropertyField name="relationalStorage" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separator" value=" "></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="sql"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+          </wikiClass>
+          <wikiObjectProperty name="author" value="xwiki:XWiki.admin"></wikiObjectProperty>
+          <wikiObjectProperty name="comment" value="Comment on my private space"></wikiObjectProperty>
+          <wikiObjectProperty name="date">
+            <p>
+              <value t="java.util.Date">2013-10-14 15:37:34.250 UTC</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="highlight" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="originalSelection" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="replyto"></wikiObjectProperty>
+          <wikiObjectProperty name="selection" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="selectionLeftContext" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="selectionRightContext" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="state" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="target" value=""></wikiObjectProperty>
+        </wikiObject>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
@@ -514,6 +667,193 @@ Link to page 1 [[here&gt;&gt;doc:SPACE1.Page 1]]</string>
             </entry>
           </parameters>
         </p>
+        <wikiObject name="space2 Home.Page 2.WebHome">
+          <p>
+            <parameters>
+              <entry>
+                <string>number</string>
+                <int>0</int>
+              </entry>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.TagClass</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiClass>
+            <wikiClassProperty name="tags" type="com.xpn.xwiki.objects.classes.StaticListClass">
+              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
+              <wikiClassPropertyField name="freeText" value="forbidden"></wikiClassPropertyField>
+              <wikiClassPropertyField name="largeStorage" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="multiSelect" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="tags"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Tags"></wikiClassPropertyField>
+              <wikiClassPropertyField name="relationalStorage" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separator" value="|"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separators" value="|,"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="values"></wikiClassPropertyField>
+            </wikiClassProperty>
+          </wikiClass>
+          <wikiObjectProperty name="tags" value="tag1|favourite"></wikiObjectProperty>
+        </wikiObject>
+        <wikiObject name="space2 Home.Page 2.WebHome">
+          <p>
+            <parameters>
+              <entry>
+                <string>number</string>
+                <long>0</long>
+              </entry>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.XWikiComments</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiClass>
+            <wikiClassProperty name="author" type="com.xpn.xwiki.objects.classes.UsersClass">
+              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
+              <wikiClassPropertyField name="multiSelect" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="author"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Author"></wikiClassPropertyField>
+              <wikiClassPropertyField name="relationalStorage" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separator" value=" "></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="comment" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="comment"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Comment"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="date" type="com.xpn.xwiki.objects.classes.DateClass">
+              <wikiClassPropertyField name="dateFormat" value="dd/MM/yyyy HH:mm:ss"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="emptyIsToday" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="date"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="2"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Date"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="20"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="highlight" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="highlight"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="3"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Highlighted Text"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="2"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="originalSelection" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="originalSelection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="6"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Original Selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="replyto" type="com.xpn.xwiki.objects.classes.NumberClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="replyto"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="4"></wikiClassPropertyField>
+              <wikiClassPropertyField name="numberType" value="Integer"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Reply To"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selection" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="3"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selectionLeftContext" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selectionLeftContext"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="4"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection Left Context"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selectionRightContext" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selectionRightContext"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection Right Context"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="state" type="com.xpn.xwiki.objects.classes.StringClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="state"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="8"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="State"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="target" type="com.xpn.xwiki.objects.classes.PageClass">
+              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="classname"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
+              <wikiClassPropertyField name="freeText" value="discouraged"></wikiClassPropertyField>
+              <wikiClassPropertyField name="multiSelect" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="target"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="7"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Target"></wikiClassPropertyField>
+              <wikiClassPropertyField name="relationalStorage" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separator" value=" "></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="sql"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+          </wikiClass>
+          <wikiObjectProperty name="author" value="xwiki:XWiki.admin"></wikiObjectProperty>
+          <wikiObjectProperty name="comment" value="Comment on page 2"></wikiObjectProperty>
+          <wikiObjectProperty name="date">
+            <p>
+              <value t="java.util.Date">2013-10-14 15:34:23.725 UTC</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="highlight" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="originalSelection" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="replyto"></wikiObjectProperty>
+          <wikiObjectProperty name="selection" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="selectionLeftContext" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="selectionRightContext" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="state" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="target" value=""></wikiObjectProperty>
+        </wikiObject>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
@@ -18863,6 +19203,193 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
             </parameters>
           </p>
         </wikiAttachment>
+        <wikiObject name="space2.space2 Home.WebHome">
+          <p>
+            <parameters>
+              <entry>
+                <string>number</string>
+                <int>0</int>
+              </entry>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.TagClass</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiClass>
+            <wikiClassProperty name="tags" type="com.xpn.xwiki.objects.classes.StaticListClass">
+              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
+              <wikiClassPropertyField name="freeText" value="forbidden"></wikiClassPropertyField>
+              <wikiClassPropertyField name="largeStorage" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="multiSelect" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="tags"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Tags"></wikiClassPropertyField>
+              <wikiClassPropertyField name="relationalStorage" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separator" value="|"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separators" value="|,"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="values"></wikiClassPropertyField>
+            </wikiClassProperty>
+          </wikiClass>
+          <wikiObjectProperty name="tags" value="tag1"></wikiObjectProperty>
+        </wikiObject>
+        <wikiObject name="space2.space2 Home.WebHome">
+          <p>
+            <parameters>
+              <entry>
+                <string>number</string>
+                <long>0</long>
+              </entry>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.XWikiComments</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiClass>
+            <wikiClassProperty name="author" type="com.xpn.xwiki.objects.classes.UsersClass">
+              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
+              <wikiClassPropertyField name="multiSelect" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="author"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Author"></wikiClassPropertyField>
+              <wikiClassPropertyField name="relationalStorage" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separator" value=" "></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="comment" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="comment"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Comment"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="date" type="com.xpn.xwiki.objects.classes.DateClass">
+              <wikiClassPropertyField name="dateFormat" value="dd/MM/yyyy HH:mm:ss"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="emptyIsToday" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="date"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="2"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Date"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="20"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="highlight" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="highlight"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="3"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Highlighted Text"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="2"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="originalSelection" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="originalSelection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="6"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Original Selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="replyto" type="com.xpn.xwiki.objects.classes.NumberClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="replyto"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="4"></wikiClassPropertyField>
+              <wikiClassPropertyField name="numberType" value="Integer"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Reply To"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selection" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="3"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selectionLeftContext" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selectionLeftContext"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="4"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection Left Context"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selectionRightContext" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selectionRightContext"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection Right Context"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="state" type="com.xpn.xwiki.objects.classes.StringClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="state"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="8"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="State"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="target" type="com.xpn.xwiki.objects.classes.PageClass">
+              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="classname"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
+              <wikiClassPropertyField name="freeText" value="discouraged"></wikiClassPropertyField>
+              <wikiClassPropertyField name="multiSelect" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="target"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="7"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Target"></wikiClassPropertyField>
+              <wikiClassPropertyField name="relationalStorage" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separator" value=" "></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="sql"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+          </wikiClass>
+          <wikiObjectProperty name="author" value="xwiki:XWiki.admin"></wikiObjectProperty>
+          <wikiObjectProperty name="comment" value="Comment on homepage of space 2"></wikiObjectProperty>
+          <wikiObjectProperty name="date">
+            <p>
+              <value t="java.util.Date">2013-10-14 15:35:40.689 UTC</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="highlight" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="originalSelection" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="replyto"></wikiObjectProperty>
+          <wikiObjectProperty name="selection" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="selectionLeftContext" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="selectionRightContext" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="state" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="target" value=""></wikiObjectProperty>
+        </wikiObject>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
@@ -18921,6 +19448,40 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
             </entry>
           </parameters>
         </p>
+        <wikiObject name="space1.WebHome">
+          <p>
+            <parameters>
+              <entry>
+                <string>number</string>
+                <int>0</int>
+              </entry>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.TagClass</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiClass>
+            <wikiClassProperty name="tags" type="com.xpn.xwiki.objects.classes.StaticListClass">
+              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
+              <wikiClassPropertyField name="freeText" value="forbidden"></wikiClassPropertyField>
+              <wikiClassPropertyField name="largeStorage" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="multiSelect" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="tags"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Tags"></wikiClassPropertyField>
+              <wikiClassPropertyField name="relationalStorage" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separator" value="|"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separators" value="|,"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="values"></wikiClassPropertyField>
+            </wikiClassProperty>
+          </wikiClass>
+          <wikiObjectProperty name="tags" value="favourite"></wikiObjectProperty>
+        </wikiObject>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
@@ -18989,7 +19550,20 @@ Content of the page including:
 11. 2c
 1. 3
 
-76 incomplete Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du caractère @ pour la lui affecter 77 incomplete task 2 78 incomplete task 2.1 79 incomplete task 2.1.1 80 incomplete task 2.2 81 incomplete task 3 82 incomplete Task 4 for [[user:admin]]
+* ☐ Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du caractère @ pour la lui affecter
+
+* ☐ task 2
+
+* ☐ task 2.1
+
+* ☐ task 2.1.1
+
+* ☐ task 2.2
+
+* ☐ task 3
+
+* ☐ Task 4 for [[user:admin]]\\
+
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
 [[image:attach:271360617.jpg]]
@@ -19122,7 +19696,20 @@ Content of the page including:
 11. 2c
 1. 3
 
-76 incomplete Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du caractère @ pour la lui affecter 77 incomplete task 2 78 incomplete task 2.1 79 incomplete task 2.1.1 80 incomplete task 2.2 81 incomplete task 3 82 incomplete Task 4 for [[user:admin]]
+* ☐ Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du caractère @ pour la lui affecter
+
+* ☐ task 2
+
+* ☐ task 2.1
+
+* ☐ task 2.1.1
+
+* ☐ task 2.2
+
+* ☐ task 3
+
+* ☐ Task 4 for [[user:admin]]\\
+
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
 [[image:attach:271360617.jpg]]
@@ -19465,7 +20052,20 @@ Content of the page including:
 11. 2c
 1. 3
 
-76 incomplete Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du caractère @ pour la lui affecter 77 incomplete task 2 78 incomplete task 2.1 79 incomplete task 2.1.1 80 incomplete task 2.2 81 incomplete task 3 82 incomplete Task 4 for [[user:admin]]
+* ☐ Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du caractère @ pour la lui affecter
+
+* ☐ task 2
+
+* ☐ task 2.1
+
+* ☐ task 2.1.1
+
+* ☐ task 2.2
+
+* ☐ task 3
+
+* ☐ Task 4 for [[user:admin]]\\
+
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
 [[image:attach:271360617.jpg]]
@@ -19808,7 +20408,20 @@ Content of the page including:
 11. 2c
 1. 3
 
-76 complete Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du caractère @ pour la lui affecter 77 incomplete task 2 78 incomplete task 2.1 79 incomplete task 2.1.1 80 incomplete task 2.2 81 incomplete task 3 82 incomplete Task 4 for [[user:admin]]
+* ☑ Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du caractère @ pour la lui affecter
+
+* ☐ task 2
+
+* ☐ task 2.1
+
+* ☐ task 2.1.1
+
+* ☐ task 2.2
+
+* ☐ task 3
+
+* ☐ Task 4 for [[user:admin]]\\
+
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
 [[image:attach:271360617.jpg]]
@@ -20151,8 +20764,20 @@ Content of the page including:
 11. 2c
 1. 3
 
-76 complete Task 1 is checked
- 77 incomplete task 2 78 incomplete task 2.1 79 incomplete task 2.1.1 80 incomplete task 2.2 81 incomplete task 3 82 incomplete Task 4 for [[user:admin]]
+* ☑ Task 1 is checked\\
+
+* ☐ task 2
+
+* ☐ task 2.1
+
+* ☐ task 2.1.1
+
+* ☐ task 2.2
+
+* ☐ task 3
+
+* ☐ Task 4 for [[user:admin]]\\
+
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
 [[image:attach:271360617.jpg]]
@@ -20495,8 +21120,20 @@ Content of the page including:
 11. 2c
 1. 3
 
-76 complete Task 1 is checked
- 77 incomplete task 2 78 incomplete task 2.1 79 incomplete task 2.1.1 80 incomplete task 2.2 81 incomplete task 3 82 incomplete Task 4 for [[user:admin]]
+* ☑ Task 1 is checked\\
+
+* ☐ task 2
+
+* ☐ task 2.1
+
+* ☐ task 2.1.1
+
+* ☐ task 2.2
+
+* ☐ task 3
+
+* ☐ Task 4 for [[user:admin]]\\
+
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
 [[image:attach:271360617.jpg]]
@@ -20846,8 +21483,20 @@ Content of the page including:
 11. 2c
 1. 3
 
-76 complete Task 1 is checked
- 77 incomplete task 2 78 incomplete task 2.1 79 incomplete task 2.1.1 80 incomplete task 2.2 81 incomplete task 3 82 incomplete Task 4 for [[user:admin]]
+* ☑ Task 1 is checked\\
+
+* ☐ task 2
+
+* ☐ task 2.1
+
+* ☐ task 2.1.1
+
+* ☐ task 2.2
+
+* ☐ task 3
+
+* ☐ Task 4 for [[user:admin]]\\
+
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
 [[image:attach:271360617.jpg]]
@@ -25478,6 +26127,469 @@ cyAvPg0KPC9HbG9iYWxTZXR0aW5ncz4=</content>
             </parameters>
           </p>
         </wikiAttachment>
+        <wikiObject name="space1 Home.Page 1.WebHome">
+          <p>
+            <parameters>
+              <entry>
+                <string>number</string>
+                <long>0</long>
+              </entry>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.XWikiComments</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiClass>
+            <wikiClassProperty name="author" type="com.xpn.xwiki.objects.classes.UsersClass">
+              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
+              <wikiClassPropertyField name="multiSelect" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="author"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Author"></wikiClassPropertyField>
+              <wikiClassPropertyField name="relationalStorage" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separator" value=" "></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="comment" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="comment"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Comment"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="date" type="com.xpn.xwiki.objects.classes.DateClass">
+              <wikiClassPropertyField name="dateFormat" value="dd/MM/yyyy HH:mm:ss"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="emptyIsToday" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="date"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="2"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Date"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="20"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="highlight" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="highlight"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="3"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Highlighted Text"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="2"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="originalSelection" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="originalSelection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="6"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Original Selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="replyto" type="com.xpn.xwiki.objects.classes.NumberClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="replyto"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="4"></wikiClassPropertyField>
+              <wikiClassPropertyField name="numberType" value="Integer"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Reply To"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selection" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="3"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selectionLeftContext" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selectionLeftContext"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="4"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection Left Context"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selectionRightContext" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selectionRightContext"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection Right Context"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="state" type="com.xpn.xwiki.objects.classes.StringClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="state"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="8"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="State"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="target" type="com.xpn.xwiki.objects.classes.PageClass">
+              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="classname"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
+              <wikiClassPropertyField name="freeText" value="discouraged"></wikiClassPropertyField>
+              <wikiClassPropertyField name="multiSelect" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="target"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="7"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Target"></wikiClassPropertyField>
+              <wikiClassPropertyField name="relationalStorage" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separator" value=" "></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="sql"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+          </wikiClass>
+          <wikiObjectProperty name="author" value="xwiki:XWiki.admin"></wikiObjectProperty>
+          <wikiObjectProperty name="comment" value="comment 1"></wikiObjectProperty>
+          <wikiObjectProperty name="date">
+            <p>
+              <value t="java.util.Date">2013-10-14 15:29:09.540 UTC</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="highlight" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="originalSelection" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="replyto"></wikiObjectProperty>
+          <wikiObjectProperty name="selection" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="selectionLeftContext" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="selectionRightContext" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="state" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="target" value=""></wikiObjectProperty>
+        </wikiObject>
+        <wikiObject name="space1 Home.Page 1.WebHome">
+          <p>
+            <parameters>
+              <entry>
+                <string>number</string>
+                <long>1</long>
+              </entry>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.XWikiComments</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiClass>
+            <wikiClassProperty name="author" type="com.xpn.xwiki.objects.classes.UsersClass">
+              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
+              <wikiClassPropertyField name="multiSelect" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="author"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Author"></wikiClassPropertyField>
+              <wikiClassPropertyField name="relationalStorage" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separator" value=" "></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="comment" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="comment"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Comment"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="date" type="com.xpn.xwiki.objects.classes.DateClass">
+              <wikiClassPropertyField name="dateFormat" value="dd/MM/yyyy HH:mm:ss"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="emptyIsToday" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="date"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="2"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Date"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="20"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="highlight" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="highlight"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="3"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Highlighted Text"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="2"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="originalSelection" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="originalSelection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="6"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Original Selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="replyto" type="com.xpn.xwiki.objects.classes.NumberClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="replyto"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="4"></wikiClassPropertyField>
+              <wikiClassPropertyField name="numberType" value="Integer"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Reply To"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selection" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="3"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selectionLeftContext" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selectionLeftContext"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="4"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection Left Context"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selectionRightContext" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selectionRightContext"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection Right Context"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="state" type="com.xpn.xwiki.objects.classes.StringClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="state"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="8"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="State"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="target" type="com.xpn.xwiki.objects.classes.PageClass">
+              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="classname"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
+              <wikiClassPropertyField name="freeText" value="discouraged"></wikiClassPropertyField>
+              <wikiClassPropertyField name="multiSelect" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="target"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="7"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Target"></wikiClassPropertyField>
+              <wikiClassPropertyField name="relationalStorage" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separator" value=" "></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="sql"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+          </wikiClass>
+          <wikiObjectProperty name="author" value="xwiki:XWiki.admin"></wikiObjectProperty>
+          <wikiObjectProperty name="comment" value="Answer of comment 1"></wikiObjectProperty>
+          <wikiObjectProperty name="date">
+            <p>
+              <value t="java.util.Date">2013-10-14 15:29:19.428 UTC</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="highlight" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="originalSelection" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="replyto">
+            <p>
+              <value t="java.lang.Long">0</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="selection" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="selectionLeftContext" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="selectionRightContext" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="state" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="target" value=""></wikiObjectProperty>
+        </wikiObject>
+        <wikiObject name="space1 Home.Page 1.WebHome">
+          <p>
+            <parameters>
+              <entry>
+                <string>number</string>
+                <long>2</long>
+              </entry>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.XWikiComments</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiClass>
+            <wikiClassProperty name="author" type="com.xpn.xwiki.objects.classes.UsersClass">
+              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
+              <wikiClassPropertyField name="multiSelect" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="author"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Author"></wikiClassPropertyField>
+              <wikiClassPropertyField name="relationalStorage" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separator" value=" "></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="comment" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="comment"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Comment"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="date" type="com.xpn.xwiki.objects.classes.DateClass">
+              <wikiClassPropertyField name="dateFormat" value="dd/MM/yyyy HH:mm:ss"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="emptyIsToday" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="date"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="2"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Date"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="20"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="highlight" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="highlight"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="3"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Highlighted Text"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="2"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="originalSelection" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="originalSelection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="6"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Original Selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="replyto" type="com.xpn.xwiki.objects.classes.NumberClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="replyto"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="4"></wikiClassPropertyField>
+              <wikiClassPropertyField name="numberType" value="Integer"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Reply To"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selection" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="3"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selectionLeftContext" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selectionLeftContext"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="4"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection Left Context"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selectionRightContext" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selectionRightContext"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection Right Context"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="state" type="com.xpn.xwiki.objects.classes.StringClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="state"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="8"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="State"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="target" type="com.xpn.xwiki.objects.classes.PageClass">
+              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="classname"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
+              <wikiClassPropertyField name="freeText" value="discouraged"></wikiClassPropertyField>
+              <wikiClassPropertyField name="multiSelect" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="target"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="7"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Target"></wikiClassPropertyField>
+              <wikiClassPropertyField name="relationalStorage" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separator" value=" "></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="sql"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+          </wikiClass>
+          <wikiObjectProperty name="author" value="xwiki:XWiki.admin"></wikiObjectProperty>
+          <wikiObjectProperty name="comment" value="Coment 2"></wikiObjectProperty>
+          <wikiObjectProperty name="date">
+            <p>
+              <value t="java.util.Date">2013-10-14 15:29:25.282 UTC</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="highlight" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="originalSelection" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="replyto"></wikiObjectProperty>
+          <wikiObjectProperty name="selection" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="selectionLeftContext" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="selectionRightContext" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="state" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="target" value=""></wikiObjectProperty>
+        </wikiObject>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
@@ -25576,6 +26688,160 @@ To help you on your way, we've inserted some of our favourite macros on this hom
             </entry>
           </parameters>
         </p>
+        <wikiObject name="space1.space1 Home.WebHome">
+          <p>
+            <parameters>
+              <entry>
+                <string>number</string>
+                <long>0</long>
+              </entry>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.XWikiComments</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiClass>
+            <wikiClassProperty name="author" type="com.xpn.xwiki.objects.classes.UsersClass">
+              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
+              <wikiClassPropertyField name="multiSelect" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="author"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Author"></wikiClassPropertyField>
+              <wikiClassPropertyField name="relationalStorage" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separator" value=" "></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="comment" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="comment"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Comment"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="date" type="com.xpn.xwiki.objects.classes.DateClass">
+              <wikiClassPropertyField name="dateFormat" value="dd/MM/yyyy HH:mm:ss"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="emptyIsToday" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="date"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="2"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Date"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="20"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="highlight" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="highlight"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="3"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Highlighted Text"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="2"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="originalSelection" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="originalSelection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="6"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Original Selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="replyto" type="com.xpn.xwiki.objects.classes.NumberClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="replyto"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="4"></wikiClassPropertyField>
+              <wikiClassPropertyField name="numberType" value="Integer"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Reply To"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selection" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="3"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selectionLeftContext" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selectionLeftContext"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="4"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection Left Context"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="selectionRightContext" type="com.xpn.xwiki.objects.classes.TextAreaClass">
+              <wikiClassPropertyField name="contenttype" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="editor" value="PureText"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="selectionRightContext"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Selection Right Context"></wikiClassPropertyField>
+              <wikiClassPropertyField name="rows" value="5"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="40"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="state" type="com.xpn.xwiki.objects.classes.StringClass">
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="state"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="8"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="State"></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+            <wikiClassProperty name="target" type="com.xpn.xwiki.objects.classes.PageClass">
+              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="classname"></wikiClassPropertyField>
+              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
+              <wikiClassPropertyField name="freeText" value="discouraged"></wikiClassPropertyField>
+              <wikiClassPropertyField name="multiSelect" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="name" value="target"></wikiClassPropertyField>
+              <wikiClassPropertyField name="number" value="7"></wikiClassPropertyField>
+              <wikiClassPropertyField name="picker" value="1"></wikiClassPropertyField>
+              <wikiClassPropertyField name="prettyName" value="Target"></wikiClassPropertyField>
+              <wikiClassPropertyField name="relationalStorage" value="0"></wikiClassPropertyField>
+              <wikiClassPropertyField name="separator" value=" "></wikiClassPropertyField>
+              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
+              <wikiClassPropertyField name="sql"></wikiClassPropertyField>
+              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
+            </wikiClassProperty>
+          </wikiClass>
+          <wikiObjectProperty name="author" value="xwiki:XWiki.admin"></wikiObjectProperty>
+          <wikiObjectProperty name="comment" value="Comment on space 1 web home
+This space is in favourit"></wikiObjectProperty>
+          <wikiObjectProperty name="date">
+            <p>
+              <value t="java.util.Date">2013-10-14 15:38:26.69 UTC</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="highlight" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="originalSelection" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="replyto"></wikiObjectProperty>
+          <wikiObjectProperty name="selection" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="selectionLeftContext" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="selectionRightContext" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="state" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="target" value=""></wikiObjectProperty>
+        </wikiObject>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>

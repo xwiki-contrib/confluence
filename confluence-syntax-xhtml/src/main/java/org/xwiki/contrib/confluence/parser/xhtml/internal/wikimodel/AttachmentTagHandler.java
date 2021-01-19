@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroTagHandler.ConfluenceMacro;
 import org.xwiki.rendering.wikimodel.WikiParameter;
 import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
@@ -37,7 +38,7 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  * @since 9.0
  */
 public class AttachmentTagHandler extends TagHandler implements ConfluenceTagHandler
-{
+{	
     public class ConfluenceAttachment implements UserContainer, PageContainer
     {
         public String filename;
@@ -81,6 +82,14 @@ public class AttachmentTagHandler extends TagHandler implements ConfluenceTagHan
 
         if (filenameParameter != null) {
             attachment.filename = filenameParameter.getValue();
+            
+            // set attachment filename as macro parameter if the attachment tag is part of a macro
+            Object macroObject = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
+            
+            if (macroObject instanceof ConfluenceMacro) {
+            	ConfluenceMacro macro = (ConfluenceMacro) macroObject;
+            	macro.parameters = macro.parameters.setParameter("att--filename", attachment.filename);
+            }
         }
 
         context.getTagStack().pushStackParameter(CONFLUENCE_CONTAINER, attachment);

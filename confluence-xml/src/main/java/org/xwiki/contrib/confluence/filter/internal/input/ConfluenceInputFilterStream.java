@@ -52,6 +52,7 @@ import org.xwiki.filter.FilterEventParameters;
 import org.xwiki.filter.FilterException;
 import org.xwiki.filter.event.model.WikiAttachmentFilter;
 import org.xwiki.filter.event.model.WikiDocumentFilter;
+import org.xwiki.filter.event.model.WikiObjectFilter;
 import org.xwiki.filter.event.user.GroupFilter;
 import org.xwiki.filter.event.user.UserFilter;
 import org.xwiki.filter.input.AbstractBeanInputFilterStream;
@@ -118,6 +119,7 @@ public class ConfluenceInputFilterStream
         }
 
         Collection<Long> users = this.confluencePackage.getUsers();
+        // TODO get users in new format (this.confluencePackage.getAllUsers())
         Collection<Long> groups = this.confluencePackage.getGroups();
         Map<Long, List<Long>> pages = this.confluencePackage.getPages();
 
@@ -551,6 +553,47 @@ public class ConfluenceInputFilterStream
         for (PropertiesConfiguration attachmentProperties : pageAttachments.values()) {
             readAttachment(pageId, attachmentProperties, filter, proxyFilter);
         }
+        
+        // Tags
+        Map<String, PropertiesConfiguration> pageTags = new LinkedHashMap<>();
+        for (Object tagIdStringObject : pageProperties.getList(ConfluenceXMLPackage.KEY_PAGE_LABELLINGS)) {
+            long tagId = Long.valueOf((String) tagIdStringObject);
+            PropertiesConfiguration tagProperties;
+            try {
+                tagProperties = this.confluencePackage.getObjectProperties(tagId);
+            } catch (ConfigurationException e) {
+                throw new FilterException("Failed to get tag properties", e);
+            }
+
+            String tagName = this.confluencePackage.getTagName(tagProperties);
+            pageTags.put(tagName, tagProperties);
+        }
+
+        if (!pageTags.isEmpty()) {
+            readPageTags(pageProperties, proxyFilter, pageTags);
+        }
+        
+        // Comments
+        Map<Long, PropertiesConfiguration> pageComments = new LinkedHashMap<>();
+        Map<Long, Long> commentIndeces = new LinkedHashMap<>();
+        int commentIndex = 0;
+        for (Object commentIdStringObject : pageProperties.getList(ConfluenceXMLPackage.KEY_PAGE_COMMENTS)) {
+            long commentId = Long.valueOf((String) commentIdStringObject);
+            PropertiesConfiguration commentProperties;
+            try {
+                commentProperties = this.confluencePackage.getObjectProperties(commentId);
+            } catch (ConfigurationException e) {
+                throw new FilterException("Failed to get comment properties", e);
+            }
+
+            pageComments.put(commentId, commentProperties);
+            commentIndeces.put(commentId, Long.valueOf(commentIndex));
+            commentIndex++;
+        }
+
+        for (Long commentId : pageComments.keySet()) {
+            readPageComment(pageProperties, proxyFilter, commentId, pageComments, commentIndeces);
+        }
 
         // < WikiDocumentRevision
         proxyFilter.endWikiDocumentRevision(revision, documentRevisionParameters);
@@ -701,6 +744,333 @@ public class ConfluenceInputFilterStream
         } catch (Exception e) {
             throw new FilterException("Failed to read attachment", e);
         }
+    }
+    
+    private void readPageTags(PropertiesConfiguration pageProperties, ConfluenceFilter proxyFilter,
+            Map<String, PropertiesConfiguration> pageTags) throws FilterException 
+    {
+        FilterEventParameters pageTagsParameters = new FilterEventParameters();     
+        String objectName = getObjectName(pageProperties);
+        
+        // Tag object
+        pageTagsParameters.put(WikiObjectFilter.PARAMETER_NUMBER, 0);
+        pageTagsParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, "XWiki.TagClass");        
+        proxyFilter.beginWikiObject(objectName, pageTagsParameters);
+        
+        // Tag class
+        FilterEventParameters tagClassParameters = new FilterEventParameters();
+        proxyFilter.beginWikiClass(tagClassParameters);
+        
+        // <tags> class property
+        FilterEventParameters tagClassPropertyParameters = new FilterEventParameters();
+        proxyFilter.beginWikiClassProperty("tags", "com.xpn.xwiki.objects.classes.StaticListClass", tagClassPropertyParameters);
+        
+        // property fields
+        proxyFilter.onWikiClassPropertyField("cache", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("displayType", "input", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("freeText", "forbidden", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("largeStorage", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("multiSelect", "1", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("name", "tags", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("number", "1", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("prettyName", "Tags", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("relationalStorage", "1", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("separator", "|", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("separators", "|,", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("size", "30", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("unmodifiable", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("values", null, new FilterEventParameters());
+        
+        proxyFilter.endWikiClassProperty("tags", "com.xpn.xwiki.objects.classes.StaticListClass", tagClassPropertyParameters);
+        
+        proxyFilter.endWikiClass(tagClassParameters);
+        
+        // get page tags separated by | as string
+        StringBuilder tagBuilder = new StringBuilder();
+        String prefix = "";
+        for (String tag : pageTags.keySet()) {
+            tagBuilder.append(prefix);
+            tagBuilder.append(tag);
+            prefix = "|";
+        }
+        
+        // <tags> object property
+        proxyFilter.onWikiObjectProperty("tags", tagBuilder.toString(), new FilterEventParameters());
+        
+        proxyFilter.endWikiObject(objectName, pageTagsParameters);
+    }
+    
+    private void readPageComment (PropertiesConfiguration pageProperties, ConfluenceFilter proxyFilter, 
+            Long commentId, Map<Long, PropertiesConfiguration> pageComments, Map<Long, Long> commentIndeces)
+            throws FilterException
+    {
+        String objectName = getObjectName(pageProperties);
+        FilterEventParameters commentParameters = new FilterEventParameters();               
+        
+        // Comment object
+        commentParameters.put(WikiObjectFilter.PARAMETER_NUMBER, commentIndeces.get(commentId));
+        commentParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, "XWiki.XWikiComments");        
+        proxyFilter.beginWikiObject(objectName, commentParameters);
+        
+        // Comment class
+        FilterEventParameters commentClassParameters = new FilterEventParameters();
+        proxyFilter.beginWikiClass(commentClassParameters);
+                    
+        FilterEventParameters commentClassPropertyParameters = new FilterEventParameters();
+        
+        // <author> class property
+        proxyFilter.beginWikiClassProperty("author", "com.xpn.xwiki.objects.classes.UsersClass", commentClassPropertyParameters);
+        proxyFilter.onWikiClassPropertyField("cache", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("displayType", "input", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("multiSelect", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("name", "author", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("number", "1", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("picker", "1", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("prettyName", "Author", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("relationalStorage", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("separator", " ", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("size", "30", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("unmodifiable", "0", new FilterEventParameters());
+        proxyFilter.endWikiClassProperty("author", "com.xpn.xwiki.objects.classes.UsersClass", commentClassPropertyParameters);
+        
+        // <comment> class property
+        proxyFilter.beginWikiClassProperty("comment", "com.xpn.xwiki.objects.classes.TextAreaClass", commentClassPropertyParameters);
+        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("editor", null, new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("name", "comment", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("number", "5", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("prettyName", "Comment", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("rows", "5", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("size", "40", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("unmodifiable", "0", new FilterEventParameters());
+        proxyFilter.endWikiClassProperty("comment", "com.xpn.xwiki.objects.classes.TextAreaClass", commentClassPropertyParameters);
+        
+        // <date> class property
+        proxyFilter.beginWikiClassProperty("date", "com.xpn.xwiki.objects.classes.DateClass", commentClassPropertyParameters);
+        proxyFilter.onWikiClassPropertyField("dateFormat", "dd/MM/yyyy HH:mm:ss", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("emptyIsToday", "1", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("name", "date", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("number", "2", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("picker", "1", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("prettyName", "Date", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("size", "20", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("unmodifiable", "0", new FilterEventParameters());
+        proxyFilter.endWikiClassProperty("date", "com.xpn.xwiki.objects.classes.DateClass", commentClassPropertyParameters);
+        
+        // <highlight> class property
+        proxyFilter.beginWikiClassProperty("highlight", "com.xpn.xwiki.objects.classes.TextAreaClass", commentClassPropertyParameters);
+        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("name", "highlight", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("number", "3", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("prettyName", "Highlighted Text", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("rows", "2", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("size", "40", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("unmodifiable", "0", new FilterEventParameters());
+        proxyFilter.endWikiClassProperty("highlight", "com.xpn.xwiki.objects.classes.TextAreaClass", commentClassPropertyParameters);
+        
+        // <originalSelection> class property
+        proxyFilter.beginWikiClassProperty("originalSelection", "com.xpn.xwiki.objects.classes.TextAreaClass", commentClassPropertyParameters);
+        proxyFilter.onWikiClassPropertyField("contenttype", "PureText", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("editor", "PureText", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("name", "originalSelection", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("number", "6", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("prettyName", "Original Selection", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("rows", "5", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("size", "40", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("unmodifiable", "0", new FilterEventParameters());
+        proxyFilter.endWikiClassProperty("originalSelection", "com.xpn.xwiki.objects.classes.TextAreaClass", commentClassPropertyParameters);
+        
+        // <replyto> class property
+        proxyFilter.beginWikiClassProperty("replyto", "com.xpn.xwiki.objects.classes.NumberClass", commentClassPropertyParameters);
+        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("name", "replyto", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("number", "4", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("numberType", "Integer", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("prettyName", "Reply To", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("size", "5", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("unmodifiable", "0", new FilterEventParameters());
+        proxyFilter.endWikiClassProperty("replyto", "com.xpn.xwiki.objects.classes.NumberClass", commentClassPropertyParameters);
+        
+        // <selection> class property
+        proxyFilter.beginWikiClassProperty("selection", "com.xpn.xwiki.objects.classes.TextAreaClass", commentClassPropertyParameters);
+        proxyFilter.onWikiClassPropertyField("contenttype", "PureText", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("editor", "PureText", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("name", "selection", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("number", "3", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("prettyName", "Selection", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("rows", "5", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("size", "40", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("unmodifiable", "0", new FilterEventParameters());
+        proxyFilter.endWikiClassProperty("selection", "com.xpn.xwiki.objects.classes.TextAreaClass", commentClassPropertyParameters);
+        
+        // <selectionLeftContext> class property
+        proxyFilter.beginWikiClassProperty("selectionLeftContext", "com.xpn.xwiki.objects.classes.TextAreaClass", commentClassPropertyParameters);
+        proxyFilter.onWikiClassPropertyField("contenttype", "PureText", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("editor", "PureText", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("name", "selectionLeftContext", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("number", "4", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("prettyName", "Selection Left Context", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("rows", "5", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("size", "40", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("unmodifiable", "0", new FilterEventParameters());
+        proxyFilter.endWikiClassProperty("selectionLeftContext", "com.xpn.xwiki.objects.classes.TextAreaClass", commentClassPropertyParameters);
+        
+        // <selectionRightContext> class property
+        proxyFilter.beginWikiClassProperty("selectionRightContext", "com.xpn.xwiki.objects.classes.TextAreaClass", commentClassPropertyParameters);
+        proxyFilter.onWikiClassPropertyField("contenttype", "PureText", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("editor", "PureText", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("name", "selectionRightContext", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("number", "5", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("prettyName", "Selection Right Context", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("rows", "5", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("size", "40", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("unmodifiable", "0", new FilterEventParameters());
+        proxyFilter.endWikiClassProperty("selectionRightContext", "com.xpn.xwiki.objects.classes.TextAreaClass", commentClassPropertyParameters);
+        
+        // <state> class property
+        proxyFilter.beginWikiClassProperty("state", "com.xpn.xwiki.objects.classes.StringClass", commentClassPropertyParameters);
+        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("name", "state", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("number", "8", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("prettyName", "State", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("size", "30", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("unmodifiable", "0", new FilterEventParameters());
+        proxyFilter.endWikiClassProperty("state", "com.xpn.xwiki.objects.classes.StringClass", commentClassPropertyParameters);
+        
+        // <target> class property
+        proxyFilter.beginWikiClassProperty("target", "com.xpn.xwiki.objects.classes.PageClass", commentClassPropertyParameters);
+        proxyFilter.onWikiClassPropertyField("cache", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("classname", null, new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("displayType", "input", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("freeText", "discouraged", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("multiSelect", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("name", "target", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("number", "7", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("picker", "1", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("prettyName", "Target", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("relationalStorage", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("separator", " ", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("size", "30", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("sql", null, new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("unmodifiable", "0", new FilterEventParameters());
+        proxyFilter.endWikiClassProperty("target", "com.xpn.xwiki.objects.classes.PageClass", commentClassPropertyParameters);
+                 
+        proxyFilter.endWikiClass(commentClassParameters);
+        
+        // object properties
+        PropertiesConfiguration commentProperties = pageComments.get(commentId);
+        
+        // creator
+        String commentCreator;
+        if (commentProperties.containsKey("creatorName")) {
+            // old creator reference by name
+            commentCreator = commentProperties.getString("creatorName");
+        } else {
+            // new creator reference by key
+            commentCreator = commentProperties.getString("creator");
+            try {
+                PropertiesConfiguration creatorProperties = this.confluencePackage.getUserProperties(commentCreator);
+                // replace dots in user names with underlines for XWiki compatibility
+                commentCreator = creatorProperties.getString("name").replace(".", "_");
+            } catch (ConfigurationException e) {
+                if (this.properties.isVerbose()) {
+                    this.logger.warn("Unable to get comment creator name, using id instead.", e);
+                }
+            }
+        }
+        String commentCreatorReference = "xwiki:XWiki." + commentCreator;
+        
+        // content
+        String commentBodyContent = this.confluencePackage.getCommentText(commentProperties, commentId);
+        int commentBodyType = this.confluencePackage.getCommentBodyType(commentProperties, commentId);
+        String commentText = commentBodyContent;
+        if (commentBodyContent != null && this.properties.isConvertToXWiki()) {
+            try {
+                commentText = convertToXWiki21(commentBodyContent, commentBodyType);
+            } catch (Exception e) {
+                this.logger.error("Failed to convert content of the comment with id [{}]", commentId, e);
+            }
+        }          
+        
+        // creation date
+        Date commentDate = null;
+        try {
+            commentDate = this.confluencePackage.getDate(commentProperties, "creationDate");
+        } catch (java.text.ParseException e) {
+            if (this.properties.isVerbose()) {
+                this.logger.error("Failed to parse date", e);
+            }
+        }
+        
+        // parent (replyto)
+        Long parentIndex = null;
+        if (commentProperties.containsKey("parent")) {
+            Long parentId = commentProperties.getLong("parent");
+            parentIndex = commentIndeces.get(parentId);
+        }
+        
+        proxyFilter.onWikiObjectProperty("author", commentCreatorReference, new FilterEventParameters());
+        proxyFilter.onWikiObjectProperty("comment", commentText, new FilterEventParameters());
+        proxyFilter.onWikiObjectProperty("date", commentDate, new FilterEventParameters());
+        proxyFilter.onWikiObjectProperty("highlight", "", new FilterEventParameters());
+        proxyFilter.onWikiObjectProperty("originalSelection", "", new FilterEventParameters());
+        proxyFilter.onWikiObjectProperty("replyto", parentIndex, new FilterEventParameters());
+        proxyFilter.onWikiObjectProperty("selection", "", new FilterEventParameters());
+        proxyFilter.onWikiObjectProperty("selectionLeftContext", "", new FilterEventParameters());
+        proxyFilter.onWikiObjectProperty("selectionRightContext", "", new FilterEventParameters());
+        proxyFilter.onWikiObjectProperty("state", "", new FilterEventParameters());
+        proxyFilter.onWikiObjectProperty("target", "", new FilterEventParameters());
+        
+        proxyFilter.endWikiObject(objectName, commentParameters); 
+    }
+    
+    private String getObjectName(PropertiesConfiguration pageProperties)
+    {
+        // get parent name from reference
+        String parentName = "";
+        try {
+            parentName = this.confluencePackage.getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT).getName();
+        } catch (Exception e) {
+            if (this.properties.isVerbose()) {
+                this.logger.warn("Failed to parse parent");
+            }
+        }
+        
+        // use space name if there is no parent
+        if (parentName.isEmpty()) {
+            try {
+                parentName = this.confluencePackage.getSpaceName(Long.valueOf(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_SPACE)));
+            } catch (NumberFormatException | ConfigurationException e) {
+                if (this.properties.isVerbose()) {
+                    this.logger.warn("Failed to parse space");
+                }
+            }
+        }
+        
+        // get page name
+        String pageName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
+        
+        // create full page name from parent + title + WebHome
+        StringBuilder nameBuilder = new StringBuilder();
+        if (!parentName.isEmpty()) {
+            nameBuilder.append(parentName);
+            nameBuilder.append(".");
+        }
+        if (!pageName.isEmpty()) {
+            nameBuilder.append(pageName);
+            nameBuilder.append(".");
+        }
+        nameBuilder.append("WebHome");
+        
+        return nameBuilder.toString();
     }
 
     public PropertiesConfiguration getContentProperties(PropertiesConfiguration properties, String key)
