@@ -571,36 +571,36 @@ public class ConfluenceXMLPackage
 
         return id;
     }
-    
+
     private String readImplObjectProperties(XMLStreamReader xmlReader, PropertiesConfiguration properties)
-            throws XMLStreamException, FilterException
-        {
-            String id = "-1";
+        throws XMLStreamException, FilterException
+    {
+        String id = "-1";
 
-            for (xmlReader.nextTag(); xmlReader.isStartElement(); xmlReader.nextTag()) {
-                String elementName = xmlReader.getLocalName();
+        for (xmlReader.nextTag(); xmlReader.isStartElement(); xmlReader.nextTag()) {
+            String elementName = xmlReader.getLocalName();
 
-                if (elementName.equals("id")) {
-                    String idName = xmlReader.getAttributeValue(null, "name");
+            if (elementName.equals("id")) {
+                String idName = xmlReader.getAttributeValue(null, "name");
 
-                    if (idName != null && idName.equals("key")) {
-                        id = fixCData(xmlReader.getElementText());
+                if (idName != null && idName.equals("key")) {
+                    id = fixCData(xmlReader.getElementText());
 
-                        properties.setProperty("id", id);
-                    } else {
-                        StAXUtils.skipElement(xmlReader);
-                    }
-                } else if (elementName.equals("property") || elementName.equals("collection")) {
-                    String propertyName = xmlReader.getAttributeValue(null, "name");
-
-                    properties.setProperty(propertyName, readProperty(xmlReader));
+                    properties.setProperty("id", id);
                 } else {
                     StAXUtils.skipElement(xmlReader);
                 }
-            }
+            } else if (elementName.equals("property") || elementName.equals("collection")) {
+                String propertyName = xmlReader.getAttributeValue(null, "name");
 
-            return id;
+                properties.setProperty(propertyName, readProperty(xmlReader));
+            } else {
+                StAXUtils.skipElement(xmlReader);
+            }
         }
+
+        return id;
+    }
 
     private void readAttachmentObject(XMLStreamReader xmlReader)
         throws XMLStreamException, FilterException, ConfigurationException
@@ -726,9 +726,9 @@ public class ConfluenceXMLPackage
         // Save page
         saveObjectProperties("users", properties, pageId);
     }
-    
+
     private void readUserImplObject(XMLStreamReader xmlReader)
-            throws XMLStreamException, ConfigurationException, FilterException
+        throws XMLStreamException, ConfigurationException, FilterException
     {
         PropertiesConfiguration properties = newProperties();
 
@@ -795,9 +795,10 @@ public class ConfluenceXMLPackage
             return readSetProperty(xmlReader);
         } else if (propertyClass.equals("Page") || propertyClass.equals("Space") || propertyClass.equals("BodyContent")
             || propertyClass.equals("Attachment") || propertyClass.equals("SpaceDescription")
-            || propertyClass.equals("Labelling") || propertyClass.equals("Label") || propertyClass.equals("SpacePermission")
-            || propertyClass.equals("InternalGroup") || propertyClass.equals("InternalUser")
-            || propertyClass.equals("Comment") || propertyClass.equals("ContentProperty")) {
+            || propertyClass.equals("Labelling") || propertyClass.equals("Label")
+            || propertyClass.equals("SpacePermission") || propertyClass.equals("InternalGroup")
+            || propertyClass.equals("InternalUser") || propertyClass.equals("Comment")
+            || propertyClass.equals("ContentProperty")) {
             return readObjectReference(xmlReader);
         } else if (propertyClass.equals("ConfluenceUserImpl")) {
             return readImplObjectReference(xmlReader);
@@ -836,7 +837,7 @@ public class ConfluenceXMLPackage
 
         return id;
     }
-    
+
     private String readImplObjectReference(XMLStreamReader xmlReader) throws FilterException, XMLStreamException
     {
         xmlReader.nextTag();
@@ -914,7 +915,7 @@ public class ConfluenceXMLPackage
     {
         return new File(getObjectsFolder(folderName), String.valueOf(objectId));
     }
-    
+
     private File getObjectFolder(String folderName, String objectId)
     {
         return new File(getObjectsFolder(folderName), objectId);
@@ -933,7 +934,7 @@ public class ConfluenceXMLPackage
 
         return new File(folder, "properties.properties");
     }
-    
+
     private File getObjectPropertiesFile(String folderName, String propertyId)
     {
         File folder = getObjectFolder(folderName, propertyId);
@@ -1028,8 +1029,9 @@ public class ConfluenceXMLPackage
 
         return new PropertiesConfiguration(file);
     }
-    
-    public PropertiesConfiguration getObjectProperties(String folder, String objectId) throws ConfigurationException
+
+    public PropertiesConfiguration getObjectProperties(String folder, String objectId, boolean create)
+        throws ConfigurationException
     {
         if (objectId == null) {
             return null;
@@ -1037,17 +1039,17 @@ public class ConfluenceXMLPackage
 
         File file = getObjectPropertiesFile(folder, objectId);
 
-        return new PropertiesConfiguration(file);
+        return create || file.exists() ? new PropertiesConfiguration(file) : null;
     }
 
     public PropertiesConfiguration getUserProperties(Long userId) throws ConfigurationException
     {
         return getObjectProperties("users", userId);
     }
-    
+
     public PropertiesConfiguration getUserProperties(String userId) throws ConfigurationException
     {
-        return getObjectProperties("users", userId);
+        return getObjectProperties("users", userId, false);
     }
 
     // will return users for old confluence format where users had ids representable as longs
@@ -1071,7 +1073,7 @@ public class ConfluenceXMLPackage
 
         return users;
     }
-    
+
     // will return users for new confluence format where users have keys which cannot be represented as longs
     public Collection<String> getAllUsers()
     {
@@ -1163,16 +1165,16 @@ public class ConfluenceXMLPackage
 
         fileProperties.save();
     }
-    
+
     private void saveObjectProperties(String folder, PropertiesConfiguration properties, String objectId)
-            throws ConfigurationException
-        {
-            PropertiesConfiguration fileProperties = getObjectProperties(folder, objectId);
+        throws ConfigurationException
+    {
+        PropertiesConfiguration fileProperties = getObjectProperties(folder, objectId, true);
 
-            fileProperties.copy(properties);
+        fileProperties.copy(properties);
 
-            fileProperties.save();
-        }
+        fileProperties.save();
+    }
 
     private void saveAttachmentProperties(PropertiesConfiguration properties, long pageId, long attachmentId)
         throws ConfigurationException
@@ -1274,22 +1276,22 @@ public class ConfluenceXMLPackage
         return originalRevisionId != null ? originalRevisionId
             : getLong(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_ORIGINALVERSION, def);
     }
-    
+
     public String getTagName(PropertiesConfiguration labellingProperties)
     {
         Long tagId = labellingProperties.getLong(ConfluenceXMLPackage.KEY_LABELLING_LABEL, null);
         String tagName = tagId.toString();
-        
+
         try {
-             PropertiesConfiguration labelProperties = getObjectProperties(tagId);
-             tagName = labelProperties.getString(ConfluenceXMLPackage.KEY_LABEL_NAME);
+            PropertiesConfiguration labelProperties = getObjectProperties(tagId);
+            tagName = labelProperties.getString(ConfluenceXMLPackage.KEY_LABEL_NAME);
         } catch (NumberFormatException | ConfigurationException e) {
             LOGGER.warn("Unable to get tag name, using id instead.");
         }
 
         return tagName;
     }
-    
+
     public String getCommentText(PropertiesConfiguration commentProperties, Long commentId)
     {
         String commentText = commentId.toString();
@@ -1303,7 +1305,7 @@ public class ConfluenceXMLPackage
 
         return commentText;
     }
-    
+
     public Integer getCommentBodyType(PropertiesConfiguration commentProperties, Long commentId)
     {
         Integer bodyType = -1;
