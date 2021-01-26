@@ -30,6 +30,7 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  * <p>
  * {@code
  * <ri:user ri:username="admin" />
+ * <ri:user ri:userkey="admin" />
  * }
  *
  * @version $Id$
@@ -47,15 +48,18 @@ public class UserTagHandler extends TagHandler implements ConfluenceTagHandler
     {
         Object container = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
 
-        WikiParameter usernameParameter = context.getParams().getParameter("ri:username");
-        if (usernameParameter != null && container instanceof UserContainer) {
-            ((UserContainer) container).setUser(usernameParameter.getValue());
-        }
-        
-        // new user reference format (by key)
-        WikiParameter userkeyParameter = context.getParams().getParameter("ri:userkey");
-        if (userkeyParameter != null && container instanceof UserContainer) {
-            ((UserContainer) container).setUser(userkeyParameter.getValue());
+        if (container instanceof UserContainer) {
+            // Name based user reference
+            WikiParameter usernameParameter = context.getParams().getParameter("ri:username");
+            if (usernameParameter != null) {
+                ((UserContainer) container).setUser(usernameParameter.getValue());
+            }
+
+            // Key based user reference
+            WikiParameter userkeyParameter = context.getParams().getParameter("ri:userkey");
+            if (userkeyParameter != null) {
+                ((UserContainer) container).setUser(userkeyParameter.getValue());
+            }
         }
     }
 }

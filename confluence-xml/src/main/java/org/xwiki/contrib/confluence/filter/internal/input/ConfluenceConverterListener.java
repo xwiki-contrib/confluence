@@ -55,6 +55,7 @@ import org.xwiki.rendering.listener.reference.AttachmentResourceReference;
 import org.xwiki.rendering.listener.reference.DocumentResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceType;
+import org.xwiki.rendering.listener.reference.UserResourceReference;
 
 /**
  * Convert various Confluence content elements to their XWiki equivalent.
@@ -71,8 +72,7 @@ public class ConfluenceConverterListener extends WrappingListener
     private static final Pattern PATTERN_URL_VIEWPAGE =
         Pattern.compile("^/pages/viewpage.action\\?pageId=(\\d+)(&.*)?$");
 
-    private static final Pattern PATTERN_URL_SPACES =
-        Pattern.compile("^/spaces/(.+)/pages/\\d+/([^\\?#]+)(\\?.*)?$");
+    private static final Pattern PATTERN_URL_SPACES = Pattern.compile("^/spaces/(.+)/pages/\\d+/([^\\?#]+)(\\?.*)?$");
 
     private static final Pattern PATTERN_URL_ATTACHMENT =
         Pattern.compile("^/download/attachments/(\\d+)/([^\\?#]+)(\\?.*)?$");
@@ -313,7 +313,7 @@ public class ConfluenceConverterListener extends WrappingListener
 
             return createDocumentResourceReference(documentReference, urlParameters, urlAnchor);
         }
-        
+
         // Try viewpage.action
         matcher = PATTERN_URL_VIEWPAGE.matcher(pattern);
         if (matcher.matches()) {
@@ -360,14 +360,48 @@ public class ConfluenceConverterListener extends WrappingListener
     @Override
     public void beginLink(ResourceReference reference, boolean freestanding, Map<String, String> parameters)
     {
-        // Fix URL entered by mistake instead of wiki links
-        fixInternalLinks(reference, freestanding, parameters, true);
+        if (reference instanceof UserResourceReference) {
+            // Resolve user key
+            resolveUserKey((UserResourceReference) reference);
+
+            super.beginLink(reference, freestanding, parameters);
+        } else {
+            // Fix URL entered by mistake instead of wiki links
+            fixInternalLinks(reference, freestanding, parameters, true);
+        }
+    }
+
+    private void resolveUserKey(UserResourceReference reference)
+    {
+        String userReference = reference.getReference();
+
+        PropertiesConfiguration userProperties;
+        try {
+            userProperties = this.confluencePackage.getUserProperties(userReference);
+
+            if (userProperties != null) {
+                String userName = userProperties.getString(ConfluenceXMLPackage.KEY_USER_NAME);
+
+                if (userName != null) {
+                    reference.setReference(userName);
+                }
+            }
+        } catch (ConfigurationException e) {
+            this.logger.warn("Failed to retrieve properties of user with key [{}]", userReference);
+        }
     }
 
     @Override
     public void endLink(ResourceReference reference, boolean freestanding, Map<String, String> parameters)
     {
-        // Fix URL entered by mistake instead of wiki links
-        fixInternalLinks(reference, freestanding, parameters, false);
+        if (reference instanceof UserResourceReference) {
+            // Resolve user key
+            resolveUserKey((UserResourceReference) reference);
+
+            super.endLink(reference, freestanding, parameters);
+        } else {
+            // Fix URL entered by mistake instead of wiki links
+            fixInternalLinks(reference, freestanding, parameters, false);
+        }
     }
 }
