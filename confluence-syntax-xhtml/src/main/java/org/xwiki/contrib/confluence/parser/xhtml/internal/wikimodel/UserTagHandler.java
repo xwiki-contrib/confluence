@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroTagHandler.ConfluenceMacro;
 import org.xwiki.rendering.wikimodel.WikiParameter;
 import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
@@ -47,18 +48,26 @@ public class UserTagHandler extends TagHandler implements ConfluenceTagHandler
     protected void begin(TagContext context)
     {
         Object container = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
+        
+        // Name based user reference
+        WikiParameter usernameParameter = context.getParams().getParameter("ri:username");
+        
+        // Key based user reference
+        WikiParameter userkeyParameter = context.getParams().getParameter("ri:userkey");
 
         if (container instanceof UserContainer) {
-            // Name based user reference
-            WikiParameter usernameParameter = context.getParams().getParameter("ri:username");
+            UserContainer userContainer = (UserContainer) container;
             if (usernameParameter != null) {
-                ((UserContainer) container).setUser(usernameParameter.getValue());
+                userContainer.setUser(usernameParameter.getValue());
+            } else if (userkeyParameter != null) {
+                userContainer.setUser(userkeyParameter.getValue());
             }
-
-            // Key based user reference
-            WikiParameter userkeyParameter = context.getParams().getParameter("ri:userkey");
-            if (userkeyParameter != null) {
-                ((UserContainer) container).setUser(userkeyParameter.getValue());
+        } else if (container instanceof ConfluenceMacro) {
+            ConfluenceMacro macro = (ConfluenceMacro) container;            
+            if (usernameParameter != null) {
+                macro.parameters = macro.parameters.setParameter("att--user", usernameParameter.getValue());
+            } else if (userkeyParameter != null) {
+                macro.parameters = macro.parameters.setParameter("att--user", userkeyParameter.getValue());
             }
         }
     }
