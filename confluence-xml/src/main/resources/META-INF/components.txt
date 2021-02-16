@@ -3,3 +3,4 @@ org.xwiki.contrib.confluence.filter.internal.input.ConfluenceInputFilterStreamFa
 org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverterListener
 org.xwiki.contrib.confluence.filter.internal.macros.AnchorMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.DefaultMacroConverter
+org.xwiki.contrib.confluence.filter.internal.macros.JiraMacroConverter
