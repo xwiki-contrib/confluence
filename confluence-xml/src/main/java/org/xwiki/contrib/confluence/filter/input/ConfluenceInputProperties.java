@@ -84,6 +84,16 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @see #getExcludedPages()
      */
     private Set<Long> excludedPages;
+    
+    /**
+     * @see #isReplaceSlashes()
+     */
+    private boolean replaceSlashes = true;
+    
+    /**
+     * @see #isTruncateNames()
+     */
+    private boolean truncateNames;
 
     /**
      * @return The source to load the wiki from
@@ -276,5 +286,45 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
         }
 
         return true;
+    }
+    
+    /**
+     * @return if true, replace slashes in page names (slashes in titles will be kept)
+     * @since 9.5.2
+     */
+    @PropertyName("Replace slashes in page names")
+    @PropertyDescription("Replace slashes in page names (slashes in titles will be kept)")
+    public boolean isReplaceSlashes()
+    {
+        return this.replaceSlashes;
+    }
+
+    /**
+     * @param replaceSlashes if true, replace slashes in page names (slashes in titles will be kept)
+     * @since 9.5.2
+     */
+    public void setReplaceSlashes(boolean replaceSlashes)
+    {
+        this.replaceSlashes = replaceSlashes;
+    }
+    
+    /**
+     * @return if true, truncate long page names
+     * @since 9.5.2
+     */
+    @PropertyName("Truncate long page names")
+    @PropertyDescription("Rename long page names to contain at most 25 characters")
+    public boolean isTruncateNames()
+    {
+        return this.truncateNames;
+    }
+
+    /**
+     * @param truncateNames if true, truncate long page names
+     * @since 9.5.2
+     */
+    public void setTruncateNames(boolean truncateNames)
+    {
+        this.truncateNames = truncateNames;
     }
 }
