@@ -9177,6 +9177,10 @@ CwAAIFgAAOAI/y/AAFGmBs2Pcz1GAAAAAElFTkSuQmCC</content>
       <p>
         <parameters>
           <entry>
+            <string>creation_author</string>
+            <string>admin</string>
+          </entry>
+          <entry>
             <string>creation_date</string>
             <date>2016-05-10 17:03:03.979 UTC</date>
           </entry>
@@ -9195,6 +9199,10 @@ CwAAIFgAAOAI/y/AAFGmBs2Pcz1GAAAAAElFTkSuQmCC</content>
                 <name>Welcome to Confluence</name>
                 <type>DOCUMENT</type>
               </org.xwiki.model.reference.EntityReference>
+            </entry>
+            <entry>
+              <string>revision_author</string>
+              <string>admin</string>
             </entry>
             <entry>
               <string>revision_date</string>

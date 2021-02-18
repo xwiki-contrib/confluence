@@ -360,7 +360,16 @@ public class ConfluenceInputFilterStream
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_CREATION_AUTHOR)) {
             documentLocaleParameters.put(WikiDocumentFilter.PARAMETER_CREATION_AUTHOR,
                 pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CREATION_AUTHOR));
+        } else if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_CREATION_AUTHOR_KEY)) {
+            String authorKey = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CREATION_AUTHOR_KEY);
+            try {
+             String authorName = this.confluencePackage.getUserProperties(authorKey)
+                                .getString(ConfluenceXMLPackage.KEY_USER_NAME, String.valueOf(authorKey));
+             documentLocaleParameters.put(WikiDocumentFilter.PARAMETER_CREATION_AUTHOR, authorName);
+            } catch (ConfigurationException e) {
+            }
         }
+
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_CREATION_DATE)) {
             try {
                 documentLocaleParameters.put(WikiDocumentFilter.PARAMETER_CREATION_DATE,
@@ -438,6 +447,14 @@ public class ConfluenceInputFilterStream
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISION_AUTHOR)) {
             documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_REVISION_AUTHOR,
                 pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION_AUTHOR));
+        } else if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISION_AUTHOR_KEY)) {
+            String authorKey = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION_AUTHOR_KEY);
+            try {
+                String authorName = this.confluencePackage.getUserProperties(authorKey)
+                                .getString(ConfluenceXMLPackage.KEY_USER_NAME, String.valueOf(authorKey));
+                documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_REVISION_AUTHOR, authorName);
+            } catch (ConfigurationException e) {
+            }
         }
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISION_DATE)) {
             try {

@@ -96,9 +96,13 @@ public class ConfluenceXMLPackage
 
     public static final String KEY_PAGE_CREATION_AUTHOR = "creatorName";
 
+    public static final String KEY_PAGE_CREATION_AUTHOR_KEY = "creator";
+
     public static final String KEY_PAGE_CREATION_DATE = "creationDate";
 
     public static final String KEY_PAGE_REVISION = "version";
+
+    public static final String KEY_PAGE_REVISION_AUTHOR_KEY = "lastModifier";
 
     public static final String KEY_PAGE_REVISION_AUTHOR = "lastModifierName";
 
