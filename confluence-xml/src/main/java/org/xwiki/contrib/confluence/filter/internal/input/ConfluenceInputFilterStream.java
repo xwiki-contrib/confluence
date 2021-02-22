@@ -421,7 +421,7 @@ public class ConfluenceInputFilterStream
         proxyFilter.endWikiDocument(documentName, documentParameters);
     }
 
-    public String resolveUserName(String key, String def)
+    String resolveUserName(String key, String def)
     {
         try {
             PropertiesConfiguration userProperties = this.confluencePackage.getUserProperties(key);
@@ -441,7 +441,7 @@ public class ConfluenceInputFilterStream
         return def;
     }
 
-    public String toUserReferenceName(String userName)
+    String toUserReferenceName(String userName)
     {
         if (userName == null || !this.properties.isConvertToXWiki()) {
             return userName;
@@ -458,7 +458,7 @@ public class ConfluenceInputFilterStream
         return userName;
     }
 
-    public String toUserReference(String userName)
+    String toUserReference(String userName)
     {
         if (userName == null || !this.properties.isConvertToXWiki()) {
             return userName;
@@ -1169,7 +1169,7 @@ public class ConfluenceInputFilterStream
         return nameBuilder.toString();
     }
 
-    public PropertiesConfiguration getContentProperties(PropertiesConfiguration properties, String key)
+    private PropertiesConfiguration getContentProperties(PropertiesConfiguration properties, String key)
         throws FilterException
     {
         try {
