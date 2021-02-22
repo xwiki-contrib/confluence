@@ -30,7 +30,7 @@
           <parameters>
             <entry>
               <string>revision_author</string>
-              <string>clemens</string>
+              <string>XWiki.clemens</string>
             </entry>
             <entry>
               <string>revision_date</string>
@@ -120,7 +120,7 @@
           <parameters>
             <entry>
               <string>revision_author</string>
-              <string>clemens</string>
+              <string>XWiki.clemens</string>
             </entry>
             <entry>
               <string>revision_date</string>
@@ -162,7 +162,7 @@ in [[code block]]
           <parameters>
             <entry>
               <string>revision_author</string>
-              <string>clemens</string>
+              <string>XWiki.clemens</string>
             </entry>
             <entry>
               <string>revision_date</string>
