@@ -74,7 +74,7 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>[[doc:XWiki.UserName]] [[doc:XWiki.UserName]] [[doc:XWiki.C_ra_ppy_User___]]</string>
+              <string>[[user:UserName]] [[user:UserName]] [[user:C_ra_ppy_User___]]</string>
             </entry>
             <entry>
               <string>syntax</string>
@@ -95,4 +95,5 @@
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=users
+.configuration.userReferences=true
 .#------------------------------------------------------------------------------
