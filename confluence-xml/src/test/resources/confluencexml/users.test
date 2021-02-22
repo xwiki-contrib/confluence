@@ -32,6 +32,36 @@
     </parameters>
   </p>
 </user>
+<user name="C_ra_ppy_User___">
+  <p>
+    <parameters>
+      <entry>
+        <string>firstname</string>
+        <string>User</string>
+      </entry>
+      <entry>
+        <string>lastname</string>
+        <string>Name</string>
+      </entry>
+      <entry>
+        <string>email</string>
+        <string>user@mail.com</string>
+      </entry>
+      <entry>
+        <string>active</string>
+        <boolean>true</boolean>
+      </entry>
+      <entry>
+        <string>revision_date</string>
+        <date>2016-05-10 15:00:02.760 UTC</date>
+      </entry>
+      <entry>
+        <string>creation_date</string>
+        <date>2016-05-10 15:00:02.760 UTC</date>
+      </entry>
+    </parameters>
+  </p>
+</user>
 <wikiSpace name="TestSpace">
   <wikiDocument name="TestContent">
     <wikiDocumentLocale>
@@ -44,7 +74,7 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>[[user:UserName]] [[user:UserName]]</string>
+              <string>[[user:UserName]] [[user:UserName]] [[user:C_ra_ppy_User___]]</string>
             </entry>
             <entry>
               <string>syntax</string>

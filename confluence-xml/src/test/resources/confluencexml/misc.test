@@ -13,7 +13,7 @@
         <parameters>
           <entry>
             <string>creation_author</string>
-            <string>clemens</string>
+            <string>XWiki.clemens</string>
           </entry>
           <entry>
             <string>creation_date</string>
@@ -103,7 +103,7 @@
         <parameters>
           <entry>
             <string>creation_author</string>
-            <string>clemens</string>
+            <string>XWiki.clemens</string>
           </entry>
           <entry>
             <string>creation_date</string>

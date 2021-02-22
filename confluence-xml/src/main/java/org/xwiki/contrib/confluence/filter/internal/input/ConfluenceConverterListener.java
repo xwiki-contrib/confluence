@@ -93,15 +93,18 @@ public class ConfluenceConverterListener extends WrappingListener
 
     private ConfluenceInputProperties properties;
 
+    private ConfluenceInputFilterStream stream;
+
     /**
      * @param confluencePackage the Confluence data
      * @param properties the input properties
      * @param listener the listener
      */
-    public void initialize(ConfluenceXMLPackage confluencePackage, ConfluenceInputProperties properties,
-        Listener listener)
+    public void initialize(ConfluenceXMLPackage confluencePackage, ConfluenceInputFilterStream stream,
+        ConfluenceInputProperties properties, Listener listener)
     {
         this.confluencePackage = confluencePackage;
+        this.stream = stream;
         this.properties = properties;
 
         setWrappedListener(listener);
@@ -375,20 +378,9 @@ public class ConfluenceConverterListener extends WrappingListener
     {
         String userReference = reference.getReference();
 
-        PropertiesConfiguration userProperties;
-        try {
-            userProperties = this.confluencePackage.getUserProperties(userReference);
+        String userName = this.stream.toUserReferenceName(this.stream.resolveUserName(userReference, userReference));
 
-            if (userProperties != null) {
-                String userName = userProperties.getString(ConfluenceXMLPackage.KEY_USER_NAME);
-
-                if (userName != null) {
-                    reference.setReference(userName);
-                }
-            }
-        } catch (ConfigurationException e) {
-            this.logger.warn("Failed to retrieve properties of user with key [{}]", userReference);
-        }
+        reference.setReference(userName);
     }
 
     @Override

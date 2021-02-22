@@ -8,7 +8,7 @@
         <parameters>
           <entry>
             <string>creation_author</string>
-            <string>admin</string>
+            <string>XWiki.Admin</string>
           </entry>
           <entry>
             <string>creation_date</string>
@@ -64,7 +64,7 @@
         <parameters>
           <entry>
             <string>creation_author</string>
-            <string>admin</string>
+            <string>XWiki.Admin</string>
           </entry>
           <entry>
             <string>creation_date</string>
@@ -137,7 +137,7 @@ h6. Navigate space
         <parameters>
           <entry>
             <string>creation_author</string>
-            <string>admin</string>
+            <string>XWiki.Admin</string>
           </entry>
           <entry>
             <string>creation_date</string>

@@ -144,7 +144,7 @@
         <parameters>
           <entry>
             <string>creation_author</string>
-            <string>admin</string>
+            <string>XWiki.Admin</string>
           </entry>
           <entry>
             <string>creation_date</string>
@@ -200,7 +200,7 @@
         <parameters>
           <entry>
             <string>creation_author</string>
-            <string>admin</string>
+            <string>XWiki.Admin</string>
           </entry>
           <entry>
             <string>creation_date</string>
@@ -263,7 +263,7 @@
         <parameters>
           <entry>
             <string>creation_author</string>
-            <string>admin</string>
+            <string>XWiki.Admin</string>
           </entry>
           <entry>
             <string>creation_date</string>
@@ -516,7 +516,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
         <parameters>
           <entry>
             <string>creation_author</string>
-            <string>admin</string>
+            <string>XWiki.Admin</string>
           </entry>
           <entry>
             <string>creation_date</string>
@@ -572,7 +572,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
         <parameters>
           <entry>
             <string>creation_author</string>
-            <string>admin</string>
+            <string>XWiki.Admin</string>
           </entry>
           <entry>
             <string>creation_date</string>
@@ -863,7 +863,7 @@ Link to page 1 [[here&gt;&gt;doc:SPACE1.Page 1]]</string>
         <parameters>
           <entry>
             <string>creation_author</string>
-            <string>admin</string>
+            <string>XWiki.Admin</string>
           </entry>
           <entry>
             <string>creation_date</string>
@@ -19401,7 +19401,7 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
         <parameters>
           <entry>
             <string>creation_author</string>
-            <string>admin</string>
+            <string>XWiki.Admin</string>
           </entry>
           <entry>
             <string>creation_date</string>
@@ -19491,7 +19491,7 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
         <parameters>
           <entry>
             <string>creation_author</string>
-            <string>admin</string>
+            <string>XWiki.Admin</string>
           </entry>
           <entry>
             <string>creation_date</string>
@@ -19562,7 +19562,7 @@ Content of the page including:
 
 * ☐ task 3
 
-* ☐ Task 4 for [[user:admin]]\\
+* ☐ Task 4 for [[user:Admin]]\\
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -19708,7 +19708,7 @@ Content of the page including:
 
 * ☐ task 3
 
-* ☐ Task 4 for [[user:admin]]\\
+* ☐ Task 4 for [[user:Admin]]\\
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -19777,7 +19777,7 @@ Some wiki text with **bold** content
 
 ----
 
-[[user:admin]] &lt;= user macro
+[[user:Admin]] &lt;= user macro
 
 {{info title="info title"}}
 info default macro
@@ -20064,7 +20064,7 @@ Content of the page including:
 
 * ☐ task 3
 
-* ☐ Task 4 for [[user:admin]]\\
+* ☐ Task 4 for [[user:Admin]]\\
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -20133,7 +20133,7 @@ Some wiki text with **bold** content
 
 ----
 
-[[user:admin]] &lt;= user macro
+[[user:Admin]] &lt;= user macro
 
 {{info title="info title"}}
 info default macro
@@ -20420,7 +20420,7 @@ Content of the page including:
 
 * ☐ task 3
 
-* ☐ Task 4 for [[user:admin]]\\
+* ☐ Task 4 for [[user:Admin]]\\
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -20489,7 +20489,7 @@ Some wiki text with **bold** content
 
 ----
 
-[[user:admin]] &lt;= user macro
+[[user:Admin]] &lt;= user macro
 
 {{info title="info title"}}
 info default macro
@@ -20776,7 +20776,7 @@ Content of the page including:
 
 * ☐ task 3
 
-* ☐ Task 4 for [[user:admin]]\\
+* ☐ Task 4 for [[user:Admin]]\\
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -20845,7 +20845,7 @@ Some wiki text with **bold** content
 
 ----
 
-[[user:admin]] &lt;= user macro
+[[user:Admin]] &lt;= user macro
 
 {{info title="info title"}}
 info default macro
@@ -21132,7 +21132,7 @@ Content of the page including:
 
 * ☐ task 3
 
-* ☐ Task 4 for [[user:admin]]\\
+* ☐ Task 4 for [[user:Admin]]\\
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -21201,7 +21201,7 @@ Some wiki text with **bold** content
 
 ----
 
-[[user:admin]] &lt;= user macro
+[[user:Admin]] &lt;= user macro
 
 {{info title="info title"}}
 info default macro
@@ -21495,7 +21495,7 @@ Content of the page including:
 
 * ☐ task 3
 
-* ☐ Task 4 for [[user:admin]]\\
+* ☐ Task 4 for [[user:Admin]]\\
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -21564,7 +21564,7 @@ Some wiki text with **bold** content
 
 ----
 
-[[user:admin]] &lt;= user macro
+[[user:Admin]] &lt;= user macro
 
 {{info title="info title"}}
 info default macro
@@ -26599,7 +26599,7 @@ cyAvPg0KPC9HbG9iYWxTZXR0aW5ncz4=</content>
         <parameters>
           <entry>
             <string>creation_author</string>
-            <string>admin</string>
+            <string>XWiki.Admin</string>
           </entry>
           <entry>
             <string>creation_date</string>

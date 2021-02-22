@@ -29,6 +29,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -61,6 +62,8 @@ import org.xwiki.filter.input.BeanInputFilterStreamFactory;
 import org.xwiki.filter.input.InputFilterStreamFactory;
 import org.xwiki.filter.input.StringInputSource;
 import org.xwiki.job.event.status.JobProgressManager;
+import org.xwiki.model.reference.EntityReferenceSerializer;
+import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.parser.ParseException;
 import org.xwiki.rendering.parser.StreamParser;
@@ -79,6 +82,8 @@ import org.xwiki.rendering.syntax.Syntax;
 public class ConfluenceInputFilterStream
     extends AbstractBeanInputFilterStream<ConfluenceInputProperties, ConfluenceFilter>
 {
+    private final static Pattern FORBIDDEN_USER_CHARACTERS = Pattern.compile("[. /]");
+
     @Inject
     private Logger logger;
 
@@ -99,6 +104,9 @@ public class ConfluenceInputFilterStream
     @Inject
     @Named("xwiki/2.1")
     private PrintRendererFactory xwiki21Factory;
+
+    @Inject
+    private EntityReferenceSerializer<String> serializer;
 
     private ConfluenceXMLPackage confluencePackage;
 
@@ -199,10 +207,8 @@ public class ConfluenceInputFilterStream
                 throw new FilterException("Failed to get user properties", e);
             }
 
-            String userName = userProperties.getString(ConfluenceXMLPackage.KEY_USER_NAME, String.valueOf(userId));
-            if (this.properties.isConvertToXWiki() && userName.equals("admin")) {
-                userName = "Admin";
-            }
+            String userName = toUserReferenceName(
+                userProperties.getString(ConfluenceXMLPackage.KEY_USER_NAME, String.valueOf(userId)));
 
             FilterEventParameters userParameters = new FilterEventParameters();
 
@@ -222,7 +228,7 @@ public class ConfluenceInputFilterStream
                     this.confluencePackage.getDate(userProperties, ConfluenceXMLPackage.KEY_USER_CREATION_DATE));
             } catch (Exception e) {
                 if (this.properties.isVerbose()) {
-                    this.logger.error("Failed to parse date", e);
+                    this.logger.error("Failed to parse the user date", e);
                 }
             }
 
@@ -266,7 +272,7 @@ public class ConfluenceInputFilterStream
                     this.confluencePackage.getDate(groupProperties, ConfluenceXMLPackage.KEY_GROUP_CREATION_DATE));
             } catch (Exception e) {
                 if (this.properties.isVerbose()) {
-                    this.logger.error("Failed to parse date", e);
+                    this.logger.error("Failed to parse the group date", e);
                 }
             }
 
@@ -371,15 +377,11 @@ public class ConfluenceInputFilterStream
         FilterEventParameters documentLocaleParameters = new FilterEventParameters();
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_CREATION_AUTHOR)) {
             documentLocaleParameters.put(WikiDocumentFilter.PARAMETER_CREATION_AUTHOR,
-                pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CREATION_AUTHOR));
+                toUserReference(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CREATION_AUTHOR)));
         } else if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_CREATION_AUTHOR_KEY)) {
             String authorKey = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CREATION_AUTHOR_KEY);
-            try {
-                String authorName = this.confluencePackage.getUserProperties(authorKey)
-                    .getString(ConfluenceXMLPackage.KEY_USER_NAME, String.valueOf(authorKey));
-                documentLocaleParameters.put(WikiDocumentFilter.PARAMETER_CREATION_AUTHOR, authorName);
-            } catch (ConfigurationException e) {
-            }
+            String authorName = toUserReference(resolveUserName(authorKey, authorKey));
+            documentLocaleParameters.put(WikiDocumentFilter.PARAMETER_CREATION_AUTHOR, authorName);
         }
 
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_CREATION_DATE)) {
@@ -417,6 +419,58 @@ public class ConfluenceInputFilterStream
 
         // < WikiDocument
         proxyFilter.endWikiDocument(documentName, documentParameters);
+    }
+
+    public String resolveUserName(String key, String def)
+    {
+        try {
+            PropertiesConfiguration userProperties = this.confluencePackage.getUserProperties(key);
+
+            if (userProperties != null) {
+                String userName = userProperties.getString(ConfluenceXMLPackage.KEY_USER_NAME);
+
+                if (userName != null) {
+                    return userName;
+                }
+            }
+        } catch (ConfigurationException e) {
+            this.logger.warn("Failed to retrieve properties of user with key [{}]: {}", key,
+                ExceptionUtils.getRootCauseMessage(e));
+        }
+
+        return def;
+    }
+
+    public String toUserReferenceName(String userName)
+    {
+        if (userName == null || !this.properties.isConvertToXWiki()) {
+            return userName;
+        }
+
+        // Translate the usual default admin user in Confluence to it's XWiki counterpart
+        if (userName.equals("admin")) {
+            return "Admin";
+        }
+
+        // Protected from characters not well supported in user page name depending on the version of XWiki
+        userName = FORBIDDEN_USER_CHARACTERS.matcher(userName).replaceAll("_");
+
+        return userName;
+    }
+
+    public String toUserReference(String userName)
+    {
+        if (userName == null || !this.properties.isConvertToXWiki()) {
+            return userName;
+        }
+
+        // Transform user name according to configuration
+        userName = toUserReferenceName(userName);
+
+        // Add the "XWiki" space. Ideally this should probably be done on XWiki Instance Output filter side
+        LocalDocumentReference reference = new LocalDocumentReference("XWiki", userName);
+
+        return this.serializer.serialize(reference);
     }
 
     private PropertiesConfiguration getPageProperties(Long pageId) throws FilterException
@@ -461,12 +515,8 @@ public class ConfluenceInputFilterStream
                 pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION_AUTHOR));
         } else if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISION_AUTHOR_KEY)) {
             String authorKey = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION_AUTHOR_KEY);
-            try {
-                String authorName = this.confluencePackage.getUserProperties(authorKey)
-                    .getString(ConfluenceXMLPackage.KEY_USER_NAME, String.valueOf(authorKey));
-                documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_REVISION_AUTHOR, authorName);
-            } catch (ConfigurationException e) {
-            }
+            String authorName = resolveUserName(authorKey, authorKey);
+            documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_REVISION_AUTHOR, authorName);
         }
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISION_DATE)) {
             try {
@@ -642,7 +692,7 @@ public class ConfluenceInputFilterStream
     {
         if (this.properties.isConvertToXWiki()) {
             ConfluenceConverterListener converter = this.converterProvider.get();
-            converter.initialize(this.confluencePackage, this.properties, proxyFilter);
+            converter.initialize(this.confluencePackage, this, this.properties, proxyFilter);
             return converter;
         }
 
@@ -1028,15 +1078,7 @@ public class ConfluenceInputFilterStream
         } else {
             // new creator reference by key
             commentCreator = commentProperties.getString("creator");
-            try {
-                PropertiesConfiguration creatorProperties = this.confluencePackage.getUserProperties(commentCreator);
-                // replace dots in user names with underlines for XWiki compatibility
-                commentCreator = creatorProperties.getString("name").replace(".", "_");
-            } catch (ConfigurationException e) {
-                if (this.properties.isVerbose()) {
-                    this.logger.warn("Unable to get comment creator name, using id instead.", e);
-                }
-            }
+            commentCreator = toUserReference(resolveUserName(commentCreator, commentCreator));
         }
         String commentCreatorReference = "xwiki:XWiki." + commentCreator;
 
