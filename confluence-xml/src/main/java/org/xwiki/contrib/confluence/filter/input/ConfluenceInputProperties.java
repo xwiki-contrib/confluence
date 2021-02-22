@@ -85,6 +85,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      */
     private Set<Long> excludedPages;
 
+    private boolean usersEnabled = true;
+
     /**
      * @return The source to load the wiki from
      */
@@ -276,5 +278,25 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
         }
 
         return true;
+    }
+
+    /**
+     * @return if true, import the users and groups found in the confluence package
+     * @since 9.6
+     */
+    @PropertyName("Import users")
+    @PropertyDescription("Import the users and groups found in the confluence package.")
+    public boolean isUsersEnabled()
+    {
+        return this.usersEnabled;
+    }
+
+    /**
+     * @param usersEnabled if true, import the users and groups found in the confluence package
+     * @since 9.6
+     */
+    public void setUsersEnabled(boolean usersEnabled)
+    {
+        this.usersEnabled = usersEnabled;
     }
 }

@@ -252,6 +252,12 @@ public class ConfluenceXMLPackage
 
     private static final XMLInputFactory XML_INPUT_FACTORY = XMLInputFactory.newInstance();
 
+    private static final String FOLDER_INTERNALUSER = "internalusers";
+
+    private static final String FOLDER_USERIMPL = "userimpls";
+
+    private static final String FOLDER_GROUP = "groups";
+
     protected static final Logger LOGGER = LoggerFactory.getLogger(ConfluenceXMLPackage.class);
 
     private File directory;
@@ -520,7 +526,7 @@ public class ConfluenceXMLPackage
             } else if (type.equals("Space")) {
                 readSpaceObject(xmlReader);
             } else if (type.equals("InternalUser")) {
-                readUserObject(xmlReader);
+                readInternalUserObject(xmlReader);
             } else if (type.equals("ConfluenceUserImpl")) {
                 readUserImplObject(xmlReader);
             } else if (type.equals("InternalGroup")) {
@@ -720,7 +726,7 @@ public class ConfluenceXMLPackage
         }
     }
 
-    private void readUserObject(XMLStreamReader xmlReader)
+    private void readInternalUserObject(XMLStreamReader xmlReader)
         throws XMLStreamException, ConfigurationException, FilterException
     {
         PropertiesConfiguration properties = newProperties();
@@ -728,7 +734,7 @@ public class ConfluenceXMLPackage
         long pageId = readObjectProperties(xmlReader, properties);
 
         // Save page
-        saveObjectProperties("users", properties, pageId);
+        saveObjectProperties(FOLDER_INTERNALUSER, properties, pageId);
     }
 
     private void readUserImplObject(XMLStreamReader xmlReader)
@@ -739,7 +745,7 @@ public class ConfluenceXMLPackage
         String pageId = readImplObjectProperties(xmlReader, properties);
 
         // Save page
-        saveObjectProperties("users", properties, pageId);
+        saveObjectProperties(FOLDER_USERIMPL, properties, pageId);
     }
 
     private void readGroupObject(XMLStreamReader xmlReader)
@@ -750,7 +756,7 @@ public class ConfluenceXMLPackage
         long pageId = readObjectProperties(xmlReader, properties);
 
         // Save page
-        saveObjectProperties("groups", properties, pageId);
+        saveObjectProperties(FOLDER_GROUP, properties, pageId);
     }
 
     private void readMembershipObject(XMLStreamReader xmlReader)
@@ -783,7 +789,7 @@ public class ConfluenceXMLPackage
                 groupProperties.setProperty(KEY_GROUP_MEMBERGROUPS, groups);
             }
 
-            saveObjectProperties("groups", groupProperties, parentGroup);
+            saveObjectProperties(FOLDER_GROUP, groupProperties, parentGroup);
         }
     }
 
@@ -900,14 +906,19 @@ public class ConfluenceXMLPackage
         return new File(this.tree, folderName);
     }
 
-    private File getUsersFolder()
+    private File getIternalUserFolder()
     {
-        return getObjectsFolder("users");
+        return getObjectsFolder(FOLDER_INTERNALUSER);
+    }
+
+    private File getUserImplFolder()
+    {
+        return getObjectsFolder(FOLDER_USERIMPL);
     }
 
     private File getGroupsFolder()
     {
-        return getObjectsFolder("groups");
+        return getObjectsFolder(FOLDER_GROUP);
     }
 
     private File getPageFolder(long pageId)
@@ -1024,7 +1035,7 @@ public class ConfluenceXMLPackage
     {
         long id;
         if (objectId != null) {
-            id = (Long) objectId;
+            id = objectId;
         } else {
             return null;
         }
@@ -1046,20 +1057,33 @@ public class ConfluenceXMLPackage
         return create || file.exists() ? new PropertiesConfiguration(file) : null;
     }
 
-    public PropertiesConfiguration getUserProperties(Long userId) throws ConfigurationException
+    public PropertiesConfiguration getInternalUserProperties(Long userId) throws ConfigurationException
     {
-        return getObjectProperties("users", userId);
+        return getObjectProperties(FOLDER_INTERNALUSER, userId);
     }
 
-    public PropertiesConfiguration getUserProperties(String userId) throws ConfigurationException
+    public PropertiesConfiguration getUserImplProperties(String userKey) throws ConfigurationException
     {
-        return getObjectProperties("users", userId, false);
+        return getObjectProperties(FOLDER_USERIMPL, userKey, false);
     }
 
-    // will return users for old confluence format where users had ids representable as longs
-    public Collection<Long> getUsers()
+    public PropertiesConfiguration getUserProperties(String userIdOrKey) throws ConfigurationException
     {
-        File folder = getUsersFolder();
+        PropertiesConfiguration properties = getUserImplProperties(userIdOrKey);
+
+        if (properties == null && NumberUtils.isCreatable(userIdOrKey)) {
+            properties = getInternalUserProperties(NumberUtils.createLong(userIdOrKey));
+        }
+
+        return properties;
+    }
+
+    /**
+     * @return users stored with class InternalUser (with long id)
+     */
+    public Collection<Long> getInternalUsers()
+    {
+        File folder = getIternalUserFolder();
 
         Collection<Long> users;
         if (folder.exists()) {
@@ -1078,10 +1102,12 @@ public class ConfluenceXMLPackage
         return users;
     }
 
-    // will return users for new confluence format where users have keys which cannot be represented as longs
-    public Collection<String> getAllUsers()
+    /**
+     * @return users stored with class ConfluenceUserImpl (with String keys)
+     */
+    public Collection<String> getUsersImpl()
     {
-        File folder = getUsersFolder();
+        File folder = getUserImplFolder();
 
         Collection<String> users;
         if (folder.exists()) {
@@ -1121,7 +1147,7 @@ public class ConfluenceXMLPackage
 
     public PropertiesConfiguration getGroupProperties(Long groupId) throws ConfigurationException
     {
-        return getObjectProperties("groups", groupId);
+        return getObjectProperties(FOLDER_GROUP, groupId);
     }
 
     public PropertiesConfiguration getAttachmentProperties(long pageId, long attachmentId) throws ConfigurationException
