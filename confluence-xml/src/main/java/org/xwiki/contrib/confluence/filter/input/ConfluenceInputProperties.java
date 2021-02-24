@@ -86,6 +86,13 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private Set<Long> excludedPages;
 
     /**
+     * @see #isUsersEnabled()
+     */
+    private boolean usersEnabled = true;
+
+    private boolean userReferences;
+
+    /**
      * @return The source to load the wiki from
      */
     @PropertyName("The source")
@@ -276,5 +283,48 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
         }
 
         return true;
+    }
+
+    /**
+     * @return if true, import the users and groups found in the confluence package
+     * @since 9.6
+     */
+    @PropertyName("Import users")
+    @PropertyDescription("Import the users and groups found in the confluence package.")
+    public boolean isUsersEnabled()
+    {
+        return this.usersEnabled;
+    }
+
+    /**
+     * @param usersEnabled if true, import the users and groups found in the confluence package
+     * @since 9.6
+     */
+    public void setUsersEnabled(boolean usersEnabled)
+    {
+        this.usersEnabled = usersEnabled;
+    }
+
+    /**
+     * @return indicate if the links to users should produce links to XWiki users profile pages or use the {@code user:}
+     *         prefix.
+     * @since 9.6
+     */
+    @PropertyName("Produce user references")
+    @PropertyDescription("Indicate if the links to users should produce links to XWiki users profile pages "
+        + "or use the \"user:\" prefix.")
+    public boolean isUserReferences()
+    {
+        return this.userReferences;
+    }
+
+    /**
+     * @param userReferences if the links to users should produce links to XWiki users profile pages or use the
+     *            {@code user:} prefix.
+     * @since 9.6
+     */
+    public void setUserReferences(boolean userReferences)
+    {
+        this.userReferences = userReferences;
     }
 }

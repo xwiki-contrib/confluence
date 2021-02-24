@@ -12,6 +12,10 @@
       <p>
         <parameters>
           <entry>
+            <string>creation_author</string>
+            <string>XWiki.clemens</string>
+          </entry>
+          <entry>
             <string>creation_date</string>
             <date>2011-08-20 16:55:49.598 UTC</date>
           </entry>
@@ -24,6 +28,10 @@
       <wikiDocumentRevision revision="1">
         <p>
           <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.clemens</string>
+            </entry>
             <entry>
               <string>revision_date</string>
               <date>2011-08-20 16:55:49.598 UTC</date>
@@ -94,6 +102,10 @@
       <p>
         <parameters>
           <entry>
+            <string>creation_author</string>
+            <string>XWiki.clemens</string>
+          </entry>
+          <entry>
             <string>creation_date</string>
             <date>2013-12-12 13:30:15.120 UTC</date>
           </entry>
@@ -106,6 +118,10 @@
       <wikiDocumentRevision revision="1">
         <p>
           <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.clemens</string>
+            </entry>
             <entry>
               <string>revision_date</string>
               <date>2013-12-12 13:30:15.120 UTC</date>
@@ -144,6 +160,10 @@ in [[code block]]
       <wikiDocumentRevision revision="2">
         <p>
           <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.clemens</string>
+            </entry>
             <entry>
               <string>revision_date</string>
               <date>2013-12-12 13:38:02.510 UTC</date>

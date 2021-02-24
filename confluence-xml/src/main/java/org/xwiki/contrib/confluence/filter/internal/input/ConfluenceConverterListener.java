@@ -93,15 +93,18 @@ public class ConfluenceConverterListener extends WrappingListener
 
     private ConfluenceInputProperties properties;
 
+    private ConfluenceInputFilterStream stream;
+
     /**
      * @param confluencePackage the Confluence data
      * @param properties the input properties
      * @param listener the listener
      */
-    public void initialize(ConfluenceXMLPackage confluencePackage, ConfluenceInputProperties properties,
-        Listener listener)
+    public void initialize(ConfluenceXMLPackage confluencePackage, ConfluenceInputFilterStream stream,
+        ConfluenceInputProperties properties, Listener listener)
     {
         this.confluencePackage = confluencePackage;
+        this.stream = stream;
         this.properties = properties;
 
         setWrappedListener(listener);
@@ -361,44 +364,52 @@ public class ConfluenceConverterListener extends WrappingListener
     public void beginLink(ResourceReference reference, boolean freestanding, Map<String, String> parameters)
     {
         if (reference instanceof UserResourceReference) {
-            // Resolve user key
-            resolveUserKey((UserResourceReference) reference);
+            // Resolve proper user reference
+            ResourceReference userReference = resolveUserReference((UserResourceReference) reference);
 
-            super.beginLink(reference, freestanding, parameters);
+            super.beginLink(userReference, freestanding, parameters);
         } else {
             // Fix URL entered by mistake instead of wiki links
             fixInternalLinks(reference, freestanding, parameters, true);
         }
     }
 
-    private void resolveUserKey(UserResourceReference reference)
+    private ResourceReference resolveUserReference(UserResourceReference reference)
     {
         String userReference = reference.getReference();
 
-        PropertiesConfiguration userProperties;
-        try {
-            userProperties = this.confluencePackage.getUserProperties(userReference);
+        if (this.properties.isUserReferences()) {
+            // Keep the UserResourceReference
 
-            if (userProperties != null) {
-                String userName = userProperties.getString(ConfluenceXMLPackage.KEY_USER_NAME);
+            // Clean the user id
+            String userName =
+                this.stream.toUserReferenceName(this.stream.resolveUserName(userReference, userReference));
 
-                if (userName != null) {
-                    reference.setReference(userName);
-                }
-            }
-        } catch (ConfigurationException e) {
-            this.logger.warn("Failed to retrieve properties of user with key [{}]", userReference);
+            reference.setReference(userName);
+
+            return reference;
         }
+
+        // Convert to link to user profile
+        // FIXME: would not really been needed if the XWiki Instance output filter was taking care of that when
+        // receiving a user reference
+
+        String userName = this.stream.toUserReference(this.stream.resolveUserName(userReference, userReference));
+        DocumentResourceReference documentReference = new DocumentResourceReference(userName);
+
+        documentReference.setParameters(reference.getParameters());
+
+        return documentReference;
     }
 
     @Override
     public void endLink(ResourceReference reference, boolean freestanding, Map<String, String> parameters)
     {
         if (reference instanceof UserResourceReference) {
-            // Resolve user key
-            resolveUserKey((UserResourceReference) reference);
+            // Resolve proper user reference
+            ResourceReference userReference = resolveUserReference((UserResourceReference) reference);
 
-            super.endLink(reference, freestanding, parameters);
+            super.endLink(userReference, freestanding, parameters);
         } else {
             // Fix URL entered by mistake instead of wiki links
             fixInternalLinks(reference, freestanding, parameters, false);

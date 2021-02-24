@@ -6,6 +6,40 @@
     <property name="lowerName"><![CDATA[username]]></property>
   </object>
 
+  <object class="InternalUser" package="com.atlassian.crowd.model.user">
+    <id name="id">163842</id>
+    <property name="name"><![CDATA[UserName]]></property>
+    <property name="lowerName"><![CDATA[username]]></property>
+    <property name="active">true</property>
+    <property name="createdDate">2016-05-10 15:00:02.760</property>
+    <property name="updatedDate">2016-05-10 15:00:02.760</property>
+    <property name="firstName"><![CDATA[User]]></property>
+    <property name="lowerFirstName"><![CDATA[user]]></property>
+    <property name="lastName"><![CDATA[Name]]></property>
+    <property name="lowerLastName"><![CDATA[name]]></property>
+    <property name="displayName"><![CDATA[User Name]]></property>
+    <property name="lowerDisplayName"><![CDATA[user name]]></property>
+    <property name="emailAddress"><![CDATA[user@mail.com]]></property>
+    <property name="lowerEmailAddress"><![CDATA[user@mail.com]]></property>
+  </object>
+
+  <object class="InternalUser" package="com.atlassian.crowd.model.user">
+    <id name="id">163843</id>
+    <property name="name"><![CDATA[C.ra ppy/User. /]]></property>
+    <property name="lowerName"><![CDATA[c.ra ppy/user. /]]></property>
+    <property name="active">true</property>
+    <property name="createdDate">2016-05-10 15:00:02.760</property>
+    <property name="updatedDate">2016-05-10 15:00:02.760</property>
+    <property name="firstName"><![CDATA[User]]></property>
+    <property name="lowerFirstName"><![CDATA[user]]></property>
+    <property name="lastName"><![CDATA[Name]]></property>
+    <property name="lowerLastName"><![CDATA[name]]></property>
+    <property name="displayName"><![CDATA[User Name]]></property>
+    <property name="lowerDisplayName"><![CDATA[user name]]></property>
+    <property name="emailAddress"><![CDATA[user@mail.com]]></property>
+    <property name="lowerEmailAddress"><![CDATA[user@mail.com]]></property>
+  </object>
+
   <object class="Space" package="com.atlassian.confluence.spaces">
     <id name="id">100</id>
     <property name="name"><![CDATA[TestSpace]]></property>
@@ -14,8 +48,7 @@
 
   <object class="Page" package="com.atlassian.confluence.pages">
     <id name="id">10</id>
-    <property name="space" class="Space"
-      package="com.atlassian.confluence.spaces">
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
       <id name="id">100</id>
     </property>
     <property name="title"><![CDATA[TestContent]]></property>
@@ -33,11 +66,12 @@
         <p>
          <ac:link><ri:user ri:username="UserName" /></ac:link>
          <ac:link><ri:user ri:userkey="ff80808156e241950156e468e9510003" /></ac:link>
+
+         <ac:link><ri:user ri:username="C.ra ppy/User. /" /></ac:link>
         </p>
       ]]>
     </property>
-    <property name="content" class="Page"
-      package="com.atlassian.confluence.pages">
+    <property name="content" class="Page" package="com.atlassian.confluence.pages">
       <id name="id">10</id>
     </property>
     <property name="bodyType">2</property>
