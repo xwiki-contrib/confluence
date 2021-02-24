@@ -229,8 +229,6 @@ public class ConfluenceXMLPackage
     public static final String KEY_USER_EMAIL = "emailAddress";
 
     public static final String KEY_USER_PASSWORD = "credential";
-    
-    public static final Integer MAX_NAME_LENGTH = 25;
 
     /**
      * 2012-03-07 17:16:48.158
@@ -247,12 +245,6 @@ public class ConfluenceXMLPackage
      * replacement to repair the CDATA
      */
     private static final String REPAIRED_CDATA_END = "]]";
-    
-    /**
-     * maps to coordinate long name truncation
-     */
-    private Map<String, String> truncatedNames = new HashMap<>();
-    private Map<String, Integer> fragmentCount = new HashMap<>();
 
     private static final XMLInputFactory XML_INPUT_FACTORY = XMLInputFactory.newInstance();
 
@@ -421,7 +413,7 @@ public class ConfluenceXMLPackage
 
     }
 
-    public EntityReference getReferenceFromId(PropertiesConfiguration currentProperties, String key, boolean replaceSlashes, boolean truncateNames)
+    public EntityReference getReferenceFromId(PropertiesConfiguration currentProperties, String key)
         throws ConfigurationException, FilterException
     {
         Long pageId = currentProperties.getLong(key, null);
@@ -438,16 +430,6 @@ public class ConfluenceXMLPackage
                 if (spaceId != currentSpaceId) {
                     String spaceName = getSpaceKey(currentSpaceId);
                     if (spaceName != null) {
-                        if (truncateNames) {
-                            if (spaceName.length() > MAX_NAME_LENGTH) {
-                                spaceName = getTruncatedName(spaceName);
-                            }
-                        }
-                        
-                        if (replaceSlashes) {
-                            spaceName.replaceAll("[/\\\\]", "_");
-                        }
-                        
                         spaceReference = new EntityReference(spaceName, EntityType.SPACE);
                     }
                 }
@@ -1346,32 +1328,5 @@ public class ConfluenceXMLPackage
 
             return def;
         }
-    }
-    
-    public String getTruncatedName(String originalName) {
-        String truncatedName = null;
-        
-        if (this.truncatedNames.containsKey(originalName)) {
-            // get the truncated name from the map if this name has already been encountered
-            truncatedName = this.truncatedNames.get(originalName);
-        } else {      
-            // get the beginning of the original name, leaving five characters free for the count
-            String nameFragment = originalName.substring(0, MAX_NAME_LENGTH - 5);
-            
-            // if no other name has produced this fragment, initialize its count
-            this.fragmentCount.putIfAbsent(nameFragment, 1);
-            
-            // get the count of the current fragment and increase it for the next use
-            Integer currentCount = this.fragmentCount.get(nameFragment);
-            this.fragmentCount.put(nameFragment, currentCount+1);
-            
-            // create the truncated name by appending the five digit count to the fragment
-            truncatedName = nameFragment + String.format("%05d", currentCount);
-            
-            // save the truncated name for the original name in the map
-            this.truncatedNames.put(originalName, truncatedName);
-        }
-               
-        return truncatedName;
     }
 }

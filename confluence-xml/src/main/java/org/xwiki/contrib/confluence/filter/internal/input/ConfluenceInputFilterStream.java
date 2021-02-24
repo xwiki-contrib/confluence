@@ -338,16 +338,6 @@ public class ConfluenceInputFilterStream
 
             return;
         }
-        
-        if (this.properties.isTruncateNames()) {
-            if (documentName.length() > ConfluenceXMLPackage.MAX_NAME_LENGTH) {
-                documentName = this.confluencePackage.getTruncatedName(documentName);
-            }
-        }
-        
-        if (this.properties.isReplaceSlashes()) {
-            documentName = documentName.replaceAll("[/\\\\]", "_");
-        }
 
         FilterEventParameters documentParameters = new FilterEventParameters();
         if (this.properties.getDefaultLocale() != null) {
@@ -438,8 +428,7 @@ public class ConfluenceInputFilterStream
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_PARENT)) {
             try {
                 documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_PARENT,
-                    this.confluencePackage.getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT, 
-                            this.properties.isReplaceSlashes(), this.properties.isTruncateNames()));
+                    this.confluencePackage.getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT));
             } catch (Exception e) {
                 if (this.properties.isVerbose()) {
                     this.logger.error("Failed to parse parent", e);
@@ -1048,8 +1037,7 @@ public class ConfluenceInputFilterStream
         // get parent name from reference
         String parentName = "";
         try {
-            parentName = this.confluencePackage.getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT, 
-                    this.properties.isReplaceSlashes(), this.properties.isTruncateNames()).getName();
+            parentName = this.confluencePackage.getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT).getName();
         } catch (Exception e) {
             if (this.properties.isVerbose()) {
                 this.logger.warn("Failed to parse parent");
@@ -1082,20 +1070,7 @@ public class ConfluenceInputFilterStream
         }
         nameBuilder.append("WebHome");
         
-        String objectName = nameBuilder.toString();
-        
-        if (this.properties.isReplaceSlashes()) {
-            // replace slashes with underline and return name
-            objectName.replaceAll("[/\\\\]", "_");
-        }
-        
-        if (this.properties.isTruncateNames()) {
-            if (objectName.length() > ConfluenceXMLPackage.MAX_NAME_LENGTH) {
-                objectName = this.confluencePackage.getTruncatedName(objectName);
-            }
-        }
-        
-        return objectName;
+        return nameBuilder.toString();
     }
 
     public PropertiesConfiguration getContentProperties(PropertiesConfiguration properties, String key)
