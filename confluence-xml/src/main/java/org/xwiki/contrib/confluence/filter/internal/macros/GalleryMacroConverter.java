@@ -41,7 +41,7 @@ public class GalleryMacroConverter extends AbstractMacroConverter
     protected String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
-        // A unique name so we can write a wrapper macro (since the XWiki gallery macro provides different functionality)
+        // A unique name so we can write a wrapper macro (the XWiki gallery macro provides different functionality)
         return "confluenceGallery";
     }
 }
