@@ -262,11 +262,14 @@ public class ConfluenceXMLPackage
 
     private File directory;
 
+    /**
+     * Indicate if {@link #directory} is temporary (extracted from a source package).
+     */
+    private boolean temporaryDirectory;
+
     private File entities;
 
     private File descriptor;
-
-    private boolean temporaryDirectory;
 
     private File tree;
 
@@ -329,7 +332,7 @@ public class ConfluenceXMLPackage
         this.directory = File.createTempFile("confluencexml", "");
         this.directory.delete();
         this.directory.mkdir();
-        this.temporaryDirectory = false;
+        this.temporaryDirectory = true;
 
         // Extract the zip
         ZipArchiveInputStream zais = new ZipArchiveInputStream(stream);
