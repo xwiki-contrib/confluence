@@ -49,6 +49,7 @@ import org.xwiki.contrib.confluence.filter.internal.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.parser.confluence.internal.ConfluenceParser;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceXHTMLInputProperties;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.ConfluenceXHTMLParser;
+import org.xwiki.environment.Environment;
 import org.xwiki.filter.FilterEventParameters;
 import org.xwiki.filter.FilterException;
 import org.xwiki.filter.event.model.WikiAttachmentFilter;
@@ -108,6 +109,9 @@ public class ConfluenceInputFilterStream
     @Inject
     private EntityReferenceSerializer<String> serializer;
 
+    @Inject
+    private Environment environment;
+
     private ConfluenceXMLPackage confluencePackage;
 
     @Override
@@ -121,7 +125,7 @@ public class ConfluenceInputFilterStream
     {
         // Prepare package
         try {
-            this.confluencePackage = new ConfluenceXMLPackage(this.properties.getSource());
+            this.confluencePackage = new ConfluenceXMLPackage(this.properties.getSource(), this.environment);
         } catch (Exception e) {
             throw new FilterException("Failed to read package", e);
         }
