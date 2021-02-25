@@ -29,6 +29,7 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.rendering.listener.Listener;
 
 /**
@@ -43,6 +44,9 @@ public class DefaultMacroConverter implements MacroConverter
 {
     @Inject
     private ComponentManager componentManager;
+
+    @Inject
+    private ConfluenceInputContext context;
 
     @Inject
     private Logger logger;
@@ -60,7 +64,7 @@ public class DefaultMacroConverter implements MacroConverter
                     parameters, content, inline, e);
             }
         } else {
-            listener.onMacro(id, parameters, content, inline);
+            listener.onMacro(context.getProperties().getUnknownMacroPrefix() + id, parameters, content, inline);
         }
     }
 }

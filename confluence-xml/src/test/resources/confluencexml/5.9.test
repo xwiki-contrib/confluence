@@ -9287,11 +9287,11 @@ Flickr photo streams, Twitter streams, Google maps and many more.
 ===   
  ===
 
-{{widget url=""/}}
+{{confluence_widget url=""/}}
 
 
 
-{{widget url=""/}}
+{{confluence_widget url=""/}}
 
 === (% style="color: rgb(51,51,51);" %)Try it yourself:(%%) ===
 

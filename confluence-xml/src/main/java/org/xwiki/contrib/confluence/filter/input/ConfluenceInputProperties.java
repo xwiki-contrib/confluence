@@ -90,7 +90,15 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      */
     private boolean usersEnabled = true;
 
+    /**
+     * @see #isUserReferences()
+     */
     private boolean userReferences;
+
+    /**
+     * @see getUnknownMacroPrefix()
+     */
+    private String unknownMacroPrefix = "confluence_";
 
     /**
      * @return The source to load the wiki from
@@ -326,5 +334,25 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setUserReferences(boolean userReferences)
     {
         this.userReferences = userReferences;
+    }
+
+    /**
+     * @return the prefix to use in the name of the macros for which no converter is registered
+     * @since 9.7
+     */
+    @PropertyName("Unknown macro prefix")
+    @PropertyDescription("The prefix to use in the name of the macros for which no converter is registered.")
+    public String getUnknownMacroPrefix()
+    {
+        return this.unknownMacroPrefix;
+    }
+
+    /**
+     * @param unknownMacroPrefix the prefix to use in the name of the macros for which no converter is registered
+     * @since 9.7
+     */
+    public void setUnknownMacroPrefix(String unknownMacroPrefix)
+    {
+        this.unknownMacroPrefix = unknownMacroPrefix;
     }
 }

@@ -43,6 +43,7 @@ import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.contrib.confluence.filter.internal.ConfluenceFilter;
 import org.xwiki.contrib.confluence.filter.internal.ConfluenceXMLPackage;
@@ -112,6 +113,9 @@ public class ConfluenceInputFilterStream
     @Inject
     private Environment environment;
 
+    @Inject
+    private ConfluenceInputContext context;
+
     private ConfluenceXMLPackage confluencePackage;
 
     @Override
@@ -122,6 +126,21 @@ public class ConfluenceInputFilterStream
 
     @Override
     protected void read(Object filter, ConfluenceFilter proxyFilter) throws FilterException
+    {
+        if (this.context instanceof DefaultConfluenceInputContext) {
+            ((DefaultConfluenceInputContext) this.context).set(this.properties);
+        }
+
+        try {
+            readInternal(filter, proxyFilter);
+        } finally {
+            if (this.context instanceof DefaultConfluenceInputContext) {
+                ((DefaultConfluenceInputContext) this.context).remove();
+            }
+        }
+    }
+
+    private void readInternal(Object filter, ConfluenceFilter proxyFilter) throws FilterException
     {
         // Prepare package
         try {
