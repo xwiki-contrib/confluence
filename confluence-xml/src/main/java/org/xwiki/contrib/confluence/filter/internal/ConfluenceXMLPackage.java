@@ -25,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -57,6 +58,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.xwiki.environment.Environment;
 import org.xwiki.filter.FilterException;
 import org.xwiki.filter.input.FileInputSource;
 import org.xwiki.filter.input.InputSource;
@@ -260,13 +262,18 @@ public class ConfluenceXMLPackage
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(ConfluenceXMLPackage.class);
 
+    private final Environment environment;
+
     private File directory;
+
+    /**
+     * Indicate if {@link #directory} is temporary (extracted from a source package).
+     */
+    private boolean temporaryDirectory;
 
     private File entities;
 
     private File descriptor;
-
-    private boolean temporaryDirectory;
 
     private File tree;
 
@@ -274,9 +281,11 @@ public class ConfluenceXMLPackage
 
     private Map<String, Long> spacesByKey = new HashMap<>();
 
-    public ConfluenceXMLPackage(InputSource source) throws IOException, FilterException, XMLStreamException,
-        FactoryConfigurationError, ConfigurationException, URISyntaxException
+    public ConfluenceXMLPackage(InputSource source, Environment environment) throws IOException, FilterException,
+        XMLStreamException, FactoryConfigurationError, ConfigurationException, URISyntaxException
     {
+        this.environment = environment;
+
         if (source instanceof FileInputSource) {
             fromFile(((FileInputSource) source).getFile());
         } else if (source instanceof URLInputSource
@@ -326,10 +335,9 @@ public class ConfluenceXMLPackage
     private void fromStream(InputStream stream) throws IOException
     {
         // Get temporary folder
-        this.directory = File.createTempFile("confluencexml", "");
-        this.directory.delete();
-        this.directory.mkdir();
-        this.temporaryDirectory = false;
+        this.directory =
+            Files.createTempDirectory(this.environment.getTemporaryDirectory().toPath(), "confluencexml").toFile();
+        this.temporaryDirectory = true;
 
         // Extract the zip
         ZipArchiveInputStream zais = new ZipArchiveInputStream(stream);
@@ -493,8 +501,8 @@ public class ConfluenceXMLPackage
         if (this.temporaryDirectory) {
             this.tree = new File(this.directory, "tree");
         } else {
-            this.tree = File.createTempFile("confluencexml-tree", "");
-            this.tree.delete();
+            this.tree = Files
+                .createTempDirectory(this.environment.getTemporaryDirectory().toPath(), "confluencexml-tree").toFile();
         }
         this.tree.mkdir();
 

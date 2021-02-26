@@ -43,12 +43,14 @@ import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.contrib.confluence.filter.internal.ConfluenceFilter;
 import org.xwiki.contrib.confluence.filter.internal.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.parser.confluence.internal.ConfluenceParser;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceXHTMLInputProperties;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.ConfluenceXHTMLParser;
+import org.xwiki.environment.Environment;
 import org.xwiki.filter.FilterEventParameters;
 import org.xwiki.filter.FilterException;
 import org.xwiki.filter.event.model.WikiAttachmentFilter;
@@ -108,6 +110,12 @@ public class ConfluenceInputFilterStream
     @Inject
     private EntityReferenceSerializer<String> serializer;
 
+    @Inject
+    private Environment environment;
+
+    @Inject
+    private ConfluenceInputContext context;
+
     private ConfluenceXMLPackage confluencePackage;
 
     @Override
@@ -119,9 +127,24 @@ public class ConfluenceInputFilterStream
     @Override
     protected void read(Object filter, ConfluenceFilter proxyFilter) throws FilterException
     {
+        if (this.context instanceof DefaultConfluenceInputContext) {
+            ((DefaultConfluenceInputContext) this.context).set(this.properties);
+        }
+
+        try {
+            readInternal(filter, proxyFilter);
+        } finally {
+            if (this.context instanceof DefaultConfluenceInputContext) {
+                ((DefaultConfluenceInputContext) this.context).remove();
+            }
+        }
+    }
+
+    private void readInternal(Object filter, ConfluenceFilter proxyFilter) throws FilterException
+    {
         // Prepare package
         try {
-            this.confluencePackage = new ConfluenceXMLPackage(this.properties.getSource());
+            this.confluencePackage = new ConfluenceXMLPackage(this.properties.getSource(), this.environment);
         } catch (Exception e) {
             throw new FilterException("Failed to read package", e);
         }

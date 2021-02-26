@@ -32,7 +32,6 @@
             <ac:parameter ac:name="">value2</ac:parameter>
           </ac:structured-macro>
           <ac:structured-macro ac:name="macro">
-            <ac:default-parameter>defaultparameter</ac:default-parameter>
             <ac:parameter ac:name="parameter">value</ac:parameter>
             <ac:rich-text-body>
               <p>rich <strong>text</strong> here</p>
@@ -42,6 +41,9 @@
             <ac:rich-text-body>
               <p>simple content</p>
             </ac:rich-text-body>
+          </ac:structured-macro>
+          <ac:structured-macro ac:name="macrowithdefaultparameter">
+            <ac:parameter ac:name="">value</ac:parameter>
           </ac:structured-macro>
         </p>
       ]]>

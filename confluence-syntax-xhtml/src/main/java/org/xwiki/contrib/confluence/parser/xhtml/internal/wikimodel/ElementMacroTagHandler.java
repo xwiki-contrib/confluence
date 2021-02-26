@@ -19,39 +19,67 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import org.apache.commons.lang3.StringUtils;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.ConfluenceXHTMLParser;
-import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroTagHandler.ConfluenceMacro;
+import org.xwiki.rendering.wikimodel.WikiParameters;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
- * Handles text inside a macro which might contain markup.
- * <p>
- * Example:
+ * Convert an element into a macro.
  * 
- * <pre>
- * {@code <ac:rich-text-body><p>some <em>text</em> here</p></ac:rich-text-body>}
- * </pre>
- *
  * @version $Id$
- * @since 9.0
+ * @since 9.8
  */
-public class RichTextBodyTagHandler extends AbstractRichContentTagHandler
+public class ElementMacroTagHandler extends AbstractRichContentTagHandler
 {
+    class UnknownMacro
+    {
+        private String name;
+
+        private WikiParameters parameters = new WikiParameters();
+
+        UnknownMacro(String name, WikiParameters parameters)
+        {
+            this.name = name;
+            this.parameters = parameters;
+        }
+    }
+
     /**
      * @param parser is used access the parser and the rendering to use to manipulate the content
      */
-    public RichTextBodyTagHandler(ConfluenceXHTMLParser parser)
+    public ElementMacroTagHandler(ConfluenceXHTMLParser parser)
     {
         super(parser);
+    }
+
+    /**
+     * @param context the tag context
+     * @return the macro name to use
+     */
+    protected String getMacroName(TagContext context)
+    {
+        String name = context.getName();
+
+        // Remove any prefix
+        return StringUtils.substringAfter(name, ":");
+    }
+
+    @Override
+    protected void begin(TagContext context)
+    {
+        UnknownMacro macro = new UnknownMacro(getMacroName(context), context.getParams());
+
+        context.getTagStack().pushStackParameter(CONFLUENCE_CONTAINER, macro);
+
+        super.begin(context);
     }
 
     @Override
     protected void endContent(String content, TagContext context)
     {
-        ConfluenceMacro macro = (ConfluenceMacro) context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
+        UnknownMacro macro = (UnknownMacro) context.getTagStack().popStackParameter(CONFLUENCE_CONTAINER);
 
-        if (macro != null) {
-            macro.content = content;
-        }
+        context.getScannerContext().onMacro(macro.name, macro.parameters, content);
     }
 }

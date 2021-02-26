@@ -19,9 +19,16 @@
  */
 package org.xwiki.contrib.confluence.filter;
 
+import java.io.File;
+import java.util.Date;
+
 import org.junit.runner.RunWith;
+import org.xwiki.environment.Environment;
 import org.xwiki.filter.test.integration.FilterTestSuite;
 import org.xwiki.test.annotation.AllComponents;
+import org.xwiki.test.mockito.MockitoComponentManager;
+
+import static org.mockito.Mockito.when;
 
 /**
  * Run all tests found in the classpath. These {@code *.test} files must follow the conventions described in
@@ -31,7 +38,16 @@ import org.xwiki.test.annotation.AllComponents;
  */
 @RunWith(FilterTestSuite.class)
 @AllComponents
-@FilterTestSuite.Scope(value = "confluencexml"/*, pattern = "users.test"*/)
+@FilterTestSuite.Scope(value = "confluencexml"/* , pattern = "content.test" */)
 public class IntegrationTests
 {
+    @FilterTestSuite.Initialized
+    public void initialized(MockitoComponentManager componentManager) throws Exception
+    {
+        Environment environment = componentManager.registerMockComponent(Environment.class);
+
+        File tmpDir = new File("target/test-" + new Date().getTime()).getAbsoluteFile();
+        tmpDir.mkdirs();
+        when(environment.getTemporaryDirectory()).thenReturn(tmpDir);
+    }
 }

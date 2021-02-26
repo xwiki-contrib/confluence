@@ -41,8 +41,8 @@ import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceXHTMLInputProperties;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXHTMLWhitespaceXMLFilter;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXWikiGeneratorListener;
-import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TimeTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.DefaultMacroParameterTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ElementMacroTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ImageTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.LinkTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroParameterTagHandler;
@@ -59,6 +59,7 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TaskIdTagHan
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TaskListTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TaskStatusTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TaskTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TimeTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.URLTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.UserTagHandler;
 import org.xwiki.rendering.internal.parser.wikimodel.AbstractWikiModelParser;
@@ -172,6 +173,11 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("ri:space", new SpaceTagHandler());
         handlers.put("ri:user", new UserTagHandler());
         handlers.put("ac:plain-text-link-body", new PlainTextLinkBodyTagHandler());
+
+        // Directly convert into https://extensions.xwiki.org/xwiki/bin/view/Extension/Container%20Macro ?
+        handlers.put("ac:layout", new ElementMacroTagHandler(this));
+        handlers.put("ac:layout-section", new ElementMacroTagHandler(this));
+        handlers.put("ac:layout-cell", new ElementMacroTagHandler(this));
 
         handlers.put("ri:attachment", new AttachmentTagHandler());
 

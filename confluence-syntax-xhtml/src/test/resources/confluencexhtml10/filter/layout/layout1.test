@@ -1,0 +1,54 @@
+.#------------------------------------------------------------------------------
+.input|confluence+xhtml/1.0
+.configuration.macroContentSyntax=event/1.0
+.#------------------------------------------------------------------------------
+<ac:layout>
+  <ac:layout-section ac:type="two_equal" ac:breakout-mode="default">
+    <ac:layout-cell><p>Test1</p></ac:layout-cell>
+    <ac:layout-cell><p>Test2</p></ac:layout-cell>
+  </ac:layout-section>
+  <ac:layout-section ac:type="fixed-width" ac:breakout-mode="default">
+    <ac:layout-cell><p /></ac:layout-cell>
+  </ac:layout-section>
+</ac:layout>
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.#------------------------------------------------------------------------------
+<document>
+  <p>
+    <metadata>
+      <metadata>
+        <entry>
+          <string>syntax</string>
+          <org.xwiki.rendering.syntax.Syntax>
+            <type>
+              <name>Confluence</name>
+              <id>confluence+xhtml</id>
+            </type>
+            <version>1.0</version>
+          </org.xwiki.rendering.syntax.Syntax>
+        </entry>
+      </metadata>
+    </metadata>
+  </p>
+  <macro id="layout" content="beginDocument [[syntax]=[Confluence 1.0]]
+onMacroStandalone [layout-section] [ac:type=two_equal|ac:breakout-mode=default] [beginDocument [[syntax]=[Confluence 1.0]]
+onMacroStandalone [layout-cell] [] [beginDocument [[syntax]=[Confluence 1.0]]
+beginParagraph
+onWord [Test1]
+endParagraph
+endDocument [[syntax]=[Confluence 1.0]]]
+onMacroStandalone [layout-cell] [] [beginDocument [[syntax]=[Confluence 1.0]]
+beginParagraph
+onWord [Test2]
+endParagraph
+endDocument [[syntax]=[Confluence 1.0]]]
+endDocument [[syntax]=[Confluence 1.0]]]
+onMacroStandalone [layout-section] [ac:type=fixed-width|ac:breakout-mode=default] [beginDocument [[syntax]=[Confluence 1.0]]
+onMacroStandalone [layout-cell] [] [beginDocument [[syntax]=[Confluence 1.0]]
+beginParagraph
+endParagraph
+endDocument [[syntax]=[Confluence 1.0]]]
+endDocument [[syntax]=[Confluence 1.0]]]
+endDocument [[syntax]=[Confluence 1.0]]"></macro>
+</document>

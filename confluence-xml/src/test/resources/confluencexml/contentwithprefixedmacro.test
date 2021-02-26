@@ -20,13 +20,13 @@
 
 {{id name="value2"/}}
 
-{{macro parameter="value"}}
+{{confluence_macro parameter="value"}}
 rich **text** here
-{{/macro}}
+{{/confluence_macro}}
 
-{{macro}}
+{{confluence_macro}}
 simple content
-{{/macro}}
+{{/confluence_macro}}
 
 {{macrowithdefaultparameter 0="value"/}}</string>
             </entry>
@@ -49,4 +49,5 @@ simple content
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=content
+.configuration.prefixedMacros=macro
 .#------------------------------------------------------------------------------

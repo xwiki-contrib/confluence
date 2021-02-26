@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -29,6 +30,7 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.rendering.listener.Listener;
 
 /**
@@ -43,6 +45,9 @@ public class DefaultMacroConverter implements MacroConverter
 {
     @Inject
     private ComponentManager componentManager;
+
+    @Inject
+    private ConfluenceInputContext context;
 
     @Inject
     private Logger logger;
@@ -60,7 +65,51 @@ public class DefaultMacroConverter implements MacroConverter
                     parameters, content, inline, e);
             }
         } else {
-            listener.onMacro(id, parameters, content, inline);
+            listener.onMacro(toXWikiMacroName(id), toXWikiMacroParaleters(parameters), content, inline);
         }
+    }
+
+    private String toXWikiMacroName(String confluenceMacroName)
+    {
+        if (!this.context.getProperties().getUnprefixedMacros().isEmpty()) {
+            if (this.context.getProperties().getUnprefixedMacros().contains(confluenceMacroName)) {
+                return confluenceMacroName;
+            }
+
+            // If there is an explicit list of unprefixed macros the others are prefixed
+            return this.context.getProperties().getUnknownMacroPrefix() + confluenceMacroName;
+        }
+
+        // Check the explicit list of prefixed macros
+        if (this.context.getProperties().getPrefixedMacros().contains(confluenceMacroName)) {
+            return this.context.getProperties().getUnknownMacroPrefix() + confluenceMacroName;
+        }
+
+        // By default macros are not prefixed
+        return confluenceMacroName;
+    }
+
+    private Map<String, String> toXWikiMacroParaleters(Map<String, String> confluenceMacroParameters)
+    {
+        if (confluenceMacroParameters == null || !this.context.getProperties().isConvertToXWiki()
+            || !confluenceMacroParameters.containsKey("")) {
+            return confluenceMacroParameters;
+        }
+
+        Map<String, String> xwikiMacroParameters = new LinkedHashMap<>(confluenceMacroParameters.size());
+
+        for (Map.Entry<String, String> entry : confluenceMacroParameters.entrySet()) {
+            String key = entry.getKey();
+            if (key.isEmpty()) {
+                // xwiki/2.x syntax does not currently support empty parameter name so we workaround it using the same
+                // default parameter name than the Confluence wiki syntax parser
+                // TODO: should probably get rid of that hack when https://jira.xwiki.org/browse/XRENDERING-601 is fixed
+                key = "0";
+            }
+
+            xwikiMacroParameters.put(key, entry.getValue());
+        }
+
+        return xwikiMacroParameters;
     }
 }

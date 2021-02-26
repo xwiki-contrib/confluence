@@ -1,6 +1,7 @@
+org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverterListener
 org.xwiki.contrib.confluence.filter.internal.input.ConfluenceInputFilterStream
 org.xwiki.contrib.confluence.filter.internal.input.ConfluenceInputFilterStreamFactory
-org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverterListener
+org.xwiki.contrib.confluence.filter.internal.input.DefaultConfluenceInputContext
 org.xwiki.contrib.confluence.filter.internal.macros.AnchorMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.DefaultMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.JiraMacroConverter
