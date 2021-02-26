@@ -64,7 +64,27 @@ public class DefaultMacroConverter implements MacroConverter
                     parameters, content, inline, e);
             }
         } else {
-            listener.onMacro(context.getProperties().getUnknownMacroPrefix() + id, parameters, content, inline);
+            listener.onMacro(toXWikiMacroName(id), parameters, content, inline);
         }
+    }
+
+    private String toXWikiMacroName(String confluenceMacroName)
+    {
+        if (!this.context.getProperties().getUnprefixedMacros().isEmpty()) {
+            if (this.context.getProperties().getUnprefixedMacros().contains(confluenceMacroName)) {
+                return confluenceMacroName;
+            }
+
+            // If there is an explicit list of unprefixed macros the others are prefixed
+            return this.context.getProperties().getUnknownMacroPrefix() + confluenceMacroName;
+        }
+
+        // Check the explicit list of prefixed macros
+        if (this.context.getProperties().getPrefixedMacros().contains(confluenceMacroName)) {
+            return this.context.getProperties().getUnknownMacroPrefix() + confluenceMacroName;
+        }
+
+        // By default macros are not prefixed
+        return confluenceMacroName;
     }
 }

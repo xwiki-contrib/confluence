@@ -20,6 +20,7 @@
 package org.xwiki.contrib.confluence.filter.input;
 
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -96,9 +97,13 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private boolean userReferences;
 
     /**
-     * @see getUnknownMacroPrefix()
+     * @see #getUnknownMacroPrefix()
      */
     private String unknownMacroPrefix = "confluence_";
+
+    private Set<String> prefixedMacros;
+
+    private Set<String> unprefixedMacros;
 
     /**
      * @return The source to load the wiki from
@@ -354,5 +359,45 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setUnknownMacroPrefix(String unknownMacroPrefix)
     {
         this.unknownMacroPrefix = unknownMacroPrefix;
+    }
+
+    /**
+     * @return the unknown macros for which the name should be prefixed
+     * @since 9.8
+     */
+    @PropertyName("Prefixed macros")
+    @PropertyDescription("The unknown macros for which the name should be prefixed.")
+    public Set<String> getPrefixedMacros()
+    {
+        return this.prefixedMacros != null ? this.prefixedMacros : Collections.emptySet();
+    }
+
+    /**
+     * @param prefixedMacros the unknown macros for which the name should be prefixed
+     * @since 9.8
+     */
+    public void setPrefixedMacros(Set<String> prefixedMacros)
+    {
+        this.prefixedMacros = prefixedMacros;
+    }
+
+    /**
+     * @return the unknown macros for which the name should not be prefixed
+     * @since 9.8
+     */
+    @PropertyName("Unprefixed macros")
+    @PropertyDescription("The unknown macros for which the name should not be prefixed.")
+    public Set<String> getUnprefixedMacros()
+    {
+        return this.unprefixedMacros != null ? this.unprefixedMacros : Collections.emptySet();
+    }
+
+    /**
+     * @param unprefixedMacros the unknown macros for which the name should not be prefixed
+     * @since 9.8
+     */
+    public void setUnprefixedMacros(Set<String> unprefixedMacros)
+    {
+        this.unprefixedMacros = unprefixedMacros;
     }
 }

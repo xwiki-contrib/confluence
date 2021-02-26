@@ -6659,13 +6659,20 @@ gU+/11XkAAAAAElFTkSuQmCC</content>
             </entry>
             <entry>
               <string>content</string>
-              <string>(% style="margin-left: 60.0px;" %)
+              <string>{{layout}}
+{{layout-section ac:type="single"}}
+{{layout-cell}}
+(% style="margin-left: 60.0px;" %)
  
 
 (% style="color: rgb(51,51,51);" %)The Confluence editor helps you create content, fast. You can embed images, Office documents, and videos. 
 That's just the tip of the iceberg when it comes to creating useful content for your team. 
  
+{{/layout-cell}}
+{{/layout-section}}
 
+{{layout-section ac:type="two_right_sidebar"}}
+{{layout-cell}}
 1. **Edit** the page.
 \\
 1. Click in the right-hand column to position your cursor.
@@ -6695,9 +6702,15 @@ Select the image named **Confluence Origami Necktie**.
 
 (% style="text-align: left;" %)
 The Files button is not just for images, you can insert and preview a wide range of files, including Microsoft Office documents and PDFs.
+{{/layout-cell}}
 
+{{layout-cell}}
  
+{{/layout-cell}}
+{{/layout-section}}
 
+{{layout-section ac:type="single"}}
+{{layout-cell}}
 (% style="text-align: center;" %)
 = (% style="color: rgb(51,51,51);" %)
 (%%) =
@@ -6706,7 +6719,10 @@ The Files button is not just for images, you can insert and preview a wide range
 = (% style="color: rgb(51,51,51);" %)[[image:attach:Let's edit this page (step 3 of 9)@prev.jpg]][[doc:Let's edit this page (step 3 of 9)]] [[image:attach:Let's edit this page (step 3 of 9)@home.jpg]][[doc:Welcome to Confluence]] [[image:attach:Let's edit this page (step 3 of 9)@next.jpg]][[doc:Get serious with a table (step 5 of 9)]](%%) =
 
 (% style="color: rgb(51,51,51);" %)
-</string>
+
+{{/layout-cell}}
+{{/layout-section}}
+{{/layout}}</string>
             </entry>
             <entry>
               <string>syntax</string>
@@ -8693,13 +8709,20 @@ gg==</content>
             </entry>
             <entry>
               <string>content</string>
-              <string>(% style="margin-left: 60.0px;" %)
+              <string>{{layout}}
+{{layout-section ac:type="single"}}
+{{layout-cell}}
+(% style="margin-left: 60.0px;" %)
  
 
 Insert tables with drag and drop simplicity. 
 Add, remove, cut, and paste rows and columns – this makes working with tables easy. 
  
+{{/layout-cell}}
+{{/layout-section}}
 
+{{layout-section ac:type="two_right_sidebar"}}
+{{layout-cell}}
 1. (% style="color: rgb(51,51,51);" %)**Edit** the page.
  
 
@@ -8720,15 +8743,24 @@ Add, remove, cut, and paste rows and columns – this makes working with tables 
 \\
 1. (% style="color: rgb(51,51,51);" %)Click **Save**.(%%)
 (% style="color: rgb(51,51,51);" %) 
+{{/layout-cell}}
 
+{{layout-cell}}
  
+{{/layout-cell}}
+{{/layout-section}}
 
+{{layout-section ac:type="single"}}
+{{layout-cell}}
 (% style="text-align: center;" %)
 = (% style="color: rgb(51,51,51);" %)
 (%%) =
 
 (% style="text-align: center;" %)
-= (% style="color: rgb(51,51,51);" %)[[image:attach:Let's edit this page (step 3 of 9)@prev.jpg]][[doc:Prettify the page with an image (step 4 of 9)]] [[image:attach:Let's edit this page (step 3 of 9)@home.jpg]][[doc:Welcome to Confluence]] [[image:attach:Let's edit this page (step 3 of 9)@next.jpg]][[doc:Lay out your page (step 6 of 9)]](%%) =</string>
+= (% style="color: rgb(51,51,51);" %)[[image:attach:Let's edit this page (step 3 of 9)@prev.jpg]][[doc:Prettify the page with an image (step 4 of 9)]] [[image:attach:Let's edit this page (step 3 of 9)@home.jpg]][[doc:Welcome to Confluence]] [[image:attach:Let's edit this page (step 3 of 9)@next.jpg]][[doc:Lay out your page (step 6 of 9)]](%%) =
+{{/layout-cell}}
+{{/layout-section}}
+{{/layout}}</string>
             </entry>
             <entry>
               <string>syntax</string>
@@ -9279,20 +9311,33 @@ See yo</string>
             </entry>
             <entry>
               <string>content</string>
-              <string>(% style="color: rgb(64,64,64);" %)Confluence automatically transforms linked content(%%) (% style="color: rgb(64,64,64);" %)into rich content.(%%) (% style="color: rgb(64,64,64);" %)Try it with Confluence pages, JIRA issues, YouTube and Vimeo videos, 
+              <string>{{layout}}
+{{layout-section ac:type="single"}}
+{{layout-cell}}
+(% style="color: rgb(64,64,64);" %)Confluence automatically transforms linked content(%%) (% style="color: rgb(64,64,64);" %)into rich content.(%%) (% style="color: rgb(64,64,64);" %)Try it with Confluence pages, JIRA issues, YouTube and Vimeo videos, 
 Flickr photo streams, Twitter streams, Google maps and many more.
 
 (% style="color: rgb(64,64,64);" %)Here's two examples of autoconvert in action.
+{{/layout-cell}}
+{{/layout-section}}
 
+{{layout-section ac:type="two_equal"}}
+{{layout-cell}}
 ===   
  ===
 
-{{confluence_widget url=""/}}
+{{widget url=""/}}
+{{/layout-cell}}
+
+{{layout-cell}}
 
 
+{{widget url=""/}}
+{{/layout-cell}}
+{{/layout-section}}
 
-{{confluence_widget url=""/}}
-
+{{layout-section ac:type="two_equal"}}
+{{layout-cell}}
 === (% style="color: rgb(51,51,51);" %)Try it yourself:(%%) ===
 
 1. (% style="color: rgb(51,51,51);" %)**Edit** this page.
@@ -9301,7 +9346,9 @@ Flickr photo streams, Twitter streams, Google maps and many more.
 1. (% style="color: rgb(51,51,51);" %)Autoconvert will embed the YouTube video on the page.
 1. (% style="color: rgb(51,51,51);" %)Save the page.
 
+{{/layout-cell}}
 
+{{layout-cell}}
 === (% style="color: rgb(51, 51, 51); color: rgb(51, 51, 51)" %)Try it yourself(% style="color: rgb(51,51,51);" %):(%%) ===
 
 1. **Edit** this page.
@@ -9309,7 +9356,11 @@ Flickr photo streams, Twitter streams, Google maps and many more.
 1. Autoconvert will render the Google Maps view on the page.
 1. (% style="color: rgb(51,51,51);" %)Save the page.
 
+{{/layout-cell}}
+{{/layout-section}}
 
+{{layout-section ac:type="single"}}
+{{layout-cell}}
 (% style="text-align: center;" %)
 = (% style="color: rgb(51,51,51);" %)
 (%%) =
@@ -9318,7 +9369,10 @@ Flickr photo streams, Twitter streams, Google maps and many more.
 = (% style="color: rgb(51,51,51);" %)[[image:attach:Let's edit this page (step 3 of 9)@prev.jpg]][[doc:Lay out your page (step 6 of 9)]] [[image:attach:Let's edit this page (step 3 of 9)@home.jpg]][[doc:Welcome to Confluence]] [[image:attach:Let's edit this page (step 3 of 9)@next.jpg]][[doc:Tell people what you think in a comment (step 8 of 9)]](%%) =
 
 (% style="color: rgb(51,51,51);" %)
-</string>
+
+{{/layout-cell}}
+{{/layout-section}}
+{{/layout}}</string>
             </entry>
             <entry>
               <string>syntax</string>

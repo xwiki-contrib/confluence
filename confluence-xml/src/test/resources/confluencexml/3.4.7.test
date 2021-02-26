@@ -101,7 +101,7 @@
 
 To help you on your way, we've inserted some of our favourite macros on this home page. As you start creating pages, blogging and commenting you'll see the macros below fill up with all the activity in your space. 
 
-{{confluence_section}}
+{{section}}
 
 {column:width=60%}
 {recently-updated}
@@ -114,7 +114,7 @@ h6. Navigate space
 {pagetree}
 {column}
 
-{{/confluence_section}}</string>
+{{/section}}</string>
             </entry>
             <entry>
               <string>syntax</string>

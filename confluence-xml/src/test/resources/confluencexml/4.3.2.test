@@ -313,7 +313,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 (((
 
 
-{{confluence_recently-updated/}}
+{{recently-updated/}}
 )))
 )))
 
@@ -325,11 +325,11 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 
 
 
-{{confluence_pagetreesearch/}}
+{{pagetreesearch/}}
 
 
 
-{{confluence_pagetree/}}
+{{pagetree/}}
 )))
 )))
 )))
@@ -913,7 +913,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 (((
 
 
-{{confluence_recently-updated/}}
+{{recently-updated/}}
 )))
 )))
 
@@ -925,11 +925,11 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 
 
 
-{{confluence_pagetreesearch/}}
+{{pagetreesearch/}}
 
 
 
-{{confluence_pagetree/}}
+{{pagetree/}}
 )))
 )))
 )))
@@ -19570,7 +19570,7 @@ Content of the page including:
 
 
 
-{{confluence_toc/}}
+{{toc/}}
 
 = Titre 1 =
 
@@ -19716,7 +19716,7 @@ Content of the page including:
 
 
 
-{{confluence_toc/}}
+{{toc/}}
 
 = Titre 1 =
 
@@ -19779,211 +19779,211 @@ Some wiki text with **bold** content
 
 [[doc:XWiki.Admin]] &lt;= user macro
 
-{{confluence_info title="info title"}}
+{{info title="info title"}}
 info default macro
-{{/confluence_info}}
+{{/info}}
 
 
 
-{{confluence_status title="State default macro"/}}
+{{status title="State default macro"/}}
 
 
 
-{{confluence_gallery title="Gallerie default macro"/}}
+{{gallery title="Gallerie default macro"/}}
 
 
 
-{{confluence_children page="space1 Home"/}}
+{{children page="space1 Home"/}}
 
 
 
 {{id name="anchor"/}}
 
-{{confluence_code title="Bloc code title for java with Django theme" theme="DJango" language="java"}}
+{{code title="Bloc code title for java with Django theme" theme="DJango" language="java"}}
 Content of bloc code
-{{/confluence_code}}
+{{/code}}
 
 
 
-{{confluence_blog-posts/}}
+{{blog-posts/}}
 
 
 
-{{confluence_create-space-button/}}
+{{create-space-button/}}
 
 
 
-{{confluence_change-history/}}
+{{change-history/}}
 
-{{confluence_column width="300px"}}
+{{column width="300px"}}
 Column macro
-{{/confluence_column}}
+{{/column}}
 
 
 
-{{confluence_gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
+{{gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
 
 
 
-{{confluence_contentbylabel labels="tag1"/}}
+{{contentbylabel labels="tag1"/}}
 
 
 
-{{confluence_content-by-user 0="admin"/}}
+{{content-by-user 0="admin"/}}
 
 
 
-{{confluence_contributors/}}
+{{contributors/}}
 
 
 
-{{confluence_contributors-summary/}}
+{{contributors-summary/}}
 
-{{confluence_details}}
+{{details}}
 Content of meta data detail macro
-{{/confluence_details}}
+{{/details}}
 
-{{confluence_expand}}
+{{expand}}
 Content of box to expand
-{{/confluence_expand}}
+{{/expand}}
 
-{{confluence_excerpt atlassian-macro-output-type="BLOCK"}}
+{{excerpt atlassian-macro-output-type="BLOCK"}}
 Excerpt content
-{{/confluence_excerpt}}
+{{/excerpt}}
 
 
 
-{{confluence_favpages/}}
+{{favpages/}}
 
 
 
-{{confluence_im service="jabber" 0="Admin"/}}
+{{im service="jabber" 0="Admin"/}}
 
-{{confluence_info title="info title"}}
+{{info title="info title"}}
 content of info macro
-{{/confluence_info}}
+{{/info}}
 
 
 
-{{confluence_space-details width="80%"/}}
+{{space-details width="80%"/}}
 
 
 
-{{confluence_listlabels/}}
+{{listlabels/}}
 
 
 
-{{confluence_spaces/}}
+{{spaces/}}
 
 
 
-{{confluence_livesearch/}}
+{{livesearch/}}
 
 "Video player" I won't add this macro because of the weight of the attached document
 
 
 
-{{confluence_navmap 0="tag1"/}}
+{{navmap 0="tag1"/}}
 
 
 
-{{confluence_network 0="following"/}}
+{{network 0="following"/}}
 
-{{confluence_note title="Optional Title of the macro"}}
+{{note title="Optional Title of the macro"}}
 content of the macro
-{{/confluence_note}}
+{{/note}}
 
 3 macros named: excel macro, powerpoint macro and word macro
 
 
 
-{{confluence_index/}}
+{{index/}}
 
 
 
-{{confluence_pagetree/}}
+{{pagetree/}}
 
 
 
-{{confluence_pagetreesearch/}}
+{{pagetreesearch/}}
 
-{{confluence_noformat}}
+{{noformat}}
 no format content
-{{/confluence_noformat}}
+{{/noformat}}
 
 PDF macro
 
 
 
-{{confluence_space-attachments/}}
+{{space-attachments/}}
 
 
 
-{{confluence_attachments/}}
+{{attachments/}}
 
 
 
-{{confluence_popular-labels/}}
+{{popular-labels/}}
 
 
 
-{{confluence_profile-picture User="admin"/}}
+{{profile-picture User="admin"/}}
 
 
 
-{{confluence_global-reports/}}
+{{global-reports/}}
 
 
 
-{{confluence_recently-updated/}}
+{{recently-updated/}}
 
 
 
-{{confluence_recently-used-labels/}}
+{{recently-used-labels/}}
 
 
 
-{{confluence_related-labels/}}
+{{related-labels/}}
 
 RSS feed macro
 
 
 
-{{confluence_spacejump space="space2"/}}
+{{spacejump space="space2"/}}
 
-{{confluence_section}}
+{{section}}
 content of the macro
-{{/confluence_section}}
+{{/section}}
 
 
 
-{{confluence_recently-updated-dashboard/}}
+{{recently-updated-dashboard/}}
 
-{{confluence_tip title="tip title"}}
+{{tip title="tip title"}}
 tip content
-{{/confluence_tip}}
+{{/tip}}
 
 
 
-{{confluence_profile user="admin"/}}
+{{profile user="admin"/}}
 
 
 
-{{confluence_status-list username="admin"/}}
+{{status-list username="admin"/}}
 
-{{confluence_panel}}
+{{panel}}
 content
-{{/confluence_panel}}
+{{/panel}}
 
-{{confluence_warning title="warning title"}}
+{{warning title="warning title"}}
 content
-{{/confluence_warning}}
+{{/warning}}
 
 Widget connector maccro
 
-{{confluence_toc-zone}}
+{{toc-zone}}
 content
-{{/confluence_toc-zone}}
+{{/toc-zone}}
 
  
 
@@ -20072,7 +20072,7 @@ Content of the page including:
 
 
 
-{{confluence_toc/}}
+{{toc/}}
 
 = Titre 1 =
 
@@ -20135,211 +20135,211 @@ Some wiki text with **bold** content
 
 [[doc:XWiki.Admin]] &lt;= user macro
 
-{{confluence_info title="info title"}}
+{{info title="info title"}}
 info default macro
-{{/confluence_info}}
+{{/info}}
 
 
 
-{{confluence_status title="State default macro"/}}
+{{status title="State default macro"/}}
 
 
 
-{{confluence_gallery title="Gallerie default macro"/}}
+{{gallery title="Gallerie default macro"/}}
 
 
 
-{{confluence_children page="space1 Home"/}}
+{{children page="space1 Home"/}}
 
 
 
 {{id name="anchor"/}}
 
-{{confluence_code title="Bloc code title for java with Django theme" theme="DJango" language="java"}}
+{{code title="Bloc code title for java with Django theme" theme="DJango" language="java"}}
 Content of bloc code
-{{/confluence_code}}
+{{/code}}
 
 
 
-{{confluence_blog-posts/}}
+{{blog-posts/}}
 
 
 
-{{confluence_create-space-button/}}
+{{create-space-button/}}
 
 
 
-{{confluence_change-history/}}
+{{change-history/}}
 
-{{confluence_column width="300px"}}
+{{column width="300px"}}
 Column macro
-{{/confluence_column}}
+{{/column}}
 
 
 
-{{confluence_gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
+{{gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
 
 
 
-{{confluence_contentbylabel labels="tag1"/}}
+{{contentbylabel labels="tag1"/}}
 
 
 
-{{confluence_content-by-user 0="admin"/}}
+{{content-by-user 0="admin"/}}
 
 
 
-{{confluence_contributors/}}
+{{contributors/}}
 
 
 
-{{confluence_contributors-summary/}}
+{{contributors-summary/}}
 
-{{confluence_details}}
+{{details}}
 Content of meta data detail macro
-{{/confluence_details}}
+{{/details}}
 
-{{confluence_expand}}
+{{expand}}
 Content of box to expand
-{{/confluence_expand}}
+{{/expand}}
 
-{{confluence_excerpt atlassian-macro-output-type="BLOCK"}}
+{{excerpt atlassian-macro-output-type="BLOCK"}}
 Excerpt content
-{{/confluence_excerpt}}
+{{/excerpt}}
 
 
 
-{{confluence_favpages/}}
+{{favpages/}}
 
 
 
-{{confluence_im service="jabber" 0="Admin"/}}
+{{im service="jabber" 0="Admin"/}}
 
-{{confluence_info title="info title"}}
+{{info title="info title"}}
 content of info macro
-{{/confluence_info}}
+{{/info}}
 
 
 
-{{confluence_space-details width="80%"/}}
+{{space-details width="80%"/}}
 
 
 
-{{confluence_listlabels/}}
+{{listlabels/}}
 
 
 
-{{confluence_spaces/}}
+{{spaces/}}
 
 
 
-{{confluence_livesearch/}}
+{{livesearch/}}
 
 "Video player" I won't add this macro because of the weight of the attached document
 
 
 
-{{confluence_navmap 0="tag1"/}}
+{{navmap 0="tag1"/}}
 
 
 
-{{confluence_network 0="following"/}}
+{{network 0="following"/}}
 
-{{confluence_note title="Optional Title of the macro"}}
+{{note title="Optional Title of the macro"}}
 content of the macro
-{{/confluence_note}}
+{{/note}}
 
 3 macros named: excel macro, powerpoint macro and word macro
 
 
 
-{{confluence_index/}}
+{{index/}}
 
 
 
-{{confluence_pagetree/}}
+{{pagetree/}}
 
 
 
-{{confluence_pagetreesearch/}}
+{{pagetreesearch/}}
 
-{{confluence_noformat}}
+{{noformat}}
 no format content
-{{/confluence_noformat}}
+{{/noformat}}
 
 PDF macro
 
 
 
-{{confluence_space-attachments/}}
+{{space-attachments/}}
 
 
 
-{{confluence_attachments/}}
+{{attachments/}}
 
 
 
-{{confluence_popular-labels/}}
+{{popular-labels/}}
 
 
 
-{{confluence_profile-picture User="admin"/}}
+{{profile-picture User="admin"/}}
 
 
 
-{{confluence_global-reports/}}
+{{global-reports/}}
 
 
 
-{{confluence_recently-updated/}}
+{{recently-updated/}}
 
 
 
-{{confluence_recently-used-labels/}}
+{{recently-used-labels/}}
 
 
 
-{{confluence_related-labels/}}
+{{related-labels/}}
 
 RSS feed macro
 
 
 
-{{confluence_spacejump space="space2"/}}
+{{spacejump space="space2"/}}
 
-{{confluence_section}}
+{{section}}
 content of the macro
-{{/confluence_section}}
+{{/section}}
 
 
 
-{{confluence_recently-updated-dashboard/}}
+{{recently-updated-dashboard/}}
 
-{{confluence_tip title="tip title"}}
+{{tip title="tip title"}}
 tip content
-{{/confluence_tip}}
+{{/tip}}
 
 
 
-{{confluence_profile user="admin"/}}
+{{profile user="admin"/}}
 
 
 
-{{confluence_status-list username="admin"/}}
+{{status-list username="admin"/}}
 
-{{confluence_panel}}
+{{panel}}
 content
-{{/confluence_panel}}
+{{/panel}}
 
-{{confluence_warning title="warning title"}}
+{{warning title="warning title"}}
 content
-{{/confluence_warning}}
+{{/warning}}
 
 Widget connector maccro
 
-{{confluence_toc-zone}}
+{{toc-zone}}
 content
-{{/confluence_toc-zone}}
+{{/toc-zone}}
 
  
 
@@ -20428,7 +20428,7 @@ Content of the page including:
 
 
 
-{{confluence_toc/}}
+{{toc/}}
 
 = Titre 1 =
 
@@ -20491,211 +20491,211 @@ Some wiki text with **bold** content
 
 [[doc:XWiki.Admin]] &lt;= user macro
 
-{{confluence_info title="info title"}}
+{{info title="info title"}}
 info default macro
-{{/confluence_info}}
+{{/info}}
 
 
 
-{{confluence_status title="State default macro"/}}
+{{status title="State default macro"/}}
 
 
 
-{{confluence_gallery title="Gallerie default macro"/}}
+{{gallery title="Gallerie default macro"/}}
 
 
 
-{{confluence_children page="space1 Home"/}}
+{{children page="space1 Home"/}}
 
 
 
 {{id name="anchor"/}}
 
-{{confluence_code title="Bloc code title for java with Django theme" theme="DJango" language="java"}}
+{{code title="Bloc code title for java with Django theme" theme="DJango" language="java"}}
 Content of bloc code
-{{/confluence_code}}
+{{/code}}
 
 
 
-{{confluence_blog-posts/}}
+{{blog-posts/}}
 
 
 
-{{confluence_create-space-button/}}
+{{create-space-button/}}
 
 
 
-{{confluence_change-history/}}
+{{change-history/}}
 
-{{confluence_column width="300px"}}
+{{column width="300px"}}
 Column macro
-{{/confluence_column}}
+{{/column}}
 
 
 
-{{confluence_gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
+{{gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
 
 
 
-{{confluence_contentbylabel labels="tag1"/}}
+{{contentbylabel labels="tag1"/}}
 
 
 
-{{confluence_content-by-user 0="admin"/}}
+{{content-by-user 0="admin"/}}
 
 
 
-{{confluence_contributors/}}
+{{contributors/}}
 
 
 
-{{confluence_contributors-summary/}}
+{{contributors-summary/}}
 
-{{confluence_details}}
+{{details}}
 Content of meta data detail macro
-{{/confluence_details}}
+{{/details}}
 
-{{confluence_expand}}
+{{expand}}
 Content of box to expand
-{{/confluence_expand}}
+{{/expand}}
 
-{{confluence_excerpt atlassian-macro-output-type="BLOCK"}}
+{{excerpt atlassian-macro-output-type="BLOCK"}}
 Excerpt content
-{{/confluence_excerpt}}
+{{/excerpt}}
 
 
 
-{{confluence_favpages/}}
+{{favpages/}}
 
 
 
-{{confluence_im service="jabber" 0="Admin"/}}
+{{im service="jabber" 0="Admin"/}}
 
-{{confluence_info title="info title"}}
+{{info title="info title"}}
 content of info macro
-{{/confluence_info}}
+{{/info}}
 
 
 
-{{confluence_space-details width="80%"/}}
+{{space-details width="80%"/}}
 
 
 
-{{confluence_listlabels/}}
+{{listlabels/}}
 
 
 
-{{confluence_spaces/}}
+{{spaces/}}
 
 
 
-{{confluence_livesearch/}}
+{{livesearch/}}
 
 "Video player" I won't add this macro because of the weight of the attached document
 
 
 
-{{confluence_navmap 0="tag1"/}}
+{{navmap 0="tag1"/}}
 
 
 
-{{confluence_network 0="following"/}}
+{{network 0="following"/}}
 
-{{confluence_note title="Optional Title of the macro"}}
+{{note title="Optional Title of the macro"}}
 content of the macro
-{{/confluence_note}}
+{{/note}}
 
 3 macros named: excel macro, powerpoint macro and word macro
 
 
 
-{{confluence_index/}}
+{{index/}}
 
 
 
-{{confluence_pagetree/}}
+{{pagetree/}}
 
 
 
-{{confluence_pagetreesearch/}}
+{{pagetreesearch/}}
 
-{{confluence_noformat}}
+{{noformat}}
 no format content
-{{/confluence_noformat}}
+{{/noformat}}
 
 PDF macro
 
 
 
-{{confluence_space-attachments/}}
+{{space-attachments/}}
 
 
 
-{{confluence_attachments/}}
+{{attachments/}}
 
 
 
-{{confluence_popular-labels/}}
+{{popular-labels/}}
 
 
 
-{{confluence_profile-picture User="admin"/}}
+{{profile-picture User="admin"/}}
 
 
 
-{{confluence_global-reports/}}
+{{global-reports/}}
 
 
 
-{{confluence_recently-updated/}}
+{{recently-updated/}}
 
 
 
-{{confluence_recently-used-labels/}}
+{{recently-used-labels/}}
 
 
 
-{{confluence_related-labels/}}
+{{related-labels/}}
 
 RSS feed macro
 
 
 
-{{confluence_spacejump space="space2"/}}
+{{spacejump space="space2"/}}
 
-{{confluence_section}}
+{{section}}
 content of the macro
-{{/confluence_section}}
+{{/section}}
 
 
 
-{{confluence_recently-updated-dashboard/}}
+{{recently-updated-dashboard/}}
 
-{{confluence_tip title="tip title"}}
+{{tip title="tip title"}}
 tip content
-{{/confluence_tip}}
+{{/tip}}
 
 
 
-{{confluence_profile user="admin"/}}
+{{profile user="admin"/}}
 
 
 
-{{confluence_status-list username="admin"/}}
+{{status-list username="admin"/}}
 
-{{confluence_panel}}
+{{panel}}
 content
-{{/confluence_panel}}
+{{/panel}}
 
-{{confluence_warning title="warning title"}}
+{{warning title="warning title"}}
 content
-{{/confluence_warning}}
+{{/warning}}
 
 Widget connector maccro
 
-{{confluence_toc-zone}}
+{{toc-zone}}
 content
-{{/confluence_toc-zone}}
+{{/toc-zone}}
 
  
 
@@ -20784,7 +20784,7 @@ Content of the page including:
 
 
 
-{{confluence_toc/}}
+{{toc/}}
 
 = Titre 1 =
 
@@ -20847,211 +20847,211 @@ Some wiki text with **bold** content
 
 [[doc:XWiki.Admin]] &lt;= user macro
 
-{{confluence_info title="info title"}}
+{{info title="info title"}}
 info default macro
-{{/confluence_info}}
+{{/info}}
 
 
 
-{{confluence_status title="State default macro"/}}
+{{status title="State default macro"/}}
 
 
 
-{{confluence_gallery title="Gallerie default macro"/}}
+{{gallery title="Gallerie default macro"/}}
 
 
 
-{{confluence_children page="space1 Home"/}}
+{{children page="space1 Home"/}}
 
 
 
 {{id name="anchor"/}}
 
-{{confluence_code title="Bloc code title for java with Django theme" theme="DJango" language="java"}}
+{{code title="Bloc code title for java with Django theme" theme="DJango" language="java"}}
 Content of bloc code
-{{/confluence_code}}
+{{/code}}
 
 
 
-{{confluence_blog-posts/}}
+{{blog-posts/}}
 
 
 
-{{confluence_create-space-button/}}
+{{create-space-button/}}
 
 
 
-{{confluence_change-history/}}
+{{change-history/}}
 
-{{confluence_column width="300px"}}
+{{column width="300px"}}
 Column macro
-{{/confluence_column}}
+{{/column}}
 
 
 
-{{confluence_gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
+{{gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
 
 
 
-{{confluence_contentbylabel labels="tag1"/}}
+{{contentbylabel labels="tag1"/}}
 
 
 
-{{confluence_content-by-user 0="admin"/}}
+{{content-by-user 0="admin"/}}
 
 
 
-{{confluence_contributors/}}
+{{contributors/}}
 
 
 
-{{confluence_contributors-summary/}}
+{{contributors-summary/}}
 
-{{confluence_details}}
+{{details}}
 Content of meta data detail macro
-{{/confluence_details}}
+{{/details}}
 
-{{confluence_expand}}
+{{expand}}
 Content of box to expand
-{{/confluence_expand}}
+{{/expand}}
 
-{{confluence_excerpt atlassian-macro-output-type="BLOCK"}}
+{{excerpt atlassian-macro-output-type="BLOCK"}}
 Excerpt content
-{{/confluence_excerpt}}
+{{/excerpt}}
 
 
 
-{{confluence_favpages/}}
+{{favpages/}}
 
 
 
-{{confluence_im service="jabber" 0="Admin"/}}
+{{im service="jabber" 0="Admin"/}}
 
-{{confluence_info title="info title"}}
+{{info title="info title"}}
 content of info macro
-{{/confluence_info}}
+{{/info}}
 
 
 
-{{confluence_space-details width="80%"/}}
+{{space-details width="80%"/}}
 
 
 
-{{confluence_listlabels/}}
+{{listlabels/}}
 
 
 
-{{confluence_spaces/}}
+{{spaces/}}
 
 
 
-{{confluence_livesearch/}}
+{{livesearch/}}
 
 "Video player" I won't add this macro because of the weight of the attached document
 
 
 
-{{confluence_navmap 0="tag1"/}}
+{{navmap 0="tag1"/}}
 
 
 
-{{confluence_network 0="following"/}}
+{{network 0="following"/}}
 
-{{confluence_note title="Optional Title of the macro"}}
+{{note title="Optional Title of the macro"}}
 content of the macro
-{{/confluence_note}}
+{{/note}}
 
 3 macros named: excel macro, powerpoint macro and word macro
 
 
 
-{{confluence_index/}}
+{{index/}}
 
 
 
-{{confluence_pagetree/}}
+{{pagetree/}}
 
 
 
-{{confluence_pagetreesearch/}}
+{{pagetreesearch/}}
 
-{{confluence_noformat}}
+{{noformat}}
 no format content
-{{/confluence_noformat}}
+{{/noformat}}
 
 PDF macro
 
 
 
-{{confluence_space-attachments/}}
+{{space-attachments/}}
 
 
 
-{{confluence_attachments/}}
+{{attachments/}}
 
 
 
-{{confluence_popular-labels/}}
+{{popular-labels/}}
 
 
 
-{{confluence_profile-picture User="admin"/}}
+{{profile-picture User="admin"/}}
 
 
 
-{{confluence_global-reports/}}
+{{global-reports/}}
 
 
 
-{{confluence_recently-updated/}}
+{{recently-updated/}}
 
 
 
-{{confluence_recently-used-labels/}}
+{{recently-used-labels/}}
 
 
 
-{{confluence_related-labels/}}
+{{related-labels/}}
 
 RSS feed macro
 
 
 
-{{confluence_spacejump space="space2"/}}
+{{spacejump space="space2"/}}
 
-{{confluence_section}}
+{{section}}
 content of the macro
-{{/confluence_section}}
+{{/section}}
 
 
 
-{{confluence_recently-updated-dashboard/}}
+{{recently-updated-dashboard/}}
 
-{{confluence_tip title="tip title"}}
+{{tip title="tip title"}}
 tip content
-{{/confluence_tip}}
+{{/tip}}
 
 
 
-{{confluence_profile user="admin"/}}
+{{profile user="admin"/}}
 
 
 
-{{confluence_status-list username="admin"/}}
+{{status-list username="admin"/}}
 
-{{confluence_panel}}
+{{panel}}
 content
-{{/confluence_panel}}
+{{/panel}}
 
-{{confluence_warning title="warning title"}}
+{{warning title="warning title"}}
 content
-{{/confluence_warning}}
+{{/warning}}
 
 Widget connector maccro
 
-{{confluence_toc-zone}}
+{{toc-zone}}
 content
-{{/confluence_toc-zone}}
+{{/toc-zone}}
 
  
 
@@ -21140,7 +21140,7 @@ Content of the page including:
 
 
 
-{{confluence_toc/}}
+{{toc/}}
 
 = Titre 1 =
 
@@ -21203,211 +21203,211 @@ Some wiki text with **bold** content
 
 [[doc:XWiki.Admin]] &lt;= user macro
 
-{{confluence_info title="info title"}}
+{{info title="info title"}}
 info default macro
-{{/confluence_info}}
+{{/info}}
 
 
 
-{{confluence_status title="State default macro"/}}
+{{status title="State default macro"/}}
 
 
 
-{{confluence_gallery title="Gallerie default macro"/}}
+{{gallery title="Gallerie default macro"/}}
 
 
 
-{{confluence_children page="space1 Home"/}}
+{{children page="space1 Home"/}}
 
 
 
 {{id name="anchor"/}}
 
-{{confluence_code title="Bloc code title for java with Django theme" theme="DJango" language="java"}}
+{{code title="Bloc code title for java with Django theme" theme="DJango" language="java"}}
 Content of bloc code
-{{/confluence_code}}
+{{/code}}
 
 
 
-{{confluence_blog-posts/}}
+{{blog-posts/}}
 
 
 
-{{confluence_create-space-button/}}
+{{create-space-button/}}
 
 
 
-{{confluence_change-history/}}
+{{change-history/}}
 
-{{confluence_column width="300px"}}
+{{column width="300px"}}
 Column macro
-{{/confluence_column}}
+{{/column}}
 
 
 
-{{confluence_gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
+{{gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
 
 
 
-{{confluence_contentbylabel labels="tag1"/}}
+{{contentbylabel labels="tag1"/}}
 
 
 
-{{confluence_content-by-user 0="admin"/}}
+{{content-by-user 0="admin"/}}
 
 
 
-{{confluence_contributors/}}
+{{contributors/}}
 
 
 
-{{confluence_contributors-summary/}}
+{{contributors-summary/}}
 
-{{confluence_details}}
+{{details}}
 Content of meta data detail macro
-{{/confluence_details}}
+{{/details}}
 
-{{confluence_expand}}
+{{expand}}
 Content of box to expand
-{{/confluence_expand}}
+{{/expand}}
 
-{{confluence_excerpt atlassian-macro-output-type="BLOCK"}}
+{{excerpt atlassian-macro-output-type="BLOCK"}}
 Excerpt content
-{{/confluence_excerpt}}
+{{/excerpt}}
 
 
 
-{{confluence_favpages/}}
+{{favpages/}}
 
 
 
-{{confluence_im service="jabber" 0="Admin"/}}
+{{im service="jabber" 0="Admin"/}}
 
-{{confluence_info title="info title"}}
+{{info title="info title"}}
 content of info macro
-{{/confluence_info}}
+{{/info}}
 
 
 
-{{confluence_space-details width="80%"/}}
+{{space-details width="80%"/}}
 
 
 
-{{confluence_listlabels/}}
+{{listlabels/}}
 
 
 
-{{confluence_spaces/}}
+{{spaces/}}
 
 
 
-{{confluence_livesearch/}}
+{{livesearch/}}
 
 "Video player" I won't add this macro because of the weight of the attached document
 
 
 
-{{confluence_navmap 0="tag1"/}}
+{{navmap 0="tag1"/}}
 
 
 
-{{confluence_network 0="following"/}}
+{{network 0="following"/}}
 
-{{confluence_note title="Optional Title of the macro"}}
+{{note title="Optional Title of the macro"}}
 content of the macro
-{{/confluence_note}}
+{{/note}}
 
 3 macros named: excel macro, powerpoint macro and word macro
 
 
 
-{{confluence_index/}}
+{{index/}}
 
 
 
-{{confluence_pagetree/}}
+{{pagetree/}}
 
 
 
-{{confluence_pagetreesearch/}}
+{{pagetreesearch/}}
 
-{{confluence_noformat}}
+{{noformat}}
 no format content
-{{/confluence_noformat}}
+{{/noformat}}
 
 PDF macro
 
 
 
-{{confluence_space-attachments/}}
+{{space-attachments/}}
 
 
 
-{{confluence_attachments/}}
+{{attachments/}}
 
 
 
-{{confluence_popular-labels/}}
+{{popular-labels/}}
 
 
 
-{{confluence_profile-picture User="admin"/}}
+{{profile-picture User="admin"/}}
 
 
 
-{{confluence_global-reports/}}
+{{global-reports/}}
 
 
 
-{{confluence_recently-updated/}}
+{{recently-updated/}}
 
 
 
-{{confluence_recently-used-labels/}}
+{{recently-used-labels/}}
 
 
 
-{{confluence_related-labels/}}
+{{related-labels/}}
 
 RSS feed macro
 
 
 
-{{confluence_spacejump space="space2"/}}
+{{spacejump space="space2"/}}
 
-{{confluence_section}}
+{{section}}
 content of the macro
-{{/confluence_section}}
+{{/section}}
 
 
 
-{{confluence_recently-updated-dashboard/}}
+{{recently-updated-dashboard/}}
 
-{{confluence_tip title="tip title"}}
+{{tip title="tip title"}}
 tip content
-{{/confluence_tip}}
+{{/tip}}
 
 
 
-{{confluence_profile user="admin"/}}
+{{profile user="admin"/}}
 
 
 
-{{confluence_status-list username="admin"/}}
+{{status-list username="admin"/}}
 
-{{confluence_panel}}
+{{panel}}
 content
-{{/confluence_panel}}
+{{/panel}}
 
-{{confluence_warning title="warning title"}}
+{{warning title="warning title"}}
 content
-{{/confluence_warning}}
+{{/warning}}
 
 Widget connector maccro
 
-{{confluence_toc-zone}}
+{{toc-zone}}
 content
-{{/confluence_toc-zone}}
+{{/toc-zone}}
 
  
 
@@ -21503,7 +21503,7 @@ Content of the page including:
 
 
 
-{{confluence_toc/}}
+{{toc/}}
 
 = Titre 1 =
 
@@ -21566,211 +21566,211 @@ Some wiki text with **bold** content
 
 [[doc:XWiki.Admin]] &lt;= user macro
 
-{{confluence_info title="info title"}}
+{{info title="info title"}}
 info default macro
-{{/confluence_info}}
+{{/info}}
 
 
 
-{{confluence_status title="State default macro"/}}
+{{status title="State default macro"/}}
 
 
 
-{{confluence_gallery title="Gallerie default macro"/}}
+{{gallery title="Gallerie default macro"/}}
 
 
 
-{{confluence_children page="space1 Home"/}}
+{{children page="space1 Home"/}}
 
 
 
 {{id name="anchor"/}}
 
-{{confluence_code title="Bloc code title for java with Django theme" theme="DJango" language="java"}}
+{{code title="Bloc code title for java with Django theme" theme="DJango" language="java"}}
 Content of bloc code
-{{/confluence_code}}
+{{/code}}
 
 
 
-{{confluence_blog-posts/}}
+{{blog-posts/}}
 
 
 
-{{confluence_create-space-button/}}
+{{create-space-button/}}
 
 
 
-{{confluence_change-history/}}
+{{change-history/}}
 
-{{confluence_column width="300px"}}
+{{column width="300px"}}
 Column macro
-{{/confluence_column}}
+{{/column}}
 
 
 
-{{confluence_gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
+{{gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
 
 
 
-{{confluence_contentbylabel labels="tag1"/}}
+{{contentbylabel labels="tag1"/}}
 
 
 
-{{confluence_content-by-user 0="admin"/}}
+{{content-by-user 0="admin"/}}
 
 
 
-{{confluence_contributors/}}
+{{contributors/}}
 
 
 
-{{confluence_contributors-summary/}}
+{{contributors-summary/}}
 
-{{confluence_details}}
+{{details}}
 Content of meta data detail macro
-{{/confluence_details}}
+{{/details}}
 
-{{confluence_expand}}
+{{expand}}
 Content of box to expand
-{{/confluence_expand}}
+{{/expand}}
 
-{{confluence_excerpt atlassian-macro-output-type="BLOCK"}}
+{{excerpt atlassian-macro-output-type="BLOCK"}}
 Excerpt content
-{{/confluence_excerpt}}
+{{/excerpt}}
 
 
 
-{{confluence_favpages/}}
+{{favpages/}}
 
 
 
-{{confluence_im service="jabber" 0="Admin"/}}
+{{im service="jabber" 0="Admin"/}}
 
-{{confluence_info title="info title"}}
+{{info title="info title"}}
 content of info macro
-{{/confluence_info}}
+{{/info}}
 
 
 
-{{confluence_space-details width="80%"/}}
+{{space-details width="80%"/}}
 
 
 
-{{confluence_listlabels/}}
+{{listlabels/}}
 
 
 
-{{confluence_spaces/}}
+{{spaces/}}
 
 
 
-{{confluence_livesearch/}}
+{{livesearch/}}
 
 "Video player" I won't add this macro because of the weight of the attached document
 
 
 
-{{confluence_navmap 0="tag1"/}}
+{{navmap 0="tag1"/}}
 
 
 
-{{confluence_network 0="following"/}}
+{{network 0="following"/}}
 
-{{confluence_note title="Optional Title of the macro"}}
+{{note title="Optional Title of the macro"}}
 content of the macro
-{{/confluence_note}}
+{{/note}}
 
 3 macros named: excel macro, powerpoint macro and word macro
 
 
 
-{{confluence_index/}}
+{{index/}}
 
 
 
-{{confluence_pagetree/}}
+{{pagetree/}}
 
 
 
-{{confluence_pagetreesearch/}}
+{{pagetreesearch/}}
 
-{{confluence_noformat}}
+{{noformat}}
 no format content
-{{/confluence_noformat}}
+{{/noformat}}
 
 PDF macro
 
 
 
-{{confluence_space-attachments/}}
+{{space-attachments/}}
 
 
 
-{{confluence_attachments/}}
+{{attachments/}}
 
 
 
-{{confluence_popular-labels/}}
+{{popular-labels/}}
 
 
 
-{{confluence_profile-picture User="admin"/}}
+{{profile-picture User="admin"/}}
 
 
 
-{{confluence_global-reports/}}
+{{global-reports/}}
 
 
 
-{{confluence_recently-updated/}}
+{{recently-updated/}}
 
 
 
-{{confluence_recently-used-labels/}}
+{{recently-used-labels/}}
 
 
 
-{{confluence_related-labels/}}
+{{related-labels/}}
 
 RSS feed macro
 
 
 
-{{confluence_spacejump space="space2"/}}
+{{spacejump space="space2"/}}
 
-{{confluence_section}}
+{{section}}
 content of the macro
-{{/confluence_section}}
+{{/section}}
 
 
 
-{{confluence_recently-updated-dashboard/}}
+{{recently-updated-dashboard/}}
 
-{{confluence_tip title="tip title"}}
+{{tip title="tip title"}}
 tip content
-{{/confluence_tip}}
+{{/tip}}
 
 
 
-{{confluence_profile user="admin"/}}
+{{profile user="admin"/}}
 
 
 
-{{confluence_status-list username="admin"/}}
+{{status-list username="admin"/}}
 
-{{confluence_panel}}
+{{panel}}
 content
-{{/confluence_panel}}
+{{/panel}}
 
-{{confluence_warning title="warning title"}}
+{{warning title="warning title"}}
 content
-{{/confluence_warning}}
+{{/warning}}
 
 Widget connector maccro
 
-{{confluence_toc-zone}}
+{{toc-zone}}
 content
-{{/confluence_toc-zone}}
+{{/toc-zone}}
 
  
 
@@ -26649,7 +26649,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 (((
 
 
-{{confluence_recently-updated/}}
+{{recently-updated/}}
 )))
 )))
 
@@ -26661,11 +26661,11 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 
 
 
-{{confluence_pagetreesearch/}}
+{{pagetreesearch/}}
 
 
 
-{{confluence_pagetree/}}
+{{pagetree/}}
 )))
 )))
 )))

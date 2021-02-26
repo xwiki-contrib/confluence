@@ -38,7 +38,7 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(FilterTestSuite.class)
 @AllComponents
-@FilterTestSuite.Scope(value = "confluencexml"/* , pattern = "users.test" */)
+@FilterTestSuite.Scope(value = "confluencexml"/* , pattern = "content.test" */)
 public class IntegrationTests
 {
     @FilterTestSuite.Initialized

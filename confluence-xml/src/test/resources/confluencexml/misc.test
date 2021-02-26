@@ -138,9 +138,9 @@
               <string>content</string>
               <string>Test ~[~[brace]]s
 
-{{confluence_code}}
+{{code}}
 in [[code block]]
-{{/confluence_code}}
+{{/code}}
 
 [[image:attach:blind.gif]]</string>
             </entry>
@@ -180,13 +180,13 @@ in [[code block]]
               <string>content</string>
               <string>Test ~[~[braces]]
 
-{{confluence_code}}
+{{code}}
 in [[code block]]
-{{/confluence_code}}
+{{/code}}
 
-{{confluence_excerpt hidden="true" atlassian-macro-output-type="BLOCK"}}
+{{excerpt hidden="true" atlassian-macro-output-type="BLOCK"}}
 in //ex//cerpt
-{{/confluence_excerpt}}</string>
+{{/excerpt}}</string>
             </entry>
             <entry>
               <string>syntax</string>
