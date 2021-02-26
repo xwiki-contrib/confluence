@@ -20,13 +20,15 @@
 
 {{id name="value2"/}}
 
-{{macro 0="defaultparameter" parameter="value"}}
+{{macro parameter="value"}}
 rich **text** here
 {{/macro}}
 
 {{macro}}
 simple content
-{{/macro}}</string>
+{{/macro}}
+
+{{macrowithdefaultparameter 0="value"/}}</string>
             </entry>
             <entry>
               <string>syntax</string>

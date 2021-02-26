@@ -20,13 +20,15 @@
 
 {{id name="value2"/}}
 
-{{confluence_macro 0="defaultparameter" parameter="value"}}
+{{confluence_macro parameter="value"}}
 rich **text** here
 {{/confluence_macro}}
 
 {{confluence_macro}}
 simple content
-{{/confluence_macro}}</string>
+{{/confluence_macro}}
+
+{{macrowithdefaultparameter 0="value"/}}</string>
             </entry>
             <entry>
               <string>syntax</string>
