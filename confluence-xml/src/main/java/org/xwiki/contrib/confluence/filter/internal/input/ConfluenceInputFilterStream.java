@@ -374,22 +374,22 @@ public class ConfluenceInputFilterStream
             documentName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
         }
 
+        // Skip pages with empty title
         if (StringUtils.isEmpty(documentName)) {
             this.logger.warn("Found a page without a name or title (id={}). Skipping it.", pageId);
 
             return;
         }
 
+        // Skip deleted, archived or draft pages
+        String contentStatus = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS);
+        if (contentStatus != null
+            && (contentStatus.equals("deleted") || contentStatus.equals("archived") || contentStatus.equals("draft")))
+            return;
+
         FilterEventParameters documentParameters = new FilterEventParameters();
         if (this.properties.getDefaultLocale() != null) {
             documentParameters.put(WikiDocumentFilter.PARAMETER_LOCALE, this.properties.getDefaultLocale());
-        }
-
-        // We should not imported pages from the Trash
-        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS)) {
-            String contentStatus = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS);
-            if (contentStatus.equals("deleted"))
-                return;
         }
 
         // > WikiDocument
