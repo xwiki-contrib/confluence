@@ -28,7 +28,13 @@ rich **text** here
 simple content
 {{/macro}}
 
-{{macrowithdefaultparameter 0="value"/}}</string>
+{{macrowithdefaultparameter 0="value"/}}
+
+{{macro}}
+{{submacro parameter="value"}}
+sub macro rich **text** content
+{{/submacro}}
+{{/macro}}</string>
             </entry>
             <entry>
               <string>syntax</string>

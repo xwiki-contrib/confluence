@@ -50,6 +50,7 @@ import org.xwiki.contrib.confluence.filter.internal.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.parser.confluence.internal.ConfluenceParser;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceXHTMLInputProperties;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.ConfluenceXHTMLParser;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.InternalConfluenceXHTMLInputProperties;
 import org.xwiki.environment.Environment;
 import org.xwiki.filter.FilterEventParameters;
 import org.xwiki.filter.FilterException;
@@ -711,15 +712,22 @@ public class ConfluenceInputFilterStream
         return printer.toString();
     }
 
-    private Listener wrap(Listener proxyFilter)
+    private ConfluenceConverterListener createConverter(Listener listener)
+    {
+        ConfluenceConverterListener converter = this.converterProvider.get();
+        converter.initialize(this.confluencePackage, this, this.properties);
+        converter.setWrappedListener(listener);
+
+        return converter;
+    }
+
+    private Listener wrap(Listener listener)
     {
         if (this.properties.isConvertToXWiki()) {
-            ConfluenceConverterListener converter = this.converterProvider.get();
-            converter.initialize(this.confluencePackage, this, this.properties, proxyFilter);
-            return converter;
+            return createConverter(listener);
         }
 
-        return proxyFilter;
+        return listener;
     }
 
     private void parse(String bodyContent, int bodyType, Syntax macroContentSyntax, Listener listener)
@@ -730,7 +738,7 @@ public class ConfluenceInputFilterStream
                 this.confluenceWIKIParser.parse(new StringReader(bodyContent), wrap(listener));
                 break;
             case 2:
-                createSyntaxFilter(bodyContent, macroContentSyntax).read(wrap(listener));
+                createSyntaxFilter(bodyContent, macroContentSyntax).read(listener);
                 break;
             default:
                 break;
@@ -740,9 +748,14 @@ public class ConfluenceInputFilterStream
     private BeanInputFilterStream<ConfluenceXHTMLInputProperties> createSyntaxFilter(String bodyContent,
         Syntax macroContentSyntax) throws FilterException
     {
-        ConfluenceXHTMLInputProperties filterProperties = new ConfluenceXHTMLInputProperties();
+        InternalConfluenceXHTMLInputProperties filterProperties = new InternalConfluenceXHTMLInputProperties();
         filterProperties.setSource(new StringInputSource(bodyContent));
         filterProperties.setMacroContentSyntax(macroContentSyntax);
+
+        if (this.properties.isConvertToXWiki()) {
+            filterProperties.setConverter(createConverter(null));
+        }
+
         BeanInputFilterStreamFactory<ConfluenceXHTMLInputProperties> syntaxFilterFactory =
             ((BeanInputFilterStreamFactory<ConfluenceXHTMLInputProperties>) this.confluenceXHTMLParserFactory);
 

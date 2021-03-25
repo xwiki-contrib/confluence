@@ -49,7 +49,6 @@ import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.model.reference.LocalDocumentReference;
-import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.listener.WrappingListener;
 import org.xwiki.rendering.listener.reference.AttachmentResourceReference;
 import org.xwiki.rendering.listener.reference.DocumentResourceReference;
@@ -98,16 +97,14 @@ public class ConfluenceConverterListener extends WrappingListener
     /**
      * @param confluencePackage the Confluence data
      * @param properties the input properties
-     * @param listener the listener
+     * @since 9.10
      */
     public void initialize(ConfluenceXMLPackage confluencePackage, ConfluenceInputFilterStream stream,
-        ConfluenceInputProperties properties, Listener listener)
+        ConfluenceInputProperties properties)
     {
         this.confluencePackage = confluencePackage;
         this.stream = stream;
         this.properties = properties;
-
-        setWrappedListener(listener);
     }
 
     @Override

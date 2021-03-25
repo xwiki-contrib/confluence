@@ -67,6 +67,7 @@ import org.xwiki.rendering.internal.parser.wikimodel.XWikiGeneratorListener;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XWikiHeaderTagHandler;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XWikiReferenceTagHandler;
 import org.xwiki.rendering.listener.Listener;
+import org.xwiki.rendering.listener.WrappingListener;
 import org.xwiki.rendering.parser.ParseException;
 import org.xwiki.rendering.parser.ResourceReferenceParser;
 import org.xwiki.rendering.parser.StreamParser;
@@ -127,6 +128,8 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
 
     private PrintRendererFactory macroContentRendererFactory;
 
+    private WrappingListener converter;
+
     @Override
     public Syntax getSyntax()
     {
@@ -183,11 +186,11 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
 
         handlers.put("th", new TableHeadTagHandler());
         handlers.put("td", new TableCellTagHandler());
-        
+
         handlers.put("pre", new PreformattedTagHandler());
-        
+
         handlers.put("time", new TimeTagHandler());
-        
+
         handlers.put("ac:task-list", new TaskListTagHandler());
         handlers.put("ac:task", new TaskTagHandler());
         handlers.put("ac:task-id", new TaskIdTagHandler());
@@ -282,5 +285,23 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
     public PrintRendererFactory getMacroContentRendererFactory()
     {
         return this.macroContentRendererFactory;
+    }
+
+    /**
+     * @return a filter to use between the parser and the renderer
+     * @since 9.10
+     */
+    public WrappingListener getConverter()
+    {
+        return this.converter;
+    }
+
+    /**
+     * @param converter a filter to use between the parser and the renderer
+     * @since 9.10
+     */
+    public void setConverter(WrappingListener converter)
+    {
+        this.converter = converter;
     }
 }

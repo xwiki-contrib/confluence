@@ -28,7 +28,13 @@ rich **text** here
 simple content
 {{/confluence_macro}}
 
-{{macrowithdefaultparameter 0="value"/}}</string>
+{{macrowithdefaultparameter 0="value"/}}
+
+{{confluence_macro}}
+{{confluence_submacro parameter="value"}}
+sub macro rich **text** content
+{{/confluence_submacro}}
+{{/confluence_macro}}</string>
             </entry>
             <entry>
               <string>syntax</string>
@@ -49,5 +55,5 @@ simple content
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=content
-.configuration.prefixedMacros=macro
+.configuration.prefixedMacros=macro,submacro
 .#------------------------------------------------------------------------------
