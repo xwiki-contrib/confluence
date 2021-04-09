@@ -97,6 +97,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private boolean userReferences;
 
     /**
+     * @see #getUserWiki()
+     */
+    private String usersWiki;
+
+    /**
      * @see #getUnknownMacroPrefix()
      */
     private String unknownMacroPrefix = "confluence_";
@@ -399,5 +404,25 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setUnprefixedMacros(Set<String> unprefixedMacros)
     {
         this.unprefixedMacros = unprefixedMacros;
+    }
+
+    /**
+     * @return the wiki where to imports users
+     * @since 9.11
+     */
+    @PropertyName("Users wiki")
+    @PropertyDescription("The wiki where to import users.")
+    public String getUsersWiki()
+    {
+        return this.usersWiki;
+    }
+
+    /**
+     * @param usersWiki the wiki where to imports users
+     * @since 9.11
+     */
+    public void setUsersWiki(String usersWiki)
+    {
+        this.usersWiki = usersWiki;
     }
 }

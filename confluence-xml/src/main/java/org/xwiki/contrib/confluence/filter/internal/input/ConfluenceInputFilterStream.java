@@ -220,6 +220,11 @@ public class ConfluenceInputFilterStream
     private void sendUsers(Collection<Long> users, Collection<Long> groups, ConfluenceFilter proxyFilter)
         throws FilterException
     {
+        // Switch the wiki if a specific one is forced
+        if (this.properties.getUsersWiki() != null) {
+            proxyFilter.beginWiki(this.properties.getUsersWiki(), FilterEventParameters.EMPTY);
+        }
+
         // Generate users events
         for (Long userId : users) {
             this.progress.startStep(this);
@@ -355,6 +360,11 @@ public class ConfluenceInputFilterStream
             proxyFilter.endGroupContainer(groupName, groupParameters);
 
             this.progress.endStep(this);
+        }
+
+        // Get back to default wiki
+        if (this.properties.getUsersWiki() != null) {
+            proxyFilter.endWiki(this.properties.getUsersWiki(), FilterEventParameters.EMPTY);
         }
     }
 
