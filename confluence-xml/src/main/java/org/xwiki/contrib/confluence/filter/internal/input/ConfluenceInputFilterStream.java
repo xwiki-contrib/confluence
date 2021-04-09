@@ -475,16 +475,37 @@ public class ConfluenceInputFilterStream
         return def;
     }
 
+    String toMappedUser(String confluenceUser)
+    {
+        if (this.properties.getUserIdMapping() != null) {
+            String mappedName = this.properties.getUserIdMapping().get(confluenceUser);
+
+            if (mappedName != null) {
+                mappedName = mappedName.trim();
+
+                if (!mappedName.isEmpty()) {
+                    return mappedName;
+                }
+            }
+        }
+
+        return confluenceUser;
+    }
+
     String toUserReferenceName(String userName)
     {
         if (userName == null || !this.properties.isConvertToXWiki()) {
-            return userName;
+            // Apply the configured mapping
+            return toMappedUser(userName);
         }
 
         // Translate the usual default admin user in Confluence to it's XWiki counterpart
         if (userName.equals("admin")) {
             return "Admin";
         }
+
+        // Apply the configured mapping
+        userName = toMappedUser(userName);
 
         // Protected from characters not well supported in user page name depending on the version of XWiki
         userName = FORBIDDEN_USER_CHARACTERS.matcher(userName).replaceAll("_");

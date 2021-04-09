@@ -26,6 +26,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.xwiki.contrib.confluence.filter.Mapping;
 import org.xwiki.filter.DefaultFilterStreamProperties;
 import org.xwiki.filter.input.InputSource;
 import org.xwiki.properties.annotation.PropertyDescription;
@@ -109,6 +110,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private Set<String> prefixedMacros;
 
     private Set<String> unprefixedMacros;
+
+    private Mapping userIdMapping;
 
     /**
      * @return The source to load the wiki from
@@ -424,5 +427,25 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setUsersWiki(String usersWiki)
     {
         this.usersWiki = usersWiki;
+    }
+
+    /**
+     * @return a mapping between Confluence user id located in the package and wanted ids
+     * @since 9.11
+     */
+    @PropertyName("User id mapping")
+    @PropertyDescription("A mapping between Confluence user id located in the package and wanted ids.")
+    public Mapping getUserIdMapping()
+    {
+        return this.userIdMapping;
+    }
+
+    /**
+     * @param existingUsers a mapping between Confluence user id located in the package and wanted ids
+     * @since 9.11
+     */
+    public void setUserIdMapping(Mapping existingUsers)
+    {
+        this.userIdMapping = existingUsers;
     }
 }
