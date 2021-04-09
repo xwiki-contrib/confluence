@@ -97,7 +97,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private boolean userReferences;
 
     /**
-     * @see #getUserWiki()
+     * @see #getUsersWiki()
      */
     private String usersWiki;
 
