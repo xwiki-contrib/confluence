@@ -65,6 +65,14 @@
 <wikiSpace name="TestSpace">
   <wikiDocument name="TestContent">
     <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.OtherUser</string>
+          </entry>
+        </parameters>
+      </p>
       <wikiDocumentRevision>
         <p>
           <parameters>

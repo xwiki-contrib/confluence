@@ -65,6 +65,8 @@ import org.xwiki.filter.input.BeanInputFilterStreamFactory;
 import org.xwiki.filter.input.InputFilterStreamFactory;
 import org.xwiki.filter.input.StringInputSource;
 import org.xwiki.job.event.status.JobProgressManager;
+import org.xwiki.model.reference.DocumentReference;
+import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.rendering.listener.Listener;
@@ -522,8 +524,14 @@ public class ConfluenceInputFilterStream
         // Transform user name according to configuration
         userName = toUserReferenceName(userName);
 
-        // Add the "XWiki" space. Ideally this should probably be done on XWiki Instance Output filter side
-        LocalDocumentReference reference = new LocalDocumentReference("XWiki", userName);
+        // Add the "XWiki" space and the wiki if configured. Ideally this should probably be done on XWiki Instance
+        // Output filter side
+        EntityReference reference;
+        if (this.properties.getUsersWiki() != null) {
+            reference = new DocumentReference(this.properties.getUsersWiki(), "XWiki", userName);
+        } else {
+            reference = new LocalDocumentReference("XWiki", userName);
+        }
 
         return this.serializer.serialize(reference);
     }

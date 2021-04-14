@@ -75,6 +75,7 @@
       <id name="id">10</id>
     </property>
     <property name="bodyType">2</property>
+    <property name="creatorName"><![CDATA[UserName]]></property>
   </object>
 
 </hibernate-generic>
