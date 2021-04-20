@@ -38,6 +38,11 @@
 
     <!-- Name to display by the Extension Manager -->
     <xwiki.extension.name>Confluence Syntax 1.0</xwiki.extension.name>
+
+    <!-- Components -->
+    <xwiki.extension.components>
+      org.xwiki.rendering.parser.Parser/confluence/1.0
+    </xwiki.extension.components>
   </properties>
   <dependencies>
     <dependency>

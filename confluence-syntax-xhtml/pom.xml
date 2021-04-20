@@ -35,6 +35,12 @@
 
     <!-- Name to display by the Extension Manager -->
     <xwiki.extension.name>Confluence XHTML Syntax</xwiki.extension.name>
+
+    <!-- Components -->
+    <xwiki.extension.components>
+      org.xwiki.filter.input.InputFilterStreamFactory/confluence+xhtml/1.0
+      org.xwiki.rendering.parser.Parser/confluence+xhtml/1.0
+    </xwiki.extension.components>
   </properties>
   <dependencies>
     <dependency>

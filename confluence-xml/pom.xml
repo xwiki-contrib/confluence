@@ -41,6 +41,13 @@
       org.xwiki.platform:xwiki-platform-filter-stream-confluencexml
     </xwiki.extension.features>
 
+    <!-- Components -->
+    <xwiki.extension.components>
+      org.xwiki.filter.input.InputFilterStreamFactory/confluence+xml
+      org.xwiki.contrib.confluence.filter.MacroConverter/anchor
+      org.xwiki.contrib.confluence.filter.MacroConverter/default
+    </xwiki.extension.components>
+
     <xwiki.surefire.captureconsole.skip>true</xwiki.surefire.captureconsole.skip>
   </properties>
   <dependencies>
