@@ -1,0 +1,109 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Content conversions
+.#------------------------------------------------------------------------------
+<wiki name="xwiki">
+  <user name="UserName">
+    <p>
+      <parameters>
+        <entry>
+          <string>firstname</string>
+          <string>User</string>
+        </entry>
+        <entry>
+          <string>lastname</string>
+          <string>Name</string>
+        </entry>
+        <entry>
+          <string>email</string>
+          <string>user@mail.com</string>
+        </entry>
+        <entry>
+          <string>active</string>
+          <boolean>true</boolean>
+        </entry>
+        <entry>
+          <string>revision_date</string>
+          <date>2016-05-10 15:00:02.760 UTC</date>
+        </entry>
+        <entry>
+          <string>creation_date</string>
+          <date>2016-05-10 15:00:02.760 UTC</date>
+        </entry>
+      </parameters>
+    </p>
+  </user>
+  <user name="C_ra_ppy_User___">
+    <p>
+      <parameters>
+        <entry>
+          <string>firstname</string>
+          <string>User</string>
+        </entry>
+        <entry>
+          <string>lastname</string>
+          <string>Name</string>
+        </entry>
+        <entry>
+          <string>email</string>
+          <string>user@mail.com</string>
+        </entry>
+        <entry>
+          <string>active</string>
+          <boolean>true</boolean>
+        </entry>
+        <entry>
+          <string>revision_date</string>
+          <date>2016-05-10 15:00:02.760 UTC</date>
+        </entry>
+        <entry>
+          <string>creation_date</string>
+          <date>2016-05-10 15:00:02.760 UTC</date>
+        </entry>
+      </parameters>
+    </p>
+  </user>
+</wiki>
+<wikiSpace name="TestSpace">
+  <wikiDocument name="TestContent">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>xwiki:XWiki.UserName</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision>
+        <p>
+          <parameters>
+            <entry>
+              <string>title</string>
+              <string>TestContent</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>[[doc:xwiki:XWiki.UserName]] [[doc:xwiki:XWiki.UserName]] [[doc:xwiki:XWiki.C_ra_ppy_User___]]</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=users
+.configuration.usersWiki=xwiki
+.#------------------------------------------------------------------------------

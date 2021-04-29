@@ -34,6 +34,7 @@ import org.xwiki.filter.FilterException;
 import org.xwiki.filter.input.AbstractBeanInputFilterStream;
 import org.xwiki.filter.input.ReaderInputSource;
 import org.xwiki.rendering.listener.Listener;
+import org.xwiki.rendering.listener.WrappingListener;
 import org.xwiki.rendering.parser.ParseException;
 import org.xwiki.rendering.parser.StreamParser;
 import org.xwiki.rendering.syntax.Syntax;
@@ -99,6 +100,14 @@ public class ConfluenceXHTMLInputFilterStream
                 }
             } else {
                 this.renderingContext.getTargetSyntax();
+            }
+
+            if (this.properties instanceof InternalConfluenceXHTMLInputProperties) {
+                WrappingListener converter = ((InternalConfluenceXHTMLInputProperties) this.properties).getConverter();
+                ((ConfluenceXHTMLParser) this.confluenceXHTMLParser).setConverter(converter);
+                converter.setWrappedListener(listener);
+
+                listener = converter;
             }
         }
 

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic>
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">100</id>
+    <property name="name"><![CDATA[TestSpace]]></property>
+    <property name="key"><![CDATA[TestSpace]]></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">10</id>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+      <id name="id">100</id>
+    </property>
+    <property name="title"><![CDATA[TestContent]]></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">1359218091</id>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+      <id name="id">100</id>
+    </property>
+    <property name="title"><![CDATA[Archived Page]]></property>
+    <property name="contentStatus"><![CDATA[archived]]></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">1359218091</id>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+      <id name="id">100</id>
+    </property>
+    <property name="title"><![CDATA[Draft Page]]></property>
+    <property name="contentStatus"><![CDATA[draft]]></property>
+  </object>
+</hibernate-generic>

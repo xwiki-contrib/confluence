@@ -5,34 +5,12 @@
 <wikiSpace name="TestSpace">
   <wikiDocument name="TestContent">
     <wikiDocumentLocale>
-      <p>
-        <parameters>
-          <entry>
-            <string>creation_author</string>
-            <string>XWiki.UserName</string>
-          </entry>
-        </parameters>
-      </p>
       <wikiDocumentRevision>
         <p>
           <parameters>
             <entry>
               <string>title</string>
               <string>TestContent</string>
-            </entry>
-            <entry>
-              <string>content</string>
-              <string>[[doc:XWiki.UserName]] [[doc:XWiki.UserName]] [[doc:XWiki.C_ra_ppy_User___]]</string>
-            </entry>
-            <entry>
-              <string>syntax</string>
-              <org.xwiki.rendering.syntax.Syntax>
-                <type>
-                  <name>XWiki</name>
-                  <id>xwiki</id>
-                </type>
-                <version>2.1</version>
-              </org.xwiki.rendering.syntax.Syntax>
             </entry>
           </parameters>
         </p>
@@ -42,6 +20,5 @@
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
-.configuration.source=users
-.configuration.usersEnabled=false
+.configuration.source=contentStatus
 .#------------------------------------------------------------------------------

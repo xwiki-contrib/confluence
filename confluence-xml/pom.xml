@@ -25,7 +25,7 @@
   <parent>
     <groupId>org.xwiki.contrib.confluence</groupId>
     <artifactId>confluence</artifactId>
-    <version>9.8.1-SNAPSHOT</version>
+    <version>9.11.3-SNAPSHOT</version>
   </parent>
   <artifactId>confluence-xml</artifactId>
   <name>Confluence - XML Input Filter</name>
@@ -40,6 +40,13 @@
     <xwiki.extension.features>
       org.xwiki.platform:xwiki-platform-filter-stream-confluencexml
     </xwiki.extension.features>
+
+    <!-- Components -->
+    <xwiki.extension.components>
+      org.xwiki.filter.input.InputFilterStreamFactory/confluence+xml
+      org.xwiki.contrib.confluence.filter.MacroConverter/anchor
+      org.xwiki.contrib.confluence.filter.MacroConverter/default
+    </xwiki.extension.components>
 
     <xwiki.surefire.captureconsole.skip>true</xwiki.surefire.captureconsole.skip>
   </properties>

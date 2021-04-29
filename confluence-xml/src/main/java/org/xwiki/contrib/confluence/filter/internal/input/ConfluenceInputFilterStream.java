@@ -50,6 +50,7 @@ import org.xwiki.contrib.confluence.filter.internal.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.parser.confluence.internal.ConfluenceParser;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceXHTMLInputProperties;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.ConfluenceXHTMLParser;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.InternalConfluenceXHTMLInputProperties;
 import org.xwiki.environment.Environment;
 import org.xwiki.filter.FilterEventParameters;
 import org.xwiki.filter.FilterException;
@@ -64,6 +65,8 @@ import org.xwiki.filter.input.BeanInputFilterStreamFactory;
 import org.xwiki.filter.input.InputFilterStreamFactory;
 import org.xwiki.filter.input.StringInputSource;
 import org.xwiki.job.event.status.JobProgressManager;
+import org.xwiki.model.reference.DocumentReference;
+import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.rendering.listener.Listener;
@@ -219,6 +222,11 @@ public class ConfluenceInputFilterStream
     private void sendUsers(Collection<Long> users, Collection<Long> groups, ConfluenceFilter proxyFilter)
         throws FilterException
     {
+        // Switch the wiki if a specific one is forced
+        if (this.properties.getUsersWiki() != null) {
+            proxyFilter.beginWiki(this.properties.getUsersWiki(), FilterEventParameters.EMPTY);
+        }
+
         // Generate users events
         for (Long userId : users) {
             this.progress.startStep(this);
@@ -355,6 +363,11 @@ public class ConfluenceInputFilterStream
 
             this.progress.endStep(this);
         }
+
+        // Get back to default wiki
+        if (this.properties.getUsersWiki() != null) {
+            proxyFilter.endWiki(this.properties.getUsersWiki(), FilterEventParameters.EMPTY);
+        }
     }
 
     private void readPage(long pageId, Object filter, ConfluenceFilter proxyFilter) throws FilterException
@@ -374,22 +387,22 @@ public class ConfluenceInputFilterStream
             documentName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
         }
 
+        // Skip pages with empty title
         if (StringUtils.isEmpty(documentName)) {
             this.logger.warn("Found a page without a name or title (id={}). Skipping it.", pageId);
 
             return;
         }
 
+        // Skip deleted, archived or draft pages
+        String contentStatus = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS);
+        if (contentStatus != null
+            && (contentStatus.equals("deleted") || contentStatus.equals("archived") || contentStatus.equals("draft")))
+            return;
+
         FilterEventParameters documentParameters = new FilterEventParameters();
         if (this.properties.getDefaultLocale() != null) {
             documentParameters.put(WikiDocumentFilter.PARAMETER_LOCALE, this.properties.getDefaultLocale());
-        }
-
-        // We should not imported pages from the Trash
-        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS)) {
-            String contentStatus = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS);
-            if (contentStatus.equals("deleted"))
-                return;
         }
 
         // > WikiDocument
@@ -464,16 +477,37 @@ public class ConfluenceInputFilterStream
         return def;
     }
 
+    String toMappedUser(String confluenceUser)
+    {
+        if (this.properties.getUserIdMapping() != null) {
+            String mappedName = this.properties.getUserIdMapping().get(confluenceUser);
+
+            if (mappedName != null) {
+                mappedName = mappedName.trim();
+
+                if (!mappedName.isEmpty()) {
+                    return mappedName;
+                }
+            }
+        }
+
+        return confluenceUser;
+    }
+
     String toUserReferenceName(String userName)
     {
         if (userName == null || !this.properties.isConvertToXWiki()) {
-            return userName;
+            // Apply the configured mapping
+            return toMappedUser(userName);
         }
 
         // Translate the usual default admin user in Confluence to it's XWiki counterpart
         if (userName.equals("admin")) {
             return "Admin";
         }
+
+        // Apply the configured mapping
+        userName = toMappedUser(userName);
 
         // Protected from characters not well supported in user page name depending on the version of XWiki
         userName = FORBIDDEN_USER_CHARACTERS.matcher(userName).replaceAll("_");
@@ -490,8 +524,14 @@ public class ConfluenceInputFilterStream
         // Transform user name according to configuration
         userName = toUserReferenceName(userName);
 
-        // Add the "XWiki" space. Ideally this should probably be done on XWiki Instance Output filter side
-        LocalDocumentReference reference = new LocalDocumentReference("XWiki", userName);
+        // Add the "XWiki" space and the wiki if configured. Ideally this should probably be done on XWiki Instance
+        // Output filter side
+        EntityReference reference;
+        if (this.properties.getUsersWiki() != null) {
+            reference = new DocumentReference(this.properties.getUsersWiki(), "XWiki", userName);
+        } else {
+            reference = new LocalDocumentReference("XWiki", userName);
+        }
 
         return this.serializer.serialize(reference);
     }
@@ -711,15 +751,22 @@ public class ConfluenceInputFilterStream
         return printer.toString();
     }
 
-    private Listener wrap(Listener proxyFilter)
+    private ConfluenceConverterListener createConverter(Listener listener)
+    {
+        ConfluenceConverterListener converter = this.converterProvider.get();
+        converter.initialize(this.confluencePackage, this, this.properties);
+        converter.setWrappedListener(listener);
+
+        return converter;
+    }
+
+    private Listener wrap(Listener listener)
     {
         if (this.properties.isConvertToXWiki()) {
-            ConfluenceConverterListener converter = this.converterProvider.get();
-            converter.initialize(this.confluencePackage, this, this.properties, proxyFilter);
-            return converter;
+            return createConverter(listener);
         }
 
-        return proxyFilter;
+        return listener;
     }
 
     private void parse(String bodyContent, int bodyType, Syntax macroContentSyntax, Listener listener)
@@ -730,7 +777,7 @@ public class ConfluenceInputFilterStream
                 this.confluenceWIKIParser.parse(new StringReader(bodyContent), wrap(listener));
                 break;
             case 2:
-                createSyntaxFilter(bodyContent, macroContentSyntax).read(wrap(listener));
+                createSyntaxFilter(bodyContent, macroContentSyntax).read(listener);
                 break;
             default:
                 break;
@@ -740,9 +787,14 @@ public class ConfluenceInputFilterStream
     private BeanInputFilterStream<ConfluenceXHTMLInputProperties> createSyntaxFilter(String bodyContent,
         Syntax macroContentSyntax) throws FilterException
     {
-        ConfluenceXHTMLInputProperties filterProperties = new ConfluenceXHTMLInputProperties();
+        InternalConfluenceXHTMLInputProperties filterProperties = new InternalConfluenceXHTMLInputProperties();
         filterProperties.setSource(new StringInputSource(bodyContent));
         filterProperties.setMacroContentSyntax(macroContentSyntax);
+
+        if (this.properties.isConvertToXWiki()) {
+            filterProperties.setConverter(createConverter(null));
+        }
+
         BeanInputFilterStreamFactory<ConfluenceXHTMLInputProperties> syntaxFilterFactory =
             ((BeanInputFilterStreamFactory<ConfluenceXHTMLInputProperties>) this.confluenceXHTMLParserFactory);
 

@@ -31,6 +31,7 @@
           <ac:structured-macro ac:name="anchor">
             <ac:parameter ac:name="">value2</ac:parameter>
           </ac:structured-macro>
+
           <ac:structured-macro ac:name="macro">
             <ac:parameter ac:name="parameter">value</ac:parameter>
             <ac:rich-text-body>
@@ -44,6 +45,16 @@
           </ac:structured-macro>
           <ac:structured-macro ac:name="macrowithdefaultparameter">
             <ac:parameter ac:name="">value</ac:parameter>
+          </ac:structured-macro>
+          <ac:structured-macro ac:name="macro">
+            <ac:rich-text-body>
+                <ac:structured-macro ac:name="submacro">
+                  <ac:parameter ac:name="parameter">value</ac:parameter>
+                  <ac:rich-text-body>
+                    <p>sub macro rich <strong>text</strong> content</p>
+                  </ac:rich-text-body>
+                </ac:structured-macro>
+            </ac:rich-text-body>
           </ac:structured-macro>
         </p>
       ]]>

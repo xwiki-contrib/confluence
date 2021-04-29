@@ -26,6 +26,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.xwiki.contrib.confluence.filter.Mapping;
 import org.xwiki.filter.DefaultFilterStreamProperties;
 import org.xwiki.filter.input.InputSource;
 import org.xwiki.properties.annotation.PropertyDescription;
@@ -97,6 +98,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private boolean userReferences;
 
     /**
+     * @see #getUsersWiki()
+     */
+    private String usersWiki;
+
+    /**
      * @see #getUnknownMacroPrefix()
      */
     private String unknownMacroPrefix = "confluence_";
@@ -104,6 +110,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private Set<String> prefixedMacros;
 
     private Set<String> unprefixedMacros;
+
+    private Mapping userIdMapping;
 
     /**
      * @return The source to load the wiki from
@@ -399,5 +407,45 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setUnprefixedMacros(Set<String> unprefixedMacros)
     {
         this.unprefixedMacros = unprefixedMacros;
+    }
+
+    /**
+     * @return the wiki where to imports users
+     * @since 9.11
+     */
+    @PropertyName("Users wiki")
+    @PropertyDescription("The wiki where to import users.")
+    public String getUsersWiki()
+    {
+        return this.usersWiki;
+    }
+
+    /**
+     * @param usersWiki the wiki where to imports users
+     * @since 9.11
+     */
+    public void setUsersWiki(String usersWiki)
+    {
+        this.usersWiki = usersWiki;
+    }
+
+    /**
+     * @return a mapping between Confluence user id located in the package and wanted ids
+     * @since 9.11
+     */
+    @PropertyName("User id mapping")
+    @PropertyDescription("A mapping between Confluence user id located in the package and wanted ids.")
+    public Mapping getUserIdMapping()
+    {
+        return this.userIdMapping;
+    }
+
+    /**
+     * @param existingUsers a mapping between Confluence user id located in the package and wanted ids
+     * @since 9.11
+     */
+    public void setUserIdMapping(Mapping existingUsers)
+    {
+        this.userIdMapping = existingUsers;
     }
 }

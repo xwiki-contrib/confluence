@@ -25,7 +25,7 @@
   <parent>
     <groupId>org.xwiki.contrib.confluence</groupId>
     <artifactId>confluence</artifactId>
-    <version>9.8.1-SNAPSHOT</version>
+    <version>9.11.3-SNAPSHOT</version>
   </parent>
   <artifactId>confluence-syntax-confluence10override</artifactId>
   <name>Confluence - Syntax - Confluence 1.0 Override</name>
@@ -38,6 +38,11 @@
 
     <!-- Name to display by the Extension Manager -->
     <xwiki.extension.name>Confluence Syntax 1.0</xwiki.extension.name>
+
+    <!-- Components -->
+    <xwiki.extension.components>
+      org.xwiki.rendering.parser.Parser/confluence/1.0
+    </xwiki.extension.components>
   </properties>
   <dependencies>
     <dependency>
