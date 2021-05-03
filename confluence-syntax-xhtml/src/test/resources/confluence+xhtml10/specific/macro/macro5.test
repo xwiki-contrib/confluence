@@ -1,6 +1,6 @@
 .#-----------------------------------------------------
 .input|confluence+xhtml/1.0
-.# temporary test to see jira macro output
+.# JIRA macro test
 .#-----------------------------------------------------
 <ac:structured-macro ac:name="jira" ac:schema-version="1"><ac:parameter ac:name="server">jiraserver</ac:parameter><ac:parameter ac:name="columns">key,summary,type,created</ac:parameter><ac:parameter ac:name="serverId">abcdef</ac:parameter><ac:parameter ac:name="key">TEST-1</ac:parameter></ac:structured-macro><ac:structured-macro ac:name="jira" ac:schema-version="1"><ac:parameter ac:name="server">jiraserver</ac:parameter><ac:parameter ac:name="columns">key,summary,type,created</ac:parameter><ac:parameter ac:name="serverId">abcdef</ac:parameter><ac:parameter ac:name="jqlQuery">someValue = "test"</ac:parameter></ac:structured-macro>
 .#-----------------------------------------------------
