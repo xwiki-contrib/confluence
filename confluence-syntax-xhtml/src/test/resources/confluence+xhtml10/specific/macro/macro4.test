@@ -2,10 +2,11 @@
 .input|confluence+xhtml/1.0
 .# If a macro parameter content in Confluence is a user reference, the parameter value of the generated wiki macro call is empty
 .#-----------------------------------------------------
-<ac:structured-macro ac:name="profile" ac:schema-version="1"><ac:parameter ac:name="user"><ri:user ri:userkey="0123456789abcdefedcba98765432100" /></ac:parameter></ac:structured-macro>
+<ac:structured-macro ac:name="profile" ac:schema-version="1"><ac:parameter ac:name="user"><ri:user ri:userkey="0123456789abcdefedcba98765432100" /></ac:parameter></ac:structured-macro><ac:structured-macro ac:name="profile" ac:schema-version="1"><ac:parameter ac:name="user"><ri:user ri:username="user1" /></ac:parameter></ac:structured-macro>
 .#-----------------------------------------------------
 .expect|event/1.0
 .#-----------------------------------------------------
 beginDocument
 onMacroStandalone [profile] [att--user=0123456789abcdefedcba98765432100|user=]
+onMacroStandalone [profile] [att--user=user1|user=]
 endDocument
