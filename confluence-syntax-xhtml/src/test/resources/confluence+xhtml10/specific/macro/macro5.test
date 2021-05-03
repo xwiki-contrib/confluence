@@ -1,0 +1,12 @@
+.#-----------------------------------------------------
+.input|confluence+xhtml/1.0
+.# temporary test to see jira macro output
+.#-----------------------------------------------------
+<ac:structured-macro ac:name="jira" ac:schema-version="1"><ac:parameter ac:name="server">jiraserver</ac:parameter><ac:parameter ac:name="columns">key,summary,type,created,updated,due,assignee,reporter,priority,status,resolution</ac:parameter><ac:parameter ac:name="serverId">e028577a-39e4-300c-be80-42496f6ccc92</ac:parameter><ac:parameter ac:name="key">H10-60</ac:parameter></ac:structured-macro><ac:structured-macro ac:name="jira" ac:schema-version="1"><ac:parameter ac:name="server">jiraserver</ac:parameter><ac:parameter ac:name="columns">key,summary,type,created,updated,due,assignee,reporter,priority,status,resolution</ac:parameter><ac:parameter ac:name="serverId">e028577a-39e4-300c-be80-42496f6ccc92</ac:parameter><ac:parameter ac:name="jqlQuery">someValue = "test"</ac:parameter></ac:structured-macro>
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+onMacroStandalone [jira] [server=jiraserver|columns=key,summary,type,created,updated,due,assignee,reporter,priority,status,resolution|serverId=e028577a-39e4-300c-be80-42496f6ccc92|key=H10-60]
+onMacroStandalone [jira] [server=jiraserver|columns=key,summary,type,created,updated,due,assignee,reporter,priority,status,resolution|serverId=e028577a-39e4-300c-be80-42496f6ccc92|jqlQuery=someValue = "test"]
+endDocument
