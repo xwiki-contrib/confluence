@@ -114,6 +114,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private Mapping userIdMapping;
 
     /**
+     * @see #isStoreConfluenceDetailsEnabled()
+     */
+    private boolean storeConfluenceDetailsEnabled;
+
+    /**
      * @return The source to load the wiki from
      */
     @PropertyName("The source")
@@ -213,7 +218,9 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      */
     @PropertyName("Base URLs")
     @PropertyDescription("The list of base URLs leading to the Confluence instance."
-        + " They are used to convert wrongly entered absoulte URL into wiki links.")
+        + " They are used to convert wrongly entered absoulte URLs into wiki links."
+        + " The first URL in the list will be used to compute page URLs used in the conversion report if the"
+        + " the 'Store Confluence details' property is used")
     public List<URL> getBaseURLs()
     {
         return this.baseURLs;
@@ -447,5 +454,25 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setUserIdMapping(Mapping existingUsers)
     {
         this.userIdMapping = existingUsers;
+    }
+
+    /**
+     * @return if true, add XWiki object to mark documents as Confluence migrated
+     * @since 9.13
+     */
+    @PropertyName("Store Confluence details")
+    @PropertyDescription("Store Confluence details in each migrated page")
+    public boolean isStoreConfluenceDetailsEnabled()
+    {
+        return this.storeConfluenceDetailsEnabled;
+    }
+
+    /**
+     * @param storeConfluenceDetails if true, add XWiki object to the migrated documents
+     * @since 9.13
+     */
+    public void setStoreConfluenceDetailsEnabled(boolean storeConfluenceDetails)
+    {
+        this.storeConfluenceDetailsEnabled = storeConfluenceDetails;
     }
 }

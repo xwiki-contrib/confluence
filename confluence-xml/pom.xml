@@ -89,6 +89,17 @@
       <artifactId>confluence-syntax-confluence</artifactId>
       <version>${project.version}</version>
     </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
+    </dependency>
+
+    <!-- Initialize Confluence.Code.ConfluencePageClass -->
+    <dependency>
+      <groupId>org.xwiki.platform</groupId>
+      <artifactId>xwiki-platform-oldcore</artifactId>
+      <version>${platform.version}</version>
+    </dependency>
 
     <!-- Convert to XWiki syntax -->
     <dependency>

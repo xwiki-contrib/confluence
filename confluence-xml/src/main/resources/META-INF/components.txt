@@ -1,3 +1,4 @@
+org.xwiki.contrib.confluence.filter.internal.ConfluencePageClassDocumentInitializer
 org.xwiki.contrib.confluence.filter.internal.MappingConverter
 org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverterListener
 org.xwiki.contrib.confluence.filter.internal.input.ConfluenceInputFilterStream

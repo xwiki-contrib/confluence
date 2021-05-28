@@ -190,7 +190,7 @@ public class ConfluenceInputFilterStream
             if (descriptionId != null) {
                 this.progress.startStep(this);
                 if (this.properties.isIncluded(descriptionId)) {
-                    readPage(descriptionId, filter, proxyFilter);
+                    readPage(descriptionId, spaceKey, filter, proxyFilter);
                 }
                 this.progress.endStep(this);
             }
@@ -199,7 +199,7 @@ public class ConfluenceInputFilterStream
             for (long pageId : entry.getValue()) {
                 this.progress.startStep(this);
                 if (this.properties.isIncluded(pageId)) {
-                    readPage(pageId, filter, proxyFilter);
+                    readPage(pageId, spaceKey, filter, proxyFilter);
                 }
                 this.progress.endStep(this);
             }
@@ -370,7 +370,8 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void readPage(long pageId, Object filter, ConfluenceFilter proxyFilter) throws FilterException
+    private void readPage(long pageId, String spaceKey, Object filter, ConfluenceFilter proxyFilter)
+        throws FilterException
     {
         PropertiesConfiguration pageProperties = getPageProperties(pageId);
 
@@ -443,12 +444,12 @@ public class ConfluenceInputFilterStream
             List<Long> revisions =
                 this.confluencePackage.getLongList(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISIONS);
             for (Long revisionId : revisions) {
-                readPageRevision(revisionId, filter, proxyFilter);
+                readPageRevision(revisionId, spaceKey, filter, proxyFilter);
             }
         }
 
         // Current version
-        readPageRevision(pageId, filter, proxyFilter);
+        readPageRevision(pageId, spaceKey, filter, proxyFilter);
 
         // < WikiDocumentLocale
         proxyFilter.endWikiDocumentLocale(locale, documentLocaleParameters);
@@ -545,7 +546,8 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void readPageRevision(Long pageId, Object filter, ConfluenceFilter proxyFilter) throws FilterException
+    private void readPageRevision(Long pageId, String spaceKey, Object filter, ConfluenceFilter proxyFilter)
+        throws FilterException
     {
         PropertiesConfiguration pageProperties = getPageProperties(pageId);
 
@@ -554,10 +556,10 @@ public class ConfluenceInputFilterStream
             return;
         }
 
-        readPageRevision(pageId, pageProperties, filter, proxyFilter);
+        readPageRevision(pageId, spaceKey, pageProperties, filter, proxyFilter);
     }
 
-    private void readPageRevision(long pageId, PropertiesConfiguration pageProperties, Object filter,
+    private void readPageRevision(long pageId, String spaceKey, PropertiesConfiguration pageProperties, Object filter,
         ConfluenceFilter proxyFilter) throws FilterException
     {
         String revision = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION);
@@ -737,8 +739,94 @@ public class ConfluenceInputFilterStream
             readPageComment(pageProperties, proxyFilter, commentId, pageComments, commentIndeces);
         }
 
+        if (this.properties.isStoreConfluenceDetailsEnabled()) {
+            storeConfluenceDetails(pageId, spaceKey, pageProperties, proxyFilter);
+        }
+
         // < WikiDocumentRevision
         proxyFilter.endWikiDocumentRevision(revision, documentRevisionParameters);
+    }
+
+    /**
+     * @since 9.13
+     */
+    private void storeConfluenceDetails(long pageId, String spaceKey, PropertiesConfiguration pageProperties,
+        ConfluenceFilter proxyFilter) throws FilterException
+    {
+        FilterEventParameters pageReportParameters = new FilterEventParameters();
+        String objectName = getObjectName(pageProperties);
+
+        // Page report object
+        pageReportParameters.put(WikiObjectFilter.PARAMETER_NUMBER, 0);
+        pageReportParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, "Confluence.Code.ConfluencePageClass");
+        proxyFilter.beginWikiObject(objectName, pageReportParameters);
+
+        // Page report class
+        FilterEventParameters pageReportClassParameters = new FilterEventParameters();
+        proxyFilter.beginWikiClass(pageReportClassParameters);
+
+        // <id> class property
+        FilterEventParameters idClassPropertyParameters = new FilterEventParameters();
+        proxyFilter.beginWikiClassProperty("id", "com.xpn.xwiki.objects.classes.NumberClass",
+            idClassPropertyParameters);
+
+        // property fields
+        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("name", "id", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("prettyName", "Id", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("numberType", "long", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("size", "30", new FilterEventParameters());
+
+        proxyFilter.endWikiClassProperty("id", "com.xpn.xwiki.objects.classes.StringClass", idClassPropertyParameters);
+
+        // <url> class property
+        FilterEventParameters urlClassPropertyParameters = new FilterEventParameters();
+        proxyFilter.beginWikiClassProperty("url", "com.xpn.xwiki.objects.classes.StringClass",
+            urlClassPropertyParameters);
+
+        // property fields
+        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("name", "url", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("prettyName", "URL", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("size", "30", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("picker", "0", new FilterEventParameters());
+
+        proxyFilter.endWikiClassProperty("url", "com.xpn.xwiki.objects.classes.StringClass",
+            urlClassPropertyParameters);
+
+        // <space> class property
+        FilterEventParameters spaceClassPropertyParameters = new FilterEventParameters();
+        proxyFilter.beginWikiClassProperty("space", "com.xpn.xwiki.objects.classes.StringClass",
+            spaceClassPropertyParameters);
+
+        // property fields
+        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("name", "space", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("prettyName", "Space", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("size", "30", new FilterEventParameters());
+        proxyFilter.onWikiClassPropertyField("picker", "0", new FilterEventParameters());
+
+        proxyFilter.endWikiClassProperty("space", "com.xpn.xwiki.objects.classes.StringClass",
+            spaceClassPropertyParameters);
+
+        proxyFilter.endWikiClass(pageReportClassParameters);
+
+        StringBuilder pageURLBuilder = new StringBuilder();
+        if (this.properties.getBaseURLs() != null) {
+            pageURLBuilder.append(this.properties.getBaseURLs().get(0).toString());
+            pageURLBuilder.append("/wiki/spaces/").append(spaceKey);
+            if (!pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
+                String pageName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
+                pageURLBuilder.append("/pages/").append(pageId).append("/").append(pageName);
+            }
+        }
+
+        // <tags> object property
+        proxyFilter.onWikiObjectProperty("id", pageId, new FilterEventParameters());
+        proxyFilter.onWikiObjectProperty("url", pageURLBuilder.toString(), new FilterEventParameters());
+        proxyFilter.onWikiObjectProperty("space", spaceKey, new FilterEventParameters());
+
+        proxyFilter.endWikiObject(objectName, pageReportParameters);
     }
 
     private String convertToXWiki21(String bodyContent, int bodyType) throws FilterException, ParseException

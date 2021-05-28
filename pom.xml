@@ -25,7 +25,7 @@
   <parent>
     <groupId>org.xwiki.contrib</groupId>
     <artifactId>parent-platform</artifactId>
-    <version>8.4-11</version>
+    <version>9.2</version>
   </parent>
   <groupId>org.xwiki.contrib.confluence</groupId>
   <artifactId>confluence</artifactId>
@@ -61,4 +61,44 @@
     <module>confluence-syntax-confluence</module>
     <module>confluence-syntax-confluence10override</module>
   </modules>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.revapi</groupId>
+        <artifactId>revapi-maven-plugin</artifactId>
+        <configuration>
+          <analysisConfiguration><![CDATA[
+            {
+              "revapi": {
+                "ignore" : [
+                  {
+                    "code": "java.annotation.attributeValueChanged",
+                    "old": "method java.util.List<java.net.URL> org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties::getBaseURLs()",
+                    "new": "method java.util.List<java.net.URL> org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties::getBaseURLs()",
+                    "attribute": "value",
+                    "oldValue": "\"The list of base URLs leading to the Confluence instance. They are used to convert wrongly entered absoulte URL into wiki links.\"",
+                    "newValue": "\"The list of base URLs leading to the Confluence instance. They are used to convert wrongly entered absoulte URLs into wiki links. The first URL in the list will be used to compute page URLs used in the conversion report if the the 'Store Confluence details' property is used\"",
+                    "annotationType": "org.xwiki.properties.annotation.PropertyDescription",
+                    "elementKind": "annotation",
+                    "justification": "Not a breakage"
+                  },
+                  {
+                    "code": "java.annotation.attributeValueChanged",
+                    "old": "method java.util.List<java.net.URL> org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties::getBaseURLs() @ org.xwiki.filter.confluence.input.ConfluenceInputProperties",
+                    "new": "method java.util.List<java.net.URL> org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties::getBaseURLs() @ org.xwiki.filter.confluence.input.ConfluenceInputProperties",
+                    "attribute": "value",
+                    "oldValue": "\"The list of base URLs leading to the Confluence instance. They are used to convert wrongly entered absoulte URL into wiki links.\"",
+                    "newValue": "\"The list of base URLs leading to the Confluence instance. They are used to convert wrongly entered absoulte URLs into wiki links. The first URL in the list will be used to compute page URLs used in the conversion report if the the 'Store Confluence details' property is used\"",
+                    "annotationType": "org.xwiki.properties.annotation.PropertyDescription",
+                    "elementKind": "annotation",
+                    "justification": "Not a breakage"
+                  }
+                ]
+              }
+            }
+          ]]></analysisConfiguration>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
