@@ -7,7 +7,7 @@ Various tools to manipulate Atlassian Confluence datas (wiki importer, syntax pa
 * [Issue Tracker](http://jira.xwiki.org/browse/CONFLUENCE)
 * Communication: [Mailing List](http://dev.xwiki.org/xwiki/bin/view/Community/MailingLists), [IRC](http://dev.xwiki.org/xwiki/bin/view/Community/IRC)
 * [Development Practices](http://dev.xwiki.org)
-* Minimal XWiki version supported: XWiki 8.4
+* Minimal XWiki version supported: XWiki 9.2
 * License: LGPL 2.1
 * Translations: N/A
 * Sonar Dashboard: N/A
