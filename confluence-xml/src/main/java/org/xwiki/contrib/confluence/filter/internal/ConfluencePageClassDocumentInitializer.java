@@ -31,7 +31,7 @@ import com.xpn.xwiki.doc.AbstractMandatoryClassInitializer;
 import com.xpn.xwiki.objects.classes.BaseClass;
 
 /**
- * Update XWiki.XWikiUsers document with all required informations.
+ * Update Confluence.Code.ConfluencePageClass document with all required information.
  *
  * @version $Id$
  * @since 9.13
@@ -58,7 +58,7 @@ public class ConfluencePageClassDocumentInitializer extends AbstractMandatoryCla
     @Override
     protected void createClass(BaseClass xclass)
     {
-        xclass.addNumberField("id", "Id", 30, "Long");
+        xclass.addNumberField("id", "Id", 30, "long");
         xclass.addTextField("url", "URL", 30);
         xclass.addTextField("space", "Space", 30);
     }

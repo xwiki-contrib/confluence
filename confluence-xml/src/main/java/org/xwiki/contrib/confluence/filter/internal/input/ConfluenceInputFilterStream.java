@@ -761,10 +761,6 @@ public class ConfluenceInputFilterStream
         pageReportParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, "Confluence.Code.ConfluencePageClass");
         proxyFilter.beginWikiObject(objectName, pageReportParameters);
 
-        // Page report class
-        FilterEventParameters pageReportClassParameters = new FilterEventParameters();
-        proxyFilter.beginWikiClass(pageReportClassParameters);
-
         // <id> class property
         FilterEventParameters idClassPropertyParameters = new FilterEventParameters();
         proxyFilter.beginWikiClassProperty("id", "com.xpn.xwiki.objects.classes.NumberClass",
@@ -808,8 +804,6 @@ public class ConfluenceInputFilterStream
 
         proxyFilter.endWikiClassProperty("space", "com.xpn.xwiki.objects.classes.StringClass",
             spaceClassPropertyParameters);
-
-        proxyFilter.endWikiClass(pageReportClassParameters);
 
         StringBuilder pageURLBuilder = new StringBuilder();
         if (this.properties.getBaseURLs() != null) {
