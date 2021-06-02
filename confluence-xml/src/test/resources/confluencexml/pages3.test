@@ -1,0 +1,47 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.#------------------------------------------------------------------------------
+<wikiSpace name="SpaceA">
+  <wikiDocument name="Page0">
+    <wikiDocumentLocale>
+      <wikiDocumentRevision>
+        <p>
+          <parameters>
+            <entry>
+              <string>title</string>
+              <string>Page0</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObject name="SpaceA.Page0.WebHome">
+          <p>
+            <parameters>
+              <entry>
+                <string>number</string>
+                <int>0</int>
+              </entry>
+              <entry>
+                <string>class_reference</string>
+                <string>Confluence.Code.ConfluencePageClass</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="id">
+            <p>
+              <value t="java.lang.Long">0</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="url" value=""></wikiObjectProperty>
+          <wikiObjectProperty name="space" value="SpaceA"></wikiObjectProperty>
+        </wikiObject>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+<wikiSpace name="SpaceB"></wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=pages
+.configuration.includedPages=0
+.configuration.storeConfluenceDetailsEnabled=true
+.#------------------------------------------------------------------------------

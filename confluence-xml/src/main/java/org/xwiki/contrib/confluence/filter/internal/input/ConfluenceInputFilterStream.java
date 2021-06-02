@@ -761,50 +761,6 @@ public class ConfluenceInputFilterStream
         pageReportParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, "Confluence.Code.ConfluencePageClass");
         proxyFilter.beginWikiObject(objectName, pageReportParameters);
 
-        // <id> class property
-        FilterEventParameters idClassPropertyParameters = new FilterEventParameters();
-        proxyFilter.beginWikiClassProperty("id", "com.xpn.xwiki.objects.classes.NumberClass",
-            idClassPropertyParameters);
-
-        // property fields
-        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
-        proxyFilter.onWikiClassPropertyField("name", "id", new FilterEventParameters());
-        proxyFilter.onWikiClassPropertyField("prettyName", "Id", new FilterEventParameters());
-        proxyFilter.onWikiClassPropertyField("numberType", "long", new FilterEventParameters());
-        proxyFilter.onWikiClassPropertyField("size", "30", new FilterEventParameters());
-
-        proxyFilter.endWikiClassProperty("id", "com.xpn.xwiki.objects.classes.StringClass", idClassPropertyParameters);
-
-        // <url> class property
-        FilterEventParameters urlClassPropertyParameters = new FilterEventParameters();
-        proxyFilter.beginWikiClassProperty("url", "com.xpn.xwiki.objects.classes.StringClass",
-            urlClassPropertyParameters);
-
-        // property fields
-        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
-        proxyFilter.onWikiClassPropertyField("name", "url", new FilterEventParameters());
-        proxyFilter.onWikiClassPropertyField("prettyName", "URL", new FilterEventParameters());
-        proxyFilter.onWikiClassPropertyField("size", "30", new FilterEventParameters());
-        proxyFilter.onWikiClassPropertyField("picker", "0", new FilterEventParameters());
-
-        proxyFilter.endWikiClassProperty("url", "com.xpn.xwiki.objects.classes.StringClass",
-            urlClassPropertyParameters);
-
-        // <space> class property
-        FilterEventParameters spaceClassPropertyParameters = new FilterEventParameters();
-        proxyFilter.beginWikiClassProperty("space", "com.xpn.xwiki.objects.classes.StringClass",
-            spaceClassPropertyParameters);
-
-        // property fields
-        proxyFilter.onWikiClassPropertyField("disabled", "0", new FilterEventParameters());
-        proxyFilter.onWikiClassPropertyField("name", "space", new FilterEventParameters());
-        proxyFilter.onWikiClassPropertyField("prettyName", "Space", new FilterEventParameters());
-        proxyFilter.onWikiClassPropertyField("size", "30", new FilterEventParameters());
-        proxyFilter.onWikiClassPropertyField("picker", "0", new FilterEventParameters());
-
-        proxyFilter.endWikiClassProperty("space", "com.xpn.xwiki.objects.classes.StringClass",
-            spaceClassPropertyParameters);
-
         StringBuilder pageURLBuilder = new StringBuilder();
         if (this.properties.getBaseURLs() != null) {
             pageURLBuilder.append(this.properties.getBaseURLs().get(0).toString());
@@ -815,7 +771,6 @@ public class ConfluenceInputFilterStream
             }
         }
 
-        // <tags> object property
         proxyFilter.onWikiObjectProperty("id", pageId, new FilterEventParameters());
         proxyFilter.onWikiObjectProperty("url", pageURLBuilder.toString(), new FilterEventParameters());
         proxyFilter.onWikiObjectProperty("space", spaceKey, new FilterEventParameters());

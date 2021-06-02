@@ -25,6 +25,7 @@ import java.util.Date;
 import org.junit.runner.RunWith;
 import org.xwiki.environment.Environment;
 import org.xwiki.filter.test.integration.FilterTestSuite;
+import org.xwiki.observation.EventListener;
 import org.xwiki.test.annotation.AllComponents;
 import org.xwiki.test.mockito.MockitoComponentManager;
 
@@ -45,6 +46,8 @@ public class IntegrationTests
     public void initialized(MockitoComponentManager componentManager) throws Exception
     {
         Environment environment = componentManager.registerMockComponent(Environment.class);
+        // Unregister this component which is not needed for testing.
+        componentManager.unregisterComponent(EventListener.class, "default");
 
         File tmpDir = new File("target/test-" + new Date().getTime()).getAbsoluteFile();
         tmpDir.mkdirs();
