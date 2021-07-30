@@ -1031,8 +1031,11 @@ public class ConfluenceInputFilterStream
         // get parent name from reference
         String parentName = "";
         try {
-            parentName = this.confluencePackage.getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT)
-                .getName();
+            EntityReference parentReference =
+                this.confluencePackage.getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT);
+            if (parentReference != null) {
+                parentName = parentReference.getName();
+            }
         } catch (Exception e) {
             if (this.properties.isVerbose()) {
                 this.logger.warn("Failed to parse parent", e);
