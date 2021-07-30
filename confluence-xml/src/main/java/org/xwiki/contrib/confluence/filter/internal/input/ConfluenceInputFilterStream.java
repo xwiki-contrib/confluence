@@ -1247,7 +1247,7 @@ public class ConfluenceInputFilterStream
                 .getName();
         } catch (Exception e) {
             if (this.properties.isVerbose()) {
-                this.logger.warn("Failed to parse parent");
+                this.logger.warn("Failed to parse parent", e);
             }
         }
 
@@ -1258,7 +1258,7 @@ public class ConfluenceInputFilterStream
                     .getSpaceName(Long.valueOf(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_SPACE)));
             } catch (NumberFormatException | ConfigurationException e) {
                 if (this.properties.isVerbose()) {
-                    this.logger.warn("Failed to parse space");
+                    this.logger.warn("Failed to parse space", e);
                 }
             }
         }
