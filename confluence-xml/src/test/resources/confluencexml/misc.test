@@ -73,25 +73,6 @@
               </entry>
             </parameters>
           </p>
-          <wikiClass>
-            <wikiClassProperty name="tags" type="com.xpn.xwiki.objects.classes.StaticListClass">
-              <wikiClassPropertyField name="cache" value="0"></wikiClassPropertyField>
-              <wikiClassPropertyField name="disabled" value="0"></wikiClassPropertyField>
-              <wikiClassPropertyField name="displayType" value="input"></wikiClassPropertyField>
-              <wikiClassPropertyField name="freeText" value="forbidden"></wikiClassPropertyField>
-              <wikiClassPropertyField name="largeStorage" value="0"></wikiClassPropertyField>
-              <wikiClassPropertyField name="multiSelect" value="1"></wikiClassPropertyField>
-              <wikiClassPropertyField name="name" value="tags"></wikiClassPropertyField>
-              <wikiClassPropertyField name="number" value="1"></wikiClassPropertyField>
-              <wikiClassPropertyField name="prettyName" value="Tags"></wikiClassPropertyField>
-              <wikiClassPropertyField name="relationalStorage" value="1"></wikiClassPropertyField>
-              <wikiClassPropertyField name="separator" value="|"></wikiClassPropertyField>
-              <wikiClassPropertyField name="separators" value="|,"></wikiClassPropertyField>
-              <wikiClassPropertyField name="size" value="30"></wikiClassPropertyField>
-              <wikiClassPropertyField name="unmodifiable" value="0"></wikiClassPropertyField>
-              <wikiClassPropertyField name="values"></wikiClassPropertyField>
-            </wikiClassProperty>
-          </wikiClass>
           <wikiObjectProperty name="tags" value="favourite"></wikiObjectProperty>
         </wikiObject>
       </wikiDocumentRevision>

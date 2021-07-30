@@ -96,6 +96,28 @@
             </entry>
           </parameters>
         </p>
+        <wikiObject name="TestSpace.TestContent.WebHome">
+          <p>
+            <parameters>
+              <entry>
+                <string>number</string>
+                <long>0</long>
+              </entry>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.XWikiComments</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="author" value="XWiki.OtherUser"></wikiObjectProperty>
+          <wikiObjectProperty name="comment" value="Comment"></wikiObjectProperty>
+          <wikiObjectProperty name="date">
+            <p>
+              <value t="java.util.Date">2013-10-14 15:37:34.250 UTC</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="replyto"></wikiObjectProperty>
+        </wikiObject>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>

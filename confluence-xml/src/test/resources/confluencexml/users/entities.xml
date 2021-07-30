@@ -57,6 +57,11 @@
         <id name="id">0</id>
       </element>
     </collection>
+    <collection name="comments" class="java.util.Collection">
+      <element class="Comment" package="com.atlassian.confluence.pages">
+        <id name="id">40</id>
+      </element>
+    </collection>
   </object>
 
   <object class="BodyContent" package="com.atlassian.confluence.core">
@@ -78,4 +83,33 @@
     <property name="creatorName"><![CDATA[UserName]]></property>
   </object>
 
+  <object class="Comment" package="com.atlassian.confluence.pages">
+    <id name="id">40</id>
+    <property name="owner" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">10</id>
+    </property>
+    <property name="title" />
+    <collection name="bodyContents" class="java.util.Collection">
+      <element class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">41</id>
+      </element>
+    </collection>
+    <property name="version">1</property>
+    <property name="creatorName"><![CDATA[UserName]]></property>
+    <property name="creationDate">2013-10-14 15:37:34.250</property>
+    <property name="lastModifierName"><![CDATA[UserName]]></property>
+    <property name="lastModificationDate">2013-10-14 15:37:34.250</property>
+    <property name="versionComment"><![CDATA[]]>
+    </property>
+    <property name="contentStatus"><![CDATA[current]]></property>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">41</id>
+    <property name="body"><![CDATA[<p>Comment</p>]]></property>
+    <property name="content" class="Comment" package="com.atlassian.confluence.pages">
+      <id name="id">40</id>
+    </property>
+    <property name="bodyType">2</property>
+  </object>
 </hibernate-generic>
