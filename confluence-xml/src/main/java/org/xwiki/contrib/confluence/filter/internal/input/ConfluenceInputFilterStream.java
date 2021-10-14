@@ -719,7 +719,7 @@ public class ConfluenceInputFilterStream
 
         // Comments
         Map<Long, PropertiesConfiguration> pageComments = new LinkedHashMap<>();
-        Map<Long, Long> commentIndeces = new LinkedHashMap<>();
+        Map<Long, Integer> commentIndeces = new LinkedHashMap<>();
         int commentIndex = 0;
         for (Object commentIdStringObject : pageProperties.getList(ConfluenceXMLPackage.KEY_PAGE_COMMENTS)) {
             long commentId = Long.parseLong((String) commentIdStringObject);
@@ -731,7 +731,7 @@ public class ConfluenceInputFilterStream
             }
 
             pageComments.put(commentId, commentProperties);
-            commentIndeces.put(commentId, Long.valueOf(commentIndex));
+            commentIndeces.put(commentId, commentIndex);
             commentIndex++;
         }
 
@@ -964,7 +964,7 @@ public class ConfluenceInputFilterStream
     }
 
     private void readPageComment(PropertiesConfiguration pageProperties, ConfluenceFilter proxyFilter, Long commentId,
-        Map<Long, PropertiesConfiguration> pageComments, Map<Long, Long> commentIndeces) throws FilterException
+        Map<Long, PropertiesConfiguration> pageComments, Map<Long, Integer> commentIndeces) throws FilterException
     {
         String objectName = getObjectName(pageProperties);
         FilterEventParameters commentParameters = new FilterEventParameters();
@@ -1012,7 +1012,7 @@ public class ConfluenceInputFilterStream
         }
 
         // parent (replyto)
-        Long parentIndex = null;
+        Integer parentIndex = null;
         if (commentProperties.containsKey("parent")) {
             Long parentId = commentProperties.getLong("parent");
             parentIndex = commentIndeces.get(parentId);

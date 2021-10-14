@@ -357,7 +357,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
             <parameters>
               <entry>
                 <string>number</string>
-                <long>0</long>
+                <int>0</int>
               </entry>
               <entry>
                 <string>class_reference</string>
@@ -556,7 +556,7 @@ Link to page 1 [[here&gt;&gt;doc:SPACE1.Page 1]]</string>
             <parameters>
               <entry>
                 <string>number</string>
-                <long>0</long>
+                <int>0</int>
               </entry>
               <entry>
                 <string>class_reference</string>
@@ -18942,7 +18942,7 @@ nzbO2eCi2LGbxjwtYZ5oo2rqiv8NRyb5/wA5VyXC08mOZwAAAABJRU5ErkJggg==</content>
             <parameters>
               <entry>
                 <string>number</string>
-                <long>0</long>
+                <int>0</int>
               </entry>
               <entry>
                 <string>class_reference</string>
@@ -25682,7 +25682,7 @@ cyAvPg0KPC9HbG9iYWxTZXR0aW5ncz4=</content>
             <parameters>
               <entry>
                 <string>number</string>
-                <long>0</long>
+                <int>0</int>
               </entry>
               <entry>
                 <string>class_reference</string>
@@ -25704,7 +25704,7 @@ cyAvPg0KPC9HbG9iYWxTZXR0aW5ncz4=</content>
             <parameters>
               <entry>
                 <string>number</string>
-                <long>1</long>
+                <int>1</int>
               </entry>
               <entry>
                 <string>class_reference</string>
@@ -25721,7 +25721,7 @@ cyAvPg0KPC9HbG9iYWxTZXR0aW5ncz4=</content>
           </wikiObjectProperty>
           <wikiObjectProperty name="replyto">
             <p>
-              <value t="java.lang.Long">0</value>
+              <value t="java.lang.Integer">0</value>
             </p>
           </wikiObjectProperty>
         </wikiObject>
@@ -25730,7 +25730,7 @@ cyAvPg0KPC9HbG9iYWxTZXR0aW5ncz4=</content>
             <parameters>
               <entry>
                 <string>number</string>
-                <long>2</long>
+                <int>2</int>
               </entry>
               <entry>
                 <string>class_reference</string>
@@ -25850,7 +25850,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
             <parameters>
               <entry>
                 <string>number</string>
-                <long>0</long>
+                <int>0</int>
               </entry>
               <entry>
                 <string>class_reference</string>

@@ -103,7 +103,7 @@
             <parameters>
               <entry>
                 <string>number</string>
-                <long>0</long>
+                <int>0</int>
               </entry>
               <entry>
                 <string>class_reference</string>
