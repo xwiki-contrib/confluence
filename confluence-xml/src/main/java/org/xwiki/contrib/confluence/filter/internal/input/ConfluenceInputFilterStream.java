@@ -851,7 +851,7 @@ public class ConfluenceInputFilterStream
 
         String attachmentName = this.confluencePackage.getAttachmentName(attachmentProperties);
 
-        long attachmentSize;
+        long attachmentSize = 0;
         String mediaType = null;
         if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTPROPERTIES)) {
             PropertiesConfiguration attachmentContentProperties =
@@ -863,7 +863,9 @@ public class ConfluenceInputFilterStream
                     attachmentContentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENT_MEDIA_TYPE);
             }
         } else {
-            attachmentSize = attachmentProperties.getLong(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENT_SIZE);
+            if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENT_SIZE)) {
+                attachmentSize = attachmentProperties.getLong(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENT_SIZE);
+            }
             if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTTYPE)) {
                 mediaType = attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTTYPE);
             }
