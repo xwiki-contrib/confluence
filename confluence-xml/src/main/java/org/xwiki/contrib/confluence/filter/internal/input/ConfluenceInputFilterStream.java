@@ -851,21 +851,20 @@ public class ConfluenceInputFilterStream
 
         String attachmentName = this.confluencePackage.getAttachmentName(attachmentProperties);
 
-        long attachmentSize = 0;
+        long attachmentSize;
         String mediaType = null;
         if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTPROPERTIES)) {
             PropertiesConfiguration attachmentContentProperties =
                 getContentProperties(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTPROPERTIES);
 
-            attachmentSize = attachmentContentProperties.getLong(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENT_FILESIZE);
+            attachmentSize =
+                attachmentContentProperties.getLong(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENT_FILESIZE, -1);
             if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTTYPE)) {
                 mediaType =
                     attachmentContentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENT_MEDIA_TYPE);
             }
         } else {
-            if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENT_SIZE)) {
-                attachmentSize = attachmentProperties.getLong(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENT_SIZE);
-            }
+            attachmentSize = attachmentProperties.getLong(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENT_SIZE, -1);
             if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTTYPE)) {
                 mediaType = attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTTYPE);
             }
@@ -926,14 +925,9 @@ public class ConfluenceInputFilterStream
 
         // WikiAttachment
 
-        try {
-            FileInputStream fis = new FileInputStream(contentFile);
-
-            try {
-                proxyFilter.onWikiAttachment(attachmentName, fis, attachmentSize, attachmentParameters);
-            } finally {
-                fis.close();
-            }
+        try (FileInputStream fis = new FileInputStream(contentFile)) {
+            proxyFilter.onWikiAttachment(attachmentName, fis,
+                attachmentSize != -1 ? attachmentSize : contentFile.length(), attachmentParameters);
         } catch (Exception e) {
             throw new FilterException("Failed to read attachment", e);
         }
