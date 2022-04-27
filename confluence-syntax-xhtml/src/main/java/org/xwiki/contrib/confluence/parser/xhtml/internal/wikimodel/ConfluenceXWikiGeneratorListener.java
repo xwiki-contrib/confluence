@@ -19,13 +19,15 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import java.io.StringReader;
 import java.util.Collections;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler.ConfluenceAttachment;
-import org.xwiki.rendering.internal.parser.wikimodel.WikiModelParserUtils;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XHTMLXWikiGeneratorListener;
+import org.xwiki.rendering.listener.InlineFilterListener;
 import org.xwiki.rendering.listener.Listener;
+import org.xwiki.rendering.listener.WrappingListener;
 import org.xwiki.rendering.listener.reference.AttachmentResourceReference;
 import org.xwiki.rendering.listener.reference.DocumentResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceReference;
@@ -51,13 +53,13 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
     // TODO: Should probably introduce a component implemented on confluence-xml module side but based on actual model
     // API this time to be safe at least in this use case
 
-    private static final String[] REPLACE_DOCUMENT_PREVIOUS = new String[] { "\\", "." };
+    private static final String[] REPLACE_DOCUMENT_PREVIOUS = new String[] {"\\", "."};
 
-    private static final String[] REPLACE_DOCUMENT_NEXT = new String[] { "\\\\", "\\." };
+    private static final String[] REPLACE_DOCUMENT_NEXT = new String[] {"\\\\", "\\."};
 
-    private static final String[] REPLACE_SPACE_PREVIOUS = new String[] { "\\", ".", ":" };
+    private static final String[] REPLACE_SPACE_PREVIOUS = new String[] {"\\", ".", ":"};
 
-    private static final String[] REPLACE_SPACE_NEXT = new String[] { "\\\\", "\\.", "\\:" };
+    private static final String[] REPLACE_SPACE_NEXT = new String[] {"\\\\", "\\.", "\\:"};
 
     private StreamParser plainParser;
 
@@ -175,17 +177,24 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
                 // links, we need to call the XWiki events and use an inline parser to parse the syntax in the label.
                 getListener().beginLink(resourceReference, false, Collections.<String, String>emptyMap());
                 if (reference.getLabel() != null) {
-                    try {
-                        WikiModelParserUtils parserUtils = new WikiModelParserUtils();
-                        parserUtils.parseInline(this.plainParser, reference.getLabel(), getListener(), false);
-                    } catch (ParseException e) {
-                        // TODO supposedly impossible with plain test parser
-                    }
+                    parsePlainInline(reference.getLabel(), getListener());
                 }
                 getListener().endLink(resourceReference, false, Collections.<String, String>emptyMap());
             }
         } else {
             super.onReference(reference);
+        }
+    }
+
+    public void parsePlainInline(String content, Listener listener)
+    {
+        WrappingListener inlineFilterListener = new InlineFilterListener();
+        inlineFilterListener.setWrappedListener(listener);
+
+        try {
+            this.plainParser.parse(new StringReader(content), inlineFilterListener);
+        } catch (ParseException e) {
+            // TODO supposedly impossible with plain test parser
         }
     }
 
