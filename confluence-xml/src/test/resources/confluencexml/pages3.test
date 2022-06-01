@@ -31,14 +31,14 @@
               <value t="java.lang.Long">0</value>
             </p>
           </wikiObjectProperty>
-          <wikiObjectProperty name="url" value=""></wikiObjectProperty>
-          <wikiObjectProperty name="space" value="SpaceA"></wikiObjectProperty>
+          <wikiObjectProperty name="url" value=""/>
+          <wikiObjectProperty name="space" value="SpaceA"/>
         </wikiObject>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
 </wikiSpace>
-<wikiSpace name="SpaceB"></wikiSpace>
+<wikiSpace name="SpaceB"/>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=pages

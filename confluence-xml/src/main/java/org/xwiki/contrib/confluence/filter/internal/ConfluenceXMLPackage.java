@@ -50,8 +50,7 @@ import javax.xml.stream.XMLStreamReader;
 
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.CloseShieldInputStream;
 import org.apache.commons.lang3.StringUtils;
@@ -351,28 +350,19 @@ public class ConfluenceXMLPackage
         }
     }
 
-    private PropertiesConfiguration newProperties()
-    {
-        PropertiesConfiguration properties = new PropertiesConfiguration();
-
-        properties.setDelimiterParsingDisabled(true);
-
-        return properties;
-    }
-
-    public Date getDate(PropertiesConfiguration properties, String key) throws ParseException
+    public Date getDate(ConfluenceProperties properties, String key) throws ParseException
     {
         String str = properties.getString(key);
 
         return str != null ? DATE_FORMAT.parse(str) : null;
     }
 
-    public List<Long> getLongList(PropertiesConfiguration properties, String key)
+    public List<Long> getLongList(ConfluenceProperties properties, String key)
     {
         return getLongList(properties, key, null);
     }
 
-    public List<Long> getLongList(PropertiesConfiguration properties, String key, List<Long> def)
+    public List<Long> getLongList(ConfluenceProperties properties, String key, List<Long> def)
     {
         List<Object> list = properties.getList(key, null);
 
@@ -396,7 +386,7 @@ public class ConfluenceXMLPackage
         return integerList;
     }
 
-    public PropertiesConfiguration getContentProperties(PropertiesConfiguration properties, String key)
+    public ConfluenceProperties getContentProperties(ConfluenceProperties properties, String key)
         throws ConfigurationException
     {
         List<Long> elements = getLongList(properties, key);
@@ -405,9 +395,9 @@ public class ConfluenceXMLPackage
             return null;
         }
 
-        PropertiesConfiguration contentProperties = new PropertiesConfiguration();
+        ConfluenceProperties contentProperties = new ConfluenceProperties();
         for (Long element : elements) {
-            PropertiesConfiguration contentProperty = getObjectProperties(element);
+            ConfluenceProperties contentProperty = getObjectProperties(element);
             if (contentProperty != null) {
                 String name = contentProperty.getString("name");
 
@@ -431,12 +421,12 @@ public class ConfluenceXMLPackage
 
     }
 
-    public EntityReference getReferenceFromId(PropertiesConfiguration currentProperties, String key)
+    public EntityReference getReferenceFromId(ConfluenceProperties currentProperties, String key)
         throws ConfigurationException, FilterException
     {
         Long pageId = currentProperties.getLong(key, null);
         if (pageId != null) {
-            PropertiesConfiguration pageProperties = getPageProperties(pageId, true);
+            ConfluenceProperties pageProperties = getPageProperties(pageId, true);
 
             long spaceId = pageProperties.getLong(KEY_PAGE_SPACE);
             String pageTitle = pageProperties.getString(KEY_PAGE_TITLE);
@@ -464,12 +454,12 @@ public class ConfluenceXMLPackage
 
     public String getSpaceName(long spaceId) throws ConfigurationException
     {
-        PropertiesConfiguration spaceProperties = getSpaceProperties(spaceId);
+        ConfluenceProperties spaceProperties = getSpaceProperties(spaceId);
 
         return spaceProperties.getString(KEY_SPACE_NAME);
     }
 
-    public static String getSpaceName(PropertiesConfiguration spaceProperties)
+    public static String getSpaceName(ConfluenceProperties spaceProperties)
     {
         String key = spaceProperties.getString(KEY_SPACE_NAME);
 
@@ -478,12 +468,12 @@ public class ConfluenceXMLPackage
 
     public String getSpaceKey(long spaceId) throws ConfigurationException
     {
-        PropertiesConfiguration spaceProperties = getSpaceProperties(spaceId);
+        ConfluenceProperties spaceProperties = getSpaceProperties(spaceId);
 
         return spaceProperties.getString(KEY_SPACE_KEY);
     }
 
-    public static String getSpaceKey(PropertiesConfiguration spaceProperties)
+    public static String getSpaceKey(ConfluenceProperties spaceProperties)
     {
         String key = spaceProperties.getString(KEY_SPACE_KEY);
 
@@ -550,7 +540,7 @@ public class ConfluenceXMLPackage
             } else if (type.equals("Attachment")) {
                 readAttachmentObject(xmlReader);
             } else {
-                PropertiesConfiguration properties = newProperties();
+                ConfluenceProperties properties = new ConfluenceProperties();
 
                 long id = readObjectProperties(xmlReader, properties);
 
@@ -560,7 +550,7 @@ public class ConfluenceXMLPackage
         }
     }
 
-    private long readObjectProperties(XMLStreamReader xmlReader, PropertiesConfiguration properties)
+    private long readObjectProperties(XMLStreamReader xmlReader, ConfluenceProperties properties)
         throws XMLStreamException, FilterException
     {
         long id = -1;
@@ -590,7 +580,7 @@ public class ConfluenceXMLPackage
         return id;
     }
 
-    private String readImplObjectProperties(XMLStreamReader xmlReader, PropertiesConfiguration properties)
+    private String readImplObjectProperties(XMLStreamReader xmlReader, ConfluenceProperties properties)
         throws XMLStreamException, FilterException
     {
         String id = "-1";
@@ -623,7 +613,7 @@ public class ConfluenceXMLPackage
     private void readAttachmentObject(XMLStreamReader xmlReader)
         throws XMLStreamException, FilterException, ConfigurationException
     {
-        PropertiesConfiguration properties = newProperties();
+        ConfluenceProperties properties = new ConfluenceProperties();
 
         long attachmentId = readObjectProperties(xmlReader, properties);
 
@@ -635,7 +625,7 @@ public class ConfluenceXMLPackage
         }
     }
 
-    private Long getAttachmentPageId(PropertiesConfiguration properties)
+    private Long getAttachmentPageId(ConfluenceProperties properties)
     {
         Long pageId = getLong(properties, KEY_ATTACHMENT_CONTAINERCONTENT, null);
 
@@ -649,7 +639,7 @@ public class ConfluenceXMLPackage
     private void readSpaceObject(XMLStreamReader xmlReader)
         throws XMLStreamException, FilterException, ConfigurationException
     {
-        PropertiesConfiguration properties = newProperties();
+        ConfluenceProperties properties = new ConfluenceProperties();
 
         long spaceId = readObjectProperties(xmlReader, properties);
 
@@ -673,7 +663,7 @@ public class ConfluenceXMLPackage
     private void readSpaceDescriptionObject(XMLStreamReader xmlReader)
         throws XMLStreamException, FilterException, ConfigurationException
     {
-        PropertiesConfiguration properties = newProperties();
+        ConfluenceProperties properties = new ConfluenceProperties();
 
         long descriptionId = readObjectProperties(xmlReader, properties);
 
@@ -686,7 +676,7 @@ public class ConfluenceXMLPackage
     private void readSpacePermissionObject(XMLStreamReader xmlReader)
         throws XMLStreamException, ConfigurationException, FilterException
     {
-        PropertiesConfiguration properties = newProperties();
+        ConfluenceProperties properties = new ConfluenceProperties();
 
         long permissionId = readObjectProperties(xmlReader, properties);
 
@@ -700,8 +690,8 @@ public class ConfluenceXMLPackage
     private void readBodyContentObject(XMLStreamReader xmlReader)
         throws XMLStreamException, ConfigurationException, FilterException
     {
-        PropertiesConfiguration properties = newProperties();
-        properties.setDelimiterParsingDisabled(true);
+        ConfluenceProperties properties = new ConfluenceProperties();
+        properties.disableListDelimiter();
 
         readObjectProperties(xmlReader, properties);
 
@@ -714,7 +704,7 @@ public class ConfluenceXMLPackage
     private void readPageObject(XMLStreamReader xmlReader)
         throws XMLStreamException, ConfigurationException, FilterException
     {
-        PropertiesConfiguration properties = newProperties();
+        ConfluenceProperties properties = new ConfluenceProperties();
 
         long pageId = readObjectProperties(xmlReader, properties);
 
@@ -737,7 +727,7 @@ public class ConfluenceXMLPackage
     private void readInternalUserObject(XMLStreamReader xmlReader)
         throws XMLStreamException, ConfigurationException, FilterException
     {
-        PropertiesConfiguration properties = newProperties();
+        ConfluenceProperties properties = new ConfluenceProperties();
 
         long pageId = readObjectProperties(xmlReader, properties);
 
@@ -748,7 +738,7 @@ public class ConfluenceXMLPackage
     private void readUserImplObject(XMLStreamReader xmlReader)
         throws XMLStreamException, ConfigurationException, FilterException
     {
-        PropertiesConfiguration properties = newProperties();
+        ConfluenceProperties properties = new ConfluenceProperties();
 
         String pageId = readImplObjectProperties(xmlReader, properties);
 
@@ -759,7 +749,7 @@ public class ConfluenceXMLPackage
     private void readGroupObject(XMLStreamReader xmlReader)
         throws XMLStreamException, ConfigurationException, FilterException
     {
-        PropertiesConfiguration properties = newProperties();
+        ConfluenceProperties properties = new ConfluenceProperties();
 
         long pageId = readObjectProperties(xmlReader, properties);
 
@@ -770,14 +760,14 @@ public class ConfluenceXMLPackage
     private void readMembershipObject(XMLStreamReader xmlReader)
         throws ConfigurationException, XMLStreamException, FilterException
     {
-        PropertiesConfiguration properties = newProperties();
+        ConfluenceProperties properties = new ConfluenceProperties();
 
         readObjectProperties(xmlReader, properties);
 
         Long parentGroup = properties.getLong("parentGroup", null);
 
         if (parentGroup != null) {
-            PropertiesConfiguration groupProperties = getGroupProperties(parentGroup);
+            ConfluenceProperties groupProperties = getGroupProperties(parentGroup);
 
             Long userMember = properties.getLong("userMember", null);
 
@@ -1027,19 +1017,19 @@ public class ConfluenceXMLPackage
         return new File(folder, "properties.properties");
     }
 
-    public PropertiesConfiguration getPageProperties(long pageId, boolean create) throws ConfigurationException
+    public ConfluenceProperties getPageProperties(long pageId, boolean create) throws ConfigurationException
     {
         File file = getPagePropertiesFile(pageId);
 
-        return create || file != null && file.exists() ? new PropertiesConfiguration(file) : null;
+        return create || file.exists() ? ConfluenceProperties.create(file) : null;
     }
 
-    public PropertiesConfiguration getObjectProperties(Long objectId) throws ConfigurationException
+    public ConfluenceProperties getObjectProperties(Long objectId) throws ConfigurationException
     {
         return getObjectProperties("objects", objectId);
     }
 
-    public PropertiesConfiguration getObjectProperties(String folder, Long objectId) throws ConfigurationException
+    public ConfluenceProperties getObjectProperties(String folder, Long objectId) throws ConfigurationException
     {
         long id;
         if (objectId != null) {
@@ -1050,10 +1040,10 @@ public class ConfluenceXMLPackage
 
         File file = getObjectPropertiesFile(folder, id);
 
-        return new PropertiesConfiguration(file);
+        return ConfluenceProperties.create(file);
     }
 
-    public PropertiesConfiguration getObjectProperties(String folder, String objectId, boolean create)
+    public ConfluenceProperties getObjectProperties(String folder, String objectId, boolean create)
         throws ConfigurationException
     {
         if (objectId == null) {
@@ -1062,22 +1052,22 @@ public class ConfluenceXMLPackage
 
         File file = getObjectPropertiesFile(folder, objectId);
 
-        return create || file.exists() ? new PropertiesConfiguration(file) : null;
+        return create || file.exists() ? ConfluenceProperties.create(file) : null;
     }
 
-    public PropertiesConfiguration getInternalUserProperties(Long userId) throws ConfigurationException
+    public ConfluenceProperties getInternalUserProperties(Long userId) throws ConfigurationException
     {
         return getObjectProperties(FOLDER_INTERNALUSER, userId);
     }
 
-    public PropertiesConfiguration getUserImplProperties(String userKey) throws ConfigurationException
+    public ConfluenceProperties getUserImplProperties(String userKey) throws ConfigurationException
     {
         return getObjectProperties(FOLDER_USERIMPL, userKey, false);
     }
 
-    public PropertiesConfiguration getUserProperties(String userIdOrKey) throws ConfigurationException
+    public ConfluenceProperties getUserProperties(String userIdOrKey) throws ConfigurationException
     {
-        PropertiesConfiguration properties = getUserImplProperties(userIdOrKey);
+        ConfluenceProperties properties = getUserImplProperties(userIdOrKey);
 
         if (properties == null && NumberUtils.isCreatable(userIdOrKey)) {
             properties = getInternalUserProperties(NumberUtils.createLong(userIdOrKey));
@@ -1153,90 +1143,90 @@ public class ConfluenceXMLPackage
         return groups;
     }
 
-    public PropertiesConfiguration getGroupProperties(Long groupId) throws ConfigurationException
+    public ConfluenceProperties getGroupProperties(Long groupId) throws ConfigurationException
     {
         return getObjectProperties(FOLDER_GROUP, groupId);
     }
 
-    public PropertiesConfiguration getAttachmentProperties(long pageId, long attachmentId) throws ConfigurationException
+    public ConfluenceProperties getAttachmentProperties(long pageId, long attachmentId) throws ConfigurationException
     {
         File file = getAttachmentPropertiesFile(pageId, attachmentId);
 
-        return new PropertiesConfiguration(file);
+        return ConfluenceProperties.create(file);
     }
 
-    public PropertiesConfiguration getSpacePermissionProperties(long spaceId, long permissionId)
+    public ConfluenceProperties getSpacePermissionProperties(long spaceId, long permissionId)
         throws ConfigurationException
     {
         File file = getSpacePermissionPropertiesFile(spaceId, permissionId);
 
-        return new PropertiesConfiguration(file);
+        return ConfluenceProperties.create(file);
     }
 
-    public PropertiesConfiguration getSpaceProperties(long spaceId) throws ConfigurationException
+    public ConfluenceProperties getSpaceProperties(long spaceId) throws ConfigurationException
     {
         File file = getSpacePropertiesFile(spaceId);
 
-        return new PropertiesConfiguration(file);
+        return ConfluenceProperties.create(file);
     }
 
-    private void savePageProperties(PropertiesConfiguration properties, long pageId) throws ConfigurationException
+    private void savePageProperties(ConfluenceProperties properties, long pageId) throws ConfigurationException
     {
-        PropertiesConfiguration fileProperties = getPageProperties(pageId, true);
+        ConfluenceProperties fileProperties = getPageProperties(pageId, true);
 
         fileProperties.copy(properties);
 
         fileProperties.save();
     }
 
-    private void saveObjectProperties(PropertiesConfiguration properties, long objectId) throws ConfigurationException
+    private void saveObjectProperties(ConfluenceProperties properties, long objectId) throws ConfigurationException
     {
         saveObjectProperties("objects", properties, objectId);
     }
 
-    private void saveObjectProperties(String folder, PropertiesConfiguration properties, long objectId)
+    private void saveObjectProperties(String folder, ConfluenceProperties properties, long objectId)
         throws ConfigurationException
     {
-        PropertiesConfiguration fileProperties = getObjectProperties(folder, objectId);
+        ConfluenceProperties fileProperties = getObjectProperties(folder, objectId);
 
         fileProperties.copy(properties);
 
         fileProperties.save();
     }
 
-    private void saveObjectProperties(String folder, PropertiesConfiguration properties, String objectId)
+    private void saveObjectProperties(String folder, ConfluenceProperties properties, String objectId)
         throws ConfigurationException
     {
-        PropertiesConfiguration fileProperties = getObjectProperties(folder, objectId, true);
+        ConfluenceProperties fileProperties = getObjectProperties(folder, objectId, true);
 
         fileProperties.copy(properties);
 
         fileProperties.save();
     }
 
-    private void saveAttachmentProperties(PropertiesConfiguration properties, long pageId, long attachmentId)
+    private void saveAttachmentProperties(ConfluenceProperties properties, long pageId, long attachmentId)
         throws ConfigurationException
     {
-        PropertiesConfiguration fileProperties = getAttachmentProperties(pageId, attachmentId);
+        ConfluenceProperties fileProperties = getAttachmentProperties(pageId, attachmentId);
 
         fileProperties.copy(properties);
 
         fileProperties.save();
     }
 
-    private void saveSpacePermissionsProperties(PropertiesConfiguration properties, long spaceId, long permissionId)
+    private void saveSpacePermissionsProperties(ConfluenceProperties properties, long spaceId, long permissionId)
         throws ConfigurationException
     {
-        PropertiesConfiguration fileProperties = getSpacePermissionProperties(spaceId, permissionId);
+        ConfluenceProperties fileProperties = getSpacePermissionProperties(spaceId, permissionId);
 
         fileProperties.copy(properties);
 
         fileProperties.save();
     }
 
-    private void saveSpaceProperties(PropertiesConfiguration properties, long spaceId) throws ConfigurationException
+    private void saveSpaceProperties(ConfluenceProperties properties, long spaceId) throws ConfigurationException
     {
-        PropertiesConfiguration fileProperties = getSpaceProperties(spaceId);
+        ConfluenceProperties fileProperties = getSpaceProperties(spaceId);
 
         fileProperties.copy(properties);
 
@@ -1287,7 +1277,7 @@ public class ConfluenceXMLPackage
         }
     }
 
-    public String getAttachmentName(PropertiesConfiguration attachmentProperties)
+    public String getAttachmentName(ConfluenceProperties attachmentProperties)
     {
         String attachmentName = attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_TITLE, null);
         if (attachmentName == null) {
@@ -1297,7 +1287,7 @@ public class ConfluenceXMLPackage
         return attachmentName;
     }
 
-    public Long getAttachementVersion(PropertiesConfiguration attachmentProperties)
+    public Long getAttachementVersion(ConfluenceProperties attachmentProperties)
     {
         Long version = getLong(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_VERSION, null);
         if (version == null) {
@@ -1307,7 +1297,7 @@ public class ConfluenceXMLPackage
         return version;
     }
 
-    public long getAttachmentOriginalVersionId(PropertiesConfiguration attachmentProperties, long def)
+    public long getAttachmentOriginalVersionId(ConfluenceProperties attachmentProperties, long def)
     {
         Long originalRevisionId =
             getLong(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_ORIGINALVERSIONID, null);
@@ -1315,13 +1305,13 @@ public class ConfluenceXMLPackage
             : getLong(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_ORIGINALVERSION, def);
     }
 
-    public String getTagName(PropertiesConfiguration labellingProperties)
+    public String getTagName(ConfluenceProperties labellingProperties)
     {
         Long tagId = labellingProperties.getLong(ConfluenceXMLPackage.KEY_LABELLING_LABEL, null);
         String tagName = tagId.toString();
 
         try {
-            PropertiesConfiguration labelProperties = getObjectProperties(tagId);
+            ConfluenceProperties labelProperties = getObjectProperties(tagId);
             tagName = labelProperties.getString(ConfluenceXMLPackage.KEY_LABEL_NAME);
         } catch (NumberFormatException | ConfigurationException e) {
             LOGGER.warn("Unable to get tag name, using id instead.");
@@ -1330,12 +1320,12 @@ public class ConfluenceXMLPackage
         return tagName;
     }
 
-    public String getCommentText(PropertiesConfiguration commentProperties, Long commentId)
+    public String getCommentText(ConfluenceProperties commentProperties, Long commentId)
     {
         String commentText = commentId.toString();
         try {
             // BodyContent objects are stored in page properties under the content id
-            PropertiesConfiguration commentContent = getPageProperties(commentId, false);
+            ConfluenceProperties commentContent = getPageProperties(commentId, false);
             commentText = commentContent.getString("body");
         } catch (ConfigurationException e) {
             LOGGER.warn("Unable to get comment text, using id instead.");
@@ -1344,11 +1334,11 @@ public class ConfluenceXMLPackage
         return commentText;
     }
 
-    public Integer getCommentBodyType(PropertiesConfiguration commentProperties, Long commentId)
+    public Integer getCommentBodyType(ConfluenceProperties commentProperties, Long commentId)
     {
         Integer bodyType = -1;
         try {
-            PropertiesConfiguration commentContent = getPageProperties(commentId, false);
+            ConfluenceProperties commentContent = getPageProperties(commentId, false);
             bodyType = commentContent.getInt("bodyType");
         } catch (ConfigurationException e) {
             LOGGER.warn("Unable to get comment body type.");
@@ -1357,7 +1347,7 @@ public class ConfluenceXMLPackage
         return bodyType;
     }
 
-    public Long getLong(PropertiesConfiguration properties, String key, Long def)
+    public Long getLong(ConfluenceProperties properties, String key, Long def)
     {
         try {
             return properties.getLong(key, def);

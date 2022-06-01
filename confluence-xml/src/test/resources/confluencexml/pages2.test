@@ -17,7 +17,7 @@
     </wikiDocumentLocale>
   </wikiDocument>
 </wikiSpace>
-<wikiSpace name="SpaceB"></wikiSpace>
+<wikiSpace name="SpaceB"/>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=pages

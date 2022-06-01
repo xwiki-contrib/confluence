@@ -35,8 +35,7 @@ import java.util.regex.Pattern;
 import javax.inject.Inject;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
@@ -44,6 +43,7 @@ import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
+import org.xwiki.contrib.confluence.filter.internal.ConfluenceProperties;
 import org.xwiki.contrib.confluence.filter.internal.ConfluenceXMLPackage;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
@@ -202,7 +202,7 @@ public class ConfluenceConverterListener extends WrappingListener
     {
         // Document name
 
-        PropertiesConfiguration pageProperties = this.confluencePackage.getPageProperties(Long.valueOf(id), false);
+        ConfluenceProperties pageProperties = this.confluencePackage.getPageProperties(Long.valueOf(id), false);
 
         if (pageProperties != null) {
             String documentName;

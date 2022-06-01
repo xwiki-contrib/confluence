@@ -34,17 +34,7 @@
       </metadata>
     </metadata>
   </p>
-  <macro id="macro" content="beginDocument [[syntax]=[Confluence 1.0]]
-beginParagraph
-onWord [rich]
-onSpace
-beginFormat [BOLD]
-onWord [text]
-endFormat [BOLD]
-onSpace
-onWord [here]
-endParagraph
-endDocument [[syntax]=[Confluence 1.0]]">
+  <macro id="macro">
     <p>
       <parameters>
         <entry>
@@ -56,13 +46,28 @@ endDocument [[syntax]=[Confluence 1.0]]">
           <string>value</string>
         </entry>
       </parameters>
+      <content>beginDocument [[syntax]=[Confluence 1.0]]
+beginParagraph
+onWord [rich]
+onSpace
+beginFormat [BOLD]
+onWord [text]
+endFormat [BOLD]
+onSpace
+onWord [here]
+endParagraph
+endDocument [[syntax]=[Confluence 1.0]]</content>
     </p>
   </macro>
-  <macro id="macro" content="beginDocument [[syntax]=[Confluence 1.0]]
+  <macro id="macro">
+    <p>
+      <content>beginDocument [[syntax]=[Confluence 1.0]]
 beginParagraph
 onWord [simple]
 onSpace
 onWord [content]
 endParagraph
-endDocument [[syntax]=[Confluence 1.0]]"></macro>
+endDocument [[syntax]=[Confluence 1.0]]</content>
+    </p>
+  </macro>
 </document>

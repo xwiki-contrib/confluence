@@ -47,5 +47,5 @@
       </parameters>
     </p>
   </macro>
-  <macro id="macro" content="simple content"></macro>
+  <macro id="macro" content="simple content"/>
 </document>

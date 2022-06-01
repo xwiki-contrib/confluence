@@ -184,19 +184,19 @@ h6. Navigate space
 ==== Tasks Completed or Worked On: ====
 
 |= JIRA Link |= Status |= Summary |= Remarks |=
- | [[TICKET-1&gt;&gt;http://www.aspose.com]] | Open |  test ticket 1 |  | 
+ | [[TICKET-1>>http://www.aspose.com]] | Open |  test ticket 1 |  | 
 
 ==== Developer: dev2 ====
 
 ==== Tasks Completed or Worked On: ====
 
 |= JIRA Link |= Status |= Summary |= Remarks |=
- | [[TICKET-2&gt;&gt;http://www.aspose.com]] | Open |  test ticket 2 |  | 
+ | [[TICKET-2>>http://www.aspose.com]] | Open |  test ticket 2 |  | 
 
 ==== Next Week Tasks: ====
 
 |= JIRA Link |= Status |= Summary |= Remarks |=
- | [[TICKET-3&gt;&gt;http://www.aspose.com]] | Open |  test ticket 3 |  </string>
+ | [[TICKET-3>>http://www.aspose.com]] | Open |  test ticket 3 |  </string>
             </entry>
             <entry>
               <string>syntax</string>

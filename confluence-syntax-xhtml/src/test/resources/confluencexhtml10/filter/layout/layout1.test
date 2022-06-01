@@ -31,7 +31,9 @@
       </metadata>
     </metadata>
   </p>
-  <macro id="layout" content="beginDocument [[syntax]=[Confluence 1.0]]
+  <macro id="layout">
+    <p>
+      <content>beginDocument [[syntax]=[Confluence 1.0]]
 onMacroStandalone [layout-section] [ac:type=two_equal|ac:breakout-mode=default] [beginDocument [[syntax]=[Confluence 1.0]]
 onMacroStandalone [layout-cell] [] [beginDocument [[syntax]=[Confluence 1.0]]
 beginParagraph
@@ -50,5 +52,7 @@ beginParagraph
 endParagraph
 endDocument [[syntax]=[Confluence 1.0]]]
 endDocument [[syntax]=[Confluence 1.0]]]
-endDocument [[syntax]=[Confluence 1.0]]"></macro>
+endDocument [[syntax]=[Confluence 1.0]]</content>
+    </p>
+  </macro>
 </document>

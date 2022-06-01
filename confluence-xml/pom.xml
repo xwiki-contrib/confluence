@@ -56,8 +56,8 @@
       <artifactId>commons-compress</artifactId>
     </dependency>
     <dependency>
-      <groupId>commons-configuration</groupId>
-      <artifactId>commons-configuration</artifactId>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-configuration2</artifactId>
     </dependency>
     <dependency>
       <groupId>org.xwiki.commons</groupId>
@@ -76,7 +76,7 @@
     </dependency>
     <dependency>
       <groupId>org.xwiki.platform</groupId>
-      <artifactId>xwiki-platform-model</artifactId>
+      <artifactId>xwiki-platform-model-api</artifactId>
       <version>${platform.version}</version>
     </dependency>
     <dependency>

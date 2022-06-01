@@ -111,14 +111,14 @@
               </entry>
             </parameters>
           </p>
-          <wikiObjectProperty name="author" value="xwiki:XWiki.UserName"></wikiObjectProperty>
-          <wikiObjectProperty name="comment" value="Comment"></wikiObjectProperty>
+          <wikiObjectProperty name="author" value="xwiki:XWiki.UserName"/>
+          <wikiObjectProperty name="comment" value="Comment"/>
           <wikiObjectProperty name="date">
             <p>
               <value t="java.util.Date">2013-10-14 15:37:34.250 UTC</value>
             </p>
           </wikiObjectProperty>
-          <wikiObjectProperty name="replyto"></wikiObjectProperty>
+          <wikiObjectProperty name="replyto"/>
         </wikiObject>
       </wikiDocumentRevision>
     </wikiDocumentLocale>

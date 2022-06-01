@@ -19,7 +19,7 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
@@ -44,6 +44,5 @@ public abstract class AbstractConfluenceTagHandler extends TagHandler
         String escapedContent = context.getContent();
         // Not really sure why but TagContext#getContent() escape the content
         return StringEscapeUtils.unescapeXml(escapedContent);
-
     }
 }

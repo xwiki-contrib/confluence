@@ -2,7 +2,7 @@
 .expect|filter+xml
 .# Content conversions
 .#------------------------------------------------------------------------------
-<wikiSpace name="TestSpace"></wikiSpace>
+<wikiSpace name="TestSpace"/>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=emptypage
