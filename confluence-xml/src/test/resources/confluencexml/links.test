@@ -1,6 +1,6 @@
 .#------------------------------------------------------------------------------
 .expect|filter+xml
-.# Content conversions
+.# Various links and reference related tests
 .#------------------------------------------------------------------------------
 <wikiSpace name="TestSpace">
   <wikiDocument name="TestContent">
@@ -22,7 +22,9 @@
 
 [[(% param="value" %)link4>>icon:icon||shape="rect"]](%%) [[(% param="value" %)link4>>icon:icon||shape="rect"]]
 
-[[(% param="value" %)link5>>doc:Other Space.Other Page||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link5>>doc:Other Space.Other Page||shape="rect"]]</string>
+[[(% param="value" %)link5>>doc:Other Space.Other Page||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link5>>doc:Other Space.Other Page||shape="rect"]]
+
+[[link6>>doc:validatedspace.validatedpage||shape="rect"]]</string>
             </entry>
             <entry>
               <string>syntax</string>
@@ -49,6 +51,22 @@
             <entry>
               <string>title</string>
               <string>Other Page</string>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+<wikiSpace name="validatedspace">
+  <wikiDocument name="validatedpage">
+    <wikiDocumentLocale>
+      <wikiDocumentRevision>
+        <p>
+          <parameters>
+            <entry>
+              <string>title</string>
+              <string>pagetovalidate</string>
             </entry>
           </parameters>
         </p>

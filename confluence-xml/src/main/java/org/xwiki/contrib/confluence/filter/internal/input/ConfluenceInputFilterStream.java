@@ -119,6 +119,9 @@ public class ConfluenceInputFilterStream
     @Inject
     private ConfluenceInputContext context;
 
+    @Inject
+    private XWikiConverter converter;
+
     private ConfluenceXMLPackage confluencePackage;
 
     @Override
@@ -180,6 +183,12 @@ public class ConfluenceInputFilterStream
             }
 
             String spaceKey = ConfluenceXMLPackage.getSpaceKey(spaceProperties);
+
+            // Apply the standard entity name validator
+            if (this.properties.isConvertToXWiki() && this.properties.isEntityNameValidation()) {
+                spaceKey = this.converter.convert(spaceKey);
+            }
+
             FilterEventParameters spaceParameters = new FilterEventParameters();
 
             // > WikiSpace
@@ -404,6 +413,11 @@ public class ConfluenceInputFilterStream
         FilterEventParameters documentParameters = new FilterEventParameters();
         if (this.properties.getDefaultLocale() != null) {
             documentParameters.put(WikiDocumentFilter.PARAMETER_LOCALE, this.properties.getDefaultLocale());
+        }
+
+        // Apply the standard entity name validator
+        if (this.properties.isConvertToXWiki() && this.properties.isEntityNameValidation()) {
+            documentName = this.converter.convert(documentName);
         }
 
         // > WikiDocument

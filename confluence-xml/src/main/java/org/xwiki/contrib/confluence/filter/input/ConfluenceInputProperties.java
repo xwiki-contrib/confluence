@@ -63,6 +63,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private boolean convertToXWiki = true;
 
     /**
+     * @see #isEntityNameValidation()
+     */
+    private boolean entityNameValidation = true;
+
+    /**
      * @see #getSpacePageName()
      */
     private String spacePageName = "WebHome";
@@ -176,7 +181,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     }
 
     /**
-     * @return if true, convert various Confluence standards to XWiki standard (the name of the admin group, etc.)
+     * @return true to convert various Confluence standards to XWiki standard (the name of the admin group, etc.)
      */
     @PropertyName("XWiki conversion")
     @PropertyDescription("Convert various Confluence standards to XWiki standard (the name of the admin group, etc.)")
@@ -192,6 +197,26 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setConvertToXWiki(boolean convertToXWiki)
     {
         this.convertToXWiki = convertToXWiki;
+    }
+
+    /**
+     * @return true if the standard XWiki entity name validation should be applied
+     * @since 9.15
+     */
+    @PropertyName("Page name validation")
+    @PropertyDescription("Apply the standard page name validator (if XWiki conversion is enabled)")
+    public boolean isEntityNameValidation()
+    {
+        return isConvertToXWiki() && this.entityNameValidation;
+    }
+
+    /**
+     * @param entityNameValidation true if the standard XWiki entity name validation should be applied
+     * @since 9.15
+     */
+    public void setEntityNameValidation(boolean entityNameValidation)
+    {
+        this.entityNameValidation = entityNameValidation;
     }
 
     /**

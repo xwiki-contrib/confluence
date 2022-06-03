@@ -44,6 +44,9 @@
           <a href="https://baseurl5.com/spaces/Other+Space/pages/11/Other+Page?param=value#anchor"><span param="value">link5</span></a>
           <a href="https://baseurl5.com/spaces/Other+Space/pages/11/Other+Page"><span param="value">link5</span></a>
         </p>
+        <p>
+          <a href="https://baseurl1.com/spaces/spacetovalidate/pages/12/pagetovalidate">link6</a>
+        </p>
       ]]>
     </property>
     <property name="content" class="Page"
@@ -66,6 +69,26 @@
       <id name="id">101</id>
     </property>
     <property name="title"><![CDATA[Other Page]]></property>
+  </object>
+
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">102</id>
+    <property name="name"><![CDATA[spacetovalidate]]></property>
+    <property name="key"><![CDATA[spacetovalidate]]></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">12</id>
+    <property name="space" class="Space"
+      package="com.atlassian.confluence.spaces">
+      <id name="id">102</id>
+    </property>
+    <property name="title"><![CDATA[pagetovalidate]]></property>
+    <collection name="bodyContents" class="java.util.Collection">
+      <element class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">0</id>
+      </element>
+    </collection>
   </object>
 
 </hibernate-generic>

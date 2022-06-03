@@ -19,16 +19,20 @@
  */
 package org.xwiki.contrib.confluence.filter;
 
-import java.io.File;
-import java.util.Date;
-
 import org.junit.runner.RunWith;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.xwiki.environment.Environment;
 import org.xwiki.filter.test.integration.FilterTestSuite;
+import org.xwiki.model.validation.EntityNameValidation;
+import org.xwiki.model.validation.EntityNameValidationManager;
 import org.xwiki.observation.ObservationManager;
+import org.xwiki.test.XWikiTempDirUtil;
 import org.xwiki.test.annotation.AllComponents;
 import org.xwiki.test.mockito.MockitoComponentManager;
 
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
@@ -39,18 +43,31 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(FilterTestSuite.class)
 @AllComponents
-@FilterTestSuite.Scope(value = "confluencexml"/* , pattern = "content.test" */)
+@FilterTestSuite.Scope(value = "confluencexml"/* , pattern = "links.test"*/)
 public class IntegrationTests
 {
     @FilterTestSuite.Initialized
     public void initialized(MockitoComponentManager componentManager) throws Exception
     {
         Environment environment = componentManager.registerMockComponent(Environment.class);
+        when(environment.getTemporaryDirectory()).thenReturn(XWikiTempDirUtil.createTemporaryDirectory());
+
+        EntityNameValidationManager validationManager =
+            componentManager.registerMockComponent(EntityNameValidationManager.class);
+        EntityNameValidation validation = mock(EntityNameValidation.class);
+        when(validationManager.getEntityReferenceNameStrategy()).thenReturn(validation);
+        when(validation.transform(anyString())).thenAnswer(new Answer<String>()
+        {
+            @Override
+            public String answer(InvocationOnMock invocation) throws Throwable
+            {
+                return (String) invocation.getArgument(0);
+            }
+        });
+        when(validation.transform("spacetovalidate")).thenReturn("validatedspace");
+        when(validation.transform("pagetovalidate")).thenReturn("validatedpage");
+
         // Unregister all listeners since they are not needed for testing
         componentManager.registerMockComponent(ObservationManager.class);
-
-        File tmpDir = new File("target/test-" + new Date().getTime()).getAbsoluteFile();
-        tmpDir.mkdirs();
-        when(environment.getTemporaryDirectory()).thenReturn(tmpDir);
     }
 }
