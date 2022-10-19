@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroTagHandler.ConfluenceMacro;
 import org.xwiki.rendering.wikimodel.WikiParameter;
 import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
@@ -51,8 +52,12 @@ public class URLTagHandler extends TagHandler implements ConfluenceTagHandler
         Object container = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
 
         WikiParameter urlParameter = context.getParams().getParameter("ri:value");
-        if (urlParameter != null && container instanceof URLContainer) {
-            ((URLContainer) container).setURL(urlParameter.getValue());
+        if (urlParameter != null) {
+            if (container instanceof URLContainer) {
+                ((URLContainer) container).setURL(urlParameter.getValue());
+            } else if (container instanceof ConfluenceMacro) {
+                context.getParentContext().appendContent(urlParameter.getValue());
+            }
         }
     }
 }

@@ -1,0 +1,15 @@
+.#-----------------------------------------------------
+.input|confluence+xhtml/1.0
+.# CONFLUENCE-105: URL macro parameter value is not imported in XWiki.
+.#-----------------------------------------------------
+<ac:structured-macro ac:name="video" ac:schema-version="1">
+  <ac:parameter ac:name="uri">
+    <ri:url ri:value="http://host"/>
+  </ac:parameter>
+</ac:structured-macro>
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+onMacroStandalone [video] [uri=http://host]
+endDocument
