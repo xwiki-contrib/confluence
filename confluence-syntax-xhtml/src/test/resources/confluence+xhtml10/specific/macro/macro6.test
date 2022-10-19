@@ -11,5 +11,5 @@
 .expect|event/1.0
 .#-----------------------------------------------------
 beginDocument
-onMacroStandalone [video] [url=http://host|uri=]
+onMacroStandalone [video] [uri=http://host]
 endDocument

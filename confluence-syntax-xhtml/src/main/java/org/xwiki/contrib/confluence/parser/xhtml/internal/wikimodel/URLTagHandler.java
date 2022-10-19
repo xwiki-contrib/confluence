@@ -52,11 +52,12 @@ public class URLTagHandler extends TagHandler implements ConfluenceTagHandler
         Object container = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
 
         WikiParameter urlParameter = context.getParams().getParameter("ri:value");
-        if (urlParameter != null && container instanceof URLContainer) {
-            ((URLContainer) container).setURL(urlParameter.getValue());
-        } else if (urlParameter != null && container instanceof ConfluenceMacro) {
-            ConfluenceMacro macro = (ConfluenceMacro) container;
-            macro.parameters = macro.parameters.setParameter("url", urlParameter.getValue());
+        if (urlParameter != null) {
+            if (container instanceof URLContainer) {
+                ((URLContainer) container).setURL(urlParameter.getValue());
+            } else if (container instanceof ConfluenceMacro) {
+                context.getParentContext().appendContent(urlParameter.getValue());
+            }
         }
     }
 }
