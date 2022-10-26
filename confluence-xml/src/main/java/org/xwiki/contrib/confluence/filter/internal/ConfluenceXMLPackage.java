@@ -1352,7 +1352,7 @@ public class ConfluenceXMLPackage
         Integer bodyType = -1;
         try {
             ConfluenceProperties commentContent = getPageProperties(commentId, false);
-            bodyType = commentContent.getInt("bodyType");
+            bodyType = commentContent.getInt("bodyType", -1);
         } catch (ConfigurationException e) {
             LOGGER.warn("Unable to get comment body type.");
         }
