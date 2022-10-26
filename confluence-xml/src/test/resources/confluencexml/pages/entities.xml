@@ -2,6 +2,8 @@
 <hibernate-generic>
   <object class="Space" package="com.atlassian.confluence.spaces">
     <id name="id">100</id>
+    <property name="position"/>
+    <property name="text">text</property>
     <property name="name"><![CDATA[SpaceA]]></property>
     <property name="key"><![CDATA[SpaceA]]></property>
   </object>

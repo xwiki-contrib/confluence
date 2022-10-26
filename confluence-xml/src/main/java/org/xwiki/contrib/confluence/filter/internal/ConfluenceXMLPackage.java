@@ -795,8 +795,13 @@ public class ConfluenceXMLPackage
     {
         String propertyClass = xmlReader.getAttributeValue(null, "class");
 
+        Object result = null;
         if (propertyClass == null) {
-            return fixCData(xmlReader.getElementText());
+            try {
+                return fixCData(xmlReader.getElementText());
+            } catch (XMLStreamException e) {
+                // Probably an empty element
+            }
         } else if (propertyClass.equals("java.util.List") || propertyClass.equals("java.util.Collection")) {
             return readListProperty(xmlReader);
         } else if (propertyClass.equals("java.util.Set")) {
@@ -810,11 +815,11 @@ public class ConfluenceXMLPackage
             return readObjectReference(xmlReader);
         } else if (propertyClass.equals("ConfluenceUserImpl")) {
             return readImplObjectReference(xmlReader);
-        } else {
-            StAXUtils.skipElement(xmlReader);
         }
 
-        return null;
+        StAXUtils.skipElement(xmlReader);
+
+        return result;
     }
 
     /**
