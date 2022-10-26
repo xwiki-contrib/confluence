@@ -52,12 +52,12 @@
       <id name="id">100</id>
     </property>
     <property name="title"><![CDATA[TestContent]]></property>
-    <collection name="bodyContents" class="java.util.Collection">
+    <collection name="bodyContents">
       <element class="BodyContent" package="com.atlassian.confluence.core">
         <id name="id">0</id>
       </element>
     </collection>
-    <collection name="comments" class="java.util.Collection">
+    <collection name="comments">
       <element class="Comment" package="com.atlassian.confluence.pages">
         <id name="id">40</id>
       </element>
@@ -89,7 +89,7 @@
       <id name="id">10</id>
     </property>
     <property name="title" />
-    <collection name="bodyContents" class="java.util.Collection">
+    <collection name="bodyContents">
       <element class="BodyContent" package="com.atlassian.confluence.core">
         <id name="id">41</id>
       </element>

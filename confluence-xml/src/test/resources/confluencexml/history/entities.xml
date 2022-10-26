@@ -19,7 +19,7 @@
     <property name="lastModifierName"><![CDATA[408010]]></property>
     <property name="lastModificationDate">2016-04-14 17:59:20.000</property>
     <property name="versionComment"><![CDATA[comment 3]]></property>
-    <collection name="historicalVersions" class="java.util.Collection">
+    <collection name="historicalVersions">
       <element class="Page" package="com.atlassian.confluence.pages">
         <id name="id">123241619</id>
       </element>
@@ -32,7 +32,7 @@
   <object class="Page" package="com.atlassian.confluence.pages">
     <id name="id">123241619</id>
     <property name="title"><![CDATA[Pricing Reports]]></property>
-    <collection name="bodyContents" class="java.util.Collection">
+    <collection name="bodyContents">
       <element class="BodyContent" package="com.atlassian.confluence.core">
         <id name="id">123306980</id>
       </element>
@@ -61,7 +61,7 @@
   <object class="Page" package="com.atlassian.confluence.pages">
     <id name="id">123797568</id>
     <property name="title"><![CDATA[Pricing Reports]]></property>
-    <collection name="bodyContents" class="java.util.Collection">
+    <collection name="bodyContents">
       <element class="BodyContent" package="com.atlassian.confluence.core">
         <id name="id">123928635</id>
       </element>

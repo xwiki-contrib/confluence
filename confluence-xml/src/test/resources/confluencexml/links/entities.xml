@@ -13,7 +13,7 @@
       <id name="id">100</id>
     </property>
     <property name="title"><![CDATA[TestContent]]></property>
-    <collection name="bodyContents" class="java.util.Collection">
+    <collection name="bodyContents">
       <element class="BodyContent" package="com.atlassian.confluence.core">
         <id name="id">0</id>
       </element>
@@ -84,7 +84,7 @@
       <id name="id">102</id>
     </property>
     <property name="title"><![CDATA[pagetovalidate]]></property>
-    <collection name="bodyContents" class="java.util.Collection">
+    <collection name="bodyContents">
       <element class="BodyContent" package="com.atlassian.confluence.core">
         <id name="id">0</id>
       </element>

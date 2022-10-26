@@ -568,7 +568,11 @@ public class ConfluenceXMLPackage
                 } else {
                     StAXUtils.skipElement(xmlReader);
                 }
-            } else if (elementName.equals("property") || elementName.equals("collection")) {
+            } else if (elementName.equals("collection")) {
+                String propertyName = xmlReader.getAttributeValue(null, "name");
+
+                properties.setProperty(propertyName, readListProperty(xmlReader));
+            } else if (elementName.equals("property")) {
                 String propertyName = xmlReader.getAttributeValue(null, "name");
 
                 properties.setProperty(propertyName, readProperty(xmlReader));
@@ -598,7 +602,11 @@ public class ConfluenceXMLPackage
                 } else {
                     StAXUtils.skipElement(xmlReader);
                 }
-            } else if (elementName.equals("property") || elementName.equals("collection")) {
+            } else if (elementName.equals("collection")) {
+                String propertyName = xmlReader.getAttributeValue(null, "name");
+
+                properties.setProperty(propertyName, readListProperty(xmlReader));
+            } else if (elementName.equals("property")) {
                 String propertyName = xmlReader.getAttributeValue(null, "name");
 
                 properties.setProperty(propertyName, readProperty(xmlReader));
