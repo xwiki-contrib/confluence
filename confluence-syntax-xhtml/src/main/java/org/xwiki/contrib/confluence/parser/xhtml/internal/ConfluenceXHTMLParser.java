@@ -22,6 +22,7 @@ package org.xwiki.contrib.confluence.parser.xhtml.internal;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
+import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +34,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.xml.sax.XMLReader;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentLookupException;
@@ -65,6 +67,7 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TimeTagHandl
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.URLTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.UserTagHandler;
 import org.xwiki.rendering.internal.parser.wikimodel.AbstractWikiModelParser;
+import org.xwiki.rendering.internal.parser.wikimodel.WikiModelStreamParser;
 import org.xwiki.rendering.internal.parser.wikimodel.XWikiGeneratorListener;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XWikiHeaderTagHandler;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XWikiReferenceTagHandler;
@@ -157,6 +160,25 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser implements In
         return this.xmlParser;
     }
 
+    private XWikiReferenceTagHandler createXWikiReferenceTagHandler() throws ParseException
+    {
+        // The second parameter in XWikiReferenceTagHandler(WikiModelStreamParser, PrintRendererFactory) have been
+        // removed at some point in XWiki so we need to check which constructor we have in the current instance
+
+        Constructor<XWikiReferenceTagHandler> constructor =
+            ConstructorUtils.getAccessibleConstructor(XWikiReferenceTagHandler.class, WikiModelStreamParser.class);
+
+        if (constructor != null) {
+            try {
+                return constructor.newInstance(this);
+            } catch (Exception e) {
+                throw new ParseException("Failed to crate a XWikiReferenceTagHandler", e);
+            }
+        }
+
+        return new XWikiReferenceTagHandler(this, this.xmlRenderer);
+    }
+
     @Override
     public IWikiParser createWikiModelParser() throws ParseException
     {
@@ -174,7 +196,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser implements In
         handlers.put("h4", handler);
         handlers.put("h5", handler);
         handlers.put("h6", handler);
-        handlers.put("a", new XWikiReferenceTagHandler(this, this.xmlRenderer));
+        handlers.put("a", createXWikiReferenceTagHandler());
 
         handlers.put("ac:macro", new MacroTagHandler());
         handlers.put("ac:structured-macro", new MacroTagHandler());
