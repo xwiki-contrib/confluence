@@ -37,6 +37,8 @@ import org.xml.sax.XMLReader;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
+import org.xwiki.component.phase.Initializable;
+import org.xwiki.component.phase.InitializationException;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceXHTMLInputProperties;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXHTMLWhitespaceXMLFilter;
@@ -89,20 +91,14 @@ import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 @Component
 @Named(ConfluenceXHTMLParser.SYNTAX_STRING)
 @Singleton
-public class ConfluenceXHTMLParser extends AbstractWikiModelParser
+public class ConfluenceXHTMLParser extends AbstractWikiModelParser implements Initializable
 {
     /**
      * The identifier of the syntax.
      */
     public static final String SYNTAX_STRING = ConfluenceXHTMLInputProperties.FILTER_STREAM_TYPE_STRING;
 
-    @Inject
-    @Named("xdom+xml/current")
-    private StreamParser xmlParser;
-
-    @Inject
-    @Named("xdom+xml/current")
-    private PrintRendererFactory xmlRenderer;
+    private static final String XMLXDOM = "xdom+xml/current";
 
     /**
      * @see #getLinkReferenceParser()
@@ -126,9 +122,28 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
     @Named("context")
     private Provider<ComponentManager> componentManagerProvider;
 
+    private StreamParser xmlParser;
+
+    private PrintRendererFactory xmlRenderer;
+
     private PrintRendererFactory macroContentRendererFactory;
 
     private WrappingListener converter;
+
+    @Override
+    public void initialize() throws InitializationException
+    {
+        ComponentManager componentManager = this.componentManagerProvider.get();
+
+        if (componentManager.hasComponent(StreamParser.class, XMLXDOM)) {
+            try {
+                this.xmlParser = componentManager.getInstance(StreamParser.class, XMLXDOM);
+                this.xmlRenderer = componentManager.getInstance(PrintRendererFactory.class, XMLXDOM);
+            } catch (ComponentLookupException e) {
+                throw new InitializationException("Failed lookup XDOM+XML parser", e);
+            }
+        }
+    }
 
     @Override
     public Syntax getSyntax()
