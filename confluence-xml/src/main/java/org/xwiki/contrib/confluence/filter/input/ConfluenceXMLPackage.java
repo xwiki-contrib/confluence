@@ -17,14 +17,14 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.confluence.filter.internal;
+package org.xwiki.contrib.confluence.filter.input;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
+import java.net.URI;
 import java.nio.file.Files;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -43,6 +43,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
+import javax.inject.Inject;
 import javax.xml.stream.FactoryConfigurationError;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -56,7 +57,9 @@ import org.apache.commons.io.input.CloseShieldInputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.xwiki.component.annotation.Component;
+import org.xwiki.component.annotation.InstantiationStrategy;
+import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
 import org.xwiki.environment.Environment;
 import org.xwiki.filter.FilterException;
 import org.xwiki.filter.input.FileInputSource;
@@ -70,57 +73,133 @@ import org.xwiki.xml.stax.StAXUtils;
 import com.google.common.base.Strings;
 
 /**
+ * Prepare a Confluence package to make it easier to import.
+ * 
  * @version $Id$
- * @since 9.0
+ * @since 9.16
  */
-public class ConfluenceXMLPackage
+@Component(roles = ConfluenceXMLPackage.class)
+@InstantiationStrategy(ComponentInstantiationStrategy.PER_LOOKUP)
+public class ConfluenceXMLPackage implements AutoCloseable
 {
+    /**
+     * The name of the main package file.
+     */
     public static final String FILE_ENTITIES = "entities.xml";
 
+    /**
+     * The name of the file containing informations about the instance.
+     */
     public static final String FILE_DESCRIPTOR = "exportDescriptor.properties";
 
+    /**
+     * The property key to access the space name.
+     */
     public static final String KEY_SPACE_NAME = "name";
 
+    /**
+     * The property key to access the space key.
+     */
     public static final String KEY_SPACE_KEY = "key";
 
+    /**
+     * The property key to access the space description.
+     */
     public static final String KEY_SPACE_DESCRIPTION = "description";
 
+    /**
+     * The property key to access the page home page.
+     */
     public static final String KEY_PAGE_HOMEPAGE = "homepage";
 
+    /**
+     * The property key to access the page parent.
+     */
     public static final String KEY_PAGE_PARENT = "parent";
 
+    /**
+     * The property key to access the page space.
+     */
     public static final String KEY_PAGE_SPACE = "space";
 
+    /**
+     * The property key to access the page title.
+     */
     public static final String KEY_PAGE_TITLE = "title";
 
+    /**
+     * The property key to access the page contents.
+     */
     public static final String KEY_PAGE_CONTENTS = "bodyContents";
 
+    /**
+     * The property key to access the page creation author name.
+     */
     public static final String KEY_PAGE_CREATION_AUTHOR = "creatorName";
 
+    /**
+     * The property key to access the page creation author key.
+     */
     public static final String KEY_PAGE_CREATION_AUTHOR_KEY = "creator";
 
+    /**
+     * The property key to access the page creation date.
+     */
     public static final String KEY_PAGE_CREATION_DATE = "creationDate";
 
+    /**
+     * The property key to access the page revision.
+     */
     public static final String KEY_PAGE_REVISION = "version";
 
+    /**
+     * The property key to access the page revision author key.
+     */
     public static final String KEY_PAGE_REVISION_AUTHOR_KEY = "lastModifier";
 
+    /**
+     * The property key to access the page revision author name.
+     */
     public static final String KEY_PAGE_REVISION_AUTHOR = "lastModifierName";
 
+    /**
+     * The property key to access the page revision date.
+     */
     public static final String KEY_PAGE_REVISION_DATE = "lastModificationDate";
 
+    /**
+     * The property key to access the page revision comment.
+     */
     public static final String KEY_PAGE_REVISION_COMMENT = "versionComment";
 
+    /**
+     * The property key to access the page revisions.
+     */
     public static final String KEY_PAGE_REVISIONS = "historicalVersions";
 
+    /**
+     * The property key to access the page content status.
+     */
     public static final String KEY_PAGE_CONTENT_STATUS = "contentStatus";
 
+    /**
+     * The property key to access the page body.
+     */
     public static final String KEY_PAGE_BODY = "body";
 
+    /**
+     * The property key to access the page body type.
+     */
     public static final String KEY_PAGE_BODY_TYPE = "bodyType";
 
+    /**
+     * The property key to access the page lebellings.
+     */
     public static final String KEY_PAGE_LABELLINGS = "labellings";
 
+    /**
+     * The property key to access the page comments.
+     */
     public static final String KEY_PAGE_COMMENTS = "comments";
 
     /**
@@ -130,6 +209,9 @@ public class ConfluenceXMLPackage
      */
     public static final String KEY_ATTACHMENT_NAME = "fileName";
 
+    /**
+     * The property key to access the attachment title.
+     */
     public static final String KEY_ATTACHMENT_TITLE = "title";
 
     /**
@@ -139,6 +221,9 @@ public class ConfluenceXMLPackage
      */
     public static final String KEY_ATTACHMENT_CONTENT = "content";
 
+    /**
+     * The property key to access the attachment content key.
+     */
     public static final String KEY_ATTACHMENT_CONTAINERCONTENT = "containerContent";
 
     /**
@@ -157,24 +242,54 @@ public class ConfluenceXMLPackage
      */
     public static final String KEY_ATTACHMENT_CONTENTTYPE = "contentType";
 
+    /**
+     * The property key to access the attachment content properties.
+     */
     public static final String KEY_ATTACHMENT_CONTENTPROPERTIES = "contentProperties";
 
+    /**
+     * The property key to access the attachment content status.
+     */
     public static final String KEY_ATTACHMENT_CONTENTSTATUS = "contentStatus";
 
+    /**
+     * The property key to access the attachment minor edit status.
+     */
     public static final String KEY_ATTACHMENT_CONTENT_MINOR_EDIT = "MINOR_EDIT";
 
+    /**
+     * The property key to access the attachment content size.
+     */
     public static final String KEY_ATTACHMENT_CONTENT_FILESIZE = "FILESIZE";
 
+    /**
+     * The property key to access the attachment content media type.
+     */
     public static final String KEY_ATTACHMENT_CONTENT_MEDIA_TYPE = "MEDIA_TYPE";
 
+    /**
+     * The property key to access the attachment creation author.
+     */
     public static final String KEY_ATTACHMENT_CREATION_AUTHOR = "creatorName";
 
+    /**
+     * The property key to access the attachment creation date.
+     */
     public static final String KEY_ATTACHMENT_CREATION_DATE = "creationDate";
 
+    /**
+     * The property key to access the attachment revision author.
+     */
     public static final String KEY_ATTACHMENT_REVISION_AUTHOR = "lastModifierName";
 
+    /**
+     * The property key to access the attachment revision date.
+     */
     public static final String KEY_ATTACHMENT_REVISION_DATE = "lastModificationDate";
 
+    /**
+     * The property key to access the attachment revision comment.
+     */
     public static final String KEY_ATTACHMENT_REVISION_COMMENT = "comment";
 
     /**
@@ -184,6 +299,9 @@ public class ConfluenceXMLPackage
      */
     public static final String KEY_ATTACHMENT_ATTACHMENTVERSION = "attachmentVersion";
 
+    /**
+     * The property key to access the attachment version.
+     */
     public static final String KEY_ATTACHMENT_VERSION = "version";
 
     /**
@@ -193,61 +311,124 @@ public class ConfluenceXMLPackage
      */
     public static final String KEY_ATTACHMENT_ORIGINALVERSION = "originalVersion";
 
+    /**
+     * The property key to access the attachment original version.
+     */
     public static final String KEY_ATTACHMENT_ORIGINALVERSIONID = "originalVersionId";
 
+    /**
+     * The property key to access the attachment DTO.
+     */
     public static final String KEY_ATTACHMENT_DTO = "imageDetailsDTO";
 
+    /**
+     * The property key to access the label name.
+     */
     public static final String KEY_LABEL_NAME = "name";
 
+    /**
+     * The property key to access the label id.
+     */
     public static final String KEY_LABELLING_LABEL = "label";
 
+    /**
+     * The property key to access the group name.
+     */
     public static final String KEY_GROUP_NAME = "name";
 
+    /**
+     * The property key to access the group active status.
+     */
     public static final String KEY_GROUP_ACTIVE = "active";
 
+    /**
+     * The property key to access the group local status.
+     */
     public static final String KEY_GROUP_LOCAL = "local";
 
+    /**
+     * The property key to access the group creation date.
+     */
     public static final String KEY_GROUP_CREATION_DATE = "createdDate";
 
+    /**
+     * The property key to access the group revision date.
+     */
     public static final String KEY_GROUP_REVISION_DATE = "updatedDate";
 
+    /**
+     * The property key to access the group description.
+     */
     public static final String KEY_GROUP_DESCRIPTION = "description";
 
+    /**
+     * The property key to access the group members.
+     */
     public static final String KEY_GROUP_MEMBERUSERS = "memberusers";
 
+    /**
+     * The property key to access the group members.
+     */
     public static final String KEY_GROUP_MEMBERGROUPS = "membergroups";
 
+    /**
+     * The property key to access the user name.
+     */
     public static final String KEY_USER_NAME = "name";
 
+    /**
+     * The property key to access the user active status.
+     */
     public static final String KEY_USER_ACTIVE = "active";
 
+    /**
+     * The property key to access the user creation date.
+     */
     public static final String KEY_USER_CREATION_DATE = "createdDate";
 
+    /**
+     * The property key to access the user revision date.
+     */
     public static final String KEY_USER_REVISION_DATE = "updatedDate";
 
+    /**
+     * The property key to access the user first name.
+     */
     public static final String KEY_USER_FIRSTNAME = "firstName";
 
+    /**
+     * The property key to access the user last name.
+     */
     public static final String KEY_USER_LASTNAME = "lastName";
 
+    /**
+     * The property key to access the user display name.
+     */
     public static final String KEY_USER_DISPLAYNAME = "displayName";
 
+    /**
+     * The property key to access the user email.
+     */
     public static final String KEY_USER_EMAIL = "emailAddress";
 
+    /**
+     * The property key to access the user password.
+     */
     public static final String KEY_USER_PASSWORD = "credential";
 
     /**
-     * 2012-03-07 17:16:48.158
+     * The date format in a Confluence package (2012-03-07 17:16:48.158).
      */
-    public static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
+    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
 
     /**
-     * pattern to find the end of "intentionally damaged" CDATA end sections. Confluence does this to nest CDATA
+     * Pattern to find the end of "intentionally damaged" CDATA end sections. Confluence does this to nest CDATA
      * sections inside CDATA sections. Interestingly it does not care if there is a &gt; after the ]].
      */
     private static final Pattern FIND_BROKEN_CDATA_PATTERN = Pattern.compile("]] ");
 
     /**
-     * replacement to repair the CDATA
+     * Replacement to repair the CDATA.
      */
     private static final String REPAIRED_CDATA_END = "]]";
 
@@ -259,9 +440,13 @@ public class ConfluenceXMLPackage
 
     private static final String FOLDER_GROUP = "groups";
 
-    protected static final Logger LOGGER = LoggerFactory.getLogger(ConfluenceXMLPackage.class);
+    private static final String PROPERTIES_FILENAME = "properties.properties";
 
-    private final Environment environment;
+    @Inject
+    private Environment environment;
+
+    @Inject
+    private Logger logger;
 
     private File directory;
 
@@ -280,16 +465,24 @@ public class ConfluenceXMLPackage
 
     private Map<String, Long> spacesByKey = new HashMap<>();
 
-    public ConfluenceXMLPackage(InputSource source, Environment environment) throws IOException, FilterException,
-        XMLStreamException, FactoryConfigurationError, ConfigurationException, URISyntaxException
+    /**
+     * @param source the source where to find the package to parse
+     * @throws IOException when failing to access the package content
+     * @throws FilterException when any error happen during the reading of the package
+     */
+    public void read(InputSource source) throws IOException, FilterException
     {
-        this.environment = environment;
-
         if (source instanceof FileInputSource) {
             fromFile(((FileInputSource) source).getFile());
         } else if (source instanceof URLInputSource
             && ((URLInputSource) source).getURL().getProtocol().equals("file")) {
-            fromFile(new File(((URLInputSource) source).getURL().toURI()));
+            URI uri;
+            try {
+                uri = ((URLInputSource) source).getURL().toURI();
+            } catch (Exception e) {
+                throw new FilterException("The passed file URL is invalid", e);
+            }
+            fromFile(new File(uri));
         } else {
             try {
                 if (source instanceof InputStreamInputSource) {
@@ -308,10 +501,14 @@ public class ConfluenceXMLPackage
 
         // Initialize
 
-        createTree();
+        try {
+            createTree();
+        } catch (Exception e) {
+            throw new FilterException("Failed to analyze the package index", e);
+        }
     }
 
-    private void fromFile(File file) throws XMLStreamException
+    private void fromFile(File file) throws FilterException
     {
         if (file.isDirectory()) {
             this.directory = file;
@@ -319,7 +516,7 @@ public class ConfluenceXMLPackage
             try (FileInputStream stream = new FileInputStream(file)) {
                 fromStream(stream);
             } catch (IOException e) {
-                throw new XMLStreamException(String.format("Failed to read Confluence package in file [%s]", file), e);
+                throw new FilterException(String.format("Failed to read Confluence package in file [%s]", file), e);
             }
         }
     }
@@ -350,18 +547,37 @@ public class ConfluenceXMLPackage
         }
     }
 
+    /**
+     * @param properties the properties from where to extract the date
+     * @param key the key associated with the date
+     * @return the date associated with the passed key in the passed properties or null
+     * @throws ParseException when failing to parse the date
+     */
     public Date getDate(ConfluenceProperties properties, String key) throws ParseException
     {
         String str = properties.getString(key);
 
-        return str != null ? DATE_FORMAT.parse(str) : null;
+        DateFormat format = new SimpleDateFormat(DATE_FORMAT);
+
+        return str != null ? format.parse(str) : null;
     }
 
+    /**
+     * @param properties the properties from where to extract the list
+     * @param key the key associated with the list
+     * @return the list associated with the passed key in the passed properties or null
+     */
     public List<Long> getLongList(ConfluenceProperties properties, String key)
     {
         return getLongList(properties, key, null);
     }
 
+    /**
+     * @param properties the properties from where to extract the list
+     * @param key the key associated with the list
+     * @param def the default value to return if no list is found
+     * @return the list associated with the passed key in the passed properties or def
+     */
     public List<Long> getLongList(ConfluenceProperties properties, String key, List<Long> def)
     {
         List<Object> list = properties.getList(key, null);
@@ -386,6 +602,12 @@ public class ConfluenceXMLPackage
         return integerList;
     }
 
+    /**
+     * @param properties the properties where to find the content identifier
+     * @param key the key to find the content identifiers
+     * @return the properties about the content
+     * @throws ConfigurationException when failing to create the properties
+     */
     public ConfluenceProperties getContentProperties(ConfluenceProperties properties, String key)
         throws ConfigurationException
     {
@@ -421,6 +643,13 @@ public class ConfluenceXMLPackage
 
     }
 
+    /**
+     * @param currentProperties the properties where to find the page identifier
+     * @param key the key to find the page identifier
+     * @return the reference of the page
+     * @throws ConfigurationException when failing to get page properties
+     * @throws FilterException when failing to create the reference
+     */
     public EntityReference getReferenceFromId(ConfluenceProperties currentProperties, String key)
         throws ConfigurationException, FilterException
     {
@@ -452,6 +681,11 @@ public class ConfluenceXMLPackage
         return null;
     }
 
+    /**
+     * @param spaceId the identifier of the space
+     * @return the value to use as name for the space
+     * @throws ConfigurationException when failing to create the properties
+     */
     public String getSpaceName(long spaceId) throws ConfigurationException
     {
         ConfluenceProperties spaceProperties = getSpaceProperties(spaceId);
@@ -459,6 +693,10 @@ public class ConfluenceXMLPackage
         return spaceProperties.getString(KEY_SPACE_NAME);
     }
 
+    /**
+     * @param spaceProperties the properties containing informations about the space
+     * @return the value to use as name for the space
+     */
     public static String getSpaceName(ConfluenceProperties spaceProperties)
     {
         String key = spaceProperties.getString(KEY_SPACE_NAME);
@@ -466,6 +704,11 @@ public class ConfluenceXMLPackage
         return key != null ? key : spaceProperties.getString(KEY_SPACE_KEY);
     }
 
+    /**
+     * @param spaceId the identifier of the space
+     * @return the value to use as key for the space
+     * @throws ConfigurationException when failing to create the properties
+     */
     public String getSpaceKey(long spaceId) throws ConfigurationException
     {
         ConfluenceProperties spaceProperties = getSpaceProperties(spaceId);
@@ -473,6 +716,10 @@ public class ConfluenceXMLPackage
         return spaceProperties.getString(KEY_SPACE_KEY);
     }
 
+    /**
+     * @param spaceProperties the properties containing informations about the space
+     * @return the value to use as key for the space
+     */
     public static String getSpaceKey(ConfluenceProperties spaceProperties)
     {
         String key = spaceProperties.getString(KEY_SPACE_KEY);
@@ -480,6 +727,9 @@ public class ConfluenceXMLPackage
         return key != null ? key : spaceProperties.getString(KEY_SPACE_NAME);
     }
 
+    /**
+     * @return a map of spaces with their pages
+     */
     public Map<Long, List<Long>> getPages()
     {
         return this.pages;
@@ -655,11 +905,7 @@ public class ConfluenceXMLPackage
         saveSpaceProperties(properties, spaceId);
 
         // Register space by id
-        List<Long> spacePages = this.pages.get(spaceId);
-        if (spacePages == null) {
-            spacePages = new LinkedList<>();
-            this.pages.put(spaceId, spacePages);
-        }
+        this.pages.computeIfAbsent(spaceId, k -> new LinkedList<Long>());
 
         // Register space by key
         String spaceKey = properties.getString("key");
@@ -723,11 +969,7 @@ public class ConfluenceXMLPackage
         Long originalVersion = (Long) properties.getProperty("originalVersion");
         if (originalVersion == null) {
             Long spaceId = properties.getLong("space", null);
-            List<Long> spacePages = this.pages.get(spaceId);
-            if (spacePages == null) {
-                spacePages = new LinkedList<>();
-                this.pages.put(spaceId, spacePages);
-            }
+            List<Long> spacePages = this.pages.computeIfAbsent(spaceId, k -> new LinkedList<>());
             spacePages.add(pageId);
         }
     }
@@ -951,23 +1193,27 @@ public class ConfluenceXMLPackage
     {
         File folder = getPageFolder(pageId);
 
-        return new File(folder, "properties.properties");
+        return new File(folder, PROPERTIES_FILENAME);
     }
 
     private File getObjectPropertiesFile(String folderName, long propertyId)
     {
         File folder = getObjectFolder(folderName, propertyId);
 
-        return new File(folder, "properties.properties");
+        return new File(folder, PROPERTIES_FILENAME);
     }
 
     private File getObjectPropertiesFile(String folderName, String propertyId)
     {
         File folder = getObjectFolder(folderName, propertyId);
 
-        return new File(folder, "properties.properties");
+        return new File(folder, PROPERTIES_FILENAME);
     }
 
+    /**
+     * @param pageId the identifier of the page where the attachments are located
+     * @return the attachments located in the passed page
+     */
     public Collection<Long> getAttachments(long pageId)
     {
         File folder = getAttachmentsFolder(pageId);
@@ -1013,23 +1259,29 @@ public class ConfluenceXMLPackage
     {
         File folder = getAttachmentFolder(pageId, attachmentId);
 
-        return new File(folder, "properties.properties");
+        return new File(folder, PROPERTIES_FILENAME);
     }
 
     private File getSpacePermissionPropertiesFile(long spaceId, long permissionId)
     {
         File folder = getSpacePermissionFolder(spaceId, permissionId);
 
-        return new File(folder, "properties.properties");
+        return new File(folder, PROPERTIES_FILENAME);
     }
 
     private File getSpacePropertiesFile(long spaceId)
     {
         File folder = getSpaceFolder(spaceId);
 
-        return new File(folder, "properties.properties");
+        return new File(folder, PROPERTIES_FILENAME);
     }
 
+    /**
+     * @param pageId the identifier of the page
+     * @param create true of the properties should be created when they don't exist
+     * @return the properties containing informations about the page
+     * @throws ConfigurationException when failing to create the properties
+     */
     public ConfluenceProperties getPageProperties(long pageId, boolean create) throws ConfigurationException
     {
         File file = getPagePropertiesFile(pageId);
@@ -1037,11 +1289,22 @@ public class ConfluenceXMLPackage
         return create || file.exists() ? ConfluenceProperties.create(file) : null;
     }
 
+    /**
+     * @param objectId the identifier of the object
+     * @return the properties containing informations about the object
+     * @throws ConfigurationException when failing to create the properties
+     */
     public ConfluenceProperties getObjectProperties(Long objectId) throws ConfigurationException
     {
         return getObjectProperties("objects", objectId);
     }
 
+    /**
+     * @param folder the folder where the object properties are stored
+     * @param objectId the identifier of the object
+     * @return the properties containing informations about the object
+     * @throws ConfigurationException when failing to create the properties
+     */
     public ConfluenceProperties getObjectProperties(String folder, Long objectId) throws ConfigurationException
     {
         long id;
@@ -1056,6 +1319,13 @@ public class ConfluenceXMLPackage
         return ConfluenceProperties.create(file);
     }
 
+    /**
+     * @param folder the folder where the object properties are stored
+     * @param objectId the identifier of the object
+     * @param create true if the properties should be created when they don't exist
+     * @return the properties containing informations about the object
+     * @throws ConfigurationException when failing to create the properties
+     */
     public ConfluenceProperties getObjectProperties(String folder, String objectId, boolean create)
         throws ConfigurationException
     {
@@ -1068,16 +1338,31 @@ public class ConfluenceXMLPackage
         return create || file.exists() ? ConfluenceProperties.create(file) : null;
     }
 
+    /**
+     * @param userId the identifier of the user
+     * @return the properties containing informations about the user
+     * @throws ConfigurationException when failing to create the properties
+     */
     public ConfluenceProperties getInternalUserProperties(Long userId) throws ConfigurationException
     {
         return getObjectProperties(FOLDER_INTERNALUSER, userId);
     }
 
+    /**
+     * @param userKey the key of the user
+     * @return the properties containing informations about the user
+     * @throws ConfigurationException when failing to create the properties
+     */
     public ConfluenceProperties getUserImplProperties(String userKey) throws ConfigurationException
     {
         return getObjectProperties(FOLDER_USERIMPL, userKey, false);
     }
 
+    /**
+     * @param userIdOrKey the identifier or key of the user
+     * @return the properties containing informations about the user
+     * @throws ConfigurationException when failing to create the properties
+     */
     public ConfluenceProperties getUserProperties(String userIdOrKey) throws ConfigurationException
     {
         ConfluenceProperties properties = getUserImplProperties(userIdOrKey);
@@ -1135,6 +1420,9 @@ public class ConfluenceXMLPackage
         return users;
     }
 
+    /**
+     * @return the groups found in the package
+     */
     public Collection<Long> getGroups()
     {
         File folder = getGroupsFolder();
@@ -1156,11 +1444,22 @@ public class ConfluenceXMLPackage
         return groups;
     }
 
+    /**
+     * @param groupId the identifier of the group
+     * @return the properties containing informations about the group
+     * @throws ConfigurationException when failing to create the properties
+     */
     public ConfluenceProperties getGroupProperties(Long groupId) throws ConfigurationException
     {
         return getObjectProperties(FOLDER_GROUP, groupId);
     }
 
+    /**
+     * @param pageId the identifier of the page where the attachment is located
+     * @param attachmentId the identifier of the attachment
+     * @return the properties containing informations about the attachment
+     * @throws ConfigurationException when failing to create the properties
+     */
     public ConfluenceProperties getAttachmentProperties(long pageId, long attachmentId) throws ConfigurationException
     {
         File file = getAttachmentPropertiesFile(pageId, attachmentId);
@@ -1168,6 +1467,12 @@ public class ConfluenceXMLPackage
         return ConfluenceProperties.create(file);
     }
 
+    /**
+     * @param spaceId the identifier of the space
+     * @param permissionId the identifier of the permission
+     * @return the properties containing informations about the space permission
+     * @throws ConfigurationException when failing to create the properties
+     */
     public ConfluenceProperties getSpacePermissionProperties(long spaceId, long permissionId)
         throws ConfigurationException
     {
@@ -1176,6 +1481,11 @@ public class ConfluenceXMLPackage
         return ConfluenceProperties.create(file);
     }
 
+    /**
+     * @param spaceId the identifier of the space
+     * @return the properties containing informations about the space
+     * @throws ConfigurationException when failing to create the properties
+     */
     public ConfluenceProperties getSpaceProperties(long spaceId) throws ConfigurationException
     {
         File file = getSpacePropertiesFile(spaceId);
@@ -1246,16 +1556,29 @@ public class ConfluenceXMLPackage
         fileProperties.save();
     }
 
+    /**
+     * @return the main file of the Confluence package
+     */
     public File getEntities()
     {
         return this.entities;
     }
 
+    /**
+     * @return the file containing informations about the Confluence instance
+     */
     public File getDescriptor()
     {
         return this.descriptor;
     }
 
+    /**
+     * @param pageId the identifier of the page were the attachment is located
+     * @param attachmentId the identifier of the attachment
+     * @param version the version of the attachment
+     * @return the file containing the attachment content
+     * @throws FileNotFoundException when failing to find the attachment content file
+     */
     public File getAttachmentFile(long pageId, long attachmentId, long version) throws FileNotFoundException
     {
         File attachmentsFolder = new File(this.directory, "attachments");
@@ -1279,6 +1602,12 @@ public class ConfluenceXMLPackage
         throw new FileNotFoundException(file.getAbsolutePath());
     }
 
+    /**
+     * Free any temporary resource used by the package.
+     * 
+     * @throws IOException when failing to close the package
+     */
+    @Override
     public void close() throws IOException
     {
         if (this.tree != null) {
@@ -1290,6 +1619,10 @@ public class ConfluenceXMLPackage
         }
     }
 
+    /**
+     * @param attachmentProperties the properties containing attachment informations
+     * @return the name of the attachment
+     */
     public String getAttachmentName(ConfluenceProperties attachmentProperties)
     {
         String attachmentName = attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_TITLE, null);
@@ -1300,6 +1633,10 @@ public class ConfluenceXMLPackage
         return attachmentName;
     }
 
+    /**
+     * @param attachmentProperties the properties containing attachment informations
+     * @return the version of the attachment
+     */
     public Long getAttachementVersion(ConfluenceProperties attachmentProperties)
     {
         Long version = getLong(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_VERSION, null);
@@ -1310,6 +1647,11 @@ public class ConfluenceXMLPackage
         return version;
     }
 
+    /**
+     * @param attachmentProperties the properties containing attachment informations
+     * @param def the default value to return in can of error
+     * @return the identifier of the attachment original version
+     */
     public long getAttachmentOriginalVersionId(ConfluenceProperties attachmentProperties, long def)
     {
         Long originalRevisionId =
@@ -1318,6 +1660,10 @@ public class ConfluenceXMLPackage
             : getLong(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_ORIGINALVERSION, def);
     }
 
+    /**
+     * @param labellingProperties the properties containing the tag informations
+     * @return the name of the tag
+     */
     public String getTagName(ConfluenceProperties labellingProperties)
     {
         Long tagId = labellingProperties.getLong(ConfluenceXMLPackage.KEY_LABELLING_LABEL, null);
@@ -1327,40 +1673,54 @@ public class ConfluenceXMLPackage
             ConfluenceProperties labelProperties = getObjectProperties(tagId);
             tagName = labelProperties.getString(ConfluenceXMLPackage.KEY_LABEL_NAME);
         } catch (NumberFormatException | ConfigurationException e) {
-            LOGGER.warn("Unable to get tag name, using id instead.");
+            logger.warn("Unable to get tag name, using id instead.");
         }
 
         return tagName;
     }
 
-    public String getCommentText(ConfluenceProperties commentProperties, Long commentId)
+    /**
+     * @param commentId the identifier of the comment
+     * @return the content of the comment
+     */
+    public String getCommentText(Long commentId)
     {
         String commentText = commentId.toString();
         try {
             // BodyContent objects are stored in page properties under the content id
             ConfluenceProperties commentContent = getPageProperties(commentId, false);
-            commentText = commentContent.getString("body");
+            commentText = commentContent.getString(KEY_PAGE_BODY);
         } catch (ConfigurationException e) {
-            LOGGER.warn("Unable to get comment text, using id instead.");
+            logger.warn("Unable to get comment text, using id instead.");
         }
 
         return commentText;
     }
 
-    public Integer getCommentBodyType(ConfluenceProperties commentProperties, Long commentId)
+    /**
+     * @param commentId the identifier of the comment
+     * @return the type of the comment content
+     */
+    public Integer getCommentBodyType(Long commentId)
     {
         Integer bodyType = -1;
         try {
             ConfluenceProperties commentContent = getPageProperties(commentId, false);
-            bodyType = commentContent.getInt("bodyType", -1);
+            bodyType = commentContent.getInt(KEY_PAGE_BODY_TYPE);
         } catch (ConfigurationException e) {
-            LOGGER.warn("Unable to get comment body type.");
+            logger.warn("Unable to get comment body type.");
         }
 
         return bodyType;
     }
 
-    public Long getLong(ConfluenceProperties properties, String key, Long def)
+    /**
+     * @param properties the properties to parse
+     * @param key the key
+     * @param def the default value in case of error
+     * @return the long value corresponding to the key or default
+     */
+    public static Long getLong(ConfluenceProperties properties, String key, Long def)
     {
         try {
             return properties.getLong(key, def);

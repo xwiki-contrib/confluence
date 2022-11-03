@@ -31,7 +31,7 @@
   <name>Confluence - XML Input Filter</name>
   <description>Filter stream extension to parse a Confluence XML package</description>
   <properties>
-    <xwiki.jacoco.instructionRatio>0.81</xwiki.jacoco.instructionRatio>
+    <xwiki.jacoco.instructionRatio>0.80</xwiki.jacoco.instructionRatio>
 
     <!-- Name to display by the Extension Manager -->
     <xwiki.extension.name>Confluence XML</xwiki.extension.name>
@@ -140,7 +140,7 @@
             <id>default</id>
             <configuration>
               <excludes>
-                org/xwiki/contrib/confluence/filter/internal/ConfluenceXMLPackage.java,
+                org/xwiki/contrib/confluence/filter/input/ConfluenceXMLPackage.java,
                 org/xwiki/contrib/confluence/filter/internal/input/ConfluenceConverterListener.java,
                 org/xwiki/contrib/confluence/filter/internal/input/ConfluenceInputFilterStream.java
               </excludes>

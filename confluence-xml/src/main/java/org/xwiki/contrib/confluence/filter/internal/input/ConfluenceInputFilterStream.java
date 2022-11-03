@@ -44,14 +44,13 @@ import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.filter.internal.ConfluenceFilter;
-import org.xwiki.contrib.confluence.filter.internal.ConfluenceProperties;
-import org.xwiki.contrib.confluence.filter.internal.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.parser.confluence.internal.ConfluenceParser;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceXHTMLInputProperties;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.ConfluenceXHTMLParser;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.InternalConfluenceXHTMLInputProperties;
-import org.xwiki.environment.Environment;
 import org.xwiki.filter.FilterEventParameters;
 import org.xwiki.filter.FilterException;
 import org.xwiki.filter.event.model.WikiAttachmentFilter;
@@ -87,10 +86,7 @@ import org.xwiki.rendering.syntax.Syntax;
 public class ConfluenceInputFilterStream
     extends AbstractBeanInputFilterStream<ConfluenceInputProperties, ConfluenceFilter>
 {
-    private final static Pattern FORBIDDEN_USER_CHARACTERS = Pattern.compile("[. /]");
-
-    @Inject
-    private Logger logger;
+    private static final Pattern FORBIDDEN_USER_CHARACTERS = Pattern.compile("[. /]");
 
     @Inject
     @Named(ConfluenceParser.SYNTAX_STRING)
@@ -114,15 +110,16 @@ public class ConfluenceInputFilterStream
     private EntityReferenceSerializer<String> serializer;
 
     @Inject
-    private Environment environment;
-
-    @Inject
     private ConfluenceInputContext context;
 
     @Inject
     private XWikiConverter converter;
 
+    @Inject
     private ConfluenceXMLPackage confluencePackage;
+
+    @Inject
+    private Logger logger;
 
     @Override
     public void close() throws IOException
@@ -150,7 +147,7 @@ public class ConfluenceInputFilterStream
     {
         // Prepare package
         try {
-            this.confluencePackage = new ConfluenceXMLPackage(this.properties.getSource(), this.environment);
+            this.confluencePackage.read(this.properties.getSource());
         } catch (Exception e) {
             throw new FilterException("Failed to read package", e);
         }
@@ -441,7 +438,7 @@ public class ConfluenceInputFilterStream
                     this.confluencePackage.getDate(pageProperties, ConfluenceXMLPackage.KEY_PAGE_CREATION_DATE));
             } catch (Exception e) {
                 if (this.properties.isVerbose()) {
-                    this.logger.error("Failed to parse date", e);
+                    this.logger.error("Failed to parse creation date", e);
                 }
             }
         }
@@ -715,7 +712,7 @@ public class ConfluenceInputFilterStream
         // Tags
         Map<String, ConfluenceProperties> pageTags = new LinkedHashMap<>();
         for (Object tagIdStringObject : pageProperties.getList(ConfluenceXMLPackage.KEY_PAGE_LABELLINGS)) {
-            long tagId = Long.valueOf((String) tagIdStringObject);
+            long tagId = Long.parseLong((String) tagIdStringObject);
             ConfluenceProperties tagProperties;
             try {
                 tagProperties = this.confluencePackage.getObjectProperties(tagId);
@@ -804,11 +801,11 @@ public class ConfluenceInputFilterStream
 
     private ConfluenceConverterListener createConverter(Listener listener)
     {
-        ConfluenceConverterListener converter = this.converterProvider.get();
-        converter.initialize(this.confluencePackage, this, this.properties);
-        converter.setWrappedListener(listener);
+        ConfluenceConverterListener converterListener = this.converterProvider.get();
+        converterListener.initialize(this.confluencePackage, this, this.properties);
+        converterListener.setWrappedListener(listener);
 
-        return converter;
+        return converterListener;
     }
 
     private Listener wrap(Listener listener)
@@ -1000,8 +997,8 @@ public class ConfluenceInputFilterStream
         String commentCreatorReference = toUserReference(commentCreator);
 
         // content
-        String commentBodyContent = this.confluencePackage.getCommentText(commentProperties, commentId);
-        int commentBodyType = this.confluencePackage.getCommentBodyType(commentProperties, commentId);
+        String commentBodyContent = this.confluencePackage.getCommentText(commentId);
+        int commentBodyType = this.confluencePackage.getCommentBodyType(commentId);
         String commentText = commentBodyContent;
         if (commentBodyContent != null && this.properties.isConvertToXWiki()) {
             try {

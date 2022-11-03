@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.confluence.filter.internal;
+package org.xwiki.contrib.confluence.filter.input;
 
 import java.io.File;
 
@@ -29,7 +29,7 @@ import org.apache.commons.configuration2.ex.ConfigurationException;
 
 /**
  * @version $Id$
- * @since 9.15
+ * @since 9.16
  */
 public class ConfluenceProperties extends PropertiesConfiguration
 {
