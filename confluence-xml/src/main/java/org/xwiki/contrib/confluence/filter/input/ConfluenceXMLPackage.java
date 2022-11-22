@@ -54,7 +54,6 @@ import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.CloseShieldInputStream;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
@@ -66,8 +65,6 @@ import org.xwiki.filter.input.FileInputSource;
 import org.xwiki.filter.input.InputSource;
 import org.xwiki.filter.input.InputStreamInputSource;
 import org.xwiki.filter.input.URLInputSource;
-import org.xwiki.model.EntityType;
-import org.xwiki.model.reference.EntityReference;
 import org.xwiki.xml.stax.StAXUtils;
 
 import com.google.common.base.Strings;
@@ -641,44 +638,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         return contentProperties;
 
-    }
-
-    /**
-     * @param currentProperties the properties where to find the page identifier
-     * @param key the key to find the page identifier
-     * @return the reference of the page
-     * @throws ConfigurationException when failing to get page properties
-     * @throws FilterException when failing to create the reference
-     */
-    public EntityReference getReferenceFromId(ConfluenceProperties currentProperties, String key)
-        throws ConfigurationException, FilterException
-    {
-        Long pageId = currentProperties.getLong(key, null);
-        if (pageId != null) {
-            ConfluenceProperties pageProperties = getPageProperties(pageId, true);
-
-            long spaceId = pageProperties.getLong(KEY_PAGE_SPACE);
-            String pageTitle = pageProperties.getString(KEY_PAGE_TITLE);
-
-            if (StringUtils.isNotEmpty(pageTitle)) {
-                long currentSpaceId = currentProperties.getLong(KEY_PAGE_SPACE);
-
-                EntityReference spaceReference = null;
-                if (spaceId != currentSpaceId) {
-                    String spaceName = getSpaceKey(currentSpaceId);
-                    if (spaceName != null) {
-                        spaceReference = new EntityReference(spaceName, EntityType.SPACE);
-                    }
-                }
-
-                return new EntityReference(pageTitle, EntityType.DOCUMENT, spaceReference);
-            } else {
-                throw new FilterException("Cannot create a reference to the page with id [" + pageId
-                    + "] because it does not have any title");
-            }
-        }
-
-        return null;
     }
 
     /**

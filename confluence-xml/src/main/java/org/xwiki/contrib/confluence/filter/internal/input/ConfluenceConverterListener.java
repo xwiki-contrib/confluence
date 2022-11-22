@@ -223,7 +223,8 @@ public class ConfluenceConverterListener extends WrappingListener
 
             // Reference
 
-            return new LocalDocumentReference(convertEntityName(spaceKey), convertEntityName(documentName));
+            return new LocalDocumentReference(this.stream.toEntityName(spaceKey),
+                this.stream.toEntityName(documentName));
         }
 
         return null;
@@ -302,7 +303,7 @@ public class ConfluenceConverterListener extends WrappingListener
         Matcher matcher = PATTERN_URL_DISPLAY.matcher(pattern);
         if (matcher.matches()) {
             LocalDocumentReference documentReference = new LocalDocumentReference(
-                convertEntityName(decode(matcher.group(1))), convertEntityName(decode(matcher.group(2))));
+                this.stream.toEntityName(decode(matcher.group(1))), this.stream.toEntityName(decode(matcher.group(2))));
 
             return createDocumentResourceReference(documentReference, urlParameters, urlAnchor);
         }
@@ -311,7 +312,7 @@ public class ConfluenceConverterListener extends WrappingListener
         matcher = PATTERN_URL_SPACES.matcher(pattern);
         if (matcher.matches()) {
             LocalDocumentReference documentReference = new LocalDocumentReference(
-                convertEntityName(decode(matcher.group(1))), convertEntityName(decode(matcher.group(2))));
+                this.stream.toEntityName(decode(matcher.group(1))), this.stream.toEntityName(decode(matcher.group(2))));
 
             return createDocumentResourceReference(documentReference, urlParameters, urlAnchor);
         }
@@ -357,16 +358,6 @@ public class ConfluenceConverterListener extends WrappingListener
         }
 
         return null;
-    }
-
-    private String convertEntityName(String entityName)
-    {
-        // Apply the standard entity name validator
-        if (this.properties.isConvertToXWiki() && this.properties.isEntityNameValidation()) {
-            return this.converter.convert(entityName);
-        }
-
-        return entityName;
     }
 
     @Override

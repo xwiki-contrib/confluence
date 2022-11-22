@@ -9,6 +9,17 @@
         <p>
           <parameters>
             <entry>
+              <string>parent_reference</string>
+              <org.xwiki.model.reference.EntityReference>
+                <name>validatedpage</name>
+                <parent>
+                  <name>validatedspace</name>
+                  <type>SPACE</type>
+                </parent>
+                <type>DOCUMENT</type>
+              </org.xwiki.model.reference.EntityReference>
+            </entry>
+            <entry>
               <string>title</string>
               <string>TestContent</string>
             </entry>

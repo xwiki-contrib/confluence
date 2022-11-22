@@ -64,6 +64,7 @@ import org.xwiki.filter.input.BeanInputFilterStreamFactory;
 import org.xwiki.filter.input.InputFilterStreamFactory;
 import org.xwiki.filter.input.StringInputSource;
 import org.xwiki.job.event.status.JobProgressManager;
+import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
@@ -179,12 +180,7 @@ public class ConfluenceInputFilterStream
                 throw new FilterException("Failed to get space properties", e);
             }
 
-            String spaceKey = ConfluenceXMLPackage.getSpaceKey(spaceProperties);
-
-            // Apply the standard entity name validator
-            if (this.properties.isConvertToXWiki() && this.properties.isEntityNameValidation()) {
-                spaceKey = this.converter.convert(spaceKey);
-            }
+            String spaceKey = toEntityName(ConfluenceXMLPackage.getSpaceKey(spaceProperties));
 
             FilterEventParameters spaceParameters = new FilterEventParameters();
 
@@ -413,9 +409,7 @@ public class ConfluenceInputFilterStream
         }
 
         // Apply the standard entity name validator
-        if (this.properties.isConvertToXWiki() && this.properties.isEntityNameValidation()) {
-            documentName = this.converter.convert(documentName);
-        }
+        documentName = toEntityName(documentName);
 
         // > WikiDocument
         proxyFilter.beginWikiDocument(documentName, documentParameters);
@@ -579,7 +573,7 @@ public class ConfluenceInputFilterStream
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_PARENT)) {
             try {
                 documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_PARENT,
-                    this.confluencePackage.getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT));
+                    getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT));
             } catch (Exception e) {
                 if (this.properties.isVerbose()) {
                     this.logger.error("Failed to parse parent", e);
@@ -756,6 +750,58 @@ public class ConfluenceInputFilterStream
 
         // < WikiDocumentRevision
         proxyFilter.endWikiDocumentRevision(revision, documentRevisionParameters);
+    }
+
+    /**
+     * @param currentProperties the properties where to find the page identifier
+     * @param key the key to find the page identifier
+     * @return the reference of the page
+     * @throws ConfigurationException when failing to get page properties
+     * @throws FilterException when failing to create the reference
+     */
+    public EntityReference getReferenceFromId(ConfluenceProperties currentProperties, String key)
+        throws ConfigurationException, FilterException
+    {
+        Long pageId = currentProperties.getLong(key, null);
+        if (pageId != null) {
+            ConfluenceProperties pageProperties = this.confluencePackage.getPageProperties(pageId, true);
+
+            long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE);
+            String pageTitle = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
+
+            if (StringUtils.isNotEmpty(pageTitle)) {
+                long currentSpaceId = currentProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE);
+
+                EntityReference spaceReference = null;
+                if (spaceId != currentSpaceId) {
+                    String spaceName = this.confluencePackage.getSpaceKey(spaceId);
+                    if (spaceName != null) {
+                        spaceReference = new EntityReference(toEntityName(spaceName), EntityType.SPACE);
+                    }
+                }
+
+                return new EntityReference(toEntityName(pageTitle), EntityType.DOCUMENT, spaceReference);
+            } else {
+                throw new FilterException("Cannot create a reference to the page with id [" + pageId
+                    + "] because it does not have any title");
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param name the name to validate
+     * @return the validated name
+     * @since 9.16.1
+     */
+    public String toEntityName(String name)
+    {
+        if (this.properties.isConvertToXWiki() && this.properties.isEntityNameValidation()) {
+            return this.converter.convert(name);
+        }
+
+        return name;
     }
 
     /**
@@ -1038,8 +1084,7 @@ public class ConfluenceInputFilterStream
         // get parent name from reference
         String parentName = "";
         try {
-            EntityReference parentReference =
-                this.confluencePackage.getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT);
+            EntityReference parentReference = getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT);
             if (parentReference != null) {
                 parentName = parentReference.getName();
             }
