@@ -31,7 +31,7 @@ import org.xwiki.rendering.wikimodel.xhtml.handler.PreserveTagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
- * Handles an element containing other elements which need to be converted to a single text conent.
+ * Handles an element containing other elements which need to be converted to a single text content.
  *
  * @version $Id$
  * @since 9.8
