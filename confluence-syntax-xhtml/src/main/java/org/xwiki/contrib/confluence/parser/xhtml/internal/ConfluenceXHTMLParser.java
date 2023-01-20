@@ -48,6 +48,7 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXW
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.DefaultMacroParameterTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ElementMacroTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ImageTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.LinkBodyTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.LinkTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroParameterTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroTagHandler;
@@ -213,6 +214,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser implements In
         handlers.put("ri:space", new SpaceTagHandler());
         handlers.put("ri:user", new UserTagHandler());
         handlers.put("ac:plain-text-link-body", new PlainTextLinkBodyTagHandler());
+        handlers.put("ac:link-body", new LinkBodyTagHandler());
 
         // Directly convert into https://extensions.xwiki.org/xwiki/bin/view/Extension/Container%20Macro ?
         handlers.put("ac:layout", new ElementMacroTagHandler(this));

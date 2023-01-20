@@ -33,6 +33,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.configuration2.ex.ConfigurationException;
@@ -47,6 +48,7 @@ import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
+import org.xwiki.model.reference.EntityReferenceResolver;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.rendering.listener.WrappingListener;
@@ -86,7 +88,8 @@ public class ConfluenceConverterListener extends WrappingListener
     private EntityReferenceSerializer<String> serializer;
 
     @Inject
-    private XWikiConverter converter;
+    @Named("relative")
+    private EntityReferenceResolver<String> explicitResolver;
 
     @Inject
     private Logger logger;
@@ -192,6 +195,20 @@ public class ConfluenceConverterListener extends WrappingListener
                     }
                 }
             }
+        } else if (Objects.equals(reference.getType(), ResourceType.DOCUMENT)) {
+            // Parse the reference
+            EntityReference documentReference =
+                this.explicitResolver.resolve(reference.getReference(), EntityType.DOCUMENT);
+
+            // Fix the reference according to entity conversion rules
+            EntityReference newDocumentReference = null;
+            for (EntityReference enityElement : documentReference.getReversedReferenceChain()) {
+                newDocumentReference = new EntityReference(this.stream.toEntityName(enityElement.getName()),
+                    enityElement.getType(), newDocumentReference);
+            }
+
+            // Serialize the fixed reference
+            reference.setReference(this.serializer.serialize(newDocumentReference));
         }
 
         if (begin) {

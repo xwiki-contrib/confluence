@@ -8,8 +8,7 @@
 
   <object class="Page" package="com.atlassian.confluence.pages">
     <id name="id">10</id>
-    <property name="space" class="Space"
-      package="com.atlassian.confluence.spaces">
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
       <id name="id">100</id>
     </property>
     <property name="title"><![CDATA[TestContent]]></property>
@@ -50,10 +49,21 @@
         <p>
           <a href="https://baseurl1.com/spaces/spacetovalidate/pages/12/pagetovalidate">link6</a>
         </p>
+        <p>
+          <ac:link ac:card-appearance="inline">
+            <ri:page ri:content-title="pagetovalidate" ri:version-at-save="1" />
+            <ac:link-body>pagetovalidate</ac:link-body>
+          </ac:link>
+        </p>
+        <p>
+          <ac:link ac:anchor="anchor">
+            <ri:page ri:content-title="pagetovalidate" ri:space-key="spacetovalidate" />
+            <ac:plain-text-link-body>pagetovalidate</ac:plain-text-link-body>
+          </ac:link>
+        </p>
       ]]>
     </property>
-    <property name="content" class="Page"
-      package="com.atlassian.confluence.pages">
+    <property name="content" class="Page" package="com.atlassian.confluence.pages">
       <id name="id">10</id>
     </property>
     <property name="bodyType">2</property>
@@ -67,8 +77,7 @@
 
   <object class="Page" package="com.atlassian.confluence.pages">
     <id name="id">11</id>
-    <property name="space" class="Space"
-      package="com.atlassian.confluence.spaces">
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
       <id name="id">101</id>
     </property>
     <property name="title"><![CDATA[Other Page]]></property>
@@ -82,8 +91,7 @@
 
   <object class="Page" package="com.atlassian.confluence.pages">
     <id name="id">12</id>
-    <property name="space" class="Space"
-      package="com.atlassian.confluence.spaces">
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
       <id name="id">102</id>
     </property>
     <property name="title"><![CDATA[pagetovalidate]]></property>
@@ -93,5 +101,4 @@
       </element>
     </collection>
   </object>
-
 </hibernate-generic>

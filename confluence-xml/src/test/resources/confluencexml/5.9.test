@@ -377,19 +377,19 @@ Confluence puts your content online in a central place where your team can searc
 == (% style="color: rgb(0,0,128);" %)
 (%%) ==
 
-1. (% style="color: rgb(0,0,128);" %)What is Confluence?
-\\[[doc:What is Confluence? (step 1 of 9)]]
+1. (% style="color: rgb(0,0,128);" %)
+\\[[What is Confluence?>>doc:What is Confluence? (step 1 of 9)]]
 1. (% style="color: rgb(0,0,128);" %)[[A quick look at the editor>>doc:A quick look at the editor (step 2 of 9)]]
  
 1. (% style="color: rgb(0,0,128);" %)[[Let's edit this page>>doc:Let's edit this page (step 3 of 9)]]
 \\
-1. (% style="color: rgb(0,0,128);" %)Prettify the page with an image
-\\[[doc:Prettify the page with an image (step 4 of 9)]]
-1. (% style="color: rgb(0,0,128);" %)Get serious with a table
-[[doc:Get serious with a table (step 5 of 9)]] 
+1. (% style="color: rgb(0,0,128);" %)
+\\[[Prettify the page with an image>>doc:Prettify the page with an image (step 4 of 9)]]
+1. (% style="color: rgb(0,0,128);" %)
+[[Get serious with a table>>doc:Get serious with a table (step 5 of 9)]] 
 1. (% style="color: rgb(0,0,128);" %)[[Lay out your page>>doc:Lay out your page (step 6 of 9)]] 
 \\
-1. [[Learn the wonders of autoconvert>&gt;doc:Learn the wonders of autoconvert (step 7 of 9)]] 
+1. [[Learn the wonders of autoconvert>>doc:Learn the wonders of autoconvert (step 7 of 9)]] 
 \\
 1. [[Tell people what you think in a comment>>doc:Tell people what you think in a comment (step 8 of 9)]] 
 \\

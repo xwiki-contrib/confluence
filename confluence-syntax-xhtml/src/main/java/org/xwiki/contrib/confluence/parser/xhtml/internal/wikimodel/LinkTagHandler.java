@@ -40,6 +40,10 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  *   </ri:attachment>
  *   <ac:plain-text-link-body><![CDATA[image1234.png]]></ac:plain-text-link-body>
  * </ac:link>
+ * <ac:link ac:card-appearance="inline">
+ *   <ri:page ri:content-title="Page with / in title" ri:version-at-save="1" />
+ *   <ac:link-body>Page with / in title</ac:link-body>
+ * </ac:link>
  * <ac:link ac:anchor="anchor">
  *   <ri:space ri:space-key="ds" />
  * </ac:link>

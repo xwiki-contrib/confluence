@@ -108,6 +108,7 @@
                 org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/DefaultMacroParameterTagHandler.java,
                 org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/ImageTagHandler.java,
                 org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/LabelContainer.java,
+                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/LinkBodyTagHandler.java,
                 org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/LinkTagHandler.java,
                 org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/MacroParameterTagHandler.java,
                 org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/MacroTagHandler.java,

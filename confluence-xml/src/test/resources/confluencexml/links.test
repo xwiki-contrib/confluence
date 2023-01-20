@@ -35,7 +35,11 @@
 
 [[(% param="value" %)link5>>doc:Other Space.Other Page||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link5>>doc:Other Space.Other Page||shape="rect"]]
 
-[[link6>>doc:validatedspace.validatedpage||shape="rect"]]</string>
+[[link6>>doc:validatedspace.validatedpage||shape="rect"]]
+
+[[pagetovalidate>>doc:validatedpage]]
+
+[[pagetovalidate>>doc:validatedspace.validatedpage||anchor="anchor"]]</string>
             </entry>
             <entry>
               <string>syntax</string>
