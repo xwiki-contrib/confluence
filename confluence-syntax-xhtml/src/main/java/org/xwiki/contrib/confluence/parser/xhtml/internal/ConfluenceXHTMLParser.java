@@ -43,6 +43,7 @@ import org.xwiki.component.phase.Initializable;
 import org.xwiki.component.phase.InitializationException;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceXHTMLInputProperties;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.CodeTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXHTMLWhitespaceXMLFilter;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXWikiGeneratorListener;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.DefaultMacroParameterTagHandler;
@@ -227,6 +228,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser implements In
         handlers.put("td", new TableCellTagHandler());
 
         handlers.put("pre", new PreformattedTagHandler());
+        handlers.put("code", new CodeTagHandler());
 
         handlers.put("time", new TimeTagHandler());
 
