@@ -11,7 +11,7 @@ onWord [before]
 onSpace
 endParagraph
 beginParagraph
-onMacroInline [code] [] [code content]
+onMacroInline [code] [language=none] [code content]
 onSpace
 onWord [after]
 endParagraph

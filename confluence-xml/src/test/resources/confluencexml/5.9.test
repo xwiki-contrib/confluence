@@ -504,7 +504,7 @@ Let's play with some content. Don't worry, you won't break anything:
 ** Change the color of some text: Select the text, then choose a color from the color option in the editor tool bar.
 \\
 ** Add a link: Select some text, then choose the **Link** button on the toolbar.
-Click **Web Link** and enter an **Address**, such as http:~/~/www.atlassian.com. 
+Click **Web Link** and enter an **Address**, such as {{code language="none"}}http://www.atlassian.com{{/code}}. 
 Click **Insert** to insert the link.
 \\
 ** Find a file or picture on your computer, and drag it anywhere on this page.

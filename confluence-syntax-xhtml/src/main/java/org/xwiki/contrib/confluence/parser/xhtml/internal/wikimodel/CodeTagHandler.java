@@ -55,9 +55,6 @@ public class CodeTagHandler extends AbstractConfluenceTagHandler implements Conf
     {
         String content = getContent(context);
 
-        WikiParameters parameters = new WikiParameters();
-        parameters.addParameter("language", "none");
-
-        context.getScannerContext().onMacro("code", parameters, content);
+        context.getScannerContext().onMacro("code", new WikiParameters().setParameter("language", "none"), content);
     }
 }
