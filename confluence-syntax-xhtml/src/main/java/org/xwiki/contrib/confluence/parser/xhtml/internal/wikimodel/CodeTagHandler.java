@@ -32,7 +32,7 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  * }
  *
  * @version $Id$
- * @since 9.18
+ * @since 9.18.0
  */
 public class CodeTagHandler extends AbstractConfluenceTagHandler implements ConfluenceTagHandler
 {
