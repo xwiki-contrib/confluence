@@ -23,6 +23,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.xwiki.contrib.confluence.filter.MacroConverter;
+import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverterListener;
 import org.xwiki.rendering.listener.Listener;
 
 /**
@@ -43,7 +44,7 @@ public abstract class AbstractMacroConverter implements MacroConverter
 
         String content = toXWikiContent(confluenceId, confluenceParameters, confluenceContent);
 
-        listener.onMacro(id, parameters, content, inline);
+        ((ConfluenceConverterListener) listener).getWrappedListener().onMacro(id, parameters, content, inline);
     }
 
     protected String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,

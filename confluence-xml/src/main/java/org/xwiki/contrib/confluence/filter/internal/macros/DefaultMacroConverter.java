@@ -31,6 +31,7 @@ import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
+import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverterListener;
 import org.xwiki.rendering.listener.Listener;
 
 /**
@@ -65,7 +66,8 @@ public class DefaultMacroConverter implements MacroConverter
                     parameters, content, inline, e);
             }
         } else {
-            listener.onMacro(toXWikiMacroName(id), toXWikiMacroParaleters(parameters), content, inline);
+            ((ConfluenceConverterListener) listener).getWrappedListener()
+                .onMacro(toXWikiMacroName(id), toXWikiMacroParaleters(parameters), content, inline);
         }
     }
 

@@ -69,5 +69,7 @@ public class IntegrationTests
 
         // Unregister all listeners since they are not needed for testing
         componentManager.registerMockComponent(ObservationManager.class);
+        // Replace the MentionMacroConverter with a copy of it that does not generate random anchors.
+        componentManager.registerComponent(MacroConverter.class, "mention", new DeterministicMentionMacroConverter());
     }
 }

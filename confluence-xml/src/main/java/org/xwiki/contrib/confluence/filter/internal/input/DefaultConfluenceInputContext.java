@@ -19,6 +19,9 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.input;
 
+import javax.inject.Singleton;
+
+import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 
@@ -28,6 +31,8 @@ import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
  * @version $Id$
  * @since 9.7
  */
+@Component
+@Singleton
 public class DefaultConfluenceInputContext implements ConfluenceInputContext
 {
     private ThreadLocal<ConfluenceInputProperties> properties = new ThreadLocal<>();
