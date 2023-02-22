@@ -55,9 +55,13 @@ public class MentionMacroConverter extends AbstractMacroConverter
 
         confluenceParameters.put(REFERENCE_PARAMETER_KEY, stringReference);
         confluenceParameters.put("style", "FULL_NAME");
-        confluenceParameters.put("anchor",
-            stringReference.replace('.', '-') + '-' + RandomStringUtils.random(5, true, false));
+        confluenceParameters.put("anchor", createAnchor(stringReference));
 
         super.toXWiki(confluenceId, confluenceParameters, confluenceContent, inline, listener);
+    }
+
+    protected String createAnchor(String stringReference)
+    {
+        return stringReference.replace('.', '-') + '-' + RandomStringUtils.random(5, true, false);
     }
 }

@@ -19,31 +19,13 @@
  */
 package org.xwiki.contrib.confluence.filter;
 
-import java.util.Map;
+import org.xwiki.contrib.confluence.filter.internal.macros.MentionMacroConverter;
 
-import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverterListener;
-import org.xwiki.contrib.confluence.filter.internal.macros.AbstractMacroConverter;
-import org.xwiki.rendering.listener.Listener;
-import org.xwiki.rendering.listener.reference.UserResourceReference;
-
-public class DeterministicMentionMacroConverter extends AbstractMacroConverter
+public class DeterministicMentionMacroConverter extends MentionMacroConverter
 {
-    private static final String REFERENCE_PARAMETER_KEY = "reference";
-
     @Override
-    public void toXWiki(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
-        boolean inline, Listener listener)
+    protected String createAnchor(String stringReference)
     {
-        UserResourceReference userReference =
-            new UserResourceReference(confluenceParameters.get(REFERENCE_PARAMETER_KEY));
-
-        String stringReference =
-            ((ConfluenceConverterListener) listener).resolveUserReference(userReference).getReference();
-
-        confluenceParameters.put(REFERENCE_PARAMETER_KEY, stringReference);
-        confluenceParameters.put("style", "FULL_NAME");
-        confluenceParameters.put("anchor", stringReference.replace('.', '-'));
-
-        super.toXWiki(confluenceId, confluenceParameters, confluenceContent, inline, listener);
+        return stringReference.replace('.', '-');
     }
 }
