@@ -116,7 +116,7 @@ public class ConfluenceConverterListener extends WrappingListener
     @Override
     public void onMacro(String id, Map<String, String> parameters, String content, boolean inline)
     {
-        this.macroConverter.toXWiki(id, parameters, content, inline, getWrappedListener());
+        this.macroConverter.toXWiki(id, parameters, content, inline, this);
     }
 
     private List<String[]> parseURLParameters(String queryString)
@@ -391,7 +391,12 @@ public class ConfluenceConverterListener extends WrappingListener
         }
     }
 
-    private ResourceReference resolveUserReference(UserResourceReference reference)
+    /**
+     * @param reference the reference of a user that can be either a username or a user key.
+     * @return a XWiki user reference.
+     * @since 9.19
+     */
+    public ResourceReference resolveUserReference(UserResourceReference reference)
     {
         String userReference = reference.getReference();
 

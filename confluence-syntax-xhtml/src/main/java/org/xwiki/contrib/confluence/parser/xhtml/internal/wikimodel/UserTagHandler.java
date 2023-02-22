@@ -48,20 +48,30 @@ public class UserTagHandler extends TagHandler implements ConfluenceTagHandler
     protected void begin(TagContext context)
     {
         Object container = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
-        
+
         // Name based user reference
         WikiParameter usernameParameter = context.getParams().getParameter("ri:username");
-        
+
         // Key based user reference
         WikiParameter userkeyParameter = context.getParams().getParameter("ri:userkey");
+        if (userkeyParameter == null) {
+            userkeyParameter = context.getParams().getParameter("ri:account-id");
+        }
 
         if (container instanceof UserContainer) {
+            ConfluenceMacro macro = new ConfluenceMacro();
             UserContainer userContainer = (UserContainer) container;
+
+            macro.name = "mention";
+
             if (usernameParameter != null) {
+                macro.parameters = macro.parameters.setParameter("reference", usernameParameter.getValue());
                 userContainer.setUser(usernameParameter.getValue());
             } else if (userkeyParameter != null) {
+                macro.parameters = macro.parameters.setParameter("reference", userkeyParameter.getValue());
                 userContainer.setUser(userkeyParameter.getValue());
             }
+            context.getScannerContext().onMacroInline(macro.name, macro.parameters, macro.content);
         } else if (container instanceof ConfluenceMacro) {
             ConfluenceMacro macro = (ConfluenceMacro) container;            
             if (usernameParameter != null) {

@@ -84,7 +84,7 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>[[doc:xwiki:XWiki.UserName]] [[doc:xwiki:XWiki.UserName]] [[doc:xwiki:XWiki.C_ra_ppy_User___]]</string>
+              <string>{{mention reference="xwiki:XWiki.UserName" style="FULL_NAME" anchor="xwiki:XWiki-UserName"/}} {{mention reference="xwiki:XWiki.UserName" style="FULL_NAME" anchor="xwiki:XWiki-UserName"/}} {{mention reference="xwiki:XWiki.C_ra_ppy_User___" style="FULL_NAME" anchor="xwiki:XWiki-C_ra_ppy_User___"/}}</string>
             </entry>
             <entry>
               <string>syntax</string>

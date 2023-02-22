@@ -82,7 +82,7 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>[[doc:XWiki.OtherUser]] [[doc:XWiki.OtherUser]] [[doc:XWiki.CleanUser]]</string>
+              <string>{{mention reference="XWiki.OtherUser" style="FULL_NAME" anchor="XWiki-OtherUser"/}} {{mention reference="XWiki.OtherUser" style="FULL_NAME" anchor="XWiki-OtherUser"/}} {{mention reference="XWiki.CleanUser" style="FULL_NAME" anchor="XWiki-CleanUser"/}}</string>
             </entry>
             <entry>
               <string>syntax</string>

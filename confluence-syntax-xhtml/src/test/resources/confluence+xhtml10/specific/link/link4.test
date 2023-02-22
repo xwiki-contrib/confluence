@@ -1,19 +1,16 @@
 .#-----------------------------------------------------
 .input|confluence+xhtml/1.0
 .#-----------------------------------------------------
-<ac:link ac:anchor="anchor"><ri:user ri:username="user" /><ac:plain-text-link-body><![CDATA[label]]></ac:plain-text-link-body></ac:link>
+<ac:link><ri:user ri:username="user" /><ac:plain-text-link-body><![CDATA[label]]></ac:plain-text-link-body></ac:link>
 
-<ac:link><ri:user ri:username="user" /></ac:link>
+<ac:link><ri:user ri:userkey="user" /></ac:link>
 .#-----------------------------------------------------
 .expect|event/1.0
 .#-----------------------------------------------------
 beginDocument
 beginParagraph
-beginLink [Typed = [true] Type = [user] Reference = [user] Parameters = [[anchor] = [anchor]]] [false]
-onWord [label]
-endLink [Typed = [true] Type = [user] Reference = [user] Parameters = [[anchor] = [anchor]]] [false]
+onMacroInline [mention] [reference=user]
 onSpace
-beginLink [Typed = [true] Type = [user] Reference = [user]] [false]
-endLink [Typed = [true] Type = [user] Reference = [user]] [false]
+onMacroInline [mention] [reference=user]
 endParagraph
 endDocument

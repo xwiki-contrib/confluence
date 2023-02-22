@@ -82,7 +82,7 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>[[user:UserName]] [[user:UserName]] [[user:C_ra_ppy_User___]]</string>
+              <string>{{mention reference="UserName" style="FULL_NAME" anchor="UserName"/}} {{mention reference="UserName" style="FULL_NAME" anchor="UserName"/}} {{mention reference="C_ra_ppy_User___" style="FULL_NAME" anchor="C_ra_ppy_User___"/}}</string>
             </entry>
             <entry>
               <string>syntax</string>

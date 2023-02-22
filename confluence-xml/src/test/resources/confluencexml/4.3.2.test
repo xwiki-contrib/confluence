@@ -896,7 +896,7 @@ Content of the page including:
 
 * ☐ task 3
 
-* ☐ Task 4 for [[doc:XWiki.Admin]]\\
+* ☐ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -1042,7 +1042,7 @@ Content of the page including:
 
 * ☐ task 3
 
-* ☐ Task 4 for [[doc:XWiki.Admin]]\\
+* ☐ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -1111,7 +1111,7 @@ Some wiki text with **bold** content
 
 ----
 
-[[doc:XWiki.Admin]] &lt;= user macro
+{{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}} &lt;= user macro
 
 {{info title="info title"}}
 info default macro
@@ -1398,7 +1398,7 @@ Content of the page including:
 
 * ☐ task 3
 
-* ☐ Task 4 for [[doc:XWiki.Admin]]\\
+* ☐ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -1467,7 +1467,7 @@ Some wiki text with **bold** content
 
 ----
 
-[[doc:XWiki.Admin]] &lt;= user macro
+{{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}} &lt;= user macro
 
 {{info title="info title"}}
 info default macro
@@ -1754,7 +1754,7 @@ Content of the page including:
 
 * ☐ task 3
 
-* ☐ Task 4 for [[doc:XWiki.Admin]]\\
+* ☐ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -1823,7 +1823,7 @@ Some wiki text with **bold** content
 
 ----
 
-[[doc:XWiki.Admin]] &lt;= user macro
+{{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}} &lt;= user macro
 
 {{info title="info title"}}
 info default macro
@@ -2110,7 +2110,7 @@ Content of the page including:
 
 * ☐ task 3
 
-* ☐ Task 4 for [[doc:XWiki.Admin]]\\
+* ☐ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -2179,7 +2179,7 @@ Some wiki text with **bold** content
 
 ----
 
-[[doc:XWiki.Admin]] &lt;= user macro
+{{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}} &lt;= user macro
 
 {{info title="info title"}}
 info default macro
@@ -2466,7 +2466,7 @@ Content of the page including:
 
 * ☐ task 3
 
-* ☐ Task 4 for [[doc:XWiki.Admin]]\\
+* ☐ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -2535,7 +2535,7 @@ Some wiki text with **bold** content
 
 ----
 
-[[doc:XWiki.Admin]] &lt;= user macro
+{{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}} &lt;= user macro
 
 {{info title="info title"}}
 info default macro
@@ -2829,7 +2829,7 @@ Content of the page including:
 
 * ☐ task 3
 
-* ☐ Task 4 for [[doc:XWiki.Admin]]\\
+* ☐ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -2898,7 +2898,7 @@ Some wiki text with **bold** content
 
 ----
 
-[[doc:XWiki.Admin]] &lt;= user macro
+{{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}} &lt;= user macro
 
 {{info title="info title"}}
 info default macro

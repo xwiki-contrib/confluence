@@ -42,7 +42,7 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
 {
-    public class ConfluenceMacro
+    public static class ConfluenceMacro
     {
         public String name;
 

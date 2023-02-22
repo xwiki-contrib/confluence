@@ -22,7 +22,7 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>[[doc:XWiki.UserName]] [[doc:XWiki.UserName]] [[doc:XWiki.C_ra_ppy_User___]]</string>
+              <string>{{mention reference="XWiki.UserName" style="FULL_NAME" anchor="XWiki-UserName"/}} {{mention reference="XWiki.UserName" style="FULL_NAME" anchor="XWiki-UserName"/}} {{mention reference="XWiki.C_ra_ppy_User___" style="FULL_NAME" anchor="XWiki-C_ra_ppy_User___"/}}</string>
             </entry>
             <entry>
               <string>syntax</string>
