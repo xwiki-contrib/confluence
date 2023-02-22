@@ -391,6 +391,11 @@ public class ConfluenceConverterListener extends WrappingListener
         }
     }
 
+    /**
+     * @param reference the reference of a user that can be either a username or a user key.
+     * @return a XWiki user reference.
+     * @since 9.19
+     */
     public ResourceReference resolveUserReference(UserResourceReference reference)
     {
         String userReference = reference.getReference();

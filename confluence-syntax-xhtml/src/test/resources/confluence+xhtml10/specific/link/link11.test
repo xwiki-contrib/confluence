@@ -1,16 +1,25 @@
 .#-----------------------------------------------------
 .input|confluence+xhtml/1.0
 .#-----------------------------------------------------
-<ac:link ac:anchor="anchor"><ri:user ri:username="user" /><ac:plain-text-link-body><![CDATA[label]]></ac:plain-text-link-body></ac:link>
-
-<ac:link><ri:user ri:userkey="user" /></ac:link>
+ <ac:link ac:card-appearance="inline">
+   <ri:page ri:content-title="Page with / in title" ri:version-at-save="1" />
+   <ac:link-body>Page with / in title</ac:link-body>
+ </ac:link>
 .#-----------------------------------------------------
 .expect|event/1.0
 .#-----------------------------------------------------
 beginDocument
 beginParagraph
-onMacroInline [mention] [reference=user]
+beginLink [Typed = [true] Type = [doc] Reference = [Page with / in title]] [false]
+onWord [Page]
 onSpace
-onMacroInline [mention] [reference=user]
+onWord [with]
+onSpace
+onSpecialSymbol [/]
+onSpace
+onWord [in]
+onSpace
+onWord [title]
+endLink [Typed = [true] Type = [doc] Reference = [Page with / in title]] [false]
 endParagraph
 endDocument

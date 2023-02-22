@@ -47,7 +47,7 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  * <ac:link ac:anchor="anchor">
  *   <ri:space ri:space-key="ds" />
  * </ac:link>
- * <ac:link ac:anchor="anchor">
+ * <ac:link>
  *   <ri:user ri:username="admin" />
  * </ac:link>
  * }
