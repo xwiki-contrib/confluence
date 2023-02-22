@@ -1,4 +1,4 @@
-#-----------------------------------------------------
+.#-----------------------------------------------------
 .input|confluence+xhtml/1.0
 .#-----------------------------------------------------
 <ac:link><ri:user ri:username="user" /><ac:plain-text-link-body><![CDATA[label]]></ac:plain-text-link-body></ac:link>
