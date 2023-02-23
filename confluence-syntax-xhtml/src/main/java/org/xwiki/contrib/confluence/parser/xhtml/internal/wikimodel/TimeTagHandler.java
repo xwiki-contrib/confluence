@@ -19,7 +19,6 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
-import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
@@ -34,20 +33,34 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  * @version $Id$
  * @since 9.5
  */
-public class TimeTagHandler extends TagHandler implements ConfluenceTagHandler
+public class TimeTagHandler extends MacroTagHandler
 {
     /**
      * Constructor (checkstyle complains that this comment is missing although the other classes don't have it).
      */
     public TimeTagHandler()
     {
-        super(false);
+        super();
     }
 
     @Override
     protected void begin(TagContext context)
     {
-        String date = context.getParams().getParameter("datetime").getValue();
-        context.getScannerContext().onWord(date);
+        // Associate the time tag to a "date" macro that has a "value" and a "format" parameter.
+        ConfluenceMacro macro = new ConfluenceMacro();
+
+        macro.name = "date";
+        String dateTime = context.getParams().getParameter("datetime").getValue();
+        macro.parameters = macro.parameters.setParameter("value", dateTime);
+        macro.parameters = macro.parameters.setParameter("format", "yyyy-MM-dd");
+        context.getTagStack().pushStackParameter(CONFLUENCE_CONTAINER, macro);
+    }
+
+    @Override
+    protected void end(TagContext context)
+    {
+        ConfluenceMacro macro = (ConfluenceMacro) context.getTagStack().popStackParameter(CONFLUENCE_CONTAINER);
+
+        context.getScannerContext().onMacroInline(macro.name, macro.parameters, macro.content);
     }
 }
