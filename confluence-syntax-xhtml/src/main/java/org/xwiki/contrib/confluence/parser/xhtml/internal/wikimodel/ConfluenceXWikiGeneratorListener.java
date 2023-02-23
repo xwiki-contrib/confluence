@@ -158,15 +158,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
                 }
 
                 resourceReference = attachmentResourceReference;
-            } else if (confluenceReference.getUser() != null) {
-                UserResourceReference userResourceReference = new UserResourceReference(confluenceReference.getUser());
-
-                if (confluenceReference.getAnchor() != null) {
-                    userResourceReference.setAnchor(confluenceReference.getAnchor());
-                }
-
-                resourceReference = userResourceReference;
-            } else if (confluenceReference.getAnchor() != null) {
+            }  else if (confluenceReference.getAnchor() != null) {
                 DocumentResourceReference documentResourceReference = new DocumentResourceReference("");
                 documentResourceReference.setAnchor(confluenceReference.getAnchor());
                 resourceReference = documentResourceReference;
