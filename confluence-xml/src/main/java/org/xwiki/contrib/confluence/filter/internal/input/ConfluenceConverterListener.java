@@ -196,19 +196,21 @@ public class ConfluenceConverterListener extends WrappingListener
                 }
             }
         } else if (Objects.equals(reference.getType(), ResourceType.DOCUMENT)) {
-            // Parse the reference
-            EntityReference documentReference =
-                this.explicitResolver.resolve(reference.getReference(), EntityType.DOCUMENT);
+            if (StringUtils.isNotEmpty(reference.getReference())) {
+                // Parse the reference
+                EntityReference documentReference =
+                    this.explicitResolver.resolve(reference.getReference(), EntityType.DOCUMENT);
 
-            // Fix the reference according to entity conversion rules
-            EntityReference newDocumentReference = null;
-            for (EntityReference enityElement : documentReference.getReversedReferenceChain()) {
-                newDocumentReference = new EntityReference(this.stream.toEntityName(enityElement.getName()),
-                    enityElement.getType(), newDocumentReference);
+                // Fix the reference according to entity conversion rules
+                EntityReference newDocumentReference = null;
+                for (EntityReference enityElement : documentReference.getReversedReferenceChain()) {
+                    newDocumentReference = new EntityReference(this.stream.toEntityName(enityElement.getName()),
+                        enityElement.getType(), newDocumentReference);
+                }
+
+                // Serialize the fixed reference
+                reference.setReference(this.serializer.serialize(newDocumentReference));
             }
-
-            // Serialize the fixed reference
-            reference.setReference(this.serializer.serialize(newDocumentReference));
         }
 
         if (begin) {
