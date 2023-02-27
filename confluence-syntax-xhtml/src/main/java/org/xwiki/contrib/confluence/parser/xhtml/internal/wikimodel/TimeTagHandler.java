@@ -35,6 +35,8 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public class TimeTagHandler extends MacroTagHandler
 {
+    private static final String DATETIME_PARAMETER = "datetime";
+
     /**
      * Constructor (checkstyle complains that this comment is missing although the other classes don't have it).
      */
@@ -46,13 +48,11 @@ public class TimeTagHandler extends MacroTagHandler
     @Override
     protected void begin(TagContext context)
     {
-        // Associate the time tag to a "date" macro that has a "value" and a "format" parameter.
         ConfluenceMacro macro = new ConfluenceMacro();
 
-        macro.name = "date";
-        String dateTime = context.getParams().getParameter("datetime").getValue();
-        macro.parameters = macro.parameters.setParameter("value", dateTime);
-        macro.parameters = macro.parameters.setParameter("format", "yyyy-MM-dd");
+        macro.name = context.getName();
+        String dateTime = context.getParams().getParameter(DATETIME_PARAMETER).getValue();
+        macro.parameters = macro.parameters.setParameter(DATETIME_PARAMETER, dateTime);
         context.getTagStack().pushStackParameter(CONFLUENCE_CONTAINER, macro);
     }
 
