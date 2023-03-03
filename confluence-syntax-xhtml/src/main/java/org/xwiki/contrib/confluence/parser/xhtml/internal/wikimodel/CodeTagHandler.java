@@ -55,6 +55,7 @@ public class CodeTagHandler extends AbstractConfluenceTagHandler implements Conf
     {
         String content = getContent(context);
 
-        context.getScannerContext().onMacro("code", new WikiParameters().setParameter("language", "none"), content);
+        context.getScannerContext().onMacro("code", new WikiParameters().setParameter("language", "none"), content,
+            context.getTagStack().isInsideBlockElement());
     }
 }
