@@ -7,5 +7,5 @@
 .expect|event/1.0
 .#-----------------------------------------------------
 beginDocument
-onMacroStandalone [view-file] [att--filename=some-file.pdf|name=|height=250]
+onMacroStandalone [view-file] [att--filename=some-file.pdf|height=250]
 endDocument

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic>
+  <object class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+    <id name="key"><![CDATA[ff80808156e241950156e468e9510003]]></id>
+    <property name="name"><![CDATA[UserName2]]></property>
+    <property name="lowerName"><![CDATA[username]]></property>
+  </object>
+
+  <object class="InternalUser" package="com.atlassian.crowd.model.user">
+    <id name="id">163842</id>
+    <property name="name"><![CDATA[UserName]]></property>
+    <property name="lowerName"><![CDATA[username]]></property>
+    <property name="active">true</property>
+    <property name="createdDate">2016-05-10 15:00:02.760</property>
+    <property name="updatedDate">2016-05-10 15:00:02.760</property>
+    <property name="firstName"><![CDATA[User]]></property>
+    <property name="lowerFirstName"><![CDATA[user]]></property>
+    <property name="lastName"><![CDATA[Name]]></property>
+    <property name="lowerLastName"><![CDATA[name]]></property>
+    <property name="displayName"><![CDATA[User Name]]></property>
+    <property name="lowerDisplayName"><![CDATA[user name]]></property>
+    <property name="emailAddress"><![CDATA[user@mail.com]]></property>
+    <property name="lowerEmailAddress"><![CDATA[user@mail.com]]></property>
+  </object>
+
+  <object class="InternalUser" package="com.atlassian.crowd.model.user">
+    <id name="id">163843</id>
+    <property name="name"><![CDATA[C.ra ppy/User. /]]></property>
+    <property name="lowerName"><![CDATA[c.ra ppy/user. /]]></property>
+    <property name="active">true</property>
+    <property name="createdDate">2016-05-10 15:00:02.760</property>
+    <property name="updatedDate">2016-05-10 15:00:02.760</property>
+    <property name="firstName"><![CDATA[User]]></property>
+    <property name="lowerFirstName"><![CDATA[user]]></property>
+    <property name="lastName"><![CDATA[Name]]></property>
+    <property name="lowerLastName"><![CDATA[name]]></property>
+    <property name="displayName"><![CDATA[User Name]]></property>
+    <property name="lowerDisplayName"><![CDATA[user name]]></property>
+    <property name="emailAddress"><![CDATA[user@mail.com]]></property>
+    <property name="lowerEmailAddress"><![CDATA[user@mail.com]]></property>
+  </object>
+
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">100</id>
+    <property name="name"><![CDATA[TestSpace]]></property>
+    <property name="key"><![CDATA[TestSpace]]></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">10</id>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+      <id name="id">100</id>
+    </property>
+    <property name="title"><![CDATA[TestContent]]></property>
+    <collection name="bodyContents">
+      <element class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">0</id>
+      </element>
+    </collection>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">0</id>
+    <property name="body"><![CDATA[<ac:structured-macro ac:name="macroWithUserParams" ac:schema-version="1">
+          <ac:parameter ac:name="userParam1">
+            <ri:user ri:username="C.ra ppy/User. /" />
+          </ac:parameter>
+          <ac:parameter ac:name="userParam2">
+            <ri:user ri:username="UserName" />
+            <ri:user ri:account-id="ff80808156e241950156e468e9510003" />
+          </ac:parameter>
+        </ac:structured-macro>]]></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">10</id>
+    </property>
+    <property name="bodyType">2</property>
+    <property name="creatorName"><![CDATA[UserName]]></property>
+  </object>
+
+</hibernate-generic>
