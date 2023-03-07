@@ -7,6 +7,6 @@
 .expect|event/1.0
 .#-----------------------------------------------------
 beginDocument
-onMacroStandalone [profile] [.user=0123456789abcdefedcba98765432100|user=]
-onMacroStandalone [profile] [.user=user1|user=]
+onMacroStandalone [profile] [user--user=0123456789abcdefedcba98765432100]
+onMacroStandalone [profile] [user--user=user1]
 endDocument

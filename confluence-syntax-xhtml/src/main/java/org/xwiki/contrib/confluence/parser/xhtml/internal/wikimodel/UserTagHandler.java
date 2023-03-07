@@ -73,11 +73,18 @@ public class UserTagHandler extends TagHandler implements ConfluenceTagHandler
             }
             context.getScannerContext().onMacroInline(macro.name, macro.parameters, macro.content);
         } else if (container instanceof ConfluenceMacro) {
-            ConfluenceMacro macro = (ConfluenceMacro) container;            
+            ConfluenceMacro macro = (ConfluenceMacro) container;
+            WikiParameter macroParam = context.getParentContext().getParams().getParameter("ac:name");
+            String paramKey = macroParam != null ? "user--" + macroParam.getValue() : ".user";
+            WikiParameter currentMacroParam = macro.parameters.getParameter(paramKey);
+            String currentParamValue = currentMacroParam != null ?
+                currentMacroParam.getValue() + "," : "";
             if (usernameParameter != null) {
-                macro.parameters = macro.parameters.setParameter(".user", usernameParameter.getValue());
+                macro.parameters = macro.parameters.setParameter(paramKey,
+                    currentParamValue + usernameParameter.getValue());
             } else if (userkeyParameter != null) {
-                macro.parameters = macro.parameters.setParameter(".user", userkeyParameter.getValue());
+                macro.parameters = macro.parameters.setParameter(paramKey,
+                    currentParamValue + userkeyParameter.getValue());
             }
         }
     }

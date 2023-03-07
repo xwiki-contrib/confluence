@@ -30,6 +30,10 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  * <p>
  * {@code
  * <ac:parameter ac:name="title">State default macro</ac:parameter>
+ * <ac:parameter ac:name="users">
+ *   <ri:user ri:username="UserName" />
+ *   <ri:user ri:userkey="adasd123213asdas" />
+ * </ac:parameter>
  * }
  *
  * @version $Id$
@@ -45,7 +49,9 @@ public class MacroParameterTagHandler extends AbstractMacroParameterTagHandler i
         if (nameParameter != null) {
             String value = getContent(context);
 
-            macro.parameters = macro.parameters.setParameter(nameParameter.getValue(), value);
+            if (!value.trim().isEmpty()) {
+                macro.parameters = macro.parameters.setParameter(nameParameter.getValue(), value);
+            }
         }
     }
 }
