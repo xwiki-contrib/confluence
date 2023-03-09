@@ -26,40 +26,16 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  * <p>
  * Example (ending tags written with backslash instead of normal slash because of checkstyle):
  * <p>
- * {@code
- * <ac:task-status>complete<\ac:task-status>
- * }
- * 
+ * {@code <ac:task-status>complete<\ac:task-status> }
+ *
  * @version $Id$
  * @since 9.5
  */
-public class TaskStatusTagHandler extends AbstractConfluenceTagHandler
-    implements ConfluenceTagHandler
+public class TaskStatusTagHandler extends AbstractMacroParameterTagHandler
 {
-    /**
-     * Default constructor.
-     */
-    public TaskStatusTagHandler()
-    {
-        super(true);
-    }
-
     @Override
-    protected void begin(TagContext context)
+    protected void setParameter(MacroTagHandler.ConfluenceMacro macro, TagContext context)
     {
-        setAccumulateContent(true);
-    }
-
-    @Override
-    protected void end(TagContext context)
-    {
-        // write ticked or unticked checkbox depending on status
-        String status = getContent(context);
-        if (status.equals("complete")) {
-            context.getScannerContext().onWord("\u2611");
-        } else {
-            context.getScannerContext().onWord("\u2610");
-        }
-        context.getScannerContext().onSpace(" ");
+        macro.parameters = macro.parameters.setParameter("status", getContent(context));
     }
 }

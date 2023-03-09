@@ -19,26 +19,23 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
+
 /**
  * Handles task id.
  * <p>
  * Example (ending tags written with backslash instead of normal slash because of checkstyle):
  * <p>
- * {@code
- * <ac:task-id>1<\ac:task-id>
- * }
- * 
+ * {@code <ac:task-id>1<\ac:task-id> }
+ *
  * @version $Id$
  * @since 9.5
  */
-public class TaskIdTagHandler extends AbstractConfluenceTagHandler
-    implements ConfluenceTagHandler
+public class TaskIdTagHandler extends AbstractMacroParameterTagHandler
 {
-    /**
-     * Default constructor.
-     */
-    public TaskIdTagHandler()
+    @Override
+    protected void setParameter(MacroTagHandler.ConfluenceMacro macro, TagContext context)
     {
-        super(false);
+        macro.parameters = macro.parameters.setParameter("id", getContent(context));
     }
 }
