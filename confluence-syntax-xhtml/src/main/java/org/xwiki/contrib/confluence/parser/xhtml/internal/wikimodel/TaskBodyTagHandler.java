@@ -31,7 +31,7 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  * {@code <ac:task-body>Rich content <time datetime="01/01/2011" /><\ac:task-body>}
  *
  * @version $Id$
- * @since 9.19.2
+ * @since 9.20
  */
 public class TaskBodyTagHandler extends AbstractRichContentTagHandler
 {

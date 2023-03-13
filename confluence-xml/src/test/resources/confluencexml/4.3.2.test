@@ -1,6 +1,3 @@
-.#------------------------------------------------------------------------------
-.expect|filter+xml
-.#------------------------------------------------------------------------------
 <user name="Admin">
   <p>
     <parameters>
@@ -884,6 +881,7 @@ Content of the page including:
 11. 2c
 1. 3
 
+{{task-list}}
 {{task id="76" status="incomplete"}}
 Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du caractère @ pour la lui affecter
 {{/task}}
@@ -891,17 +889,25 @@ Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du cara
 {{task id="77" status="incomplete"}}
 task 2
 
+{{task-list}}
+
+
 {{task id="78" status="incomplete"}}
 task 2.1
+
+{{task-list}}
+
 
 {{task id="79" status="incomplete"}}
 task 2.1.1
 {{/task}}
+{{/task-list}}
 {{/task}}
 
 {{task id="80" status="incomplete"}}
 task 2.2
 {{/task}}
+{{/task-list}}
 {{/task}}
 
 {{task id="81" status="incomplete"}}
@@ -911,6 +917,7 @@ task 3
 {{task id="82" status="incomplete"}}
 Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
 {{/task}}
+{{/task-list}}
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -1044,6 +1051,7 @@ Content of the page including:
 11. 2c
 1. 3
 
+{{task-list}}
 {{task id="76" status="incomplete"}}
 Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du caractère @ pour la lui affecter
 {{/task}}
@@ -1051,17 +1059,25 @@ Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du cara
 {{task id="77" status="incomplete"}}
 task 2
 
+{{task-list}}
+
+
 {{task id="78" status="incomplete"}}
 task 2.1
+
+{{task-list}}
+
 
 {{task id="79" status="incomplete"}}
 task 2.1.1
 {{/task}}
+{{/task-list}}
 {{/task}}
 
 {{task id="80" status="incomplete"}}
 task 2.2
 {{/task}}
+{{/task-list}}
 {{/task}}
 
 {{task id="81" status="incomplete"}}
@@ -1071,6 +1087,7 @@ task 3
 {{task id="82" status="incomplete"}}
 Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
 {{/task}}
+{{/task-list}}
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -1414,6 +1431,7 @@ Content of the page including:
 11. 2c
 1. 3
 
+{{task-list}}
 {{task id="76" status="incomplete"}}
 Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du caractère @ pour la lui affecter
 {{/task}}
@@ -1421,17 +1439,25 @@ Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du cara
 {{task id="77" status="incomplete"}}
 task 2
 
+{{task-list}}
+
+
 {{task id="78" status="incomplete"}}
 task 2.1
+
+{{task-list}}
+
 
 {{task id="79" status="incomplete"}}
 task 2.1.1
 {{/task}}
+{{/task-list}}
 {{/task}}
 
 {{task id="80" status="incomplete"}}
 task 2.2
 {{/task}}
+{{/task-list}}
 {{/task}}
 
 {{task id="81" status="incomplete"}}
@@ -1441,6 +1467,7 @@ task 3
 {{task id="82" status="incomplete"}}
 Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
 {{/task}}
+{{/task-list}}
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -1784,6 +1811,7 @@ Content of the page including:
 11. 2c
 1. 3
 
+{{task-list}}
 {{task id="76" status="complete"}}
 Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du caractère @ pour la lui affecter
 {{/task}}
@@ -1791,17 +1819,25 @@ Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du cara
 {{task id="77" status="incomplete"}}
 task 2
 
+{{task-list}}
+
+
 {{task id="78" status="incomplete"}}
 task 2.1
+
+{{task-list}}
+
 
 {{task id="79" status="incomplete"}}
 task 2.1.1
 {{/task}}
+{{/task-list}}
 {{/task}}
 
 {{task id="80" status="incomplete"}}
 task 2.2
 {{/task}}
+{{/task-list}}
 {{/task}}
 
 {{task id="81" status="incomplete"}}
@@ -1811,6 +1847,7 @@ task 3
 {{task id="82" status="incomplete"}}
 Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
 {{/task}}
+{{/task-list}}
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -2154,6 +2191,7 @@ Content of the page including:
 11. 2c
 1. 3
 
+{{task-list}}
 {{task id="76" status="complete"}}
 Task 1 is checked\\
 {{/task}}
@@ -2161,17 +2199,25 @@ Task 1 is checked\\
 {{task id="77" status="incomplete"}}
 task 2
 
+{{task-list}}
+
+
 {{task id="78" status="incomplete"}}
 task 2.1
+
+{{task-list}}
+
 
 {{task id="79" status="incomplete"}}
 task 2.1.1
 {{/task}}
+{{/task-list}}
 {{/task}}
 
 {{task id="80" status="incomplete"}}
 task 2.2
 {{/task}}
+{{/task-list}}
 {{/task}}
 
 {{task id="81" status="incomplete"}}
@@ -2181,6 +2227,7 @@ task 3
 {{task id="82" status="incomplete"}}
 Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
 {{/task}}
+{{/task-list}}
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -2524,6 +2571,7 @@ Content of the page including:
 11. 2c
 1. 3
 
+{{task-list}}
 {{task id="76" status="complete"}}
 Task 1 is checked\\
 {{/task}}
@@ -2531,17 +2579,25 @@ Task 1 is checked\\
 {{task id="77" status="incomplete"}}
 task 2
 
+{{task-list}}
+
+
 {{task id="78" status="incomplete"}}
 task 2.1
+
+{{task-list}}
+
 
 {{task id="79" status="incomplete"}}
 task 2.1.1
 {{/task}}
+{{/task-list}}
 {{/task}}
 
 {{task id="80" status="incomplete"}}
 task 2.2
 {{/task}}
+{{/task-list}}
 {{/task}}
 
 {{task id="81" status="incomplete"}}
@@ -2551,6 +2607,7 @@ task 3
 {{task id="82" status="incomplete"}}
 Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
 {{/task}}
+{{/task-list}}
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -2901,6 +2958,7 @@ Content of the page including:
 11. 2c
 1. 3
 
+{{task-list}}
 {{task id="76" status="complete"}}
 Task 1 is checked\\
 {{/task}}
@@ -2908,17 +2966,25 @@ Task 1 is checked\\
 {{task id="77" status="incomplete"}}
 task 2
 
+{{task-list}}
+
+
 {{task id="78" status="incomplete"}}
 task 2.1
+
+{{task-list}}
+
 
 {{task id="79" status="incomplete"}}
 task 2.1.1
 {{/task}}
+{{/task-list}}
 {{/task}}
 
 {{task id="80" status="incomplete"}}
 task 2.2
 {{/task}}
+{{/task-list}}
 {{/task}}
 
 {{task id="81" status="incomplete"}}
@@ -2928,6 +2994,7 @@ task 3
 {{task id="82" status="incomplete"}}
 Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
 {{/task}}
+{{/task-list}}
 
 [[image:attach:9391963529_96f9f9b16c_o.jpg]]
 
@@ -3519,9 +3586,4 @@ To help you on your way, we've inserted some of our favourite macros on this hom
         </wikiObject>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
-  </wikiDocument>
-</wikiSpace>
-.#------------------------------------------------------------------------------
-.input|confluence+xml
-.configuration.source=4.3.2.xml.zip
-.#------------------------------------------------------------------------------
+  <
