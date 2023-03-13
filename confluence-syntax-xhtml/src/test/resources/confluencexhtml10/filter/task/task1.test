@@ -1,0 +1,74 @@
+.#------------------------------------------------------------------------------
+.input|confluence+xhtml/1.0
+.configuration.macroContentSyntax=event/1.0
+.#------------------------------------------------------------------------------
+<ac:task-list>
+    <ac:task>
+        <ac:task-id>1</ac:task-id>
+        <ac:task-status>complete</ac:task-status>
+        <ac:task-body>First task completed on <time datetime="2020-01-01" /></ac:task-body>
+    </ac:task>
+    <ac:task>
+        <ac:task-id>2</ac:task-id>
+        <ac:task-status>incomplete</ac:task-status>
+        <ac:task-body>Second task assigned to <ac:link><ri:user ri:username="User1" /></ac:link> deadline on <time datetime="2020-01-01" /></ac:task-body>
+    </ac:task>
+</ac:task-list>
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.#------------------------------------------------------------------------------
+<document>
+  <p>
+    <metadata>
+      <metadata>
+        <entry>
+          <string>syntax</string>
+          <org.xwiki.rendering.syntax.Syntax>
+            <type>
+              <name>Confluence</name>
+              <id>confluence+xhtml</id>
+            </type>
+            <version>1.0</version>
+          </org.xwiki.rendering.syntax.Syntax>
+        </entry>
+      </metadata>
+    </metadata>
+  </p>
+  <macro id="task-list">
+    <p>
+      <content>beginDocument [[syntax]=[Confluence 1.0]]
+onMacroStandalone [task] [id=1|status=complete] [beginDocument [[syntax]=[Confluence 1.0]]
+beginParagraph
+onWord [First]
+onSpace
+onWord [task]
+onSpace
+onWord [completed]
+onSpace
+onWord [on]
+onSpace
+onMacroInline [time] [datetime=2020-01-01]
+endParagraph
+endDocument [[syntax]=[Confluence 1.0]]]
+onMacroStandalone [task] [id=2|status=incomplete] [beginDocument [[syntax]=[Confluence 1.0]]
+beginParagraph
+onWord [Second]
+onSpace
+onWord [task]
+onSpace
+onWord [assigned]
+onSpace
+onWord [to]
+onSpace
+onMacroInline [mention] [reference=User1]
+onSpace
+onWord [deadline]
+onSpace
+onWord [on]
+onMacroInline [time] [datetime=2020-01-01]
+endParagraph
+endDocument [[syntax]=[Confluence 1.0]]]
+endDocument [[syntax]=[Confluence 1.0]]</content>
+    </p>
+  </macro>
+</document>

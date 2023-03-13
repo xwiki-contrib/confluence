@@ -61,8 +61,8 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.RichTextBody
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.SpaceTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TableCellTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TableHeadTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TaskBodyTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TaskIdTagHandler;
-import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TaskListTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TaskStatusTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TaskTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TimeTagHandler;
@@ -232,10 +232,11 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser implements In
 
         handlers.put("time", new TimeTagHandler());
 
-        handlers.put("ac:task-list", new TaskListTagHandler());
+        handlers.put("ac:task-list", new ElementMacroTagHandler(this));
         handlers.put("ac:task", new TaskTagHandler());
         handlers.put("ac:task-id", new TaskIdTagHandler());
         handlers.put("ac:task-status", new TaskStatusTagHandler());
+        handlers.put("ac:task-body", new TaskBodyTagHandler(this));
 
         parser.setExtraHandlers(handlers);
 

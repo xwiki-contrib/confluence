@@ -17,52 +17,38 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import org.xwiki.contrib.confluence.parser.xhtml.internal.ConfluenceXHTMLParser;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
- * Handles task-list tags using a normal list.
+ * Handles task-body tags.
  * <p>
  * Example (ending tags written with backslash instead of normal slash because of checkstyle):
  * <p>
- * {@code
- * <ac:task-list>
- * <ac:task>
- * <ac:task-id>1<\ac:task-id>
- * <ac:task-status>complete<\ac:task-status>
- * <ac:task-body>First task<\ac:task-body>
- * <\ac:task>
- * <ac:task>
- * <ac:task-id>2<\ac:task-id>
- * <ac:task-status>incomplete<\ac:task-status>
- * <ac:task-body>Second task<\ac:task-body>
- * <\ac:task>
- * <\ac:task-list>
- * }
+ * {@code <ac:task-body>Rich content <time datetime="01/01/2011" /><\ac:task-body>}
  *
  * @version $Id$
- * @since 9.5
+ * @since 9.20
  */
-public class TaskListTagHandler extends AbstractConfluenceTagHandler implements ConfluenceTagHandler
+public class TaskBodyTagHandler extends AbstractRichContentTagHandler
 {
     /**
-     * Constructor (checkstyle complains that this comment is missing although the other classes don't have it).
+     * @param parser is used access the parser and the rendering to use to manipulate the content
      */
-    public TaskListTagHandler()
+    public TaskBodyTagHandler(ConfluenceXHTMLParser parser)
     {
-        super(false);
+        super(parser);
     }
 
     @Override
-    protected void begin(TagContext context)
+    protected void endContent(String content, TagContext context)
     {
-        context.getScannerContext().beginList();
-    }
+        MacroTagHandler.ConfluenceMacro macro =
+            (MacroTagHandler.ConfluenceMacro) context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
 
-    @Override
-    protected void end(TagContext context)
-    {
-        context.getScannerContext().endList();
+        macro.content = content;
     }
 }

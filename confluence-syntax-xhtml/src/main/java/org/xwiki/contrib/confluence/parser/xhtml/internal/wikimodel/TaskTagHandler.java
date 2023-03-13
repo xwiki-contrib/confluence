@@ -19,7 +19,6 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
-import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
@@ -38,25 +37,18 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  * @version $Id$
  * @since 9.5
  */
-public class TaskTagHandler extends TagHandler implements ConfluenceTagHandler
+public class TaskTagHandler extends MacroTagHandler
 {
     /**
      * Constructor.
      */
-    public TaskTagHandler()
-    {
-        super(false);
-    }
-
     @Override
     protected void begin(TagContext context)
-    { 
-        context.getScannerContext().beginListItem("");
-    }
-
-    @Override
-    protected void end(TagContext context)
     {
-        context.getScannerContext().endListItem();
+        ConfluenceMacro macro = new ConfluenceMacro();
+
+        macro.name = "task";
+
+        context.getTagStack().pushStackParameter(CONFLUENCE_CONTAINER, macro);
     }
 }
