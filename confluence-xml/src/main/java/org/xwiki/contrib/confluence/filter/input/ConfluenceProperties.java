@@ -49,6 +49,9 @@ public class ConfluenceProperties extends PropertiesConfiguration
         ConfluenceProperties properties = builder.getConfiguration();
         properties.builder = builder;
 
+        // Disable interpolation
+        properties.setInterpolator(null);
+
         return properties;
     }
 
