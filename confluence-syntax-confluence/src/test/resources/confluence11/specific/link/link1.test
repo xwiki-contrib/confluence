@@ -1,0 +1,13 @@
+.#-----------------------------------------------------
+.input|confluence/1.1
+.#-----------------------------------------------------
+[|]
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+beginParagraph
+beginLink [Typed = [false] Type = [url] Reference = []] [false]
+endLink [Typed = [false] Type = [url] Reference = []] [false]
+endParagraph
+endDocument

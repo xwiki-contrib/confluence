@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.parser.confluence.internal.wikimodel;
 
+import org.apache.commons.lang3.StringUtils;
 import org.xwiki.rendering.wikimodel.IWikiReferenceParser;
 import org.xwiki.rendering.wikimodel.WikiParameters;
 import org.xwiki.rendering.wikimodel.WikiReference;
@@ -33,11 +34,15 @@ public class ConfluenceWikiReferenceParser implements IWikiReferenceParser
     public WikiReference parse(String str)
     {
         str = str.trim();
-        String[] array = str.split("[|]");
+        String[] array = StringUtils.split(str, '|');
         String link;
         String label;
         String tip;
-        if (array.length == 1) {
+        if (array.length == 0) {
+            link = "";
+            label = null;
+            tip = null;            
+        } else if (array.length == 1) {
             link = str;
             label = null;
             tip = null;
@@ -50,7 +55,7 @@ public class ConfluenceWikiReferenceParser implements IWikiReferenceParser
         if (tip != null) {
             params = params.addParameter("title", tip);
         }
-        WikiReference ref = new WikiReference(link, label, params);
-        return ref;
+
+        return new WikiReference(link, label, params);
     }
 }
