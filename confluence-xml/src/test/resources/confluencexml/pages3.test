@@ -13,13 +13,9 @@
             </entry>
           </parameters>
         </p>
-        <wikiObject name="SpaceA.Page0.WebHome">
+        <wikiObject name="Confluence.Code.ConfluencePageClass">
           <p>
             <parameters>
-              <entry>
-                <string>number</string>
-                <int>0</int>
-              </entry>
               <entry>
                 <string>class_reference</string>
                 <string>Confluence.Code.ConfluencePageClass</string>

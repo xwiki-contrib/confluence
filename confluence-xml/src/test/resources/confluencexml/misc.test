@@ -60,13 +60,9 @@
             </entry>
           </parameters>
         </p>
-        <wikiObject name="Test XWIKI-9803.WebHome">
+        <wikiObject name="XWiki.TagClass">
           <p>
             <parameters>
-              <entry>
-                <string>number</string>
-                <int>0</int>
-              </entry>
               <entry>
                 <string>class_reference</string>
                 <string>XWiki.TagClass</string>

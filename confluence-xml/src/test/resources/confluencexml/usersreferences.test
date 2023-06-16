@@ -96,13 +96,9 @@
             </entry>
           </parameters>
         </p>
-        <wikiObject name="TestSpace.TestContent.WebHome">
+        <wikiObject name="XWiki.XWikiComments">
           <p>
             <parameters>
-              <entry>
-                <string>number</string>
-                <int>0</int>
-              </entry>
               <entry>
                 <string>class_reference</string>
                 <string>XWiki.XWikiComments</string>
