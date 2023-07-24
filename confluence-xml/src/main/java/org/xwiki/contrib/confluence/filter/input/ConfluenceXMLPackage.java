@@ -686,6 +686,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return key != null ? key : spaceProperties.getString(KEY_SPACE_NAME);
     }
 
+    public Map<String, Long> getSpacesByKey()
+    {
+        return spacesByKey;
+    }
+
     /**
      * @return a map of spaces with their pages
      */

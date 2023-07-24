@@ -42,6 +42,7 @@ import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
+import org.xwiki.contrib.confluence.filter.event.ConfluencePackageReadEvent;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
@@ -69,6 +70,7 @@ import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.model.reference.LocalDocumentReference;
+import org.xwiki.observation.ObservationManager;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.parser.ParseException;
 import org.xwiki.rendering.parser.StreamParser;
@@ -117,6 +119,9 @@ public class ConfluenceInputFilterStream
     private EntityReferenceSerializer<String> serializer;
 
     @Inject
+    private ObservationManager observationManager;
+
+    @Inject
     private ConfluenceInputContext context;
 
     @Inject
@@ -157,6 +162,12 @@ public class ConfluenceInputFilterStream
             this.confluencePackage.read(this.properties.getSource());
         } catch (Exception e) {
             throw new FilterException("Failed to read package", e);
+        }
+        ConfluencePackageReadEvent readEvent = new ConfluencePackageReadEvent();
+        this.observationManager.notify(readEvent, this, this.confluencePackage);
+        if (readEvent.isCanceled()) {
+            closeConfluencePackage();
+            return;
         }
 
         Map<Long, List<Long>> pages = this.confluencePackage.getPages();
@@ -220,6 +231,11 @@ public class ConfluenceInputFilterStream
 
         // Cleanup
 
+        closeConfluencePackage();
+    }
+
+    private void closeConfluencePackage() throws FilterException
+    {
         try {
             this.confluencePackage.close();
         } catch (IOException e) {
