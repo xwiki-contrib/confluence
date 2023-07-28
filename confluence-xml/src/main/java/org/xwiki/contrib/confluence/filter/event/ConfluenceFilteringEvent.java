@@ -30,7 +30,7 @@ import org.xwiki.observation.event.AbstractCancelableEvent;
  * </ul>
  *
  * @version $Id$
- * @since 9.20.2
+ * @since 9.21.0
  */
 public class ConfluenceFilteringEvent extends AbstractCancelableEvent
 {

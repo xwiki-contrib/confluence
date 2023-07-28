@@ -31,7 +31,7 @@ import org.xwiki.observation.event.AbstractFilterableEvent;
  * </ul>
  *
  * @version $Id$
- * @since 9.20.2
+ * @since 9.21.0
  */
 public class ConfluenceFilteredEvent extends AbstractFilterableEvent
 {
