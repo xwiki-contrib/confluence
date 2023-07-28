@@ -42,7 +42,8 @@ import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
-import org.xwiki.contrib.confluence.filter.event.ConfluencePackageReadEvent;
+import org.xwiki.contrib.confluence.filter.event.ConfluenceFilteredEvent;
+import org.xwiki.contrib.confluence.filter.event.ConfluenceFilteringEvent;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
@@ -163,9 +164,9 @@ public class ConfluenceInputFilterStream
         } catch (Exception e) {
             throw new FilterException("Failed to read package", e);
         }
-        ConfluencePackageReadEvent readEvent = new ConfluencePackageReadEvent();
-        this.observationManager.notify(readEvent, this, this.confluencePackage);
-        if (readEvent.isCanceled()) {
+        ConfluenceFilteringEvent filteringEvent = new ConfluenceFilteringEvent();
+        this.observationManager.notify(filteringEvent, this, this.confluencePackage);
+        if (filteringEvent.isCanceled()) {
             closeConfluencePackage();
             return;
         }
@@ -230,6 +231,8 @@ public class ConfluenceInputFilterStream
         this.progress.popLevelProgress(this);
 
         // Cleanup
+
+        observationManager.notify(new ConfluenceFilteredEvent(), this, this.confluencePackage);
 
         closeConfluencePackage();
     }
@@ -423,7 +426,9 @@ public class ConfluenceInputFilterStream
         String contentStatus = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS);
         if (contentStatus != null
             && (contentStatus.equals("deleted") || contentStatus.equals("archived") || contentStatus.equals("draft")))
+        {
             return;
+        }
 
         FilterEventParameters documentParameters = new FilterEventParameters();
         if (this.properties.getDefaultLocale() != null) {

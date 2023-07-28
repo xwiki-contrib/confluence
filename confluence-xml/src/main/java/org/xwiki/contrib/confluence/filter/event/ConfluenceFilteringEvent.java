@@ -22,7 +22,7 @@ package org.xwiki.contrib.confluence.filter.event;
 import org.xwiki.observation.event.AbstractCancelableEvent;
 
 /**
- * Event emitted when the confluence package has been read.
+ * Event emitted after the confluence package has been read and the filtering process starts.
  *
  * <ul>
  * <li>source: the input filter stream that triggers the event.</li>
@@ -32,6 +32,6 @@ import org.xwiki.observation.event.AbstractCancelableEvent;
  * @version $Id$
  * @since 9.20.2
  */
-public class ConfluencePackageReadEvent extends AbstractCancelableEvent
+public class ConfluenceFilteringEvent extends AbstractCancelableEvent
 {
 }
