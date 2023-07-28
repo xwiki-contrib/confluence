@@ -42,6 +42,8 @@ import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
+import org.xwiki.contrib.confluence.filter.event.ConfluenceFilteredEvent;
+import org.xwiki.contrib.confluence.filter.event.ConfluenceFilteringEvent;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
@@ -69,6 +71,7 @@ import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.model.reference.LocalDocumentReference;
+import org.xwiki.observation.ObservationManager;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.parser.ParseException;
 import org.xwiki.rendering.parser.StreamParser;
@@ -117,6 +120,9 @@ public class ConfluenceInputFilterStream
     private EntityReferenceSerializer<String> serializer;
 
     @Inject
+    private ObservationManager observationManager;
+
+    @Inject
     private ConfluenceInputContext context;
 
     @Inject
@@ -157,6 +163,12 @@ public class ConfluenceInputFilterStream
             this.confluencePackage.read(this.properties.getSource());
         } catch (Exception e) {
             throw new FilterException("Failed to read package", e);
+        }
+        ConfluenceFilteringEvent filteringEvent = new ConfluenceFilteringEvent();
+        this.observationManager.notify(filteringEvent, this, this.confluencePackage);
+        if (filteringEvent.isCanceled()) {
+            closeConfluencePackage();
+            return;
         }
 
         Map<Long, List<Long>> pages = this.confluencePackage.getPages();
@@ -220,6 +232,13 @@ public class ConfluenceInputFilterStream
 
         // Cleanup
 
+        observationManager.notify(new ConfluenceFilteredEvent(), this, this.confluencePackage);
+
+        closeConfluencePackage();
+    }
+
+    private void closeConfluencePackage() throws FilterException
+    {
         try {
             this.confluencePackage.close();
         } catch (IOException e) {
@@ -407,7 +426,9 @@ public class ConfluenceInputFilterStream
         String contentStatus = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS);
         if (contentStatus != null
             && (contentStatus.equals("deleted") || contentStatus.equals("archived") || contentStatus.equals("draft")))
+        {
             return;
+        }
 
         FilterEventParameters documentParameters = new FilterEventParameters();
         if (this.properties.getDefaultLocale() != null) {
