@@ -457,7 +457,7 @@ public class ConfluenceInputFilterStream
 
         // Skip pages with empty title
         if (StringUtils.isEmpty(documentName)) {
-            this.logger.error("Found a page without a name or title (id={}). Skipping it.",
+            this.logger.warn("Found a page without a name or title (id={}). Skipping it.",
                 createPageIdentifier(pageId, spaceKey));
 
             return;
