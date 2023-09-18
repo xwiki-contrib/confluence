@@ -33,7 +33,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.configuration2.ex.ConfigurationException;
@@ -48,7 +47,6 @@ import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
-import org.xwiki.model.reference.EntityReferenceResolver;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.rendering.listener.WrappingListener;
@@ -86,10 +84,6 @@ public class ConfluenceConverterListener extends WrappingListener
 
     @Inject
     private EntityReferenceSerializer<String> serializer;
-
-    @Inject
-    @Named("relative")
-    private EntityReferenceResolver<String> explicitResolver;
 
     @Inject
     private Logger logger;
@@ -153,11 +147,9 @@ public class ConfluenceConverterListener extends WrappingListener
         return builder.toString();
     }
 
-    private void fixInternalLinks(ResourceReference reference, boolean freestanding, Map<String, String> parameters,
-        boolean begin)
+    private ResourceReference convert(ResourceReference reference)
     {
         ResourceReference fixedReference = reference;
-        Map<String, String> fixedParameters = parameters;
 
         if (CollectionUtils.isNotEmpty(this.properties.getBaseURLs())
             && Objects.equals(reference.getType(), ResourceType.URL)) {
@@ -196,28 +188,14 @@ public class ConfluenceConverterListener extends WrappingListener
                 }
             }
         } else if (Objects.equals(reference.getType(), ResourceType.DOCUMENT)) {
-            if (StringUtils.isNotEmpty(reference.getReference())) {
-                // Parse the reference
-                EntityReference documentReference =
-                    this.explicitResolver.resolve(reference.getReference(), EntityType.DOCUMENT);
-
-                // Fix the reference according to entity conversion rules
-                EntityReference newDocumentReference = null;
-                for (EntityReference enityElement : documentReference.getReversedReferenceChain()) {
-                    newDocumentReference = new EntityReference(this.stream.toEntityName(enityElement.getName()),
-                        enityElement.getType(), newDocumentReference);
-                }
-
-                // Serialize the fixed reference
-                reference.setReference(this.serializer.serialize(newDocumentReference));
-            }
+            // Make sure the reference follows the configured rules of conversion
+            reference.setReference(this.stream.convert(reference.getReference(), EntityType.DOCUMENT));
+        } else if (Objects.equals(reference.getType(), ResourceType.ATTACHMENT)) {
+            // Make sure the reference follows the configured rules of conversion
+            reference.setReference(this.stream.convert(reference.getReference(), EntityType.ATTACHMENT));
         }
 
-        if (begin) {
-            super.beginLink(fixedReference, freestanding, fixedParameters);
-        } else {
-            super.endLink(fixedReference, freestanding, fixedParameters);
-        }
+        return fixedReference;
     }
 
     private LocalDocumentReference fromPageId(String id) throws NumberFormatException, ConfigurationException
@@ -388,8 +366,8 @@ public class ConfluenceConverterListener extends WrappingListener
 
             super.beginLink(userReference, freestanding, parameters);
         } else {
-            // Fix URL entered by mistake instead of wiki links
-            fixInternalLinks(reference, freestanding, parameters, true);
+            // Fix and optimize the link reference according to various rules
+            super.beginLink(convert(reference), freestanding, parameters);
         }
     }
 
@@ -435,8 +413,15 @@ public class ConfluenceConverterListener extends WrappingListener
 
             super.endLink(userReference, freestanding, parameters);
         } else {
-            // Fix URL entered by mistake instead of wiki links
-            fixInternalLinks(reference, freestanding, parameters, false);
+            // Fix and optimize the link reference according to various rules
+            super.endLink(convert(reference), freestanding, parameters);
         }
+    }
+
+    @Override
+    public void onImage(ResourceReference reference, boolean freestanding, Map<String, String> parameters)
+    {
+        // Fix and optimize the link reference according to various rules
+        super.onImage(convert(reference), freestanding, parameters);
     }
 }

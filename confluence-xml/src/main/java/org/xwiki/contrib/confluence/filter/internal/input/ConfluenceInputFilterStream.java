@@ -70,6 +70,7 @@ import org.xwiki.job.event.status.JobProgressManager;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.EntityReference;
+import org.xwiki.model.reference.EntityReferenceResolver;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.observation.ObservationManager;
@@ -131,6 +132,10 @@ public class ConfluenceInputFilterStream
 
     @Inject
     private ConfluenceXMLPackage confluencePackage;
+
+    @Inject
+    @Named("relative")
+    private EntityReferenceResolver<String> relativeResolver;
 
     @Inject
     private Logger logger;
@@ -876,6 +881,56 @@ public class ConfluenceInputFilterStream
         }
 
         return name;
+    }
+
+    /**
+     * @param entityReference the reference to convert
+     * @return the converted reference
+     * @since 9.20.2
+     */
+    public EntityReference convert(EntityReference entityReference)
+    {
+        if (this.properties.isConvertToXWiki() && this.properties.isEntityNameValidation()) {
+            EntityReference newDocumentReference = null;
+
+            for (EntityReference entityElement : entityReference.getReversedReferenceChain()) {
+                if (entityElement.getType() == EntityType.DOCUMENT || entityElement.getType() == EntityType.SPACE) {
+                    newDocumentReference = new EntityReference(this.converter.convert(entityElement.getName()),
+                        entityElement.getType(), newDocumentReference);
+                } else if (newDocumentReference == null || entityElement.getParent() == newDocumentReference) {
+                    newDocumentReference = entityElement;
+                } else {
+                    newDocumentReference = new EntityReference(entityElement, newDocumentReference);
+                }
+            }
+
+            return newDocumentReference;
+        }
+
+        return entityReference;
+    }
+
+    /**
+     * @param entityReference the reference to convert
+     * @param entityType the type of the reference
+     * @return the converted reference
+     * @since 9.20.2
+     */
+    public String convert(String entityReference, EntityType entityType)
+    {
+        if (StringUtils.isNotEmpty(entityReference) && this.properties.isConvertToXWiki()
+            && this.properties.isEntityNameValidation()) {
+            // Parse the reference
+            EntityReference documentReference = this.relativeResolver.resolve(entityReference, entityType);
+
+            // Fix the reference according to entity conversion rules
+            documentReference = convert(documentReference);
+
+            // Serialize the fixed reference
+            return this.serializer.serialize(documentReference);
+        }
+
+        return entityReference;
     }
 
     /**

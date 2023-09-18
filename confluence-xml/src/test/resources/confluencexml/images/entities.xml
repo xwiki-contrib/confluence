@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic>
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">100</id>
+    <property name="name"><![CDATA[TestSpace]]></property>
+    <property name="key"><![CDATA[TestSpace]]></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">10</id>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+      <id name="id">100</id>
+    </property>
+    <property name="title"><![CDATA[TestContent]]></property>
+    <property name="parent" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">12</id>
+    </property>
+    <collection name="bodyContents">
+      <element class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">0</id>
+      </element>
+    </collection>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">0</id>
+    <property name="body">
+      <![CDATA[
+        <p>
+          <ac:image>
+            <ri:attachment ri:filename="image.png">
+              <ri:page ri:content-title="pagetovalidate" ri:space-key="spacetovalidate"/>
+            </ri:attachment>
+          </ac:image>
+        </p>
+      ]]>
+    </property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">10</id>
+    </property>
+    <property name="bodyType">2</property>
+  </object>
+
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">101</id>
+    <property name="name"><![CDATA[Other Space]]></property>
+    <property name="key"><![CDATA[Other Space]]></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">11</id>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+      <id name="id">101</id>
+    </property>
+    <property name="title"><![CDATA[Other Page]]></property>
+  </object>
+
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">102</id>
+    <property name="name"><![CDATA[spacetovalidate]]></property>
+    <property name="key"><![CDATA[spacetovalidate]]></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">12</id>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+      <id name="id">102</id>
+    </property>
+    <property name="title"><![CDATA[pagetovalidate]]></property>
+    <collection name="bodyContents">
+      <element class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">0</id>
+      </element>
+    </collection>
+  </object>
+</hibernate-generic>

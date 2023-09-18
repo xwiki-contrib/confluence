@@ -1,0 +1,82 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Various links and reference related tests
+.#------------------------------------------------------------------------------
+<wikiSpace name="TestSpace">
+  <wikiDocument name="TestContent">
+    <wikiDocumentLocale>
+      <wikiDocumentRevision>
+        <p>
+          <parameters>
+            <entry>
+              <string>parent_reference</string>
+              <org.xwiki.model.reference.EntityReference>
+                <name>validatedpage</name>
+                <parent>
+                  <name>validatedspace</name>
+                  <type>SPACE</type>
+                </parent>
+                <type>DOCUMENT</type>
+              </org.xwiki.model.reference.EntityReference>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>TestContent</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>[[image:attach:validatedspace.validatedpage@image.png]]</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+<wikiSpace name="Other Space">
+  <wikiDocument name="Other Page">
+    <wikiDocumentLocale>
+      <wikiDocumentRevision>
+        <p>
+          <parameters>
+            <entry>
+              <string>title</string>
+              <string>Other Page</string>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+<wikiSpace name="validatedspace">
+  <wikiDocument name="validatedpage">
+    <wikiDocumentLocale>
+      <wikiDocumentRevision>
+        <p>
+          <parameters>
+            <entry>
+              <string>title</string>
+              <string>pagetovalidate</string>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=images
+.configuration.baseURLs=https://baseurl1.com,https://baseurl2.com,https://baseurl3.com,https://baseurl4.com,https://baseurl5.com/
+.#------------------------------------------------------------------------------

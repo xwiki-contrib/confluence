@@ -43,7 +43,7 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(FilterTestSuite.class)
 @AllComponents
-@FilterTestSuite.Scope(value = "confluencexml"/* , pattern = "links.test"*/)
+@FilterTestSuite.Scope(value = "confluencexml"/*, pattern = "images.test"*/)
 public class IntegrationTests
 {
     @FilterTestSuite.Initialized
