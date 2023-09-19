@@ -414,6 +414,21 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String KEY_USER_PASSWORD = "credential";
 
     /**
+     * The property key to access the blog post page.
+     */
+    public static final String KEY_PAGE_BLOGPOST = "blogpost";
+
+    /**
+     * The property key to access the page home page.
+     */
+    public static final String KEY_PAGE_BLOGHOMEPAGE = "bloghomepage";
+
+    /**
+     * The property key to access the entity id.
+     */
+    public static final String KEY_ENTITY_ID = "id";
+
+    /**
      * The date format in a Confluence package (2012-03-07 17:16:48.158).
      */
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
@@ -459,6 +474,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private File tree;
 
     private Map<Long, List<Long>> pages = new LinkedHashMap<>();
+
+    private Map<Long, List<Long>> blogPages = new LinkedHashMap<>();
 
     private Map<String, Long> spacesByKey = new HashMap<>();
 
@@ -703,6 +720,25 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return this.pages;
     }
 
+    /**
+     * @return a map of blog spaces with their pages
+     * @since 9.22.1
+     */
+    public Map<Long, List<Long>> getBlogPages()
+    {
+        return this.blogPages;
+    }
+
+    /**
+     * @param the Id to generate a new Id from
+     * @return the new Id
+     * @since 9.22.1
+     */
+    public Long computeNewId(Long id)
+    {
+        return id * 100;
+    }
+
     private void createTree()
         throws XMLStreamException, FactoryConfigurationError, IOException, ConfigurationException, FilterException
     {
@@ -757,6 +793,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 readSpacePermissionObject(xmlReader);
             } else if (type.equals("Attachment")) {
                 readAttachmentObject(xmlReader);
+            } else if (type.equals("BlogPost")) {
+                readBlogPostObject(xmlReader);
             } else {
                 ConfluenceProperties properties = new ConfluenceProperties();
 
@@ -942,6 +980,42 @@ public class ConfluenceXMLPackage implements AutoCloseable
         }
     }
 
+    private void readBlogPostObject(XMLStreamReader xmlReader)
+        throws XMLStreamException, ConfigurationException, FilterException
+    {
+        ConfluenceProperties properties = new ConfluenceProperties();
+
+        properties.setProperty(KEY_PAGE_BLOGPOST, true);
+
+        long pageId = readObjectProperties(xmlReader, properties);
+
+        savePageProperties(properties, pageId);
+
+        Long spaceId = properties.getLong("space", null);
+
+        // Register blog post page
+        Long originalVersion = (Long) properties.getProperty("originalVersion");
+        if (originalVersion == null) {
+            Long blogSpaceId = computeNewId(spaceId);
+            List<Long> blogSpacePages = this.blogPages.computeIfAbsent(blogSpaceId, k -> new LinkedList<>());
+
+            // First, register the Blog descriptor (home page) if not already registered
+            File spacePropertiesFile = getSpacePropertiesFile(blogSpaceId);
+            if (!spacePropertiesFile.exists()) {
+                // Blog Descriptor page
+                ConfluenceProperties blogHomePageProperties = new ConfluenceProperties();
+                blogHomePageProperties.setProperty(KEY_PAGE_BLOGHOMEPAGE, true);
+                Long blogHomePageId = computeNewId(blogSpaceId);
+                blogHomePageProperties.setProperty(KEY_ENTITY_ID, blogHomePageId);
+                savePageProperties(blogHomePageProperties, blogHomePageId);
+
+                blogSpacePages.add(blogHomePageId);
+            }
+
+            blogSpacePages.add(pageId);
+        }
+    }
+
     private void readInternalUserObject(XMLStreamReader xmlReader)
         throws XMLStreamException, ConfigurationException, FilterException
     {
@@ -1025,7 +1099,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
         } else if (propertyClass.equals("java.util.Set")) {
             return readSetProperty(xmlReader);
         } else if (propertyClass.equals("Page") || propertyClass.equals("Space") || propertyClass.equals("BodyContent")
-            || propertyClass.equals("Attachment") || propertyClass.equals("SpaceDescription")
+            || propertyClass.equals("Attachment") || propertyClass.equals("BlogPost") || propertyClass.equals("SpaceDescription")
             || propertyClass.equals("Labelling") || propertyClass.equals("Label")
             || propertyClass.equals("SpacePermission") || propertyClass.equals("InternalGroup")
             || propertyClass.equals("InternalUser") || propertyClass.equals("Comment")

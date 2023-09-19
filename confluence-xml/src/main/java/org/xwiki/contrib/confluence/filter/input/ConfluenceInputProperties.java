@@ -124,6 +124,16 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private boolean storeConfluenceDetailsEnabled;
 
     /**
+     * @see #isBlogsEnabled()
+     */
+    private boolean blogsEnabled = true;
+
+    /**
+     * @see #getBlogSpaceName()
+     */
+    private String blogSpaceName = "Blog";
+
+    /**
      * @return The source to load the wiki from
      */
     @PropertyName("The source")
@@ -499,5 +509,45 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setStoreConfluenceDetailsEnabled(boolean storeConfluenceDetails)
     {
         this.storeConfluenceDetailsEnabled = storeConfluenceDetails;
+    }
+
+    /**
+     * @return if true, import the blog posts found in the confluence package
+     * @since 9.22.1
+     */
+    @PropertyName("Import blog posts")
+    @PropertyDescription("Import the blog posts found in the confluence package.")
+    public boolean isBlogsEnabled()
+    {
+        return this.blogsEnabled;
+    }
+
+    /**
+     * @param blogsEnabled if true, import the blog posts found in the confluence package
+     * @since 9.22.1
+     */
+    public void setBlogsEnabled(boolean blogsEnabled)
+    {
+        this.blogsEnabled = blogsEnabled;
+    }
+
+    /**
+     * @return The name to use for blog space
+     * @since 9.22.1
+     */
+    @PropertyName("Blog Space name")
+    @PropertyDescription("The name to use for blog space")
+    public String getBlogSpaceName()
+    {
+        return this.blogSpaceName;
+    }
+
+    /**
+     * @param blogSpaceName The name to use for blog space
+     * @since 9.22.1
+     */
+    public void setBlogSpaceName(String blogSpaceName)
+    {
+        this.blogSpaceName = blogSpaceName;
     }
 }

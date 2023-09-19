@@ -100,6 +100,10 @@ public class ConfluenceInputFilterStream
 
     private static final String COMMENTS_CLASSNAME = "XWiki.XWikiComments";
 
+    private static final String BLOG_CLASSNAME = "Blog.BlogClass";
+
+    private static final String BLOG_POST_CLASSNAME = "Blog.BlogPostClass";
+
     @Inject
     @Named(ConfluenceParser.SYNTAX_STRING)
     private StreamParser confluenceWIKIParser;
@@ -178,6 +182,7 @@ public class ConfluenceInputFilterStream
         }
 
         Map<Long, List<Long>> pages = this.confluencePackage.getPages();
+        Map<Long, List<Long>> blogPages = this.confluencePackage.getBlogPages();
 
         if (this.properties.isUsersEnabled()) {
             Collection<Long> users = this.confluencePackage.getInternalUsers();
@@ -240,6 +245,13 @@ public class ConfluenceInputFilterStream
                 this.progress.endStep(this);
             }
 
+            // Generate Blog events
+            Long blogSpaceId = this.confluencePackage.computeNewId(spaceId);
+            List<Long> blogSpacePages = blogPages.get(blogSpaceId);
+            if (this.properties.isBlogsEnabled() && blogSpacePages != null && blogSpacePages.size() > 0) {
+                generateBlogEvents(blogSpaceId, filter, proxyFilter);
+            }
+
             // < WikiSpace
             proxyFilter.endWikiSpace(spaceKey, spaceParameters);
         }
@@ -251,6 +263,42 @@ public class ConfluenceInputFilterStream
         observationManager.notify(new ConfluenceFilteredEvent(), this, this.confluencePackage);
 
         closeConfluencePackage();
+    }
+
+    private void generateBlogEvents(Long blogSpaceId, Object filter, ConfluenceFilter proxyFilter)
+        throws FilterException
+    {
+        FilterEventParameters spaceParameters = new FilterEventParameters();
+
+        ConfluenceProperties blogSpaceProperties;
+
+        try {
+            blogSpaceProperties = this.confluencePackage.getSpaceProperties(blogSpaceId);
+        } catch (ConfigurationException e) {
+            throw new FilterException("Failed to get space properties", e);
+        }
+
+        String blogSpaceKey = toEntityName(this.properties.getBlogSpaceName());
+
+        FilterEventParameters blogSpaceParameters = new FilterEventParameters();
+
+        // > WikiSpace
+        proxyFilter.beginWikiSpace(blogSpaceKey, blogSpaceParameters);
+
+        Map<Long, List<Long>> blogPages = this.confluencePackage.getBlogPages();
+        for (long pageId : blogPages.get(blogSpaceId)) {
+            this.progress.startStep(this);
+            try {
+                readPage(pageId, blogSpaceKey, filter, proxyFilter);
+            } catch (Exception e) {
+                logger.error("Failed to filter the page with id [{}]. Cause: [{}].",
+                    createPageIdentifier(pageId, blogSpaceKey), ExceptionUtils.getRootCauseMessage(e));
+            }
+            this.progress.endStep(this);
+        }
+
+        // < WikiSpace
+        proxyFilter.endWikiSpace(blogSpaceKey, blogSpaceParameters);
     }
 
     private PageIdentifier createPageIdentifier(Long pageId, String spaceKey)
@@ -454,7 +502,8 @@ public class ConfluenceInputFilterStream
         }
 
         String documentName;
-        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
+        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)
+            || pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_BLOGHOMEPAGE)) {
             documentName = this.properties.getSpacePageName();
         } else {
             documentName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
@@ -821,6 +870,17 @@ public class ConfluenceInputFilterStream
 
         for (Long commentId : pageComments.keySet()) {
             readPageComment(pageId, spaceKey, proxyFilter, commentId, pageComments, commentIndeces);
+        }
+
+        // Blog home page
+        if (this.properties.isBlogsEnabled()
+            && pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_BLOGHOMEPAGE)) {
+            storeBlogDescriptorObject(pageId, spaceKey, proxyFilter);
+        }
+
+        // Blog post
+        if (this.properties.isBlogsEnabled() && pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_BLOGPOST)) {
+            storeBlogPostObject(pageId, spaceKey, proxyFilter, documentRevisionParameters);
         }
 
         if (this.properties.isStoreConfluenceDetailsEnabled()) {
@@ -1199,6 +1259,56 @@ public class ConfluenceInputFilterStream
         proxyFilter.onWikiObjectProperty("replyto", parentIndex, FilterEventParameters.EMPTY);
 
         proxyFilter.endWikiObject(COMMENTS_CLASSNAME, commentParameters);
+    }
+
+    /**
+     * @since 9.22.1
+     */
+    private void storeBlogDescriptorObject(Long pageId, String spaceKey, ConfluenceFilter proxyFilter)
+        throws FilterException
+    {
+        FilterEventParameters blogParameters = new FilterEventParameters();
+
+        // Blog Object
+        blogParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, BLOG_CLASSNAME);
+
+        proxyFilter.beginWikiObject(BLOG_CLASSNAME, blogParameters);
+
+        // Object properties
+        proxyFilter.onWikiObjectProperty("title", this.properties.getBlogSpaceName(), FilterEventParameters.EMPTY);
+        proxyFilter.onWikiObjectProperty("postsLayout", "image", FilterEventParameters.EMPTY);
+        proxyFilter.onWikiObjectProperty("displayType", "paginated", FilterEventParameters.EMPTY);
+
+        proxyFilter.endWikiObject(BLOG_CLASSNAME, blogParameters);
+    }
+
+    /**
+     * @since 9.22.1
+     */
+    private void storeBlogPostObject(Long pageId, String spaceKey, ConfluenceFilter proxyFilter,
+        FilterEventParameters documentRevisionParameters) throws FilterException
+    {
+        FilterEventParameters blogPostParameters = new FilterEventParameters();
+
+        // Blog Post Object
+        blogPostParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, BLOG_POST_CLASSNAME);
+
+        proxyFilter.beginWikiObject(BLOG_POST_CLASSNAME, blogPostParameters);
+
+        // Object properties
+        proxyFilter.onWikiObjectProperty("title", documentRevisionParameters.get(WikiDocumentFilter.PARAMETER_TITLE),
+            FilterEventParameters.EMPTY);
+        proxyFilter.onWikiObjectProperty("content",
+            documentRevisionParameters.get(WikiDocumentFilter.PARAMETER_CONTENT), FilterEventParameters.EMPTY);
+        proxyFilter.onWikiObjectProperty("publishDate",
+            documentRevisionParameters.get(WikiDocumentFilter.PARAMETER_REVISION_DATE), FilterEventParameters.EMPTY);
+
+        // The blog post 'published' property is always set to true because unpublished blog posts are draft pages and
+        // draft pages are skipped during the import.
+        proxyFilter.onWikiObjectProperty("published", 1, FilterEventParameters.EMPTY);
+        proxyFilter.onWikiObjectProperty("hidden", 0, FilterEventParameters.EMPTY);
+
+        proxyFilter.endWikiObject(BLOG_POST_CLASSNAME, blogPostParameters);
     }
 
     private ConfluenceProperties getContentProperties(ConfluenceProperties properties, String key)
