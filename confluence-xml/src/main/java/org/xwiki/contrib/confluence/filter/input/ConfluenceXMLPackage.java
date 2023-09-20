@@ -782,7 +782,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
                 long id = readObjectProperties(xmlReader, properties);
 
-                // Save page
                 saveObjectProperties(properties, id);
             }
         }
@@ -866,7 +865,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
         Long pageId = getAttachmentPageId(properties);
 
         if (pageId != null) {
-            // Save attachment
             saveAttachmentProperties(properties, pageId, attachmentId);
         }
     }
@@ -889,7 +887,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         long spaceId = readObjectProperties(xmlReader, properties);
 
-        // Save page
         saveSpaceProperties(properties, spaceId);
 
         // Register space by id
@@ -911,7 +908,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         properties.setProperty(KEY_PAGE_HOMEPAGE, true);
 
-        // Save page
         savePageProperties(properties, descriptionId);
     }
 
@@ -924,7 +920,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         Long spaceId = properties.getLong("space", null);
         if (spaceId != null) {
-            // Save attachment
             saveSpacePermissionsProperties(properties, spaceId, permissionId);
         }
     }
@@ -950,7 +945,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         long pageId = readObjectProperties(xmlReader, properties);
 
-        // Save page
         savePageProperties(properties, pageId);
 
         // Register only current pages (they will take care of handling there history)
@@ -989,7 +983,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         long pageId = readObjectProperties(xmlReader, properties);
 
-        // Save page
         saveObjectProperties(FOLDER_INTERNALUSER, properties, pageId);
     }
 
@@ -1000,7 +993,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         String pageId = readImplObjectProperties(xmlReader, properties);
 
-        // Save page
         saveObjectProperties(FOLDER_USERIMPL, properties, pageId);
     }
 
@@ -1011,7 +1003,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         long pageId = readObjectProperties(xmlReader, properties);
 
-        // Save page
         saveObjectProperties(FOLDER_GROUP, properties, pageId);
     }
 
