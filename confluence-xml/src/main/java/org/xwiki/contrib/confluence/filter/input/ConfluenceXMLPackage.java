@@ -85,7 +85,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String FILE_ENTITIES = "entities.xml";
 
     /**
-     * The name of the file containing informations about the instance.
+     * The name of the file containing information about the instance.
      */
     public static final String FILE_DESCRIPTOR = "exportDescriptor.properties";
 
@@ -662,7 +662,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     }
 
     /**
-     * @param spaceProperties the properties containing informations about the space
+     * @param spaceProperties the properties containing information about the space
      * @return the value to use as name for the space
      */
     public static String getSpaceName(ConfluenceProperties spaceProperties)
@@ -685,7 +685,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     }
 
     /**
-     * @param spaceProperties the properties containing informations about the space
+     * @param spaceProperties the properties containing information about the space
      * @return the value to use as key for the space
      */
     public static String getSpaceKey(ConfluenceProperties spaceProperties)
@@ -1287,7 +1287,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     /**
      * @param pageId the identifier of the page
      * @param create true of the properties should be created when they don't exist
-     * @return the properties containing informations about the page
+     * @return the properties containing information about the page
      * @throws ConfigurationException when failing to create the properties
      */
     public ConfluenceProperties getPageProperties(long pageId, boolean create) throws ConfigurationException
@@ -1299,7 +1299,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * @param objectId the identifier of the object
-     * @return the properties containing informations about the object
+     * @return the properties containing information about the object
      * @throws ConfigurationException when failing to create the properties
      */
     public ConfluenceProperties getObjectProperties(Long objectId) throws ConfigurationException
@@ -1310,7 +1310,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     /**
      * @param folder the folder where the object properties are stored
      * @param objectId the identifier of the object
-     * @return the properties containing informations about the object
+     * @return the properties containing information about the object
      * @throws ConfigurationException when failing to create the properties
      */
     public ConfluenceProperties getObjectProperties(String folder, Long objectId) throws ConfigurationException
@@ -1331,7 +1331,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
      * @param folder the folder where the object properties are stored
      * @param objectId the identifier of the object
      * @param create true if the properties should be created when they don't exist
-     * @return the properties containing informations about the object
+     * @return the properties containing information about the object
      * @throws ConfigurationException when failing to create the properties
      */
     public ConfluenceProperties getObjectProperties(String folder, String objectId, boolean create)
@@ -1348,7 +1348,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * @param userId the identifier of the user
-     * @return the properties containing informations about the user
+     * @return the properties containing information about the user
      * @throws ConfigurationException when failing to create the properties
      */
     public ConfluenceProperties getInternalUserProperties(Long userId) throws ConfigurationException
@@ -1358,7 +1358,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * @param userKey the key of the user
-     * @return the properties containing informations about the user
+     * @return the properties containing information about the user
      * @throws ConfigurationException when failing to create the properties
      */
     public ConfluenceProperties getUserImplProperties(String userKey) throws ConfigurationException
@@ -1368,7 +1368,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * @param userIdOrKey the identifier or key of the user
-     * @return the properties containing informations about the user
+     * @return the properties containing information about the user
      * @throws ConfigurationException when failing to create the properties
      */
     public ConfluenceProperties getUserProperties(String userIdOrKey) throws ConfigurationException
@@ -1454,7 +1454,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * @param groupId the identifier of the group
-     * @return the properties containing informations about the group
+     * @return the properties containing information about the group
      * @throws ConfigurationException when failing to create the properties
      */
     public ConfluenceProperties getGroupProperties(Long groupId) throws ConfigurationException
@@ -1465,7 +1465,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     /**
      * @param pageId the identifier of the page where the attachment is located
      * @param attachmentId the identifier of the attachment
-     * @return the properties containing informations about the attachment
+     * @return the properties containing information about the attachment
      * @throws ConfigurationException when failing to create the properties
      */
     public ConfluenceProperties getAttachmentProperties(long pageId, long attachmentId) throws ConfigurationException
@@ -1478,7 +1478,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     /**
      * @param spaceId the identifier of the space
      * @param permissionId the identifier of the permission
-     * @return the properties containing informations about the space permission
+     * @return the properties containing information about the space permission
      * @throws ConfigurationException when failing to create the properties
      */
     public ConfluenceProperties getSpacePermissionProperties(long spaceId, long permissionId)
@@ -1491,7 +1491,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * @param spaceId the identifier of the space
-     * @return the properties containing informations about the space
+     * @return the properties containing information about the space
      * @throws ConfigurationException when failing to create the properties
      */
     public ConfluenceProperties getSpaceProperties(long spaceId) throws ConfigurationException
@@ -1573,7 +1573,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     }
 
     /**
-     * @return the file containing informations about the Confluence instance
+     * @return the file containing information about the Confluence instance
      */
     public File getDescriptor()
     {
@@ -1628,7 +1628,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     }
 
     /**
-     * @param attachmentProperties the properties containing attachment informations
+     * @param attachmentProperties the properties containing attachment information
      * @return the name of the attachment
      */
     public String getAttachmentName(ConfluenceProperties attachmentProperties)
@@ -1642,7 +1642,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     }
 
     /**
-     * @param attachmentProperties the properties containing attachment informations
+     * @param attachmentProperties the properties containing attachment information
      * @return the version of the attachment
      */
     public Long getAttachementVersion(ConfluenceProperties attachmentProperties)
@@ -1656,7 +1656,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     }
 
     /**
-     * @param attachmentProperties the properties containing attachment informations
+     * @param attachmentProperties the properties containing attachment information
      * @param def the default value to return in can of error
      * @return the identifier of the attachment original version
      */
@@ -1669,7 +1669,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     }
 
     /**
-     * @param labellingProperties the properties containing the tag informations
+     * @param labellingProperties the properties containing the tag information
      * @return the name of the tag
      */
     public String getTagName(ConfluenceProperties labellingProperties)
