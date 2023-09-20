@@ -39,8 +39,6 @@ import org.xml.sax.XMLReader;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
-import org.xwiki.component.phase.Initializable;
-import org.xwiki.component.phase.InitializationException;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceXHTMLInputProperties;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.CodeTagHandler;
@@ -96,14 +94,12 @@ import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 @Component
 @Named(ConfluenceXHTMLParser.SYNTAX_STRING)
 @Singleton
-public class ConfluenceXHTMLParser extends AbstractWikiModelParser implements Initializable
+public class ConfluenceXHTMLParser extends AbstractWikiModelParser
 {
     /**
      * The identifier of the syntax.
      */
     public static final String SYNTAX_STRING = ConfluenceXHTMLInputProperties.FILTER_STREAM_TYPE_STRING;
-
-    private static final String XMLXDOM = "xdom+xml/current";
 
     /**
      * @see #getLinkReferenceParser()
@@ -127,28 +123,9 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser implements In
     @Named("context")
     private Provider<ComponentManager> componentManagerProvider;
 
-    private StreamParser xmlParser;
-
-    private PrintRendererFactory xmlRenderer;
-
     private PrintRendererFactory macroContentRendererFactory;
 
     private WrappingListener converter;
-
-    @Override
-    public void initialize() throws InitializationException
-    {
-        ComponentManager componentManager = this.componentManagerProvider.get();
-
-        if (componentManager.hasComponent(StreamParser.class, XMLXDOM)) {
-            try {
-                this.xmlParser = componentManager.getInstance(StreamParser.class, XMLXDOM);
-                this.xmlRenderer = componentManager.getInstance(PrintRendererFactory.class, XMLXDOM);
-            } catch (ComponentLookupException e) {
-                throw new InitializationException("Failed lookup XDOM+XML parser", e);
-            }
-        }
-    }
 
     @Override
     public Syntax getSyntax()
@@ -159,7 +136,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser implements In
     @Override
     public StreamParser getLinkLabelParser()
     {
-        return this.xmlParser;
+        return null;
     }
 
     private XWikiReferenceTagHandler createXWikiReferenceTagHandler() throws ParseException
@@ -178,7 +155,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser implements In
             }
         }
 
-        return new XWikiReferenceTagHandler(this, this.xmlRenderer);
+        return new XWikiReferenceTagHandler(this);
     }
 
     @Override
@@ -269,7 +246,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser implements In
     }
 
     @Override
-    protected void parse(final Reader source, Listener listener, IdGenerator idGenerator) throws ParseException
+    public void parse(final Reader source, Listener listener, IdGenerator idGenerator) throws ParseException
     {
         String content;
         try {

@@ -22,8 +22,11 @@
           <string>syntax</string>
           <org.xwiki.rendering.syntax.Syntax>
             <type>
-              <name>Confluence</name>
-              <id>confluence+xhtml</id>
+              <name>Confluence (XHTML)</name>
+              <id>confluence</id>
+              <variants>
+                <string>xhtml</string>
+              </variants>
             </type>
             <version>1.0</version>
           </org.xwiki.rendering.syntax.Syntax>
@@ -33,26 +36,26 @@
   </p>
   <macro id="layout">
     <p>
-      <content>beginDocument [[syntax]=[Confluence 1.0]]
-onMacroStandalone [layout-section] [ac:type=two_equal|ac:breakout-mode=default] [beginDocument [[syntax]=[Confluence 1.0]]
-onMacroStandalone [layout-cell] [] [beginDocument [[syntax]=[Confluence 1.0]]
+      <content>beginDocument [[syntax]=[Confluence (XHTML) 1.0]]
+onMacroStandalone [layout-section] [ac:type=two_equal|ac:breakout-mode=default] [beginDocument [[syntax]=[Confluence (XHTML) 1.0]]
+onMacroStandalone [layout-cell] [] [beginDocument [[syntax]=[Confluence (XHTML) 1.0]]
 beginParagraph
 onWord [Test1]
 endParagraph
-endDocument [[syntax]=[Confluence 1.0]]]
-onMacroStandalone [layout-cell] [] [beginDocument [[syntax]=[Confluence 1.0]]
+endDocument [[syntax]=[Confluence (XHTML) 1.0]]]
+onMacroStandalone [layout-cell] [] [beginDocument [[syntax]=[Confluence (XHTML) 1.0]]
 beginParagraph
 onWord [Test2]
 endParagraph
-endDocument [[syntax]=[Confluence 1.0]]]
-endDocument [[syntax]=[Confluence 1.0]]]
-onMacroStandalone [layout-section] [ac:type=fixed-width|ac:breakout-mode=default] [beginDocument [[syntax]=[Confluence 1.0]]
-onMacroStandalone [layout-cell] [] [beginDocument [[syntax]=[Confluence 1.0]]
+endDocument [[syntax]=[Confluence (XHTML) 1.0]]]
+endDocument [[syntax]=[Confluence (XHTML) 1.0]]]
+onMacroStandalone [layout-section] [ac:type=fixed-width|ac:breakout-mode=default] [beginDocument [[syntax]=[Confluence (XHTML) 1.0]]
+onMacroStandalone [layout-cell] [] [beginDocument [[syntax]=[Confluence (XHTML) 1.0]]
 beginParagraph
 endParagraph
-endDocument [[syntax]=[Confluence 1.0]]]
-endDocument [[syntax]=[Confluence 1.0]]]
-endDocument [[syntax]=[Confluence 1.0]]</content>
+endDocument [[syntax]=[Confluence (XHTML) 1.0]]]
+endDocument [[syntax]=[Confluence (XHTML) 1.0]]]
+endDocument [[syntax]=[Confluence (XHTML) 1.0]]</content>
     </p>
   </macro>
 </document>

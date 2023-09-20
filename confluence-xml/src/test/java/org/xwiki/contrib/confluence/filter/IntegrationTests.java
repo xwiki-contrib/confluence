@@ -23,6 +23,7 @@ import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.xwiki.environment.Environment;
+import org.xwiki.filter.input.InputFilterStreamFactory;
 import org.xwiki.filter.test.integration.FilterTestSuite;
 import org.xwiki.model.validation.EntityNameValidation;
 import org.xwiki.model.validation.EntityNameValidationManager;
@@ -71,5 +72,7 @@ public class IntegrationTests
         componentManager.registerMockComponent(ObservationManager.class);
         // Replace the MentionMacroConverter with a copy of it that does not generate random anchors.
         componentManager.registerComponent(MacroConverter.class, "mention", new DeterministicMentionMacroConverter());
+        // Unregister the instance input filter stream factory since we don't need it here
+        componentManager.registerMockComponent(InputFilterStreamFactory.class, "xwiki+instance");
     }
 }

@@ -24,8 +24,11 @@
           <string>syntax</string>
           <org.xwiki.rendering.syntax.Syntax>
             <type>
-              <name>Confluence</name>
-              <id>confluence+xhtml</id>
+              <name>Confluence (XHTML)</name>
+              <id>confluence</id>
+              <variants>
+                <string>xhtml</string>
+              </variants>
             </type>
             <version>1.0</version>
           </org.xwiki.rendering.syntax.Syntax>

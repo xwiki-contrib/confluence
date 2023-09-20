@@ -539,7 +539,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 String path = zipEntry.getName();
                 File file = new File(this.directory, path);
 
-                FileUtils.copyInputStreamToFile(new CloseShieldInputStream(zais), file);
+                FileUtils.copyInputStreamToFile(CloseShieldInputStream.wrap(zais), file);
             }
         }
     }

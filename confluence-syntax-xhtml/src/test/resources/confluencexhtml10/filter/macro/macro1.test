@@ -25,8 +25,11 @@
           <string>syntax</string>
           <org.xwiki.rendering.syntax.Syntax>
             <type>
-              <name>Confluence</name>
-              <id>confluence+xhtml</id>
+              <name>Confluence (XHTML)</name>
+              <id>confluence</id>
+              <variants>
+                <string>xhtml</string>
+              </variants>
             </type>
             <version>1.0</version>
           </org.xwiki.rendering.syntax.Syntax>
@@ -46,7 +49,7 @@
           <string>value</string>
         </entry>
       </parameters>
-      <content>beginDocument [[syntax]=[Confluence 1.0]]
+      <content>beginDocument [[syntax]=[Confluence (XHTML) 1.0]]
 beginParagraph
 onWord [rich]
 onSpace
@@ -56,18 +59,18 @@ endFormat [BOLD]
 onSpace
 onWord [here]
 endParagraph
-endDocument [[syntax]=[Confluence 1.0]]</content>
+endDocument [[syntax]=[Confluence (XHTML) 1.0]]</content>
     </p>
   </macro>
   <macro id="macro">
     <p>
-      <content>beginDocument [[syntax]=[Confluence 1.0]]
+      <content>beginDocument [[syntax]=[Confluence (XHTML) 1.0]]
 beginParagraph
 onWord [simple]
 onSpace
 onWord [content]
 endParagraph
-endDocument [[syntax]=[Confluence 1.0]]</content>
+endDocument [[syntax]=[Confluence (XHTML) 1.0]]</content>
     </p>
   </macro>
 </document>

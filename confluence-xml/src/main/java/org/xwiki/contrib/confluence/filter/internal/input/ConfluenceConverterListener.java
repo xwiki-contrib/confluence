@@ -424,4 +424,11 @@ public class ConfluenceConverterListener extends WrappingListener
         // Fix and optimize the link reference according to various rules
         super.onImage(convert(reference), freestanding, parameters);
     }
+
+    @Override
+    public void onImage(ResourceReference reference, boolean freestanding, String id, Map<String, String> parameters)
+    {
+        // Fix and optimize the link reference according to various rules
+        super.onImage(convert(reference), freestanding, id, parameters);
+    }
 }

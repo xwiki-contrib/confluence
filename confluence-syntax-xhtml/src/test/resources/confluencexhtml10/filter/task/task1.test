@@ -25,8 +25,11 @@
           <string>syntax</string>
           <org.xwiki.rendering.syntax.Syntax>
             <type>
-              <name>Confluence</name>
-              <id>confluence+xhtml</id>
+              <name>Confluence (XHTML)</name>
+              <id>confluence</id>
+              <variants>
+                <string>xhtml</string>
+              </variants>
             </type>
             <version>1.0</version>
           </org.xwiki.rendering.syntax.Syntax>
@@ -36,8 +39,8 @@
   </p>
   <macro id="task-list">
     <p>
-      <content>beginDocument [[syntax]=[Confluence 1.0]]
-onMacroStandalone [task] [id=1|status=complete] [beginDocument [[syntax]=[Confluence 1.0]]
+      <content>beginDocument [[syntax]=[Confluence (XHTML) 1.0]]
+onMacroStandalone [task] [id=1|status=complete] [beginDocument [[syntax]=[Confluence (XHTML) 1.0]]
 beginParagraph
 onWord [First]
 onSpace
@@ -49,8 +52,8 @@ onWord [on]
 onSpace
 onMacroInline [time] [datetime=2020-01-01]
 endParagraph
-endDocument [[syntax]=[Confluence 1.0]]]
-onMacroStandalone [task] [id=2|status=incomplete] [beginDocument [[syntax]=[Confluence 1.0]]
+endDocument [[syntax]=[Confluence (XHTML) 1.0]]]
+onMacroStandalone [task] [id=2|status=incomplete] [beginDocument [[syntax]=[Confluence (XHTML) 1.0]]
 beginParagraph
 onWord [Second]
 onSpace
@@ -67,8 +70,8 @@ onSpace
 onWord [on]
 onMacroInline [time] [datetime=2020-01-01]
 endParagraph
-endDocument [[syntax]=[Confluence 1.0]]]
-endDocument [[syntax]=[Confluence 1.0]]</content>
+endDocument [[syntax]=[Confluence (XHTML) 1.0]]]
+endDocument [[syntax]=[Confluence (XHTML) 1.0]]</content>
     </p>
   </macro>
 </document>

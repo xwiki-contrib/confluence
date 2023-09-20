@@ -471,8 +471,7 @@ public class ConfluenceInputFilterStream
         // Skip deleted, archived or draft pages
         String contentStatus = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS);
         if (contentStatus != null
-            && (contentStatus.equals("deleted") || contentStatus.equals("archived") || contentStatus.equals("draft")))
-        {
+            && (contentStatus.equals("deleted") || contentStatus.equals("archived") || contentStatus.equals("draft"))) {
             return;
         }
 
@@ -652,12 +651,12 @@ public class ConfluenceInputFilterStream
             }
         }
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISION_AUTHOR)) {
-            documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_REVISION_AUTHOR,
+            documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_REVISION_EFFECTIVEMETADATA_AUTHOR,
                 toUserReference(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION_AUTHOR)));
         } else if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISION_AUTHOR_KEY)) {
             String authorKey = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION_AUTHOR_KEY);
             String authorName = toUserReference(resolveUserName(authorKey, authorKey));
-            documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_REVISION_AUTHOR, authorName);
+            documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_REVISION_EFFECTIVEMETADATA_AUTHOR, authorName);
         }
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISION_DATE)) {
             try {
@@ -694,8 +693,8 @@ public class ConfluenceInputFilterStream
                     bodySyntax = Syntax.CONFLUENCEXHTML_1_0;
                     break;
                 default:
-                    this.logger.warn("Unknown body type [{}] for the content of the document with id [{}].",
-                        bodyType, createPageIdentifier(pageId, spaceKey));
+                    this.logger.warn("Unknown body type [{}] for the content of the document with id [{}].", bodyType,
+                        createPageIdentifier(pageId, spaceKey));
                     break;
             }
         }
@@ -1095,8 +1094,7 @@ public class ConfluenceInputFilterStream
                 attachmentParameters.put(WikiAttachmentFilter.PARAMETER_REVISION_DATE, this.confluencePackage
                     .getDate(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE));
             } catch (Exception e) {
-                this.logger.warn(
-                    "Failed to parse the revision date of the attachment [{}] in page [{}]. Cause: [{}].",
+                this.logger.warn("Failed to parse the revision date of the attachment [{}] in page [{}]. Cause: [{}].",
                     attachmentId, createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
             }
         }
