@@ -415,18 +415,9 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * The property key to access the blog post page.
+     * @since 9.24.0
      */
     public static final String KEY_PAGE_BLOGPOST = "blogpost";
-
-    /**
-     * The property key to access the page home page.
-     */
-    public static final String KEY_PAGE_BLOGHOMEPAGE = "bloghomepage";
-
-    /**
-     * The property key to access the entity id.
-     */
-    public static final String KEY_ENTITY_ID = "id";
 
     /**
      * The date format in a Confluence package (2012-03-07 17:16:48.158).
@@ -722,21 +713,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * @return a map of blog spaces with their pages
-     * @since 9.22.1
+     * @since 9.24.0
      */
     public Map<Long, List<Long>> getBlogPages()
     {
         return this.blogPages;
-    }
-
-    /**
-     * @param the Id to generate a new Id from
-     * @return the new Id
-     * @since 9.22.1
-     */
-    public Long computeNewId(Long id)
-    {
-        return id * 100;
     }
 
     private void createTree()
@@ -991,28 +972,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         savePageProperties(properties, pageId);
 
-        Long spaceId = properties.getLong("space", null);
-
-        // Register blog post page
+        // Register only current pages (they will take care of handling there history)
         Long originalVersion = (Long) properties.getProperty("originalVersion");
         if (originalVersion == null) {
-            Long blogSpaceId = computeNewId(spaceId);
-            List<Long> blogSpacePages = this.blogPages.computeIfAbsent(blogSpaceId, k -> new LinkedList<>());
-
-            // First, register the Blog descriptor (home page) if not already registered
-            File spacePropertiesFile = getSpacePropertiesFile(blogSpaceId);
-            if (!spacePropertiesFile.exists()) {
-                // Blog Descriptor page
-                ConfluenceProperties blogHomePageProperties = new ConfluenceProperties();
-                blogHomePageProperties.setProperty(KEY_PAGE_BLOGHOMEPAGE, true);
-                Long blogHomePageId = computeNewId(blogSpaceId);
-                blogHomePageProperties.setProperty(KEY_ENTITY_ID, blogHomePageId);
-                savePageProperties(blogHomePageProperties, blogHomePageId);
-
-                blogSpacePages.add(blogHomePageId);
-            }
-
-            blogSpacePages.add(pageId);
+            Long spaceId = properties.getLong("space", null);
+            List<Long> blogPages = this.blogPages.computeIfAbsent(spaceId, k -> new LinkedList<>());
+            blogPages.add(pageId);
         }
     }
 

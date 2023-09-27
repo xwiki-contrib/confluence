@@ -513,7 +513,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
 
     /**
      * @return if true, import the blog posts found in the confluence package
-     * @since 9.22.1
+     * @since 9.24.0
      */
     @PropertyName("Import blog posts")
     @PropertyDescription("Import the blog posts found in the confluence package.")
@@ -524,7 +524,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
 
     /**
      * @param blogsEnabled if true, import the blog posts found in the confluence package
-     * @since 9.22.1
+     * @since 9.24.0
      */
     public void setBlogsEnabled(boolean blogsEnabled)
     {
@@ -533,7 +533,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
 
     /**
      * @return The name to use for blog space
-     * @since 9.22.1
+     * @since 9.24.0
      */
     @PropertyName("Blog Space name")
     @PropertyDescription("The name to use for blog space")
@@ -544,7 +544,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
 
     /**
      * @param blogSpaceName The name to use for blog space
-     * @since 9.22.1
+     * @since 9.24.0
      */
     public void setBlogSpaceName(String blogSpaceName)
     {
