@@ -49,6 +49,7 @@
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -122,6 +123,7 @@ h6. Navigate space
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -204,6 +206,7 @@ h6. Navigate space
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>

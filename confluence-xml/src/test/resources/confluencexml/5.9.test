@@ -220,6 +220,7 @@
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -324,6 +325,7 @@ Confluence puts your content online in a central place where your team can searc
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -419,6 +421,7 @@ Confluence puts your content online in a central place where your team can searc
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -534,6 +537,7 @@ When// y//ou're ready, click **Save** and go to the next step or back to the sp
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -708,6 +712,7 @@ You can type into the editor as you would in any document, apply formatting, and
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -902,6 +907,7 @@ The Files button is not just for images, you can insert and preview a wide range
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -1081,6 +1087,7 @@ You can add as many sections as you need, and each section can have a different 
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -1244,6 +1251,7 @@ Add, remove, cut, and paste rows and columns – this makes working with tables 
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -1382,6 +1390,7 @@ The user will be notified that you mentioned them.
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -1470,6 +1479,7 @@ See yo</string>
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -1586,6 +1596,7 @@ Flickr photo streams, Twitter streams, Google maps and many more.
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -1675,6 +1686,7 @@ Confluence will send the person an email message about this page. Shared!
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>

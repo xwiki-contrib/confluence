@@ -25,11 +25,11 @@
   <parent>
     <groupId>org.xwiki.contrib</groupId>
     <artifactId>parent-platform</artifactId>
-    <version>12.10-1</version>
+    <version>14.10</version>
   </parent>
   <groupId>org.xwiki.contrib.confluence</groupId>
   <artifactId>confluence</artifactId>
-  <version>9.22.1-SNAPSHOT</version>
+  <version>9.23.1-SNAPSHOT</version>
   <name>Confluence - Parent POM</name>
   <description>Parent POM for Concluence modules</description>
   <packaging>pom</packaging>
@@ -61,27 +61,4 @@
     <module>confluence-syntax-confluence</module>
     <module>confluence-syntax-confluence10override</module>
   </modules>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.revapi</groupId>
-        <artifactId>revapi-maven-plugin</artifactId>
-        <configuration>
-          <analysisConfiguration><![CDATA[
-            {
-              "revapi": {
-                "ignore" : [
-                  {
-                    "code": "java.method.removed",
-                    "old": "method org.xwiki.model.reference.EntityReference org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage::getReferenceFromId(org.xwiki.contrib.confluence.filter.input.ConfluenceProperties, java.lang.String) throws org.apache.commons.configuration2.ex.ConfigurationException, org.xwiki.filter.FilterException",
-                    "justification": "This API does not make sense at this level"
-                  }
-                ]
-              }
-            }
-          ]]></analysisConfiguration>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 </project>

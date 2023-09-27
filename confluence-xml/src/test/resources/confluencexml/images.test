@@ -1,6 +1,6 @@
 .#------------------------------------------------------------------------------
 .expect|filter+xml
-.# Various links and reference related tests
+.# Various images related tests
 .#------------------------------------------------------------------------------
 <wikiSpace name="TestSpace">
   <wikiDocument name="TestContent">
@@ -33,6 +33,7 @@
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
