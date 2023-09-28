@@ -414,6 +414,13 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String KEY_USER_PASSWORD = "credential";
 
     /**
+     * The property key to access the blog post page.
+     * 
+     * @since 9.24.0
+     */
+    public static final String KEY_PAGE_BLOGPOST = "blogpost";
+
+    /**
      * The date format in a Confluence package (2012-03-07 17:16:48.158).
      */
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
@@ -459,6 +466,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private File tree;
 
     private Map<Long, List<Long>> pages = new LinkedHashMap<>();
+
+    private Map<Long, List<Long>> blogPages = new LinkedHashMap<>();
 
     private Map<String, Long> spacesByKey = new HashMap<>();
 
@@ -703,6 +712,15 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return this.pages;
     }
 
+    /**
+     * @return a map of blog spaces with their pages
+     * @since 9.24.0
+     */
+    public Map<Long, List<Long>> getBlogPages()
+    {
+        return this.blogPages;
+    }
+
     private void createTree()
         throws XMLStreamException, FactoryConfigurationError, IOException, ConfigurationException, FilterException
     {
@@ -757,6 +775,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 readSpacePermissionObject(xmlReader);
             } else if (type.equals("Attachment")) {
                 readAttachmentObject(xmlReader);
+            } else if (type.equals("BlogPost")) {
+                readBlogPostObject(xmlReader);
             } else {
                 ConfluenceProperties properties = new ConfluenceProperties();
 
@@ -942,6 +962,26 @@ public class ConfluenceXMLPackage implements AutoCloseable
         }
     }
 
+    private void readBlogPostObject(XMLStreamReader xmlReader)
+        throws XMLStreamException, ConfigurationException, FilterException
+    {
+        ConfluenceProperties properties = new ConfluenceProperties();
+
+        properties.setProperty(KEY_PAGE_BLOGPOST, true);
+
+        long pageId = readObjectProperties(xmlReader, properties);
+
+        savePageProperties(properties, pageId);
+
+        // Register only current pages (they will take care of handling there history)
+        Long originalVersion = (Long) properties.getProperty("originalVersion");
+        if (originalVersion == null) {
+            Long spaceId = properties.getLong("space", null);
+            List<Long> blogPages = this.blogPages.computeIfAbsent(spaceId, k -> new LinkedList<>());
+            blogPages.add(pageId);
+        }
+    }
+
     private void readInternalUserObject(XMLStreamReader xmlReader)
         throws XMLStreamException, ConfigurationException, FilterException
     {
@@ -1025,11 +1065,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
         } else if (propertyClass.equals("java.util.Set")) {
             return readSetProperty(xmlReader);
         } else if (propertyClass.equals("Page") || propertyClass.equals("Space") || propertyClass.equals("BodyContent")
-            || propertyClass.equals("Attachment") || propertyClass.equals("SpaceDescription")
-            || propertyClass.equals("Labelling") || propertyClass.equals("Label")
-            || propertyClass.equals("SpacePermission") || propertyClass.equals("InternalGroup")
-            || propertyClass.equals("InternalUser") || propertyClass.equals("Comment")
-            || propertyClass.equals("ContentProperty")) {
+            || propertyClass.equals("Attachment") || propertyClass.equals("BlogPost")
+            || propertyClass.equals("SpaceDescription") || propertyClass.equals("Labelling")
+            || propertyClass.equals("Label") || propertyClass.equals("SpacePermission")
+            || propertyClass.equals("InternalGroup") || propertyClass.equals("InternalUser")
+            || propertyClass.equals("Comment") || propertyClass.equals("ContentProperty")) {
             return readObjectReference(xmlReader);
         } else if (propertyClass.equals("ConfluenceUserImpl")) {
             return readImplObjectReference(xmlReader);
