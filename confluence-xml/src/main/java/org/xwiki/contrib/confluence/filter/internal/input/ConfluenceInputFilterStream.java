@@ -1325,7 +1325,8 @@ public class ConfluenceInputFilterStream
         proxyFilter.endWikiDocument(documentName, FilterEventParameters.EMPTY);
     }
 
-    private void addBlogPostObject(String title, String content, Date publishDate, ConfluenceFilter proxyFilter) throws FilterException
+    private void addBlogPostObject(String title, String content, Date publishDate, ConfluenceFilter proxyFilter)
+        throws FilterException
     {
         FilterEventParameters blogPostParameters = new FilterEventParameters();
 

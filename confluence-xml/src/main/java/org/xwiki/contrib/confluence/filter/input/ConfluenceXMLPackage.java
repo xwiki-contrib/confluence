@@ -415,6 +415,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * The property key to access the blog post page.
+     * 
      * @since 9.24.0
      */
     public static final String KEY_PAGE_BLOGPOST = "blogpost";
@@ -1064,11 +1065,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
         } else if (propertyClass.equals("java.util.Set")) {
             return readSetProperty(xmlReader);
         } else if (propertyClass.equals("Page") || propertyClass.equals("Space") || propertyClass.equals("BodyContent")
-            || propertyClass.equals("Attachment") || propertyClass.equals("BlogPost") || propertyClass.equals("SpaceDescription")
-            || propertyClass.equals("Labelling") || propertyClass.equals("Label")
-            || propertyClass.equals("SpacePermission") || propertyClass.equals("InternalGroup")
-            || propertyClass.equals("InternalUser") || propertyClass.equals("Comment")
-            || propertyClass.equals("ContentProperty")) {
+            || propertyClass.equals("Attachment") || propertyClass.equals("BlogPost")
+            || propertyClass.equals("SpaceDescription") || propertyClass.equals("Labelling")
+            || propertyClass.equals("Label") || propertyClass.equals("SpacePermission")
+            || propertyClass.equals("InternalGroup") || propertyClass.equals("InternalUser")
+            || propertyClass.equals("Comment") || propertyClass.equals("ContentProperty")) {
             return readObjectReference(xmlReader);
         } else if (propertyClass.equals("ConfluenceUserImpl")) {
             return readImplObjectReference(xmlReader);
