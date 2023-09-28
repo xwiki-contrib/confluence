@@ -291,7 +291,7 @@ public class ConfluenceInputFilterStream
             proxyFilter.beginWikiSpace(blogSpaceKey, FilterEventParameters.EMPTY);
 
             // Blog Descriptor page
-            storeBlogDescriptorPage(proxyFilter);
+            addBlogDescriptorPage(proxyFilter);
 
             // Blog post pages
             for (long pageId : entry.getValue()) {
@@ -761,7 +761,8 @@ public class ConfluenceInputFilterStream
             }
         }
 
-        // Content
+        // Generate page content when the page is a regular page or the value of the "content" property of the
+        // "Blog.BlogPostClass" object if the page is a blog post.
         if (!pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_BLOGPOST)) {
             if (bodyContent != null) {
                 if (this.properties.isContentEvents() && filter instanceof Listener) {
@@ -802,18 +803,20 @@ public class ConfluenceInputFilterStream
         } else {
             String blogPostContent = bodyContent;
 
-            if (bodyContent != null && this.properties.isConvertToXWiki()) {
-                // Convert content to XWiki syntax
-                try {
-                    blogPostContent = convertToXWiki21(bodyContent, bodyType);
-                    documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, Syntax.XWIKI_2_1);
-                } catch (Exception e) {
-                    this.logger.warn("Failed to convert content of the page with id [{}]. Cause: [{}].",
-                        createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+            if (bodyContent != null) {
+                if (this.properties.isConvertToXWiki()) {
+                    // Convert content to XWiki syntax
+                    try {
+                        blogPostContent = convertToXWiki21(bodyContent, bodyType);
+                        documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, Syntax.XWIKI_2_1);
+                    } catch (Exception e) {
+                        this.logger.warn("Failed to convert content of the page with id [{}]. Cause: [{}].",
+                            createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                    }
+                } else {
+                    // Keep Confluence syntax
+                    documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, bodySyntax);
                 }
-            } else if (bodyContent != null) {
-                // Keep Confluence syntax
-                documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, bodySyntax);
             }
 
             // > WikiDocumentRevision
@@ -830,7 +833,7 @@ public class ConfluenceInputFilterStream
                     createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
             }
 
-            storeBlogPostObject(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE), blogPostContent,
+            addBlogPostObject(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE), blogPostContent,
                 publishDate, proxyFilter);
         }
 
@@ -1296,10 +1299,7 @@ public class ConfluenceInputFilterStream
         proxyFilter.endWikiObject(COMMENTS_CLASSNAME, commentParameters);
     }
 
-    /**
-     * @since 9.24.0
-     */
-    private void storeBlogDescriptorPage(ConfluenceFilter proxyFilter) throws FilterException
+    private void addBlogDescriptorPage(ConfluenceFilter proxyFilter) throws FilterException
     {
         // Apply the standard entity name validator
         String documentName = toEntityName(this.properties.getSpacePageName());
@@ -1325,10 +1325,7 @@ public class ConfluenceInputFilterStream
         proxyFilter.endWikiDocument(documentName, FilterEventParameters.EMPTY);
     }
 
-    /**
-     * @since 9.24.0
-     */
-    private void storeBlogPostObject(String title, String content, Date publishDate, ConfluenceFilter proxyFilter) throws FilterException
+    private void addBlogPostObject(String title, String content, Date publishDate, ConfluenceFilter proxyFilter) throws FilterException
     {
         FilterEventParameters blogPostParameters = new FilterEventParameters();
 
