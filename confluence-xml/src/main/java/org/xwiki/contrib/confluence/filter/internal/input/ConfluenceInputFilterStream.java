@@ -985,7 +985,7 @@ public class ConfluenceInputFilterStream
     /**
      * @param entityReference the reference to convert
      * @return the converted reference
-     * @since 9.24.0
+     * @since 9.22.1
      */
     public EntityReference convert(EntityReference entityReference)
     {
@@ -1013,7 +1013,7 @@ public class ConfluenceInputFilterStream
      * @param entityReference the reference to convert
      * @param entityType the type of the reference
      * @return the converted reference
-     * @since 9.24.0
+     * @since 9.22.1
      */
     public String convert(String entityReference, EntityType entityType)
     {
