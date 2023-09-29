@@ -559,6 +559,7 @@ public class ConfluenceInputFilterStream
                     createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
             }
         }
+
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISION)) {
             documentLocaleParameters.put(WikiDocumentFilter.PARAMETER_LASTREVISION,
                 pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION));
