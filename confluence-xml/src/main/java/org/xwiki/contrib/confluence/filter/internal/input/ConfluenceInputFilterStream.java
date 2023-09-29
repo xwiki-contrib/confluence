@@ -536,6 +536,17 @@ public class ConfluenceInputFilterStream
         // > WikiDocument
         proxyFilter.beginWikiDocument(documentName, documentParameters);
 
+        if (this.properties.isContentsEnabled()) {
+            sendRevisions(pageId, spaceKey, filter, proxyFilter, pageProperties);
+        }
+
+        // < WikiDocument
+        proxyFilter.endWikiDocument(documentName, documentParameters);
+    }
+
+    private void sendRevisions(long pageId, String spaceKey, Object filter, ConfluenceFilter proxyFilter, ConfluenceProperties pageProperties)
+        throws FilterException
+    {
         Locale locale = Locale.ROOT;
 
         FilterEventParameters documentLocaleParameters = new FilterEventParameters();
@@ -580,9 +591,6 @@ public class ConfluenceInputFilterStream
 
         // < WikiDocumentLocale
         proxyFilter.endWikiDocumentLocale(locale, documentLocaleParameters);
-
-        // < WikiDocument
-        proxyFilter.endWikiDocument(documentName, documentParameters);
     }
 
     String resolveUserName(String key, String def)

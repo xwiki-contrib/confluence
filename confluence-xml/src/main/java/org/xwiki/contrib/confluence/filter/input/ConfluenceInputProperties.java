@@ -128,6 +128,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      */
     private boolean blogsEnabled = true;
 
+    private boolean contentsEnabled = true;
     /**
      * @see #getBlogSpaceName()
      */
@@ -529,6 +530,28 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setBlogsEnabled(boolean blogsEnabled)
     {
         this.blogsEnabled = blogsEnabled;
+    }
+
+    /**
+     * @return if true, import the contents found in the confluence package
+     * @since 9.24.0
+     */
+    @PropertyName("Import contents")
+    @PropertyDescription("Import the contents found in the confluence package.")
+    public boolean isContentsEnabled()
+    {
+        return this.contentsEnabled;
+    }
+
+    /**
+     * @param contentsEnabled if true, import the rights found in the confluence package
+     * @since 9.24.0
+     */
+    @PropertyName("Import contents")
+    @PropertyDescription("Import the contents found in the confluence package.")
+    public void setContentsEnabled(boolean contentsEnabled)
+    {
+        this.contentsEnabled = contentsEnabled;
     }
 
     /**
