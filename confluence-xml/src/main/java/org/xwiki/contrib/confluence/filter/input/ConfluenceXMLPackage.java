@@ -920,7 +920,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         Long spaceId = properties.getLong("space", null);
         if (spaceId != null) {
-            saveSpacePermissionsProperties(properties, spaceId, permissionId);
+            saveSpacePermissionProperties(properties, spaceId, permissionId);
         }
     }
 
@@ -1239,7 +1239,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return new File(getPageFolder(pageId), "attachments");
     }
 
-    private File getSpacePermissionsFolder(long spaceId)
+    private File getSpacePermissionFolder(long spaceId)
     {
         return new File(getSpaceFolder(spaceId), "permissions");
     }
@@ -1251,7 +1251,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private File getSpacePermissionFolder(long spaceId, long permissionId)
     {
-        return new File(getSpacePermissionsFolder(spaceId), String.valueOf(permissionId));
+        return new File(getSpacePermissionFolder(spaceId), String.valueOf(permissionId));
     }
 
     private File getAttachmentPropertiesFile(long pageId, long attachmentId)
@@ -1536,7 +1536,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
         fileProperties.save();
     }
 
-    private void saveSpacePermissionsProperties(ConfluenceProperties properties, long spaceId, long permissionId)
+    private void saveSpacePermissionProperties(ConfluenceProperties properties, long spaceId, long permissionId)
         throws ConfigurationException
     {
         ConfluenceProperties fileProperties = getSpacePermissionProperties(spaceId, permissionId);
