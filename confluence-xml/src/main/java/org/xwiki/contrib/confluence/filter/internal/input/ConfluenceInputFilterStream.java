@@ -23,12 +23,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
@@ -49,6 +53,8 @@ import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
+import org.xwiki.contrib.confluence.filter.input.ContentPermissionType;
+import org.xwiki.contrib.confluence.filter.input.SpacePermissionType;
 import org.xwiki.contrib.confluence.filter.internal.ConfluenceFilter;
 import org.xwiki.contrib.confluence.parser.confluence.internal.ConfluenceParser;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceXHTMLInputProperties;
@@ -81,6 +87,7 @@ import org.xwiki.rendering.renderer.PrintRenderer;
 import org.xwiki.rendering.renderer.PrintRendererFactory;
 import org.xwiki.rendering.renderer.printer.DefaultWikiPrinter;
 import org.xwiki.rendering.syntax.Syntax;
+import org.xwiki.security.authorization.Right;
 
 /**
  * @version $Id$
@@ -103,6 +110,8 @@ public class ConfluenceInputFilterStream
     private static final String BLOG_CLASSNAME = "Blog.BlogClass";
 
     private static final String BLOG_POST_CLASSNAME = "Blog.BlogPostClass";
+
+    private static final String XWIKIRIGHTS_CLASSNAME = "XWiki.XWikiRights";
 
     @Inject
     @Named(ConfluenceParser.SYNTAX_STRING)
@@ -219,6 +228,10 @@ public class ConfluenceInputFilterStream
             // > WikiSpace
             proxyFilter.beginWikiSpace(spaceKey, spaceParameters);
 
+            if (this.properties.isRightsEnabled()) {
+                sendSpaceRights(proxyFilter, spaceProperties, spaceKey, spaceId);
+            }
+
             // Main page
             Long descriptionId = spaceProperties.getLong(ConfluenceXMLPackage.KEY_SPACE_DESCRIPTION, null);
             if (descriptionId != null) {
@@ -303,6 +316,188 @@ public class ConfluenceInputFilterStream
             // < WikiSpace
             proxyFilter.endWikiSpace(spaceKey, FilterEventParameters.EMPTY);
         }
+    }
+
+    private void sendSpaceRights(ConfluenceFilter proxyFilter, ConfluenceProperties spaceProperties, String spaceKey, long spaceId)
+        throws FilterException
+    {
+        Collection<Object> spacePermissions = spaceProperties.getList(ConfluenceXMLPackage.KEY_SPACE_PERMISSIONS);
+        if (!spacePermissions.isEmpty()) {
+            boolean webPreferencesStarted = false;
+            String spaceWebPreferences = spaceKey + ".WebPreferences";
+
+            // This lets us avoid duplicate XWiki right objects. For instance, REMOVEPAGE and REMOVEBLOG are both mapped
+            // to DELETE, and EDITPAGE and EDITBLOG are both mapped to EDIT. In each of these cases, If both rights are
+            // set, we need to deduplicate.
+            Set<String> addedRights = new HashSet<>();
+
+            for (Object spacePermissionObject : spacePermissions) {
+                Long spacePermissionId = Long.parseLong((String) spacePermissionObject);
+
+                ConfluenceProperties spacePermissionProperties;
+                try {
+                    spacePermissionProperties = this.confluencePackage.getSpacePermissionProperties(spaceId, spacePermissionId);
+                } catch (ConfigurationException e) {
+                    logger.warn("Failed to get space permission properties [{}] for the space [{}]. Cause: [{}].", spacePermissionId,
+                            spaceKey, ExceptionUtils.getRootCauseMessage(e));
+                    continue;
+                }
+
+                ConfluenceRightData confluenceRight = getConfluenceRightData(spacePermissionProperties);
+                if (confluenceRight == null) {
+                    continue;
+                }
+
+                SpacePermissionType type;
+                try {
+                    type = SpacePermissionType.valueOf(confluenceRight.type);
+                } catch (IllegalArgumentException e) {
+                    logger.warn("Failed to understand space permission type [{}] for the space [{}], permission id [{}].",
+                            confluenceRight.type, spaceKey, spacePermissionId);
+                    continue;
+                }
+
+                Right right = null;
+                switch (type) {
+                    case EXPORTSPACE:
+                    case EXPORTPAGE:
+                    case REMOVEMAIL:
+                    case SETPAGEPERMISSIONS:
+                    case SETSPACEPERMISSIONS:
+                    case REMOVEOWNCONTENT:
+                    case CREATEATTACHMENT:
+                    case REMOVEATTACHMENT:
+                    case REMOVECOMMENT:
+                    case ADMINISTRATECONFLUENCE:
+                    case SYSTEMADMINISTRATOR:
+                    case PROFILEATTACHMENTS:
+                    case UPDATEUSERSTATUS:
+                    case ARCHIVEPAGE:
+                    case USECONFLUENCE:
+                        // These rights are irrelevant in XWiki or can't be represented as-is.
+                        // EDITBLOG and REMOVEBLOG can be implemented when migrating blogs is supported.
+                        continue;
+                    case VIEWSPACE:
+                        right = Right.VIEW;
+                        break;
+                    case EDITSPACE:
+                    case EDITBLOG:
+                        right = Right.EDIT;
+                        break;
+                    case CREATESPACE:
+                        break;
+                    case PERSONALSPACE:
+                        break;
+                    case REMOVEBLOG:
+                    case REMOVEPAGE:
+                        right = Right.DELETE;
+                        break;
+                    case COMMENT:
+                        right = Right.COMMENT;
+                        break;
+                    default:
+                        this.logger.warn("Unknown space permission right type [{}].", right);
+                        continue;
+                }
+
+                String group = confluenceRight.group;
+                if (group != null && !group.isEmpty()) {
+                    String groupRightString = "g:" + group + ":" + right.toString();
+                    if (addedRights.contains(groupRightString)) {
+                        group = "";
+                    } else {
+                        addedRights.add(groupRightString);
+                    }
+                } else {
+                    group = "";
+                }
+
+                String user = confluenceRight.user;
+                if (user != null && !user.isEmpty()) {
+                    String userRightString = "u:" + user + ":" + right.toString();
+                    if (addedRights.contains(userRightString)) {
+                        user = "";
+                    } else {
+                        addedRights.add(userRightString);
+                    }
+                } else {
+                    user = "";
+                }
+
+                if (right != null && !(user.isEmpty() && group.isEmpty())) {
+                    if (!webPreferencesStarted) {
+                        proxyFilter.beginWikiDocument(spaceWebPreferences, new FilterEventParameters());
+                        webPreferencesStarted = true;
+                    }
+                    sendRight(proxyFilter, group, right, user);
+                }
+            }
+
+            if (webPreferencesStarted) {
+                proxyFilter.endWikiDocument(spaceWebPreferences, new FilterEventParameters());
+            }
+        }
+    }
+
+    private ConfluenceRightData getConfluenceRightData(ConfluenceProperties permissionProperties)
+        throws FilterException
+    {
+        String type = permissionProperties.getString(ConfluenceXMLPackage.KEY_PERMISSION_TYPE, "");
+        String groupStr = permissionProperties.getString(ConfluenceXMLPackage.KEY_SPACEPERMISSION_GROUP, null);
+        if (groupStr == null || groupStr.isEmpty()) {
+            groupStr = permissionProperties.getString(ConfluenceXMLPackage.KEY_CONTENTPERMISSION_GROUP, null);
+        }
+        String group = (groupStr == null || groupStr.isEmpty())
+                ? ""
+                : (toUserReference(getConfluenceToXWikiGroupName(groupStr)));
+
+        String user = "";
+        String userName = permissionProperties.getString(ConfluenceXMLPackage.KEY_SPACEPERMISSION_USERNAME, null);
+        if (userName == null || userName.isEmpty()) {
+            String userSubjectStr = permissionProperties.getString(ConfluenceXMLPackage.KEY_PERMISSION_USERSUBJECT, null);
+            if (userSubjectStr != null && !userSubjectStr.isEmpty()) {
+                ConfluenceProperties userProperties;
+                try {
+                    userProperties = confluencePackage.getUserImplProperties(userSubjectStr);
+                } catch (ConfigurationException e) {
+                    throw new FilterException("Failed to get user properties", e);
+                }
+
+                userName = userProperties.getString(ConfluenceXMLPackage.KEY_USER_NAME, userSubjectStr);
+            }
+        }
+
+        if (userName != null && !userName.isEmpty()) {
+            user = toUserReference(userName);
+        }
+
+        return new ConfluenceRightData(type, group, user);
+    }
+
+    private static class ConfluenceRightData
+    {
+        public final String type;
+        public final String group;
+        public final String user;
+
+        public ConfluenceRightData(String type, String group, String user) {
+            this.type = type;
+            this.group = group;
+            this.user = user;
+        }
+    }
+
+    private static void sendRight(ConfluenceFilter proxyFilter, String group, Right right, String user) throws FilterException
+    {
+        FilterEventParameters rightParameters = new FilterEventParameters();
+        // Page report object
+        rightParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, XWIKIRIGHTS_CLASSNAME);
+        proxyFilter.beginWikiObject(XWIKIRIGHTS_CLASSNAME, rightParameters);
+        proxyFilter.onWikiObjectProperty("allow", "1", FilterEventParameters.EMPTY);
+        proxyFilter.onWikiObjectProperty("groups", group, FilterEventParameters.EMPTY);
+        proxyFilter.onWikiObjectProperty("levels", right.getName(), FilterEventParameters.EMPTY);
+        proxyFilter.onWikiObjectProperty("users", user, FilterEventParameters.EMPTY);
+        proxyFilter.endWikiObject(XWIKIRIGHTS_CLASSNAME, rightParameters);
     }
 
     private PageIdentifier createPageIdentifier(Long pageId, String spaceKey)
@@ -559,6 +754,10 @@ public class ConfluenceInputFilterStream
             sendRevisions(pageId, spaceKey, filter, proxyFilter, pageProperties);
         }
 
+        if (this.properties.isRightsEnabled()) {
+            sendPageRights(pageId, spaceKey, proxyFilter, pageProperties);
+        }
+
         // < WikiDocument
         proxyFilter.endWikiDocument(documentName, documentParameters);
     }
@@ -610,6 +809,73 @@ public class ConfluenceInputFilterStream
 
         // < WikiDocumentLocale
         proxyFilter.endWikiDocumentLocale(locale, documentLocaleParameters);
+    }
+
+    private void sendPageRights(long pageId, String spaceKey, ConfluenceFilter proxyFilter, ConfluenceProperties pageProperties) throws FilterException {
+        for (Object permissionSetIdStr : pageProperties.getList("contentPermissionSets")) {
+            long permissionSetId = Long.parseLong((String) permissionSetIdStr);
+            ConfluenceProperties permissionSetProperties = null;
+            try {
+                permissionSetProperties = confluencePackage.getContentPermissionSetProperties(permissionSetId);
+            } catch (ConfigurationException e) {
+                logger.warn("Could not get permission set [{}] for page [{}]. Cause: [{}].",
+                        permissionSetId, createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                continue;
+            }
+
+            if (permissionSetProperties == null) {
+                logger.warn("Could not find permission set [{}] for page [{}].", permissionSetId, createPageIdentifier(pageId, spaceKey));
+                continue;
+            }
+
+            for (Object permissionIdStr : permissionSetProperties.getList("contentPermissions")) {
+                long permissionId = Long.parseLong((String) permissionIdStr);
+                ConfluenceProperties permissionProperties = null;
+                try {
+                    permissionProperties = confluencePackage.getContentPermissionProperties(permissionSetId, permissionId);
+                } catch (ConfigurationException e) {
+                    logger.warn("Could not get permission [{}] for page [{}]. Cause: [{}].",
+                            permissionId, createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                    continue;
+                }
+
+                if (permissionProperties == null) {
+                    logger.warn("Could not find permission [{}] for page [{}].", permissionId, createPageIdentifier(pageId, spaceKey));
+                    continue;
+                }
+
+                ConfluenceRightData confluenceRight = getConfluenceRightData(permissionProperties);
+
+                ContentPermissionType type;
+                try {
+                    type = ContentPermissionType.valueOf(confluenceRight.type.toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    logger.warn("Failed to understand content permission type [{}] for page [{}], permission id [{}].",
+                            confluenceRight.type, createPageIdentifier(pageId, spaceKey), permissionId);
+                    continue;
+                }
+
+                Right right = null;
+                switch (type) {
+                    case VIEW:
+                        right = Right.VIEW;
+                        break;
+                    case EDIT:
+                        right = Right.EDIT;
+                        break;
+                    case SHARE:
+                        // Sharing is not represented in XWiki rights
+                        continue;
+                    default:
+                        this.logger.warn("Unknown content permission right type [{}].", right);
+                        continue;
+                }
+
+                if (right != null) {
+                    sendRight(proxyFilter, confluenceRight.group, right, confluenceRight.user);
+                }
+            }
+        }
     }
 
     String resolveUserName(String key, String def)

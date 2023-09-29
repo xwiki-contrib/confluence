@@ -142,6 +142,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      */
     private boolean blogsEnabled = true;
 
+    private boolean rightsEnabled = true;
+
     private boolean contentsEnabled = true;
     /**
      * @see #getBlogSpaceName()
@@ -510,7 +512,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * Replace the current Confluence -> XWiki group mapping with the given one.
      * @param existingGroups a mapping between Confluence groups and XWiki groups.
      *                       Use the empty string value to ignore a Confluence group.
-     * @since 9.24
+     * @since 9.24.0
      */
     public void setGroupMapping(Mapping existingGroups)
     {
@@ -519,7 +521,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
 
     /**
      * @return a mapping between Confluence group names located in the package and wanted ids
-     * @since 9.24
+     * @since 9.24.0
      */
     @PropertyName("Group name mapping")
     @PropertyDescription("A mapping between Confluence group names located in the package and wanted ids.")
@@ -566,6 +568,27 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setBlogsEnabled(boolean blogsEnabled)
     {
         this.blogsEnabled = blogsEnabled;
+    }
+
+
+   /**
+     * @return if true, import the rights found in the confluence package
+     * @since 9.24.0
+     */
+    @PropertyName("Import rights")
+    @PropertyDescription("Import the rights found in the confluence package.")
+    public boolean isRightsEnabled()
+    {
+        return this.rightsEnabled;
+    }
+
+    /**
+     * @param rightsEnabled if true, import the rights found in the confluence package
+     * @since 9.24.0
+     */
+    public void setRightsEnabled(boolean rightsEnabled)
+    {
+        this.rightsEnabled = rightsEnabled;
     }
 
     /**

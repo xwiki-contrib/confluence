@@ -28,7 +28,7 @@ import java.io.Reader;
  * Reader removing the ASCII BS (8) character from the provided input stream.
  * This is necessary because we have seen Confluence exports containing such characters which break XML parsing.
  * @version $Id$
- * @since 9.34
+ * @since 9.24.0
  */
 public class WithoutBackSpacesReader extends Reader
 {

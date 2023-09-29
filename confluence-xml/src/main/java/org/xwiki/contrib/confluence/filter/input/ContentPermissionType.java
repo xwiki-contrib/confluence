@@ -17,29 +17,27 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.confluence.filter.internal.macros;
-
-import org.xwiki.component.annotation.Component;
-
-import javax.inject.Named;
-import javax.inject.Singleton;
-import java.util.Map;
+package org.xwiki.contrib.confluence.filter.input;
 
 /**
- * Convert Confluence warning macro.
- *
- * @version $Id$
+ * The list of content restriction types.
  * @since 9.24.0
+ * @version $Id$
  */
-@Component
-@Singleton
-@Named("warning")
-public class WarningMacroConverter extends AbstractMacroConverter
+public enum ContentPermissionType
 {
-    @Override
-    protected String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
-        boolean inline)
-    {
-        return "error";
-    }
+    /**
+     * View page.
+     */
+    VIEW,
+
+    /**
+     * Edit page.
+     */
+    EDIT,
+
+    /**
+     * Share page.
+     */
+    SHARE;
 }

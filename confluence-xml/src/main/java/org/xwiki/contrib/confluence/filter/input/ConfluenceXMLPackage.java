@@ -106,6 +106,42 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String KEY_SPACE_DESCRIPTION = "description";
 
     /**
+     * The property key to access the space permissions.
+     * @since 9.24.0
+     */
+    public static final String KEY_SPACE_PERMISSIONS = "permissions";
+
+    /**
+     * The property key to access the space permission type.
+     * @since 9.24.0
+     */
+    public static final String KEY_PERMISSION_TYPE = "type";
+
+    /**
+     * The property key to access the space permission group.
+     * @since 9.24.0
+     */
+    public static final String KEY_SPACEPERMISSION_GROUP = "group";
+
+    /**
+     * The property key to access the space permission group.
+     * @since 9.24.0
+     */
+    public static final String KEY_CONTENTPERMISSION_GROUP = "groupName";
+
+    /**
+     * The property key to access the space or content permission user subject.
+     * @since 9.24.0
+     */
+    public static final String KEY_PERMISSION_USERSUBJECT = "userSubject";
+
+    /**
+     * The property key to access the space permission username.
+     * @since 9.24.0
+     */
+    public static final String KEY_SPACEPERMISSION_USERNAME = "userName";
+
+    /**
      * The property key to access the page home page.
      */
     public static final String KEY_PAGE_HOMEPAGE = "homepage";
@@ -774,6 +810,10 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 readSpaceDescriptionObject(xmlReader);
             } else if (type.equals("SpacePermission")) {
                 readSpacePermissionObject(xmlReader);
+            } else if (type.equals("ContentPermission")) {
+                readContentPermissionObject(xmlReader);
+            } else if (type.equals("ContentPermissionSet")) {
+                readContentPermissionSetObject(xmlReader);
             } else if (type.equals("Attachment")) {
                 readAttachmentObject(xmlReader);
             } else if (type.equals("BlogPost")) {
@@ -925,6 +965,29 @@ public class ConfluenceXMLPackage implements AutoCloseable
         }
     }
 
+    private void readContentPermissionObject(XMLStreamReader xmlReader)
+        throws XMLStreamException, FilterException, ConfigurationException
+    {
+        ConfluenceProperties properties = new ConfluenceProperties();
+
+        long permissionId = readObjectProperties(xmlReader, properties);
+
+        Long contentPermissionSetId = properties.getLong("owningSet", null);
+        if (contentPermissionSetId != null) {
+            saveContentPermissionProperties(properties, contentPermissionSetId, permissionId);
+        }
+    }
+
+    private void readContentPermissionSetObject(XMLStreamReader xmlReader)
+        throws XMLStreamException, FilterException, ConfigurationException
+    {
+        ConfluenceProperties properties = new ConfluenceProperties();
+
+        long permissionId = readObjectProperties(xmlReader, properties);
+
+        saveContentPermissionSetProperties(properties, permissionId);
+    }
+
     private void readBodyContentObject(XMLStreamReader xmlReader)
         throws XMLStreamException, ConfigurationException, FilterException
     {
@@ -1061,7 +1124,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
             || propertyClass.equals("SpaceDescription") || propertyClass.equals("Labelling")
             || propertyClass.equals("Label") || propertyClass.equals("SpacePermission")
             || propertyClass.equals("InternalGroup") || propertyClass.equals("InternalUser")
-            || propertyClass.equals("Comment") || propertyClass.equals("ContentProperty")) {
+            || propertyClass.equals("Comment") || propertyClass.equals("ContentProperty")
+            || propertyClass.equals("ContentPermissionSet") || propertyClass.equals("ContentPermission")) {
             return readObjectReference(xmlReader);
         } else if (propertyClass.equals("ConfluenceUserImpl")) {
             return readImplObjectReference(xmlReader);
@@ -1142,6 +1206,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private File getSpacesFolder()
     {
         return new File(this.tree, "spaces");
+    }
+
+    private File getContentPermissionSetsFolder()
+    {
+        return new File(this.tree,"contentPermissionSets");
     }
 
     private File getSpaceFolder(long spaceId)
@@ -1245,6 +1314,16 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return new File(getSpaceFolder(spaceId), "permissions");
     }
 
+    private File getContentPermissionSetFolder(long permissionSetId)
+    {
+        return new File(getContentPermissionSetsFolder(), String.valueOf(permissionSetId));
+    }
+
+    private File getContentPermissionFolder(long permissionSetId)
+    {
+        return new File(getContentPermissionSetFolder(permissionSetId), String.valueOf(permissionSetId));
+    }
+
     private File getAttachmentFolder(long pageId, long attachmentId)
     {
         return new File(getAttachmentsFolder(pageId), String.valueOf(attachmentId));
@@ -1253,6 +1332,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private File getSpacePermissionFolder(long spaceId, long permissionId)
     {
         return new File(getSpacePermissionFolder(spaceId), String.valueOf(permissionId));
+    }
+
+    private File getContentPermissionFolder(long permissionSetId, long permissionId)
+    {
+        return new File(getContentPermissionFolder(permissionSetId), String.valueOf(permissionId));
     }
 
     private File getAttachmentPropertiesFile(long pageId, long attachmentId)
@@ -1265,6 +1349,20 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private File getSpacePermissionPropertiesFile(long spaceId, long permissionId)
     {
         File folder = getSpacePermissionFolder(spaceId, permissionId);
+
+        return new File(folder, PROPERTIES_FILENAME);
+    }
+
+    private File getContentPermissionSetPropertiesFile(long permissionSetId)
+    {
+        File folder = getContentPermissionSetFolder(permissionSetId);
+
+        return new File(folder, PROPERTIES_FILENAME);
+    }
+
+    private File getContentPermissionPropertiesFile(long permissionSetId, long permissionId)
+    {
+        File folder = getContentPermissionFolder(permissionSetId, permissionId);
 
         return new File(folder, PROPERTIES_FILENAME);
     }
@@ -1472,11 +1570,40 @@ public class ConfluenceXMLPackage implements AutoCloseable
      * @param permissionId the identifier of the permission
      * @return the properties containing information about the space permission
      * @throws ConfigurationException when failing to create the properties
+     * @since 9.24.0
      */
     public ConfluenceProperties getSpacePermissionProperties(long spaceId, long permissionId)
         throws ConfigurationException
     {
         File file = getSpacePermissionPropertiesFile(spaceId, permissionId);
+
+        return ConfluenceProperties.create(file);
+    }
+
+    /**
+     * @param permissionSetId the identifier of the permission set
+     * @param permissionId the identifier of the permission
+     * @return the properties containing information about the permission
+     * @throws ConfigurationException when failing to create the properties
+     * @since 9.24.0
+     */
+    public ConfluenceProperties getContentPermissionProperties(long permissionSetId, long permissionId)
+            throws ConfigurationException
+    {
+        File file = getContentPermissionPropertiesFile(permissionSetId, permissionId);
+
+        return ConfluenceProperties.create(file);
+    }
+
+    /**
+     * @param permissionSetId the identifier of the permission set
+     * @return the properties containing information about the permission set
+     * @throws ConfigurationException when failing to create the properties
+     */
+    public ConfluenceProperties getContentPermissionSetProperties(long permissionSetId)
+            throws ConfigurationException
+    {
+        File file = getContentPermissionSetPropertiesFile(permissionSetId);
 
         return ConfluenceProperties.create(file);
     }
@@ -1541,6 +1668,26 @@ public class ConfluenceXMLPackage implements AutoCloseable
         throws ConfigurationException
     {
         ConfluenceProperties fileProperties = getSpacePermissionProperties(spaceId, permissionId);
+
+        fileProperties.copy(properties);
+
+        fileProperties.save();
+    }
+
+    private void saveContentPermissionSetProperties(ConfluenceProperties properties, long permissionSetId)
+            throws ConfigurationException
+    {
+        ConfluenceProperties fileProperties = getContentPermissionSetProperties(permissionSetId);
+
+        fileProperties.copy(properties);
+
+        fileProperties.save();
+    }
+
+    private void saveContentPermissionProperties(ConfluenceProperties properties, long contentPermissionSetId, long permissionId)
+            throws ConfigurationException
+    {
+        ConfluenceProperties fileProperties = getContentPermissionProperties(contentPermissionSetId, permissionId);
 
         fileProperties.copy(properties);
 
