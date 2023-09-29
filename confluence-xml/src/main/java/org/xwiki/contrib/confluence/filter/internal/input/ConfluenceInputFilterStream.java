@@ -436,12 +436,8 @@ public class ConfluenceInputFilterStream
                     FilterEventParameters memberParameters = new FilterEventParameters();
 
                     try {
-                        String memberId = this.confluencePackage.getInternalUserProperties(memberInt)
-                            .getString(ConfluenceXMLPackage.KEY_USER_NAME, String.valueOf(memberInt));
-
-                        if (this.properties.isConvertToXWiki() && memberId.equals("admin")) {
-                            memberId = "Admin";
-                        }
+                        String memberId = toUserReferenceName(this.confluencePackage.getInternalUserProperties(memberInt)
+                            .getString(ConfluenceXMLPackage.KEY_USER_NAME, String.valueOf(memberInt)));
 
                         proxyFilter.onGroupMemberGroup(memberId, memberParameters);
                     } catch (Exception e) {
