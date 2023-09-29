@@ -409,14 +409,8 @@ public class ConfluenceInputFilterStream
                 throw new FilterException("Failed to get group properties", e);
             }
 
-            String groupName = groupProperties.getString(ConfluenceXMLPackage.KEY_GROUP_NAME, String.valueOf(groupInt));
-            if (this.properties.isConvertToXWiki()) {
-                if (groupName.equals("confluence-administrators")) {
-                    groupName = "XWikiAdminGroup";
-                } else if (groupName.equals("confluence-users")) {
-                    groupName = "XWikiAllGroup";
-                }
-            }
+            String groupName = getConfluenceToXWikiGroupName(
+                    groupProperties.getString(ConfluenceXMLPackage.KEY_GROUP_NAME, String.valueOf(groupInt)));
 
             FilterEventParameters groupParameters = new FilterEventParameters();
 
@@ -464,16 +458,9 @@ public class ConfluenceInputFilterStream
                     FilterEventParameters memberParameters = new FilterEventParameters();
 
                     try {
-                        String memberId = this.confluencePackage.getGroupProperties(memberInt)
-                            .getString(ConfluenceXMLPackage.KEY_GROUP_NAME, String.valueOf(memberInt));
-
-                        if (this.properties.isConvertToXWiki()) {
-                            if (memberId.equals("confluence-administrators")) {
-                                memberId = "XWikiAdminGroup";
-                            } else if (memberId.equals("confluence-users")) {
-                                memberId = "XWikiAllGroup";
-                            }
-                        }
+                        String memberId = getConfluenceToXWikiGroupName(
+                              this.confluencePackage.getGroupProperties(memberInt)
+                                    .getString(ConfluenceXMLPackage.KEY_GROUP_NAME, String.valueOf(memberInt)));
 
                         proxyFilter.onGroupMemberGroup(memberId, memberParameters);
                     } catch (Exception e) {
@@ -492,6 +479,21 @@ public class ConfluenceInputFilterStream
         if (this.properties.getUsersWiki() != null) {
             proxyFilter.endWiki(this.properties.getUsersWiki(), FilterEventParameters.EMPTY);
         }
+    }
+
+    private String getConfluenceToXWikiGroupName(String groupName)
+    {
+        if (!this.properties.isConvertToXWiki()) {
+            return groupName;
+        }
+
+        if (memberId.equals("confluence-administrators")) {
+            return "XWikiAdminGroup";
+        } else if (memberId.equals("confluence-users")) {
+            return "XWikiAllGroup";
+        }
+
+        return groupName;
     }
 
     private void readPage(long pageId, String spaceKey, Object filter, ConfluenceFilter proxyFilter)
