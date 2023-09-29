@@ -1,0 +1,115 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.#------------------------------------------------------------------------------
+<user name="Admin">
+  <p>
+    <parameters>
+      <entry>
+        <string>firstname</string>
+        <string>Olivier</string>
+      </entry>
+      <entry>
+        <string>lastname</string>
+        <string>[Administrator]</string>
+      </entry>
+      <entry>
+        <string>email</string>
+        <string>oseres@gmail.com</string>
+      </entry>
+      <entry>
+        <string>active</string>
+        <boolean>true</boolean>
+      </entry>
+      <entry>
+        <string>revision_date</string>
+        <date>2016-05-10 15:00:02.746 UTC</date>
+      </entry>
+      <entry>
+        <string>creation_date</string>
+        <date>2016-05-10 15:00:02.746 UTC</date>
+      </entry>
+    </parameters>
+  </p>
+</user>
+<user name="sysadmin">
+  <p>
+    <parameters>
+      <entry>
+        <string>firstname</string>
+        <string>System</string>
+      </entry>
+      <entry>
+        <string>lastname</string>
+        <string>Administrator</string>
+      </entry>
+      <entry>
+        <string>email</string>
+        <string>noreply@atlassian.com</string>
+      </entry>
+      <entry>
+        <string>active</string>
+        <boolean>true</boolean>
+      </entry>
+      <entry>
+        <string>revision_date</string>
+        <date>2016-05-10 15:00:02.760 UTC</date>
+      </entry>
+      <entry>
+        <string>creation_date</string>
+        <date>2016-05-10 15:00:02.760 UTC</date>
+      </entry>
+    </parameters>
+  </p>
+</user>
+<groupContainer name="XWikiAdminGroup">
+  <p>
+    <parameters>
+      <entry>
+        <string>revision_date</string>
+        <date>2016-05-10 15:00:03.147 UTC</date>
+      </entry>
+      <entry>
+        <string>creation_date</string>
+        <date>2016-05-10 15:00:03.147 UTC</date>
+      </entry>
+    </parameters>
+  </p>
+  <groupMemberGroup name="Admin"/>
+  <groupMemberGroup name="sysadmin"/>
+</groupContainer>
+<groupContainer name="XWikiAllGroup">
+  <p>
+    <parameters>
+      <entry>
+        <string>revision_date</string>
+        <date>2016-05-10 15:00:03.896 UTC</date>
+      </entry>
+      <entry>
+        <string>creation_date</string>
+        <date>2016-05-10 15:00:03.896 UTC</date>
+      </entry>
+    </parameters>
+  </p>
+</groupContainer>
+<groupContainer name="MockupEditors">
+  <p>
+    <parameters>
+      <entry>
+        <string>revision_date</string>
+        <date>2016-05-10 15:00:03.147 UTC</date>
+      </entry>
+      <entry>
+        <string>creation_date</string>
+        <date>2016-05-10 15:00:03.147 UTC</date>
+      </entry>
+    </parameters>
+  </p>
+  <groupMemberGroup name="Admin"/>
+</groupContainer>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=5.9.zip
+.configuration.contentsEnabled=false
+.configuration.rightsEnabled=false
+.configuration.groupMapping=atlassian-addons=|balsamiq-mockups-editors=MockupEditors|administrators=XWikiAdminGroup|site-admins=XWikiAdminGroup|_licensed-confluence=|confluence-users=XWikiAllGroup|confluence-administrators=XWikiAdminGroup|system-administrators=XWikiAdminGroup
+.#------------------------------------------------------------------------------

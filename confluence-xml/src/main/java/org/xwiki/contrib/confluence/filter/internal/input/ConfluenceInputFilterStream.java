@@ -399,6 +399,9 @@ public class ConfluenceInputFilterStream
         }
 
         // Generate groups events
+
+        // First, group groups by XWiki group name. There can be several Confluence groups mapping to a unique XWiki group.
+        Map<String, Collection<ConfluenceProperties>> groupsByXWikiName = new HashMap<>();
         for (long groupInt : groups) {
             this.progress.startStep(this);
 
@@ -412,13 +415,25 @@ public class ConfluenceInputFilterStream
             String groupName = getConfluenceToXWikiGroupName(
                     groupProperties.getString(ConfluenceXMLPackage.KEY_GROUP_NAME, String.valueOf(groupInt)));
 
+            if (!groupName.isEmpty()) {
+                Collection<ConfluenceProperties> l = groupsByXWikiName.getOrDefault(groupName, new ArrayList<>());
+                l.add(groupProperties);
+                groupsByXWikiName.put(groupName, l);
+            }
+        }
+
+        // Loop over the XWiki groups
+        for (Map.Entry<String, Collection<ConfluenceProperties>> groupEntry: groupsByXWikiName.entrySet()) {
+            String groupName = groupEntry.getKey();
             FilterEventParameters groupParameters = new FilterEventParameters();
 
+            // We arbitrarily take the creation and revision date of the first Confluence group mapped to this XWiki group.
             try {
+                ConfluenceProperties firstGroupProperties = groupEntry.getValue().iterator().next();
                 groupParameters.put(GroupFilter.PARAMETER_REVISION_DATE,
-                    this.confluencePackage.getDate(groupProperties, ConfluenceXMLPackage.KEY_GROUP_REVISION_DATE));
+                    this.confluencePackage.getDate(firstGroupProperties, ConfluenceXMLPackage.KEY_GROUP_REVISION_DATE));
                 groupParameters.put(GroupFilter.PARAMETER_CREATION_DATE,
-                    this.confluencePackage.getDate(groupProperties, ConfluenceXMLPackage.KEY_GROUP_CREATION_DATE));
+                    this.confluencePackage.getDate(firstGroupProperties, ConfluenceXMLPackage.KEY_GROUP_CREATION_DATE));
             } catch (Exception e) {
                 if (this.properties.isVerbose()) {
                     this.logger.error("Failed to parse the group date", e);
@@ -428,39 +443,49 @@ public class ConfluenceInputFilterStream
             // > Group
             proxyFilter.beginGroupContainer(groupName, groupParameters);
 
-            // Members users
-            if (groupProperties.containsKey(ConfluenceXMLPackage.KEY_GROUP_MEMBERUSERS)) {
-                List<Long> groupMembers =
-                    this.confluencePackage.getLongList(groupProperties, ConfluenceXMLPackage.KEY_GROUP_MEMBERUSERS);
-                for (Long memberInt : groupMembers) {
-                    FilterEventParameters memberParameters = new FilterEventParameters();
+            // We add members of all the Confluence groups mapped to this XWiki group to the XWiki group.
+            Collection<String> alreadyAddedMembers = new HashSet<>();
+            for (ConfluenceProperties groupProperties : groupEntry.getValue()) {
+                // Members users
+                if (groupProperties.containsKey(ConfluenceXMLPackage.KEY_GROUP_MEMBERUSERS)) {
+                    List<Long> groupMembers =
+                            this.confluencePackage.getLongList(groupProperties, ConfluenceXMLPackage.KEY_GROUP_MEMBERUSERS);
+                    for (Long memberInt : groupMembers) {
+                        FilterEventParameters memberParameters = new FilterEventParameters();
 
-                    try {
-                        String memberId = toUserReferenceName(this.confluencePackage.getInternalUserProperties(memberInt)
-                            .getString(ConfluenceXMLPackage.KEY_USER_NAME, String.valueOf(memberInt)));
+                        try {
+                            String memberId = toUserReferenceName(this.confluencePackage.getInternalUserProperties(memberInt)
+                                    .getString(ConfluenceXMLPackage.KEY_USER_NAME, String.valueOf(memberInt)));
 
-                        proxyFilter.onGroupMemberGroup(memberId, memberParameters);
-                    } catch (Exception e) {
-                        this.logger.error("Failed to get user properties", e);
+                            if (!alreadyAddedMembers.contains(memberId)) {
+                                proxyFilter.onGroupMemberGroup(memberId, memberParameters);
+                                alreadyAddedMembers.add(memberId);
+                            }
+                        } catch (Exception e) {
+                            this.logger.error("Failed to get user properties", e);
+                        }
                     }
                 }
-            }
 
-            // Members groups
-            if (groupProperties.containsKey(ConfluenceXMLPackage.KEY_GROUP_MEMBERGROUPS)) {
-                List<Long> groupMembers =
-                    this.confluencePackage.getLongList(groupProperties, ConfluenceXMLPackage.KEY_GROUP_MEMBERGROUPS);
-                for (Long memberInt : groupMembers) {
-                    FilterEventParameters memberParameters = new FilterEventParameters();
+                // Members groups
+                if (groupProperties.containsKey(ConfluenceXMLPackage.KEY_GROUP_MEMBERGROUPS)) {
+                    List<Long> groupMembers =
+                            this.confluencePackage.getLongList(groupProperties, ConfluenceXMLPackage.KEY_GROUP_MEMBERGROUPS);
+                    for (Long memberInt : groupMembers) {
+                        FilterEventParameters memberParameters = new FilterEventParameters();
 
-                    try {
-                        String memberId = getConfluenceToXWikiGroupName(
-                              this.confluencePackage.getGroupProperties(memberInt)
-                                    .getString(ConfluenceXMLPackage.KEY_GROUP_NAME, String.valueOf(memberInt)));
+                        try {
+                            String memberId = getConfluenceToXWikiGroupName(
+                                    this.confluencePackage.getGroupProperties(memberInt)
+                                            .getString(ConfluenceXMLPackage.KEY_GROUP_NAME, String.valueOf(memberInt)));
 
-                        proxyFilter.onGroupMemberGroup(memberId, memberParameters);
-                    } catch (Exception e) {
-                        this.logger.error("Failed to get group properties", e);
+                            if (!alreadyAddedMembers.contains(memberId)) {
+                                proxyFilter.onGroupMemberGroup(memberId, memberParameters);
+                                alreadyAddedMembers.add(memberId);
+                            }
+                        } catch (Exception e) {
+                            this.logger.error("Failed to get group properties", e);
+                        }
                     }
                 }
             }
