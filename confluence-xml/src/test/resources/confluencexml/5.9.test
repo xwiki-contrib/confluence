@@ -61,7 +61,7 @@
     </parameters>
   </p>
 </user>
-<groupContainer name="administrators">
+<groupContainer name="XWikiAdminGroup">
   <p>
     <parameters>
       <entry>
@@ -75,6 +75,21 @@
     </parameters>
   </p>
   <groupMemberGroup name="Admin"/>
+  <groupMemberGroup name="sysadmin"/>
+</groupContainer>
+<groupContainer name="XWikiAllGroup">
+  <p>
+    <parameters>
+      <entry>
+        <string>revision_date</string>
+        <date>2016-05-10 15:00:03.896 UTC</date>
+      </entry>
+      <entry>
+        <string>creation_date</string>
+        <date>2016-05-10 15:00:03.896 UTC</date>
+      </entry>
+    </parameters>
+  </p>
 </groupContainer>
 <groupContainer name="atlassian-addons">
   <p>
@@ -91,67 +106,6 @@
   </p>
 </groupContainer>
 <groupContainer name="balsamiq-mockups-editors">
-  <p>
-    <parameters>
-      <entry>
-        <string>revision_date</string>
-        <date>2016-05-10 15:00:03.147 UTC</date>
-      </entry>
-      <entry>
-        <string>creation_date</string>
-        <date>2016-05-10 15:00:03.147 UTC</date>
-      </entry>
-    </parameters>
-  </p>
-  <groupMemberGroup name="Admin"/>
-</groupContainer>
-<groupContainer name="_licensed-confluence">
-  <p>
-    <parameters>
-      <entry>
-        <string>revision_date</string>
-        <date>2016-05-10 15:00:03.147 UTC</date>
-      </entry>
-      <entry>
-        <string>creation_date</string>
-        <date>2016-05-10 15:00:03.147 UTC</date>
-      </entry>
-    </parameters>
-  </p>
-  <groupMemberGroup name="Admin"/>
-  <groupMemberGroup name="sysadmin"/>
-</groupContainer>
-<groupContainer name="system-administrators">
-  <p>
-    <parameters>
-      <entry>
-        <string>revision_date</string>
-        <date>2016-05-10 15:00:03.147 UTC</date>
-      </entry>
-      <entry>
-        <string>creation_date</string>
-        <date>2016-05-10 15:00:03.147 UTC</date>
-      </entry>
-    </parameters>
-  </p>
-  <groupMemberGroup name="sysadmin"/>
-</groupContainer>
-<groupContainer name="XWikiAdminGroup">
-  <p>
-    <parameters>
-      <entry>
-        <string>revision_date</string>
-        <date>2016-05-10 15:00:03.147 UTC</date>
-      </entry>
-      <entry>
-        <string>creation_date</string>
-        <date>2016-05-10 15:00:03.147 UTC</date>
-      </entry>
-    </parameters>
-  </p>
-  <groupMemberGroup name="sysadmin"/>
-</groupContainer>
-<groupContainer name="site-admins">
   <p>
     <parameters>
       <entry>

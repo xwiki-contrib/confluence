@@ -23,6 +23,7 @@ import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -42,6 +43,9 @@ import org.xwiki.rendering.syntax.Syntax;
  */
 public class ConfluenceInputProperties extends DefaultFilterStreamProperties
 {
+    private static final String XWIKI_ADMIN_GROUP_NAME = "XWikiAdminGroup";
+    private static final String XWIKI_ALL_GROUP_NAME = "XWikiAllGroup";
+
     /**
      * @see #getSource()
      */
@@ -117,6 +121,16 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private Set<String> unprefixedMacros;
 
     private Mapping userIdMapping;
+
+    private Mapping groupMapping = new Mapping(Map.of(
+        "confluence-administrators", XWIKI_ADMIN_GROUP_NAME,
+        "administrators", XWIKI_ADMIN_GROUP_NAME,
+        "site-admins", XWIKI_ADMIN_GROUP_NAME,
+        "system-administrators", XWIKI_ADMIN_GROUP_NAME,
+        "confluence-users", XWIKI_ALL_GROUP_NAME,
+        "users", XWIKI_ALL_GROUP_NAME,
+        "_licensed-confluence", ""
+    ));
 
     /**
      * @see #isStoreConfluenceDetailsEnabled()
@@ -490,6 +504,28 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setUserIdMapping(Mapping existingUsers)
     {
         this.userIdMapping = existingUsers;
+    }
+
+    /**
+     * Replace the current Confluence -> XWiki group mapping with the given one.
+     * @param existingGroups a mapping between Confluence groups and XWiki groups.
+     *                       Use the empty string value to ignore a Confluence group.
+     * @since 9.24
+     */
+    public void setGroupMapping(Mapping existingGroups)
+    {
+        this.groupMapping = existingGroups;
+    }
+
+    /**
+     * @return a mapping between Confluence group names located in the package and wanted ids
+     * @since 9.24
+     */
+    @PropertyName("Group name mapping")
+    @PropertyDescription("A mapping between Confluence group names located in the package and wanted ids.")
+    public Mapping getGroupMapping()
+    {
+        return this.groupMapping;
     }
 
     /**

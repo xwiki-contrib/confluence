@@ -479,17 +479,11 @@ public class ConfluenceInputFilterStream
 
     private String getConfluenceToXWikiGroupName(String groupName)
     {
-        if (!this.properties.isConvertToXWiki()) {
+        if (!this.properties.isConvertToXWiki() || this.properties.getGroupMapping() == null) {
             return groupName;
         }
 
-        if (memberId.equals("confluence-administrators")) {
-            return "XWikiAdminGroup";
-        } else if (memberId.equals("confluence-users")) {
-            return "XWikiAllGroup";
-        }
-
-        return groupName;
+        return this.properties.getGroupMapping().getOrDefault(groupName, groupName);
     }
 
     private void readPage(long pageId, String spaceKey, Object filter, ConfluenceFilter proxyFilter)
