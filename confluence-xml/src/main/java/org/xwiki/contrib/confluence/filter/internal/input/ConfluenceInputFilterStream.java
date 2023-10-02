@@ -175,6 +175,11 @@ public class ConfluenceInputFilterStream
         }
     }
 
+    private int countPages(Map<Long, List<Long>> pages)
+    {
+        return pages.entrySet().stream().mapToInt(e -> e.getValue().size()).sum();
+    }
+
     private void readInternal(Object filter, ConfluenceFilter proxyFilter) throws FilterException
     {
         // Prepare package
@@ -193,10 +198,11 @@ public class ConfluenceInputFilterStream
         Map<Long, List<Long>> pages = this.confluencePackage.getPages();
         Map<Long, List<Long>> blogPages = this.confluencePackage.getBlogPages();
 
-        int pagesCount = pages.size() + pages.entrySet().stream().mapToInt(e -> e.getValue().size()).sum();
-        if (this.properties.isBlogsEnabled()) {
-            pagesCount = pagesCount + blogPages.entrySet().stream().mapToInt(e -> e.getValue().size()).sum();
-        }
+        // Only count pages if we are going to send them
+        boolean willSendPages = this.properties.isContentsEnabled() || this.properties.isRightsEnabled();
+        int pagesCount = willSendPages
+                ? pages.size() + countPages(pages) + (properties.isBlogsEnabled() ? countPages(blogPages) : 0)
+                : 0;
 
         if (this.properties.isUsersEnabled()) {
             Collection<Long> users = this.confluencePackage.getInternalUsers();
@@ -210,7 +216,26 @@ public class ConfluenceInputFilterStream
             this.progress.pushLevelProgress(pagesCount, this);
         }
 
-        // Generate documents events
+        if (willSendPages) {
+            sendDocuments(filter, proxyFilter, pages);
+        }
+
+        // Generate Blog events
+        if (this.properties.isBlogsEnabled()) {
+            generateBlogEvents(blogPages, filter, proxyFilter);
+        }
+
+        this.progress.popLevelProgress(this);
+
+        // Cleanup
+
+        observationManager.notify(new ConfluenceFilteredEvent(), this, this.confluencePackage);
+
+        closeConfluencePackage();
+    }
+
+    private void sendDocuments(Object filter, ConfluenceFilter proxyFilter, Map<Long, List<Long>> pages) throws FilterException
+    {
         for (Map.Entry<Long, List<Long>> entry : pages.entrySet()) {
             long spaceId = entry.getKey();
 
@@ -232,10 +257,12 @@ public class ConfluenceInputFilterStream
                 sendSpaceRights(proxyFilter, spaceProperties, spaceKey, spaceId);
             }
 
-            // Main page
-            Long descriptionId = spaceProperties.getLong(ConfluenceXMLPackage.KEY_SPACE_DESCRIPTION, null);
-            if (descriptionId != null) {
-                sendPage(descriptionId, spaceKey, filter, proxyFilter, true);
+            if (this.properties.isContentsEnabled()) {
+                // Main page
+                Long descriptionId = spaceProperties.getLong(ConfluenceXMLPackage.KEY_SPACE_DESCRIPTION, null);
+                if (descriptionId != null) {
+                    sendPage(descriptionId, spaceKey, filter, proxyFilter, true);
+                }
             }
 
             // Other pages
@@ -244,25 +271,14 @@ public class ConfluenceInputFilterStream
             // < WikiSpace
             proxyFilter.endWikiSpace(spaceKey, spaceParameters);
         }
-
-        // Generate Blog events
-        if (this.properties.isBlogsEnabled()) {
-            generateBlogEvents(blogPages, filter, proxyFilter);
-        }
-
-        this.progress.popLevelProgress(this);
-
-        // Cleanup
-
-        observationManager.notify(new ConfluenceFilteredEvent(), this, this.confluencePackage);
-
-        closeConfluencePackage();
     }
 
     private void sendPages(Object filter, ConfluenceFilter proxyFilter, Map.Entry<Long, List<Long>> entry, String spaceKey)
     {
-        for (long pageId : entry.getValue()) {
-            sendPage(pageId, spaceKey, filter, proxyFilter, false);
+        if (this.properties.isContentsEnabled()) {
+            for (long pageId : entry.getValue()) {
+                sendPage(pageId, spaceKey, filter, proxyFilter, false);
+            }
         }
     }
 
