@@ -222,31 +222,11 @@ public class ConfluenceInputFilterStream
             // Main page
             Long descriptionId = spaceProperties.getLong(ConfluenceXMLPackage.KEY_SPACE_DESCRIPTION, null);
             if (descriptionId != null) {
-                this.progress.startStep(this);
-                if (this.properties.isIncluded(descriptionId)) {
-                    try {
-                        readPage(descriptionId, spaceKey, filter, proxyFilter);
-                    } catch (Exception e) {
-                        logger.error("Failed to filter the main page with id [{}]. Cause: [{}].",
-                            createPageIdentifier(descriptionId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
-                    }
-                }
-                this.progress.endStep(this);
+                sendPage(descriptionId, spaceKey, filter, proxyFilter, true);
             }
 
             // Other pages
-            for (long pageId : entry.getValue()) {
-                this.progress.startStep(this);
-                if (this.properties.isIncluded(pageId)) {
-                    try {
-                        readPage(pageId, spaceKey, filter, proxyFilter);
-                    } catch (Exception e) {
-                        logger.error("Failed to filter the page with id [{}]. Cause: [{}].",
-                            createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
-                    }
-                }
-                this.progress.endStep(this);
-            }
+            sendPages(filter, proxyFilter, entry, spaceKey);
 
             // < WikiSpace
             proxyFilter.endWikiSpace(spaceKey, spaceParameters);
@@ -264,6 +244,27 @@ public class ConfluenceInputFilterStream
         observationManager.notify(new ConfluenceFilteredEvent(), this, this.confluencePackage);
 
         closeConfluencePackage();
+    }
+
+    private void sendPages(Object filter, ConfluenceFilter proxyFilter, Map.Entry<Long, List<Long>> entry, String spaceKey)
+    {
+        for (long pageId : entry.getValue()) {
+            sendPage(pageId, spaceKey, filter, proxyFilter, false);
+        }
+    }
+
+    private void sendPage(long pageId, String spaceKey, Object filter, ConfluenceFilter proxyFilter, boolean isMain)
+    {
+        this.progress.startStep(this);
+        if (this.properties.isIncluded(pageId)) {
+            try {
+                readPage(pageId, spaceKey, filter, proxyFilter);
+            } catch (Exception e) {
+                logger.error("Failed to filter the {}page with id [{}]. Cause: [{}].", isMain ? " main" : "",
+                        createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+            }
+        }
+        this.progress.endStep(this);
     }
 
     private void generateBlogEvents(Map<Long, List<Long>> blogPages, Object filter, ConfluenceFilter proxyFilter)
@@ -294,18 +295,7 @@ public class ConfluenceInputFilterStream
             addBlogDescriptorPage(proxyFilter);
 
             // Blog post pages
-            for (long pageId : entry.getValue()) {
-                this.progress.startStep(this);
-                if (this.properties.isIncluded(pageId)) {
-                    try {
-                        readPage(pageId, spaceKey, filter, proxyFilter);
-                    } catch (Exception e) {
-                        logger.error("Failed to filter the page with id [{}]. Cause: [{}].",
-                            createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
-                    }
-                }
-                this.progress.endStep(this);
-            }
+            sendPages(filter, proxyFilter, entry, spaceKey);
 
             // < WikiSpace
             proxyFilter.endWikiSpace(blogSpaceKey, FilterEventParameters.EMPTY);
