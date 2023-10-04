@@ -1,3 +1,6 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.#------------------------------------------------------------------------------
 <user name="Admin">
   <p>
     <parameters>
@@ -182,6 +185,7 @@
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -245,6 +249,7 @@
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -343,19 +348,16 @@ To help you on your way, we've inserted some of our favourite macros on this hom
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
             </entry>
           </parameters>
         </p>
-        <wikiObject name="privatespace.privatespace Home.WebHome">
+        <wikiObject name="XWiki.XWikiComments">
           <p>
             <parameters>
-              <entry>
-                <string>number</string>
-                <int>0</int>
-              </entry>
               <entry>
                 <string>class_reference</string>
                 <string>XWiki.XWikiComments</string>
@@ -423,6 +425,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -481,6 +484,7 @@ Link to page 1 [[here>>doc:SPACE1.Page 1]]</string>
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -527,19 +531,16 @@ Link to page 1 [[here>>doc:SPACE1.Page 1]]</string>
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
             </entry>
           </parameters>
         </p>
-        <wikiObject name="space2 Home.Page 2.WebHome">
+        <wikiObject name="XWiki.TagClass">
           <p>
             <parameters>
-              <entry>
-                <string>number</string>
-                <int>0</int>
-              </entry>
               <entry>
                 <string>class_reference</string>
                 <string>XWiki.TagClass</string>
@@ -548,13 +549,9 @@ Link to page 1 [[here>>doc:SPACE1.Page 1]]</string>
           </p>
           <wikiObjectProperty name="tags" value="tag1|favourite"/>
         </wikiObject>
-        <wikiObject name="space2 Home.Page 2.WebHome">
+        <wikiObject name="XWiki.XWikiComments">
           <p>
             <parameters>
-              <entry>
-                <string>number</string>
-                <int>0</int>
-              </entry>
               <entry>
                 <string>class_reference</string>
                 <string>XWiki.XWikiComments</string>
@@ -662,6 +659,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -703,13 +701,9 @@ To help you on your way, we've inserted some of our favourite macros on this hom
             </parameters>
           </p>
         </wikiAttachment>
-        <wikiObject name="space2.space2 Home.WebHome">
+        <wikiObject name="XWiki.TagClass">
           <p>
             <parameters>
-              <entry>
-                <string>number</string>
-                <int>0</int>
-              </entry>
               <entry>
                 <string>class_reference</string>
                 <string>XWiki.TagClass</string>
@@ -718,13 +712,9 @@ To help you on your way, we've inserted some of our favourite macros on this hom
           </p>
           <wikiObjectProperty name="tags" value="tag1"/>
         </wikiObject>
-        <wikiObject name="space2.space2 Home.WebHome">
+        <wikiObject name="XWiki.XWikiComments">
           <p>
             <parameters>
-              <entry>
-                <string>number</string>
-                <int>0</int>
-              </entry>
               <entry>
                 <string>class_reference</string>
                 <string>XWiki.XWikiComments</string>
@@ -792,19 +782,16 @@ To help you on your way, we've inserted some of our favourite macros on this hom
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
             </entry>
           </parameters>
         </p>
-        <wikiObject name="space1.WebHome">
+        <wikiObject name="XWiki.TagClass">
           <p>
             <parameters>
-              <entry>
-                <string>number</string>
-                <int>0</int>
-              </entry>
               <entry>
                 <string>class_reference</string>
                 <string>XWiki.TagClass</string>
@@ -890,13 +877,13 @@ Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du cara
 task 2
 
 {{task-list}}
-
+ 
 
 {{task id="78" status="incomplete"}}
 task 2.1
 
 {{task-list}}
-
+ 
 
 {{task id="79" status="incomplete"}}
 task 2.1.1
@@ -996,6 +983,7 @@ Some wiki text with **bold** content
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -1060,13 +1048,13 @@ Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du cara
 task 2
 
 {{task-list}}
-
+ 
 
 {{task id="78" status="incomplete"}}
 task 2.1
 
 {{task-list}}
-
+ 
 
 {{task id="79" status="incomplete"}}
 task 2.1.1
@@ -1376,6 +1364,7 @@ content
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -1440,13 +1429,13 @@ Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du cara
 task 2
 
 {{task-list}}
-
+ 
 
 {{task id="78" status="incomplete"}}
 task 2.1
 
 {{task-list}}
-
+ 
 
 {{task id="79" status="incomplete"}}
 task 2.1.1
@@ -1756,6 +1745,7 @@ content
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -1820,13 +1810,13 @@ Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du cara
 task 2
 
 {{task-list}}
-
+ 
 
 {{task id="78" status="incomplete"}}
 task 2.1
 
 {{task-list}}
-
+ 
 
 {{task id="79" status="incomplete"}}
 task 2.1.1
@@ -2136,6 +2126,7 @@ content
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -2200,13 +2191,13 @@ Task 1 is checked\\
 task 2
 
 {{task-list}}
-
+ 
 
 {{task id="78" status="incomplete"}}
 task 2.1
 
 {{task-list}}
-
+ 
 
 {{task id="79" status="incomplete"}}
 task 2.1.1
@@ -2516,6 +2507,7 @@ content
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -2580,13 +2572,13 @@ Task 1 is checked\\
 task 2
 
 {{task-list}}
-
+ 
 
 {{task id="78" status="incomplete"}}
 task 2.1
 
 {{task-list}}
-
+ 
 
 {{task id="79" status="incomplete"}}
 task 2.1.1
@@ -2896,6 +2888,7 @@ content
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -2967,13 +2960,13 @@ Task 1 is checked\\
 task 2
 
 {{task-list}}
-
+ 
 
 {{task id="78" status="incomplete"}}
 task 2.1
 
 {{task-list}}
-
+ 
 
 {{task id="79" status="incomplete"}}
 task 2.1.1
@@ -3283,6 +3276,7 @@ content
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
@@ -3394,13 +3388,9 @@ content
             </parameters>
           </p>
         </wikiAttachment>
-        <wikiObject name="space1 Home.Page 1.WebHome">
+        <wikiObject name="XWiki.XWikiComments">
           <p>
             <parameters>
-              <entry>
-                <string>number</string>
-                <int>0</int>
-              </entry>
               <entry>
                 <string>class_reference</string>
                 <string>XWiki.XWikiComments</string>
@@ -3416,13 +3406,9 @@ content
           </wikiObjectProperty>
           <wikiObjectProperty name="replyto"/>
         </wikiObject>
-        <wikiObject name="space1 Home.Page 1.WebHome">
+        <wikiObject name="XWiki.XWikiComments">
           <p>
             <parameters>
-              <entry>
-                <string>number</string>
-                <int>1</int>
-              </entry>
               <entry>
                 <string>class_reference</string>
                 <string>XWiki.XWikiComments</string>
@@ -3442,13 +3428,9 @@ content
             </p>
           </wikiObjectProperty>
         </wikiObject>
-        <wikiObject name="space1 Home.Page 1.WebHome">
+        <wikiObject name="XWiki.XWikiComments">
           <p>
             <parameters>
-              <entry>
-                <string>number</string>
-                <int>2</int>
-              </entry>
               <entry>
                 <string>class_reference</string>
                 <string>XWiki.XWikiComments</string>
@@ -3556,19 +3538,16 @@ To help you on your way, we've inserted some of our favourite macros on this hom
                 <type>
                   <name>XWiki</name>
                   <id>xwiki</id>
+                  <variants class="empty-list"/>
                 </type>
                 <version>2.1</version>
               </org.xwiki.rendering.syntax.Syntax>
             </entry>
           </parameters>
         </p>
-        <wikiObject name="space1.space1 Home.WebHome">
+        <wikiObject name="XWiki.XWikiComments">
           <p>
             <parameters>
-              <entry>
-                <string>number</string>
-                <int>0</int>
-              </entry>
               <entry>
                 <string>class_reference</string>
                 <string>XWiki.XWikiComments</string>
@@ -3576,7 +3555,12 @@ To help you on your way, we've inserted some of our favourite macros on this hom
             </parameters>
           </p>
           <wikiObjectProperty name="author" value="XWiki.Admin"/>
-          <wikiObjectProperty name="comment" value="Comment on space 1 web home&#xa;This space is in favourit"/>
+          <wikiObjectProperty name="comment">
+            <p>
+              <value>Comment on space 1 web home
+This space is in favourit</value>
+            </p>
+          </wikiObjectProperty>
           <wikiObjectProperty name="date">
             <p>
               <value t="java.util.Date">2013-10-14 15:38:26.69 UTC</value>
@@ -3586,4 +3570,9 @@ To help you on your way, we've inserted some of our favourite macros on this hom
         </wikiObject>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
-  <
+  </wikiDocument>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=4.3.2.xml.zip
+.#------------------------------------------------------------------------------
