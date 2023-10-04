@@ -1342,9 +1342,9 @@ tip content
 content
 {{/panel}}
 
-{{warning title="warning title"}}
+{{error title="warning title"}}
 content
-{{/warning}}
+{{/error}}
 
 Widget connector maccro
 
@@ -1723,9 +1723,9 @@ tip content
 content
 {{/panel}}
 
-{{warning title="warning title"}}
+{{error title="warning title"}}
 content
-{{/warning}}
+{{/error}}
 
 Widget connector maccro
 
@@ -2104,9 +2104,9 @@ tip content
 content
 {{/panel}}
 
-{{warning title="warning title"}}
+{{error title="warning title"}}
 content
-{{/warning}}
+{{/error}}
 
 Widget connector maccro
 
@@ -2485,9 +2485,9 @@ tip content
 content
 {{/panel}}
 
-{{warning title="warning title"}}
+{{error title="warning title"}}
 content
-{{/warning}}
+{{/error}}
 
 Widget connector maccro
 
@@ -2866,9 +2866,9 @@ tip content
 content
 {{/panel}}
 
-{{warning title="warning title"}}
+{{error title="warning title"}}
 content
-{{/warning}}
+{{/error}}
 
 Widget connector maccro
 
@@ -3254,9 +3254,9 @@ tip content
 content
 {{/panel}}
 
-{{warning title="warning title"}}
+{{error title="warning title"}}
 content
-{{/warning}}
+{{/error}}
 
 Widget connector maccro
 

@@ -10,3 +10,4 @@ org.xwiki.contrib.confluence.filter.internal.macros.AnchorMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.DefaultMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.MentionMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.JiraMacroConverter
+org.xwiki.contrib.confluence.filter.internal.macros.WarningMacroConverter
