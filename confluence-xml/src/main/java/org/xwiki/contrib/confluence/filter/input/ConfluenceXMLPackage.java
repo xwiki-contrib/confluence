@@ -1072,9 +1072,9 @@ public class ConfluenceXMLPackage implements AutoCloseable
     }
 
     /**
-     * to protect content with cdata section inside of cdata elements confluence adds a single space after two
+     * To protect content with cdata section inside cdata elements confluence adds a single space after two
      * consecutive curly braces. we need to undo this patch as otherwise the content parser will complain about invalid
-     * content. strictly speaking this needs only to be done for string valued properties
+     * content. Strictly speaking this needs only to be done for string valued properties.
      */
     private String fixCData(String elementText)
     {
