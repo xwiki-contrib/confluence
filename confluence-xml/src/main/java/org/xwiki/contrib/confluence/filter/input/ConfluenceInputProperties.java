@@ -509,7 +509,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     }
 
     /**
-     * Replace the current Confluence -> XWiki group mapping with the given one.
+     * Replace the current Confluence to XWiki group mapping with the given one.
      * @param existingGroups a mapping between Confluence groups and XWiki groups.
      *                       Use the empty string value to ignore a Confluence group.
      * @since 9.24.0
