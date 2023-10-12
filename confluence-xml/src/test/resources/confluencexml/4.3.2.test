@@ -139,12 +139,12 @@
 </groupContainer>
 <wikiSpace name="PRIV">
   <wikiDocument name="PRIV.WebPreferences">
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -153,12 +153,12 @@
       <wikiObjectProperty name="levels" value="view"/>
       <wikiObjectProperty name="users" value="XWiki.Admin"/>
     </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -167,12 +167,12 @@
       <wikiObjectProperty name="levels" value="comment"/>
       <wikiObjectProperty name="users" value="XWiki.Admin"/>
     </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -181,12 +181,12 @@
       <wikiObjectProperty name="levels" value="edit"/>
       <wikiObjectProperty name="users" value="XWiki.Admin"/>
     </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -437,12 +437,12 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 </wikiSpace>
 <wikiSpace name="SPACE2">
   <wikiDocument name="SPACE2.WebPreferences">
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -451,12 +451,12 @@ To help you on your way, we've inserted some of our favourite macros on this hom
       <wikiObjectProperty name="levels" value="view"/>
       <wikiObjectProperty name="users" value="XWiki.Admin"/>
     </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -465,12 +465,12 @@ To help you on your way, we've inserted some of our favourite macros on this hom
       <wikiObjectProperty name="levels" value="comment"/>
       <wikiObjectProperty name="users" value="XWiki.Admin"/>
     </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -479,12 +479,12 @@ To help you on your way, we've inserted some of our favourite macros on this hom
       <wikiObjectProperty name="levels" value="edit"/>
       <wikiObjectProperty name="users" value="XWiki.Admin"/>
     </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -493,12 +493,12 @@ To help you on your way, we've inserted some of our favourite macros on this hom
       <wikiObjectProperty name="levels" value="delete"/>
       <wikiObjectProperty name="users" value="XWiki.Admin"/>
     </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -507,12 +507,12 @@ To help you on your way, we've inserted some of our favourite macros on this hom
       <wikiObjectProperty name="levels" value="comment"/>
       <wikiObjectProperty name="users" value=""/>
     </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -521,12 +521,12 @@ To help you on your way, we've inserted some of our favourite macros on this hom
       <wikiObjectProperty name="levels" value="edit"/>
       <wikiObjectProperty name="users" value=""/>
     </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -922,12 +922,12 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 </wikiSpace>
 <wikiSpace name="SPACE1">
   <wikiDocument name="SPACE1.WebPreferences">
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -936,12 +936,12 @@ To help you on your way, we've inserted some of our favourite macros on this hom
       <wikiObjectProperty name="levels" value="view"/>
       <wikiObjectProperty name="users" value="XWiki.Admin"/>
     </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -950,12 +950,12 @@ To help you on your way, we've inserted some of our favourite macros on this hom
       <wikiObjectProperty name="levels" value="comment"/>
       <wikiObjectProperty name="users" value="XWiki.Admin"/>
     </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -964,12 +964,12 @@ To help you on your way, we've inserted some of our favourite macros on this hom
       <wikiObjectProperty name="levels" value="edit"/>
       <wikiObjectProperty name="users" value="XWiki.Admin"/>
     </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -978,12 +978,12 @@ To help you on your way, we've inserted some of our favourite macros on this hom
       <wikiObjectProperty name="levels" value="delete"/>
       <wikiObjectProperty name="users" value="XWiki.Admin"/>
     </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -992,12 +992,12 @@ To help you on your way, we've inserted some of our favourite macros on this hom
       <wikiObjectProperty name="levels" value="comment"/>
       <wikiObjectProperty name="users" value=""/>
     </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -1006,12 +1006,12 @@ To help you on your way, we've inserted some of our favourite macros on this hom
       <wikiObjectProperty name="levels" value="view"/>
       <wikiObjectProperty name="users" value=""/>
     </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>

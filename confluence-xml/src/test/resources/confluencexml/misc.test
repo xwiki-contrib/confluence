@@ -8,12 +8,12 @@
 .#------------------------------------------------------------------------------
 <wikiSpace name="TestSpace">
   <wikiDocument name="TestSpace.WebPreferences">
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -22,12 +22,12 @@
       <wikiObjectProperty name="levels" value="view"/>
       <wikiObjectProperty name="users" value="XWiki.clemens"/>
     </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -36,12 +36,12 @@
       <wikiObjectProperty name="levels" value="comment"/>
       <wikiObjectProperty name="users" value="XWiki.clemens"/>
     </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -50,12 +50,12 @@
       <wikiObjectProperty name="levels" value="edit"/>
       <wikiObjectProperty name="users" value="XWiki.clemens"/>
     </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -64,12 +64,12 @@
       <wikiObjectProperty name="levels" value="delete"/>
       <wikiObjectProperty name="users" value="XWiki.clemens"/>
     </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>
@@ -78,12 +78,12 @@
       <wikiObjectProperty name="levels" value="view"/>
       <wikiObjectProperty name="users" value=""/>
     </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
+    <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
           <entry>
             <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
+            <string>XWiki.XWikiGlobalRights</string>
           </entry>
         </parameters>
       </p>

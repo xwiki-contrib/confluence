@@ -113,6 +113,8 @@ public class ConfluenceInputFilterStream
 
     private static final String XWIKIRIGHTS_CLASSNAME = "XWiki.XWikiRights";
 
+    private static final String XWIKIGLOBALRIGHTS_CLASSNAME = "XWiki.XWikiGlobalRights";
+
     @Inject
     @Named(ConfluenceParser.SYNTAX_STRING)
     private StreamParser confluenceWIKIParser;
@@ -445,7 +447,7 @@ public class ConfluenceInputFilterStream
                         proxyFilter.beginWikiDocument(spaceWebPreferences, new FilterEventParameters());
                         webPreferencesStarted = true;
                     }
-                    sendRight(proxyFilter, group, right, user);
+                    sendRight(proxyFilter, group, right, user, true);
                 }
             }
 
@@ -503,17 +505,18 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private static void sendRight(ConfluenceFilter proxyFilter, String group, Right right, String user) throws FilterException
+    private static void sendRight(ConfluenceFilter proxyFilter, String group, Right right, String user, boolean space) throws FilterException
     {
         FilterEventParameters rightParameters = new FilterEventParameters();
         // Page report object
-        rightParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, XWIKIRIGHTS_CLASSNAME);
-        proxyFilter.beginWikiObject(XWIKIRIGHTS_CLASSNAME, rightParameters);
+        String rightClassName = space ? XWIKIGLOBALRIGHTS_CLASSNAME : XWIKIRIGHTS_CLASSNAME;
+        rightParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, rightClassName);
+        proxyFilter.beginWikiObject(rightClassName, rightParameters);
         proxyFilter.onWikiObjectProperty("allow", "1", FilterEventParameters.EMPTY);
         proxyFilter.onWikiObjectProperty("groups", group, FilterEventParameters.EMPTY);
         proxyFilter.onWikiObjectProperty("levels", right.getName(), FilterEventParameters.EMPTY);
         proxyFilter.onWikiObjectProperty("users", user, FilterEventParameters.EMPTY);
-        proxyFilter.endWikiObject(XWIKIRIGHTS_CLASSNAME, rightParameters);
+        proxyFilter.endWikiObject(rightClassName, rightParameters);
     }
 
     private PageIdentifier createPageIdentifier(Long pageId, String spaceKey)
@@ -890,7 +893,7 @@ public class ConfluenceInputFilterStream
                 }
 
                 if (right != null) {
-                    sendRight(proxyFilter, confluenceRight.group, right, confluenceRight.user);
+                    sendRight(proxyFilter, confluenceRight.group, right, confluenceRight.user, false);
                 }
             }
         }
