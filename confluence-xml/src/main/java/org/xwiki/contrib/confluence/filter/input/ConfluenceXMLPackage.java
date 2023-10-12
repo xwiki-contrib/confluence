@@ -30,10 +30,12 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -507,6 +509,24 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private Map<Long, List<Long>> blogPages = new LinkedHashMap<>();
 
     private Map<String, Long> spacesByKey = new HashMap<>();
+
+    private static Collection<String> SUPPORTED_OBJECTS = new HashSet<>(Arrays.asList(
+        "Attachment",
+        "BlogPost",
+        "BodyContent",
+        "Comment",
+        "ContentPermission",
+        "ContentPermissionSet",
+        "ContentProperty",
+        "InternalGroup",
+        "InternalUser",
+        "Label",
+        "Labelling",
+        "Page",
+        "Space",
+        "SpaceDescription",
+        "SpacePermission"
+    ));
 
     /**
      * @param source the source where to find the package to parse
@@ -1119,13 +1139,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
             return readListProperty(xmlReader);
         } else if (propertyClass.equals("java.util.Set")) {
             return readSetProperty(xmlReader);
-        } else if (propertyClass.equals("Page") || propertyClass.equals("Space") || propertyClass.equals("BodyContent")
-            || propertyClass.equals("Attachment") || propertyClass.equals("BlogPost")
-            || propertyClass.equals("SpaceDescription") || propertyClass.equals("Labelling")
-            || propertyClass.equals("Label") || propertyClass.equals("SpacePermission")
-            || propertyClass.equals("InternalGroup") || propertyClass.equals("InternalUser")
-            || propertyClass.equals("Comment") || propertyClass.equals("ContentProperty")
-            || propertyClass.equals("ContentPermissionSet") || propertyClass.equals("ContentPermission")) {
+        } else if (SUPPORTED_OBJECTS.contains(propertyClass)) {
             return readObjectReference(xmlReader);
         } else if (propertyClass.equals("ConfluenceUserImpl")) {
             return readImplObjectReference(xmlReader);
