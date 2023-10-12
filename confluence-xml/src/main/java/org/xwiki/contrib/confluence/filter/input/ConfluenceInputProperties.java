@@ -145,6 +145,9 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private boolean rightsEnabled = true;
 
     private boolean contentsEnabled = true;
+
+    private boolean historyEnabled = true;
+
     /**
      * @see #getBlogSpaceName()
      */
@@ -603,7 +606,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     }
 
     /**
-     * @param contentsEnabled if true, import the rights found in the confluence package
+     * @param contentsEnabled if true, import the contents found in the confluence package
      * @since 9.24.0
      */
     @PropertyName("Import contents")
@@ -611,6 +614,28 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setContentsEnabled(boolean contentsEnabled)
     {
         this.contentsEnabled = contentsEnabled;
+    }
+
+    /**
+     * @return if true, import the contents found in the confluence package
+     * @since 9.24.0
+     */
+    @PropertyName("Import history")
+    @PropertyDescription("Import history (all the revisions) found in the confluence package.")
+    public boolean isHistoryEnabled()
+    {
+        return this.historyEnabled;
+    }
+
+    /**
+     * @param historyEnabled if true, import the history found in the confluence package
+     * @since 9.24.0
+     */
+    @PropertyName("Import history")
+    @PropertyDescription("Import history (all the revisions) found in the confluence package.")
+    public void setHistoryEnabled(boolean historyEnabled)
+    {
+        this.historyEnabled = historyEnabled;
     }
 
     /**

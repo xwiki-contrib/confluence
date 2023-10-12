@@ -1,0 +1,52 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.#------------------------------------------------------------------------------
+<wikiSpace name="TestSpace">
+  <wikiDocument name="Pricing Reports">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.331651</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2014-07-29 21:11:24.0 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>43</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="43">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.408010</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2016-04-14 17:59:20.0 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string>comment 3</string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>Pricing Reports</string>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.historyEnabled=false
+.configuration.source=history
+.#------------------------------------------------------------------------------

@@ -812,11 +812,13 @@ public class ConfluenceInputFilterStream
         proxyFilter.beginWikiDocumentLocale(locale, documentLocaleParameters);
 
         // Revisions
-        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISIONS)) {
-            List<Long> revisions =
-                this.confluencePackage.getLongList(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISIONS);
-            for (Long revisionId : revisions) {
-                readPageRevision(revisionId, spaceKey, filter, proxyFilter);
+        if (this.properties.isHistoryEnabled()) {
+            if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISIONS)) {
+                List<Long> revisions =
+                    this.confluencePackage.getLongList(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISIONS);
+                for (Long revisionId : revisions) {
+                    readPageRevision(revisionId, spaceKey, filter, proxyFilter);
+                }
             }
         }
 
