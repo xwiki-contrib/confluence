@@ -7,7 +7,7 @@
 .# XWIKI-10014 - Failed to import attachments with multiple versions in some version of Confluence
 .#------------------------------------------------------------------------------
 <wikiSpace name="TestSpace">
-  <wikiDocument name="TestSpace.WebPreferences">
+  <wikiDocument name="WebPreferences">
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>

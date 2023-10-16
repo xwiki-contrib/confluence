@@ -115,6 +115,8 @@ public class ConfluenceInputFilterStream
 
     private static final String XWIKIGLOBALRIGHTS_CLASSNAME = "XWiki.XWikiGlobalRights";
 
+    private static final String WEB_PREFERENCES = "WebPreferences";
+
     @Inject
     @Named(ConfluenceParser.SYNTAX_STRING)
     private StreamParser confluenceWIKIParser;
@@ -342,7 +344,6 @@ public class ConfluenceInputFilterStream
         Collection<Object> spacePermissions = spaceProperties.getList(ConfluenceXMLPackage.KEY_SPACE_PERMISSIONS);
         if (!spacePermissions.isEmpty()) {
             boolean webPreferencesStarted = false;
-            String spaceWebPreferences = spaceKey + ".WebPreferences";
 
             // This lets us avoid duplicate XWiki right objects. For instance, REMOVEPAGE and REMOVEBLOG are both mapped
             // to DELETE, and EDITPAGE and EDITBLOG are both mapped to EDIT. In each of these cases, If both rights are
@@ -444,7 +445,7 @@ public class ConfluenceInputFilterStream
 
                 if (right != null && !(user.isEmpty() && group.isEmpty())) {
                     if (!webPreferencesStarted) {
-                        proxyFilter.beginWikiDocument(spaceWebPreferences, new FilterEventParameters());
+                        proxyFilter.beginWikiDocument(WEB_PREFERENCES, new FilterEventParameters());
                         webPreferencesStarted = true;
                     }
                     sendRight(proxyFilter, group, right, user, true);
@@ -452,7 +453,7 @@ public class ConfluenceInputFilterStream
             }
 
             if (webPreferencesStarted) {
-                proxyFilter.endWikiDocument(spaceWebPreferences, new FilterEventParameters());
+                proxyFilter.endWikiDocument(WEB_PREFERENCES, new FilterEventParameters());
             }
         }
     }

@@ -2,7 +2,7 @@
 .expect|filter+xml
 .#------------------------------------------------------------------------------
 <wikiSpace name="Great">
-  <wikiDocument name="Great.WebPreferences">
+  <wikiDocument name="WebPreferences">
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>

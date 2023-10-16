@@ -121,7 +121,7 @@
   <groupMemberGroup name="Admin"/>
 </groupContainer>
 <wikiSpace name="ds">
-  <wikiDocument name="ds.WebPreferences">
+  <wikiDocument name="WebPreferences">
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
