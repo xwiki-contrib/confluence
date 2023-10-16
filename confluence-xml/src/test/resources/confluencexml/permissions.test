@@ -3141,53 +3141,6 @@
     </wikiDocumentLocale>
   </wikiDocument>
   <wikiDocument name="Nice Web">
-    <wikiDocumentLocale>
-      <p>
-        <parameters>
-          <entry>
-            <string>creation_author</string>
-            <string>XWiki.01251587</string>
-          </entry>
-          <entry>
-            <string>creation_date</string>
-            <date>2015-01-14 10:19:54.0 UTC</date>
-          </entry>
-          <entry>
-            <string>lastrevision</string>
-            <string>2</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiDocumentRevision revision="2">
-        <p>
-          <parameters>
-            <entry>
-              <string>parent_reference</string>
-              <org.xwiki.model.reference.EntityReference>
-                <name>Archive</name>
-                <type>DOCUMENT</type>
-              </org.xwiki.model.reference.EntityReference>
-            </entry>
-            <entry>
-              <string>revision_author</string>
-              <string>XWiki.01251587</string>
-            </entry>
-            <entry>
-              <string>revision_date</string>
-              <date>2015-09-21 16:28:55.0 UTC</date>
-            </entry>
-            <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>title</string>
-              <string>Nice Web</string>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
     <wikiObject name="XWiki.XWikiRights">
       <p>
         <parameters>
@@ -3426,6 +3379,53 @@
       <wikiObjectProperty name="levels" value="view"/>
       <wikiObjectProperty name="users" value="XWiki.SPN02514"/>
     </wikiObject>
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.01251587</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2015-01-14 10:19:54.0 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>2</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="2">
+        <p>
+          <parameters>
+            <entry>
+              <string>parent_reference</string>
+              <org.xwiki.model.reference.EntityReference>
+                <name>Archive</name>
+                <type>DOCUMENT</type>
+              </org.xwiki.model.reference.EntityReference>
+            </entry>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.01251587</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2015-09-21 16:28:55.0 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>Nice Web</string>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
   </wikiDocument>
   <wikiDocument name="Archive">
     <wikiDocumentLocale>

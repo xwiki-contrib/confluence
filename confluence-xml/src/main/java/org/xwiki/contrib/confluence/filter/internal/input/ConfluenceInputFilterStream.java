@@ -769,12 +769,12 @@ public class ConfluenceInputFilterStream
         // > WikiDocument
         proxyFilter.beginWikiDocument(documentName, documentParameters);
 
-        if (this.properties.isContentsEnabled()) {
-            sendRevisions(pageId, spaceKey, filter, proxyFilter, pageProperties);
-        }
-
         if (this.properties.isRightsEnabled()) {
             sendPageRights(pageId, spaceKey, proxyFilter, pageProperties);
+        }
+
+        if (this.properties.isContentsEnabled()) {
+            sendRevisions(pageId, spaceKey, filter, proxyFilter, pageProperties);
         }
 
         // < WikiDocument
