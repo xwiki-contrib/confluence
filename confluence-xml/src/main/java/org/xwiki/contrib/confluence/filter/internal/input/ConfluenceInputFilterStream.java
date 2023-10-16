@@ -291,8 +291,8 @@ public class ConfluenceInputFilterStream
             try {
                 readPage(pageId, spaceKey, filter, proxyFilter);
             } catch (Exception e) {
-                logger.error("Failed to filter the {}page with id [{}]. Cause: [{}].", isMain ? " main" : "",
-                        createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                logger.error("Failed to filter the page with id [{}] (main page: [{}]). Cause: [{}].",
+                        createPageIdentifier(pageId, spaceKey), isMain, ExceptionUtils.getRootCauseMessage(e), e);
             }
         }
         this.progress.endStep(this);
