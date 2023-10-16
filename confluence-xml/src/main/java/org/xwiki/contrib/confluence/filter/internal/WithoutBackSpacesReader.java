@@ -22,7 +22,6 @@ package org.xwiki.contrib.confluence.filter.internal;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
 
 /**
  * Reader removing the ASCII BS (8) character from the provided input stream.
@@ -30,7 +29,7 @@ import java.io.Reader;
  * @version $Id$
  * @since 9.24.0
  */
-public class WithoutBackSpacesReader extends Reader
+public class WithoutBackSpacesReader extends InputStream
 {
     private InputStream is;
 
@@ -44,7 +43,7 @@ public class WithoutBackSpacesReader extends Reader
     }
 
     @Override
-    public int read(char[] cbuf, int off, int len) throws IOException
+    public int read(byte[] b, int off, int len) throws IOException
     {
         for (int i = 0; i < len; i++) {
             int c = read();
@@ -54,7 +53,7 @@ public class WithoutBackSpacesReader extends Reader
                 }
                 return i;
             }
-            cbuf[off + i] = (char) c;
+            b[off + i] = (byte) c;
         }
         return len;
     }
