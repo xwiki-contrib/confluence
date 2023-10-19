@@ -1,0 +1,28 @@
+.#-----------------------------------------------------
+.input|confluence+xhtml/1.0
+.#-----------------------------------------------------
+<p>Default</p><ac:adf-extension><ac:adf-node type="panel"><ac:adf-attribute key="panel-type">note</ac:adf-attribute><ac:adf-content>
+<p>This is a note (woaw) 😯</p></ac:adf-content></ac:adf-node><ac:adf-fallback>
+<div class="panel conf-macro output-block" style="background-color: rgb(234,230,255);border-color: rgb(153,141,217);border-width: 1.0px;">
+<div class="panelContent" style="background-color: rgb(234,230,255);">
+
+<p>This is a note (woaw) 😯</p>
+</div></div></ac:adf-fallback></ac:adf-extension>
+
+<ac:adf-extension><ac:adf-node type="imaginarytypeforthetest"><ac:adf-attribute key="imaginarytypeforthetest-type">note</ac:adf-attribute><ac:adf-content>
+<p>This is a note (woaw) 😯</p></ac:adf-content></ac:adf-node><ac:adf-fallback>
+<div class="panel conf-macro output-block" style="background-color: rgb(234,230,255);border-color: rgb(153,141,217);border-width: 1.0px;">
+<div class="panelContent" style="background-color: rgb(234,230,255);">
+
+<p>This is a note (woaw) 😯</p>
+</div></div></ac:adf-fallback></ac:adf-extension>
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+beginParagraph
+onWord [Default]
+endParagraph
+onMacroStandalone [note] [] [This is a note (woaw) 😯]
+onMacroStandalone [confluence-adf-imaginarytypeforthetest] [type=note] [This is a note (woaw) 😯]
+endDocument

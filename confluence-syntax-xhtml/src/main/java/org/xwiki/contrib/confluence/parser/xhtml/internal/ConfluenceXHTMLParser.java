@@ -40,12 +40,16 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceXHTMLInputProperties;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ADFAttributeHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ADFContentHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ADFNodeHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.CodeTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXHTMLWhitespaceXMLFilter;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXWikiGeneratorListener;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.DefaultMacroParameterTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ElementMacroTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.IgnoredTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ImageTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.LinkBodyTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.LinkTagHandler;
@@ -214,6 +218,12 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("ac:task-id", new TaskIdTagHandler());
         handlers.put("ac:task-status", new TaskStatusTagHandler());
         handlers.put("ac:task-body", new TaskBodyTagHandler(this));
+
+        // ac:adf-extension tags are ignored, but their content parsed. Nothing to do.
+        handlers.put("ac:adf-fallback", new IgnoredTagHandler(this));
+        handlers.put("ac:adf-node", new ADFNodeHandler());
+        handlers.put("ac:adf-attribute", new ADFAttributeHandler());
+        handlers.put("ac:adf-content", new ADFContentHandler(this));
 
         parser.setExtraHandlers(handlers);
 
