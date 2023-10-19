@@ -38,7 +38,7 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public abstract class AbstractRichContentTagHandler extends PreserveTagHandler implements ConfluenceTagHandler
 {
-    private static final String CURRRENT_LISTENER = "rich_current_listener";
+    private static final String CURRENT_LISTENER = "rich_current_listener";
 
     private final ConfluenceXHTMLParser parser;
 
@@ -61,7 +61,7 @@ public abstract class AbstractRichContentTagHandler extends PreserveTagHandler i
             WrappingListener converter = this.parser.getConverter();
             if (converter != null) {
                 // Remember the current listener to put it back
-                context.getTagStack().setStackParameter(CURRRENT_LISTENER, converter.getWrappedListener());
+                context.getTagStack().setStackParameter(CURRENT_LISTENER, converter.getWrappedListener());
 
                 // Put a converter in front of the renderer if one is provided
                 converter.setWrappedListener(contentRenderer);
@@ -99,7 +99,7 @@ public abstract class AbstractRichContentTagHandler extends PreserveTagHandler i
                 contentRenderer = (PrintRenderer) converter.getWrappedListener();
 
                 // Put back the current listener
-                converter.setWrappedListener((Listener) context.getTagStack().getStackParameter(CURRRENT_LISTENER));
+                converter.setWrappedListener((Listener) context.getTagStack().getStackParameter(CURRENT_LISTENER));
             } else {
                 contentRenderer = (PrintRenderer) xwikiListener.getListener();
             }

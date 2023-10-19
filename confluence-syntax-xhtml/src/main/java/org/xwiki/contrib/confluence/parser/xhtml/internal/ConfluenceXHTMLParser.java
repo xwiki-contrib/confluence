@@ -151,7 +151,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
             try {
                 return constructor.newInstance(this);
             } catch (Exception e) {
-                throw new ParseException("Failed to crate a XWikiReferenceTagHandler", e);
+                throw new ParseException("Failed to create a XWikiReferenceTagHandler", e);
             }
         }
 
