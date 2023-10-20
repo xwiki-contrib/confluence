@@ -205,7 +205,10 @@ public class ConfluenceInputFilterStream
         // Only count pages if we are going to send them
         boolean willSendPages = this.properties.isContentsEnabled() || this.properties.isRightsEnabled();
         int pagesCount = willSendPages
-                ? pages.size() + countPages(pages) + (properties.isBlogsEnabled() ? countPages(blogPages) : 0)
+                ? (
+                      (properties.isNonBlogContentEnabled() ? (pages.size() + countPages(pages)) : 0)
+                    + (properties.isBlogsEnabled() ? countPages(blogPages) : 0)
+                )
                 : 0;
 
         if (this.properties.isUsersEnabled()) {
@@ -220,7 +223,7 @@ public class ConfluenceInputFilterStream
             this.progress.pushLevelProgress(pagesCount, this);
         }
 
-        if (willSendPages) {
+        if (willSendPages && properties.isNonBlogContentEnabled()) {
             sendDocuments(filter, proxyFilter, pages);
         }
 

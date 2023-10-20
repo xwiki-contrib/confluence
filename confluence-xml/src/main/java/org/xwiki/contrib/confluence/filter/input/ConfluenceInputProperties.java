@@ -139,6 +139,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
 
     private boolean blogsEnabled = true;
 
+    private boolean nonBlogContentEnabled = true;
+
     private boolean rightsEnabled = true;
 
     private boolean contentsEnabled = true;
@@ -570,8 +572,27 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
         this.blogsEnabled = blogsEnabled;
     }
 
+    /**
+     * @return if true, import the non-blog content found in the confluence package
+     * @since 9.25.0
+     */
+    @PropertyName("Import non-blog contents")
+    @PropertyDescription("Import the non-blog contents found in the confluence package.")
+    public boolean isNonBlogContentEnabled()
+    {
+        return this.nonBlogContentEnabled;
+    }
 
-   /**
+    /**
+     * @param nonBlogContentEnabled if true, import the blog posts found in the confluence package
+     * @since 9.25.0
+     */
+    public void setNonBlogContentEnabled(boolean nonBlogContentEnabled)
+    {
+        this.nonBlogContentEnabled = nonBlogContentEnabled;
+    }
+
+    /**
      * @return if true, import the rights found in the confluence package
      * @since 9.24.0
      */
