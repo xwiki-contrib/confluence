@@ -137,9 +137,6 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      */
     private boolean storeConfluenceDetailsEnabled;
 
-    /**
-     * @see #isBlogsEnabled()
-     */
     private boolean blogsEnabled = true;
 
     private boolean rightsEnabled = true;
