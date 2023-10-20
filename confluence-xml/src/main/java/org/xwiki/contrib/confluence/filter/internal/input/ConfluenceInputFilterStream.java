@@ -1070,44 +1070,7 @@ public class ConfluenceInputFilterStream
 
         // Generate page content when the page is a regular page or the value of the "content" property of the
         // "Blog.BlogPostClass" object if the page is a blog post.
-        if (!pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_BLOGPOST)) {
-            if (bodyContent != null) {
-                if (this.properties.isContentEvents() && filter instanceof Listener) {
-                    // > WikiDocumentRevision
-                    proxyFilter.beginWikiDocumentRevision(revision, documentRevisionParameters);
-
-                    try {
-                        parse(bodyContent, bodyType, this.properties.getMacroContentSyntax(), proxyFilter);
-                    } catch (Exception e) {
-                        this.logger.warn("Failed to parse content of page with id [{}]. Cause: [{}].",
-                            createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
-                    }
-                } else if (this.properties.isConvertToXWiki()) {
-                    // Convert content to XWiki syntax
-                    try {
-                        documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_CONTENT,
-                            convertToXWiki21(bodyContent, bodyType));
-                        documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, Syntax.XWIKI_2_1);
-                    } catch (Exception e) {
-                        this.logger.warn("Failed to convert content of the page with id [{}]. Cause: [{}].",
-                            createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
-                    }
-
-                    // > WikiDocumentRevision
-                    proxyFilter.beginWikiDocumentRevision(revision, documentRevisionParameters);
-                } else {
-                    // Keep Confluence syntax
-                    documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_CONTENT, bodyContent);
-                    documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, bodySyntax);
-
-                    // > WikiDocumentRevision
-                    proxyFilter.beginWikiDocumentRevision(revision, documentRevisionParameters);
-                }
-            } else {
-                // > WikiDocumentRevision
-                proxyFilter.beginWikiDocumentRevision(revision, documentRevisionParameters);
-            }
-        } else {
+        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_BLOGPOST)) {
             String blogPostContent = bodyContent;
 
             if (bodyContent != null) {
@@ -1142,6 +1105,41 @@ public class ConfluenceInputFilterStream
 
             addBlogPostObject(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE), blogPostContent,
                 publishDate, proxyFilter);
+        } else if (bodyContent != null) {
+            if (this.properties.isContentEvents() && filter instanceof Listener) {
+                // > WikiDocumentRevision
+                proxyFilter.beginWikiDocumentRevision(revision, documentRevisionParameters);
+
+                try {
+                    parse(bodyContent, bodyType, this.properties.getMacroContentSyntax(), proxyFilter);
+                } catch (Exception e) {
+                    this.logger.warn("Failed to parse content of page with id [{}]. Cause: [{}].",
+                        createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                }
+            } else if (this.properties.isConvertToXWiki()) {
+                // Convert content to XWiki syntax
+                try {
+                    documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_CONTENT,
+                        convertToXWiki21(bodyContent, bodyType));
+                    documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, Syntax.XWIKI_2_1);
+                } catch (Exception e) {
+                    this.logger.warn("Failed to convert content of the page with id [{}]. Cause: [{}].",
+                        createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                }
+
+                // > WikiDocumentRevision
+                proxyFilter.beginWikiDocumentRevision(revision, documentRevisionParameters);
+            } else {
+                // Keep Confluence syntax
+                documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_CONTENT, bodyContent);
+                documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, bodySyntax);
+
+                // > WikiDocumentRevision
+                proxyFilter.beginWikiDocumentRevision(revision, documentRevisionParameters);
+            }
+        } else {
+            // > WikiDocumentRevision
+            proxyFilter.beginWikiDocumentRevision(revision, documentRevisionParameters);
         }
 
         // Attachments
