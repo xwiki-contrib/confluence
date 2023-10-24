@@ -82,19 +82,18 @@ public class LinkTagHandler extends TagHandler implements ConfluenceTagHandler
         ConfluenceLinkWikiReference link =
             (ConfluenceLinkWikiReference) context.getTagStack().popStackParameter(CONFLUENCE_CONTAINER);
 
-        // If an user tag was inside the link tag, it was transformed into a mention macro.
+        // If a user tag was inside the link tag, it was transformed into a mention macro.
         if (link.getUser() != null) {
             return;
         }
         // Make sure to have a label for local anchors
         if (link.getLabel() == null && link.getDocument() == null
             && link.getSpace() == null && link.getUser() == null && link.getAttachment() == null) {
-            if (StringUtils.isNotEmpty(link.getAnchor())) {
-                link.setLabel(link.getAnchor());
-            } else {
+            if (StringUtils.isEmpty(link.getAnchor())) {
                 // Skip empty links.
                 return;
             }
+            link.setLabel(link.getAnchor());
         }
 
         context.getScannerContext().onReference(link);
