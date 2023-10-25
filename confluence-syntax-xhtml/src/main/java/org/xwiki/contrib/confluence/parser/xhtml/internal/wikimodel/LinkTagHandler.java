@@ -96,6 +96,16 @@ public class LinkTagHandler extends TagHandler implements ConfluenceTagHandler
             link.setLabel(link.getAnchor());
         }
 
-        context.getScannerContext().onReference(link);
+        if (context.getTagStack().getStackParameter(MacroParameterTagHandler.IN_CONFLUENCE_PARAMETER) != null) {
+            // We are in a confluence macro parameter, we put the link in the content instead of issuing a reference.
+            String ref = link.getDocument();
+            String space = link.getSpace();
+            if (space != null && !space.isEmpty()) {
+                ref = space + "." + ref;
+            }
+            context.getParentContext().appendContent(ref);
+        } else {
+            context.getScannerContext().onReference(link);
+        }
     }
 }
