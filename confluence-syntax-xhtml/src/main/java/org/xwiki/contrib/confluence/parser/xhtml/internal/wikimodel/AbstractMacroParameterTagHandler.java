@@ -31,6 +31,8 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 public abstract class AbstractMacroParameterTagHandler extends AbstractConfluenceTagHandler
     implements ConfluenceTagHandler
 {
+    protected static final String IN_CONFLUENCE_PARAMETER = "in-confluence-parameter";
+
     /**
      * Default constructor.
      */
@@ -43,11 +45,13 @@ public abstract class AbstractMacroParameterTagHandler extends AbstractConfluenc
     protected void begin(TagContext context)
     {
         setAccumulateContent(true);
+        context.getTagStack().pushStackParameter(IN_CONFLUENCE_PARAMETER, true);
     }
 
     @Override
     protected void end(TagContext context)
     {
+        context.getTagStack().popStackParameter(IN_CONFLUENCE_PARAMETER);
         ConfluenceMacro macro = (ConfluenceMacro) context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
 
         if (macro != null) {
