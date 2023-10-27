@@ -19,8 +19,20 @@
  */
 package org.xwiki.contrib.confluence.filter;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
+
+import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.internal.macros.MentionMacroConverter;
 
+/**
+ * Customize {@link MentionMacroConverter} to avoid random result.
+ * 
+ * @version $Id$
+ */
+@Component
+@Singleton
+@Named("mention")
 public class DeterministicMentionMacroConverter extends MentionMacroConverter
 {
     @Override
