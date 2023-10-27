@@ -21,12 +21,13 @@ package org.xwiki.contrib.confluence.filter.internal.macros;
 
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverterListener;
+import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.listener.reference.UserResourceReference;
 
@@ -43,6 +44,9 @@ public class MentionMacroConverter extends AbstractMacroConverter
 {
     private static final String REFERENCE_PARAMETER_KEY = "reference";
 
+    @Inject
+    private ConfluenceConverter confluenceConverter;
+
     @Override
     public void toXWiki(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline, Listener listener)
@@ -50,8 +54,7 @@ public class MentionMacroConverter extends AbstractMacroConverter
         UserResourceReference userReference =
             new UserResourceReference(confluenceParameters.get(REFERENCE_PARAMETER_KEY));
 
-        String stringReference =
-            ((ConfluenceConverterListener) listener).resolveUserReference(userReference).getReference();
+        String stringReference = confluenceConverter.resolveUserReference(userReference).getReference();
 
         confluenceParameters.put(REFERENCE_PARAMETER_KEY, stringReference);
         confluenceParameters.put("style", "FULL_NAME");

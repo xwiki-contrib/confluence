@@ -33,13 +33,13 @@ import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
+import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
 import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverterListener;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.listener.reference.UserResourceReference;
 
 /**
  * Find converter for passed macro.
- *
  * @version $Id$
  * @since 9.1
  */
@@ -60,13 +60,15 @@ public class DefaultMacroConverter implements MacroConverter
     @Inject
     private Logger logger;
 
+    @Inject
+    private ConfluenceConverter confluenceConverter;
+
     @Override
     public void toXWiki(String id, Map<String, String> parameters, String content, boolean inline, Listener listener)
     {
         if (this.componentManager.hasComponent(MacroConverter.class, id)) {
             try {
                 MacroConverter converter = this.componentManager.getInstance(MacroConverter.class, id);
-
                 converter.toXWiki(id, parameters, content, inline, listener);
             } catch (ComponentLookupException e) {
                 this.logger.error("Failed to lookup converter for macro [{}] (id=[{}], parameters={}, inline=[{}])", id,
@@ -74,7 +76,7 @@ public class DefaultMacroConverter implements MacroConverter
             }
         } else {
             ((ConfluenceConverterListener) listener).getWrappedListener()
-                .onMacro(toXWikiMacroName(id), toXWikiMacroParaleters(parameters, listener), content, inline);
+                .onMacro(toXWikiMacroName(id), toXWikiMacroParameters(parameters, listener), content, inline);
         }
     }
 
@@ -98,7 +100,7 @@ public class DefaultMacroConverter implements MacroConverter
         return confluenceMacroName;
     }
 
-    private Map<String, String> toXWikiMacroParaleters(Map<String, String> confluenceMacroParameters, Listener listener)
+    private Map<String, String> toXWikiMacroParameters(Map<String, String> confluenceMacroParameters, Listener listener)
     {
         if (confluenceMacroParameters == null || !this.context.getProperties().isConvertToXWiki() || (
             !confluenceMacroParameters.containsKey("") && confluenceMacroParameters.keySet().stream()
@@ -119,7 +121,7 @@ public class DefaultMacroConverter implements MacroConverter
                 key = "0";
             } else if (key.startsWith(USER_PARAMETER_PREFIX)) {
                 List<String> userIds = Arrays.asList(value.split("\\s*,\\s*"));
-                userIds.replaceAll(userId -> ((ConfluenceConverterListener) listener).resolveUserReference(
+                userIds.replaceAll(userId -> confluenceConverter.resolveUserReference(
                     new UserResourceReference(userId)).getReference());
 
                 key = key.replace(USER_PARAMETER_PREFIX, "");

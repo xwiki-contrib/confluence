@@ -24,6 +24,7 @@ import javax.inject.Singleton;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 
 /**
  * Default implementation of {@link ConfluenceInputContext}.
@@ -37,11 +38,15 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
 {
     private ThreadLocal<ConfluenceInputProperties> properties = new ThreadLocal<>();
 
+    private ThreadLocal<ConfluenceXMLPackage> confluencePackage = new ThreadLocal<>();
+
     /**
+     * @param confluencePackage the Confluence input package
      * @param properties the Confluence input properties
      */
-    public void set(ConfluenceInputProperties properties)
+    public void set(ConfluenceXMLPackage confluencePackage, ConfluenceInputProperties properties)
     {
+        this.confluencePackage.set(confluencePackage);
         this.properties.set(properties);
     }
 
@@ -50,6 +55,7 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
      */
     public void remove()
     {
+        this.confluencePackage.remove();
         this.properties.remove();
     }
 
@@ -57,5 +63,11 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
     public ConfluenceInputProperties getProperties()
     {
         return this.properties.get();
+    }
+
+    @Override
+    public ConfluenceXMLPackage getConfluencePackage()
+    {
+        return this.confluencePackage.get();
     }
 }

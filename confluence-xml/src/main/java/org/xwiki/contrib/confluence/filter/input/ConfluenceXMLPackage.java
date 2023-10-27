@@ -56,6 +56,7 @@ import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.CloseShieldInputStream;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
@@ -1484,6 +1485,32 @@ public class ConfluenceXMLPackage implements AutoCloseable
         }
 
         return properties;
+    }
+
+    /**
+     * @param key the user key
+     * @param def the value to return if the user was not found
+     * @since 9.26.0
+     * @return the resolved user
+     */
+    public String resolveUserName(String key, String def)
+    {
+        try {
+            ConfluenceProperties userProperties = getUserProperties(key);
+
+            if (userProperties != null) {
+                String userName = userProperties.getString(ConfluenceXMLPackage.KEY_USER_NAME);
+
+                if (userName != null) {
+                    return userName;
+                }
+            }
+        } catch (ConfigurationException e) {
+            this.logger.warn("Failed to retrieve properties of user with key [{}]: {}", key,
+                ExceptionUtils.getRootCauseMessage(e));
+        }
+
+        return def;
     }
 
     /**

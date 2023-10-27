@@ -42,7 +42,7 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
-import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.model.EntityType;
@@ -58,7 +58,7 @@ import org.xwiki.rendering.listener.reference.UserResourceReference;
 
 /**
  * Convert various Confluence content elements to their XWiki equivalent.
- * 
+ *
  * @version $Id$
  * @since 9.1
  */
@@ -88,24 +88,11 @@ public class ConfluenceConverterListener extends WrappingListener
     @Inject
     private Logger logger;
 
-    private ConfluenceXMLPackage confluencePackage;
+    @Inject
+    private ConfluenceInputContext context;
 
-    private ConfluenceInputProperties properties;
-
-    private ConfluenceInputFilterStream stream;
-
-    /**
-     * @param confluencePackage the Confluence data
-     * @param properties the input properties
-     * @since 9.10
-     */
-    public void initialize(ConfluenceXMLPackage confluencePackage, ConfluenceInputFilterStream stream,
-        ConfluenceInputProperties properties)
-    {
-        this.confluencePackage = confluencePackage;
-        this.stream = stream;
-        this.properties = properties;
-    }
+    @Inject
+    private ConfluenceConverter confluenceConverter;
 
     @Override
     public void onMacro(String id, Map<String, String> parameters, String content, boolean inline)
@@ -151,9 +138,9 @@ public class ConfluenceConverterListener extends WrappingListener
     {
         ResourceReference fixedReference = reference;
 
-        if (CollectionUtils.isNotEmpty(this.properties.getBaseURLs())
+        if (CollectionUtils.isNotEmpty(context.getProperties().getBaseURLs())
             && Objects.equals(reference.getType(), ResourceType.URL)) {
-            for (URL baseURL : this.properties.getBaseURLs()) {
+            for (URL baseURL : context.getProperties().getBaseURLs()) {
                 String baseURLString = baseURL.toExternalForm();
 
                 if (reference.getReference().startsWith(baseURLString)) {
@@ -189,10 +176,10 @@ public class ConfluenceConverterListener extends WrappingListener
             }
         } else if (Objects.equals(reference.getType(), ResourceType.DOCUMENT)) {
             // Make sure the reference follows the configured rules of conversion
-            reference.setReference(this.stream.convert(reference.getReference(), EntityType.DOCUMENT));
+            reference.setReference(confluenceConverter.convert(reference.getReference(), EntityType.DOCUMENT));
         } else if (Objects.equals(reference.getType(), ResourceType.ATTACHMENT)) {
             // Make sure the reference follows the configured rules of conversion
-            reference.setReference(this.stream.convert(reference.getReference(), EntityType.ATTACHMENT));
+            reference.setReference(confluenceConverter.convert(reference.getReference(), EntityType.ATTACHMENT));
         }
 
         return fixedReference;
@@ -202,12 +189,14 @@ public class ConfluenceConverterListener extends WrappingListener
     {
         // Document name
 
-        ConfluenceProperties pageProperties = this.confluencePackage.getPageProperties(Long.valueOf(id), false);
+        ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
+
+        ConfluenceProperties pageProperties = confluencePackage.getPageProperties(Long.parseLong(id), false);
 
         if (pageProperties != null) {
             String documentName;
             if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
-                documentName = this.properties.getSpacePageName();
+                documentName = context.getProperties().getSpacePageName();
             } else {
                 documentName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
             }
@@ -216,12 +205,12 @@ public class ConfluenceConverterListener extends WrappingListener
 
             Long spaceId = pageProperties.getLong("space", null);
 
-            String spaceKey = this.confluencePackage.getSpaceKey(spaceId);
+            String spaceKey = confluencePackage.getSpaceKey(spaceId);
 
             // Reference
 
-            return new LocalDocumentReference(this.stream.toEntityName(spaceKey),
-                this.stream.toEntityName(documentName));
+            return new LocalDocumentReference(confluenceConverter.toEntityName(spaceKey),
+                confluenceConverter.toEntityName(documentName));
         }
 
         return null;
@@ -300,7 +289,7 @@ public class ConfluenceConverterListener extends WrappingListener
         Matcher matcher = PATTERN_URL_DISPLAY.matcher(pattern);
         if (matcher.matches()) {
             LocalDocumentReference documentReference = new LocalDocumentReference(
-                this.stream.toEntityName(decode(matcher.group(1))), this.stream.toEntityName(decode(matcher.group(2))));
+                confluenceConverter.toEntityName(decode(matcher.group(1))), confluenceConverter.toEntityName(decode(matcher.group(2))));
 
             return createDocumentResourceReference(documentReference, urlParameters, urlAnchor);
         }
@@ -309,7 +298,7 @@ public class ConfluenceConverterListener extends WrappingListener
         matcher = PATTERN_URL_SPACES.matcher(pattern);
         if (matcher.matches()) {
             LocalDocumentReference documentReference = new LocalDocumentReference(
-                this.stream.toEntityName(decode(matcher.group(1))), this.stream.toEntityName(decode(matcher.group(2))));
+                confluenceConverter.toEntityName(decode(matcher.group(1))), confluenceConverter.toEntityName(decode(matcher.group(2))));
 
             return createDocumentResourceReference(documentReference, urlParameters, urlAnchor);
         }
@@ -362,7 +351,7 @@ public class ConfluenceConverterListener extends WrappingListener
     {
         if (reference instanceof UserResourceReference) {
             // Resolve proper user reference
-            ResourceReference userReference = resolveUserReference((UserResourceReference) reference);
+            ResourceReference userReference = confluenceConverter.resolveUserReference((UserResourceReference) reference);
 
             super.beginLink(userReference, freestanding, parameters);
         } else {
@@ -371,45 +360,12 @@ public class ConfluenceConverterListener extends WrappingListener
         }
     }
 
-    /**
-     * @param reference the reference of a user that can be either a username or a user key.
-     * @return a XWiki user reference.
-     * @since 9.19
-     */
-    public ResourceReference resolveUserReference(UserResourceReference reference)
-    {
-        String userReference = reference.getReference();
-
-        if (this.properties.isUserReferences()) {
-            // Keep the UserResourceReference
-
-            // Clean the user id
-            String userName =
-                this.stream.toUserReferenceName(this.stream.resolveUserName(userReference, userReference));
-
-            reference.setReference(userName);
-
-            return reference;
-        }
-
-        // Convert to link to user profile
-        // FIXME: would not really been needed if the XWiki Instance output filter was taking care of that when
-        // receiving a user reference
-
-        String userName = this.stream.toUserReference(this.stream.resolveUserName(userReference, userReference));
-        DocumentResourceReference documentReference = new DocumentResourceReference(userName);
-
-        documentReference.setParameters(reference.getParameters());
-
-        return documentReference;
-    }
-
     @Override
     public void endLink(ResourceReference reference, boolean freestanding, Map<String, String> parameters)
     {
         if (reference instanceof UserResourceReference) {
             // Resolve proper user reference
-            ResourceReference userReference = resolveUserReference((UserResourceReference) reference);
+            ResourceReference userReference = confluenceConverter.resolveUserReference((UserResourceReference) reference);
 
             super.endLink(userReference, freestanding, parameters);
         } else {

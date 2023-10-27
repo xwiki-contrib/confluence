@@ -34,4 +34,10 @@ public interface ConfluenceInputContext
      * @return the properties controlling the behavior of the Confluence input filter stream
      */
     ConfluenceInputProperties getProperties();
+
+    /**
+     * @return the confluence package being filtered
+     * @since 9.26.0
+     */
+    ConfluenceXMLPackage getConfluencePackage();
 }
