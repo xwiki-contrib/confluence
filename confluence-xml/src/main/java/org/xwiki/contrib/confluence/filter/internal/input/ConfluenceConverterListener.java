@@ -19,16 +19,15 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.input;
 
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,6 +35,7 @@ import javax.inject.Inject;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
@@ -66,18 +66,18 @@ import org.xwiki.rendering.listener.reference.UserResourceReference;
 @InstantiationStrategy(ComponentInstantiationStrategy.PER_LOOKUP)
 public class ConfluenceConverterListener extends WrappingListener
 {
-    private static final Pattern PATTERN_URL_DISPLAY = Pattern.compile("^/display/(.+)/([^\\?#]+)(\\?.*)?$");
+    private static final Pattern PATTERN_URL_DISPLAY = Pattern.compile("^/display/(.+)/([^?#]+)(\\?.*)?$");
 
     private static final Pattern PATTERN_URL_VIEWPAGE =
         Pattern.compile("^/pages/viewpage.action\\?pageId=(\\d+)(&.*)?$");
 
-    private static final Pattern PATTERN_URL_SPACES = Pattern.compile("^/spaces/(.+)/pages/\\d+/([^\\?#]+)(\\?.*)?$");
+    private static final Pattern PATTERN_URL_SPACES = Pattern.compile("^/spaces/(.+)/pages/\\d+/([^?#]+)(\\?.*)?$");
 
     private static final Pattern PATTERN_URL_ATTACHMENT =
-        Pattern.compile("^/download/attachments/(\\d+)/([^\\?#]+)(\\?.*)?$");
+        Pattern.compile("^/download/attachments/(\\d+)/([^?#]+)(\\?.*)?$");
 
     private static final Pattern PATTERN_URL_EMOTICON =
-        Pattern.compile("^/images/icons/emoticons/([^\\?#]+)(\\....)(\\?.*)?$");
+        Pattern.compile("^/images/icons/emoticons/([^?#]+)(\\....)(\\?.*)?$");
 
     @Inject
     private MacroConverter macroConverter;
@@ -134,6 +134,14 @@ public class ConfluenceConverterListener extends WrappingListener
         return builder.toString();
     }
 
+    private String enforceSlash(String pattern)
+    {
+        if (pattern.isEmpty() || pattern.charAt(0) != '/') {
+            return "/" + pattern;
+        }
+        return pattern;
+    }
+
     private ResourceReference convert(ResourceReference reference)
     {
         ResourceReference fixedReference = reference;
@@ -158,10 +166,7 @@ public class ConfluenceConverterListener extends WrappingListener
                         continue;
                     }
 
-                    String pattern = urlString.substring(baseURLString.length());
-                    if (pattern.isEmpty() || pattern.charAt(0) != '/') {
-                        pattern = "/" + pattern;
-                    }
+                    String pattern = enforceSlash(urlString.substring(baseURLString.length()));
 
                     List<String[]> urlParameters = parseURLParameters(url.getQuery());
                     String urlAnchor = url.getRef();
@@ -262,88 +267,73 @@ public class ConfluenceConverterListener extends WrappingListener
         return resourceReference;
     }
 
-    private void removeParameter(String parameterName, List<String[]> urlParameters)
-    {
-        for (ListIterator<String[]> it = urlParameters.listIterator(); it.hasNext();) {
-            String[] parameter = it.next();
-
-            if (parameter[0].equals(parameterName)) {
-                it.remove();
-            }
-        }
-    }
-
     private String decode(String encoded)
     {
-        try {
-            return URLDecoder.decode(encoded, StandardCharsets.UTF_8.toString());
-        } catch (UnsupportedEncodingException e) {
-            // If this happen we are is big trouble...
-            throw new RuntimeException(e);
+        return URLDecoder.decode(encoded, StandardCharsets.UTF_8);
+    }
+
+    private ResourceReference tryPattern(Pattern pattern, String p, Function<Matcher, ResourceReference> f)
+    {
+        Matcher matcher = pattern.matcher(p);
+        if (matcher.matches()) {
+            return f.apply(matcher);
         }
+
+        return null;
+    }
+
+    private DocumentResourceReference simpleDocRef(Matcher m, List<String[]> urlParameters, String urlAnchor)
+    {
+        LocalDocumentReference documentReference = new LocalDocumentReference(
+            confluenceConverter.toEntityName(decode(m.group(1))), confluenceConverter.toEntityName(decode(m.group(2))));
+
+        return createDocumentResourceReference(documentReference, urlParameters, urlAnchor);
     }
 
     private ResourceReference fixReference(String pattern, List<String[]> urlParameters, String urlAnchor)
     {
-        // Try /display
-        Matcher matcher = PATTERN_URL_DISPLAY.matcher(pattern);
-        if (matcher.matches()) {
-            LocalDocumentReference documentReference = new LocalDocumentReference(
-                confluenceConverter.toEntityName(decode(matcher.group(1))), confluenceConverter.toEntityName(decode(matcher.group(2))));
+        return ObjectUtils.firstNonNull(
+            // Try /display
+            tryPattern(PATTERN_URL_DISPLAY, pattern, matcher -> simpleDocRef(matcher, urlParameters, urlAnchor)),
 
-            return createDocumentResourceReference(documentReference, urlParameters, urlAnchor);
-        }
+            // Try /spaces
+            tryPattern(PATTERN_URL_SPACES, pattern, matcher -> simpleDocRef(matcher, urlParameters, urlAnchor)),
 
-        // Try /spaces
-        matcher = PATTERN_URL_SPACES.matcher(pattern);
-        if (matcher.matches()) {
-            LocalDocumentReference documentReference = new LocalDocumentReference(
-                confluenceConverter.toEntityName(decode(matcher.group(1))), confluenceConverter.toEntityName(decode(matcher.group(2))));
+            // Try viewpage.action
+            tryPattern(PATTERN_URL_VIEWPAGE, pattern, matcher -> {
+                LocalDocumentReference documentReference;
+                try {
+                    documentReference = fromPageId(matcher.group(1));
+                } catch (Exception e) {
+                    this.logger.error("Failed to get page for id [{}]", matcher.group(1), e);
+                    return null;
+                }
 
-            return createDocumentResourceReference(documentReference, urlParameters, urlAnchor);
-        }
+                // Clean id parameter
+                urlParameters.removeIf(parameter -> parameter[0].equals("pageId"));
 
-        // Try viewpage.action
-        matcher = PATTERN_URL_VIEWPAGE.matcher(pattern);
-        if (matcher.matches()) {
-            LocalDocumentReference documentReference;
-            try {
-                documentReference = fromPageId(matcher.group(1));
-            } catch (Exception e) {
-                this.logger.error("Failed to get page for id [{}]", matcher.group(1), e);
-                return null;
-            }
+                return createDocumentResourceReference(documentReference, urlParameters, urlAnchor);
+            }),
 
-            // Clean id parameter
-            removeParameter("pageId", urlParameters);
+            // Try attachments
+            tryPattern(PATTERN_URL_ATTACHMENT, pattern, matcher -> {
+                LocalDocumentReference documentReference;
+                try {
+                    documentReference = fromPageId(matcher.group(1));
+                } catch (Exception e) {
+                    this.logger.error("Failed to get attachment page for id [{}]", matcher.group(1), e);
+                    return null;
+                }
 
-            return createDocumentResourceReference(documentReference, urlParameters, urlAnchor);
-        }
+                EntityReference attachmentReference =
+                    new EntityReference(decode(matcher.group(2)), EntityType.ATTACHMENT, documentReference);
 
-        // Try attachments
-        matcher = PATTERN_URL_ATTACHMENT.matcher(pattern);
-        if (matcher.matches()) {
-            LocalDocumentReference documentReference;
-            try {
-                documentReference = fromPageId(matcher.group(1));
-            } catch (Exception e) {
-                this.logger.error("Failed to get attachment page for id [{}]", matcher.group(1), e);
-                return null;
-            }
+                return createAttachmentResourceReference(attachmentReference, urlParameters, urlAnchor);
+            }),
 
-            EntityReference attachmentReference =
-                new EntityReference(decode(matcher.group(2)), EntityType.ATTACHMENT, documentReference);
-
-            return createAttachmentResourceReference(attachmentReference, urlParameters, urlAnchor);
-        }
-
-        // emoticons
-        matcher = PATTERN_URL_EMOTICON.matcher(pattern);
-        if (matcher.matches()) {
-            return new ResourceReference(decode(matcher.group(1)), ResourceType.ICON);
-        }
-
-        return null;
+            // emoticons
+            tryPattern(PATTERN_URL_EMOTICON, pattern, m -> new ResourceReference(decode(m.group(1)), ResourceType.ICON))
+        );
     }
 
     @Override
@@ -351,9 +341,9 @@ public class ConfluenceConverterListener extends WrappingListener
     {
         if (reference instanceof UserResourceReference) {
             // Resolve proper user reference
-            ResourceReference userReference = confluenceConverter.resolveUserReference((UserResourceReference) reference);
+            ResourceReference userRef = confluenceConverter.resolveUserReference((UserResourceReference) reference);
 
-            super.beginLink(userReference, freestanding, parameters);
+            super.beginLink(userRef, freestanding, parameters);
         } else {
             // Fix and optimize the link reference according to various rules
             super.beginLink(convert(reference), freestanding, parameters);
@@ -365,9 +355,9 @@ public class ConfluenceConverterListener extends WrappingListener
     {
         if (reference instanceof UserResourceReference) {
             // Resolve proper user reference
-            ResourceReference userReference = confluenceConverter.resolveUserReference((UserResourceReference) reference);
+            ResourceReference userRef = confluenceConverter.resolveUserReference((UserResourceReference) reference);
 
-            super.endLink(userReference, freestanding, parameters);
+            super.endLink(userRef, freestanding, parameters);
         } else {
             // Fix and optimize the link reference according to various rules
             super.endLink(convert(reference), freestanding, parameters);
