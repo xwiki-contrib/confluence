@@ -9,31 +9,12 @@
         <p>
           <parameters>
             <entry>
-              <string>parent_reference</string>
-              <org.xwiki.model.reference.EntityReference>
-                <name>validatedpage</name>
-                <parent>
-                  <name>validatedspace</name>
-                  <type>SPACE</type>
-                </parent>
-                <type>DOCUMENT</type>
-              </org.xwiki.model.reference.EntityReference>
-            </entry>
-            <entry>
               <string>title</string>
               <string>TestContent</string>
             </entry>
             <entry>
               <string>content</string>
-              <string>{{display reference="validatedspace.Includee"/}}
-
-{{display reference="recently-updated"/}}
-
-{{display reference="Attachments"/}}
-
-{{display reference="note, tip, info, success, warning, error"/}}
-
-{{excerpt-include 0="validatedpage"/}}</string>
+              <string>{{content-report-table spaces="validatedspace"/}}</string>
             </entry>
             <entry>
               <string>syntax</string>
@@ -52,23 +33,8 @@
     </wikiDocumentLocale>
   </wikiDocument>
 </wikiSpace>
-<wikiSpace name="validatedspace">
-  <wikiDocument name="validatedpage">
-    <wikiDocumentLocale>
-      <wikiDocumentRevision>
-        <p>
-          <parameters>
-            <entry>
-              <string>title</string>
-              <string>pagetovalidate</string>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
-</wikiSpace>
+<wikiSpace name="validatedspace"/>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
-.configuration.source=include
+.configuration.source=rispaceparameter
 .#------------------------------------------------------------------------------
