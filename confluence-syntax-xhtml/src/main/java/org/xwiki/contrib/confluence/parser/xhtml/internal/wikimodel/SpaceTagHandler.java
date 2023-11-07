@@ -45,11 +45,17 @@ public class SpaceTagHandler extends TagHandler implements ConfluenceTagHandler
     @Override
     protected void begin(TagContext context)
     {
-        Object container = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
-
         WikiParameter spaceParameter = context.getParams().getParameter("ri:space-key");
-        if (spaceParameter != null && container instanceof SpaceContainer) {
-            ((SpaceContainer) container).setSpace(spaceParameter.getValue());
+        if (spaceParameter != null) {
+            if (context.getTagStack().getStackParameter(AbstractMacroParameterTagHandler.IN_CONFLUENCE_PARAMETER) != null) {
+                // We are in a confluence macro parameter, we store the space in it.
+                context.getParentContext().appendContent(spaceParameter.getValue());
+                return;
+            }
+            Object container = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
+            if (container instanceof SpaceContainer) {
+                ((SpaceContainer) container).setSpace(spaceParameter.getValue());
+            }
         }
     }
 }
