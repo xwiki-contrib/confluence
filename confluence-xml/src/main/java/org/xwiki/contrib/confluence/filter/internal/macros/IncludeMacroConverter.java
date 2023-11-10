@@ -20,13 +20,9 @@
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
-import org.xwiki.model.EntityType;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -40,9 +36,6 @@ import java.util.Map;
 @Named("include")
 public class IncludeMacroConverter extends AbstractMacroConverter
 {
-    @Inject
-    private ConfluenceConverter confluenceConverter;
-
     @Override
     protected String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
@@ -54,9 +47,8 @@ public class IncludeMacroConverter extends AbstractMacroConverter
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {
-        Map<String, String> parameters = new LinkedHashMap<>(1);
-        String docRef = confluenceParameters.get("");
-        parameters.put("reference", confluenceConverter.convert(docRef, EntityType.DOCUMENT));
+        Map<String, String> parameters = super.toXWikiParameters(confluenceId, confluenceParameters, content);
+        parameters.put("reference", parameters.remove("0"));
         return parameters;
     }
 }

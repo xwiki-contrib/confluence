@@ -19,9 +19,6 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -32,11 +29,7 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
-import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
-import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
-import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverterListener;
 import org.xwiki.rendering.listener.Listener;
-import org.xwiki.rendering.listener.reference.UserResourceReference;
 
 /**
  * Find converter for passed macro.
@@ -45,23 +38,13 @@ import org.xwiki.rendering.listener.reference.UserResourceReference;
  */
 @Component
 @Singleton
-public class DefaultMacroConverter implements MacroConverter
+public class DefaultMacroConverter extends AbstractMacroConverter
 {
-    private static final String DELIMITER = ",";
-
-    private static final String USER_PARAMETER_PREFIX = "user--";
-
     @Inject
     private ComponentManager componentManager;
 
     @Inject
-    private ConfluenceInputContext context;
-
-    @Inject
     private Logger logger;
-
-    @Inject
-    private ConfluenceConverter confluenceConverter;
 
     @Override
     public void toXWiki(String id, Map<String, String> parameters, String content, boolean inline, Listener listener)
@@ -75,62 +58,8 @@ public class DefaultMacroConverter implements MacroConverter
                     parameters, content, inline, e);
             }
         } else {
-            ((ConfluenceConverterListener) listener).getWrappedListener()
-                .onMacro(toXWikiMacroName(id), toXWikiMacroParameters(parameters, listener), content, inline);
+            // If we haven't found a specific macro converter matching this id, we use the default behavior
+            super.toXWiki(id, parameters, content, inline, listener);
         }
-    }
-
-    private String toXWikiMacroName(String confluenceMacroName)
-    {
-        if (!this.context.getProperties().getUnprefixedMacros().isEmpty()) {
-            if (this.context.getProperties().getUnprefixedMacros().contains(confluenceMacroName)) {
-                return confluenceMacroName;
-            }
-
-            // If there is an explicit list of unprefixed macros the others are prefixed
-            return this.context.getProperties().getUnknownMacroPrefix() + confluenceMacroName;
-        }
-
-        // Check the explicit list of prefixed macros
-        if (this.context.getProperties().getPrefixedMacros().contains(confluenceMacroName)) {
-            return this.context.getProperties().getUnknownMacroPrefix() + confluenceMacroName;
-        }
-
-        // By default macros are not prefixed
-        return confluenceMacroName;
-    }
-
-    private Map<String, String> toXWikiMacroParameters(Map<String, String> confluenceMacroParameters, Listener listener)
-    {
-        if (confluenceMacroParameters == null || !this.context.getProperties().isConvertToXWiki() || (
-            !confluenceMacroParameters.containsKey("") && confluenceMacroParameters.keySet().stream()
-                .noneMatch(k -> k.startsWith(USER_PARAMETER_PREFIX))))
-        {
-            return confluenceMacroParameters;
-        }
-
-        Map<String, String> xwikiMacroParameters = new LinkedHashMap<>(confluenceMacroParameters.size());
-
-        for (Map.Entry<String, String> entry : confluenceMacroParameters.entrySet()) {
-            String key = entry.getKey();
-            String value = entry.getValue();
-            if (key.isEmpty()) {
-                // xwiki/2.x syntax does not currently support empty parameter name so we workaround it using the same
-                // default parameter name than the Confluence wiki syntax parser
-                // TODO: should probably get rid of that hack when https://jira.xwiki.org/browse/XRENDERING-601 is fixed
-                key = "0";
-            } else if (key.startsWith(USER_PARAMETER_PREFIX)) {
-                List<String> userIds = Arrays.asList(value.split("\\s*,\\s*"));
-                userIds.replaceAll(userId -> confluenceConverter.resolveUserReference(
-                    new UserResourceReference(userId)).getReference());
-
-                key = key.replace(USER_PARAMETER_PREFIX, "");
-                value = String.join(DELIMITER, userIds);
-            }
-
-            xwikiMacroParameters.put(key, value);
-        }
-
-        return xwikiMacroParameters;
     }
 }

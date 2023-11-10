@@ -104,6 +104,8 @@ public class LinkTagHandler extends TagHandler implements ConfluenceTagHandler
                 ref = space + "." + ref;
             }
             context.getParentContext().appendContent(ref);
+            context.getTagStack().setStackParameter(AbstractMacroParameterTagHandler.PARAMETER_PREFIX,
+                AbstractMacroParameterTagHandler.PARAMETER_PREFIX_DOC);
         } else {
             context.getScannerContext().onReference(link);
         }

@@ -50,6 +50,8 @@ public class SpaceTagHandler extends TagHandler implements ConfluenceTagHandler
             if (context.getTagStack().getStackParameter(AbstractMacroParameterTagHandler.IN_CONFLUENCE_PARAMETER) != null) {
                 // We are in a confluence macro parameter, we store the space in it.
                 context.getParentContext().appendContent(spaceParameter.getValue());
+                context.getTagStack().setStackParameter(AbstractMacroParameterTagHandler.PARAMETER_PREFIX,
+                    AbstractMacroParameterTagHandler.PARAMETER_PREFIX_SPACES);
                 return;
             }
             Object container = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);

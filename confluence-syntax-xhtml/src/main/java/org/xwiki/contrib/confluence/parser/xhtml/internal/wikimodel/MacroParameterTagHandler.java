@@ -48,7 +48,7 @@ public class MacroParameterTagHandler extends AbstractMacroParameterTagHandler i
     }
 
     @Override
-    protected void setParameter(ConfluenceMacro macro, TagContext context)
+    protected void setParameter(ConfluenceMacro macro, TagContext context, String prefix)
     {
         WikiParameter nameParameter = context.getParams().getParameter("ac:name");
 
@@ -56,7 +56,8 @@ public class MacroParameterTagHandler extends AbstractMacroParameterTagHandler i
             String value = getContent(context);
 
             if (!value.trim().isEmpty()) {
-                macro.parameters = macro.parameters.setParameter(nameParameter.getValue(), value);
+                String p = nameParameter.getValue();
+                macro.parameters = macro.parameters.setParameter(prefix + p, value);
             }
         }
     }

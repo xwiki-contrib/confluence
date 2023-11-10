@@ -54,6 +54,13 @@
                   </ac:link>
               </ac:parameter>
           </ac:structured-macro>
+          <ac:structured-macro ac:name="include">
+              <ac:parameter ac:name="">
+                  <ac:link>
+                      <ri:page ri:content-title="pagetovalidate"/>
+                  </ac:link>
+              </ac:parameter>
+          </ac:structured-macro>
           <ac:structured-macro ac:name="excerpt-include">
               <ac:parameter ac:name="">
                   <ac:link>

@@ -31,6 +31,12 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 public abstract class AbstractMacroParameterTagHandler extends AbstractConfluenceTagHandler
     implements ConfluenceTagHandler
 {
+    protected static final String PARAMETER_PREFIX = "PARAMETER_REF_TYPE";
+
+    protected static final String PARAMETER_PREFIX_SPACES = "spaces--";
+
+    protected static final String PARAMETER_PREFIX_DOC = "doc--";
+
     protected static final String IN_CONFLUENCE_PARAMETER = "in-confluence-parameter";
 
     /**
@@ -46,6 +52,7 @@ public abstract class AbstractMacroParameterTagHandler extends AbstractConfluenc
     {
         setAccumulateContent(true);
         context.getTagStack().pushStackParameter(IN_CONFLUENCE_PARAMETER, true);
+        context.getTagStack().pushStackParameter(PARAMETER_PREFIX, "");
     }
 
     @Override
@@ -53,11 +60,11 @@ public abstract class AbstractMacroParameterTagHandler extends AbstractConfluenc
     {
         context.getTagStack().popStackParameter(IN_CONFLUENCE_PARAMETER);
         ConfluenceMacro macro = (ConfluenceMacro) context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
+        String prefix = (String) context.getTagStack().popStackParameter(PARAMETER_PREFIX);
 
         if (macro != null) {
-            setParameter(macro, context);
+            setParameter(macro, context, prefix);
         }
     }
-
-    protected abstract void setParameter(ConfluenceMacro macro, TagContext context);
+    protected abstract void setParameter(ConfluenceMacro macro, TagContext context, String prefix);
 }

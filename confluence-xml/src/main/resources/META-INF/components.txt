@@ -13,5 +13,3 @@ org.xwiki.contrib.confluence.filter.internal.macros.MentionMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.JiraMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.WarningMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.IncludeMacroConverter
-org.xwiki.contrib.confluence.filter.internal.macros.ExcerptIncludeMacroConverter
-org.xwiki.contrib.confluence.filter.internal.macros.ContentReportTableMacroConverter
