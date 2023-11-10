@@ -61,6 +61,20 @@
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.clemens"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
       <wikiObjectProperty name="levels" value="delete"/>
       <wikiObjectProperty name="users" value="XWiki.clemens"/>
     </wikiObject>

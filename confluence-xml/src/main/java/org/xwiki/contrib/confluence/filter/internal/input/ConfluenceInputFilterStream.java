@@ -374,14 +374,10 @@ public class ConfluenceInputFilterStream
                     case EXPORTSPACE:
                     case EXPORTPAGE:
                     case REMOVEMAIL:
-                    case SETPAGEPERMISSIONS:
-                    case SETSPACEPERMISSIONS:
                     case REMOVEOWNCONTENT:
                     case CREATEATTACHMENT:
                     case REMOVEATTACHMENT:
                     case REMOVECOMMENT:
-                    case ADMINISTRATECONFLUENCE:
-                    case SYSTEMADMINISTRATOR:
                     case PROFILEATTACHMENTS:
                     case UPDATEUSERSTATUS:
                     case ARCHIVEPAGE:
@@ -389,6 +385,12 @@ public class ConfluenceInputFilterStream
                         // These rights are irrelevant in XWiki or can't be represented as-is.
                         // EDITBLOG and REMOVEBLOG can be implemented when migrating blogs is supported.
                         continue;
+                    case ADMINISTRATECONFLUENCE:
+                    case SYSTEMADMINISTRATOR:
+                    case SETPAGEPERMISSIONS:
+                    case SETSPACEPERMISSIONS:
+                        right = Right.ADMIN;
+                        break;
                     case VIEWSPACE:
                         right = Right.VIEW;
                         break;
