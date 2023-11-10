@@ -34,7 +34,7 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 public class TaskStatusTagHandler extends AbstractMacroParameterTagHandler
 {
     @Override
-    protected void setParameter(MacroTagHandler.ConfluenceMacro macro, TagContext context)
+    protected void setParameter(MacroTagHandler.ConfluenceMacro macro, TagContext context, String prefix)
     {
         macro.parameters = macro.parameters.setParameter("status", getContent(context));
     }

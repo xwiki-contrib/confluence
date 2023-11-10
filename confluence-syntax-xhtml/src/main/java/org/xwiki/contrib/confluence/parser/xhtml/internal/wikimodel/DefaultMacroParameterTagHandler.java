@@ -37,10 +37,11 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 public class DefaultMacroParameterTagHandler extends AbstractMacroParameterTagHandler implements ConfluenceTagHandler
 {
     @Override
-    protected void setParameter(ConfluenceMacro macro, TagContext context)
+    protected void setParameter(ConfluenceMacro macro, TagContext context, String prefix)
     {
         String value = getContent(context);
 
-        macro.parameters = macro.parameters.setParameter(String.valueOf(++macro.index), value);
+        String p = String.valueOf(++macro.index);
+        macro.parameters = macro.parameters.setParameter(prefix + p, value);
     }
 }

@@ -33,6 +33,8 @@
 
 {{display reference="note, tip, info, success, warning, error"/}}
 
+{{display reference="validatedpage"/}}
+
 {{excerpt-include 0="validatedpage"/}}</string>
             </entry>
             <entry>
