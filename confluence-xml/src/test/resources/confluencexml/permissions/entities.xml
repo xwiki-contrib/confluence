@@ -1762,6 +1762,9 @@
       <element class="SpacePermission" package="com.atlassian.confluence.security">
         <id name="id">267190456</id>
       </element>
+      <element class="SpacePermission" package="com.atlassian.confluence.security">
+        <id name="id">617742337</id>
+      </element>
     </collection>
     <collection name="pageTemplates" class="java.util.Collection">
       <element class="PageTemplate" package="com.atlassian.confluence.pages.templates">
@@ -2728,6 +2731,23 @@
     <property name="name"><![CDATA[00019356]]></property>
     <property name="lowerName"><![CDATA[00019356]]></property>
     <property name="email"><![CDATA[allen@mail.cox.smu.edu]]></property>
+  </object>
+  <object class="SpacePermission" package="com.atlassian.confluence.security">
+    <id name="id">617742337</id>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+      <id name="id">622593</id>
+    </property>
+    <property name="type"><![CDATA[COMMENT]]></property>
+    <property name="group"/>
+    <property name="allUsersSubject"><![CDATA[anonymous-users]]></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[01f7c1ca483b2b1c01483b2d4f4206cc]]></id>
+    </property>
+    <property name="creationDate">2023-11-10 14:11:48.022</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[01f7c1ca483b2b1c01483b2d4f4206cc]]></id>
+    </property>
+    <property name="lastModificationDate">2023-11-10 14:11:48.022</property>
   </object>
   <object class="SpacePermission" package="com.atlassian.confluence.security">
     <id name="id">258212371</id>

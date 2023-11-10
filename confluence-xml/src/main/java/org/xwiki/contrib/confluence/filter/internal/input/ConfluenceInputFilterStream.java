@@ -426,24 +426,24 @@ public class ConfluenceInputFilterStream
                     group = "";
                 }
 
-                String user = confluenceRight.user;
-                if (user != null && !user.isEmpty()) {
-                    String userRightString = "u:" + user + ":" + right.toString();
+                String users = confluenceRight.users;
+                if (users != null && !users.isEmpty()) {
+                    String userRightString = "u:" + users + ":" + right.toString();
                     if (addedRights.contains(userRightString)) {
-                        user = "";
+                        users = "";
                     } else {
                         addedRights.add(userRightString);
                     }
                 } else {
-                    user = "";
+                    users = "";
                 }
 
-                if (right != null && !(user.isEmpty() && group.isEmpty())) {
+                if (right != null && !(users.isEmpty() && group.isEmpty())) {
                     if (!webPreferencesStarted) {
                         proxyFilter.beginWikiDocument(WEB_PREFERENCES, new FilterEventParameters());
                         webPreferencesStarted = true;
                     }
-                    sendRight(proxyFilter, group, right, user, true);
+                    sendRight(proxyFilter, group, right, users, true);
                 }
             }
 
@@ -465,7 +465,13 @@ public class ConfluenceInputFilterStream
             ? ""
             : (confluenceConverter.toUserReference(getConfluenceToXWikiGroupName(groupStr)));
 
-        String user = "";
+        String users = "";
+
+        String allUsersSubject = permissionProperties.getString(ConfluenceXMLPackage.KEY_PERMISSION_ALLUSERSSUBJECT, null);
+        if ("anonymous-users".equals(allUsersSubject)) {
+            users = "XWiki.XWikiGuest";
+        }
+
         String userName = permissionProperties.getString(ConfluenceXMLPackage.KEY_SPACEPERMISSION_USERNAME, null);
         if (userName == null || userName.isEmpty()) {
             String userSubjectStr = permissionProperties.getString(ConfluenceXMLPackage.KEY_PERMISSION_USERSUBJECT, null);
@@ -482,26 +488,26 @@ public class ConfluenceInputFilterStream
         }
 
         if (userName != null && !userName.isEmpty()) {
-            user = confluenceConverter.toUserReference(userName);
+            users = (users.isEmpty() ? "" : users + ",") + confluenceConverter.toUserReference(userName);
         }
 
-        return new ConfluenceRightData(type, group, user);
+        return new ConfluenceRightData(type, group, users);
     }
 
     private static class ConfluenceRightData
     {
         public final String type;
         public final String group;
-        public final String user;
+        public final String users;
 
-        public ConfluenceRightData(String type, String group, String user) {
+        public ConfluenceRightData(String type, String group, String users) {
             this.type = type;
             this.group = group;
-            this.user = user;
+            this.users = users;
         }
     }
 
-    private static void sendRight(ConfluenceFilter proxyFilter, String group, Right right, String user, boolean space) throws FilterException
+    private static void sendRight(ConfluenceFilter proxyFilter, String group, Right right, String users, boolean space) throws FilterException
     {
         FilterEventParameters rightParameters = new FilterEventParameters();
         // Page report object
@@ -511,7 +517,7 @@ public class ConfluenceInputFilterStream
         proxyFilter.onWikiObjectProperty("allow", "1", FilterEventParameters.EMPTY);
         proxyFilter.onWikiObjectProperty("groups", group, FilterEventParameters.EMPTY);
         proxyFilter.onWikiObjectProperty("levels", right.getName(), FilterEventParameters.EMPTY);
-        proxyFilter.onWikiObjectProperty("users", user, FilterEventParameters.EMPTY);
+        proxyFilter.onWikiObjectProperty("users", users, FilterEventParameters.EMPTY);
         proxyFilter.endWikiObject(rightClassName, rightParameters);
     }
 
@@ -892,7 +898,7 @@ public class ConfluenceInputFilterStream
                 }
 
                 if (right != null) {
-                    sendRight(proxyFilter, confluenceRight.group, right, confluenceRight.user, false);
+                    sendRight(proxyFilter, confluenceRight.group, right, confluenceRight.users, false);
                 }
             }
         }

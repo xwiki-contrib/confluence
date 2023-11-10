@@ -136,6 +136,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
      * The property key to access the space or content permission user subject.
      * @since 9.24.0
      */
+    public static final String KEY_PERMISSION_ALLUSERSSUBJECT = "allUsersSubject";
+
+    /**
+     * The property key to access the space or content permission user subject.
+     * @since 9.24.0
+     */
     public static final String KEY_PERMISSION_USERSUBJECT = "userSubject";
 
     /**
