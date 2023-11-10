@@ -20,6 +20,7 @@
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
 import org.apache.commons.lang3.StringUtils;
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
 import org.xwiki.rendering.wikimodel.WikiParameter;
 import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
@@ -57,9 +58,12 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public class LinkTagHandler extends TagHandler implements ConfluenceTagHandler
 {
-    public LinkTagHandler()
+    private final ConfluenceReferenceConverter referenceConverter;
+
+    public LinkTagHandler(ConfluenceReferenceConverter referenceConverter)
     {
         super(false);
+        this.referenceConverter = referenceConverter;
     }
 
     @Override
@@ -98,10 +102,15 @@ public class LinkTagHandler extends TagHandler implements ConfluenceTagHandler
 
         if (context.getTagStack().getStackParameter(AbstractMacroParameterTagHandler.IN_CONFLUENCE_PARAMETER) != null) {
             // We are in a confluence macro parameter, we put the link in the content instead of issuing a reference.
-            String ref = link.getDocument();
-            String space = link.getSpace();
-            if (space != null && !space.isEmpty()) {
-                ref = space + "." + ref;
+            String ref;
+            if (referenceConverter == null) {
+                ref = link.getDocument();
+                String space = link.getSpace();
+                if (space != null && !space.isEmpty()) {
+                    ref = space + "." + ref;
+                }
+            } else {
+                ref = referenceConverter.convertDocumentReference(link.getSpace(), link.getDocument());
             }
             context.getParentContext().appendContent(ref);
         } else {

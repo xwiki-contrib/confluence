@@ -28,7 +28,7 @@ import org.xwiki.rendering.listener.Listener;
 
 /**
  * Base class for {@link MacroConverter} implementations.
- * 
+ *
  * @version $Id$
  * @since 9.1
  */
@@ -72,6 +72,13 @@ public abstract class AbstractMacroConverter implements MacroConverter
     protected String toXWikiParameterName(String confluenceParameterName, String id,
         Map<String, String> confluenceParameters, String confluenceContent)
     {
+        if (confluenceParameterName.isEmpty()) {
+            // xwiki/2.x syntax does not currently support empty parameter name so we workaround it using the same
+            // default parameter name than the Confluence wiki syntax parser
+            // TODO: should probably get rid of that hack when https://jira.xwiki.org/browse/XRENDERING-601 is fixed
+            return "0";
+        }
+
         return confluenceParameterName;
     }
 

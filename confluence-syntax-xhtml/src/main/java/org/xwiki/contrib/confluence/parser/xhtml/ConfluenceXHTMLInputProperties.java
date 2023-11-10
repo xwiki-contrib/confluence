@@ -58,6 +58,11 @@ public class ConfluenceXHTMLInputProperties extends DefaultFilterStreamPropertie
     private Syntax macroContentSyntax;
 
     /**
+     * @see #getReferenceConverter()
+     */
+    private ConfluenceReferenceConverter referenceConverter;
+
+    /**
      * @return The source to load the wiki from
      */
     @PropertyName("Source")
@@ -92,5 +97,25 @@ public class ConfluenceXHTMLInputProperties extends DefaultFilterStreamPropertie
     public void setMacroContentSyntax(Syntax macroContentSyntax)
     {
         this.macroContentSyntax = macroContentSyntax;
+    }
+
+    /**
+     * @return the referenceConverter to use to convert references
+     * @since 2.29.0
+     */
+    @PropertyName("Reference converter")
+    @PropertyDescription("The reference converter to use to convert references.")
+    public ConfluenceReferenceConverter getReferenceConverter()
+    {
+        return this.referenceConverter;
+    }
+
+    /**
+     * @param referenceConverter the converter to use to convert references
+     * @since 2.29.0
+     */
+    public void setReferenceConverter(ConfluenceReferenceConverter referenceConverter)
+    {
+        this.referenceConverter = referenceConverter;
     }
 }

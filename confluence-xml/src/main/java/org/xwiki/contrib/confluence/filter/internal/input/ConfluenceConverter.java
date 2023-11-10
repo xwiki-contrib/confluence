@@ -25,6 +25,7 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.Mapping;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.EntityReference;
@@ -47,7 +48,7 @@ import java.util.regex.Pattern;
  */
 @Component(roles = ConfluenceConverter.class)
 @Singleton
-public class ConfluenceConverter
+public class ConfluenceConverter implements ConfluenceReferenceConverter
 {
     private static final Pattern FORBIDDEN_USER_CHARACTERS = Pattern.compile("[. /]");
 
@@ -216,5 +217,26 @@ public class ConfluenceConverter
         documentReference.setParameters(reference.getParameters());
 
         return documentReference;
+    }
+
+    @Override
+    public String convertUserReference(String userId)
+    {
+        return resolveUserReference(new UserResourceReference(userId)).getReference();
+    }
+
+    @Override
+    public String convertDocumentReference(String parentSpaceReference, String documentReference)
+    {
+        if (parentSpaceReference == null || parentSpaceReference.isEmpty()) {
+            return convert(documentReference, EntityType.DOCUMENT);
+        }
+        return this.serializer.serialize(convert(new LocalDocumentReference(parentSpaceReference, documentReference)));
+    }
+
+    @Override
+    public String convertSpaceReference(String spaceReference)
+    {
+        return convert(spaceReference, EntityType.SPACE);
     }
 }

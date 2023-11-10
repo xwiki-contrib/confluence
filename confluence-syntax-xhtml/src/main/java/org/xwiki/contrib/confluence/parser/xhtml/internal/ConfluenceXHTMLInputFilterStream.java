@@ -90,21 +90,23 @@ public class ConfluenceXHTMLInputFilterStream
         Listener listener = (Listener) filter;
 
         if (this.confluenceXHTMLParser instanceof ConfluenceXHTMLParser) {
+            ConfluenceXHTMLParser parser = (ConfluenceXHTMLParser) this.confluenceXHTMLParser;
             Syntax targetSyntax = getSyntax();
 
             if (targetSyntax != null) {
                 try {
-                    ((ConfluenceXHTMLParser) this.confluenceXHTMLParser).setMacroContentSyntax(targetSyntax);
+                    parser.setMacroContentSyntax(targetSyntax);
                 } catch (ComponentLookupException e) {
                     throw new FilterException("Failed to initialize the Confluence XHTML input filter", e);
                 }
+                parser.setReferenceConverter(this.properties.getReferenceConverter());
             } else {
                 this.renderingContext.getTargetSyntax();
             }
 
             if (this.properties instanceof InternalConfluenceXHTMLInputProperties) {
                 WrappingListener converter = ((InternalConfluenceXHTMLInputProperties) this.properties).getConverter();
-                ((ConfluenceXHTMLParser) this.confluenceXHTMLParser).setConverter(converter);
+                parser.setConverter(converter);
                 converter.setWrappedListener(listener);
 
                 listener = converter;

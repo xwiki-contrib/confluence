@@ -51,6 +51,7 @@ import org.xwiki.contrib.confluence.filter.event.ConfluenceFilteringEvent;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.filter.input.ContentPermissionType;
 import org.xwiki.contrib.confluence.filter.input.SpacePermissionType;
@@ -1274,6 +1275,7 @@ public class ConfluenceInputFilterStream
         InternalConfluenceXHTMLInputProperties filterProperties = new InternalConfluenceXHTMLInputProperties();
         filterProperties.setSource(new StringInputSource(bodyContent));
         filterProperties.setMacroContentSyntax(macroContentSyntax);
+        filterProperties.setReferenceConverter(confluenceConverter);
 
         if (this.properties.isConvertToXWiki()) {
             filterProperties.setConverter(createConverter(null));

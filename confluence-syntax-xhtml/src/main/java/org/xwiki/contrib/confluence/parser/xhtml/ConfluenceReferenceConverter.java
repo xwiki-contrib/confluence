@@ -1,0 +1,47 @@
+/*
+ * See the NOTICE file distributed with this work for additional
+ * information regarding copyright ownership.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ */
+package org.xwiki.contrib.confluence.parser.xhtml;
+
+/**
+ * Converts references from Confluence to XWiki, using the parameters set for the conversion.
+ * @version $Id$
+ * @since 9.29.0
+ */
+public interface ConfluenceReferenceConverter
+{
+    /**
+     * @return the converted user reference
+     * @param userId the user identifier to convert
+     */
+    String convertUserReference(String userId);
+
+    /**
+     * @return the converted document reference
+     * @param parentSpaceReference the confluence space in which the document lives
+     * @param documentReference the document reference to convert
+     */
+    String convertDocumentReference(String parentSpaceReference, String documentReference);
+
+    /**
+     * @return the converted space reference
+     * @param spaceReference the space reference to convert
+     */
+    String convertSpaceReference(String spaceReference);
+}

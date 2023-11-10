@@ -39,6 +39,7 @@ import org.xml.sax.XMLReader;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceXHTMLInputProperties;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ADFAttributeHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ADFContentHandler;
@@ -131,6 +132,8 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
 
     private WrappingListener converter;
 
+    private ConfluenceReferenceConverter referenceConverter;
+
     @Override
     public Syntax getSyntax()
     {
@@ -191,10 +194,10 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("ac:image", new ImageTagHandler());
         handlers.put("ri:url", new URLTagHandler());
 
-        handlers.put("ac:link", new LinkTagHandler());
+        handlers.put("ac:link", new LinkTagHandler(referenceConverter));
         handlers.put("ri:page", new PageTagHandler());
-        handlers.put("ri:space", new SpaceTagHandler());
-        handlers.put("ri:user", new UserTagHandler());
+        handlers.put("ri:space", new SpaceTagHandler(referenceConverter));
+        handlers.put("ri:user", new UserTagHandler(referenceConverter));
         handlers.put("ac:plain-text-link-body", new PlainTextLinkBodyTagHandler());
         handlers.put("ac:link-body", new LinkBodyTagHandler());
 
@@ -306,6 +309,15 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         } else {
             this.macroContentRendererFactory = null;
         }
+    }
+
+    /**
+     * @param referenceConverter the converter to use to convert user, space and document references
+     * @since 9.29.0
+     */
+    public void setReferenceConverter(ConfluenceReferenceConverter referenceConverter)
+    {
+        this.referenceConverter = referenceConverter;
     }
 
     /**
