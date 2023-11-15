@@ -146,7 +146,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
     private XWikiReferenceTagHandler createXWikiReferenceTagHandler() throws ParseException
     {
         // The second parameter in XWikiReferenceTagHandler(WikiModelStreamParser, PrintRendererFactory) have been
-        // removed at some point in XWiki so we need to check which constructor we have in the current instance
+        // removed at some point in XWiki, so we need to check which constructor we have in the current instance
 
         Constructor<XWikiReferenceTagHandler> constructor =
             ConstructorUtils.getAccessibleConstructor(XWikiReferenceTagHandler.class, WikiModelStreamParser.class);
@@ -245,11 +245,11 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         // Ignore SAX callbacks when the parser parses the DTD
         DTDXMLFilter dtdFilter = new DTDXMLFilter(xmlReader);
 
-        // Add a XML Filter to accumulate onCharacters() calls since SAX
+        // Add an XML Filter to accumulate onCharacters() calls since SAX
         // parser may call it several times.
         AccumulationXMLFilter accumulationFilter = new AccumulationXMLFilter(dtdFilter);
 
-        // Add a XML Filter to remove non-semantic white spaces. We need to
+        // Add an XML Filter to remove non-semantic white spaces. We need to
         // do that since all WikiModel
         // events contain only semantic information.
         return new ConfluenceXHTMLWhitespaceXMLFilter(accumulationFilter);
@@ -296,7 +296,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
 
     /**
      * @param macroContentSyntax the syntax to use to convert rich macro content
-     * @throws ComponentLookupException when failing to find a rendering factory conrresponding to the provider syntax
+     * @throws ComponentLookupException when failing to find a rendering factory corresponding to the provider syntax
      */
     public void setMacroContentSyntax(Syntax macroContentSyntax) throws ComponentLookupException
     {

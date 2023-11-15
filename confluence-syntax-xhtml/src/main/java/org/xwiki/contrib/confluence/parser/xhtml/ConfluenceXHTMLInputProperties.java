@@ -77,7 +77,7 @@ public class ConfluenceXHTMLInputProperties extends DefaultFilterStreamPropertie
     }
 
     /**
-     * @return the macroContentSyntax the syntax to use to convert rich macro content
+     * @return the syntax to use to convert rich macro content
      */
     @PropertyName("Macro content syntax")
     @PropertyDescription("The syntax to use to convert rich macro content. The default is current default syntax.")
