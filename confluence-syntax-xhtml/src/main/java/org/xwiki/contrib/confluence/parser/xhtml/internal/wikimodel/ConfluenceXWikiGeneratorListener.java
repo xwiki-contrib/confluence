@@ -27,6 +27,7 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTa
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XHTMLXWikiGeneratorListener;
 import org.xwiki.rendering.listener.InlineFilterListener;
 import org.xwiki.rendering.listener.Listener;
+import org.xwiki.rendering.listener.MetaData;
 import org.xwiki.rendering.listener.WrappingListener;
 import org.xwiki.rendering.listener.reference.AttachmentResourceReference;
 import org.xwiki.rendering.listener.reference.DocumentResourceReference;
@@ -62,6 +63,8 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
 
     private StreamParser plainParser;
 
+    private StreamParser wikiParser;
+
     /**
      * @param parser the parser to use to parse link labels
      * @param listener the XWiki listener to which to forward WikiModel events
@@ -70,6 +73,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
      * @param plainRendererFactory used to generate header ids
      * @param idGenerator used to generate header ids
      * @param syntax the syntax of the parsed source
+     * @param plainParser the parser to use to parse link labels
      * @since 3.0M3
      */
     public ConfluenceXWikiGeneratorListener(StreamParser parser, Listener listener,
@@ -79,6 +83,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         super(parser, listener, linkReferenceParser, imageReferenceParser, plainRendererFactory, idGenerator, syntax);
 
         this.plainParser = plainParser;
+        this.wikiParser = parser;
     }
 
     private String escapeSpace(String space)
@@ -225,7 +230,23 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
             }
 
             if (resourceReference != null) {
-                onImage(resourceReference, false, Collections.<String, String>emptyMap());
+                if (confluenceReference.getCaption() != null) {
+                    this.getListener().beginFigure(Collections.singletonMap("class", "image"));
+                    onImage(resourceReference, false, confluenceReference.getImageParameters());
+                    this.getListener().beginFigureCaption(Listener.EMPTY_PARAMETERS);
+
+                    try {
+                        WrappingListener wrapper = new InlineFilterListener();
+                        wrapper.setWrappedListener(this.getListener());
+                        this.wikiParser.parse(new StringReader(confluenceReference.getCaption()), wrapper);
+                    } catch (ParseException ignored) {
+                    }
+
+                    this.getListener().endFigureCaption(Listener.EMPTY_PARAMETERS);
+                    this.getListener().endFigure(Collections.singletonMap("class", "image"));
+                } else {
+                    onImage(resourceReference, false, confluenceReference.getImageParameters());
+                }
             }
         } else {
             super.onImage(reference);

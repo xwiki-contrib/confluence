@@ -752,7 +752,7 @@ You can type into the editor as you would in any document, apply formatting, and
 
 (% style="color: rgb(51,51,51);" %)The editor looks like this (% style="color: rgb(51, 51, 51); color: rgb(153, 153, 153)" %)(click images to for a larger view)(% style="color: rgb(51,51,51);" %):
  
-[[image:attach:step-2-image-1.png]] 
+[[image:attach:step-2-image-1.png||width="675"]] 
 
 == Here is a description of the components: ==
 
@@ -760,7 +760,7 @@ You can type into the editor as you would in any document, apply formatting, and
 === (% style="color: rgb(0,0,0);" %)Editor toolbar(%%) ===
 
 (% style="color: rgb(51,51,51);" %)The editor toolbar provides tools to format and color page content, create lists and tables, indent and align text, and insert other content into the page such as symbols, links, images, multimedia files, and macros.(%%)
-\\[[image:attach:step-2-image-3.png]]
+\\[[image:attach:step-2-image-3.png||width="900"]]
 \\
 )))
 1. (((
@@ -774,7 +774,7 @@ You can type into the editor as you would in any document, apply formatting, and
 
 (% style="color: rgb(0,0,0);" %)Click the Save button to publish your page so others can see your changes.(%%)
  
-[[image:attach:step-2-image-5.png]]
+[[image:attach:step-2-image-5.png||width="650"]]
 \\
 )))
 
@@ -953,7 +953,7 @@ Select the image named **Confluence Origami Necktie**.
 1. Click **Properties **and then select the **Curl Shadow** option from the Image Effects dialog. 
   \\
 1. (% style="color: rgb(51,51,51);" %)Your image should look like this when completed:
-[[image:attach:Confluence-Origami-Necktie.jpeg]]
+[[image:attach:Confluence-Origami-Necktie.jpeg||thumbnail="true" queryparams="effects=border-simple,shadow-kn" width="300"]]
  
 1. Click **Save** to save the page.
 \\
@@ -1461,7 +1461,7 @@ The user will be notified that you mentioned them.
 (%%) =
 
 (% style="text-align: center;" %)
-= [[image:attach:Let's edit this page (step 3 of 9)@prev.jpg]][[doc:Learn the wonders of autoconvert (step 7 of 9)]] [[image:attach:Let's edit this page (step 3 of 9)@home.jpg]][[doc:Welcome to Confluence]] [[image:attach:Let's edit this page (step 3 of 9)@next.jpg]][[doc:Share your page with a team member (step 9 of 9)]] =
+= [[image:attach:Let's edit this page (step 3 of 9)@prev.jpg||width="106" height="40"]][[doc:Learn the wonders of autoconvert (step 7 of 9)]] [[image:attach:Let's edit this page (step 3 of 9)@home.jpg]][[doc:Welcome to Confluence]] [[image:attach:Let's edit this page (step 3 of 9)@next.jpg]][[doc:Share your page with a team member (step 9 of 9)]] =
 
 (% style="color: rgb(51,51,51);" %)
 </string>
@@ -1740,7 +1740,7 @@ Confluence can do all the work for you, just click the **Share** button.
 1. Let's tell someone about this page. 
 Click the **Share** button at the top right of the page. It looks like this:
  
-[[image:attach:step09-01.png]]
+[[image:attach:step09-01.png||width="400"]]
  
 1. Type the name of the person or group you want to share the page with. 
 You can also enter an email address.

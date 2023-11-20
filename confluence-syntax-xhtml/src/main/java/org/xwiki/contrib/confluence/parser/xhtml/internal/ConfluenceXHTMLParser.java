@@ -43,8 +43,10 @@ import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceXHTMLInputProperties;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ADFAttributeHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ADFContentHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ADFMarkHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ADFNodeHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.CaptionHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.CodeTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXHTMLWhitespaceXMLFilter;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXWikiGeneratorListener;
@@ -125,6 +127,10 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
     private StreamParser plainParser;
 
     @Inject
+    @Named("xwiki/2.1")
+    private StreamParser xwikiParser;
+
+    @Inject
     @Named("context")
     private Provider<ComponentManager> componentManagerProvider;
 
@@ -192,6 +198,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("ac:rich-text-body", new RichTextBodyTagHandler(this));
 
         handlers.put("ac:image", new ImageTagHandler());
+        handlers.put("ac:caption", new CaptionHandler(this));
         handlers.put("ri:url", new URLTagHandler());
 
         handlers.put("ac:link", new LinkTagHandler(referenceConverter));
@@ -227,6 +234,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("ac:adf-node", new ADFNodeHandler());
         handlers.put("ac:adf-attribute", new ADFAttributeHandler());
         handlers.put("ac:adf-content", new ADFContentHandler(this));
+        handlers.put("ac:adf-mark", new ADFMarkHandler());
 
         parser.setExtraHandlers(handlers);
 
@@ -293,13 +301,14 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
     @Override
     public XWikiGeneratorListener createXWikiGeneratorListener(Listener listener, IdGenerator idGenerator)
     {
-        return new ConfluenceXWikiGeneratorListener(getLinkLabelParser(), listener, getLinkReferenceParser(),
+        return new ConfluenceXWikiGeneratorListener(this.xwikiParser, listener, getLinkReferenceParser(),
             getImageReferenceParser(), this.plainRendererFactory, idGenerator, getSyntax(), this.plainParser);
     }
 
     /**
      * @param macroContentSyntax the syntax to use to convert rich macro content
-     * @throws ComponentLookupException when failing to find a rendering factory corresponding to the provider syntax
+     * @throws ComponentLookupException when failing to find a rendering factory corresponding to the provider
+     *     syntax
      */
     public void setMacroContentSyntax(Syntax macroContentSyntax) throws ComponentLookupException
     {
