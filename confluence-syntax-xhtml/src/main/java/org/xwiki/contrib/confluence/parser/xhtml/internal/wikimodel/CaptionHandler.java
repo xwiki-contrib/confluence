@@ -39,7 +39,7 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  *     </ac:caption>
  * </ac:image> }
  * @version $Id$
- * @since 9.29
+ * @since 9.29.0
  */
 public class CaptionHandler extends TagHandler implements ConfluenceTagHandler
 {

@@ -31,7 +31,7 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  * {@code <ac:image> <ac:adf-mark key="border" size="2" color="#091e4224" /> </ac:image> }
  *
  * @version $Id$
- * @since 9.29
+ * @since 9.29.0
  */
 public class ADFMarkHandler extends TagHandler implements ConfluenceTagHandler
 {

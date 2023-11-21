@@ -68,7 +68,7 @@ public class ConfluenceImageWikiReference extends WikiReference implements Attac
     }
 
     /**
-     * @since 9.29
+     * @since 9.29.0
      */
     public XDOM getCaption()
     {
@@ -76,7 +76,7 @@ public class ConfluenceImageWikiReference extends WikiReference implements Attac
     }
 
     /**
-     * @since 9.29
+     * @since 9.29.0
      */
     public void setCaption(XDOM caption)
     {
@@ -84,7 +84,7 @@ public class ConfluenceImageWikiReference extends WikiReference implements Attac
     }
 
     /**
-     * @since 9.29
+     * @since 9.29.0
      */
     public Map<String, String> getImageParameters()
     {
