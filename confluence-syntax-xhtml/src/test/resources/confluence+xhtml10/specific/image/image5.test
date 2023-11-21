@@ -1,0 +1,15 @@
+.#-----------------------------------------------------
+.input|confluence+xhtml/1.0
+.#-----------------------------------------------------
+<ac:image ac:align="left" ac:layout="wrap-left" ac:original-height="1200" ac:original-width="1200"
+  ac:custom-width="true" ac:alt="some alt text" ac:width="50">
+  <ri:attachment ri:filename="rock.jpg" ri:version-at-save="1" />
+</ac:image>
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+beginParagraph
+onImage [Typed = [true] Type = [attach] Reference = [rock.jpg]] [false] [Irock.jpg] [[align]=[left][alt]=[some alt text][custom-width]=[true][data-xwiki-image-style-alignment]=[start][data-xwiki-image-style-text-wrap]=[true][original-height]=[1200][original-width]=[1200][width]=[50]]
+endParagraph
+endDocument

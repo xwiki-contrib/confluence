@@ -1,0 +1,34 @@
+.#-----------------------------------------------------
+.input|confluence+xhtml/1.0
+.#-----------------------------------------------------
+<ac:image ac:align="left" ac:layout="align-start" ac:original-height="1200" ac:original-width="1200"
+  ac:custom-width="true" ac:alt="some alt text" ac:width="50">
+  <ri:attachment ri:filename="rock.jpg" ri:version-at-save="1" />
+  <ac:caption>
+    <p>sos<em>asdas</em>ame ca<strong>sasd</strong>ion</p>
+  </ac:caption>
+  <ac:adf-mark key="border" size="2" color="#091e4224" />
+</ac:image>
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+beginParagraph
+beginFigure [[class]=[image]]
+onImage [Typed = [true] Type = [attach] Reference = [rock.jpg]] [false] [Irock.jpg] [[align]=[left][alt]=[some alt text][custom-width]=[true][data-xwiki-image-style-alignment]=[start][data-xwiki-image-style-border]=[true][original-height]=[1200][original-width]=[1200][width]=[50]]
+beginFigureCaption
+onWord [sos]
+beginFormat [ITALIC]
+onWord [asdas]
+endFormat [ITALIC]
+onWord [ame]
+onSpace
+onWord [ca]
+beginFormat [BOLD]
+onWord [sasd]
+endFormat [BOLD]
+onWord [ion]
+endFigureCaption
+endFigure [[class]=[image]]
+endParagraph
+endDocument

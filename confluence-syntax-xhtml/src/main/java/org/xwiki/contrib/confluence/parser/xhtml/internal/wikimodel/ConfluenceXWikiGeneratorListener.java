@@ -70,6 +70,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
      * @param plainRendererFactory used to generate header ids
      * @param idGenerator used to generate header ids
      * @param syntax the syntax of the parsed source
+     * @param plainParser the parser to use to parse link labels
      * @since 3.0M3
      */
     public ConfluenceXWikiGeneratorListener(StreamParser parser, Listener listener,
@@ -225,7 +226,20 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
             }
 
             if (resourceReference != null) {
-                onImage(resourceReference, false, Collections.<String, String>emptyMap());
+                if (confluenceReference.getCaption() != null) {
+                    this.getListener().beginFigure(Collections.singletonMap("class", "image"));
+                    onImage(resourceReference, false, confluenceReference.getImageParameters());
+                    this.getListener().beginFigureCaption(Listener.EMPTY_PARAMETERS);
+
+                    InlineFilterListener inlineFilterListener = new InlineFilterListener();
+                    inlineFilterListener.setWrappedListener(this.getListener());
+                    confluenceReference.getCaption().traverse(inlineFilterListener);
+
+                    this.getListener().endFigureCaption(Listener.EMPTY_PARAMETERS);
+                    this.getListener().endFigure(Collections.singletonMap("class", "image"));
+                } else {
+                    onImage(resourceReference, false, confluenceReference.getImageParameters());
+                }
             }
         } else {
             super.onImage(reference);
