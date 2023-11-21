@@ -20,6 +20,7 @@
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler.ConfluenceAttachment;
+import org.xwiki.rendering.block.XDOM;
 import org.xwiki.rendering.wikimodel.WikiReference;
 
 import java.util.HashMap;
@@ -35,7 +36,7 @@ public class ConfluenceImageWikiReference extends WikiReference implements Attac
 
     private String url;
 
-    private String caption;
+    private XDOM caption;
 
     private final Map<String, String> imageParameters = new HashMap<>();
 
@@ -69,7 +70,7 @@ public class ConfluenceImageWikiReference extends WikiReference implements Attac
     /**
      * @since 9.29
      */
-    public String getCaption()
+    public XDOM getCaption()
     {
         return caption;
     }
@@ -77,7 +78,7 @@ public class ConfluenceImageWikiReference extends WikiReference implements Attac
     /**
      * @since 9.29
      */
-    public void setCaption(String caption)
+    public void setCaption(XDOM caption)
     {
         this.caption = caption;
     }

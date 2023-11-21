@@ -20,6 +20,11 @@
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
 import org.xwiki.contrib.confluence.parser.xhtml.internal.ConfluenceXHTMLParser;
+import org.xwiki.rendering.block.XDOM;
+import org.xwiki.rendering.internal.parser.XDOMGeneratorListener;
+import org.xwiki.rendering.internal.parser.wikimodel.XWikiGeneratorListener;
+import org.xwiki.rendering.wikimodel.impl.WikiScannerContext;
+import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
@@ -36,23 +41,48 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  * @version $Id$
  * @since 9.29
  */
-public class CaptionHandler extends AbstractRichContentTagHandler
+public class CaptionHandler extends TagHandler implements ConfluenceTagHandler
 {
+    private final ConfluenceXHTMLParser parser;
+
     /**
      * @param parser is used access the parser and the rendering to use to manipulate the content
      */
     public CaptionHandler(ConfluenceXHTMLParser parser)
     {
-        super(parser);
+        super(true);
+        this.parser = parser;
     }
 
     @Override
-    protected void endContent(String content, TagContext context)
+    protected void begin(TagContext context)
     {
+        XDOMGeneratorListener captionListener = new XDOMGeneratorListener();
+        XWikiGeneratorListener xwikiListener = this.parser.createXWikiGeneratorListener(captionListener, null);
+        context.getTagStack().pushScannerContext(new WikiScannerContext(xwikiListener));
+        context.getTagStack().pushStackParameters();
+
+        // Ensure we simulate a new document being parsed
+        context.getScannerContext().beginDocument();
+    }
+
+    @Override
+    protected void end(TagContext context)
+    {
+        context.getScannerContext().endDocument();
+
+        WikiScannerContext scannerContext = context.getTagStack().popScannerContext();
+        context.getTagStack().popStackParameters();
+
+        XWikiGeneratorListener xwikiListener = (XWikiGeneratorListener) scannerContext.getfListener();
+        XDOMGeneratorListener captionListener = (XDOMGeneratorListener) xwikiListener.getListener();
+
+        XDOM caption = captionListener.getXDOM();
+
         ConfluenceImageWikiReference image =
             (ConfluenceImageWikiReference) context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
         if (image != null) {
-            image.setCaption(content);
+            image.setCaption(caption);
         }
     }
 }

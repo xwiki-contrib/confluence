@@ -17,9 +17,17 @@ beginParagraph
 beginFigure [[class]=[image]]
 onImage [Typed = [true] Type = [attach] Reference = [rock.jpg]] [false] [Irock.jpg] [[align]=[left][alt]=[some alt text][custom-width]=[true][data-xwiki-image-style-alignment]=[start][data-xwiki-image-style-border]=[true][original-height]=[1200][original-width]=[1200][width]=[50]]
 beginFigureCaption
-onWord [sosasdasame]
+onWord [sos]
+beginFormat [ITALIC]
+onWord [asdas]
+endFormat [ITALIC]
+onWord [ame]
 onSpace
-onWord [casasdion]
+onWord [ca]
+beginFormat [BOLD]
+onWord [sasd]
+endFormat [BOLD]
+onWord [ion]
 endFigureCaption
 endFigure [[class]=[image]]
 endParagraph

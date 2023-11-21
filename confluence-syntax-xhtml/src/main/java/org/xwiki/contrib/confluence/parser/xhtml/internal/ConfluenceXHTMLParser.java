@@ -127,10 +127,6 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
     private StreamParser plainParser;
 
     @Inject
-    @Named("xwiki/2.1")
-    private StreamParser xwikiParser;
-
-    @Inject
     @Named("context")
     private Provider<ComponentManager> componentManagerProvider;
 
@@ -301,7 +297,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
     @Override
     public XWikiGeneratorListener createXWikiGeneratorListener(Listener listener, IdGenerator idGenerator)
     {
-        return new ConfluenceXWikiGeneratorListener(this.xwikiParser, listener, getLinkReferenceParser(),
+        return new ConfluenceXWikiGeneratorListener(getLinkLabelParser(), listener, getLinkReferenceParser(),
             getImageReferenceParser(), this.plainRendererFactory, idGenerator, getSyntax(), this.plainParser);
     }
 

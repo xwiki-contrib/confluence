@@ -62,8 +62,6 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
 
     private StreamParser plainParser;
 
-    private StreamParser wikiParser;
-
     /**
      * @param parser the parser to use to parse link labels
      * @param listener the XWiki listener to which to forward WikiModel events
@@ -82,7 +80,6 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         super(parser, listener, linkReferenceParser, imageReferenceParser, plainRendererFactory, idGenerator, syntax);
 
         this.plainParser = plainParser;
-        this.wikiParser = parser;
     }
 
     private String escapeSpace(String space)
@@ -234,12 +231,9 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
                     onImage(resourceReference, false, confluenceReference.getImageParameters());
                     this.getListener().beginFigureCaption(Listener.EMPTY_PARAMETERS);
 
-                    try {
-                        WrappingListener wrapper = new InlineFilterListener();
-                        wrapper.setWrappedListener(this.getListener());
-                        this.wikiParser.parse(new StringReader(confluenceReference.getCaption()), wrapper);
-                    } catch (ParseException ignored) {
-                    }
+                    InlineFilterListener inlineFilterListener = new InlineFilterListener();
+                    inlineFilterListener.setWrappedListener(this.getListener());
+                    confluenceReference.getCaption().traverse(inlineFilterListener);
 
                     this.getListener().endFigureCaption(Listener.EMPTY_PARAMETERS);
                     this.getListener().endFigure(Collections.singletonMap("class", "image"));
