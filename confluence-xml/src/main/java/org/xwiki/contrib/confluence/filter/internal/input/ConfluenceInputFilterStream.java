@@ -1130,7 +1130,7 @@ public class ConfluenceInputFilterStream
 
         // Comments
         Map<Long, ConfluenceProperties> pageComments = new LinkedHashMap<>();
-        Map<Long, Integer> commentIndeces = new LinkedHashMap<>();
+        Map<Long, Integer> commentIndices = new LinkedHashMap<>();
         int commentIndex = 0;
         for (Object commentIdStringObject : pageProperties.getList(ConfluenceXMLPackage.KEY_PAGE_COMMENTS)) {
             long commentId = Long.parseLong((String) commentIdStringObject);
@@ -1144,12 +1144,12 @@ public class ConfluenceInputFilterStream
             }
 
             pageComments.put(commentId, commentProperties);
-            commentIndeces.put(commentId, commentIndex);
+            commentIndices.put(commentId, commentIndex);
             commentIndex++;
         }
 
         for (Long commentId : pageComments.keySet()) {
-            readPageComment(pageId, spaceKey, proxyFilter, commentId, pageComments, commentIndeces);
+            readPageComment(pageId, spaceKey, proxyFilter, commentId, pageComments, commentIndices);
         }
 
         if (this.properties.isStoreConfluenceDetailsEnabled()) {
