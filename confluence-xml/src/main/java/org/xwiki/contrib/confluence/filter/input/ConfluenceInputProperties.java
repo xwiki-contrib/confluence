@@ -273,7 +273,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     @PropertyName("Base URLs")
     @PropertyDescription("The list of base URLs leading to the Confluence instance."
         + " They are used to convert wrongly entered absolute URLs into wiki links."
-        + " The first URL in the list will be used to compute page URLs used in the conversion report if the"
+        + " The first URL in the list will be used to compute page URLs used in the conversion report if"
         + " the 'Store Confluence details' property is used")
     public List<URL> getBaseURLs()
     {
