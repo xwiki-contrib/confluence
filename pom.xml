@@ -31,7 +31,7 @@
   <artifactId>confluence</artifactId>
   <version>9.29.1-SNAPSHOT</version>
   <name>Confluence - Parent POM</name>
-  <description>Parent POM for Concluence modules</description>
+  <description>Parent POM for Confluence modules</description>
   <packaging>pom</packaging>
   <properties>
     <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
