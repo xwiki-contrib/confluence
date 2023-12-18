@@ -336,32 +336,32 @@ public class ConfluenceConverterListener extends WrappingListener
         );
     }
 
-    @Override
-    public void beginLink(ResourceReference reference, boolean freestanding, Map<String, String> parameters)
+    private ResourceReference convertLinkRef(ResourceReference reference)
     {
         if (reference instanceof UserResourceReference) {
             // Resolve proper user reference
             ResourceReference userRef = confluenceConverter.resolveUserReference((UserResourceReference) reference);
-
-            super.beginLink(userRef, freestanding, parameters);
-        } else {
-            // Fix and optimize the link reference according to various rules
-            super.beginLink(convert(reference), freestanding, parameters);
+            if (userRef != null) {
+                return userRef;
+            }
+            // FIXME should we handle things like this when userRef is null?
+            // (probably meaning that the Confluence user is mapped to nothing)
         }
+
+        return convert(reference);
+    }
+
+    @Override
+    public void beginLink(ResourceReference reference, boolean freestanding, Map<String, String> parameters)
+    {
+        // Fix and optimize the link reference according to various rules
+        super.beginLink(convertLinkRef(reference), freestanding, parameters);
     }
 
     @Override
     public void endLink(ResourceReference reference, boolean freestanding, Map<String, String> parameters)
     {
-        if (reference instanceof UserResourceReference) {
-            // Resolve proper user reference
-            ResourceReference userRef = confluenceConverter.resolveUserReference((UserResourceReference) reference);
-
-            super.endLink(userRef, freestanding, parameters);
-        } else {
-            // Fix and optimize the link reference according to various rules
-            super.endLink(convert(reference), freestanding, parameters);
-        }
+        super.endLink(convertLinkRef(reference), freestanding, parameters);
     }
 
     @Override

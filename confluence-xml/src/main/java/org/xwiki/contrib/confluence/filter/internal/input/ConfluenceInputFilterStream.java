@@ -479,11 +479,12 @@ public class ConfluenceInputFilterStream
                 ConfluenceProperties userProperties;
                 try {
                     userProperties = confluencePackage.getUserImplProperties(userSubjectStr);
+                    if (userProperties != null) {
+                        userName = userProperties.getString(ConfluenceXMLPackage.KEY_USER_NAME, userSubjectStr);
+                    }
                 } catch (ConfigurationException e) {
                     throw new FilterException("Failed to get user properties", e);
                 }
-
-                userName = userProperties.getString(ConfluenceXMLPackage.KEY_USER_NAME, userSubjectStr);
             }
         }
 

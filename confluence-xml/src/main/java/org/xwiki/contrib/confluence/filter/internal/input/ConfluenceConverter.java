@@ -176,6 +176,9 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     {
         // Transform user name according to configuration
         String userReferenceName = toUserReferenceName(userName);
+        if (userReferenceName == null || userReferenceName.isEmpty()) {
+            return null;
+        }
 
         // Add the "XWiki" space and the wiki if configured. Ideally this should probably be done on XWiki Instance
         // Output filter side
@@ -201,6 +204,9 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
             // Clean the user id
             String userName = toUserReferenceName(confluencePackage.resolveUserName(userReference, userReference));
+            if (userName == null || userName.isEmpty()) {
+                return null;
+            }
 
             reference.setReference(userName);
 
@@ -212,6 +218,10 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         // receiving a user reference
 
         String userName = toUserReference(confluencePackage.resolveUserName(userReference, userReference));
+        if (userName == null || userName.isEmpty()) {
+            return null;
+        }
+
         DocumentResourceReference documentReference = new DocumentResourceReference(userName);
 
         documentReference.setParameters(reference.getParameters());

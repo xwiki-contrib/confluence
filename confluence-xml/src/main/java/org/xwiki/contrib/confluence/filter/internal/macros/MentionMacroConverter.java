@@ -26,9 +26,11 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
 import org.xwiki.rendering.listener.Listener;
+import org.xwiki.rendering.listener.reference.ResourceReference;
 import org.xwiki.rendering.listener.reference.UserResourceReference;
 
 /**
@@ -47,6 +49,9 @@ public class MentionMacroConverter extends AbstractMacroConverter
     @Inject
     private ConfluenceConverter confluenceConverter;
 
+    @Inject
+    private Logger logger;
+
     @Override
     public void toXWiki(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline, Listener listener)
@@ -54,11 +59,17 @@ public class MentionMacroConverter extends AbstractMacroConverter
         UserResourceReference userReference =
             new UserResourceReference(confluenceParameters.get(REFERENCE_PARAMETER_KEY));
 
-        String stringReference = confluenceConverter.resolveUserReference(userReference).getReference();
-
-        confluenceParameters.put(REFERENCE_PARAMETER_KEY, stringReference);
         confluenceParameters.put("style", "FULL_NAME");
-        confluenceParameters.put("anchor", createAnchor(stringReference));
+
+        ResourceReference reference = confluenceConverter.resolveUserReference(userReference);
+        if (reference == null) {
+            this.logger.error("Failed to find the mentioned user for macro [{}] (id=[{}], parameters={}, inline=[{}])",
+                confluenceId, confluenceParameters, inline);
+        } else {
+            String stringReference = reference.getReference();
+            confluenceParameters.put("anchor", createAnchor(stringReference));
+            confluenceParameters.put(REFERENCE_PARAMETER_KEY, stringReference);
+        }
 
         super.toXWiki(confluenceId, confluenceParameters, confluenceContent, inline, listener);
     }
