@@ -462,7 +462,8 @@ public class ConfluenceInputFilterStream
     private ConfluenceRightData getConfluenceRightData(ConfluenceProperties permissionProperties)
         throws FilterException
     {
-        String type = permissionProperties.getString(ConfluenceXMLPackage.KEY_PERMISSION_TYPE, "");
+        String type = permissionProperties.getString(ConfluenceXMLPackage.KEY_PERMISSION_TYPE, "")
+            .replaceAll("\\~.+$", "");
         String groupStr = permissionProperties.getString(ConfluenceXMLPackage.KEY_SPACEPERMISSION_GROUP, null);
         if (groupStr == null || groupStr.isEmpty()) {
             groupStr = permissionProperties.getString(ConfluenceXMLPackage.KEY_CONTENTPERMISSION_GROUP, null);
