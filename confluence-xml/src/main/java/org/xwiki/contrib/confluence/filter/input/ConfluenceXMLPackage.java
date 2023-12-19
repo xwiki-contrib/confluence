@@ -692,6 +692,10 @@ public class ConfluenceXMLPackage implements AutoCloseable
             ConfluenceProperties contentProperty = getObjectProperties(element);
             if (contentProperty != null) {
                 String name = contentProperty.getString("name");
+                if (name == null) {
+                    logger.warn("ContentProperty [{}] was not found", element);
+                    continue;
+                }
 
                 Object value = contentProperty.getString("longValue", null);
                 if (Strings.isNullOrEmpty((String) value)) {
