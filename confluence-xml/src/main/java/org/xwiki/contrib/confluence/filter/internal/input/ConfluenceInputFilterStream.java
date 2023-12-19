@@ -521,11 +521,14 @@ public class ConfluenceInputFilterStream
         String rightClassName = space ? XWIKIGLOBALRIGHTS_CLASSNAME : XWIKIRIGHTS_CLASSNAME;
         rightParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, rightClassName);
         proxyFilter.beginWikiObject(rightClassName, rightParameters);
-        proxyFilter.onWikiObjectProperty("allow", "1", FilterEventParameters.EMPTY);
-        proxyFilter.onWikiObjectProperty("groups", group, FilterEventParameters.EMPTY);
-        proxyFilter.onWikiObjectProperty("levels", right.getName(), FilterEventParameters.EMPTY);
-        proxyFilter.onWikiObjectProperty("users", users, FilterEventParameters.EMPTY);
-        proxyFilter.endWikiObject(rightClassName, rightParameters);
+        try {
+            proxyFilter.onWikiObjectProperty("allow", "1", FilterEventParameters.EMPTY);
+            proxyFilter.onWikiObjectProperty("groups", group, FilterEventParameters.EMPTY);
+            proxyFilter.onWikiObjectProperty("levels", right.getName(), FilterEventParameters.EMPTY);
+            proxyFilter.onWikiObjectProperty("users", users, FilterEventParameters.EMPTY);
+        } finally {
+            proxyFilter.endWikiObject(rightClassName, rightParameters);
+        }
     }
 
     private PageIdentifier createPageIdentifier(Long pageId, String spaceKey)
@@ -1221,22 +1224,23 @@ public class ConfluenceInputFilterStream
         // Page report object
         pageReportParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, CONFLUENCEPAGE_CLASSNAME);
         proxyFilter.beginWikiObject(CONFLUENCEPAGE_CLASSNAME, pageReportParameters);
-
-        StringBuilder pageURLBuilder = new StringBuilder();
-        if (this.properties.getBaseURLs() != null) {
-            pageURLBuilder.append(this.properties.getBaseURLs().get(0).toString());
-            pageURLBuilder.append("/wiki/spaces/").append(spaceKey);
-            if (!pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
-                String pageName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
-                pageURLBuilder.append("/pages/").append(pageId).append("/").append(pageName);
+        try {
+            StringBuilder pageURLBuilder = new StringBuilder();
+            if (this.properties.getBaseURLs() != null) {
+                pageURLBuilder.append(this.properties.getBaseURLs().get(0).toString());
+                pageURLBuilder.append("/wiki/spaces/").append(spaceKey);
+                if (!pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
+                    String pageName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
+                    pageURLBuilder.append("/pages/").append(pageId).append("/").append(pageName);
+                }
             }
+
+            proxyFilter.onWikiObjectProperty("id", pageId, FilterEventParameters.EMPTY);
+            proxyFilter.onWikiObjectProperty("url", pageURLBuilder.toString(), FilterEventParameters.EMPTY);
+            proxyFilter.onWikiObjectProperty("space", spaceKey, FilterEventParameters.EMPTY);
+        } finally {
+            proxyFilter.endWikiObject(CONFLUENCEPAGE_CLASSNAME, pageReportParameters);
         }
-
-        proxyFilter.onWikiObjectProperty("id", pageId, FilterEventParameters.EMPTY);
-        proxyFilter.onWikiObjectProperty("url", pageURLBuilder.toString(), FilterEventParameters.EMPTY);
-        proxyFilter.onWikiObjectProperty("space", spaceKey, FilterEventParameters.EMPTY);
-
-        proxyFilter.endWikiObject(CONFLUENCEPAGE_CLASSNAME, pageReportParameters);
     }
 
     private String convertToXWiki21(String bodyContent, int bodyType) throws FilterException, ParseException
@@ -1400,20 +1404,21 @@ public class ConfluenceInputFilterStream
         // Tag object
         pageTagsParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, TAGS_CLASSNAME);
         proxyFilter.beginWikiObject(TAGS_CLASSNAME, pageTagsParameters);
+        try {
+            // get page tags separated by | as string
+            StringBuilder tagBuilder = new StringBuilder();
+            String prefix = "";
+            for (String tag : pageTags.keySet()) {
+                tagBuilder.append(prefix);
+                tagBuilder.append(tag);
+                prefix = "|";
+            }
 
-        // get page tags separated by | as string
-        StringBuilder tagBuilder = new StringBuilder();
-        String prefix = "";
-        for (String tag : pageTags.keySet()) {
-            tagBuilder.append(prefix);
-            tagBuilder.append(tag);
-            prefix = "|";
+            // <tags> object property
+            proxyFilter.onWikiObjectProperty("tags", tagBuilder.toString(), FilterEventParameters.EMPTY);
+        } finally {
+            proxyFilter.endWikiObject(TAGS_CLASSNAME, pageTagsParameters);
         }
-
-        // <tags> object property
-        proxyFilter.onWikiObjectProperty("tags", tagBuilder.toString(), FilterEventParameters.EMPTY);
-
-        proxyFilter.endWikiObject(TAGS_CLASSNAME, pageTagsParameters);
     }
 
     private void readPageComment(Long pageId, String spaceKey, ConfluenceFilter proxyFilter, Long commentId,
@@ -1425,56 +1430,58 @@ public class ConfluenceInputFilterStream
         commentParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, COMMENTS_CLASSNAME);
         proxyFilter.beginWikiObject(COMMENTS_CLASSNAME, commentParameters);
 
-        // object properties
-        ConfluenceProperties commentProperties = pageComments.get(commentId);
+        try {
+            // object properties
+            ConfluenceProperties commentProperties = pageComments.get(commentId);
 
-        // creator
-        String commentCreator;
-        if (commentProperties.containsKey("creatorName")) {
-            // old creator reference by name
-            commentCreator = commentProperties.getString("creatorName");
-        } else {
-            // new creator reference by key
-            commentCreator = commentProperties.getString("creator");
-            commentCreator = confluencePackage.resolveUserName(commentCreator, commentCreator);
-        }
-        String commentCreatorReference = confluenceConverter.toUserReference(commentCreator);
+            // creator
+            String commentCreator;
+            if (commentProperties.containsKey("creatorName")) {
+                // old creator reference by name
+                commentCreator = commentProperties.getString("creatorName");
+            } else {
+                // new creator reference by key
+                commentCreator = commentProperties.getString("creator");
+                commentCreator = confluencePackage.resolveUserName(commentCreator, commentCreator);
+            }
+            String commentCreatorReference = confluenceConverter.toUserReference(commentCreator);
 
-        // content
-        String commentBodyContent = this.confluencePackage.getCommentText(commentId);
-        int commentBodyType = this.confluencePackage.getCommentBodyType(commentId);
-        String commentText = commentBodyContent;
-        if (commentBodyContent != null && this.properties.isConvertToXWiki()) {
+            // content
+            String commentBodyContent = this.confluencePackage.getCommentText(commentId);
+            int commentBodyType = this.confluencePackage.getCommentBodyType(commentId);
+            String commentText = commentBodyContent;
+            if (commentBodyContent != null && this.properties.isConvertToXWiki()) {
+                try {
+                    commentText = convertToXWiki21(commentBodyContent, commentBodyType);
+                } catch (Exception e) {
+                    this.logger.warn("Failed to convert content of the comment with id [{}] for page [{}]. Cause: [{}].",
+                        commentId, createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                }
+            }
+
+            // creation date
+            Date commentDate = null;
             try {
-                commentText = convertToXWiki21(commentBodyContent, commentBodyType);
+                commentDate = this.confluencePackage.getDate(commentProperties, "creationDate");
             } catch (Exception e) {
-                this.logger.warn("Failed to convert content of the comment with id [{}] for page [{}]. Cause: [{}].",
+                this.logger.warn("Failed to parse the creation date of the comment [{}] in page [{}]. Cause: [{}].",
                     commentId, createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
             }
+
+            // parent (replyto)
+            Integer parentIndex = null;
+            if (commentProperties.containsKey("parent")) {
+                Long parentId = commentProperties.getLong("parent");
+                parentIndex = commentIndeces.get(parentId);
+            }
+
+            proxyFilter.onWikiObjectProperty("author", commentCreatorReference, FilterEventParameters.EMPTY);
+            proxyFilter.onWikiObjectProperty("comment", commentText, FilterEventParameters.EMPTY);
+            proxyFilter.onWikiObjectProperty("date", commentDate, FilterEventParameters.EMPTY);
+            proxyFilter.onWikiObjectProperty("replyto", parentIndex, FilterEventParameters.EMPTY);
+        } finally {
+            proxyFilter.endWikiObject(COMMENTS_CLASSNAME, commentParameters);
         }
-
-        // creation date
-        Date commentDate = null;
-        try {
-            commentDate = this.confluencePackage.getDate(commentProperties, "creationDate");
-        } catch (Exception e) {
-            this.logger.warn("Failed to parse the creation date of the comment [{}] in page [{}]. Cause: [{}].",
-                commentId, createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
-        }
-
-        // parent (replyto)
-        Integer parentIndex = null;
-        if (commentProperties.containsKey("parent")) {
-            Long parentId = commentProperties.getLong("parent");
-            parentIndex = commentIndeces.get(parentId);
-        }
-
-        proxyFilter.onWikiObjectProperty("author", commentCreatorReference, FilterEventParameters.EMPTY);
-        proxyFilter.onWikiObjectProperty("comment", commentText, FilterEventParameters.EMPTY);
-        proxyFilter.onWikiObjectProperty("date", commentDate, FilterEventParameters.EMPTY);
-        proxyFilter.onWikiObjectProperty("replyto", parentIndex, FilterEventParameters.EMPTY);
-
-        proxyFilter.endWikiObject(COMMENTS_CLASSNAME, commentParameters);
     }
 
     private void addBlogDescriptorPage(ConfluenceFilter proxyFilter) throws FilterException
@@ -1491,13 +1498,14 @@ public class ConfluenceInputFilterStream
             blogParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, BLOG_CLASSNAME);
 
             proxyFilter.beginWikiObject(BLOG_CLASSNAME, blogParameters);
-
-            // Object properties
-            proxyFilter.onWikiObjectProperty("title", this.properties.getBlogSpaceName(), FilterEventParameters.EMPTY);
-            proxyFilter.onWikiObjectProperty("postsLayout", "image", FilterEventParameters.EMPTY);
-            proxyFilter.onWikiObjectProperty("displayType", "paginated", FilterEventParameters.EMPTY);
-
-            proxyFilter.endWikiObject(BLOG_CLASSNAME, blogParameters);
+            try {
+                // Object properties
+                proxyFilter.onWikiObjectProperty("title", this.properties.getBlogSpaceName(), FilterEventParameters.EMPTY);
+                proxyFilter.onWikiObjectProperty("postsLayout", "image", FilterEventParameters.EMPTY);
+                proxyFilter.onWikiObjectProperty("displayType", "paginated", FilterEventParameters.EMPTY);
+            } finally {
+                proxyFilter.endWikiObject(BLOG_CLASSNAME, blogParameters);
+            }
         } finally {
             // < WikiDocument
             proxyFilter.endWikiDocument(documentName, FilterEventParameters.EMPTY);
@@ -1513,18 +1521,19 @@ public class ConfluenceInputFilterStream
         blogPostParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, BLOG_POST_CLASSNAME);
 
         proxyFilter.beginWikiObject(BLOG_POST_CLASSNAME, blogPostParameters);
+        try {
+            // Object properties
+            proxyFilter.onWikiObjectProperty("title", title, FilterEventParameters.EMPTY);
+            proxyFilter.onWikiObjectProperty("content", content, FilterEventParameters.EMPTY);
+            proxyFilter.onWikiObjectProperty("publishDate", publishDate, FilterEventParameters.EMPTY);
 
-        // Object properties
-        proxyFilter.onWikiObjectProperty("title", title, FilterEventParameters.EMPTY);
-        proxyFilter.onWikiObjectProperty("content", content, FilterEventParameters.EMPTY);
-        proxyFilter.onWikiObjectProperty("publishDate", publishDate, FilterEventParameters.EMPTY);
-
-        // The blog post 'published' property is always set to true because unpublished blog posts are draft pages and
-        // draft pages are skipped during the import.
-        proxyFilter.onWikiObjectProperty("published", 1, FilterEventParameters.EMPTY);
-        proxyFilter.onWikiObjectProperty("hidden", 0, FilterEventParameters.EMPTY);
-
-        proxyFilter.endWikiObject(BLOG_POST_CLASSNAME, blogPostParameters);
+            // The blog post 'published' property is always set to true because unpublished blog posts are draft pages and
+            // draft pages are skipped during the import.
+            proxyFilter.onWikiObjectProperty("published", 1, FilterEventParameters.EMPTY);
+            proxyFilter.onWikiObjectProperty("hidden", 0, FilterEventParameters.EMPTY);
+        } finally {
+            proxyFilter.endWikiObject(BLOG_POST_CLASSNAME, blogPostParameters);
+        }
     }
 
     private ConfluenceProperties getContentProperties(ConfluenceProperties properties, String key)
