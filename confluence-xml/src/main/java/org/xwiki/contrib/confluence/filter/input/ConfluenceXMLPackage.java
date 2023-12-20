@@ -1865,13 +1865,16 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public String getTagName(ConfluenceProperties labellingProperties)
     {
         Long tagId = labellingProperties.getLong(ConfluenceXMLPackage.KEY_LABELLING_LABEL, null);
+        if (tagId == null) {
+            return null;
+        }
         String tagName = tagId.toString();
 
         try {
             ConfluenceProperties labelProperties = getObjectProperties(tagId);
             tagName = labelProperties.getString(ConfluenceXMLPackage.KEY_LABEL_NAME);
         } catch (NumberFormatException | ConfigurationException e) {
-            logger.warn("Unable to get tag name, using id instead.");
+            logger.error("Unable to get tag name, using id [{}] instead.", tagId, e);
         }
 
         return tagName;

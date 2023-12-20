@@ -1135,7 +1135,12 @@ public class ConfluenceInputFilterStream
                 }
 
                 String tagName = this.confluencePackage.getTagName(tagProperties);
-                pageTags.put(tagName, tagProperties);
+                if (tagName == null) {
+                    logger.warn("Failed to get the name of tag id [{}] for the page with id [{}].", tagId,
+                        createPageIdentifier(pageId, spaceKey));
+                } else {
+                    pageTags.put(tagName, tagProperties);
+                }
             }
 
             if (!pageTags.isEmpty()) {
