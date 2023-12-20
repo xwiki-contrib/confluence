@@ -1888,12 +1888,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
             // BodyContent objects are stored in page properties under the content id
             ConfluenceProperties commentContent = getPageProperties(commentId, false);
             if (commentContent == null) {
-                logger.warn("Unable to get comment text, using id instead.");
+                logger.warn("Unable to get comment text for comment [{}], using id instead.", commentId);
             } else {
                 commentText = commentContent.getString(KEY_PAGE_BODY);
             }
         } catch (ConfigurationException e) {
-            logger.warn("Unable to get comment text, using id instead.");
+            logger.error("Unable to get comment text for comment [{}], using id instead.", commentId, e);
         }
 
         return commentText;
@@ -1909,12 +1909,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
         try {
             ConfluenceProperties commentContent = getPageProperties(commentId, false);
             if (commentContent == null) {
-                logger.warn("Unable to get comment body type.");
+                logger.warn("Unable to get comment body type for comment [{}].", commentId);
             } else {
                 bodyType = commentContent.getInt(KEY_PAGE_BODY_TYPE);
             }
         } catch (ConfigurationException e) {
-            logger.warn("Unable to get comment body type.");
+            logger.error("Unable to get comment body type for comment [{}].", commentId, e);
         }
 
         return bodyType;
