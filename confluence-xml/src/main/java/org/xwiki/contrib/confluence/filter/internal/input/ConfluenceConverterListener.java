@@ -117,12 +117,6 @@ public class ConfluenceConverterListener extends WrappingListener
         super.setWrappedListener(wrappingListener);
     }
 
-    @Override
-    public Listener getWrappedListener()
-    {
-        return wrappingListener.getWrappedListener();
-    }
-
     private List<String[]> parseURLParameters(String queryString)
     {
         if (queryString == null) {
