@@ -20,6 +20,8 @@
 package org.xwiki.contrib.confluence.filter.input;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import org.apache.commons.configuration2.PropertiesConfiguration;
 import org.apache.commons.configuration2.builder.FileBasedConfigurationBuilder;
@@ -42,9 +44,16 @@ public class ConfluenceProperties extends PropertiesConfiguration
      */
     public static ConfluenceProperties create(File file) throws ConfigurationException
     {
+        URL url;
+        try {
+            url = file.toURI().toURL();
+        } catch (MalformedURLException e) {
+            throw new ConfigurationException("Could not get the URL of the properties file", e);
+        }
+
         FileBasedConfigurationBuilder<ConfluenceProperties> builder =
             new FileBasedConfigurationBuilder<>(ConfluenceProperties.class, null, true)
-                .configure(new Parameters().properties().setFile(file));
+                .configure(new Parameters().properties().setFile(file).setURL(url).setEncoding("UTF-8"));
 
         ConfluenceProperties properties = builder.getConfiguration();
         properties.builder = builder;
