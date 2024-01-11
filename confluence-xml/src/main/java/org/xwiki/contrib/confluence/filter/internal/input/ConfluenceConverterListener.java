@@ -24,7 +24,6 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -47,7 +46,6 @@ import org.xwiki.contrib.confluence.filter.MacroConverter;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
-import org.xwiki.contrib.confluence.filter.internal.ConfluenceFilter;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
@@ -126,7 +124,7 @@ public class ConfluenceConverterListener extends WrappingListener
     /**
      * @param macroIds a set of macro ids that will be updated whenever a new macro event will be called.
      *
-     * @since 9.29.7
+     * @since 9.30.0
      */
     public void setMacroIds(Set<String> macroIds)
     {
