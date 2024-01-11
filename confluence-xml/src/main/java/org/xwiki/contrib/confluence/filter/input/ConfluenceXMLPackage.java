@@ -517,7 +517,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private Map<Long, List<Long>> blogPages = new LinkedHashMap<>();
 
     private Map<String, Long> spacesByKey = new HashMap<>();
-
     private static Collection<String> SUPPORTED_OBJECTS = new HashSet<>(Arrays.asList(
         "Attachment",
         "BlogPost",

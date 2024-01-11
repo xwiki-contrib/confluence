@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -49,6 +50,7 @@ import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.model.reference.LocalDocumentReference;
+import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.listener.WrappingListener;
 import org.xwiki.rendering.listener.reference.AttachmentResourceReference;
 import org.xwiki.rendering.listener.reference.DocumentResourceReference;
@@ -94,10 +96,39 @@ public class ConfluenceConverterListener extends WrappingListener
     @Inject
     private ConfluenceConverter confluenceConverter;
 
+    private Set<String> macroIds;
+    private final WrappingListener wrappingListener = new WrappingListener() {
+        @Override
+        public void onMacro(String id, Map<String, String> parameters, String content, boolean inline)
+        {
+            if (macroIds != null) {
+                macroIds.add(id);
+            }
+            super.onMacro(id, parameters, content, inline);
+        }
+    };
+
     @Override
     public void onMacro(String id, Map<String, String> parameters, String content, boolean inline)
     {
         this.macroConverter.toXWiki(id, parameters, content, inline, this);
+    }
+
+    @Override
+    public void setWrappedListener(Listener listener)
+    {
+        wrappingListener.setWrappedListener(listener);
+        super.setWrappedListener(wrappingListener);
+    }
+
+    /**
+     * @param macroIds a set of macro ids that will be updated whenever a new macro event will be called.
+     *
+     * @since 9.30.0
+     */
+    public void setMacroIds(Set<String> macroIds)
+    {
+        this.macroIds = macroIds;
     }
 
     private List<String[]> parseURLParameters(String queryString)

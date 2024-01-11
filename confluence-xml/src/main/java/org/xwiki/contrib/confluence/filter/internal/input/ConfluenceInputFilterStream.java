@@ -147,6 +147,8 @@ public class ConfluenceInputFilterStream
     @Inject
     private Logger logger;
 
+    private final Set<String> macrosIds = new HashSet<>();
+
     @Override
     public void close() throws IOException
     {
@@ -224,6 +226,7 @@ public class ConfluenceInputFilterStream
 
         this.progress.popLevelProgress(this);
 
+        logger.info(ConfluenceFilter.LOG_MACROS_FOUND, "The following macros have been found [{}].", macrosIds);
         // Cleanup
 
         observationManager.notify(new ConfluenceFilteredEvent(), this, this.confluencePackage);
@@ -1262,6 +1265,7 @@ public class ConfluenceInputFilterStream
     {
         ConfluenceConverterListener converterListener = this.converterProvider.get();
         converterListener.setWrappedListener(listener);
+        converterListener.setMacroIds(macrosIds);
 
         return converterListener;
     }
