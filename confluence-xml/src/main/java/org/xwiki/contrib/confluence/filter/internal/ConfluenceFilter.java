@@ -48,7 +48,7 @@ public interface ConfluenceFilter extends WikiFarmFilter, WikiFilter, WikiSpaceF
      * Mark a log as the list of macros found during the filtering process. First log parameter should be a list of
      * strings representing the ids of the macros.
      *
-     * @since 9.29.6
+     * @since 9.29.7
      */
     Marker LOG_MACROS_FOUND = MarkerFactory.getMarker("filter.confluence.macros");
 }

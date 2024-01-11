@@ -126,7 +126,7 @@ public class ConfluenceConverterListener extends WrappingListener
     /**
      * @param macroIds a set of macro ids that will be updated whenever a new macro event will be called.
      *
-     * @since 9.29.6
+     * @since 9.29.7
      */
     public void setMacroIds(Set<String> macroIds)
     {
