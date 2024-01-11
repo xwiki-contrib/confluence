@@ -516,8 +516,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private Map<Long, List<Long>> blogPages = new LinkedHashMap<>();
 
     private Map<String, Long> spacesByKey = new HashMap<>();
-
-    private Set<String> macros = new HashSet<>();
     private static Collection<String> SUPPORTED_OBJECTS = new HashSet<>(Arrays.asList(
         "Attachment",
         "BlogPost",
@@ -779,22 +777,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public Map<Long, List<Long>> getPages()
     {
         return this.pages;
-    }
-
-    /**
-     * @return a set of macros present in the package.
-     * @since 9.29.6
-     */
-    public Set<String> getMacros() {
-        return this.macros;
-    }
-
-    /**
-     * @param id the id of the macro that is present in the imported pages.
-     * @since 9.29.6
-     */
-    public void addMacro(String id) {
-        this.macros.add(id);
     }
 
     /**

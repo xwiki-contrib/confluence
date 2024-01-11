@@ -19,6 +19,8 @@
  */
 package org.xwiki.contrib.confluence.filter.internal;
 
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 import org.xwiki.filter.event.model.WikiFarmFilter;
 import org.xwiki.filter.event.model.WikiAttachmentFilter;
 import org.xwiki.filter.event.model.WikiClassFilter;
@@ -42,5 +44,11 @@ public interface ConfluenceFilter extends WikiFarmFilter, WikiFilter, WikiSpaceF
     WikiAttachmentFilter, WikiClassFilter, WikiClassPropertyFilter, WikiObjectFilter, WikiObjectPropertyFilter,
     UserFilter, GroupFilter, Listener
 {
-
+    /**
+     * Mark a log as the list of macros found during the filtering process. First log parameter should be a list of
+     * strings representing the ids of the macros.
+     *
+     * @since 9.29.6
+     */
+    Marker LOG_MACROS_FOUND = MarkerFactory.getMarker("filter.confluence.macros");
 }

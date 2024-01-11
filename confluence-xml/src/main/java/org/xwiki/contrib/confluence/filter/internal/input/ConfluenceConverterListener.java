@@ -24,9 +24,11 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -45,6 +47,7 @@ import org.xwiki.contrib.confluence.filter.MacroConverter;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
+import org.xwiki.contrib.confluence.filter.internal.ConfluenceFilter;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
@@ -95,11 +98,14 @@ public class ConfluenceConverterListener extends WrappingListener
     @Inject
     private ConfluenceConverter confluenceConverter;
 
+    private Set<String> macroIds;
     private final WrappingListener wrappingListener = new WrappingListener() {
         @Override
         public void onMacro(String id, Map<String, String> parameters, String content, boolean inline)
         {
-            context.getConfluencePackage().addMacro(id);
+            if (macroIds != null) {
+                macroIds.add(id);
+            }
             super.onMacro(id, parameters, content, inline);
         }
     };
@@ -115,6 +121,16 @@ public class ConfluenceConverterListener extends WrappingListener
     {
         wrappingListener.setWrappedListener(listener);
         super.setWrappedListener(wrappingListener);
+    }
+
+    /**
+     * @param macroIds a set of macro ids that will be updated whenever a new macro event will be called.
+     *
+     * @since 9.29.6
+     */
+    public void setMacroIds(Set<String> macroIds)
+    {
+        this.macroIds = macroIds;
     }
 
     private List<String[]> parseURLParameters(String queryString)
