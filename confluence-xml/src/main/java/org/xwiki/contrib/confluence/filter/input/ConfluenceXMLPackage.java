@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.filter.input;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -801,7 +802,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
         this.tree.mkdir();
 
         try (InputStream stream = new FileInputStream(getEntities())) {
-            XMLStreamReader xmlReader = XML_INPUT_FACTORY.createXMLStreamReader(new WithoutBackSpacesReader(stream));
+            XMLStreamReader xmlReader = XML_INPUT_FACTORY.createXMLStreamReader(
+                new WithoutBackSpacesReader(new BufferedInputStream(stream)));
 
             xmlReader.nextTag();
 
