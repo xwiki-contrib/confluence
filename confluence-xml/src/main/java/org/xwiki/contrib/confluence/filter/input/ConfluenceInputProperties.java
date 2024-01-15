@@ -147,6 +147,10 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
 
     private boolean historyEnabled = true;
 
+    private boolean archivedDocumentsEnabled;
+
+    private boolean archivedSpacesEnabled;
+
     /**
      * @see #getBlogSpaceName()
      */
@@ -610,6 +614,46 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setRightsEnabled(boolean rightsEnabled)
     {
         this.rightsEnabled = rightsEnabled;
+    }
+
+    /**
+     * @return if true, import the archived documents found in the confluence package
+     * @since 9.31.0
+     */
+    @PropertyName("Import archived documents")
+    @PropertyDescription("Import the archived documents found in the confluence package.")
+    public boolean isArchivedDocumentsEnabled()
+    {
+        return this.archivedDocumentsEnabled;
+    }
+
+    /**
+     * @param archivedDocumentsEnabled if true, import the rights found in the confluence package
+     * @since 9.31.0
+     */
+    public void setArchivedDocumentsEnabled(boolean archivedDocumentsEnabled)
+    {
+        this.archivedDocumentsEnabled = archivedDocumentsEnabled;
+    }
+
+    /**
+     * @return if true, import the archived spaces found in the confluence package
+     * @since 9.31.0
+     */
+    @PropertyName("Import archived spaces")
+    @PropertyDescription("Import the archived spaces found in the confluence package.")
+    public boolean isArchivedSpacesEnabled()
+    {
+        return this.archivedSpacesEnabled;
+    }
+
+    /**
+     * @param archivedSpacesEnabled if true, import the archived spaces found in the confluence package
+     * @since 9.31.0
+     */
+    public void setArchivedSpacesEnabled(boolean archivedSpacesEnabled)
+    {
+        this.archivedSpacesEnabled = archivedSpacesEnabled;
     }
 
     /**

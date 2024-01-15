@@ -28,6 +28,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -184,6 +185,9 @@ public class ConfluenceInputFilterStream
         } catch (Exception e) {
             throw new FilterException("Failed to read package", e);
         }
+
+        maybeRemoveArchivedSpaces();
+
         ConfluenceFilteringEvent filteringEvent = new ConfluenceFilteringEvent();
         this.observationManager.notify(filteringEvent, this, this.confluencePackage);
         if (filteringEvent.isCanceled()) {
@@ -232,6 +236,26 @@ public class ConfluenceInputFilterStream
         observationManager.notify(new ConfluenceFilteredEvent(), this, this.confluencePackage);
 
         closeConfluencePackage();
+    }
+
+    private void maybeRemoveArchivedSpaces() throws FilterException
+    {
+        // Yes, this is a bit hacky, I know. It would be better to not even create objects related to spaces that should
+        // not be there. This is harder to do. If you find a cleaner way, don't hesitate do change this.
+        if (!properties.isArchivedSpacesEnabled()) {
+            try {
+                for (Iterator<Long> it = confluencePackage.getPages().keySet().iterator(); it.hasNext();) {
+                    Long spaceId = it.next();
+                    if (confluencePackage.isSpaceArchived(spaceId)) {
+                        confluencePackage.getBlogPages().remove(spaceId);
+                        confluencePackage.getSpacesByKey().remove(confluencePackage.getSpaceKey(spaceId));
+                        it.remove();
+                    }
+                }
+            } catch (ConfigurationException e) {
+                throw new FilterException("Failed to determine if the space is archived", e);
+            }
+        }
     }
 
     private void sendDocuments(Object filter, ConfluenceFilter proxyFilter, Map<Long, List<Long>> pages) throws FilterException
@@ -769,8 +793,12 @@ public class ConfluenceInputFilterStream
 
         // Skip deleted, archived or draft pages
         String contentStatus = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS);
-        if (contentStatus != null
-            && (contentStatus.equals("deleted") || contentStatus.equals("archived") || contentStatus.equals("draft"))) {
+        if (contentStatus != null && (
+            contentStatus.equals("deleted") ||
+            (contentStatus.equals("archived") && !this.properties.isArchivedDocumentsEnabled()) ||
+            contentStatus.equals("draft")
+        )
+        ) {
             return;
         }
 

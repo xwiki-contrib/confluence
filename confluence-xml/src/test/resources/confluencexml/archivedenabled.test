@@ -1,0 +1,11 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Content conversions
+.#------------------------------------------------------------------------------
+<wikiSpace name="ArchivedSpace"/>
+<wikiSpace name="TestSpace"/>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=archived
+.configuration.archivedSpacesEnabled=true
+.#------------------------------------------------------------------------------

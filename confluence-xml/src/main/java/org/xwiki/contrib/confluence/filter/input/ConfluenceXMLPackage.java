@@ -116,6 +116,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String KEY_SPACE_PERMISSIONS = "permissions";
 
     /**
+     * The property key to access the space status.
+     * @since 9.31.0
+     */
+    public static final String KEY_SPACE_STATUS = "spaceStatus";
+
+    /**
      * The property key to access the space permission type.
      * @since 9.24.0
      */
@@ -493,6 +499,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private static final String PROPERTIES_FILENAME = "properties.properties";
 
+    private static final String SPACE_STATUS_ARCHIVED = "ARCHIVED";
+
     @Inject
     private Environment environment;
 
@@ -750,6 +758,30 @@ public class ConfluenceXMLPackage implements AutoCloseable
         ConfluenceProperties spaceProperties = getSpaceProperties(spaceId);
 
         return spaceProperties.getString(KEY_SPACE_KEY);
+    }
+
+    /**
+     * @return whether the given space is archived (or false if the status cannot be determined)
+     * @param spaceId the identifier of the space
+     * @throws ConfigurationException when failing to create the properties
+     * @since 9.31.0
+     */
+    public boolean isSpaceArchived(long spaceId) throws ConfigurationException
+    {
+        return SPACE_STATUS_ARCHIVED.equals(getSpaceStatus(spaceId));
+    }
+
+    /**
+     * @return the status of the space
+     * @param spaceId the identifier of the space
+     * @throws ConfigurationException when failing to create the properties
+     * @since 9.31.0
+     */
+    public String getSpaceStatus(long spaceId) throws ConfigurationException
+    {
+        ConfluenceProperties spaceProperties = getSpaceProperties(spaceId);
+
+        return spaceProperties.getString(KEY_SPACE_STATUS);
     }
 
     /**
@@ -1043,7 +1075,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         savePageProperties(properties, pageId);
 
-        // Register only current pages (they will take care of handling there history)
+        // Register only current pages (they will take care of handling their history)
         Long originalVersion = (Long) properties.getProperty("originalVersion");
         if (originalVersion == null) {
             Long spaceId = properties.getLong("space", null);
