@@ -627,8 +627,6 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @param contentsEnabled if true, import the contents found in the confluence package
      * @since 9.24.0
      */
-    @PropertyName("Import contents")
-    @PropertyDescription("Import the contents found in the confluence package.")
     public void setContentsEnabled(boolean contentsEnabled)
     {
         this.contentsEnabled = contentsEnabled;
@@ -649,8 +647,6 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @param historyEnabled if true, import the history found in the confluence package
      * @since 9.24.0
      */
-    @PropertyName("Import history")
-    @PropertyDescription("Import history (all the revisions) found in the confluence package.")
     public void setHistoryEnabled(boolean historyEnabled)
     {
         this.historyEnabled = historyEnabled;
