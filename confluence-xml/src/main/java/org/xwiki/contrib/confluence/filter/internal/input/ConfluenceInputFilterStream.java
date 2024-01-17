@@ -177,8 +177,27 @@ public class ConfluenceInputFilterStream
         return pages.entrySet().stream().mapToInt(e -> e.getValue().size()).sum();
     }
 
+    private void pushLevelProgress(int steps)
+    {
+        try {
+            this.progress.pushLevelProgress(steps, this);
+        } catch (Exception e) {
+            logger.error("Could not push level progress", e);
+        }
+    }
+
+    private void popLevelProgress()
+    {
+        try {
+            this.progress.popLevelProgress(this);
+        } catch (Exception e) {
+            logger.error("Could not push level progress", e);
+        }
+    }
+
     private void readInternal(Object filter, ConfluenceFilter proxyFilter) throws FilterException
     {
+        pushLevelProgress(2);
         // Prepare package
         try {
             this.confluencePackage.read(this.properties.getSource());
@@ -212,11 +231,11 @@ public class ConfluenceInputFilterStream
             // TODO get users in new format (this.confluencePackage.getAllUsers())
             Collection<Long> groups = this.confluencePackage.getGroups();
 
-            this.progress.pushLevelProgress(users.size() + groups.size() + pagesCount, this);
+            pushLevelProgress(users.size() + groups.size() + pagesCount);
 
             sendUsers(users, groups, proxyFilter);
         } else {
-            this.progress.pushLevelProgress(pagesCount, this);
+            pushLevelProgress(pagesCount);
         }
 
         if (willSendPages && properties.isNonBlogContentEnabled()) {
@@ -228,7 +247,7 @@ public class ConfluenceInputFilterStream
             generateBlogEvents(blogPages, filter, proxyFilter);
         }
 
-        this.progress.popLevelProgress(this);
+        popLevelProgress();
 
         logger.info(ConfluenceFilter.LOG_MACROS_FOUND, "The following macros have been found [{}].", macrosIds);
         // Cleanup
@@ -236,6 +255,7 @@ public class ConfluenceInputFilterStream
         observationManager.notify(new ConfluenceFilteredEvent(), this, this.confluencePackage);
 
         closeConfluencePackage();
+        popLevelProgress();
     }
 
     private void maybeRemoveArchivedSpaces() throws FilterException

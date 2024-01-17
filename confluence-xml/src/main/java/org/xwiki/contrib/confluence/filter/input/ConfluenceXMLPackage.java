@@ -867,7 +867,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
                     inStep = false;
                 }
             }
-            if (nextStepPos > size) {
+            if (inStep) {
                 progress.endStep(this);
             }
             progress.popLevelProgress(this);
