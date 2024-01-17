@@ -832,9 +832,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
         }
         this.tree.mkdir();
 
-        try (InputStream stream = new FileInputStream(getEntities())) {
-            XMLStreamReader xmlReader = XML_INPUT_FACTORY.createXMLStreamReader(
-                new WithoutBackSpacesReader(new BufferedInputStream(stream)));
+        try (InputStream stream = new BufferedInputStream(new FileInputStream(getEntities()))) {
+            XMLStreamReader xmlReader = XML_INPUT_FACTORY.createXMLStreamReader(new WithoutBackSpacesReader(stream));
 
             xmlReader.nextTag();
 
