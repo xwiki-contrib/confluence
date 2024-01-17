@@ -246,7 +246,7 @@ public class ConfluenceInputFilterStream
             try {
                 for (Iterator<Long> it = confluencePackage.getPages().keySet().iterator(); it.hasNext();) {
                     Long spaceId = it.next();
-                    if (confluencePackage.isSpaceArchived(spaceId)) {
+                    if (spaceId != null && confluencePackage.isSpaceArchived(spaceId)) {
                         confluencePackage.getBlogPages().remove(spaceId);
                         confluencePackage.getSpacesByKey().remove(confluencePackage.getSpaceKey(spaceId));
                         it.remove();
