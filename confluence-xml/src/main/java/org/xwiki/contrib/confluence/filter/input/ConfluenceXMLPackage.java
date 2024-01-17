@@ -57,6 +57,7 @@ import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.CloseShieldInputStream;
+import org.apache.commons.io.input.CountingInputStream;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
@@ -70,6 +71,7 @@ import org.xwiki.filter.input.FileInputSource;
 import org.xwiki.filter.input.InputSource;
 import org.xwiki.filter.input.InputStreamInputSource;
 import org.xwiki.filter.input.URLInputSource;
+import org.xwiki.job.event.status.JobProgressManager;
 import org.xwiki.xml.stax.StAXUtils;
 
 import com.google.common.base.Strings;
@@ -505,6 +507,9 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private Environment environment;
 
     @Inject
+    private JobProgressManager progress;
+
+    @Inject
     private Logger logger;
 
     private File directory;
@@ -832,12 +837,22 @@ public class ConfluenceXMLPackage implements AutoCloseable
         }
         this.tree.mkdir();
 
-        try (InputStream stream = new BufferedInputStream(new FileInputStream(getEntities()))) {
-            XMLStreamReader xmlReader = XML_INPUT_FACTORY.createXMLStreamReader(new WithoutBackSpacesReader(stream));
+        try (CountingInputStream s = new CountingInputStream(new BufferedInputStream(new FileInputStream(entities)))) {
+            XMLStreamReader xmlReader = XML_INPUT_FACTORY.createXMLStreamReader(new WithoutBackSpacesReader(s));
 
             xmlReader.nextTag();
 
+            long size = entities.length();
+            int steps = 100;
+            progress.pushLevelProgress(steps, this);
+            boolean inStep = false;
+            long stepSize = size / steps;
+            long nextStepPos = stepSize;
             for (xmlReader.nextTag(); xmlReader.isStartElement(); xmlReader.nextTag()) {
+                if (!inStep) {
+                    progress.startStep(this);
+                    inStep = true;
+                }
                 String elementName = xmlReader.getLocalName();
 
                 if (elementName.equals("object")) {
@@ -845,7 +860,17 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 } else {
                     StAXUtils.skipElement(xmlReader);
                 }
+                long pos = s.getByteCount();
+                if (pos >= nextStepPos) {
+                    progress.endStep(this);
+                    nextStepPos += stepSize;
+                    inStep = false;
+                }
             }
+            if (nextStepPos > size) {
+                progress.endStep(this);
+            }
+            progress.popLevelProgress(this);
         }
     }
 
