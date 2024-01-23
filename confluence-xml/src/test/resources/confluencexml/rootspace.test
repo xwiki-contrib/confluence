@@ -1,6 +1,6 @@
 .#------------------------------------------------------------------------------
 .expect|filter+xml
-.# Make sure the way we store the index does not trigger bugs
+.# Make sure the root space parameter works correctly, including links
 .#------------------------------------------------------------------------------
 <wikiSpace name="Root">
   <wikiSpace name="TestSpace">
@@ -10,12 +10,39 @@
           <p>
             <parameters>
               <entry>
+                <string>parent_reference</string>
+                <org.xwiki.model.reference.EntityReference>
+                  <name>validatedpage</name>
+                  <parent>
+                    <name>validatedspace</name>
+                    <type>SPACE</type>
+                  </parent>
+                  <type>DOCUMENT</type>
+                </org.xwiki.model.reference.EntityReference>
+              </entry>
+              <entry>
                 <string>title</string>
                 <string>TestContent</string>
               </entry>
               <entry>
                 <string>content</string>
-                <string>${body}</string>
+                <string>[[(% param="value" %)link1>>doc:Root.Other Space.Other Page||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link1>>doc:Root.Other Space.Other Page||shape="rect"]]
+
+[[(% param="value" %)link2>>doc:Root.Other Space.Other Page||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link2>>doc:Root.Other Space.Other Page||shape="rect"]]
+
+[[(% param="value" %)link3>>attach:Root.Other Space.Other Page@attachment.png||queryString="param=value" shape="rect"]](%%) [[(% param="value" %)link3>>attach:Root.Other Space.Other Page@attachment.png||shape="rect"]]
+
+[[(% param="value" %)link4>>icon:icon||shape="rect"]](%%) [[(% param="value" %)link4>>icon:icon||shape="rect"]]
+
+[[(% param="value" %)link5>>doc:Root.Other Space.Other Page||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link5>>doc:Root.Other Space.Other Page||shape="rect"]]
+
+[[link6>>doc:Root.validatedspace.validatedpage||shape="rect"]]
+
+[[pagetovalidate>>doc:Root.validatedpage]]
+
+[[pagetovalidate>>doc:Root.validatedspace.validatedpage||anchor="anchor"]]
+
+[[Highlights>>doc:||anchor="anchor"]]</string>
               </entry>
               <entry>
                 <string>syntax</string>
@@ -34,9 +61,42 @@
       </wikiDocumentLocale>
     </wikiDocument>
   </wikiSpace>
+  <wikiSpace name="Other Space">
+    <wikiDocument name="Other Page">
+      <wikiDocumentLocale>
+        <wikiDocumentRevision>
+          <p>
+            <parameters>
+              <entry>
+                <string>title</string>
+                <string>Other Page</string>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+  <wikiSpace name="validatedspace">
+    <wikiDocument name="validatedpage">
+      <wikiDocumentLocale>
+        <wikiDocumentRevision>
+          <p>
+            <parameters>
+              <entry>
+                <string>title</string>
+                <string>pagetovalidate</string>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
-.configuration.source=index
+.configuration.source=links
 .configuration.rootSpaceName=Root
+.configuration.baseURLs=https://baseurl1.com,https://baseurl2.com,https://baseurl3.com,https://baseurl4.com,https://baseurl5.com/
 .#------------------------------------------------------------------------------

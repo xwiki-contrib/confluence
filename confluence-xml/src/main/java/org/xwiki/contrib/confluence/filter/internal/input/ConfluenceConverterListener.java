@@ -24,6 +24,7 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -245,11 +246,21 @@ public class ConfluenceConverterListener extends WrappingListener
 
             // Reference
 
-            return new LocalDocumentReference(confluenceConverter.toEntityName(spaceKey),
-                confluenceConverter.toEntityName(documentName));
+            return createLocalReference(spaceKey, documentName);
         }
 
         return null;
+    }
+
+    private LocalDocumentReference createLocalReference(String spaceKey, String documentName)
+    {
+        String rootSpaceName = context.getProperties().getRootSpaceName();
+        String parent = confluenceConverter.toEntityName(spaceKey);
+        String convertedName = confluenceConverter.toEntityName(documentName);
+        if (rootSpaceName == null || rootSpaceName.isEmpty()) {
+            return new LocalDocumentReference(parent, convertedName);
+        }
+        return new LocalDocumentReference(Arrays.asList(rootSpaceName, parent), convertedName);
     }
 
     private AttachmentResourceReference createAttachmentResourceReference(EntityReference reference,
@@ -315,8 +326,7 @@ public class ConfluenceConverterListener extends WrappingListener
 
     private DocumentResourceReference simpleDocRef(Matcher m, List<String[]> urlParameters, String urlAnchor)
     {
-        LocalDocumentReference documentReference = new LocalDocumentReference(
-            confluenceConverter.toEntityName(decode(m.group(1))), confluenceConverter.toEntityName(decode(m.group(2))));
+        LocalDocumentReference documentReference = createLocalReference(decode(m.group(1)), decode(m.group(2)));
 
         return createDocumentResourceReference(documentReference, urlParameters, urlAnchor);
     }
@@ -385,13 +395,13 @@ public class ConfluenceConverterListener extends WrappingListener
     @Override
     public void beginLink(ResourceReference reference, boolean freestanding, Map<String, String> parameters)
     {
-        // Fix and optimize the link reference according to various rules
-        super.beginLink(convertLinkRef(reference), freestanding, parameters);
+        super.beginLink(reference, freestanding, parameters);
     }
 
     @Override
     public void endLink(ResourceReference reference, boolean freestanding, Map<String, String> parameters)
     {
+        // Fix and optimize the link reference according to various rules
         super.endLink(convertLinkRef(reference), freestanding, parameters);
     }
 

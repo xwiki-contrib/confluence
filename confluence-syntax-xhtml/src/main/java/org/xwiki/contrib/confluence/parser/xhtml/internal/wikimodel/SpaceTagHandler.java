@@ -38,12 +38,9 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public class SpaceTagHandler extends TagHandler implements ConfluenceTagHandler
 {
-    private final ConfluenceReferenceConverter referenceConverter;
-
-    public SpaceTagHandler(ConfluenceReferenceConverter referenceConverter)
+    public SpaceTagHandler()
     {
         super(false);
-        this.referenceConverter = referenceConverter;
     }
 
     @Override
@@ -54,9 +51,6 @@ public class SpaceTagHandler extends TagHandler implements ConfluenceTagHandler
             if (context.getTagStack().getStackParameter(AbstractMacroParameterTagHandler.IN_CONFLUENCE_PARAMETER) != null) {
                 // We are in a confluence macro parameter, we store the space in it.
                 String space = spaceParameter.getValue();
-                if (referenceConverter != null) {
-                    space = referenceConverter.convertSpaceReference(space);
-                }
                 context.getParentContext().appendContent(space);
                 return;
             }

@@ -93,7 +93,10 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     public EntityReference convert(EntityReference entityReference)
     {
         if (context.getProperties().isConvertToXWiki() && context.getProperties().isEntityNameValidation()) {
-            EntityReference newDocumentReference = null;
+            String rootSpaceName = context.getProperties().getRootSpaceName();
+            EntityReference newDocumentReference = (rootSpaceName == null || rootSpaceName.isEmpty())
+                ? null
+                : new EntityReference(rootSpaceName, EntityType.SPACE);
 
             for (EntityReference entityElement : entityReference.getReversedReferenceChain()) {
                 if (entityElement.getType() == EntityType.DOCUMENT || entityElement.getType() == EntityType.SPACE) {
