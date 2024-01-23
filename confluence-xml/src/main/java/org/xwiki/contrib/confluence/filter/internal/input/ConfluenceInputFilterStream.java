@@ -641,11 +641,11 @@ public class ConfluenceInputFilterStream
             FilterEventParameters userParameters = new FilterEventParameters();
 
             userParameters.put(UserFilter.PARAMETER_FIRSTNAME,
-                userProperties.getString(ConfluenceXMLPackage.KEY_USER_FIRSTNAME));
+                userProperties.getString(ConfluenceXMLPackage.KEY_USER_FIRSTNAME, "").trim());
             userParameters.put(UserFilter.PARAMETER_LASTNAME,
-                userProperties.getString(ConfluenceXMLPackage.KEY_USER_LASTNAME));
+                userProperties.getString(ConfluenceXMLPackage.KEY_USER_LASTNAME, "").trim());
             userParameters.put(UserFilter.PARAMETER_EMAIL,
-                userProperties.getString(ConfluenceXMLPackage.KEY_USER_EMAIL));
+                userProperties.getString(ConfluenceXMLPackage.KEY_USER_EMAIL, "").trim());
             userParameters.put(UserFilter.PARAMETER_ACTIVE,
                 userProperties.getBoolean(ConfluenceXMLPackage.KEY_USER_ACTIVE, true));
 

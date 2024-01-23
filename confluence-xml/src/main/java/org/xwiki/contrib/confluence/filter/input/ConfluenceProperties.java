@@ -53,7 +53,12 @@ public class ConfluenceProperties extends PropertiesConfiguration
 
         FileBasedConfigurationBuilder<ConfluenceProperties> builder =
             new FileBasedConfigurationBuilder<>(ConfluenceProperties.class, null, true)
-                .configure(new Parameters().properties().setFile(file).setURL(url).setEncoding("UTF-8"));
+                .configure(new Parameters()
+                    .properties()
+                    .setFile(file)
+                    .setURL(url)
+                    .setEncoding("UTF-8")
+                    .setIOFactory(new JupIOFactory()));
 
         ConfluenceProperties properties = builder.getConfiguration();
         properties.builder = builder;

@@ -312,7 +312,7 @@ h6. Navigate space
 ==== Next Week Tasks: ====
 
 |= JIRA Link |= Status |= Summary |= Remarks |=
- | [[TICKET-3>>http://www.aspose.com]] | Open |  test ticket 3 |  </string>
+ | [[TICKET-3>>http://www.aspose.com]] | Open |  test ticket 3 |  | </string>
             </entry>
             <entry>
               <string>syntax</string>
