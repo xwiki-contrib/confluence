@@ -78,7 +78,7 @@ import com.google.common.base.Strings;
 
 /**
  * Prepare a Confluence package to make it easier to import.
- * 
+ *
  * @version $Id$
  * @since 9.16
  */
@@ -256,7 +256,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * Old property to indicate attachment name.
-     * 
+     *
      * @see #KEY_ATTACHMENT_TITLE
      */
     public static final String KEY_ATTACHMENT_NAME = "fileName";
@@ -268,7 +268,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * Old field containing attachment page id.
-     * 
+     *
      * @see #KEY_ATTACHMENT_CONTAINERCONTENT
      */
     public static final String KEY_ATTACHMENT_CONTENT = "content";
@@ -280,7 +280,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * Old property to indicate attachment size.
-     * 
+     *
      * @see #KEY_ATTACHMENT_CONTENTPROPERTIES
      * @see #KEY_ATTACHMENT_CONTENT_FILESIZE
      */
@@ -288,7 +288,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * Old property to indicate attachment media type.
-     * 
+     *
      * @see #KEY_ATTACHMENT_CONTENTPROPERTIES
      * @see #KEY_ATTACHMENT_CONTENT_MEDIA_TYPE
      */
@@ -346,7 +346,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * Old property to indicate attachment revision.
-     * 
+     *
      * @see #KEY_ATTACHMENT_VERSION
      */
     public static final String KEY_ATTACHMENT_ATTACHMENTVERSION = "attachmentVersion";
@@ -358,7 +358,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * Old property to indicate attachment original revision.
-     * 
+     *
      * @see #KEY_ATTACHMENT_ORIGINALVERSIONID
      */
     public static final String KEY_ATTACHMENT_ORIGINALVERSION = "originalVersion";
@@ -470,7 +470,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * The property key to access the blog post page.
-     * 
+     *
      * @since 9.24.0
      */
     public static final String KEY_PAGE_BLOGPOST = "blogpost";
@@ -669,11 +669,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
             return def;
         }
 
-        if (list.isEmpty()) {
-            return Collections.emptyList();
-        }
-
-        if (list.get(0) instanceof Long) {
+        if (list.isEmpty() || list.get(0) instanceof Long) {
             return (List) list;
         }
 
@@ -928,7 +924,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 String idName = xmlReader.getAttributeValue(null, "name");
 
                 if (idName != null && idName.equals("id")) {
-                    id = Long.valueOf(xmlReader.getElementText());
+                    id = Long.parseLong(xmlReader.getElementText());
 
                     properties.setProperty("id", id);
                 } else {

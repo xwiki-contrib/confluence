@@ -111,6 +111,7 @@ public class ConfluenceInputFilterStream
     private static final String XWIKIGLOBALRIGHTS_CLASSNAME = "XWiki.XWikiGlobalRights";
 
     private static final String WEB_PREFERENCES = "WebPreferences";
+    public static final String FAILED_TO_GET_USER_PROPERTIES = "Failed to get user properties";
 
     @Inject
     @Named(ConfluenceParser.SYNTAX_STRING)
@@ -174,7 +175,7 @@ public class ConfluenceInputFilterStream
 
     private int countPages(Map<Long, List<Long>> pages)
     {
-        return pages.entrySet().stream().mapToInt(e -> e.getValue().size()).sum();
+        return pages.values().stream().mapToInt(List::size).sum();
     }
 
     private void pushLevelProgress(int steps)
@@ -450,7 +451,6 @@ public class ConfluenceInputFilterStream
                             right = Right.EDIT;
                             break;
                         case CREATESPACE:
-                            break;
                         case PERSONALSPACE:
                             break;
                         case REMOVEBLOG:
@@ -466,8 +466,8 @@ public class ConfluenceInputFilterStream
                     }
 
                     String group = confluenceRight.group;
-                    if (group != null && !group.isEmpty()) {
-                        String groupRightString = "g:" + group + ":" + right.toString();
+                    if (right != null && group != null && !group.isEmpty()) {
+                        String groupRightString = "g:" + group + ":" + right;
                         if (addedRights.contains(groupRightString)) {
                             group = "";
                         } else {
@@ -478,8 +478,8 @@ public class ConfluenceInputFilterStream
                     }
 
                     String users = confluenceRight.users;
-                    if (users != null && !users.isEmpty()) {
-                        String userRightString = "u:" + users + ":" + right.toString();
+                    if (right != null && users != null && !users.isEmpty()) {
+                        String userRightString = "u:" + users + ":" + right;
                         if (addedRights.contains(userRightString)) {
                             users = "";
                         } else {
@@ -536,7 +536,7 @@ public class ConfluenceInputFilterStream
                         userName = userProperties.getString(ConfluenceXMLPackage.KEY_USER_NAME, userSubjectStr);
                     }
                 } catch (ConfigurationException e) {
-                    throw new FilterException("Failed to get user properties", e);
+                    throw new FilterException(FAILED_TO_GET_USER_PROPERTIES, e);
                 }
             }
         }
@@ -602,7 +602,7 @@ public class ConfluenceInputFilterStream
                 }
             }
         } catch (FilterException ignored) {
-
+            // ignore
         }
         return page;
     }
@@ -632,7 +632,7 @@ public class ConfluenceInputFilterStream
             try {
                 userProperties = this.confluencePackage.getInternalUserProperties(userId);
             } catch (ConfigurationException e) {
-                throw new FilterException("Failed to get user properties", e);
+                throw new FilterException(FAILED_TO_GET_USER_PROPERTIES, e);
             }
 
             String userName = confluenceConverter.toUserReferenceName(
@@ -736,7 +736,7 @@ public class ConfluenceInputFilterStream
                                 alreadyAddedMembers.add(memberId);
                             }
                         } catch (Exception e) {
-                            this.logger.error("Failed to get user properties", e);
+                            this.logger.error(FAILED_TO_GET_USER_PROPERTIES, e);
                         }
                     }
                 }
@@ -884,14 +884,13 @@ public class ConfluenceInputFilterStream
 
         try {
             // Revisions
-            if (this.properties.isHistoryEnabled()) {
-                if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISIONS)) {
+            if (properties.isHistoryEnabled() && pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISIONS)) {
                     List<Long> revisions =
                         this.confluencePackage.getLongList(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISIONS);
                     for (Long revisionId : revisions) {
                         readPageRevision(revisionId, spaceKey, filter, proxyFilter);
                     }
-                }
+
             }
 
             // Current version
@@ -1169,7 +1168,7 @@ public class ConfluenceInputFilterStream
             }
 
             for (ConfluenceProperties attachmentProperties : pageAttachments.values()) {
-                readAttachment(pageId, spaceKey, attachmentProperties, filter, proxyFilter);
+                readAttachment(pageId, spaceKey, attachmentProperties, proxyFilter);
             }
 
             // Tags
@@ -1245,14 +1244,14 @@ public class ConfluenceInputFilterStream
         if (pageId != null) {
             ConfluenceProperties pageProperties = this.confluencePackage.getPageProperties(pageId, true);
 
-            long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE);
+            Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE);
             String pageTitle = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
 
             if (StringUtils.isNotEmpty(pageTitle)) {
                 long currentSpaceId = currentProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE);
 
                 EntityReference spaceReference = null;
-                if (spaceId != currentSpaceId) {
+                if (spaceId != null && !spaceId.equals(currentSpaceId)) {
                     String spaceName = this.confluencePackage.getSpaceKey(spaceId);
                     if (spaceName != null) {
                         spaceReference = new EntityReference(confluenceConverter.toEntityName(spaceName), EntityType.SPACE);
@@ -1360,12 +1359,12 @@ public class ConfluenceInputFilterStream
         return syntaxFilterFactory.createInputFilterStream(filterProperties);
     }
 
-    private void readAttachment(long pageId, String spaceKey, ConfluenceProperties attachmentProperties, Object filter,
+    private void readAttachment(long pageId, String spaceKey, ConfluenceProperties attachmentProperties,
         ConfluenceFilter proxyFilter) throws FilterException
     {
         String contentStatus = attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTSTATUS, null);
         if (StringUtils.equals(contentStatus, "deleted")) {
-            // The actual deleted attachment is not in the exported package so we can't really do anything with it
+            // The actual deleted attachment is not in the exported package, so we can't really do anything with it
             return;
         }
 
