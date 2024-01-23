@@ -235,13 +235,24 @@ public class ConfluenceInputFilterStream
             pushLevelProgress(pagesCount);
         }
 
-        if (willSendPages && properties.isNonBlogContentEnabled()) {
-            sendDocuments(filter, proxyFilter, pages);
+        String rootSpace = properties.getRootSpaceName();
+        if (rootSpace != null && !rootSpace.isEmpty()) {
+            proxyFilter.beginWikiSpace(rootSpace, FilterEventParameters.EMPTY);
         }
 
-        // Generate Blog events
-        if (this.properties.isBlogsEnabled()) {
-            generateBlogEvents(blogPages, filter, proxyFilter);
+        try {
+            if (willSendPages && properties.isNonBlogContentEnabled()) {
+                sendDocuments(filter, proxyFilter, pages);
+            }
+
+            // Generate Blog events
+            if (this.properties.isBlogsEnabled()) {
+                generateBlogEvents(blogPages, filter, proxyFilter);
+            }
+        } finally {
+            if (rootSpace != null && !rootSpace.isEmpty()) {
+                proxyFilter.endWikiSpace(rootSpace, FilterEventParameters.EMPTY);
+            }
         }
 
         popLevelProgress();
