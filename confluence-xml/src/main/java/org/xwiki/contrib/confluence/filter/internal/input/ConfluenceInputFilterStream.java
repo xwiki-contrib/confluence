@@ -21,6 +21,7 @@ package org.xwiki.contrib.confluence.filter.internal.input;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
@@ -41,7 +42,6 @@ import javax.inject.Provider;
 
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
@@ -75,7 +75,6 @@ import org.xwiki.filter.input.StringInputSource;
 import org.xwiki.job.event.status.JobProgressManager;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
-import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.observation.ObservationManager;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.parser.ParseException;
@@ -130,9 +129,6 @@ public class ConfluenceInputFilterStream
     @Inject
     @Named("xwiki/2.1")
     private PrintRendererFactory xwiki21Factory;
-
-    @Inject
-    private EntityReferenceSerializer<String> serializer;
 
     @Inject
     private ObservationManager observationManager;
@@ -335,8 +331,8 @@ public class ConfluenceInputFilterStream
             try {
                 readPage(pageId, spaceKey, filter, proxyFilter);
             } catch (Exception e) {
-                logger.error("Failed to filter the page with id [{}] (main page: [{}]). Cause: [{}].",
-                    createPageIdentifier(pageId, spaceKey), isMain, ExceptionUtils.getRootCauseMessage(e), e);
+                logger.error("Failed to filter the page with id [{}] (main page: [{}])",
+                    createPageIdentifier(pageId, spaceKey), isMain, e);
             }
         }
         this.progress.endStep(this);
@@ -406,8 +402,8 @@ public class ConfluenceInputFilterStream
                     try {
                         spacePermissionProperties = this.confluencePackage.getSpacePermissionProperties(spaceId, spacePermissionId);
                     } catch (ConfigurationException e) {
-                        logger.warn("Failed to get space permission properties [{}] for the space [{}]. Cause: [{}].", spacePermissionId,
-                            spaceKey, ExceptionUtils.getRootCauseMessage(e));
+                        logger.warn("Failed to get space permission properties [{}] for the space [{}]", spacePermissionId,
+                            spaceKey, e);
                         continue;
                     }
 
@@ -873,8 +869,8 @@ public class ConfluenceInputFilterStream
                 documentLocaleParameters.put(WikiDocumentFilter.PARAMETER_CREATION_DATE,
                     this.confluencePackage.getDate(pageProperties, ConfluenceXMLPackage.KEY_PAGE_CREATION_DATE));
             } catch (Exception e) {
-                this.logger.warn("Failed to parse creation date of the document with id [{}]. Cause [{}].",
-                    createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                this.logger.warn("Failed to parse creation date of the document with id [{}]",
+                    createPageIdentifier(pageId, spaceKey), e);
             }
         }
 
@@ -916,8 +912,8 @@ public class ConfluenceInputFilterStream
             try {
                 permissionSetProperties = confluencePackage.getContentPermissionSetProperties(permissionSetId);
             } catch (ConfigurationException e) {
-                logger.warn("Could not get permission set [{}] for page [{}]. Cause: [{}].",
-                    permissionSetId, createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                logger.warn("Could not get permission set [{}] for page [{}]",
+                    permissionSetId, createPageIdentifier(pageId, spaceKey), e);
                 continue;
             }
 
@@ -936,8 +932,8 @@ public class ConfluenceInputFilterStream
                 try {
                     permissionProperties = confluencePackage.getContentPermissionProperties(permissionSetId, permissionId);
                 } catch (ConfigurationException e) {
-                    logger.warn("Could not get permission [{}] for page [{}]. Cause: [{}].",
-                        permissionId, createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                    logger.warn("Could not get permission [{}] for page [{}]",
+                        permissionId, createPageIdentifier(pageId, spaceKey), e);
                     continue;
                 }
 
@@ -1020,8 +1016,8 @@ public class ConfluenceInputFilterStream
                 documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_PARENT,
                     getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT));
             } catch (Exception e) {
-                this.logger.warn("Failed to parse parent for the document with id [{}]. Cause: [{}].",
-                    createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                this.logger.warn("Failed to parse parent for the document with id [{}]",
+                    createPageIdentifier(pageId, spaceKey), e);
             }
         }
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISION_AUTHOR)) {
@@ -1039,8 +1035,8 @@ public class ConfluenceInputFilterStream
                 documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_REVISION_DATE,
                     this.confluencePackage.getDate(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISION_DATE));
             } catch (Exception e) {
-                this.logger.warn("Failed to parse the revision date of the document with id [{}]. Cause: [{}].",
-                    createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                this.logger.warn("Failed to parse the revision date of the document with id [{}]",
+                    createPageIdentifier(pageId, spaceKey), e);
             }
         }
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISION_COMMENT)) {
@@ -1087,8 +1083,8 @@ public class ConfluenceInputFilterStream
                         blogPostContent = convertToXWiki21(bodyContent, bodyType);
                         documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, Syntax.XWIKI_2_1);
                     } catch (Exception e) {
-                        this.logger.warn("Failed to convert content of the page with id [{}]. Cause: [{}].",
-                            createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                        this.logger.warn("Failed to convert content of the page with id [{}]",
+                            createPageIdentifier(pageId, spaceKey), e);
                     }
                 } else {
                     // Keep Confluence syntax
@@ -1106,8 +1102,8 @@ public class ConfluenceInputFilterStream
                     this.confluencePackage.getDate(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISION_DATE);
             } catch (Exception e) {
                 this.logger.warn(
-                    "Failed to parse the publish date of the blog post document with id [{}]. Cause: [{}].",
-                    createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                    "Failed to parse the publish date of the blog post document with id [{}]",
+                    createPageIdentifier(pageId, spaceKey), e);
             }
 
             addBlogPostObject(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE), blogPostContent,
@@ -1120,8 +1116,8 @@ public class ConfluenceInputFilterStream
                 try {
                     parse(bodyContent, bodyType, this.properties.getMacroContentSyntax(), proxyFilter);
                 } catch (Exception e) {
-                    this.logger.warn("Failed to parse content of page with id [{}]. Cause: [{}].",
-                        createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                    this.logger.warn("Failed to parse content of page with id [{}]",
+                        createPageIdentifier(pageId, spaceKey), e);
                 }
             } else if (this.properties.isConvertToXWiki()) {
                 // Convert content to XWiki syntax
@@ -1130,8 +1126,8 @@ public class ConfluenceInputFilterStream
                         convertToXWiki21(bodyContent, bodyType));
                     documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, Syntax.XWIKI_2_1);
                 } catch (Exception e) {
-                    this.logger.warn("Failed to convert content of the page with id [{}]. Cause: [{}].",
-                        createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                    this.logger.warn("Failed to convert content of the page with id [{}]",
+                        createPageIdentifier(pageId, spaceKey), e);
                 }
 
                 // > WikiDocumentRevision
@@ -1158,8 +1154,8 @@ public class ConfluenceInputFilterStream
                     attachmentProperties = this.confluencePackage.getAttachmentProperties(pageId, attachmentId);
                 } catch (ConfigurationException e) {
                     logger.warn(
-                        "Failed to get the properties of the attachments from the document identified by [{}]. Cause: [{}].",
-                        createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                        "Failed to get the properties of the attachments from the document identified by [{}]",
+                        createPageIdentifier(pageId, spaceKey), e);
                     continue;
                 }
 
@@ -1178,8 +1174,8 @@ public class ConfluenceInputFilterStream
                         }
                     } catch (Exception e) {
                         this.logger.warn(
-                            "Failed to parse the date of attachment [{}] from the page with id [{}], skipping it. Cause: [{}].",
-                            createPageIdentifier(pageId, spaceKey), attachmentId, ExceptionUtils.getRootCauseMessage(e));
+                            "Failed to parse the date of attachment [{}] from the page with id [{}], skipping it",
+                            createPageIdentifier(pageId, spaceKey), attachmentId, e);
                     }
                 } else {
                     pageAttachments.put(attachmentName, attachmentProperties);
@@ -1198,8 +1194,8 @@ public class ConfluenceInputFilterStream
                 try {
                     tagProperties = this.confluencePackage.getObjectProperties(tagId);
                 } catch (ConfigurationException e) {
-                    logger.warn("Failed to get tag properties [{}] for the page with id [{}]. Cause: [{}].", tagId,
-                        createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                    logger.warn("Failed to get tag properties [{}] for the page with id [{}].", tagId,
+                        createPageIdentifier(pageId, spaceKey), e);
                     continue;
                 }
 
@@ -1226,8 +1222,8 @@ public class ConfluenceInputFilterStream
                 try {
                     commentProperties = this.confluencePackage.getObjectProperties(commentId);
                 } catch (ConfigurationException e) {
-                    logger.warn("Failed to get the comment properties [{}] for the page with id [{}]. Cause: [{}].",
-                        commentId, createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                    logger.warn("Failed to get the comment properties [{}] for the page with id [{}]",
+                        commentId, createPageIdentifier(pageId, spaceKey), e);
                     continue;
                 }
 
@@ -1417,9 +1413,9 @@ public class ConfluenceInputFilterStream
         File contentFile;
         try {
             contentFile = this.confluencePackage.getAttachmentFile(pageId, originalRevisionId, version);
-        } catch (Exception e) {
-            this.logger.warn("Failed to find file corresponding to version [{}] attachment [{}] in page [{}]: {}",
-                version, attachmentName, createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+        } catch (FileNotFoundException e) {
+            this.logger.warn("Failed to find file corresponding to version [{}] attachment [{}] in page [{}]",
+                version, attachmentName, createPageIdentifier(pageId, spaceKey));
             return;
         }
 
@@ -1436,8 +1432,8 @@ public class ConfluenceInputFilterStream
                 attachmentParameters.put(WikiAttachmentFilter.PARAMETER_CREATION_DATE, this.confluencePackage
                     .getDate(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_CREATION_DATE));
             } catch (Exception e) {
-                this.logger.warn("Failed to parse the creation date of the attachment [{}] in page [{}]. Cause: [{}].",
-                    attachmentId, createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                this.logger.warn("Failed to parse the creation date of the attachment [{}] in page [{}]",
+                    attachmentId, createPageIdentifier(pageId, spaceKey), e);
             }
         }
 
@@ -1451,8 +1447,8 @@ public class ConfluenceInputFilterStream
                 attachmentParameters.put(WikiAttachmentFilter.PARAMETER_REVISION_DATE, this.confluencePackage
                     .getDate(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE));
             } catch (Exception e) {
-                this.logger.warn("Failed to parse the revision date of the attachment [{}] in page [{}]. Cause: [{}].",
-                    attachmentId, createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                this.logger.warn("Failed to parse the revision date of the attachment [{}] in page [{}]",
+                    attachmentId, createPageIdentifier(pageId, spaceKey), e);
             }
         }
         if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_COMMENT)) {
@@ -1466,8 +1462,8 @@ public class ConfluenceInputFilterStream
             proxyFilter.onWikiAttachment(attachmentName, fis,
                 attachmentSize != -1 ? attachmentSize : contentFile.length(), attachmentParameters);
         } catch (Exception e) {
-            logger.warn("Failed to read attachment [{}] for the page [{}]. Cause: [{}].", attachmentId,
-                createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+            logger.warn("Failed to read attachment [{}] for the page [{}].", attachmentId,
+                createPageIdentifier(pageId, spaceKey), e);
         }
     }
 
@@ -1529,8 +1525,8 @@ public class ConfluenceInputFilterStream
                 try {
                     commentText = convertToXWiki21(commentBodyContent, commentBodyType);
                 } catch (Exception e) {
-                    this.logger.warn("Failed to convert content of the comment with id [{}] for page [{}]. Cause: [{}].",
-                        commentId, createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                    this.logger.warn("Failed to convert content of the comment with id [{}] for page [{}]",
+                        commentId, createPageIdentifier(pageId, spaceKey), e);
                 }
             }
 
@@ -1539,8 +1535,8 @@ public class ConfluenceInputFilterStream
             try {
                 commentDate = this.confluencePackage.getDate(commentProperties, "creationDate");
             } catch (Exception e) {
-                this.logger.warn("Failed to parse the creation date of the comment [{}] in page [{}]. Cause: [{}].",
-                    commentId, createPageIdentifier(pageId, spaceKey), ExceptionUtils.getRootCauseMessage(e));
+                this.logger.warn("Failed to parse the creation date of the comment [{}] in page [{}]",
+                    commentId, createPageIdentifier(pageId, spaceKey), e);
             }
 
             // parent (replyto)
