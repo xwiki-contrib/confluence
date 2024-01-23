@@ -396,7 +396,11 @@ public class ConfluenceInputFilterStream
                 Set<String> addedRights = new HashSet<>();
 
                 for (Object spacePermissionObject : spacePermissions) {
-                    Long spacePermissionId = Long.parseLong((String) spacePermissionObject);
+                    Long spacePermissionId = toLong(spacePermissionObject);
+                    if (spacePermissionId == null) {
+                        logger.warn("Space permission id is null for the space [{}]", spaceKey);
+                        continue;
+                    }
 
                     ConfluenceProperties spacePermissionProperties;
                     try {
@@ -902,8 +906,12 @@ public class ConfluenceInputFilterStream
     }
 
     private void sendPageRights(long pageId, String spaceKey, ConfluenceFilter proxyFilter, ConfluenceProperties pageProperties) throws FilterException {
-        for (Object permissionSetIdStr : pageProperties.getList("contentPermissionSets")) {
-            long permissionSetId = Long.parseLong((String) permissionSetIdStr);
+        for (Object permissionSetIdObject : pageProperties.getList("contentPermissionSets")) {
+            Long permissionSetId = toLong(permissionSetIdObject);
+            if (permissionSetId == null) {
+                logger.warn("Space permission set id is null for space [{}]", spaceKey);
+                continue;
+            }
             ConfluenceProperties permissionSetProperties = null;
             try {
                 permissionSetProperties = confluencePackage.getContentPermissionSetProperties(permissionSetId);
@@ -918,8 +926,12 @@ public class ConfluenceInputFilterStream
                 continue;
             }
 
-            for (Object permissionIdStr : permissionSetProperties.getList("contentPermissions")) {
-                long permissionId = Long.parseLong((String) permissionIdStr);
+            for (Object permissionIdObject : permissionSetProperties.getList("contentPermissions")) {
+                Long permissionId = toLong(permissionIdObject);
+                if (permissionId == null) {
+                    logger.warn("Permission id is null for page [{}]", createPageIdentifier(pageId, spaceKey));
+                    continue;
+                }
                 ConfluenceProperties permissionProperties = null;
                 try {
                     permissionProperties = confluencePackage.getContentPermissionProperties(permissionSetId, permissionId);
@@ -966,6 +978,13 @@ public class ConfluenceInputFilterStream
                 }
             }
         }
+    }
+
+    private static Long toLong(Object permissionSetIdObject)
+    {
+        return permissionSetIdObject instanceof Long
+            ? (Long) permissionSetIdObject
+            : Long.parseLong((String) permissionSetIdObject);
     }
 
     private ConfluenceProperties getPageProperties(Long pageId) throws FilterException
