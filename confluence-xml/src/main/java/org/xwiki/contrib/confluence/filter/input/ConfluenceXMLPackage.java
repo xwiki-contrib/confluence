@@ -503,6 +503,24 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private static final String SPACE_STATUS_ARCHIVED = "ARCHIVED";
 
+    private static final Collection<String> SUPPORTED_OBJECTS = new HashSet<>(Arrays.asList(
+        "Attachment",
+        "BlogPost",
+        "BodyContent",
+        "Comment",
+        "ContentPermission",
+        "ContentPermissionSet",
+        "ContentProperty",
+        "InternalGroup",
+        "InternalUser",
+        "Label",
+        "Labelling",
+        "Page",
+        "Space",
+        "SpaceDescription",
+        "SpacePermission"
+    ));
+
     @Inject
     private Environment environment;
 
@@ -530,23 +548,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private Map<Long, List<Long>> blogPages = new LinkedHashMap<>();
 
     private Map<String, Long> spacesByKey = new HashMap<>();
-    private static Collection<String> SUPPORTED_OBJECTS = new HashSet<>(Arrays.asList(
-        "Attachment",
-        "BlogPost",
-        "BodyContent",
-        "Comment",
-        "ContentPermission",
-        "ContentPermissionSet",
-        "ContentProperty",
-        "InternalGroup",
-        "InternalUser",
-        "Label",
-        "Labelling",
-        "Page",
-        "Space",
-        "SpaceDescription",
-        "SpacePermission"
-    ));
 
     /**
      * @param source the source where to find the package to parse
@@ -1119,8 +1120,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
         Long originalVersion = (Long) properties.getProperty("originalVersion");
         if (originalVersion == null) {
             Long spaceId = properties.getLong("space", null);
-            List<Long> blogPages = this.blogPages.computeIfAbsent(spaceId, k -> new LinkedList<>());
-            blogPages.add(pageId);
+            this.blogPages.computeIfAbsent(spaceId, k -> new LinkedList<>()).add(pageId);
         }
     }
 
@@ -1288,7 +1288,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private File getContentPermissionSetsFolder()
     {
-        return new File(this.tree,"contentPermissionSets");
+        return new File(this.tree, "contentPermissionSets");
     }
 
     private File getSpaceFolder(long spaceId)
@@ -1788,8 +1788,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
         fileProperties.save();
     }
 
-    private void saveContentPermissionProperties(ConfluenceProperties properties, long contentPermissionSetId, long permissionId)
-            throws ConfigurationException
+    private void saveContentPermissionProperties(ConfluenceProperties properties,
+        long contentPermissionSetId, long permissionId) throws ConfigurationException
     {
         ConfluenceProperties fileProperties = getContentPermissionProperties(contentPermissionSetId, permissionId);
 

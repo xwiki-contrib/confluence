@@ -28,6 +28,9 @@ import org.xwiki.rendering.wikimodel.impl.WikiScannerContext;
  */
 public class ConfluenceWikiScannerContext extends WikiScannerContext
 {
+    /**
+     * @param listener the listener to use
+     */
     public ConfluenceWikiScannerContext(IWemListener listener)
     {
         super(listener);
@@ -53,6 +56,9 @@ public class ConfluenceWikiScannerContext extends WikiScannerContext
         return context;
     }
 
+    /**
+     * @return whether the context is in a table.
+     */
     public boolean isExplicitInTable()
     {
         return getContext().isExplicitInTable();

@@ -31,10 +31,14 @@ import org.xwiki.rendering.wikimodel.WikiReference;
  */
 public class ConfluenceWikiReferenceParser implements IWikiReferenceParser
 {
+    /**
+     * @return the parsed reference
+     * @param str the reference to parse
+     */
     public WikiReference parse(String str)
     {
-        str = str.trim();
-        String[] array = StringUtils.split(str, '|');
+        String trimmed = str.trim();
+        String[] array = StringUtils.split(trimmed, '|');
         String link;
         String label;
         String tip;
@@ -43,7 +47,7 @@ public class ConfluenceWikiReferenceParser implements IWikiReferenceParser
             label = null;
             tip = null;            
         } else if (array.length == 1) {
-            link = str;
+            link = trimmed;
             label = null;
             tip = null;
         } else {

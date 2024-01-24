@@ -60,6 +60,9 @@ public class LinkTagHandler extends TagHandler implements ConfluenceTagHandler
 {
     private final ConfluenceReferenceConverter referenceConverter;
 
+    /**
+     * @param referenceConverter the reference converter to use (can be null)
+     */
     public LinkTagHandler(ConfluenceReferenceConverter referenceConverter)
     {
         super(false);

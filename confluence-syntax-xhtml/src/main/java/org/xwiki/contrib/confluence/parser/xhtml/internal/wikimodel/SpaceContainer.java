@@ -25,5 +25,9 @@ package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
  */
 public interface SpaceContainer
 {
+    /**
+     * Set the space.
+     * @param space to set
+     */
     void setSpace(String space);
 }

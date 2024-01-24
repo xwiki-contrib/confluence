@@ -38,6 +38,11 @@ public class ConfluenceInternalWikiScannerContext extends
 {
     private int fPreBlockType = IBlockTypes.NONE;
 
+    /**
+     * Constructor.
+     * @param sectionBuilder the section builder
+     * @param listener the listener
+     */
     public ConfluenceInternalWikiScannerContext(
         SectionBuilder<WikiParameters> sectionBuilder, IWemListener listener)
     {
@@ -83,6 +88,7 @@ public class ConfluenceInternalWikiScannerContext extends
             {
                 private Deque<WikiParameters> fListParamsStack = new ArrayDeque<WikiParameters>();
 
+                @Override
                 public void beginRow(char treeType, char rowType)
                 {
                     if (rowType == ':') {
@@ -98,6 +104,7 @@ public class ConfluenceInternalWikiScannerContext extends
                     beginStyleContainer();
                 }
 
+                @Override
                 public void beginTree(char type)
                 {
                     fListParamsStack.push(fListParams);
@@ -121,6 +128,7 @@ public class ConfluenceInternalWikiScannerContext extends
                     fListParams = WikiParameters.EMPTY;
                 }
 
+                @Override
                 public void endRow(char treeType, char rowType)
                 {
                     closeFormat();
@@ -141,6 +149,7 @@ public class ConfluenceInternalWikiScannerContext extends
                     }
                 }
 
+                @Override
                 public void endTree(char type)
                 {
                     switch (type) {
@@ -189,11 +198,14 @@ public class ConfluenceInternalWikiScannerContext extends
         }
     }
 
+    /**
+     * @return whether we are in a table.
+     */
     public boolean isExplicitInTable()
     {
         return super.isInTable()
-            || (((fPreBlockType & IBlockTypes.TABLE) == IBlockTypes.TABLE) &&
-            (fBlockType & IBlockTypes.LIST) == IBlockTypes.LIST);
+            || (((fPreBlockType & IBlockTypes.TABLE) == IBlockTypes.TABLE)
+                && (fBlockType & IBlockTypes.LIST) == IBlockTypes.LIST);
     }
 
     private void checkListOpened()

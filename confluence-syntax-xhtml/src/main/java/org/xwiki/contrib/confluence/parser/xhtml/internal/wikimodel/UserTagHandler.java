@@ -40,8 +40,13 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public class UserTagHandler extends TagHandler implements ConfluenceTagHandler
 {
+    private static final String REFERENCE = "reference";
+
     private final ConfluenceReferenceConverter referenceConverter;
 
+    /**
+     * @param referenceConverter the reference converter to use (can be null).
+     */
     public UserTagHandler(ConfluenceReferenceConverter referenceConverter)
     {
         super(false);
@@ -78,10 +83,10 @@ public class UserTagHandler extends TagHandler implements ConfluenceTagHandler
             macro.name = "mention";
 
             if (usernameParameter != null) {
-                macro.parameters = macro.parameters.setParameter("reference", usernameParameter.getValue());
+                macro.parameters = macro.parameters.setParameter(REFERENCE, usernameParameter.getValue());
                 userContainer.setUser(usernameParameter.getValue());
             } else if (userkeyParameter != null) {
-                macro.parameters = macro.parameters.setParameter("reference", userkeyParameter.getValue());
+                macro.parameters = macro.parameters.setParameter(REFERENCE, userkeyParameter.getValue());
                 userContainer.setUser(userkeyParameter.getValue());
             }
             context.getScannerContext().onMacroInline(macro.name, macro.parameters, macro.content);
@@ -90,8 +95,9 @@ public class UserTagHandler extends TagHandler implements ConfluenceTagHandler
             WikiParameter macroParam = context.getParentContext().getParams().getParameter("ac:name");
             String paramKey = macroParam != null ? macroParam.getValue() : ".user";
             WikiParameter currentMacroParam = macro.parameters.getParameter(paramKey);
-            String currentParamValue = currentMacroParam != null ?
-                currentMacroParam.getValue() + "," : "";
+            String currentParamValue = currentMacroParam != null
+                ? currentMacroParam.getValue() + ","
+                : "";
             if (usernameParameter != null) {
                 macro.parameters = macro.parameters.setParameter(paramKey,
                     currentParamValue + convert(usernameParameter.getValue()));

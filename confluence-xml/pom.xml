@@ -144,11 +144,7 @@
             <!-- Specify the "default" execution id so that the "blocker" one is always executed -->
             <id>default</id>
             <configuration>
-              <excludes>
-                org/xwiki/contrib/confluence/filter/input/ConfluenceXMLPackage.java,
-                org/xwiki/contrib/confluence/filter/internal/input/ConfluenceInputFilterStream.java,
-                org/xwiki/contrib/confluence/filter/internal/input/ConfluenceConverterListener.java
-              </excludes>
+              <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
             </configuration>
           </execution>
         </executions>

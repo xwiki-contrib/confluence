@@ -25,5 +25,9 @@ package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
  */
 public interface LabelContainer extends SpaceContainer
 {
+    /**
+     * Set the label.
+     * @param label the label to set
+     */
     void setLabel(String label);
 }

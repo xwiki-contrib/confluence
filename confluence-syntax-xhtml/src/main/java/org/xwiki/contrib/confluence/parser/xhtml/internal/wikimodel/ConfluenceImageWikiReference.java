@@ -40,11 +40,17 @@ public class ConfluenceImageWikiReference extends WikiReference implements Attac
 
     private final Map<String, String> imageParameters = new HashMap<>();
 
+    /**
+     * Default constructor.
+     */
     public ConfluenceImageWikiReference()
     {
         super("");
     }
 
+    /**
+     * @return the attachment.
+     */
     public ConfluenceAttachment getAttachment()
     {
         return this.attachment;
@@ -56,6 +62,9 @@ public class ConfluenceImageWikiReference extends WikiReference implements Attac
         this.attachment = attachment;
     }
 
+    /**
+     * @return the URL.
+     */
     public String getURL()
     {
         return this.url;
@@ -68,6 +77,7 @@ public class ConfluenceImageWikiReference extends WikiReference implements Attac
     }
 
     /**
+     * @return the caption.
      * @since 9.29.0
      */
     public XDOM getCaption()
@@ -76,6 +86,7 @@ public class ConfluenceImageWikiReference extends WikiReference implements Attac
     }
 
     /**
+     * @param caption the caption to set.
      * @since 9.29.0
      */
     public void setCaption(XDOM caption)
@@ -84,6 +95,7 @@ public class ConfluenceImageWikiReference extends WikiReference implements Attac
     }
 
     /**
+     * @return the image parameters.
      * @since 9.29.0
      */
     public Map<String, String> getImageParameters()

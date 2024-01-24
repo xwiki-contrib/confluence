@@ -93,38 +93,9 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-checkstyle-plugin</artifactId>
-        <executions>
-          <execution>
-            <!-- Specify the "default" execution id so that the "blocker" one is always executed -->
-            <id>default</id>
-            <configuration>
-              <excludes>
-                org/xwiki/contrib/confluence/parser/xhtml/internal/ConfluenceXHTMLParser.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/AttachmentContainer.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/AttachmentTagHandler.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/ConfluenceImageWikiReference.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/ConfluenceLinkWikiReference.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/ConfluenceXWikiGeneratorListener.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/DefaultMacroParameterTagHandler.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/ImageTagHandler.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/LabelContainer.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/LinkBodyTagHandler.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/LinkTagHandler.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/MacroParameterTagHandler.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/MacroTagHandler.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/PageContainer.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/PageTagHandler.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/PlainTextBodyTagHandler.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/PlainTextLinkBodyTagHandler.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/RichTextBodyTagHandler.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/SpaceContainer.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/SpaceTagHandler.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/UserContainer.java,
-                org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/UserTagHandler.java
-              </excludes>
-            </configuration>
-          </execution>
-        </executions>
+        <configuration>
+          <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
+        </configuration>
       </plugin>
     </plugins>
   </build>

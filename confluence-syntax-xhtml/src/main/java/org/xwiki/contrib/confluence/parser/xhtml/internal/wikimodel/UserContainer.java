@@ -25,5 +25,9 @@ package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
  */
 public interface UserContainer
 {
+    /**
+     * Set the user.
+     * @param user the user to set
+     */
     void setUser(String user);
 }

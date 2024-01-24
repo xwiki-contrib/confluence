@@ -38,15 +38,30 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  * @since 9.0
  */
 public class AttachmentTagHandler extends TagHandler implements ConfluenceTagHandler
-{	
+{
+    /**
+     * Represents an attachment from Confluence.
+     */
     public class ConfluenceAttachment implements UserContainer, PageContainer
     {
+        /**
+         * The filename.
+         */
         public String filename;
 
+        /**
+         * The space.
+         */
         public String space;
 
+        /**
+         * The page.
+         */
         public String page;
 
+        /**
+         * The user.
+         */
         public String user;
 
         @Override
@@ -68,6 +83,9 @@ public class AttachmentTagHandler extends TagHandler implements ConfluenceTagHan
         }
     }
 
+    /**
+     * Default constructor.
+     */
     public AttachmentTagHandler()
     {
         super(false);
@@ -87,8 +105,8 @@ public class AttachmentTagHandler extends TagHandler implements ConfluenceTagHan
             Object macroObject = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
             
             if (macroObject instanceof ConfluenceMacro) {
-            	ConfluenceMacro macro = (ConfluenceMacro) macroObject;
-            	macro.parameters = macro.parameters.setParameter("att--filename", attachment.filename);
+                ConfluenceMacro macro = (ConfluenceMacro) macroObject;
+                macro.parameters = macro.parameters.setParameter("att--filename", attachment.filename);
             }
         }
 

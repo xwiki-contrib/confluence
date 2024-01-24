@@ -36,6 +36,9 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public class PlainTextBodyTagHandler extends AbstractConfluenceTagHandler implements ConfluenceTagHandler
 {
+    /**
+     * Default constructor.
+     */
     public PlainTextBodyTagHandler()
     {
         super(true);

@@ -37,6 +37,9 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public class PageTagHandler extends TagHandler implements ConfluenceTagHandler
 {
+    /**
+     * Default constructor.
+     */
     public PageTagHandler()
     {
         super(false);

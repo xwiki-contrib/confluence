@@ -21,6 +21,7 @@ package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
 import java.io.StringReader;
 import java.util.Collections;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler.ConfluenceAttachment;
@@ -178,6 +179,11 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         }
     }
 
+    /**
+     * Parse the given content inline using the given listener.
+     * @param content the content to parse
+     * @param listener the listener to wrap
+     */
     public void parsePlainInline(String content, Listener listener)
     {
         WrappingListener inlineFilterListener = new InlineFilterListener();
@@ -227,7 +233,8 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
 
             if (resourceReference != null) {
                 if (confluenceReference.getCaption() != null) {
-                    this.getListener().beginFigure(Collections.singletonMap("class", "image"));
+                    Map<String, String> figureParameters = Collections.singletonMap("class", "image");
+                    this.getListener().beginFigure(figureParameters);
                     onImage(resourceReference, false, confluenceReference.getImageParameters());
                     this.getListener().beginFigureCaption(Listener.EMPTY_PARAMETERS);
 
@@ -236,7 +243,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
                     confluenceReference.getCaption().traverse(inlineFilterListener);
 
                     this.getListener().endFigureCaption(Listener.EMPTY_PARAMETERS);
-                    this.getListener().endFigure(Collections.singletonMap("class", "image"));
+                    this.getListener().endFigure(figureParameters);
                 } else {
                     onImage(resourceReference, false, confluenceReference.getImageParameters());
                 }

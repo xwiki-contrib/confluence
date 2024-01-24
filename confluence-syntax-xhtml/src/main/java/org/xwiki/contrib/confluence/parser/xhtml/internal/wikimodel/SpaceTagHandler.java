@@ -19,7 +19,6 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
-import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
 import org.xwiki.rendering.wikimodel.WikiParameter;
 import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
@@ -38,6 +37,9 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public class SpaceTagHandler extends TagHandler implements ConfluenceTagHandler
 {
+    /**
+     * Default constructor.
+     */
     public SpaceTagHandler()
     {
         super(false);
@@ -47,17 +49,22 @@ public class SpaceTagHandler extends TagHandler implements ConfluenceTagHandler
     protected void begin(TagContext context)
     {
         WikiParameter spaceParameter = context.getParams().getParameter("ri:space-key");
-        if (spaceParameter != null) {
-            if (context.getTagStack().getStackParameter(AbstractMacroParameterTagHandler.IN_CONFLUENCE_PARAMETER) != null) {
-                // We are in a confluence macro parameter, we store the space in it.
-                String space = spaceParameter.getValue();
-                context.getParentContext().appendContent(space);
-                return;
-            }
-            Object container = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
-            if (container instanceof SpaceContainer) {
-                ((SpaceContainer) container).setSpace(spaceParameter.getValue());
-            }
+        if (spaceParameter == null) {
+            return;
+        }
+
+        String space = spaceParameter.getValue();
+
+        if (context.getTagStack().getStackParameter(AbstractMacroParameterTagHandler.IN_CONFLUENCE_PARAMETER) != null) {
+            // We are in a confluence macro parameter, we store the space in it.
+
+            context.getParentContext().appendContent(space);
+            return;
+        }
+
+        Object container = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
+        if (container instanceof SpaceContainer) {
+            ((SpaceContainer) container).setSpace(space);
         }
     }
 }

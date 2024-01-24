@@ -34,21 +34,24 @@ import org.xwiki.rendering.wikimodel.impl.WikiScannerUtil;
  */
 public class ConfluenceImageWikiReferenceParser implements IWikiReferenceParser
 {
+    /**
+     * @return the parsed reference.
+     * @param str the reference to parse
+     */
     public WikiReference parse(String str)
     {
-        str = str.trim();
-        String[] array = str.split("[|]");
+        String trimmed = str.trim();
+        String[] array = trimmed.split("[|]");
         String link;
         String label;
         String tip;
         WikiParameters params;
         if (array.length == 1) {
-            link = str;
+            link = trimmed;
             label = null;
             tip = null;
             params = WikiParameters.EMPTY;
         } else {
-
             String s = array[1].trim();
             ArrayList<WikiParameter> kps = new ArrayList<WikiParameter>();
             WikiScannerUtil.splitToPairs(s, kps, ",");

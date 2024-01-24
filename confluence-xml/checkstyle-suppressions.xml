@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+        "-//Puppy Crawl//DTD Suppressions 1.0//EN"
+        "http://www.puppycrawl.com/dtds/suppressions_1_0.dtd">
+
+<suppressions>
+  <suppress checks="MultipleStringLiterals|ClassFanOutComplexity|CyclomaticComplexity|ReturnCount"
+            files="src/main/java/org/xwiki/contrib/confluence/filter/input/ConfluenceXMLPackage\.java$"/>
+  <suppress checks="ClassFanOutComplexity|JavaNCSS|MethodLength|ExecutableStatementCount|NPathComplexity|CyclomaticComplexity|BooleanExpressionComplexity|MultipleStringLiterals"
+            files="src/main/java/org/xwiki/contrib/confluence/filter/internal/input/ConfluenceInputFilterStream\.java$"/>
+  <suppress checks="CyclomaticComplexity"
+            files="src/main/java/org/xwiki/contrib/confluence/filter/internal/input/ConfluenceConverter\.java$"/>
+  <suppress checks="ClassFanOutComplexity"
+            files="src/main/java/org/xwiki/contrib/confluence/filter/internal/input/ConfluenceConverterListener\.java$"/>
+</suppressions>

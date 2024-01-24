@@ -41,21 +41,34 @@ public class ConfluenceLinkWikiReference extends WikiReference
 
     private String label;
 
+    /**
+     * Default constructor.
+     */
     public ConfluenceLinkWikiReference()
     {
         super("");
     }
 
+    /**
+     * @return the link's anchor.
+     */
     public String getAnchor()
     {
         return this.anchor;
     }
 
+    /**
+     * Set the link's anchor.
+     * @param anchor the anchor to set
+     */
     public void setAnchor(String anchor)
     {
         this.anchor = anchor;
     }
 
+    /**
+     * @return the attachment.
+     */
     public ConfluenceAttachment getAttachment()
     {
         return this.attachment;
@@ -67,6 +80,9 @@ public class ConfluenceLinkWikiReference extends WikiReference
         this.attachment = attachment;
     }
 
+    /**
+     * @return the user.
+     */
     public String getUser()
     {
         return this.user;
@@ -78,6 +94,9 @@ public class ConfluenceLinkWikiReference extends WikiReference
         this.user = user;
     }
 
+    /**
+     * @return the space.
+     */
     public String getSpace()
     {
         return this.space;
@@ -89,6 +108,9 @@ public class ConfluenceLinkWikiReference extends WikiReference
         this.space = space;
     }
 
+    /**
+     * @return the document.
+     */
     public String getDocument()
     {
         return this.document;

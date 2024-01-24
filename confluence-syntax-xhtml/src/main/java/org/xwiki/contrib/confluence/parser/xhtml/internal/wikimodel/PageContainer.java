@@ -25,5 +25,9 @@ package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
  */
 public interface PageContainer extends SpaceContainer
 {
+    /**
+     * Set the page.
+     * @param page the page to set.
+     */
     void setDocument(String page);
 }

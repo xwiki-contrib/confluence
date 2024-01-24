@@ -27,5 +27,9 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTa
  */
 public interface AttachmentContainer
 {
+    /**
+     * Set the attachment.
+     * @param attachment the attachment to set
+     */
     void setAttachment(ConfluenceAttachment attachment);
 }

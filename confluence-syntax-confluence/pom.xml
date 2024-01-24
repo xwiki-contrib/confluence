@@ -117,14 +117,9 @@
             <id>default</id>
             <configuration>
               <excludes>
-                org/xwiki/contrib/confluence/parser/confluence/internal/ConfluenceXHTMLParser.java,
-                org/xwiki/contrib/confluence/parser/confluence/internal/wikimodel/ConfluenceImageWikiReferenceParser.java,
-                org/xwiki/contrib/confluence/parser/confluence/internal/wikimodel/ConfluenceInternalWikiScannerContext.java,
-                org/xwiki/contrib/confluence/parser/confluence/internal/wikimodel/ConfluenceWikiParser.java,
-                org/xwiki/contrib/confluence/parser/confluence/internal/wikimodel/ConfluenceWikiReferenceParser.java,
-                org/xwiki/contrib/confluence/parser/confluence/internal/wikimodel/ConfluenceWikiScannerContext.java,
                 org/xwiki/contrib/confluence/parser/confluence/internal/wikimodel/javacc/*
               </excludes>
+              <suppressionsLocation>checkstyle-suppressions.xml</suppressionsLocation>
             </configuration>
           </execution>
         </executions>

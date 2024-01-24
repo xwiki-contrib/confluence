@@ -42,17 +42,35 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
 {
+    /**
+     * A Confluence Macro.
+     */
     public static class ConfluenceMacro
     {
+        /**
+         * The name of the Confluence macro.
+         */
         public String name;
 
+        /**
+         * The macro parameters.
+         */
         public WikiParameters parameters = new WikiParameters();
 
+        /**
+         * The macro content.
+         */
         public String content;
 
+        /**
+         * The macro index.
+         */
         public int index = -1;
     }
 
+    /**
+     * Default constructor.
+     */
     public MacroTagHandler()
     {
         super(false);

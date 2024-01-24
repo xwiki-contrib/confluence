@@ -31,7 +31,11 @@ import java.util.Map;
  * Example:
  * <p>
  * {@code
- * <ac:image><ri:attachment ri:filename="9391963529_96f9f9b16c_o.jpg"><ri:page ri:content-title="xhtml" ri:space-key="SPACE" /></ri:attachment></ac:image>
+ * <ac:image>
+ *     <ri:attachment ri:filename="9391963529_96f9f9b16c_o.jpg">
+ *         <ri:page ri:content-title="xhtml" ri:space-key="SPACE" />
+ *     </ri:attachment>
+ * </ac:image>
  * <ac:image><ri:url ri:value="http://host" /></ac:image>
  * <ac:image ac:align="left" ac:layout="align-start" ac:original-height="1200" ac:original-width="1200"
  *   ac:custom-width="true" ac:alt="some alt text" ac:width="50">
@@ -54,6 +58,9 @@ public class ImageTagHandler extends TagHandler implements ConfluenceTagHandler
         "wrap-right", "end"
     );
 
+    /**
+     * Default constructor.
+     */
     public ImageTagHandler()
     {
         super(false);
@@ -66,7 +73,8 @@ public class ImageTagHandler extends TagHandler implements ConfluenceTagHandler
 
         for (WikiParameter param : context.getParams()) {
             if ("ac:layout".equals(param.getKey())) {
-                image.getImageParameters().put("data-xwiki-image-style-alignment", CONFLUENCE_TO_WIKI_PARAMS.getOrDefault(param.getValue(), param.getValue()));
+                image.getImageParameters().put("data-xwiki-image-style-alignment",
+                    CONFLUENCE_TO_WIKI_PARAMS.getOrDefault(param.getValue(), param.getValue()));
                 if (param.getValue().contains("wrap-")) {
                     image.getImageParameters().put("data-xwiki-image-style-text-wrap", "true");
                 }
