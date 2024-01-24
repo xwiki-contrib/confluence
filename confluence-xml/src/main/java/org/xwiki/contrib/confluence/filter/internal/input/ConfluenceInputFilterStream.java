@@ -431,7 +431,7 @@ public class ConfluenceInputFilterStream
                         spacePermissionProperties = this.confluencePackage.getSpacePermissionProperties(spaceId,
                             spacePermissionId);
                     } catch (ConfigurationException e) {
-                        logger.warn("Failed to get space permission properties [{}] for the space [{}]",
+                        logger.error("Failed to get space permission properties [{}] for the space [{}]",
                             spacePermissionId, spaceKey, e);
                         continue;
                     }
@@ -445,7 +445,7 @@ public class ConfluenceInputFilterStream
                     try {
                         type = SpacePermissionType.valueOf(confluenceRight.type);
                     } catch (IllegalArgumentException e) {
-                        logger.warn("Failed to understand space permission type [{}] for the space [{}], "
+                        logger.error("Failed to understand space permission type [{}] for the space [{}], "
                                 + "permission id [{}].", confluenceRight.type, spaceKey, spacePermissionId);
                         continue;
                     }
@@ -902,7 +902,7 @@ public class ConfluenceInputFilterStream
                 documentLocaleParameters.put(WikiDocumentFilter.PARAMETER_CREATION_DATE,
                     this.confluencePackage.getDate(pageProperties, ConfluenceXMLPackage.KEY_PAGE_CREATION_DATE));
             } catch (Exception e) {
-                this.logger.warn("Failed to parse creation date of the document with id [{}]",
+                this.logger.error("Failed to parse creation date of the document with id [{}]",
                     createPageIdentifier(pageId, spaceKey), e);
             }
         }
@@ -939,20 +939,20 @@ public class ConfluenceInputFilterStream
         for (Object permissionSetIdObject : pageProperties.getList("contentPermissionSets")) {
             Long permissionSetId = toLong(permissionSetIdObject);
             if (permissionSetId == null) {
-                logger.warn("Space permission set id is null for space [{}]", spaceKey);
+                logger.error("Space permission set id is null for space [{}]", spaceKey);
                 continue;
             }
             ConfluenceProperties permissionSetProperties = null;
             try {
                 permissionSetProperties = confluencePackage.getContentPermissionSetProperties(permissionSetId);
             } catch (ConfigurationException e) {
-                logger.warn("Could not get permission set [{}] for page [{}]",
+                logger.error("Could not get permission set [{}] for page [{}]",
                     permissionSetId, createPageIdentifier(pageId, spaceKey), e);
                 continue;
             }
 
             if (permissionSetProperties == null) {
-                logger.warn("Could not find permission set [{}] for page [{}].",
+                logger.error("Could not find permission set [{}] for page [{}].",
                     permissionSetId, createPageIdentifier(pageId, spaceKey));
                 continue;
             }
@@ -960,20 +960,20 @@ public class ConfluenceInputFilterStream
             for (Object permissionIdObject : permissionSetProperties.getList("contentPermissions")) {
                 Long permissionId = toLong(permissionIdObject);
                 if (permissionId == null) {
-                    logger.warn("Permission id is null for page [{}]", createPageIdentifier(pageId, spaceKey));
+                    logger.error("Permission id is null for page [{}]", createPageIdentifier(pageId, spaceKey));
                     continue;
                 }
                 ConfluenceProperties permProperties = null;
                 try {
                     permProperties = confluencePackage.getContentPermissionProperties(permissionSetId, permissionId);
                 } catch (ConfigurationException e) {
-                    logger.warn("Could not get permission [{}] for page [{}]",
+                    logger.error("Could not get permission [{}] for page [{}]",
                         permissionId, createPageIdentifier(pageId, spaceKey), e);
                     continue;
                 }
 
                 if (permProperties == null) {
-                    logger.warn("Could not find permission [{}] for page [{}].",
+                    logger.error("Could not find permission [{}] for page [{}].",
                         permissionId, createPageIdentifier(pageId, spaceKey));
                     continue;
                 }
@@ -1052,7 +1052,7 @@ public class ConfluenceInputFilterStream
                 documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_PARENT,
                     getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT));
             } catch (Exception e) {
-                this.logger.warn("Failed to parse parent for the document with id [{}]",
+                this.logger.error("Failed to parse parent for the document with id [{}]",
                     createPageIdentifier(pageId, spaceKey), e);
             }
         }
@@ -1071,7 +1071,7 @@ public class ConfluenceInputFilterStream
                 documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_REVISION_DATE,
                     this.confluencePackage.getDate(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISION_DATE));
             } catch (Exception e) {
-                this.logger.warn("Failed to parse the revision date of the document with id [{}]",
+                this.logger.error("Failed to parse the revision date of the document with id [{}]",
                     createPageIdentifier(pageId, spaceKey), e);
             }
         }
@@ -1120,7 +1120,7 @@ public class ConfluenceInputFilterStream
                         blogPostContent = convertToXWiki21(bodyContent, bodyType);
                         documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, Syntax.XWIKI_2_1);
                     } catch (Exception e) {
-                        this.logger.warn("Failed to convert content of the page with id [{}]",
+                        this.logger.error("Failed to convert content of the page with id [{}]",
                             createPageIdentifier(pageId, spaceKey), e);
                     }
                 } else {
@@ -1138,7 +1138,7 @@ public class ConfluenceInputFilterStream
                 publishDate =
                     this.confluencePackage.getDate(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISION_DATE);
             } catch (Exception e) {
-                this.logger.warn(
+                this.logger.error(
                     "Failed to parse the publish date of the blog post document with id [{}]",
                     createPageIdentifier(pageId, spaceKey), e);
             }
@@ -1153,7 +1153,7 @@ public class ConfluenceInputFilterStream
                 try {
                     parse(bodyContent, bodyType, this.properties.getMacroContentSyntax(), proxyFilter);
                 } catch (Exception e) {
-                    this.logger.warn("Failed to parse content of page with id [{}]",
+                    this.logger.error("Failed to parse content of page with id [{}]",
                         createPageIdentifier(pageId, spaceKey), e);
                 }
             } else if (this.properties.isConvertToXWiki()) {
@@ -1163,7 +1163,7 @@ public class ConfluenceInputFilterStream
                         convertToXWiki21(bodyContent, bodyType));
                     documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, Syntax.XWIKI_2_1);
                 } catch (Exception e) {
-                    this.logger.warn("Failed to convert content of the page with id [{}]",
+                    this.logger.error("Failed to convert content of the page with id [{}]",
                         createPageIdentifier(pageId, spaceKey), e);
                 }
 
@@ -1190,7 +1190,7 @@ public class ConfluenceInputFilterStream
                 try {
                     attachmentProperties = this.confluencePackage.getAttachmentProperties(pageId, attachmentId);
                 } catch (ConfigurationException e) {
-                    logger.warn(
+                    logger.error(
                         "Failed to get the properties of the attachments from the document identified by [{}]",
                         createPageIdentifier(pageId, spaceKey), e);
                     continue;
@@ -1210,7 +1210,7 @@ public class ConfluenceInputFilterStream
                             pageAttachments.put(attachmentName, attachmentProperties);
                         }
                     } catch (Exception e) {
-                        this.logger.warn(
+                        this.logger.error(
                             "Failed to parse the date of attachment [{}] from the page with id [{}], skipping it",
                             createPageIdentifier(pageId, spaceKey), attachmentId, e);
                     }
@@ -1231,7 +1231,7 @@ public class ConfluenceInputFilterStream
                 try {
                     tagProperties = this.confluencePackage.getObjectProperties(tagId);
                 } catch (ConfigurationException e) {
-                    logger.warn("Failed to get tag properties [{}] for the page with id [{}].", tagId,
+                    logger.error("Failed to get tag properties [{}] for the page with id [{}].", tagId,
                         createPageIdentifier(pageId, spaceKey), e);
                     continue;
                 }
@@ -1259,7 +1259,7 @@ public class ConfluenceInputFilterStream
                 try {
                     commentProperties = this.confluencePackage.getObjectProperties(commentId);
                 } catch (ConfigurationException e) {
-                    logger.warn("Failed to get the comment properties [{}] for the page with id [{}]",
+                    logger.error("Failed to get the comment properties [{}] for the page with id [{}]",
                         commentId, createPageIdentifier(pageId, spaceKey), e);
                     continue;
                 }
@@ -1469,7 +1469,7 @@ public class ConfluenceInputFilterStream
                 attachmentParameters.put(WikiAttachmentFilter.PARAMETER_CREATION_DATE, this.confluencePackage
                     .getDate(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_CREATION_DATE));
             } catch (Exception e) {
-                this.logger.warn("Failed to parse the creation date of the attachment [{}] in page [{}]",
+                this.logger.error("Failed to parse the creation date of the attachment [{}] in page [{}]",
                     attachmentId, createPageIdentifier(pageId, spaceKey), e);
             }
         }
@@ -1484,7 +1484,7 @@ public class ConfluenceInputFilterStream
                 attachmentParameters.put(WikiAttachmentFilter.PARAMETER_REVISION_DATE, this.confluencePackage
                     .getDate(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE));
             } catch (Exception e) {
-                this.logger.warn("Failed to parse the revision date of the attachment [{}] in page [{}]",
+                this.logger.error("Failed to parse the revision date of the attachment [{}] in page [{}]",
                     attachmentId, createPageIdentifier(pageId, spaceKey), e);
             }
         }
@@ -1499,7 +1499,7 @@ public class ConfluenceInputFilterStream
             proxyFilter.onWikiAttachment(attachmentName, fis,
                 attachmentSize != -1 ? attachmentSize : contentFile.length(), attachmentParameters);
         } catch (Exception e) {
-            logger.warn("Failed to read attachment [{}] for the page [{}].", attachmentId,
+            this.logger.error("Failed to read attachment [{}] for the page [{}].", attachmentId,
                 createPageIdentifier(pageId, spaceKey), e);
         }
     }
@@ -1562,7 +1562,7 @@ public class ConfluenceInputFilterStream
                 try {
                     commentText = convertToXWiki21(commentBodyContent, commentBodyType);
                 } catch (Exception e) {
-                    this.logger.warn("Failed to convert content of the comment with id [{}] for page [{}]",
+                    this.logger.error("Failed to convert content of the comment with id [{}] for page [{}]",
                         commentId, createPageIdentifier(pageId, spaceKey), e);
                 }
             }
@@ -1572,7 +1572,7 @@ public class ConfluenceInputFilterStream
             try {
                 commentDate = this.confluencePackage.getDate(commentProperties, "creationDate");
             } catch (Exception e) {
-                this.logger.warn("Failed to parse the creation date of the comment [{}] in page [{}]",
+                this.logger.error("Failed to parse the creation date of the comment [{}] in page [{}]",
                     commentId, createPageIdentifier(pageId, spaceKey), e);
             }
 
