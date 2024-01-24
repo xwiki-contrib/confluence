@@ -192,6 +192,26 @@ public class ConfluenceInputFilterStream
         }
     }
 
+    private void beginSpace(EntityReference space, ConfluenceFilter proxyFilter) throws FilterException
+    {
+        if (space == null || !EntityType.SPACE.equals(space.getType())) {
+            return;
+        }
+
+        beginSpace(space.getParent(), proxyFilter);
+        proxyFilter.beginWikiSpace(space.getName(), FilterEventParameters.EMPTY);
+    }
+
+    private void endSpace(EntityReference space, ConfluenceFilter proxyFilter) throws FilterException
+    {
+        if (space == null || !EntityType.SPACE.equals(space.getType())) {
+            return;
+        }
+
+        proxyFilter.endWikiSpace(space.getName(), FilterEventParameters.EMPTY);
+        endSpace(space.getParent(), proxyFilter);
+    }
+
     private void readInternal(Object filter, ConfluenceFilter proxyFilter) throws FilterException
     {
         pushLevelProgress(2);
@@ -235,10 +255,7 @@ public class ConfluenceInputFilterStream
             pushLevelProgress(pagesCount);
         }
 
-        String rootSpace = properties.getRootSpaceName();
-        if (rootSpace != null && !rootSpace.isEmpty()) {
-            proxyFilter.beginWikiSpace(rootSpace, FilterEventParameters.EMPTY);
-        }
+        beginSpace(properties.getRootSpace(), proxyFilter);
 
         try {
             if (willSendPages && properties.isNonBlogContentEnabled()) {
@@ -250,9 +267,7 @@ public class ConfluenceInputFilterStream
                 generateBlogEvents(blogPages, filter, proxyFilter);
             }
         } finally {
-            if (rootSpace != null && !rootSpace.isEmpty()) {
-                proxyFilter.endWikiSpace(rootSpace, FilterEventParameters.EMPTY);
-            }
+            endSpace(properties.getRootSpace(), proxyFilter);
         }
 
         popLevelProgress();

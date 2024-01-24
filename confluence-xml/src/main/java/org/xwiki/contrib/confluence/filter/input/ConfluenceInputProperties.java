@@ -30,6 +30,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.xwiki.contrib.confluence.filter.Mapping;
 import org.xwiki.filter.DefaultFilterStreamProperties;
 import org.xwiki.filter.input.InputSource;
+import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.properties.annotation.PropertyDescription;
 import org.xwiki.properties.annotation.PropertyMandatory;
 import org.xwiki.properties.annotation.PropertyName;
@@ -156,7 +157,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      */
     private String blogSpaceName = "Blog";
 
-    private String rootSpaceName = "";
+    private SpaceReference rootSpace;
 
     /**
      * @return The source to load the wiki from
@@ -720,22 +721,22 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     }
 
     /**
-     * @return The name to use for blog space
+     * @return The name to use for the root space
      * @since 9.32.0
      */
     @PropertyName("Root space name")
     @PropertyDescription("The name to use for the space in which pages will be imported")
-    public String getRootSpaceName()
+    public SpaceReference getRootSpace()
     {
-        return this.rootSpaceName;
+        return this.rootSpace;
     }
 
     /**
-     * @param rootSpaceName The name to use for blog space
+     * @param rootSpace The name to use for the root space
      * @since 9.32.0
      */
-    public void setRootSpaceName(String rootSpaceName)
+    public void setRootSpace(SpaceReference rootSpace)
     {
-        this.rootSpaceName = rootSpaceName;
+        this.rootSpace = rootSpace;
     }
 }

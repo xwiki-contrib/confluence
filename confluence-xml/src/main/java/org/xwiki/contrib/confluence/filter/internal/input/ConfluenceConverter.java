@@ -38,6 +38,7 @@ import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceResolver;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.model.reference.LocalDocumentReference;
+import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.rendering.listener.reference.DocumentResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceReference;
 import org.xwiki.rendering.listener.reference.UserResourceReference;
@@ -93,23 +94,33 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     public EntityReference convert(EntityReference entityReference)
     {
         if (context.getProperties().isConvertToXWiki() && context.getProperties().isEntityNameValidation()) {
-            String rootSpaceName = context.getProperties().getRootSpaceName();
-            EntityReference newDocumentReference = (rootSpaceName == null || rootSpaceName.isEmpty())
-                ? null
-                : new EntityReference(rootSpaceName, EntityType.SPACE);
+            EntityReference newRef = null;
 
             for (EntityReference entityElement : entityReference.getReversedReferenceChain()) {
                 if (entityElement.getType() == EntityType.DOCUMENT || entityElement.getType() == EntityType.SPACE) {
-                    newDocumentReference = new EntityReference(this.converter.convert(entityElement.getName()),
-                        entityElement.getType(), newDocumentReference);
-                } else if (newDocumentReference == null || entityElement.getParent() == newDocumentReference) {
-                    newDocumentReference = entityElement;
+                    newRef = new EntityReference(this.converter.convert(entityElement.getName()),
+                        entityElement.getType(), newRef);
+                } else if (newRef == null || entityElement.getParent() == newRef) {
+                    newRef = entityElement;
                 } else {
-                    newDocumentReference = new EntityReference(entityElement, newDocumentReference);
+                    newRef = new EntityReference(entityElement, newRef);
                 }
             }
 
-            return newDocumentReference;
+            if (newRef == null) {
+                return null;
+            }
+
+            SpaceReference root = context.getProperties().getRootSpace();
+            if (root != null) {
+                EntityType rootType = newRef.getRoot().getType();
+                if (EntityType.SPACE.equals(rootType) || EntityType.WIKI.equals(rootType)) {
+                    // We don't want to add the root if the reference is a local document, otherwise we end up with a
+                    // broken reference (Root.Document instead of Root.SpaceContainingDocument.Document)
+                    newRef = newRef.appendParent(root);
+                }
+            }
+            return newRef;
         }
 
         return entityReference;
@@ -126,13 +137,13 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         if (StringUtils.isNotEmpty(entityReference) && context.getProperties().isConvertToXWiki()
             && context.getProperties().isEntityNameValidation()) {
             // Parse the reference
-            EntityReference documentReference = this.relativeResolver.resolve(entityReference, entityType);
+            EntityReference reference = this.relativeResolver.resolve(entityReference, entityType);
 
             // Fix the reference according to entity conversion rules
-            documentReference = convert(documentReference);
+            reference = convert(reference);
 
             // Serialize the fixed reference
-            return this.serializer.serialize(documentReference);
+            return this.serializer.serialize(reference);
         }
 
         return entityReference;

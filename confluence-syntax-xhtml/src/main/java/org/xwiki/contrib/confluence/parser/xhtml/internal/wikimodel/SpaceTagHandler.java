@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
 import org.xwiki.rendering.wikimodel.WikiParameter;
 import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
@@ -37,12 +38,16 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public class SpaceTagHandler extends TagHandler implements ConfluenceTagHandler
 {
+    private final ConfluenceReferenceConverter referenceConverter;
+
     /**
      * Default constructor.
+     * @param referenceConverter the reference converter to use (can be null)
      */
-    public SpaceTagHandler()
+    public SpaceTagHandler(ConfluenceReferenceConverter referenceConverter)
     {
         super(false);
+        this.referenceConverter = referenceConverter;
     }
 
     @Override
@@ -54,6 +59,9 @@ public class SpaceTagHandler extends TagHandler implements ConfluenceTagHandler
         }
 
         String space = spaceParameter.getValue();
+        if (referenceConverter != null) {
+            space = referenceConverter.convertSpaceReference(space);
+        }
 
         if (context.getTagStack().getStackParameter(AbstractMacroParameterTagHandler.IN_CONFLUENCE_PARAMETER) != null) {
             // We are in a confluence macro parameter, we store the space in it.

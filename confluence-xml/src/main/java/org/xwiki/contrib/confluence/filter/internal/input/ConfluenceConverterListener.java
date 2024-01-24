@@ -24,7 +24,6 @@ import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -50,7 +49,7 @@ import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
-import org.xwiki.model.reference.LocalDocumentReference;
+import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.listener.WrappingListener;
 import org.xwiki.rendering.listener.reference.AttachmentResourceReference;
@@ -222,7 +221,7 @@ public class ConfluenceConverterListener extends WrappingListener
         return fixedReference;
     }
 
-    private LocalDocumentReference fromPageId(String id) throws NumberFormatException, ConfigurationException
+    private EntityReference fromPageId(String id) throws NumberFormatException, ConfigurationException
     {
         // Document name
 
@@ -246,21 +245,19 @@ public class ConfluenceConverterListener extends WrappingListener
 
             // Reference
 
-            return createLocalReference(spaceKey, documentName);
+            return createDocRef(spaceKey, documentName);
         }
 
         return null;
     }
 
-    private LocalDocumentReference createLocalReference(String spaceKey, String documentName)
+    private EntityReference createDocRef(String spaceKey, String documentName)
     {
-        String rootSpaceName = context.getProperties().getRootSpaceName();
-        String parent = confluenceConverter.toEntityName(spaceKey);
         String convertedName = confluenceConverter.toEntityName(documentName);
-        if (rootSpaceName == null || rootSpaceName.isEmpty()) {
-            return new LocalDocumentReference(parent, convertedName);
-        }
-        return new LocalDocumentReference(Arrays.asList(rootSpaceName, parent), convertedName);
+        String convertedSpace = confluenceConverter.toEntityName(spaceKey);
+        SpaceReference root = context.getProperties().getRootSpace();
+        EntityReference parent = new EntityReference(convertedSpace, EntityType.SPACE, root);
+        return new EntityReference(convertedName, EntityType.DOCUMENT, parent);
     }
 
     private AttachmentResourceReference createAttachmentResourceReference(EntityReference reference,
@@ -326,7 +323,7 @@ public class ConfluenceConverterListener extends WrappingListener
 
     private DocumentResourceReference simpleDocRef(Matcher m, List<String[]> urlParameters, String urlAnchor)
     {
-        LocalDocumentReference documentReference = createLocalReference(decode(m.group(1)), decode(m.group(2)));
+        EntityReference documentReference = createDocRef(decode(m.group(1)), decode(m.group(2)));
 
         return createDocumentResourceReference(documentReference, urlParameters, urlAnchor);
     }
@@ -342,7 +339,7 @@ public class ConfluenceConverterListener extends WrappingListener
 
             // Try viewpage.action
             tryPattern(PATTERN_URL_VIEWPAGE, pattern, matcher -> {
-                LocalDocumentReference documentReference;
+                EntityReference documentReference;
                 try {
                     documentReference = fromPageId(matcher.group(1));
                 } catch (Exception e) {
@@ -358,7 +355,7 @@ public class ConfluenceConverterListener extends WrappingListener
 
             // Try attachments
             tryPattern(PATTERN_URL_ATTACHMENT, pattern, matcher -> {
-                LocalDocumentReference documentReference;
+                EntityReference documentReference;
                 try {
                     documentReference = fromPageId(matcher.group(1));
                 } catch (Exception e) {

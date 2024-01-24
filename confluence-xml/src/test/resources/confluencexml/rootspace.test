@@ -2,101 +2,103 @@
 .expect|filter+xml
 .# Make sure the root space parameter works correctly, including links
 .#------------------------------------------------------------------------------
-<wikiSpace name="Root">
-  <wikiSpace name="TestSpace">
-    <wikiDocument name="TestContent">
-      <wikiDocumentLocale>
-        <wikiDocumentRevision>
-          <p>
-            <parameters>
-              <entry>
-                <string>parent_reference</string>
-                <org.xwiki.model.reference.EntityReference>
-                  <name>validatedpage</name>
-                  <parent>
-                    <name>validatedspace</name>
-                    <type>SPACE</type>
-                  </parent>
-                  <type>DOCUMENT</type>
-                </org.xwiki.model.reference.EntityReference>
-              </entry>
-              <entry>
-                <string>title</string>
-                <string>TestContent</string>
-              </entry>
-              <entry>
-                <string>content</string>
-                <string>[[(% param="value" %)link1>>doc:Root.Other Space.Other Page||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link1>>doc:Root.Other Space.Other Page||shape="rect"]]
+<wikiSpace name="Composed">
+  <wikiSpace name="Root">
+    <wikiSpace name="TestSpace">
+      <wikiDocument name="TestContent">
+        <wikiDocumentLocale>
+          <wikiDocumentRevision>
+            <p>
+              <parameters>
+                <entry>
+                  <string>parent_reference</string>
+                  <org.xwiki.model.reference.EntityReference>
+                    <name>validatedpage</name>
+                    <parent>
+                      <name>validatedspace</name>
+                      <type>SPACE</type>
+                    </parent>
+                    <type>DOCUMENT</type>
+                  </org.xwiki.model.reference.EntityReference>
+                </entry>
+                <entry>
+                  <string>title</string>
+                  <string>TestContent</string>
+                </entry>
+                <entry>
+                  <string>content</string>
+                  <string>[[(% param="value" %)link1>>doc:xwiki:Composed.Root.Other Space.Other Page||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link1>>doc:xwiki:Composed.Root.Other Space.Other Page||shape="rect"]]
 
-[[(% param="value" %)link2>>doc:Root.Other Space.Other Page||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link2>>doc:Root.Other Space.Other Page||shape="rect"]]
+[[(% param="value" %)link2>>doc:xwiki:Composed.Root.Other Space.Other Page||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link2>>doc:xwiki:Composed.Root.Other Space.Other Page||shape="rect"]]
 
-[[(% param="value" %)link3>>attach:Root.Other Space.Other Page@attachment.png||queryString="param=value" shape="rect"]](%%) [[(% param="value" %)link3>>attach:Root.Other Space.Other Page@attachment.png||shape="rect"]]
+[[(% param="value" %)link3>>attach:xwiki:Composed.Root.Other Space.Other Page@attachment.png||queryString="param=value" shape="rect"]](%%) [[(% param="value" %)link3>>attach:xwiki:Composed.Root.Other Space.Other Page@attachment.png||shape="rect"]]
 
 [[(% param="value" %)link4>>icon:icon||shape="rect"]](%%) [[(% param="value" %)link4>>icon:icon||shape="rect"]]
 
-[[(% param="value" %)link5>>doc:Root.Other Space.Other Page||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link5>>doc:Root.Other Space.Other Page||shape="rect"]]
+[[(% param="value" %)link5>>doc:xwiki:Composed.Root.Other Space.Other Page||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link5>>doc:xwiki:Composed.Root.Other Space.Other Page||shape="rect"]]
 
-[[link6>>doc:Root.validatedspace.validatedpage||shape="rect"]]
+[[link6>>doc:xwiki:Composed.Root.validatedspace.validatedpage||shape="rect"]]
 
-[[pagetovalidate>>doc:Root.validatedpage]]
+[[pagetovalidate>>doc:validatedpage]]
 
-[[pagetovalidate>>doc:Root.validatedspace.validatedpage||anchor="anchor"]]
+[[pagetovalidate>>doc:xwiki:Composed.Root.validatedspace.validatedpage||anchor="anchor"]]
 
 [[Highlights>>doc:||anchor="anchor"]]</string>
-              </entry>
-              <entry>
-                <string>syntax</string>
-                <org.xwiki.rendering.syntax.Syntax>
-                  <type>
-                    <name>XWiki</name>
-                    <id>xwiki</id>
-                    <variants class="empty-list"/>
-                  </type>
-                  <version>2.1</version>
-                </org.xwiki.rendering.syntax.Syntax>
-              </entry>
-            </parameters>
-          </p>
-        </wikiDocumentRevision>
-      </wikiDocumentLocale>
-    </wikiDocument>
-  </wikiSpace>
-  <wikiSpace name="Other Space">
-    <wikiDocument name="Other Page">
-      <wikiDocumentLocale>
-        <wikiDocumentRevision>
-          <p>
-            <parameters>
-              <entry>
-                <string>title</string>
-                <string>Other Page</string>
-              </entry>
-            </parameters>
-          </p>
-        </wikiDocumentRevision>
-      </wikiDocumentLocale>
-    </wikiDocument>
-  </wikiSpace>
-  <wikiSpace name="validatedspace">
-    <wikiDocument name="validatedpage">
-      <wikiDocumentLocale>
-        <wikiDocumentRevision>
-          <p>
-            <parameters>
-              <entry>
-                <string>title</string>
-                <string>pagetovalidate</string>
-              </entry>
-            </parameters>
-          </p>
-        </wikiDocumentRevision>
-      </wikiDocumentLocale>
-    </wikiDocument>
+                </entry>
+                <entry>
+                  <string>syntax</string>
+                  <org.xwiki.rendering.syntax.Syntax>
+                    <type>
+                      <name>XWiki</name>
+                      <id>xwiki</id>
+                      <variants class="empty-list"/>
+                    </type>
+                    <version>2.1</version>
+                  </org.xwiki.rendering.syntax.Syntax>
+                </entry>
+              </parameters>
+            </p>
+          </wikiDocumentRevision>
+        </wikiDocumentLocale>
+      </wikiDocument>
+    </wikiSpace>
+    <wikiSpace name="Other Space">
+      <wikiDocument name="Other Page">
+        <wikiDocumentLocale>
+          <wikiDocumentRevision>
+            <p>
+              <parameters>
+                <entry>
+                  <string>title</string>
+                  <string>Other Page</string>
+                </entry>
+              </parameters>
+            </p>
+          </wikiDocumentRevision>
+        </wikiDocumentLocale>
+      </wikiDocument>
+    </wikiSpace>
+    <wikiSpace name="validatedspace">
+      <wikiDocument name="validatedpage">
+        <wikiDocumentLocale>
+          <wikiDocumentRevision>
+            <p>
+              <parameters>
+                <entry>
+                  <string>title</string>
+                  <string>pagetovalidate</string>
+                </entry>
+              </parameters>
+            </p>
+          </wikiDocumentRevision>
+        </wikiDocumentLocale>
+      </wikiDocument>
+    </wikiSpace>
   </wikiSpace>
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=links
-.configuration.rootSpaceName=Root
+.configuration.rootSpace=Composed.Root
 .configuration.baseURLs=https://baseurl1.com,https://baseurl2.com,https://baseurl3.com,https://baseurl4.com,https://baseurl5.com/
 .#------------------------------------------------------------------------------
