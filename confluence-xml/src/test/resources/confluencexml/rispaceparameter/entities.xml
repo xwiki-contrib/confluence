@@ -12,9 +12,6 @@
       <id name="id">100</id>
     </property>
     <property name="title"><![CDATA[TestContent]]></property>
-    <property name="parent" class="Page" package="com.atlassian.confluence.pages">
-      <id name="id">12</id>
-    </property>
     <collection name="bodyContents">
       <element class="BodyContent" package="com.atlassian.confluence.core">
         <id name="id">0</id>
