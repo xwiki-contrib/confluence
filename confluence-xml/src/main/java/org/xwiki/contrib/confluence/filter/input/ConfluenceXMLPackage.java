@@ -1861,6 +1861,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     @Override
     public void close() throws IOException
     {
+        logger.info("Closing the Confluence package.");
         if (this.tree != null) {
             FileUtils.deleteDirectory(this.tree);
         }
@@ -1868,6 +1869,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
         if (this.temporaryDirectory && this.directory.exists()) {
             FileUtils.deleteDirectory(this.directory);
         }
+        logger.info("Closed the Confluence package.");
     }
 
     /**
