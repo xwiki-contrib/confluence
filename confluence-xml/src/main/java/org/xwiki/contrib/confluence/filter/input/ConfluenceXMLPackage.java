@@ -44,6 +44,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.CompletableFuture;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
@@ -1870,6 +1871,26 @@ public class ConfluenceXMLPackage implements AutoCloseable
             FileUtils.deleteDirectory(this.directory);
         }
         logger.info("Closed the Confluence package.");
+    }
+
+    /**
+     * Free any temporary resource used by the package.
+     * @param async whether this should be done asynchronously in a separate thread so it doesn't block the current main
+     *              operation.
+     */
+    public void close(boolean async) throws IOException
+    {
+        if (async) {
+            CompletableFuture.runAsync(() -> {
+                try {
+                    close();
+                } catch (IOException e) {
+                    logger.error("Something went wrong while closing the Confluence package", e);
+                }
+            });
+        } else {
+            close();
+        }
     }
 
     /**

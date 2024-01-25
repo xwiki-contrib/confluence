@@ -46,6 +46,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
 {
     private static final String XWIKI_ADMIN_GROUP_NAME = "XWikiAdminGroup";
     private static final String XWIKI_ALL_GROUP_NAME = "XWikiAllGroup";
+    private static final String CLEANUP_SYNC = "SYNC";
 
     /**
      * @see #getSource()
@@ -151,6 +152,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private boolean archivedDocumentsEnabled;
 
     private boolean archivedSpacesEnabled;
+
+    private String cleanup = CLEANUP_SYNC;
 
     /**
      * @see #getBlogSpaceName()
@@ -738,5 +741,27 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setRootSpace(SpaceReference rootSpace)
     {
         this.rootSpace = rootSpace;
+    }
+
+    /**
+     * @return the cleanup mode.
+     * @since 9.33.0
+     */
+    @PropertyName("Cleanup mode")
+    @PropertyDescription("The mode to use for cleaning up temporary files produced when parsing the Confluence package."
+        + "SYNC: clean up right after the filter stream is done. "
+        + "ASYNC: same, but asynchronously. "
+        + "NO: don't clean up at all")
+    public String getCleanup()
+    {
+        return this.cleanup;
+    }
+    /**
+     * @param cleanup The cleanup mode to use
+     * @since 9.33.0
+     */
+    public void setCleanup(String cleanup)
+    {
+        this.cleanup = cleanup == null ? CLEANUP_SYNC : cleanup.toUpperCase();
     }
 }

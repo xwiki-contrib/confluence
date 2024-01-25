@@ -640,8 +640,12 @@ public class ConfluenceInputFilterStream
 
     private void closeConfluencePackage() throws FilterException
     {
+        if ("NO".equals(this.properties.getCleanup())) {
+            return;
+        }
+
         try {
-            this.confluencePackage.close();
+            this.confluencePackage.close("ASYNC".equals(this.properties.getCleanup()));
         } catch (IOException e) {
             throw new FilterException("Failed to close package", e);
         }
