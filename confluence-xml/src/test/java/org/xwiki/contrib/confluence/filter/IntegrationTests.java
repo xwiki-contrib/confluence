@@ -19,9 +19,14 @@
  */
 package org.xwiki.contrib.confluence.filter;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import org.junit.runner.RunWith;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import org.slf4j.LoggerFactory;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
+import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceInputFilterStream;
 import org.xwiki.environment.Environment;
 import org.xwiki.filter.input.InputFilterStreamFactory;
 import org.xwiki.filter.test.integration.FilterTestSuite;
@@ -72,5 +77,11 @@ public class IntegrationTests
         componentManager.registerMockComponent(ObservationManager.class);
         // Unregister the instance input filter stream factory since we don't need it here
         componentManager.registerMockComponent(InputFilterStreamFactory.class, "xwiki+instance");
+
+        // Many INFO-level logs are to inform the user about the progression of migrations but they spam the tests.
+        Logger logger = (Logger) LoggerFactory.getLogger(ConfluenceXMLPackage.class);
+        logger.setLevel(Level.WARN);
+        logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(ConfluenceInputFilterStream.class);
+        logger.setLevel(Level.WARN);
     }
 }
