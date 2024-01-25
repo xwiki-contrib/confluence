@@ -445,7 +445,7 @@ public class ConfluenceInputFilterStream
                     try {
                         type = SpacePermissionType.valueOf(confluenceRight.type);
                     } catch (IllegalArgumentException e) {
-                        logger.error("Failed to understand space permission type [{}] for the space [{}], "
+                        logger.warn("Failed to understand space permission type [{}] for the space [{}], "
                                 + "permission id [{}].", confluenceRight.type, spaceKey, spacePermissionId);
                         continue;
                     }
