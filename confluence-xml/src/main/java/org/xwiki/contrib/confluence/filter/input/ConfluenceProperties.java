@@ -58,7 +58,7 @@ public class ConfluenceProperties extends PropertiesConfiguration
                     .setFile(file)
                     .setURL(url)
                     .setEncoding("UTF-8")
-                    .setIOFactory(new JupIOFactory()));
+                    .setIOFactory(new JupIOFactory(false)));
 
         ConfluenceProperties properties = builder.getConfiguration();
         properties.builder = builder;
