@@ -1307,7 +1307,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return new File(this.tree, folderName);
     }
 
-    private File getIternalUserFolder()
+    private File getInternalUserFolder()
     {
         return getObjectsFolder(FOLDER_INTERNALUSER);
     }
@@ -1582,7 +1582,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
      */
     public Collection<Long> getInternalUsers()
     {
-        File folder = getIternalUserFolder();
+        File folder = getInternalUserFolder();
 
         Collection<Long> users;
         if (folder.exists()) {
