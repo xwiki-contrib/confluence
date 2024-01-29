@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -924,6 +925,7 @@ public class ConfluenceInputFilterStream
             if (properties.isHistoryEnabled() && pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISIONS)) {
                 List<Long> revisions =
                     this.confluencePackage.getLongList(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISIONS);
+                Collections.sort(revisions);
                 for (Long revisionId : revisions) {
                     readPageRevision(revisionId, spaceKey, filter, proxyFilter);
                 }

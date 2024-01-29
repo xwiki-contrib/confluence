@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic datetime="2023-12-14 13:37:10">
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">73469022</id>
+    <property name="hibernateVersion">37</property>
+    <property name="title"><![CDATA[Hello]]></property>
+    <property name="lowerTitle"><![CDATA[hello]]></property>
+    <collection name="bodyContents" class="java.util.Collection">
+      <element class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">73500883</id>
+      </element>
+    </collection>
+    <property name="version">6</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[2c90808d438d6b4701438d6bb8480027]]></id>
+    </property>
+    <property name="creationDate">2020-06-26 10:46:09.825</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[2c90808d438d6b4701438d6bb8480027]]></id>
+    </property>
+    <property name="lastModificationDate">2020-07-06 09:36:17.839</property>
+    <property name="versionComment"><![CDATA[notification added]]></property>
+    <collection name="historicalVersions" class="java.util.Collection">
+      <element class="Page" package="com.atlassian.confluence.pages">
+        <id name="id">73469376</id>
+      </element>
+      <element class="Page" package="com.atlassian.confluence.pages">
+        <id name="id">73469369</id>
+      </element>
+      <element class="Page" package="com.atlassian.confluence.pages">
+        <id name="id">73469368</id>
+      </element>
+      <element class="Page" package="com.atlassian.confluence.pages">
+        <id name="id">73469030</id>
+      </element>
+      <element class="Page" package="com.atlassian.confluence.pages">
+        <id name="id">73469028</id>
+      </element>
+    </collection>
+    <property name="contentStatus"><![CDATA[current]]></property>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+      <id name="id">2260994</id>
+    </property>
+    <property name="position">0</property>
+  </object>
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">73500883</id>
+    <property name="body"><![CDATA[content current]]></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">73469022</id>
+    </property>
+    <property name="bodyType">2</property>
+  </object>
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">2260994</id>
+    <property name="name"><![CDATA[Space]]></property>
+    <property name="key"><![CDATA[SPACE]]></property>
+    <property name="lowerKey"><![CDATA[space]]></property>
+    <property name="description" class="SpaceDescription" package="com.atlassian.confluence.spaces">
+      <id name="id">2031875</id>
+    </property>
+    <property name="homePage" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">73469022</id>
+    </property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[2c90808d438d6b4701438d6bb845000c]]></id>
+    </property>
+    <property name="creationDate">2011-01-19 17:02:22.264</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[2c90808d438d6b4701438d6bb845000c]]></id>
+    </property>
+    <property name="lastModificationDate">2011-01-19 17:02:22.264</property>
+    <property name="spaceType">global</property>
+    <property name="spaceStatus" enum-class="SpaceStatus" package="com.atlassian.confluence.spaces">CURRENT</property>
+  </object>
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">73469369</id>
+    <property name="hibernateVersion">27</property>
+    <property name="title"><![CDATA[My Page]]></property>
+    <property name="lowerTitle"><![CDATA[my page]]></property>
+    <collection name="bodyContents" class="java.util.Collection">
+      <element class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">73501161</id>
+      </element>
+    </collection>
+    <property name="version">4</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[2c90808d438d6b4701438d6bb8480027]]></id>
+    </property>
+    <property name="creationDate">2020-06-26 10:46:09.825</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[2c90808d438d6b4701438d6bb8480027]]></id>
+    </property>
+    <property name="lastModificationDate">2020-07-06 09:01:42.667</property>
+    <property name="versionComment"><![CDATA[scrum link added]]></property>
+    <property name="originalVersion" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">73469022</id>
+    </property>
+    <property name="contentStatus"><![CDATA[current]]></property>
+    <property name="position">0</property>
+  </object>
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">73469030</id>
+    <property name="hibernateVersion">19</property>
+    <property name="title"><![CDATA[My Page]]></property>
+    <property name="lowerTitle"><![CDATA[my page]]></property>
+    <collection name="bodyContents" class="java.util.Collection">
+      <element class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">73500891</id>
+      </element>
+    </collection>
+    <property name="version">2</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[2c90808d438d6b4701438d6bb8480027]]></id>
+    </property>
+    <property name="creationDate">2020-06-26 10:46:09.825</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[2c90808d438d6b4701438d6bb8480027]]></id>
+    </property>
+    <property name="lastModificationDate">2020-06-26 10:55:33.268</property>
+    <property name="versionComment"><![CDATA[]]></property>
+    <property name="originalVersion" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">73469022</id>
+    </property>
+    <property name="contentStatus"><![CDATA[current]]></property>
+    <property name="position">0</property>
+  </object>
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">73469368</id>
+    <property name="hibernateVersion">24</property>
+    <property name="title"><![CDATA[My Page]]></property>
+    <property name="lowerTitle"><![CDATA[my page]]></property>
+    <collection name="bodyContents" class="java.util.Collection">
+      <element class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">73501160</id>
+      </element>
+    </collection>
+    <property name="version">3</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[2c90808d438d6b4701438d6bb8480027]]></id>
+    </property>
+    <property name="creationDate">2020-06-26 10:46:09.825</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[2c90808d438d6b4701438d6bb8480027]]></id>
+    </property>
+    <property name="lastModificationDate">2020-06-26 10:57:52.304</property>
+    <property name="versionComment"><![CDATA[]]></property>
+    <property name="originalVersion" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">73469022</id>
+    </property>
+    <property name="contentStatus"><![CDATA[current]]></property>
+    <property name="position">0</property>
+  </object>
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">73469028</id>
+    <property name="hibernateVersion">16</property>
+    <property name="title"><![CDATA[My Page]]></property>
+    <property name="lowerTitle"><![CDATA[my page]]></property>
+    <collection name="bodyContents" class="java.util.Collection">
+      <element class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">73500889</id>
+      </element>
+    </collection>
+    <property name="version">1</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[2c90808d438d6b4701438d6bb8480027]]></id>
+    </property>
+    <property name="creationDate">2020-06-26 10:46:09.825</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[2c90808d438d6b4701438d6bb8480027]]></id>
+    </property>
+    <property name="lastModificationDate">2020-06-26 10:52:10.107</property>
+    <property name="versionComment"><![CDATA[]]></property>
+    <property name="originalVersion" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">73469022</id>
+    </property>
+    <property name="contentStatus"><![CDATA[current]]></property>
+    <property name="position">0</property>
+  </object>
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">73501161</id>
+    <property name="body"><![CDATA[content 4]]></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">73469369</id>
+    </property>
+    <property name="bodyType">2</property>
+  </object>
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">73501160</id>
+    <property name="body"><![CDATA[content 3]]></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">73469368</id>
+    </property>
+    <property name="bodyType">2</property>
+  </object>
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">73500891</id>
+    <property name="body"><![CDATA[content 2]]></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">73469030</id>
+    </property>
+    <property name="bodyType">2</property>
+  </object>
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">73500889</id>
+    <property name="body"><![CDATA[content 1]]></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">73469028</id>
+    </property>
+    <property name="bodyType">2</property>
+  </object>
+</hibernate-generic>

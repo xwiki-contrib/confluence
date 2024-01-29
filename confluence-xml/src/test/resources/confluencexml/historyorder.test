@@ -1,0 +1,215 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# History should be sensibly ordered (by modification date)
+.#------------------------------------------------------------------------------
+<wikiSpace name="SPACE">
+  <wikiDocument name="Hello">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.2c90808d438d6b4701438d6bb8480027</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2020-06-26 10:46:09.825 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>6</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.2c90808d438d6b4701438d6bb8480027</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-06-26 10:52:10.107 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>My Page</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>content 1</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="2">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.2c90808d438d6b4701438d6bb8480027</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-06-26 10:55:33.268 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>My Page</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>content 2</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="3">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.2c90808d438d6b4701438d6bb8480027</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-06-26 10:57:52.304 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>My Page</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>content 3</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="4">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.2c90808d438d6b4701438d6bb8480027</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-07-06 09:01:42.667 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string>scrum link added</string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>My Page</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>content 4</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="6">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.2c90808d438d6b4701438d6bb8480027</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-07-06 09:36:17.839 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string>notification added</string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>Hello</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>content current</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=historyorder
+.#------------------------------------------------------------------------------
