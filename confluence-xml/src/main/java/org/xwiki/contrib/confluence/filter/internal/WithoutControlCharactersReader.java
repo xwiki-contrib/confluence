@@ -29,7 +29,7 @@ import java.io.InputStream;
  * @version $Id$
  * @since 9.24.0
  */
-public class WithoutControlCharactersReaders extends InputStream
+public class WithoutControlCharactersReader extends InputStream
 {
     private InputStream is;
 
@@ -37,7 +37,7 @@ public class WithoutControlCharactersReaders extends InputStream
      * Convert this input stream into a reader that skips the BS characters.
      * @param is the input stream from which to ignore the BS characters.
      */
-    public WithoutControlCharactersReaders(InputStream is)
+    public WithoutControlCharactersReader(InputStream is)
     {
         this.is = is;
     }
