@@ -65,7 +65,7 @@ import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
-import org.xwiki.contrib.confluence.filter.internal.WithoutBackSpacesReader;
+import org.xwiki.contrib.confluence.filter.internal.WithoutControlCharactersReaders;
 import org.xwiki.environment.Environment;
 import org.xwiki.filter.FilterException;
 import org.xwiki.filter.input.FileInputSource;
@@ -836,7 +836,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
         this.tree.mkdir();
 
         try (CountingInputStream s = new CountingInputStream(new BufferedInputStream(new FileInputStream(entities)))) {
-            XMLStreamReader xmlReader = XML_INPUT_FACTORY.createXMLStreamReader(new WithoutBackSpacesReader(s));
+            XMLStreamReader xmlReader = XML_INPUT_FACTORY.createXMLStreamReader(new WithoutControlCharactersReaders(s));
 
             xmlReader.nextTag();
 
