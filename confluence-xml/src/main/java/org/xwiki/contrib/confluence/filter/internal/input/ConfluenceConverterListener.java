@@ -96,13 +96,13 @@ public class ConfluenceConverterListener extends WrappingListener
     @Inject
     private ConfluenceConverter confluenceConverter;
 
-    private Set<String> macroIds;
+    private Map<String, Integer> macroIds;
     private final WrappingListener wrappingListener = new WrappingListener() {
         @Override
         public void onMacro(String id, Map<String, String> parameters, String content, boolean inline)
         {
             if (macroIds != null) {
-                macroIds.add(id);
+                macroIds.put(id, macroIds.getOrDefault(id, 0) + 1);
             }
             super.onMacro(id, parameters, content, inline);
         }
@@ -126,7 +126,7 @@ public class ConfluenceConverterListener extends WrappingListener
      *
      * @since 9.30.0
      */
-    public void setMacroIds(Set<String> macroIds)
+    public void setMacroIds(Map<String, Integer> macroIds)
     {
         this.macroIds = macroIds;
     }

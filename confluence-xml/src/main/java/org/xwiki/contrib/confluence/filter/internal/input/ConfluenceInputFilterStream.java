@@ -148,7 +148,7 @@ public class ConfluenceInputFilterStream
     @Inject
     private Logger logger;
 
-    private final Set<String> macrosIds = new HashSet<>();
+    private final Map<String, Integer> macrosIds = new HashMap<>();
 
     @Override
     public void close() throws IOException
@@ -248,8 +248,6 @@ public class ConfluenceInputFilterStream
         }
 
         popLevelProgress();
-
-        logger.info(ConfluenceFilter.LOG_MACROS_FOUND, "The following macros have been found [{}].", macrosIds);
         // Cleanup
 
         observationManager.notify(new ConfluenceFilteredEvent(), this, this.confluencePackage);
@@ -844,6 +842,11 @@ public class ConfluenceInputFilterStream
         } finally {
             // < WikiDocument
             proxyFilter.endWikiDocument(documentName, documentParameters);
+            if (!macrosIds.isEmpty()) {
+                logger.info(ConfluenceFilter.LOG_MACROS_FOUND, "The following macros [{}] were found on page [{}].",
+                    macrosIds, documentName);
+                macrosIds.clear();
+            }
         }
     }
 
