@@ -237,11 +237,14 @@ public class ConfluenceInputFilterStream
 
         // Only count pages if we are going to send them
         boolean willSendPages = this.properties.isContentsEnabled() || this.properties.isRightsEnabled();
+
+        // The + 1 is for the space description
         int pagesCount = willSendPages
             ? (
-            (properties.isNonBlogContentEnabled() ? (pages.size() + countPages(pages)) : 0)
-                + (properties.isBlogsEnabled() ? countPages(blogPages) : 0)
-        )
+                (properties.isNonBlogContentEnabled() ? (pages.size() + countPages(pages)) : 0)
+                    + (properties.isBlogsEnabled() ? countPages(blogPages) : 0)
+                    + 1
+            )
             : 0;
 
         if (this.properties.isUsersEnabled()) {
