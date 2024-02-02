@@ -58,6 +58,7 @@ import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.filter.input.ContentPermissionType;
 import org.xwiki.contrib.confluence.filter.input.SpacePermissionType;
 import org.xwiki.contrib.confluence.filter.internal.ConfluenceFilter;
+import org.xwiki.contrib.confluence.filter.internal.idrange.ConfluenceIdRangeList;
 import org.xwiki.contrib.confluence.parser.confluence.internal.ConfluenceParser;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceXHTMLInputProperties;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.ConfluenceXHTMLParser;
@@ -149,6 +150,10 @@ public class ConfluenceInputFilterStream
 
     private final Map<String, Integer> macrosIds = new HashMap<>();
 
+    private ConfluenceIdRangeList objectIdRanges;
+
+    private List<Long> nextIdsForObjectIdRanges;
+
     @Override
     public void close() throws IOException
     {
@@ -169,6 +174,38 @@ public class ConfluenceInputFilterStream
                 ((DefaultConfluenceInputContext) this.context).remove();
             }
         }
+    }
+
+    /**
+     *  @return if the object should be sent and not ignored, given the object id ranges provided in the properties.
+     *  It is very important that each object is only checked once.
+     */
+    private boolean shouldSendObject(Long id) throws FilterException
+    {
+        if (id == null || this.objectIdRanges == null) {
+            // by default, we ignore no objects.
+            return true;
+        }
+
+        if (this.nextIdsForObjectIdRanges == null || this.nextIdsForObjectIdRanges.isEmpty()) {
+            if (this.objectIdRanges.pushId(id)) {
+                this.nextIdsForObjectIdRanges = null;
+                return true;
+            }
+
+            if (this.nextIdsForObjectIdRanges  == null) {
+                // we only prepare for the next range id if it has not been already asked.
+                prepareNextObjectRangeId();
+            }
+            return false;
+        }
+
+        if (id.equals(this.nextIdsForObjectIdRanges.get(0))) {
+            this.nextIdsForObjectIdRanges.remove(0);
+            return true;
+        }
+
+        return false;
     }
 
     private int countPages(Map<Long, List<Long>> pages)
@@ -233,6 +270,11 @@ public class ConfluenceInputFilterStream
             return;
         }
 
+        this.objectIdRanges = this.properties.getObjectIdRanges();
+        if (this.objectIdRanges != null) {
+            prepareNextObjectRangeId();
+        }
+
         Map<Long, List<Long>> pages = this.confluencePackage.getPages();
         Map<Long, List<Long>> blogPages = this.confluencePackage.getBlogPages();
 
@@ -267,7 +309,7 @@ public class ConfluenceInputFilterStream
             rootSpaces.addAll(blogPages.keySet());
 
             for (Long spaceId : rootSpaces) {
-                if (pagesCount == 0) {
+                if (!shouldSendObject(spaceId) || pagesCount == 0) {
                     continue;
                 }
 
@@ -286,6 +328,18 @@ public class ConfluenceInputFilterStream
 
         closeConfluencePackage();
         popLevelProgress();
+    }
+
+    private void prepareNextObjectRangeId() throws FilterException
+    {
+        Long nextIdForObjectIdRanges = this.objectIdRanges.getNextId();
+        if (nextIdForObjectIdRanges != null) {
+            try {
+                this.nextIdsForObjectIdRanges = this.confluencePackage.getAncestors(nextIdForObjectIdRanges);
+            } catch (ConfigurationException e) {
+                throw new FilterException(e);
+            }
+        }
     }
 
     private void maybeRemoveArchivedSpaces() throws FilterException
@@ -415,6 +469,10 @@ public class ConfluenceInputFilterStream
                     Long spacePermissionId = toLong(spacePermissionObject);
                     if (spacePermissionId == null) {
                         logger.warn("Space permission id is null for the space [{}]", spaceKey);
+                        continue;
+                    }
+
+                    if (!shouldSendObject(spacePermissionId)) {
                         continue;
                     }
 
@@ -655,7 +713,9 @@ public class ConfluenceInputFilterStream
         for (Long userId : users) {
             this.progress.startStep(this);
 
-            sendUser(proxyFilter, userId);
+            if (shouldSendObject(userId)) {
+                sendUser(proxyFilter, userId);
+            }
 
             this.progress.endStep(this);
         }
@@ -821,6 +881,10 @@ public class ConfluenceInputFilterStream
     private void readPage(long pageId, String spaceKey, Object filter, ConfluenceFilter proxyFilter)
         throws FilterException
     {
+        if (!shouldSendObject(pageId)) {
+            return;
+        }
+
         ConfluenceProperties pageProperties = getPageProperties(pageId);
 
         if (pageProperties == null) {
@@ -933,11 +997,15 @@ public class ConfluenceInputFilterStream
                     this.confluencePackage.getLongList(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISIONS);
                 Collections.sort(revisions);
                 for (Long revisionId : revisions) {
-                    readPageRevision(revisionId, spaceKey, filter, proxyFilter);
+                    if (shouldSendObject(revisionId)) {
+                        readPageRevision(revisionId, spaceKey, filter, proxyFilter);
+                    }
                 }
             }
 
             // Current version
+            // Note: no need to check whether the object should be sent. Indeed, this is already checked by an upper
+            // function
             readPageRevision(pageId, spaceKey, filter, proxyFilter);
         } finally {
             // < WikiDocumentLocale
@@ -954,6 +1022,11 @@ public class ConfluenceInputFilterStream
                 logger.error("Space permission set id is null for space [{}]", spaceKey);
                 continue;
             }
+
+            if (!shouldSendObject(permissionSetId)) {
+                continue;
+            }
+
             ConfluenceProperties permissionSetProperties = null;
             try {
                 permissionSetProperties = confluencePackage.getContentPermissionSetProperties(permissionSetId);
@@ -975,6 +1048,11 @@ public class ConfluenceInputFilterStream
                     logger.error("Permission id is null for page [{}]", createPageIdentifier(pageId, spaceKey));
                     continue;
                 }
+
+                if (!shouldSendObject(permissionId)) {
+                    continue;
+                }
+
                 ConfluenceProperties permProperties = null;
                 try {
                     permProperties = confluencePackage.getContentPermissionProperties(permissionSetId, permissionId);
@@ -1197,7 +1275,11 @@ public class ConfluenceInputFilterStream
         try {
             // Attachments
             Map<String, ConfluenceProperties> pageAttachments = new LinkedHashMap<>();
-            for (long attachmentId : this.confluencePackage.getAttachments(pageId)) {
+            for (Long attachmentId : this.confluencePackage.getAttachments(pageId)) {
+                if (!shouldSendObject(attachmentId)) {
+                    continue;
+                }
+
                 ConfluenceProperties attachmentProperties;
                 try {
                     attachmentProperties = this.confluencePackage.getAttachmentProperties(pageId, attachmentId);
@@ -1238,7 +1320,10 @@ public class ConfluenceInputFilterStream
             // Tags
             Map<String, ConfluenceProperties> pageTags = new LinkedHashMap<>();
             for (Object tagIdStringObject : pageProperties.getList(ConfluenceXMLPackage.KEY_PAGE_LABELLINGS)) {
-                long tagId = Long.parseLong((String) tagIdStringObject);
+                Long tagId = Long.parseLong((String) tagIdStringObject);
+                if (!shouldSendObject(tagId)) {
+                    continue;
+                }
                 ConfluenceProperties tagProperties;
                 try {
                     tagProperties = this.confluencePackage.getObjectProperties(tagId);
@@ -1266,7 +1351,10 @@ public class ConfluenceInputFilterStream
             Map<Long, Integer> commentIndices = new LinkedHashMap<>();
             int commentIndex = 0;
             for (Object commentIdStringObject : pageProperties.getList(ConfluenceXMLPackage.KEY_PAGE_COMMENTS)) {
-                long commentId = Long.parseLong((String) commentIdStringObject);
+                Long commentId = Long.parseLong((String) commentIdStringObject);
+                if (!shouldSendObject(commentId)) {
+                    continue;
+                }
                 ConfluenceProperties commentProperties;
                 try {
                     commentProperties = this.confluencePackage.getObjectProperties(commentId);
@@ -1423,7 +1511,7 @@ public class ConfluenceInputFilterStream
         return syntaxFilterFactory.createInputFilterStream(filterProperties);
     }
 
-    private void readAttachment(long pageId, String spaceKey, ConfluenceProperties attachmentProperties,
+    private void readAttachment(Long pageId, String spaceKey, ConfluenceProperties attachmentProperties,
         ConfluenceFilter proxyFilter) throws FilterException
     {
         String contentStatus = attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTSTATUS, null);
@@ -1432,7 +1520,8 @@ public class ConfluenceInputFilterStream
             return;
         }
 
-        long attachmentId = attachmentProperties.getLong("id");
+        Long attachmentId = attachmentProperties.getLong("id");
+        // no need to check shouldSendObject(attachmentId), already done by the caller.
 
         String attachmentName = this.confluencePackage.getAttachmentName(attachmentProperties);
 
@@ -1457,7 +1546,7 @@ public class ConfluenceInputFilterStream
 
         Long version = this.confluencePackage.getAttachementVersion(attachmentProperties);
 
-        long originalRevisionId =
+        Long originalRevisionId =
             this.confluencePackage.getAttachmentOriginalVersionId(attachmentProperties, attachmentId);
         File contentFile;
         try {

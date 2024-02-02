@@ -28,6 +28,7 @@ import java.util.Set;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.xwiki.contrib.confluence.filter.Mapping;
+import org.xwiki.contrib.confluence.filter.internal.idrange.ConfluenceIdRangeList;
 import org.xwiki.filter.DefaultFilterStreamProperties;
 import org.xwiki.filter.input.InputSource;
 import org.xwiki.model.reference.SpaceReference;
@@ -123,6 +124,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private Set<String> unprefixedMacros;
 
     private Mapping userIdMapping;
+
+    private ConfluenceIdRangeList objectIdRanges;
 
     private Mapping groupMapping = new Mapping(Map.of(
         "confluence-administrators", XWIKI_ADMIN_GROUP_NAME,
@@ -756,6 +759,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     {
         return this.cleanup;
     }
+
     /**
      * @param cleanup The cleanup mode to use
      * @since 9.33.0
@@ -763,5 +767,40 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setCleanup(String cleanup)
     {
         this.cleanup = cleanup == null ? CLEANUP_SYNC : cleanup.toUpperCase();
+    }
+
+    /**
+     * @return the object id range.
+     * @since 9.35.0
+     */
+    @PropertyName("Object ID ranges")
+    @PropertyDescription("Ranges of Confluence objects to read. Can be used to restore an interrupted migration. "
+        + "Several comma-separated ranges can be given. "
+        + "Note that the order used for these ranges are not increasingly big ids, but in the order they are processed "
+        + "by the Confluence module. This order may change between versions of the parser, "
+        + "but is guaranteed to be the same between different runs using the same version of the Confluence module. "
+        + "Ranges must not overlap. Overlapping ranges are not supported, may lead to surprising results and their "
+        + "behavior is not guaranteed to be stable. In the same vain, ranges must be ordered in the parsing order. "
+        + "Examples: "
+        + "[4242,] - only read object id 4242 and all the following ones; "
+        + "(4242,] - same, but exclude object id 4242; "
+        + "[,4242] - read all objects until object id 4242 included; "
+        + "[,4242) - same, but exclude 4242; "
+        + "[4242,2424], [3456,1234] -  read objects between 4242 and 2424 both included, "
+        + "then ignore objects until 5656 and read objects between 5656 and 1234 both included "
+        + "(notice how IDs may look disordered).")
+    public ConfluenceIdRangeList getObjectIdRanges()
+    {
+        return objectIdRanges;
+    }
+
+    /**
+     * Set the object id range list.
+     * @param objectIdRanges the list of id ranges to set
+     * @since 9.35.0
+     */
+    public void setObjectIdRanges(ConfluenceIdRangeList objectIdRanges)
+    {
+        this.objectIdRanges = objectIdRanges;
     }
 }
