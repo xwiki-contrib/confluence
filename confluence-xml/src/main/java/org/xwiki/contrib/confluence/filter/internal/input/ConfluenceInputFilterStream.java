@@ -322,6 +322,10 @@ public class ConfluenceInputFilterStream
 
         FilterEventParameters spaceParameters = new FilterEventParameters();
 
+        if (this.properties.isVerbose()) {
+            this.logger.info("Sending Confluence space [{}], id=[{}]", spaceKey, spaceId);
+        }
+
         // > WikiSpace
         proxyFilter.beginWikiSpace(spaceKey, spaceParameters);
         try {
@@ -347,6 +351,9 @@ public class ConfluenceInputFilterStream
         } finally {
             // < WikiSpace
             proxyFilter.endWikiSpace(spaceKey, spaceParameters);
+            if (this.properties.isVerbose()) {
+                this.logger.info("Finished sending Confluence space [{}], id=[{}]", spaceKey, spaceId);
+            }
         }
     }
 
@@ -818,7 +825,6 @@ public class ConfluenceInputFilterStream
 
         if (pageProperties == null) {
             this.logger.error("Can't find page with id [{}]", createPageIdentifier(pageId, spaceKey));
-
             return;
         }
 
@@ -857,6 +863,10 @@ public class ConfluenceInputFilterStream
         // Apply the standard entity name validator
         documentName = confluenceConverter.toEntityName(documentName);
 
+        if (this.properties.isVerbose()) {
+            this.logger.info("Sending page [{}], Confluence id=[{}]", documentName, pageId);
+        }
+
         // > WikiDocument
         proxyFilter.beginWikiDocument(documentName, documentParameters);
 
@@ -872,8 +882,10 @@ public class ConfluenceInputFilterStream
             // < WikiDocument
             proxyFilter.endWikiDocument(documentName, documentParameters);
             if (!macrosIds.isEmpty()) {
-                logger.info(ConfluenceFilter.LOG_MACROS_FOUND, "The following macros [{}] were found on page [{}].",
-                    macrosIds, documentName);
+                if (properties.isVerbose()) {
+                    logger.info(ConfluenceFilter.LOG_MACROS_FOUND, "The following macros [{}] were found on page [{}].",
+                        macrosIds, documentName);
+                }
                 macrosIds.clear();
             }
         }
