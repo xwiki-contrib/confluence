@@ -332,8 +332,6 @@ in //ex//cerpt
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
-</wikiSpace>
-<wikiSpace name="TestSpace">
   <wikiSpace name="Blog">
     <wikiDocument name="WebHome">
       <wikiObject name="Blog.BlogClass">

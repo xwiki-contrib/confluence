@@ -32,6 +32,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -260,15 +261,19 @@ public class ConfluenceInputFilterStream
         }
 
         beginSpace(properties.getRootSpace(), proxyFilter);
-
         try {
-            if (willSendPages && properties.isNonBlogContentEnabled()) {
-                sendDocuments(filter, proxyFilter, pages);
-            }
+            Set<Long> rootSpaces = new LinkedHashSet<>();
+            rootSpaces.addAll(pages.keySet());
+            rootSpaces.addAll(blogPages.keySet());
 
-            // Generate Blog events
-            if (this.properties.isBlogsEnabled()) {
-                generateBlogEvents(blogPages, filter, proxyFilter);
+            for (Long spaceId : rootSpaces) {
+                if (pagesCount == 0) {
+                    continue;
+                }
+
+                List<Long> regularPageIds = pages.getOrDefault(spaceId, Collections.emptyList());
+                List<Long> blogPageIds = blogPages.get(spaceId);
+                sendConfluenceRootSpace(spaceId, filter, proxyFilter, regularPageIds, blogPageIds);
             }
         } finally {
             endSpace(properties.getRootSpace(), proxyFilter);
@@ -303,54 +308,45 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void sendDocuments(Object filter, ConfluenceFilter proxyFilter, Map<Long, List<Long>> pages)
-        throws FilterException
+    private void sendConfluenceRootSpace(Long spaceId, Object filter, ConfluenceFilter proxyFilter,
+        List<Long> pages, List<Long> blogPages) throws FilterException
     {
-        for (Map.Entry<Long, List<Long>> entry : pages.entrySet()) {
-            long spaceId = entry.getKey();
-
-            ConfluenceProperties spaceProperties;
-            try {
-                spaceProperties = this.confluencePackage.getSpaceProperties(spaceId);
-            } catch (ConfigurationException e) {
-                throw new FilterException("Failed to get space properties", e);
-            }
-
-            String spaceKey = confluenceConverter.toEntityName(ConfluenceXMLPackage.getSpaceKey(spaceProperties));
-
-            FilterEventParameters spaceParameters = new FilterEventParameters();
-
-            // > WikiSpace
-            proxyFilter.beginWikiSpace(spaceKey, spaceParameters);
-            try {
-                if (this.properties.isRightsEnabled()) {
-                    sendSpaceRights(proxyFilter, spaceProperties, spaceKey, spaceId);
-                }
-
-                if (this.properties.isContentsEnabled()) {
-                    // Main page
-                    Long descriptionId = spaceProperties.getLong(ConfluenceXMLPackage.KEY_SPACE_DESCRIPTION, null);
-                    if (descriptionId != null) {
-                        sendPage(descriptionId, spaceKey, filter, proxyFilter, true);
-                    }
-                }
-
-                // Other pages
-                sendPages(filter, proxyFilter, entry, spaceKey);
-            } finally {
-                // < WikiSpace
-                proxyFilter.endWikiSpace(spaceKey, spaceParameters);
-            }
+        ConfluenceProperties spaceProperties;
+        try {
+            spaceProperties = this.confluencePackage.getSpaceProperties(spaceId);
+        } catch (ConfigurationException e) {
+            throw new FilterException("Failed to get space properties", e);
         }
-    }
 
-    private void sendPages(Object filter, ConfluenceFilter proxyFilter, Map.Entry<Long, List<Long>> entry,
-        String spaceKey)
-    {
-        if (this.properties.isContentsEnabled()) {
-            for (long pageId : entry.getValue()) {
-                sendPage(pageId, spaceKey, filter, proxyFilter, false);
+        String spaceKey = confluenceConverter.toEntityName(ConfluenceXMLPackage.getSpaceKey(spaceProperties));
+
+        FilterEventParameters spaceParameters = new FilterEventParameters();
+
+        // > WikiSpace
+        proxyFilter.beginWikiSpace(spaceKey, spaceParameters);
+        try {
+            if (this.properties.isRightsEnabled()) {
+                sendSpaceRights(proxyFilter, spaceProperties, spaceKey, spaceId);
             }
+
+            if (this.properties.isContentsEnabled()) {
+                // Main page
+                Long descriptionId = spaceProperties.getLong(ConfluenceXMLPackage.KEY_SPACE_DESCRIPTION, null);
+                if (descriptionId != null) {
+                    sendPage(descriptionId, spaceKey, filter, proxyFilter, true);
+                }
+            }
+
+            if (this.properties.isContentsEnabled() || this.properties.isRightsEnabled()) {
+                sendPages(spaceKey, pages, filter, proxyFilter);
+            }
+
+            if (this.properties.isBlogsEnabled() && blogPages != null && !blogPages.isEmpty()) {
+                sendBlogs(spaceKey, blogPages, filter, proxyFilter);
+            }
+        } finally {
+            // < WikiSpace
+            proxyFilter.endWikiSpace(spaceKey, spaceParameters);
         }
     }
 
@@ -368,43 +364,30 @@ public class ConfluenceInputFilterStream
         this.progress.endStep(this);
     }
 
-    private void generateBlogEvents(Map<Long, List<Long>> blogPages, Object filter, ConfluenceFilter proxyFilter)
+    private void sendBlogs(String spaceKey, List<Long> blogPages, Object filter, ConfluenceFilter proxyFilter)
         throws FilterException
     {
-        for (Map.Entry<Long, List<Long>> entry : blogPages.entrySet()) {
-            long spaceId = entry.getKey();
+        // Blog space
+        String blogSpaceKey = confluenceConverter.toEntityName(this.properties.getBlogSpaceName());
 
-            ConfluenceProperties spaceProperties;
-            try {
-                spaceProperties = this.confluencePackage.getSpaceProperties(spaceId);
-            } catch (ConfigurationException e) {
-                throw new FilterException("Failed to get space properties", e);
-            }
+        // > WikiSpace
+        proxyFilter.beginWikiSpace(blogSpaceKey, FilterEventParameters.EMPTY);
+        try {
+            // Blog Descriptor page
+            addBlogDescriptorPage(proxyFilter);
 
-            String spaceKey = confluenceConverter.toEntityName(ConfluenceXMLPackage.getSpaceKey(spaceProperties));
+            // Blog post pages
+            sendPages(spaceKey, blogPages, filter, proxyFilter);
+        } finally {
+            // < WikiSpace
+            proxyFilter.endWikiSpace(blogSpaceKey, FilterEventParameters.EMPTY);
+        }
+    }
 
-            // > WikiSpace
-            proxyFilter.beginWikiSpace(spaceKey, FilterEventParameters.EMPTY);
-            try {
-                // Blog space
-                String blogSpaceKey = confluenceConverter.toEntityName(this.properties.getBlogSpaceName());
-
-                // > WikiSpace
-                proxyFilter.beginWikiSpace(blogSpaceKey, FilterEventParameters.EMPTY);
-                try {
-                    // Blog Descriptor page
-                    addBlogDescriptorPage(proxyFilter);
-
-                    // Blog post pages
-                    sendPages(filter, proxyFilter, entry, spaceKey);
-                } finally {
-                    // < WikiSpace
-                    proxyFilter.endWikiSpace(blogSpaceKey, FilterEventParameters.EMPTY);
-                }
-            } finally {
-                // < WikiSpace
-                proxyFilter.endWikiSpace(spaceKey, FilterEventParameters.EMPTY);
-            }
+    private void sendPages(String spaceKey, List<Long> blogPages, Object filter, ConfluenceFilter proxyFilter)
+    {
+        for (Long pageId : blogPages) {
+            sendPage(pageId, spaceKey, filter, proxyFilter, false);
         }
     }
 
@@ -665,45 +648,7 @@ public class ConfluenceInputFilterStream
         for (Long userId : users) {
             this.progress.startStep(this);
 
-            ConfluenceProperties userProperties;
-            try {
-                userProperties = this.confluencePackage.getInternalUserProperties(userId);
-            } catch (ConfigurationException e) {
-                throw new FilterException(FAILED_TO_GET_USER_PROPERTIES, e);
-            }
-
-            String userName = confluenceConverter.toUserReferenceName(
-                userProperties.getString(ConfluenceXMLPackage.KEY_USER_NAME, String.valueOf(userId)));
-
-            FilterEventParameters userParameters = new FilterEventParameters();
-
-            userParameters.put(UserFilter.PARAMETER_FIRSTNAME,
-                userProperties.getString(ConfluenceXMLPackage.KEY_USER_FIRSTNAME, "").trim());
-            userParameters.put(UserFilter.PARAMETER_LASTNAME,
-                userProperties.getString(ConfluenceXMLPackage.KEY_USER_LASTNAME, "").trim());
-            userParameters.put(UserFilter.PARAMETER_EMAIL,
-                userProperties.getString(ConfluenceXMLPackage.KEY_USER_EMAIL, "").trim());
-            userParameters.put(UserFilter.PARAMETER_ACTIVE,
-                userProperties.getBoolean(ConfluenceXMLPackage.KEY_USER_ACTIVE, true));
-
-            try {
-                userParameters.put(UserFilter.PARAMETER_REVISION_DATE,
-                    this.confluencePackage.getDate(userProperties, ConfluenceXMLPackage.KEY_USER_REVISION_DATE));
-                userParameters.put(UserFilter.PARAMETER_CREATION_DATE,
-                    this.confluencePackage.getDate(userProperties, ConfluenceXMLPackage.KEY_USER_CREATION_DATE));
-            } catch (Exception e) {
-                if (this.properties.isVerbose()) {
-                    this.logger.error("Failed to parse the user date", e);
-                }
-            }
-
-            // TODO: no idea how to import/convert the password, probably salted with the Confluence instance id
-
-            // > User
-            proxyFilter.beginUser(userName, userParameters);
-
-            // < User
-            proxyFilter.endUser(userName, userParameters);
+            sendUser(proxyFilter, userId);
 
             this.progress.endStep(this);
         }
@@ -812,6 +757,49 @@ public class ConfluenceInputFilterStream
         if (this.properties.getUsersWiki() != null) {
             proxyFilter.endWiki(this.properties.getUsersWiki(), FilterEventParameters.EMPTY);
         }
+    }
+
+    private void sendUser(ConfluenceFilter proxyFilter, Long userId) throws FilterException
+    {
+        ConfluenceProperties userProperties;
+        try {
+            userProperties = this.confluencePackage.getInternalUserProperties(userId);
+        } catch (ConfigurationException e) {
+            throw new FilterException(FAILED_TO_GET_USER_PROPERTIES, e);
+        }
+
+        String userName = confluenceConverter.toUserReferenceName(
+            userProperties.getString(ConfluenceXMLPackage.KEY_USER_NAME, String.valueOf(userId)));
+
+        FilterEventParameters userParameters = new FilterEventParameters();
+
+        userParameters.put(UserFilter.PARAMETER_FIRSTNAME,
+            userProperties.getString(ConfluenceXMLPackage.KEY_USER_FIRSTNAME, "").trim());
+        userParameters.put(UserFilter.PARAMETER_LASTNAME,
+            userProperties.getString(ConfluenceXMLPackage.KEY_USER_LASTNAME, "").trim());
+        userParameters.put(UserFilter.PARAMETER_EMAIL,
+            userProperties.getString(ConfluenceXMLPackage.KEY_USER_EMAIL, "").trim());
+        userParameters.put(UserFilter.PARAMETER_ACTIVE,
+            userProperties.getBoolean(ConfluenceXMLPackage.KEY_USER_ACTIVE, true));
+
+        try {
+            userParameters.put(UserFilter.PARAMETER_REVISION_DATE,
+                this.confluencePackage.getDate(userProperties, ConfluenceXMLPackage.KEY_USER_REVISION_DATE));
+            userParameters.put(UserFilter.PARAMETER_CREATION_DATE,
+                this.confluencePackage.getDate(userProperties, ConfluenceXMLPackage.KEY_USER_CREATION_DATE));
+        } catch (Exception e) {
+            if (this.properties.isVerbose()) {
+                this.logger.error("Failed to parse the user date", e);
+            }
+        }
+
+        // TODO: no idea how to import/convert the password, probably salted with the Confluence instance id
+
+        // > User
+        proxyFilter.beginUser(userName, userParameters);
+
+        // < User
+        proxyFilter.endUser(userName, userParameters);
     }
 
     private String getConfluenceToXWikiGroupName(String groupName)

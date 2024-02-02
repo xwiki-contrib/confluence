@@ -5,6 +5,584 @@
 .# Test that Blog post is created
 .#------------------------------------------------------------------------------
 <wikiSpace name="SpaceA">
+  <wikiDocument name="WebPreferences">
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.XWikiAdminGroup"/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.testuser@mail_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.XWikiAllGroup"/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.msteams-confluence@connect_atlassian_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.confluence-chats-integration@connect_atlassian_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.org_swift_confluence_table@connect_atlassian_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.34169017-dfe4-41cb-a8ae-6c3644475fb8@connect_atlassian_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.testuser@mail_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.XWikiAllGroup"/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.XWikiAdminGroup"/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.msteams-confluence@connect_atlassian_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.confluence-chats-integration@connect_atlassian_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.org_swift_confluence_table@connect_atlassian_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.34169017-dfe4-41cb-a8ae-6c3644475fb8@connect_atlassian_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.XWikiAdminGroup"/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.testuser@mail_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.msteams-confluence@connect_atlassian_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.confluence-chats-integration@connect_atlassian_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.org_swift_confluence_table@connect_atlassian_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.34169017-dfe4-41cb-a8ae-6c3644475fb8@connect_atlassian_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.testuser@mail_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.XWikiAdminGroup"/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.msteams-confluence@connect_atlassian_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.confluence-chats-integration@connect_atlassian_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.org_swift_confluence_table@connect_atlassian_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.34169017-dfe4-41cb-a8ae-6c3644475fb8@connect_atlassian_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.XWikiAdminGroup"/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.testuser@mail_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.XWikiAllGroup"/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.msteams-confluence@connect_atlassian_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.confluence-chats-integration@connect_atlassian_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.org_swift_confluence_table@connect_atlassian_com"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.34169017-dfe4-41cb-a8ae-6c3644475fb8@connect_atlassian_com"/>
+    </wikiObject>
+  </wikiDocument>
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.testuser@mail_com</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2023-09-27 17:02:25.738 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>1</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.testuser@mail_com</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2023-09-27 17:02:25.738 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+  <wikiDocument name="SpaceA Home">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.testuser@mail_com</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2023-09-27 17:02:26.883 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>1</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.testuser@mail_com</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2023-09-27 17:02:26.883 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>SpaceA Home</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>Hello !</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
   <wikiSpace name="Blog">
     <wikiDocument name="WebHome">
       <wikiObject name="Blog.BlogClass">
