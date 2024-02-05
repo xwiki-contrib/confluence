@@ -1139,11 +1139,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
         Long pageId = properties.getLong("content", null);
 
         if (pageId != null) {
-            ConfluenceProperties fileProperties = getPageProperties(pageId, true);
+            ConfluenceProperties pageProperties = getPageProperties(pageId, true);
 
-            if (!fileProperties.getList(KEY_PAGE_LABELLINGS).contains(labellingId)) {
-                fileProperties.addProperty(KEY_PAGE_LABELLINGS, labellingId);
-                fileProperties.save();
+            if (!pageProperties.getList(KEY_PAGE_LABELLINGS).contains(labellingId)) {
+                pageProperties.addProperty(KEY_PAGE_LABELLINGS, labellingId);
+                pageProperties.save();
             }
         }
     }
