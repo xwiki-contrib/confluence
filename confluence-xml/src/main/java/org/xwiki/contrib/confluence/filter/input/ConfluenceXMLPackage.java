@@ -904,6 +904,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 readAttachmentObject(xmlReader);
             } else if (type.equals("BlogPost")) {
                 readBlogPostObject(xmlReader);
+            } else if (type.equals("Labelling")) {
+                readLabellingObject(xmlReader);
             } else {
                 ConfluenceProperties properties = new ConfluenceProperties();
 
@@ -1122,6 +1124,27 @@ public class ConfluenceXMLPackage implements AutoCloseable
         if (originalVersion == null) {
             Long spaceId = properties.getLong("space", null);
             this.blogPages.computeIfAbsent(spaceId, k -> new LinkedList<>()).add(pageId);
+        }
+    }
+
+    private void readLabellingObject(XMLStreamReader xmlReader)
+        throws XMLStreamException, FilterException, ConfigurationException
+    {
+        ConfluenceProperties properties = new ConfluenceProperties();
+
+        long labellingId = readObjectProperties(xmlReader, properties);
+        saveObjectProperties(properties, labellingId);
+
+        // Since confluence 8.0, the labellings are not part of the Page Object anymore.
+        Long pageId = properties.getLong("content", null);
+
+        if (pageId != null) {
+            ConfluenceProperties fileProperties = getPageProperties(pageId, true);
+
+            if (!fileProperties.getList(KEY_PAGE_LABELLINGS).contains(labellingId)) {
+                fileProperties.addProperty(KEY_PAGE_LABELLINGS, labellingId);
+                fileProperties.save();
+            }
         }
     }
 

@@ -1,0 +1,1305 @@
+<hibernate-generic datetime="2023-12-18 13:12:19">
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">589825</id>
+    <property name="name">AreTagsImported</property>
+    <property name="key">AR</property>
+    <property name="lowerKey">ar</property>
+    <property name="creationDate">2023-12-18 15:02:21.573</property>
+    <property name="lastModificationDate">2023-12-18 15:02:21.996</property>
+    <property name="spaceType">global</property>
+    <property name="spaceStatus" enum-class="SpaceStatus" package="com.atlassian.confluence.spaces">CURRENT</property>
+    <property name="description" class="SpaceDescription" package="com.atlassian.confluence.spaces"><id name="id">360452</id></property>
+    <property name="homePage" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="ConfluenceBandanaRecord" package="com.atlassian.confluence.setup.bandana">
+    <id name="id">32888</id>
+    <property name="context">AR</property>
+    <property name="key">trash.date.migration.time</property>
+    <property name="value"><![CDATA[<instant>2023-12-18T13:02:21.958947929Z</instant>]]></property>
+  </object>
+
+  <object class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+    <id name="key">4028e49e8c7d0359018c7d048c6c0000</id>
+    <property name="name">admin</property>
+    <property name="lowerName">admin</property>
+    <property name="email">admin@admin.admin</property>
+  </object>
+
+  <object class="SpaceDescription" package="com.atlassian.confluence.spaces">
+    <id name="id">360452</id>
+    <property name="hibernateVersion">13</property>
+    <property name="version">2</property>
+    <property name="creationDate">2015-08-12 17:14:17.610</property>
+    <property name="lastModificationDate">2023-12-18 15:02:21.984</property>
+    <property name="versionComment"></property>
+    <property name="contentStatus">current</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d0531de0001</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">589825</id></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">360461</id>
+    <property name="hibernateVersion">9</property>
+    <property name="title">HoomePage</property>
+    <property name="lowerTitle">hoomepage</property>
+    <property name="version">1</property>
+    <property name="creationDate">2023-12-18 15:02:23.349</property>
+    <property name="lastModificationDate">2023-12-18 15:02:55.147</property>
+    <property name="versionComment"></property>
+    <property name="contentStatus">current</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">589825</id></property>
+    <collection name="contentProperties" class="java.util.Collection">
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655387</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655416</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655388</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655414</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655415</id></element>
+    </collection>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655388</id>
+    <property name="name">share-id</property>
+    <property name="stringValue">455935d4-4c43-4032-ba69-dc76470d6818</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360461</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655414</id>
+    <property name="name">macro-create-events-published-for-version</property>
+    <property name="longValue">1</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360461</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655416</id>
+    <property name="name">macroNames</property>
+    <property name="stringValue"></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360461</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655387</id>
+    <property name="name">sync-rev-source</property>
+    <property name="stringValue">synchrony-ack</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360461</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655415</id>
+    <property name="name">sync-rev</property>
+    <property name="stringValue">0.confluence$content$360461.9</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360461</id></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">360451</id>
+    <property name="hibernateVersion">27</property>
+    <property name="title">AreTagsImported</property>
+    <property name="lowerTitle">aretagsimported</property>
+    <property name="version">2</property>
+    <property name="creationDate">2023-12-18 15:02:21.573</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.933</property>
+    <property name="versionComment"></property>
+    <property name="contentStatus">current</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">589825</id></property>
+    <collection name="contentProperties" class="java.util.Collection">
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655362</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655363</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655427</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655361</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655366</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655364</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655428</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655429</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655365</id></element>
+    </collection>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655429</id>
+    <property name="name">macroNames</property>
+    <property name="stringValue">children,tip,roadmap</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655361</id>
+    <property name="name">macro-count.children</property>
+    <property name="stringValue">2-1</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655362</id>
+    <property name="name">macro-count.recently-updated</property>
+    <property name="stringValue">1-1</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655363</id>
+    <property name="name">macro-count.contributors</property>
+    <property name="stringValue">1-1</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655364</id>
+    <property name="name">macro-count.roadmap</property>
+    <property name="stringValue">2-1</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655365</id>
+    <property name="name">macro-create-events-published-for-version</property>
+    <property name="longValue">2</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655366</id>
+    <property name="name">macro-count.tip</property>
+    <property name="stringValue">2-1</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655427</id>
+    <property name="name">sync-rev</property>
+    <property name="stringValue">0.confluence$content$360451.27</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655428</id>
+    <property name="name">sync-rev-source</property>
+    <property name="stringValue">synchrony-ack</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+  </object>
+
+  <object class="Labelling" package="com.atlassian.confluence.labels">
+    <id name="id">786433</id>
+    <property name="creationDate">2015-09-21 12:19:53.445</property>
+    <property name="lastModificationDate">2015-09-21 12:19:53.445</property>
+    <property name="labelableId">1998863</property>
+    <property name="labelableType">CONTENT</property>
+    <property name="label" class="Label" package="com.atlassian.confluence.labels"><id name="id">753665</id></property>
+    <property name="content" class="SpaceDescription" package="com.atlassian.confluence.spaces"><id name="id">360452</id></property>
+    <property name="owningUser" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+    <id name="key">4028e49e8c7d0359018c7d0531de0001</id>
+    <property name="name">exporter</property>
+    <property name="lowerName">exporter</property>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">720898</id>
+    <property name="body"></property>
+    <property name="bodyType">0</property>
+    <property name="content" class="SpaceDescription" package="com.atlassian.confluence.spaces"><id name="id">360452</id></property>
+  </object>
+
+  <object class="BucketPropertySetItem" package="bucket.user.propertyset">
+    <composite-id>
+      <property name="entityName" type="string">confluence_ContentEntityObject</property>
+      <property name="entityId" type="long">360451</property>
+      <property name="key" type="string">confluence.inline.tasks.sequence.last</property>
+    </composite-id>
+    <property name="type">5</property>
+    <property name="booleanVal">false</property>
+    <property name="doubleVal">0.0</property>
+    <property name="stringVal">13</property>
+    <property name="textVal"></property>
+    <property name="longVal">0</property>
+    <property name="intVal">0</property>
+  </object>
+
+  <object class="OutgoingLink" package="com.atlassian.confluence.links">
+    <id name="id">622623</id>
+    <property name="destinationPageTitle">//www.atlassian.com/collaboration/confluence-organize-work-in-spaces</property>
+    <property name="lowerDestinationPageTitle">//www.atlassian.com/collaboration/confluence-organize-work-in-spaces</property>
+    <property name="destinationSpaceKey">https</property>
+    <property name="lowerDestinationSpaceKey">https</property>
+    <property name="creationDate">2023-12-18 15:03:23.985</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.985</property>
+    <property name="sourceContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="OutgoingLink" package="com.atlassian.confluence.links">
+    <id name="id">622624</id>
+    <property name="destinationPageTitle">//confluence.atlassian.com/x/NgszKw</property>
+    <property name="lowerDestinationPageTitle">//confluence.atlassian.com/x/ngszkw</property>
+    <property name="destinationSpaceKey">https</property>
+    <property name="lowerDestinationSpaceKey">https</property>
+    <property name="creationDate">2023-12-18 15:03:23.985</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.985</property>
+    <property name="sourceContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="OutgoingLink" package="com.atlassian.confluence.links">
+    <id name="id">622625</id>
+    <property name="destinationPageTitle">AreTagsImported</property>
+    <property name="lowerDestinationPageTitle">aretagsimported</property>
+    <property name="destinationSpaceKey">AR</property>
+    <property name="lowerDestinationSpaceKey">ar</property>
+    <property name="creationDate">2023-12-18 15:03:23.985</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.985</property>
+    <property name="sourceContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="OutgoingLink" package="com.atlassian.confluence.links">
+    <id name="id">622626</id>
+    <property name="destinationPageTitle">//confluence.atlassian.com/x/ASEC</property>
+    <property name="lowerDestinationPageTitle">//confluence.atlassian.com/x/asec</property>
+    <property name="destinationSpaceKey">https</property>
+    <property name="lowerDestinationSpaceKey">https</property>
+    <property name="creationDate">2023-12-18 15:03:23.985</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.985</property>
+    <property name="sourceContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="OutgoingLink" package="com.atlassian.confluence.links">
+    <id name="id">622627</id>
+    <property name="destinationPageTitle">//blogs.atlassian.com/2015/01/roadmap-planner-macro/</property>
+    <property name="lowerDestinationPageTitle">//blogs.atlassian.com/2015/01/roadmap-planner-macro/</property>
+    <property name="destinationSpaceKey">http</property>
+    <property name="lowerDestinationSpaceKey">http</property>
+    <property name="creationDate">2023-12-18 15:03:23.985</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.985</property>
+    <property name="sourceContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="OutgoingLink" package="com.atlassian.confluence.links">
+    <id name="id">622628</id>
+    <property name="destinationPageTitle">//confluence.atlassian.com/x/SRwC</property>
+    <property name="lowerDestinationPageTitle">//confluence.atlassian.com/x/srwc</property>
+    <property name="destinationSpaceKey">https</property>
+    <property name="lowerDestinationSpaceKey">https</property>
+    <property name="creationDate">2023-12-18 15:03:23.985</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.985</property>
+    <property name="sourceContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="OutgoingLink" package="com.atlassian.confluence.links">
+    <id name="id">622629</id>
+    <property name="destinationPageTitle">//www.atlassian.com/collaboration/confluence-discuss-work-with-your-team</property>
+    <property name="lowerDestinationPageTitle">//www.atlassian.com/collaboration/confluence-discuss-work-with-your-team</property>
+    <property name="destinationSpaceKey">https</property>
+    <property name="lowerDestinationSpaceKey">https</property>
+    <property name="creationDate">2023-12-18 15:03:23.985</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.985</property>
+    <property name="sourceContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="OutgoingLink" package="com.atlassian.confluence.links">
+    <id name="id">622630</id>
+    <property name="destinationPageTitle">//confluence.atlassian.com/x/liAC</property>
+    <property name="lowerDestinationPageTitle">//confluence.atlassian.com/x/liac</property>
+    <property name="destinationSpaceKey">https</property>
+    <property name="lowerDestinationSpaceKey">https</property>
+    <property name="creationDate">2023-12-18 15:03:23.985</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.985</property>
+    <property name="sourceContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="OutgoingLink" package="com.atlassian.confluence.links">
+    <id name="id">622631</id>
+    <property name="destinationPageTitle">//confluence.atlassian.com/x/2yAC</property>
+    <property name="lowerDestinationPageTitle">//confluence.atlassian.com/x/2yac</property>
+    <property name="destinationSpaceKey">https</property>
+    <property name="lowerDestinationSpaceKey">https</property>
+    <property name="creationDate">2023-12-18 15:03:23.985</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.985</property>
+    <property name="sourceContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="OutgoingLink" package="com.atlassian.confluence.links">
+    <id name="id">622632</id>
+    <property name="destinationPageTitle">//www.atlassian.com/collaboration/confluence-create-content-with-pages</property>
+    <property name="lowerDestinationPageTitle">//www.atlassian.com/collaboration/confluence-create-content-with-pages</property>
+    <property name="destinationSpaceKey">https</property>
+    <property name="lowerDestinationSpaceKey">https</property>
+    <property name="creationDate">2023-12-18 15:03:23.985</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.985</property>
+    <property name="sourceContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="User2ContentRelationEntity" package="com.atlassian.confluence.internal.relations.dao">
+    <id name="id">819202</id>
+    <property name="targetType" enum-class="RelatableEntityTypeEnum" package="com.atlassian.confluence.internal.relations">PAGE</property>
+    <property name="relationName">collaborator</property>
+    <property name="creationDate">2023-12-18 15:02:40.984</property>
+    <property name="lastModificationDate">2023-12-18 15:02:40.984</property>
+    <property name="targetContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360461</id></property>
+    <property name="sourceContent" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="User2ContentRelationEntity" package="com.atlassian.confluence.internal.relations.dao">
+    <id name="id">819203</id>
+    <property name="targetType" enum-class="RelatableEntityTypeEnum" package="com.atlassian.confluence.internal.relations">PAGE</property>
+    <property name="relationName">touched</property>
+    <property name="creationDate">2023-12-18 15:02:55.125</property>
+    <property name="lastModificationDate">2023-12-18 15:02:55.125</property>
+    <property name="targetContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360461</id></property>
+    <property name="sourceContent" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="User2ContentRelationEntity" package="com.atlassian.confluence.internal.relations.dao">
+    <id name="id">819208</id>
+    <property name="targetType" enum-class="RelatableEntityTypeEnum" package="com.atlassian.confluence.internal.relations">PAGE</property>
+    <property name="relationName">collaborator</property>
+    <property name="creationDate">2023-12-18 15:03:24.004</property>
+    <property name="lastModificationDate">2023-12-18 15:03:24.004</property>
+    <property name="targetContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+    <property name="sourceContent" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">360470</id>
+    <property name="hibernateVersion">4</property>
+    <property name="title">notagspage</property>
+    <property name="lowerTitle">notagspage</property>
+    <property name="version">1</property>
+    <property name="creationDate">2023-12-18 15:06:10.427</property>
+    <property name="lastModificationDate">2023-12-18 15:09:19.915</property>
+    <property name="versionComment"></property>
+    <property name="contentStatus">current</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">589825</id></property>
+    <property name="parent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+    <collection name="contentProperties" class="java.util.Collection">
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655435</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655438</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655439</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655436</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655437</id></element>
+    </collection>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655436</id>
+    <property name="name">share-id</property>
+    <property name="stringValue">0a80eb13-dbdb-4073-a482-6569e67207ba</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360470</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655437</id>
+    <property name="name">macro-create-events-published-for-version</property>
+    <property name="longValue">1</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360470</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655439</id>
+    <property name="name">macroNames</property>
+    <property name="stringValue"></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360470</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655435</id>
+    <property name="name">sync-rev-source</property>
+    <property name="stringValue">synchrony-ack</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360470</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655438</id>
+    <property name="name">sync-rev</property>
+    <property name="stringValue">0.confluence$content$360470.4</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360470</id></property>
+  </object>
+
+  <object class="Label" package="com.atlassian.confluence.labels">
+    <id name="id">753665</id>
+    <property name="name">favourite</property>
+    <property name="namespace">my</property>
+    <property name="creationDate">2015-09-15 16:59:33.517</property>
+    <property name="lastModificationDate">2015-09-15 16:59:33.517</property>
+    <property name="owningUser" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="Labelling" package="com.atlassian.confluence.labels">
+    <id name="id">786434</id>
+    <property name="creationDate">2023-12-18 15:03:36.937</property>
+    <property name="lastModificationDate">2023-12-18 15:03:36.937</property>
+    <property name="labelableId">360451</property>
+    <property name="labelableType">CONTENT</property>
+    <property name="label" class="Label" package="com.atlassian.confluence.labels"><id name="id">753666</id></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+    <property name="owningUser" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="Labelling" package="com.atlassian.confluence.labels">
+    <id name="id">786435</id>
+    <property name="creationDate">2023-12-18 15:04:07.616</property>
+    <property name="lastModificationDate">2023-12-18 15:04:07.616</property>
+    <property name="labelableId">360461</property>
+    <property name="labelableType">CONTENT</property>
+    <property name="label" class="Label" package="com.atlassian.confluence.labels"><id name="id">753667</id></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360461</id></property>
+    <property name="owningUser" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="Labelling" package="com.atlassian.confluence.labels">
+    <id name="id">786439</id>
+    <property name="creationDate">2023-12-18 15:10:53.948</property>
+    <property name="lastModificationDate">2023-12-18 15:10:53.948</property>
+    <property name="labelableId">360451</property>
+    <property name="labelableType">CONTENT</property>
+    <property name="label" class="Label" package="com.atlassian.confluence.labels"><id name="id">753670</id></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+    <property name="owningUser" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">720897</id>
+    <property name="body"><![CDATA[<ac:layout><ac:layout-section ac:type="single"><ac:layout-cell><ac:structured-macro ac:name="tip" ac:schema-version="1" ac:macro-id="5da7fd26-ee1a-4fe5-a582-dcf9bfaf8f45"><ac:rich-text-body><p>Welcome to your first space. Go ahead, edit and customize this home page any way you like. We've added some sample content to get you started.</p></ac:rich-text-body></ac:structured-macro></ac:layout-cell></ac:layout-section><ac:layout-section ac:type="single"><ac:layout-cell><p></p><p><br /></p></ac:layout-cell></ac:layout-section><ac:layout-section ac:type="two_right_sidebar"><ac:layout-cell><hr /><h1><strong>Goal</strong></h1><h2><em>Your space homepage should summarize what the space is for, and provide links to key resources for your team. </em></h2><hr /><p><br /></p><h1><strong>Core team</strong></h1><table class="wrapped"><tbody><tr><td><div class="content-wrapper"><p style="text-align: center;"></p><p style="text-align: center;"><strong>Harvey Honner-white<br /></strong>Team Lead<strong> </strong></p></div></td><td><div class="content-wrapper"><p style="text-align: center;"></p><p style="text-align: center;"><strong>Alana Baczewski<br /> </strong>Tech Lead</p></div></td><td><div class="content-wrapper"><p style="text-align: center;"></p><p style="text-align: center;"><strong>Sameer Farrell<br /> </strong>Marketing</p></div></td><td><div class="content-wrapper"><p style="text-align: center;"></p><p style="text-align: center;"><strong>Mia Bednarczyk<br /> </strong>Recruitment</p></div></td></tr></tbody></table><p><br /></p><h1><strong>Roadmap</strong></h1><p>You can edit this roadmap or create a new one by adding the Roadmap Planner macro from the Insert menu. Link your Confluence pages to each bar to add visibility, and find more tips by reading the Atlassian blog: <a href="http://blogs.atlassian.com/2015/01/roadmap-planner-macro/">Plan better in 2015 with the Roadmap Planner macro</a>.</p><p><ac:structured-macro ac:name="roadmap" ac:schema-version="1" ac:macro-id="acab4a3d-dde3-4e22-a912-ce9f886e3e91"><ac:parameter ac:name="maplinks" /><ac:parameter ac:name="timeline">true</ac:parameter><ac:parameter ac:name="pagelinks" /><ac:parameter ac:name="source">%7B%22title%22%3A%22Roadmap%20Planner%22%2C%22timeline%22%3A%7B%22startDate%22%3A%222015-06-01%2000%3A00%3A00%22%2C%22endDate%22%3A%222015-12-31%2000%3A00%3A00%22%2C%22displayOption%22%3A%22MONTH%22%7D%2C%22lanes%22%3A%5B%7B%22title%22%3A%22Marketing%22%2C%22color%22%3A%7B%22lane%22%3A%22%23f15c75%22%2C%22bar%22%3A%22%23f58598%22%2C%22text%22%3A%22%23ffffff%22%2C%22count%22%3A1%7D%2C%22bars%22%3A%5B%7B%22title%22%3A%22Social%20campaign%22%2C%22description%22%3A%22Add%20a%20description%20to%20your%20bars%20here.%22%2C%22startDate%22%3A%222015-07-30%2011%3A10%3A05%22%2C%22duration%22%3A3.6435643564356437%2C%22rowIndex%22%3A0%2C%22id%22%3A%22e703c6a8-1649-4d20-9ccf-2c7a8698e385%22%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22title%22%3A%22Website%20development%22%2C%22description%22%3A%22Add%20a%20description%20to%20your%20bars%20here.%22%2C%22startDate%22%3A%222015-07-17%2006%3A24%3A57%22%2C%22duration%22%3A3.3069306930693068%2C%22rowIndex%22%3A1%2C%22id%22%3A%22655d454d-b701-4584-a301-9ea0bb86ed32%22%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A2%2C%22startDate%22%3A%222015-06-01%2000%3A00%3A00%22%2C%22id%22%3A%22c420ef33-ae28-4828-958f-8a9d793153b3%22%2C%22title%22%3A%22Crowdfunding%20campaign%22%2C%22description%22%3A%22Add%20a%20description%20to%20your%20bars%20here.%22%2C%22duration%22%3A2.5544554455445545%2C%22pageLink%22%3A%7B%7D%7D%5D%7D%2C%7B%22title%22%3A%22People%22%2C%22color%22%3A%7B%22lane%22%3A%22%23654982%22%2C%22bar%22%3A%22%238c77a1%22%2C%22text%22%3A%22%23ffffff%22%2C%22count%22%3A1%7D%2C%22bars%22%3A%5B%7B%22title%22%3A%22Recruitment%22%2C%22description%22%3A%22%22%2C%22startDate%22%3A%222015-06-01%2000%3A00%3A00%22%2C%22duration%22%3A2.5%2C%22rowIndex%22%3A0%2C%22id%22%3A%221230bab8-718c-47da-903a-2cbdcb220d97%22%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-08-17%2013%3A46%3A55%22%2C%22id%22%3A%228639d09c-59d1-4d1f-ad91-c78f04b20135%22%2C%22title%22%3A%22Assessment%20Period%22%2C%22description%22%3A%22%22%2C%22duration%22%3A2.910891089108911%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A1%2C%22startDate%22%3A%222015-09-01%2021%3A23%3A10%22%2C%22id%22%3A%22802b53f7-ba66-4415-984d-efef93b4caec%22%2C%22title%22%3A%22Training%22%2C%22description%22%3A%22%22%2C%22duration%22%3A2.5841584158415842%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-11-15%2006%3A10%3A41%22%2C%22id%22%3A%22502fac56-3849-415f-b412-af27c39229b7%22%2C%22title%22%3A%22Finalisation%22%2C%22description%22%3A%22%22%2C%22duration%22%3A1.4356435643564356%2C%22pageLink%22%3A%7B%7D%7D%5D%7D%2C%7B%22title%22%3A%22Product%22%2C%22color%22%3A%7B%22lane%22%3A%22%233b7fc4%22%2C%22bar%22%3A%22%236c9fd3%22%2C%22text%22%3A%22%23ffffff%22%2C%22count%22%3A1%7D%2C%22bars%22%3A%5B%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-06-24%2004%3A02%3A22%22%2C%22id%22%3A%2200ada54b-0998-41a5-aa98-712ecdec8c7f%22%2C%22title%22%3A%22Planning%22%2C%22description%22%3A%22%22%2C%22duration%22%3A2.1782178217821784%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-08-31%2001%3A54%3A03%22%2C%22id%22%3A%2271967f2c-f3ab-4871-aaf5-7cf31389e62f%22%2C%22title%22%3A%22Development%22%2C%22description%22%3A%22%22%2C%22duration%22%3A1.9207920792079207%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-10-29%2013%3A04%3A09%22%2C%22id%22%3A%22d76ac773-3ee7-495b-9d7f-1daf267dc58c%22%2C%22title%22%3A%22Testing%22%2C%22description%22%3A%22%22%2C%22duration%22%3A1%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-11-30%2002%3A36%3A49%22%2C%22id%22%3A%224f584dc6-63b8-4efa-a98e-a5d7bbe9910e%22%2C%22title%22%3A%22Deploy%22%2C%22description%22%3A%22%22%2C%22duration%22%3A1.0297029702970297%2C%22pageLink%22%3A%7B%7D%7D%5D%7D%5D%2C%22markers%22%3A%5B%7B%22title%22%3A%22Yearly%20Finalisation%22%2C%22markerDate%22%3A%222015-11-29%2012%3A21%3A23%22%7D%5D%7D</ac:parameter><ac:parameter ac:name="title">Roadmap%20Planner</ac:parameter><ac:parameter ac:name="hash">f0477dfac6f6ca380d8c5f2f44041947</ac:parameter></ac:structured-macro></p><p><br /></p><h1><strong>Know your spaces</strong> </h1><p>Everything your team is working on - meeting notes and agendas, project plans and timelines, technical documentation and more - is located in a space; it's home base for your team.</p><p>A small team should plan to have a space for the team, and a space for each big project. If you'll be working in Confluence with several other teams and departments, we recommend a space for each team as well as a space for each major cross-team project. The key is to think of a space as the container that holds all the important stuff - like pages, files, and blog posts - a team, group, or project needs to work.</p><h1><strong>Know your pages</strong></h1><p>If you're working on something related to your team - project plans, product requirements, blog posts, internal communications, you name it - create and store it in a Confluence page. Confluence pages offer a lot of flexibility in creating and storing information, and there are a number of useful page templates included to get you started, like the meeting notes template. Your spaces should be filled with pages that document your business processes, outline your plans, contain your files, and report on your progress. The more you learn to do in Confluence (adding tables and graphs, or embedding video and links are great places to start), the more engaging and helpful your pages will become.</p><p>Helelo</p><p>Learn more by reading <a href="https://www.atlassian.com/collaboration/confluence-organize-work-in-spaces">Confluence 101: organize your work in spaces</a></p><p><br /></p><hr /></ac:layout-cell><ac:layout-cell><h1><strong>Quick navigation</strong></h1><p>When you create new pages in this space, they'll appear here automatically.</p><p><ac:structured-macro ac:name="children" ac:schema-version="2" ac:macro-id="8ca379f2-ea2a-4fbb-bf4a-77619f9875ed" /></p><h1><strong>Useful links</strong></h1><table class="wrapped"><tbody><tr><th>Link</th><th>Description</th></tr><tr><td><a href="https://www.atlassian.com/collaboration/confluence-organize-work-in-spaces">Confluence 101: organize your work in spaces</a></td><td><p>Chances are, the information you need to do your job lives in multiple places. Word docs, Evernote files, email, PDFs, even Post-it notes. It's scattered among different systems. And to make matters worse, <em>the stuff your teammates need is equally siloed</em>. If information had feelings, it would be lonely.</p><p>But with Confluence, you can bring all that information into one place.</p></td></tr><tr><td><a href="https://www.atlassian.com/collaboration/confluence-discuss-work-with-your-team">Confluence 101: discuss work with your team</a></td><td>Getting a project outlined and adding the right content are just the first steps. Now it's time for your team to weigh in. Confluence makes it easy to discuss your work - with your team, your boss, or your entire company - in the same place where you organized and created it.</td></tr><tr><td colspan="1"><a href="https://www.atlassian.com/collaboration/confluence-create-content-with-pages">Confluence 101: create content with pages</a></td><td colspan="1">Think of pages as a New Age &quot;document.&quot; If Word docs were rotary phones, Confluence pages would be smart phones. A smart phone still makes calls (like their rotary counterparts), but it can do so much more than that</td></tr></tbody></table><p><strong style="font-size: 24.0px;line-height: 1.25;"> </strong></p><p><strong style="font-size: 24.0px;line-height: 1.25;">Tasks</strong></p><table class="wrapped"><tbody><tr><td><div class="content-wrapper"><ac:task-list>
+<ac:task>
+<ac:task-id>59</ac:task-id>
+<ac:task-status>incomplete</ac:task-status>
+<ac:task-body><a href="https://confluence.atlassian.com/x/NgszKw">Customize the name, colour, and icon of Confluence</a>.</ac:task-body>
+</ac:task>
+<ac:task>
+<ac:task-id>56</ac:task-id>
+<ac:task-status>incomplete</ac:task-status>
+<ac:task-body>Decide who can see and edit this space or a specific page by clicking the icon. Learn more about <a href="https://confluence.atlassian.com/x/liAC">Page Restrictions</a> and <a href="https://confluence.atlassian.com/x/ASEC">Space Permissions</a>.</ac:task-body>
+</ac:task>
+<ac:task>
+<ac:task-id>57</ac:task-id>
+<ac:task-status>incomplete</ac:task-status>
+<ac:task-body>Try adding an <a href="https://confluence.atlassian.com/x/2yAC">inline comment</a> by highlighting some text and click the comment icon.</ac:task-body>
+</ac:task>
+<ac:task>
+<ac:task-id>58</ac:task-id>
+<ac:task-status>incomplete</ac:task-status>
+<ac:task-body>Learn more about <a href="https://confluence.atlassian.com/x/SRwC">inviting your team to Confluence</a>.</ac:task-body>
+</ac:task>
+</ac:task-list></div></td></tr></tbody></table></ac:layout-cell></ac:layout-section></ac:layout>]]></property>
+    <property name="bodyType">2</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">720901</id>
+    <property name="body"><![CDATA[<p>Hello there!</p>]]></property>
+    <property name="bodyType">2</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360461</id></property>
+  </object>
+
+  <object class="Notification" package="com.atlassian.confluence.mail.notification">
+    <id name="id">688129</id>
+    <property name="creationDate">2015-08-12 17:14:17.637</property>
+    <property name="lastModificationDate">2015-08-12 17:14:17.637</property>
+    <property name="digest">false</property>
+    <property name="network">false</property>
+    <property name="type" enum-class="ContentTypeEnum" package="com.atlassian.confluence.search.service">page</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+    <property name="receiver" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d0531de0001</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d0531de0001</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d0531de0001</id></property>
+  </object>
+
+  <object class="Notification" package="com.atlassian.confluence.mail.notification">
+    <id name="id">688130</id>
+    <property name="creationDate">2023-12-18 15:02:23.374</property>
+    <property name="lastModificationDate">2023-12-18 15:02:23.374</property>
+    <property name="digest">false</property>
+    <property name="network">false</property>
+    <property name="type" enum-class="ContentTypeEnum" package="com.atlassian.confluence.search.service">page</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360461</id></property>
+    <property name="receiver" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="Notification" package="com.atlassian.confluence.mail.notification">
+    <id name="id">688131</id>
+    <property name="creationDate">2023-12-18 15:03:23.980</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.980</property>
+    <property name="digest">false</property>
+    <property name="network">false</property>
+    <property name="type" enum-class="ContentTypeEnum" package="com.atlassian.confluence.search.service">page</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+    <property name="receiver" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="Label" package="com.atlassian.confluence.labels">
+    <id name="id">753666</id>
+    <property name="name">homepagelabel</property>
+    <property name="namespace">global</property>
+    <property name="creationDate">2023-12-18 15:03:36.932</property>
+    <property name="lastModificationDate">2023-12-18 15:03:36.932</property>
+  </object>
+
+  <object class="Label" package="com.atlassian.confluence.labels">
+    <id name="id">753667</id>
+    <property name="name">pagelabel</property>
+    <property name="namespace">global</property>
+    <property name="creationDate">2023-12-18 15:04:07.615</property>
+    <property name="lastModificationDate">2023-12-18 15:04:07.615</property>
+  </object>
+
+  <object class="Label" package="com.atlassian.confluence.labels">
+    <id name="id">753670</id>
+    <property name="name">generic</property>
+    <property name="namespace">global</property>
+    <property name="creationDate">2023-12-18 15:10:20.700</property>
+    <property name="lastModificationDate">2023-12-18 15:10:20.700</property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">360472</id>
+    <property name="hibernateVersion">4</property>
+    <property name="title">three tags page</property>
+    <property name="lowerTitle">three tags page</property>
+    <property name="version">1</property>
+    <property name="creationDate">2023-12-18 15:09:33.097</property>
+    <property name="lastModificationDate">2023-12-18 15:09:51.558</property>
+    <property name="versionComment"></property>
+    <property name="contentStatus">current</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">589825</id></property>
+    <property name="parent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+    <collection name="contentProperties" class="java.util.Collection">
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655442</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655443</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655446</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655444</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655445</id></element>
+    </collection>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655443</id>
+    <property name="name">share-id</property>
+    <property name="stringValue">ca1356d9-bf79-4876-aa0e-bf9e9b71e546</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360472</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655444</id>
+    <property name="name">macro-create-events-published-for-version</property>
+    <property name="longValue">1</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360472</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655446</id>
+    <property name="name">macroNames</property>
+    <property name="stringValue"></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360472</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655442</id>
+    <property name="name">sync-rev-source</property>
+    <property name="stringValue">synchrony-ack</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360472</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655445</id>
+    <property name="name">sync-rev</property>
+    <property name="stringValue">0.confluence$content$360472.4</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360472</id></property>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">720905</id>
+    <property name="body"><![CDATA[<p>sdasdafvcb</p><p>fghgfgdffgfg</p>]]></property>
+    <property name="bodyType">2</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360470</id></property>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">720907</id>
+    <property name="body"><![CDATA[<p>ffsd sdfsfs dsfsf</p>]]></property>
+    <property name="bodyType">2</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360472</id></property>
+  </object>
+
+  <object class="User2ContentRelationEntity" package="com.atlassian.confluence.internal.relations.dao">
+    <id name="id">819209</id>
+    <property name="targetType" enum-class="RelatableEntityTypeEnum" package="com.atlassian.confluence.internal.relations">PAGE</property>
+    <property name="relationName">collaborator</property>
+    <property name="creationDate">2023-12-18 15:09:14.870</property>
+    <property name="lastModificationDate">2023-12-18 15:09:14.870</property>
+    <property name="targetContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360470</id></property>
+    <property name="sourceContent" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="User2ContentRelationEntity" package="com.atlassian.confluence.internal.relations.dao">
+    <id name="id">819213</id>
+    <property name="targetType" enum-class="RelatableEntityTypeEnum" package="com.atlassian.confluence.internal.relations">PAGE</property>
+    <property name="relationName">collaborator</property>
+    <property name="creationDate">2023-12-18 15:09:46.957</property>
+    <property name="lastModificationDate">2023-12-18 15:09:46.957</property>
+    <property name="targetContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360472</id></property>
+    <property name="sourceContent" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="User2ContentRelationEntity" package="com.atlassian.confluence.internal.relations.dao">
+    <id name="id">819214</id>
+    <property name="targetType" enum-class="RelatableEntityTypeEnum" package="com.atlassian.confluence.internal.relations">PAGE</property>
+    <property name="relationName">touched</property>
+    <property name="creationDate">2023-12-18 15:09:51.551</property>
+    <property name="lastModificationDate">2023-12-18 15:09:51.551</property>
+    <property name="targetContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360472</id></property>
+    <property name="sourceContent" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="User2ContentRelationEntity" package="com.atlassian.confluence.internal.relations.dao">
+    <id name="id">819211</id>
+    <property name="targetType" enum-class="RelatableEntityTypeEnum" package="com.atlassian.confluence.internal.relations">PAGE</property>
+    <property name="relationName">touched</property>
+    <property name="creationDate">2023-12-18 15:09:19.909</property>
+    <property name="lastModificationDate">2023-12-18 15:09:19.909</property>
+    <property name="targetContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360470</id></property>
+    <property name="sourceContent" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="Notification" package="com.atlassian.confluence.mail.notification">
+    <id name="id">688132</id>
+    <property name="creationDate">2023-12-18 15:09:19.916</property>
+    <property name="lastModificationDate">2023-12-18 15:09:19.916</property>
+    <property name="digest">false</property>
+    <property name="network">false</property>
+    <property name="type" enum-class="ContentTypeEnum" package="com.atlassian.confluence.search.service">page</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360470</id></property>
+    <property name="receiver" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="Notification" package="com.atlassian.confluence.mail.notification">
+    <id name="id">688133</id>
+    <property name="creationDate">2023-12-18 15:09:51.558</property>
+    <property name="lastModificationDate">2023-12-18 15:09:51.558</property>
+    <property name="digest">false</property>
+    <property name="network">false</property>
+    <property name="type" enum-class="ContentTypeEnum" package="com.atlassian.confluence.search.service">page</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360472</id></property>
+    <property name="receiver" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="Labelling" package="com.atlassian.confluence.labels">
+    <id name="id">786436</id>
+    <property name="creationDate">2023-12-18 15:10:20.695</property>
+    <property name="lastModificationDate">2023-12-18 15:10:20.695</property>
+    <property name="labelableId">360472</property>
+    <property name="labelableType">CONTENT</property>
+    <property name="label" class="Label" package="com.atlassian.confluence.labels"><id name="id">753668</id></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360472</id></property>
+    <property name="owningUser" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="Labelling" package="com.atlassian.confluence.labels">
+    <id name="id">786437</id>
+    <property name="creationDate">2023-12-18 15:10:20.699</property>
+    <property name="lastModificationDate">2023-12-18 15:10:20.699</property>
+    <property name="labelableId">360472</property>
+    <property name="labelableType">CONTENT</property>
+    <property name="label" class="Label" package="com.atlassian.confluence.labels"><id name="id">753669</id></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360472</id></property>
+    <property name="owningUser" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="Labelling" package="com.atlassian.confluence.labels">
+    <id name="id">786438</id>
+    <property name="creationDate">2023-12-18 15:10:20.700</property>
+    <property name="lastModificationDate">2023-12-18 15:10:20.700</property>
+    <property name="labelableId">360472</property>
+    <property name="labelableType">CONTENT</property>
+    <property name="label" class="Label" package="com.atlassian.confluence.labels"><id name="id">753670</id></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360472</id></property>
+    <property name="owningUser" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="Label" package="com.atlassian.confluence.labels">
+    <id name="id">753668</id>
+    <property name="name">three1</property>
+    <property name="namespace">global</property>
+    <property name="creationDate">2023-12-18 15:10:20.694</property>
+    <property name="lastModificationDate">2023-12-18 15:10:20.694</property>
+  </object>
+
+  <object class="Label" package="com.atlassian.confluence.labels">
+    <id name="id">753669</id>
+    <property name="name">three2</property>
+    <property name="namespace">global</property>
+    <property name="creationDate">2023-12-18 15:10:20.698</property>
+    <property name="lastModificationDate">2023-12-18 15:10:20.698</property>
+  </object>
+
+  <object class="Comment" package="com.atlassian.confluence.pages">
+    <id name="id">360460</id>
+    <property name="hibernateVersion">5</property>
+    <property name="version">1</property>
+    <property name="creationDate">2023-12-18 15:02:21.573</property>
+    <property name="lastModificationDate">2023-12-18 15:02:21.573</property>
+    <property name="versionComment"></property>
+    <property name="contentStatus">current</property>
+    <collection name="contentProperties" class="java.util.Collection">
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655386</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655385</id></element>
+    </collection>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655385</id>
+    <property name="name">status</property>
+    <property name="stringValue">open</property>
+    <property name="content" class="Comment" package="com.atlassian.confluence.pages"><id name="id">360460</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655386</id>
+    <property name="name">ANCHOR</property>
+    <property name="stringValue"><![CDATA[{"type":"pin","page":1,"x":0.5071428571428571,"y":0.6082474226804123}]]></property>
+    <property name="content" class="Comment" package="com.atlassian.confluence.pages"><id name="id">360460</id></property>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">720900</id>
+    <property name="body"><![CDATA[<p><span>You can add comments directly to images. Use file comments to review designs, add feedback, or just start a conversation.</span></p>]]></property>
+    <property name="bodyType">2</property>
+    <property name="content" class="Comment" package="com.atlassian.confluence.pages"><id name="id">360460</id></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">360468</id>
+    <property name="hibernateVersion">4</property>
+    <property name="title">AreTagsImported</property>
+    <property name="lowerTitle">aretagsimported</property>
+    <property name="version">1</property>
+    <property name="creationDate">2023-12-18 15:02:21.573</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.991</property>
+    <property name="versionComment"></property>
+    <property name="contentStatus">draft</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="originalVersion" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">589825</id></property>
+    <collection name="contentProperties" class="java.util.Collection">
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655434</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655419</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655432</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655433</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655420</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655430</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655431</id></element>
+    </collection>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655419</id>
+    <property name="name">sync-rev-source</property>
+    <property name="stringValue">synchrony-ack</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360468</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655430</id>
+    <property name="name">macro-count.children</property>
+    <property name="stringValue">1-1</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360468</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655431</id>
+    <property name="name">macro-count.tip</property>
+    <property name="stringValue">1-1</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360468</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655432</id>
+    <property name="name">macro-count.roadmap</property>
+    <property name="stringValue">1-1</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360468</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655433</id>
+    <property name="name">macro-create-events-published-for-version</property>
+    <property name="longValue">1</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360468</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655434</id>
+    <property name="name">sync-rev</property>
+    <property name="stringValue">0.i8HMEvGi5BLSvki0kodhDA.0</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360468</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655420</id>
+    <property name="name">share-id</property>
+    <property name="stringValue">f0fb9d06-0702-44cb-b916-5bd809e1dc4a</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360468</id></property>
+  </object>
+
+  <object class="SpaceDescription" package="com.atlassian.confluence.spaces">
+    <id name="id">360459</id>
+    <property name="hibernateVersion">11</property>
+    <property name="version">1</property>
+    <property name="creationDate">2015-08-12 17:14:17.610</property>
+    <property name="lastModificationDate">2015-11-03 13:10:49.552</property>
+    <property name="versionComment"></property>
+    <property name="contentStatus">current</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d0531de0001</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="originalVersion" class="SpaceDescription" package="com.atlassian.confluence.spaces"><id name="id">360452</id></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">360471</id>
+    <property name="hibernateVersion">1</property>
+    <property name="title">notagspage</property>
+    <property name="lowerTitle">notagspage</property>
+    <property name="version">1</property>
+    <property name="creationDate">2023-12-18 15:06:10.427</property>
+    <property name="lastModificationDate">2023-12-18 15:09:19.915</property>
+    <property name="versionComment"></property>
+    <property name="contentStatus">draft</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="originalVersion" class="Page" package="com.atlassian.confluence.pages"><id name="id">360470</id></property>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">589825</id></property>
+    <collection name="contentProperties" class="java.util.Collection">
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655440</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655441</id></element>
+    </collection>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655440</id>
+    <property name="name">sync-rev-source</property>
+    <property name="stringValue">synchrony</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360471</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655441</id>
+    <property name="name">share-id</property>
+    <property name="stringValue">0a80eb13-dbdb-4073-a482-6569e67207ba</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360471</id></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">360467</id>
+    <property name="hibernateVersion">1</property>
+    <property name="title">HoomePage</property>
+    <property name="lowerTitle">hoomepage</property>
+    <property name="version">1</property>
+    <property name="creationDate">2023-12-18 15:02:23.349</property>
+    <property name="lastModificationDate">2023-12-18 15:02:55.147</property>
+    <property name="versionComment"></property>
+    <property name="contentStatus">draft</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="originalVersion" class="Page" package="com.atlassian.confluence.pages"><id name="id">360461</id></property>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">589825</id></property>
+    <collection name="contentProperties" class="java.util.Collection">
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655418</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655417</id></element>
+    </collection>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655417</id>
+    <property name="name">sync-rev-source</property>
+    <property name="stringValue">synchrony</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360467</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655418</id>
+    <property name="name">share-id</property>
+    <property name="stringValue">455935d4-4c43-4032-ba69-dc76470d6818</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360467</id></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">360469</id>
+    <property name="hibernateVersion">25</property>
+    <property name="title">AreTagsImported</property>
+    <property name="lowerTitle">aretagsimported</property>
+    <property name="version">1</property>
+    <property name="creationDate">2023-12-18 15:02:21.573</property>
+    <property name="lastModificationDate">2023-12-18 15:02:21.573</property>
+    <property name="versionComment"></property>
+    <property name="contentStatus">current</property>
+    <property name="originalVersion" class="Page" package="com.atlassian.confluence.pages"><id name="id">360451</id></property>
+    <collection name="contentProperties" class="java.util.Collection">
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655422</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655423</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655421</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655426</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655424</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655425</id></element>
+    </collection>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655421</id>
+    <property name="name">macro-count.children</property>
+    <property name="stringValue">2-1</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360469</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655422</id>
+    <property name="name">macro-count.recently-updated</property>
+    <property name="stringValue">1-1</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360469</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655423</id>
+    <property name="name">macro-count.contributors</property>
+    <property name="stringValue">1-1</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360469</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655424</id>
+    <property name="name">macro-count.roadmap</property>
+    <property name="stringValue">2-1</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360469</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655425</id>
+    <property name="name">macro-create-events-published-for-version</property>
+    <property name="longValue">2</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360469</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655426</id>
+    <property name="name">macro-count.tip</property>
+    <property name="stringValue">2-1</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360469</id></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">360473</id>
+    <property name="hibernateVersion">1</property>
+    <property name="title">three tags page</property>
+    <property name="lowerTitle">three tags page</property>
+    <property name="version">1</property>
+    <property name="creationDate">2023-12-18 15:09:33.097</property>
+    <property name="lastModificationDate">2023-12-18 15:09:51.558</property>
+    <property name="versionComment"></property>
+    <property name="contentStatus">draft</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="originalVersion" class="Page" package="com.atlassian.confluence.pages"><id name="id">360472</id></property>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">589825</id></property>
+    <collection name="contentProperties" class="java.util.Collection">
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655448</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">655447</id></element>
+    </collection>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655447</id>
+    <property name="name">sync-rev-source</property>
+    <property name="stringValue">synchrony</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360473</id></property>
+  </object>
+
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">655448</id>
+    <property name="name">share-id</property>
+    <property name="stringValue">ca1356d9-bf79-4876-aa0e-bf9e9b71e546</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360473</id></property>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">720899</id>
+    <property name="body">efionboardingspace</property>
+    <property name="bodyType">0</property>
+    <property name="content" class="SpaceDescription" package="com.atlassian.confluence.spaces"><id name="id">360459</id></property>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">720902</id>
+    <property name="body"><![CDATA[<p>Hello there!</p>]]></property>
+    <property name="bodyType">2</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360467</id></property>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">720903</id>
+    <property name="body"><![CDATA[<ac:layout><ac:layout-section ac:type="single"><ac:layout-cell>
+<ac:structured-macro ac:name="tip" ac:schema-version="1" ac:macro-id="5da7fd26-ee1a-4fe5-a582-dcf9bfaf8f45"><ac:rich-text-body><p>Welcome to your first space. Go ahead, edit and customize this home page any way you like. We've added some sample content to get you started.</p></ac:rich-text-body></ac:structured-macro></ac:layout-cell></ac:layout-section><ac:layout-section ac:type="single"><ac:layout-cell>
+<p></p><p><br /></p></ac:layout-cell></ac:layout-section><ac:layout-section ac:type="two_right_sidebar"><ac:layout-cell>
+<hr /><h1><strong>Goal</strong></h1><h2><em>Your space homepage should summarize what the space is for, and provide links to key resources for your team. </em></h2><hr /><p><br /></p><h1><strong>Core team</strong></h1><table class="wrapped"><tbody><tr><td><div class="content-wrapper"><p style="text-align: center;"></p><p style="text-align: center;"><strong>Harvey Honner-white<br /></strong>Team Lead<strong> </strong></p></div></td><td><div class="content-wrapper"><p style="text-align: center;"></p><p style="text-align: center;"><strong>Alana Baczewski<br /> </strong>Tech Lead</p></div></td><td><div class="content-wrapper"><p style="text-align: center;"></p><p style="text-align: center;"><strong>Sameer Farrell<br /> </strong>Marketing</p></div></td><td><div class="content-wrapper"><p style="text-align: center;"></p><p style="text-align: center;"><strong>Mia Bednarczyk<br /> </strong>Recruitment</p></div></td></tr></tbody></table><p><br /></p><h1><strong>Roadmap</strong></h1><p>You can edit this roadmap or create a new one by adding the Roadmap Planner macro from the Insert menu. Link your Confluence pages to each bar to add visibility, and find more tips by reading the Atlassian blog: <a href="http://blogs.atlassian.com/2015/01/roadmap-planner-macro/">Plan better in 2015 with the Roadmap Planner macro</a>.</p><p><ac:structured-macro ac:name="roadmap" ac:schema-version="1" ac:macro-id="acab4a3d-dde3-4e22-a912-ce9f886e3e91"><ac:parameter ac:name="maplinks" /><ac:parameter ac:name="timeline">true</ac:parameter><ac:parameter ac:name="pagelinks" /><ac:parameter ac:name="source">%7B%22title%22%3A%22Roadmap%20Planner%22%2C%22timeline%22%3A%7B%22startDate%22%3A%222015-06-01%2000%3A00%3A00%22%2C%22endDate%22%3A%222015-12-31%2000%3A00%3A00%22%2C%22displayOption%22%3A%22MONTH%22%7D%2C%22lanes%22%3A%5B%7B%22title%22%3A%22Marketing%22%2C%22color%22%3A%7B%22lane%22%3A%22%23f15c75%22%2C%22bar%22%3A%22%23f58598%22%2C%22text%22%3A%22%23ffffff%22%2C%22count%22%3A1%7D%2C%22bars%22%3A%5B%7B%22title%22%3A%22Social%20campaign%22%2C%22description%22%3A%22Add%20a%20description%20to%20your%20bars%20here.%22%2C%22startDate%22%3A%222015-07-30%2011%3A10%3A05%22%2C%22duration%22%3A3.6435643564356437%2C%22rowIndex%22%3A0%2C%22id%22%3A%22e703c6a8-1649-4d20-9ccf-2c7a8698e385%22%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22title%22%3A%22Website%20development%22%2C%22description%22%3A%22Add%20a%20description%20to%20your%20bars%20here.%22%2C%22startDate%22%3A%222015-07-17%2006%3A24%3A57%22%2C%22duration%22%3A3.3069306930693068%2C%22rowIndex%22%3A1%2C%22id%22%3A%22655d454d-b701-4584-a301-9ea0bb86ed32%22%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A2%2C%22startDate%22%3A%222015-06-01%2000%3A00%3A00%22%2C%22id%22%3A%22c420ef33-ae28-4828-958f-8a9d793153b3%22%2C%22title%22%3A%22Crowdfunding%20campaign%22%2C%22description%22%3A%22Add%20a%20description%20to%20your%20bars%20here.%22%2C%22duration%22%3A2.5544554455445545%2C%22pageLink%22%3A%7B%7D%7D%5D%7D%2C%7B%22title%22%3A%22People%22%2C%22color%22%3A%7B%22lane%22%3A%22%23654982%22%2C%22bar%22%3A%22%238c77a1%22%2C%22text%22%3A%22%23ffffff%22%2C%22count%22%3A1%7D%2C%22bars%22%3A%5B%7B%22title%22%3A%22Recruitment%22%2C%22description%22%3A%22%22%2C%22startDate%22%3A%222015-06-01%2000%3A00%3A00%22%2C%22duration%22%3A2.5%2C%22rowIndex%22%3A0%2C%22id%22%3A%221230bab8-718c-47da-903a-2cbdcb220d97%22%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-08-17%2013%3A46%3A55%22%2C%22id%22%3A%228639d09c-59d1-4d1f-ad91-c78f04b20135%22%2C%22title%22%3A%22Assessment%20Period%22%2C%22description%22%3A%22%22%2C%22duration%22%3A2.910891089108911%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A1%2C%22startDate%22%3A%222015-09-01%2021%3A23%3A10%22%2C%22id%22%3A%22802b53f7-ba66-4415-984d-efef93b4caec%22%2C%22title%22%3A%22Training%22%2C%22description%22%3A%22%22%2C%22duration%22%3A2.5841584158415842%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-11-15%2006%3A10%3A41%22%2C%22id%22%3A%22502fac56-3849-415f-b412-af27c39229b7%22%2C%22title%22%3A%22Finalisation%22%2C%22description%22%3A%22%22%2C%22duration%22%3A1.4356435643564356%2C%22pageLink%22%3A%7B%7D%7D%5D%7D%2C%7B%22title%22%3A%22Product%22%2C%22color%22%3A%7B%22lane%22%3A%22%233b7fc4%22%2C%22bar%22%3A%22%236c9fd3%22%2C%22text%22%3A%22%23ffffff%22%2C%22count%22%3A1%7D%2C%22bars%22%3A%5B%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-06-24%2004%3A02%3A22%22%2C%22id%22%3A%2200ada54b-0998-41a5-aa98-712ecdec8c7f%22%2C%22title%22%3A%22Planning%22%2C%22description%22%3A%22%22%2C%22duration%22%3A2.1782178217821784%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-08-31%2001%3A54%3A03%22%2C%22id%22%3A%2271967f2c-f3ab-4871-aaf5-7cf31389e62f%22%2C%22title%22%3A%22Development%22%2C%22description%22%3A%22%22%2C%22duration%22%3A1.9207920792079207%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-10-29%2013%3A04%3A09%22%2C%22id%22%3A%22d76ac773-3ee7-495b-9d7f-1daf267dc58c%22%2C%22title%22%3A%22Testing%22%2C%22description%22%3A%22%22%2C%22duration%22%3A1%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-11-30%2002%3A36%3A49%22%2C%22id%22%3A%224f584dc6-63b8-4efa-a98e-a5d7bbe9910e%22%2C%22title%22%3A%22Deploy%22%2C%22description%22%3A%22%22%2C%22duration%22%3A1.0297029702970297%2C%22pageLink%22%3A%7B%7D%7D%5D%7D%5D%2C%22markers%22%3A%5B%7B%22title%22%3A%22Yearly%20Finalisation%22%2C%22markerDate%22%3A%222015-11-29%2012%3A21%3A23%22%7D%5D%7D</ac:parameter><ac:parameter ac:name="title">Roadmap%20Planner</ac:parameter><ac:parameter ac:name="hash">f0477dfac6f6ca380d8c5f2f44041947</ac:parameter></ac:structured-macro></p><p><br /></p><h1><strong>Know your spaces</strong> </h1><p>Everything your team is working on - meeting notes and agendas, project plans and timelines, technical documentation and more - is located in a space; it's home base for your team.</p><p>A small team should plan to have a space for the team, and a space for each big project. If you'll be working in Confluence with several other teams and departments, we recommend a space for each team as well as a space for each major cross-team project. The key is to think of a space as the container that holds all the important stuff - like pages, files, and blog posts - a team, group, or project needs to work.</p><h1><strong>Know your pages</strong></h1><p>If you're working on something related to your team - project plans, product requirements, blog posts, internal communications, you name it - create and store it in a Confluence page. Confluence pages offer a lot of flexibility in creating and storing information, and there are a number of useful page templates included to get you started, like the meeting notes template. Your spaces should be filled with pages that document your business processes, outline your plans, contain your files, and report on your progress. The more you learn to do in Confluence (adding tables and graphs, or embedding video and links are great places to start), the more engaging and helpful your pages will become.</p><p>Helelo</p><p>Learn more by reading <a href="https://www.atlassian.com/collaboration/confluence-organize-work-in-spaces">Confluence 101: organize your work in spaces</a></p><p><br /></p><hr /></ac:layout-cell><ac:layout-cell>
+<h1><strong>Quick navigation</strong></h1><p>When you create new pages in this space, they'll appear here automatically.</p><p><ac:structured-macro ac:name="children" ac:schema-version="2" ac:macro-id="8ca379f2-ea2a-4fbb-bf4a-77619f9875ed" /></p><h1><strong>Useful links</strong></h1><table class="wrapped"><tbody><tr><th>Link</th><th>Description</th></tr><tr><td><a href="https://www.atlassian.com/collaboration/confluence-organize-work-in-spaces">Confluence 101: organize your work in spaces</a></td><td><p>Chances are, the information you need to do your job lives in multiple places. Word docs, Evernote files, email, PDFs, even Post-it notes. It's scattered among different systems. And to make matters worse, <em>the stuff your teammates need is equally siloed</em>. If information had feelings, it would be lonely.</p><p>But with Confluence, you can bring all that information into one place.</p></td></tr><tr><td><a href="https://www.atlassian.com/collaboration/confluence-discuss-work-with-your-team">Confluence 101: discuss work with your team</a></td><td>Getting a project outlined and adding the right content are just the first steps. Now it's time for your team to weigh in. Confluence makes it easy to discuss your work - with your team, your boss, or your entire company - in the same place where you organized and created it.</td></tr><tr><td colspan="1"><a href="https://www.atlassian.com/collaboration/confluence-create-content-with-pages">Confluence 101: create content with pages</a></td><td colspan="1">Think of pages as a New Age &quot;document.&quot; If Word docs were rotary phones, Confluence pages would be smart phones. A smart phone still makes calls (like their rotary counterparts), but it can do so much more than that</td></tr></tbody></table><p><strong style="font-size: 24.0px;line-height: 1.25;"> </strong></p><p><strong style="font-size: 24.0px;line-height: 1.25;">Tasks</strong></p><table class="wrapped"><tbody><tr><td><div class="content-wrapper"><ac:task-list>
+<ac:task>
+<ac:task-id>59</ac:task-id>
+<ac:task-status>incomplete</ac:task-status>
+<ac:task-body><a href="https://confluence.atlassian.com/x/NgszKw">Customize the name, colour, and icon of Confluence</a>.</ac:task-body>
+</ac:task>
+<ac:task>
+<ac:task-id>56</ac:task-id>
+<ac:task-status>incomplete</ac:task-status>
+<ac:task-body>Decide who can see and edit this space or a specific page by clicking the  icon. Learn more about <a href="https://confluence.atlassian.com/x/liAC">Page Restrictions</a> and <a href="https://confluence.atlassian.com/x/ASEC">Space Permissions</a>.</ac:task-body>
+</ac:task>
+<ac:task>
+<ac:task-id>57</ac:task-id>
+<ac:task-status>incomplete</ac:task-status>
+<ac:task-body>Try adding an <a href="https://confluence.atlassian.com/x/2yAC">inline comment</a> by highlighting some text and click the comment icon.</ac:task-body>
+</ac:task>
+<ac:task>
+<ac:task-id>58</ac:task-id>
+<ac:task-status>incomplete</ac:task-status>
+<ac:task-body>Learn more about <a href="https://confluence.atlassian.com/x/SRwC">inviting your team to Confluence</a>.</ac:task-body>
+</ac:task>
+</ac:task-list></div></td></tr></tbody></table></ac:layout-cell></ac:layout-section></ac:layout>]]></property>
+    <property name="bodyType">2</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360468</id></property>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">720904</id>
+    <property name="body"><![CDATA[<ac:layout><ac:layout-section ac:type="single"><ac:layout-cell><ac:structured-macro ac:macro-id="5da7fd26-ee1a-4fe5-a582-dcf9bfaf8f45" ac:name="tip" ac:schema-version="1"><ac:rich-text-body><p>Welcome to your first space. Go ahead, edit and customize this home page any way you like. We've added some sample content to get you started.</p></ac:rich-text-body></ac:structured-macro></ac:layout-cell></ac:layout-section><ac:layout-section ac:type="single"><ac:layout-cell><p></p><p style="text-align: center;"><strong>Mia Bednarczyk<br /> </strong>Recruitment</p></td></tr></tbody></table><p> </p><h1><strong>Roadmap</strong></h1><p>You can edit this roadmap or create a new one by adding the Roadmap Planner macro from the Insert menu. Link your Confluence pages to each bar to add visibility, and find more tips by reading the Atlassian blog: <a href="http://blogs.atlassian.com/2015/01/roadmap-planner-macro/">Plan better in 2015 with the Roadmap Planner macro</a>.</p><p><ac:structured-macro ac:macro-id="acab4a3d-dde3-4e22-a912-ce9f886e3e91" ac:name="roadmap" ac:schema-version="1"><ac:parameter ac:name="maplinks" /><ac:parameter ac:name="timeline">true</ac:parameter><ac:parameter ac:name="pagelinks" /><ac:parameter ac:name="source">%7B%22title%22%3A%22Roadmap%20Planner%22%2C%22timeline%22%3A%7B%22startDate%22%3A%222015-06-01%2000%3A00%3A00%22%2C%22endDate%22%3A%222015-12-31%2000%3A00%3A00%22%2C%22displayOption%22%3A%22MONTH%22%7D%2C%22lanes%22%3A%5B%7B%22title%22%3A%22Marketing%22%2C%22color%22%3A%7B%22lane%22%3A%22%23f15c75%22%2C%22bar%22%3A%22%23f58598%22%2C%22text%22%3A%22%23ffffff%22%2C%22count%22%3A1%7D%2C%22bars%22%3A%5B%7B%22title%22%3A%22Social%20campaign%22%2C%22description%22%3A%22Add%20a%20description%20to%20your%20bars%20here.%22%2C%22startDate%22%3A%222015-07-30%2011%3A10%3A05%22%2C%22duration%22%3A3.6435643564356437%2C%22rowIndex%22%3A0%2C%22id%22%3A%22e703c6a8-1649-4d20-9ccf-2c7a8698e385%22%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22title%22%3A%22Website%20development%22%2C%22description%22%3A%22Add%20a%20description%20to%20your%20bars%20here.%22%2C%22startDate%22%3A%222015-07-17%2006%3A24%3A57%22%2C%22duration%22%3A3.3069306930693068%2C%22rowIndex%22%3A1%2C%22id%22%3A%22655d454d-b701-4584-a301-9ea0bb86ed32%22%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A2%2C%22startDate%22%3A%222015-06-01%2000%3A00%3A00%22%2C%22id%22%3A%22c420ef33-ae28-4828-958f-8a9d793153b3%22%2C%22title%22%3A%22Crowdfunding%20campaign%22%2C%22description%22%3A%22Add%20a%20description%20to%20your%20bars%20here.%22%2C%22duration%22%3A2.5544554455445545%2C%22pageLink%22%3A%7B%7D%7D%5D%7D%2C%7B%22title%22%3A%22People%22%2C%22color%22%3A%7B%22lane%22%3A%22%23654982%22%2C%22bar%22%3A%22%238c77a1%22%2C%22text%22%3A%22%23ffffff%22%2C%22count%22%3A1%7D%2C%22bars%22%3A%5B%7B%22title%22%3A%22Recruitment%22%2C%22description%22%3A%22%22%2C%22startDate%22%3A%222015-06-01%2000%3A00%3A00%22%2C%22duration%22%3A2.5%2C%22rowIndex%22%3A0%2C%22id%22%3A%221230bab8-718c-47da-903a-2cbdcb220d97%22%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-08-17%2013%3A46%3A55%22%2C%22id%22%3A%228639d09c-59d1-4d1f-ad91-c78f04b20135%22%2C%22title%22%3A%22Assessment%20Period%22%2C%22description%22%3A%22%22%2C%22duration%22%3A2.910891089108911%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A1%2C%22startDate%22%3A%222015-09-01%2021%3A23%3A10%22%2C%22id%22%3A%22802b53f7-ba66-4415-984d-efef93b4caec%22%2C%22title%22%3A%22Training%22%2C%22description%22%3A%22%22%2C%22duration%22%3A2.5841584158415842%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-11-15%2006%3A10%3A41%22%2C%22id%22%3A%22502fac56-3849-415f-b412-af27c39229b7%22%2C%22title%22%3A%22Finalisation%22%2C%22description%22%3A%22%22%2C%22duration%22%3A1.4356435643564356%2C%22pageLink%22%3A%7B%7D%7D%5D%7D%2C%7B%22title%22%3A%22Product%22%2C%22color%22%3A%7B%22lane%22%3A%22%233b7fc4%22%2C%22bar%22%3A%22%236c9fd3%22%2C%22text%22%3A%22%23ffffff%22%2C%22count%22%3A1%7D%2C%22bars%22%3A%5B%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-06-24%2004%3A02%3A22%22%2C%22id%22%3A%2200ada54b-0998-41a5-aa98-712ecdec8c7f%22%2C%22title%22%3A%22Planning%22%2C%22description%22%3A%22%22%2C%22duration%22%3A2.1782178217821784%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-08-31%2001%3A54%3A03%22%2C%22id%22%3A%2271967f2c-f3ab-4871-aaf5-7cf31389e62f%22%2C%22title%22%3A%22Development%22%2C%22description%22%3A%22%22%2C%22duration%22%3A1.9207920792079207%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-10-29%2013%3A04%3A09%22%2C%22id%22%3A%22d76ac773-3ee7-495b-9d7f-1daf267dc58c%22%2C%22title%22%3A%22Testing%22%2C%22description%22%3A%22%22%2C%22duration%22%3A1%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-11-30%2002%3A36%3A49%22%2C%22id%22%3A%224f584dc6-63b8-4efa-a98e-a5d7bbe9910e%22%2C%22title%22%3A%22Deploy%22%2C%22description%22%3A%22%22%2C%22duration%22%3A1.0297029702970297%2C%22pageLink%22%3A%7B%7D%7D%5D%7D%5D%2C%22markers%22%3A%5B%7B%22title%22%3A%22Yearly%20Finalisation%22%2C%22markerDate%22%3A%222015-11-29%2012%3A21%3A23%22%7D%5D%7D</ac:parameter><ac:parameter ac:name="title">Roadmap%20Planner</ac:parameter><ac:parameter ac:name="hash">f0477dfac6f6ca380d8c5f2f44041947</ac:parameter></ac:structured-macro></p><p> </p><h1><strong>Know your spaces</strong> </h1><p>Everything your team is working on - meeting notes and agendas, project plans and timelines, technical documentation and more - is located in a space; it's home base for your team.</p><p>A small team should plan to have a space for the team, and a space for each big project. If you'll be working in Confluence with several other teams and departments, we recommend a space for each team as well as a space for each major cross-team project. The key is to think of a space as the container that holds all the important stuff - like pages, files, and blog posts - a team, group, or project needs to work.</p><h1><strong>Know your pages</strong></h1><p>If you're working on something related to your team - project plans, product requirements, blog posts, internal communications, you name it - create and store it in a Confluence page. Confluence pages offer a lot of flexibility in creating and storing information, and there are a number of useful page templates included to get you started, like the meeting notes template. Your spaces should be filled with pages that document your business processes, outline your plans, contain your files, and report on your progress. The more you learn to do in Confluence (adding tables and graphs, or embedding video and links are great places to start), the more engaging and helpful your pages will become.</p><p>Learn more by reading <a href="https://www.atlassian.com/collaboration/confluence-organize-work-in-spaces">Confluence 101: organize your work in spaces</a></p><p> </p><hr /></ac:layout-cell><ac:layout-cell><h1><strong>Quick navigation</strong></h1><p>When you create new pages in this space, they'll appear here automatically.</p><p><ac:structured-macro ac:macro-id="8ca379f2-ea2a-4fbb-bf4a-77619f9875ed" ac:name="children" ac:schema-version="2" /></p><h1><strong>Useful links</strong></h1><table><tbody><tr><th>Link</th><th>Description</th></tr><tr><td><a href="https://www.atlassian.com/collaboration/confluence-organize-work-in-spaces">Confluence 101: organize your work in spaces</a></td><td><p>Chances are, the information you need to do your job lives in multiple places. Word docs, Evernote files, email, PDFs, even Post-it notes. It's scattered among different systems. And to make matters worse, <em>the stuff your teammates need is equally siloed</em>. If information had feelings, it would be lonely.</p><p>But with Confluence, you can bring all that information into one place.</p></td></tr><tr><td><a href="https://www.atlassian.com/collaboration/confluence-discuss-work-with-your-team">Confluence 101: discuss work with your team</a></td><td>Getting a project outlined and adding the right content are just the first steps. Now it's time for your team to weigh in. Confluence makes it easy to discuss your work - with your team, your boss, or your entire company - in the same place where you organized and created it.</td></tr><tr><td colspan="1"><a href="https://www.atlassian.com/collaboration/confluence-create-content-with-pages">Confluence 101: create content with pages</a></td><td colspan="1">Think of pages as a New Age &quot;document.&quot; If Word docs were rotary phones, Confluence pages would be smart phones. A smart phone still makes calls (like their rotary counterparts), but it can do so much more than that</td></tr></tbody></table><p><strong style="font-size: 24.0px;line-height: 1.25;"><br /></strong></p><p><strong style="font-size: 24.0px;line-height: 1.25;">Tasks</strong></p><table><tbody><tr><td><ac:task-list>
+<ac:task>
+<ac:task-id>59</ac:task-id>
+<ac:task-status>incomplete</ac:task-status>
+<ac:task-body><a href="https://confluence.atlassian.com/x/NgszKw">Customize the name, colour, and icon of Confluence</a>.</ac:task-body>
+</ac:task>
+<ac:task>
+<ac:task-id>56</ac:task-id>
+<ac:task-status>incomplete</ac:task-status>
+<ac:task-body>Decide who can see and edit this space or a specific page by clicking the  icon. Learn more about <a href="https://confluence.atlassian.com/x/liAC">Page Restrictions</a> and <a href="https://confluence.atlassian.com/x/ASEC">Space Permissions</a>.</ac:task-body>
+</ac:task>
+<ac:task>
+<ac:task-id>57</ac:task-id>
+<ac:task-status>incomplete</ac:task-status>
+<ac:task-body>Try adding an <a href="https://confluence.atlassian.com/x/2yAC">inline comment</a> by highlighting some text and click the comment icon.</ac:task-body>
+</ac:task>
+<ac:task>
+<ac:task-id>58</ac:task-id>
+<ac:task-status>incomplete</ac:task-status>
+<ac:task-body>Learn more about <a href="https://confluence.atlassian.com/x/SRwC">inviting your team to Confluence</a>.</ac:task-body>
+</ac:task>
+</ac:task-list>
+</td></tr></tbody></table></ac:layout-cell></ac:layout-section></ac:layout>]]></property>
+    <property name="bodyType">2</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360469</id></property>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">720906</id>
+    <property name="body"><![CDATA[<p>sdasdafvcb</p><p>fghgfgdffgfg</p>]]></property>
+    <property name="bodyType">2</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360471</id></property>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">720908</id>
+    <property name="body"><![CDATA[<p>ffsd sdfsfs dsfsf</p>]]></property>
+    <property name="bodyType">2</property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">360473</id></property>
+  </object>
+
+  <object class="OutgoingLink" package="com.atlassian.confluence.links">
+    <id name="id">622633</id>
+    <property name="destinationPageTitle">//confluence.atlassian.com/x/liAC</property>
+    <property name="lowerDestinationPageTitle">//confluence.atlassian.com/x/liac</property>
+    <property name="destinationSpaceKey">https</property>
+    <property name="lowerDestinationSpaceKey">https</property>
+    <property name="creationDate">2023-12-18 15:03:23.993</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.993</property>
+    <property name="sourceContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360468</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="OutgoingLink" package="com.atlassian.confluence.links">
+    <id name="id">622634</id>
+    <property name="destinationPageTitle">//www.atlassian.com/collaboration/confluence-create-content-with-pages</property>
+    <property name="lowerDestinationPageTitle">//www.atlassian.com/collaboration/confluence-create-content-with-pages</property>
+    <property name="destinationSpaceKey">https</property>
+    <property name="lowerDestinationSpaceKey">https</property>
+    <property name="creationDate">2023-12-18 15:03:23.993</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.993</property>
+    <property name="sourceContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360468</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="OutgoingLink" package="com.atlassian.confluence.links">
+    <id name="id">622635</id>
+    <property name="destinationPageTitle">//confluence.atlassian.com/x/NgszKw</property>
+    <property name="lowerDestinationPageTitle">//confluence.atlassian.com/x/ngszkw</property>
+    <property name="destinationSpaceKey">https</property>
+    <property name="lowerDestinationSpaceKey">https</property>
+    <property name="creationDate">2023-12-18 15:03:23.993</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.993</property>
+    <property name="sourceContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360468</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="OutgoingLink" package="com.atlassian.confluence.links">
+    <id name="id">622636</id>
+    <property name="destinationPageTitle">//confluence.atlassian.com/x/SRwC</property>
+    <property name="lowerDestinationPageTitle">//confluence.atlassian.com/x/srwc</property>
+    <property name="destinationSpaceKey">https</property>
+    <property name="lowerDestinationSpaceKey">https</property>
+    <property name="creationDate">2023-12-18 15:03:23.993</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.993</property>
+    <property name="sourceContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360468</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="OutgoingLink" package="com.atlassian.confluence.links">
+    <id name="id">622637</id>
+    <property name="destinationPageTitle">//www.atlassian.com/collaboration/confluence-organize-work-in-spaces</property>
+    <property name="lowerDestinationPageTitle">//www.atlassian.com/collaboration/confluence-organize-work-in-spaces</property>
+    <property name="destinationSpaceKey">https</property>
+    <property name="lowerDestinationSpaceKey">https</property>
+    <property name="creationDate">2023-12-18 15:03:23.993</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.993</property>
+    <property name="sourceContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360468</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="OutgoingLink" package="com.atlassian.confluence.links">
+    <id name="id">622638</id>
+    <property name="destinationPageTitle">AreTagsImported</property>
+    <property name="lowerDestinationPageTitle">aretagsimported</property>
+    <property name="destinationSpaceKey">AR</property>
+    <property name="lowerDestinationSpaceKey">ar</property>
+    <property name="creationDate">2023-12-18 15:03:23.993</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.993</property>
+    <property name="sourceContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360468</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="OutgoingLink" package="com.atlassian.confluence.links">
+    <id name="id">622639</id>
+    <property name="destinationPageTitle">//blogs.atlassian.com/2015/01/roadmap-planner-macro/</property>
+    <property name="lowerDestinationPageTitle">//blogs.atlassian.com/2015/01/roadmap-planner-macro/</property>
+    <property name="destinationSpaceKey">http</property>
+    <property name="lowerDestinationSpaceKey">http</property>
+    <property name="creationDate">2023-12-18 15:03:23.993</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.993</property>
+    <property name="sourceContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360468</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="OutgoingLink" package="com.atlassian.confluence.links">
+    <id name="id">622640</id>
+    <property name="destinationPageTitle">//confluence.atlassian.com/x/2yAC</property>
+    <property name="lowerDestinationPageTitle">//confluence.atlassian.com/x/2yac</property>
+    <property name="destinationSpaceKey">https</property>
+    <property name="lowerDestinationSpaceKey">https</property>
+    <property name="creationDate">2023-12-18 15:03:23.993</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.993</property>
+    <property name="sourceContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360468</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="OutgoingLink" package="com.atlassian.confluence.links">
+    <id name="id">622641</id>
+    <property name="destinationPageTitle">//confluence.atlassian.com/x/ASEC</property>
+    <property name="lowerDestinationPageTitle">//confluence.atlassian.com/x/asec</property>
+    <property name="destinationSpaceKey">https</property>
+    <property name="lowerDestinationSpaceKey">https</property>
+    <property name="creationDate">2023-12-18 15:03:23.993</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.993</property>
+    <property name="sourceContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360468</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="OutgoingLink" package="com.atlassian.confluence.links">
+    <id name="id">622642</id>
+    <property name="destinationPageTitle">//www.atlassian.com/collaboration/confluence-discuss-work-with-your-team</property>
+    <property name="lowerDestinationPageTitle">//www.atlassian.com/collaboration/confluence-discuss-work-with-your-team</property>
+    <property name="destinationSpaceKey">https</property>
+    <property name="lowerDestinationSpaceKey">https</property>
+    <property name="creationDate">2023-12-18 15:03:23.993</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.993</property>
+    <property name="sourceContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360468</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+  <object class="User2ContentRelationEntity" package="com.atlassian.confluence.internal.relations.dao">
+    <id name="id">819207</id>
+    <property name="targetType" enum-class="RelatableEntityTypeEnum" package="com.atlassian.confluence.internal.relations">PAGE</property>
+    <property name="relationName">touched</property>
+    <property name="creationDate">2023-12-18 15:03:23.918</property>
+    <property name="lastModificationDate">2023-12-18 15:03:23.918</property>
+    <property name="targetContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">360468</id></property>
+    <property name="sourceContent" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
+  </object>
+
+</hibernate-generic>
