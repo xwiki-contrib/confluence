@@ -1,0 +1,522 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Content conversions
+.#------------------------------------------------------------------------------
+<wikiSpace name="AR">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.exporter</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2015-08-12 17:14:17.610 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>2</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="2">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2023-12-18 15:02:21.984 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <null/>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObject name="XWiki.TagClass">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.TagClass</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="tags" value="favourite"/>
+        </wikiObject>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+  <wikiDocument name="HoomePage">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.Admin</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2023-12-18 15:02:23.349 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>1</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2023-12-18 15:02:55.147 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>HoomePage</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>Hello there!</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObject name="XWiki.TagClass">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.TagClass</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="tags" value="pagelabel"/>
+        </wikiObject>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+  <wikiDocument name="AreTagsImported">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_date</string>
+            <date>2023-12-18 15:02:21.573 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>2</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="2">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2023-12-18 15:03:23.933 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>AreTagsImported</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>{{layout}}
+{{layout-section ac:type="single"}}
+{{layout-cell}}
+{{tip}}
+Welcome to your first space. Go ahead, edit and customize this home page any way you like. We've added some sample content to get you started.
+{{/tip}}
+{{/layout-cell}}
+{{/layout-section}}
+
+{{layout-section ac:type="single"}}
+{{layout-cell}}
+
+
+\\
+{{/layout-cell}}
+{{/layout-section}}
+
+{{layout-section ac:type="two_right_sidebar"}}
+{{layout-cell}}
+----
+
+= **Goal** =
+
+== //Your space homepage should summarize what the space is for, and provide links to key resources for your team. // ==
+
+----
+
+\\
+
+= **Core team** =
+
+(% class="wrapped" %)
+|(((
+(% class="content-wrapper" %)
+(((
+(% style="text-align: center;" %)
+
+
+(% style="text-align: center;" %)
+**Harvey Honner-white
+**Team Lead** **
+)))
+)))|(((
+(% class="content-wrapper" %)
+(((
+(% style="text-align: center;" %)
+
+
+(% style="text-align: center;" %)
+**Alana Baczewski
+ **Tech Lead
+)))
+)))|(((
+(% class="content-wrapper" %)
+(((
+(% style="text-align: center;" %)
+
+
+(% style="text-align: center;" %)
+**Sameer Farrell
+ **Marketing
+)))
+)))|(((
+(% class="content-wrapper" %)
+(((
+(% style="text-align: center;" %)
+
+
+(% style="text-align: center;" %)
+**Mia Bednarczyk
+ **Recruitment
+)))
+)))
+
+\\
+
+= **Roadmap** =
+
+You can edit this roadmap or create a new one by adding the Roadmap Planner macro from the Insert menu. Link your Confluence pages to each bar to add visibility, and find more tips by reading the Atlassian blog: [[Plan better in 2015 with the Roadmap Planner macro>>url:http://blogs.atlassian.com/2015/01/roadmap-planner-macro/||shape="rect"]].
+
+
+
+{{roadmap timeline="true" source="%7B%22title%22%3A%22Roadmap%20Planner%22%2C%22timeline%22%3A%7B%22startDate%22%3A%222015-06-01%2000%3A00%3A00%22%2C%22endDate%22%3A%222015-12-31%2000%3A00%3A00%22%2C%22displayOption%22%3A%22MONTH%22%7D%2C%22lanes%22%3A%5B%7B%22title%22%3A%22Marketing%22%2C%22color%22%3A%7B%22lane%22%3A%22%23f15c75%22%2C%22bar%22%3A%22%23f58598%22%2C%22text%22%3A%22%23ffffff%22%2C%22count%22%3A1%7D%2C%22bars%22%3A%5B%7B%22title%22%3A%22Social%20campaign%22%2C%22description%22%3A%22Add%20a%20description%20to%20your%20bars%20here.%22%2C%22startDate%22%3A%222015-07-30%2011%3A10%3A05%22%2C%22duration%22%3A3.6435643564356437%2C%22rowIndex%22%3A0%2C%22id%22%3A%22e703c6a8-1649-4d20-9ccf-2c7a8698e385%22%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22title%22%3A%22Website%20development%22%2C%22description%22%3A%22Add%20a%20description%20to%20your%20bars%20here.%22%2C%22startDate%22%3A%222015-07-17%2006%3A24%3A57%22%2C%22duration%22%3A3.3069306930693068%2C%22rowIndex%22%3A1%2C%22id%22%3A%22655d454d-b701-4584-a301-9ea0bb86ed32%22%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A2%2C%22startDate%22%3A%222015-06-01%2000%3A00%3A00%22%2C%22id%22%3A%22c420ef33-ae28-4828-958f-8a9d793153b3%22%2C%22title%22%3A%22Crowdfunding%20campaign%22%2C%22description%22%3A%22Add%20a%20description%20to%20your%20bars%20here.%22%2C%22duration%22%3A2.5544554455445545%2C%22pageLink%22%3A%7B%7D%7D%5D%7D%2C%7B%22title%22%3A%22People%22%2C%22color%22%3A%7B%22lane%22%3A%22%23654982%22%2C%22bar%22%3A%22%238c77a1%22%2C%22text%22%3A%22%23ffffff%22%2C%22count%22%3A1%7D%2C%22bars%22%3A%5B%7B%22title%22%3A%22Recruitment%22%2C%22description%22%3A%22%22%2C%22startDate%22%3A%222015-06-01%2000%3A00%3A00%22%2C%22duration%22%3A2.5%2C%22rowIndex%22%3A0%2C%22id%22%3A%221230bab8-718c-47da-903a-2cbdcb220d97%22%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-08-17%2013%3A46%3A55%22%2C%22id%22%3A%228639d09c-59d1-4d1f-ad91-c78f04b20135%22%2C%22title%22%3A%22Assessment%20Period%22%2C%22description%22%3A%22%22%2C%22duration%22%3A2.910891089108911%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A1%2C%22startDate%22%3A%222015-09-01%2021%3A23%3A10%22%2C%22id%22%3A%22802b53f7-ba66-4415-984d-efef93b4caec%22%2C%22title%22%3A%22Training%22%2C%22description%22%3A%22%22%2C%22duration%22%3A2.5841584158415842%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-11-15%2006%3A10%3A41%22%2C%22id%22%3A%22502fac56-3849-415f-b412-af27c39229b7%22%2C%22title%22%3A%22Finalisation%22%2C%22description%22%3A%22%22%2C%22duration%22%3A1.4356435643564356%2C%22pageLink%22%3A%7B%7D%7D%5D%7D%2C%7B%22title%22%3A%22Product%22%2C%22color%22%3A%7B%22lane%22%3A%22%233b7fc4%22%2C%22bar%22%3A%22%236c9fd3%22%2C%22text%22%3A%22%23ffffff%22%2C%22count%22%3A1%7D%2C%22bars%22%3A%5B%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-06-24%2004%3A02%3A22%22%2C%22id%22%3A%2200ada54b-0998-41a5-aa98-712ecdec8c7f%22%2C%22title%22%3A%22Planning%22%2C%22description%22%3A%22%22%2C%22duration%22%3A2.1782178217821784%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-08-31%2001%3A54%3A03%22%2C%22id%22%3A%2271967f2c-f3ab-4871-aaf5-7cf31389e62f%22%2C%22title%22%3A%22Development%22%2C%22description%22%3A%22%22%2C%22duration%22%3A1.9207920792079207%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-10-29%2013%3A04%3A09%22%2C%22id%22%3A%22d76ac773-3ee7-495b-9d7f-1daf267dc58c%22%2C%22title%22%3A%22Testing%22%2C%22description%22%3A%22%22%2C%22duration%22%3A1%2C%22pageLink%22%3A%7B%7D%7D%2C%7B%22rowIndex%22%3A0%2C%22startDate%22%3A%222015-11-30%2002%3A36%3A49%22%2C%22id%22%3A%224f584dc6-63b8-4efa-a98e-a5d7bbe9910e%22%2C%22title%22%3A%22Deploy%22%2C%22description%22%3A%22%22%2C%22duration%22%3A1.0297029702970297%2C%22pageLink%22%3A%7B%7D%7D%5D%7D%5D%2C%22markers%22%3A%5B%7B%22title%22%3A%22Yearly%20Finalisation%22%2C%22markerDate%22%3A%222015-11-29%2012%3A21%3A23%22%7D%5D%7D" title="Roadmap%20Planner" hash="f0477dfac6f6ca380d8c5f2f44041947"/}}
+
+\\
+
+= **Know your spaces**  =
+
+Everything your team is working on - meeting notes and agendas, project plans and timelines, technical documentation and more - is located in a space; it's home base for your team.
+
+A small team should plan to have a space for the team, and a space for each big project. If you'll be working in Confluence with several other teams and departments, we recommend a space for each team as well as a space for each major cross-team project. The key is to think of a space as the container that holds all the important stuff - like pages, files, and blog posts - a team, group, or project needs to work.
+
+= **Know your pages** =
+
+If you're working on something related to your team - project plans, product requirements, blog posts, internal communications, you name it - create and store it in a Confluence page. Confluence pages offer a lot of flexibility in creating and storing information, and there are a number of useful page templates included to get you started, like the meeting notes template. Your spaces should be filled with pages that document your business processes, outline your plans, contain your files, and report on your progress. The more you learn to do in Confluence (adding tables and graphs, or embedding video and links are great places to start), the more engaging and helpful your pages will become.
+
+Helelo
+
+Learn more by reading [[Confluence 101: organize your work in spaces>>url:https://www.atlassian.com/collaboration/confluence-organize-work-in-spaces||shape="rect"]]
+
+\\
+
+----
+{{/layout-cell}}
+
+{{layout-cell}}
+= **Quick navigation** =
+
+When you create new pages in this space, they'll appear here automatically.
+
+
+
+{{children/}}
+
+= **Useful links** =
+
+(% class="wrapped" %)
+|=(((
+Link
+)))|=(((
+Description
+)))
+|(((
+[[Confluence 101: organize your work in spaces>>url:https://www.atlassian.com/collaboration/confluence-organize-work-in-spaces||shape="rect"]]
+)))|(((
+Chances are, the information you need to do your job lives in multiple places. Word docs, Evernote files, email, PDFs, even Post-it notes. It's scattered among different systems. And to make matters worse, //the stuff your teammates need is equally siloed//. If information had feelings, it would be lonely.
+
+But with Confluence, you can bring all that information into one place.
+)))
+|(((
+[[Confluence 101: discuss work with your team>>url:https://www.atlassian.com/collaboration/confluence-discuss-work-with-your-team||shape="rect"]]
+)))|(((
+Getting a project outlined and adding the right content are just the first steps. Now it's time for your team to weigh in. Confluence makes it easy to discuss your work - with your team, your boss, or your entire company - in the same place where you organized and created it.
+)))
+|(% colspan="1" %)(% colspan="1" %)
+(((
+[[Confluence 101: create content with pages>>url:https://www.atlassian.com/collaboration/confluence-create-content-with-pages||shape="rect"]]
+)))|(% colspan="1" %)(% colspan="1" %)
+(((
+Think of pages as a New Age "document." If Word docs were rotary phones, Confluence pages would be smart phones. A smart phone still makes calls (like their rotary counterparts), but it can do so much more than that
+)))
+
+(% style="font-size: 24.0px;line-height: 1.25;" %)** **
+
+(% style="font-size: 24.0px;line-height: 1.25;" %)**Tasks**
+
+(% class="wrapped" %)
+|(((
+(% class="content-wrapper" %)
+(((
+{{task-list}}
+{{task id="59" status="incomplete"}}
+[[Customize the name, colour, and icon of Confluence>>url:https://confluence.atlassian.com/x/NgszKw||shape="rect"]].
+{{/task}}
+
+{{task id="56" status="incomplete"}}
+Decide who can see and edit this space or a specific page by clicking the icon. Learn more about [[Page Restrictions>>url:https://confluence.atlassian.com/x/liAC||shape="rect"]] and [[Space Permissions>>url:https://confluence.atlassian.com/x/ASEC||shape="rect"]].
+{{/task}}
+
+{{task id="57" status="incomplete"}}
+Try adding an [[inline comment>>url:https://confluence.atlassian.com/x/2yAC||shape="rect"]] by highlighting some text and click the comment icon.
+{{/task}}
+
+{{task id="58" status="incomplete"}}
+Learn more about [[inviting your team to Confluence>>url:https://confluence.atlassian.com/x/SRwC||shape="rect"]].
+{{/task}}
+{{/task-list}}
+)))
+)))
+{{/layout-cell}}
+{{/layout-section}}
+{{/layout}}</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObject name="XWiki.TagClass">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.TagClass</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="tags" value="homepagelabel|generic"/>
+        </wikiObject>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+  <wikiDocument name="notagspage">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.Admin</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2023-12-18 15:06:10.427 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>1</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>parent_reference</string>
+              <org.xwiki.model.reference.EntityReference>
+                <name>AreTagsImported</name>
+                <type>DOCUMENT</type>
+              </org.xwiki.model.reference.EntityReference>
+            </entry>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2023-12-18 15:09:19.915 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>notagspage</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>sdasdafvcb
+
+fghgfgdffgfg</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+  <wikiDocument name="three tags page">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.Admin</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2023-12-18 15:09:33.97 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>1</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>parent_reference</string>
+              <org.xwiki.model.reference.EntityReference>
+                <name>AreTagsImported</name>
+                <type>DOCUMENT</type>
+              </org.xwiki.model.reference.EntityReference>
+            </entry>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2023-12-18 15:09:51.558 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>three tags page</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>ffsd sdfsfs dsfsf</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObject name="XWiki.TagClass">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.TagClass</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="tags" value="three1|three2|generic"/>
+        </wikiObject>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=confluence80tags
+.#------------------------------------------------------------------------------
