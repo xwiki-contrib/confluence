@@ -166,6 +166,17 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private SpaceReference rootSpace;
 
     /**
+     * @see #isAttachmentsEnabled()
+     */
+    private boolean attachmentsEnabled = true;
+
+    /**
+     * @see #isTagsEnabled()
+     */
+    private boolean tagsEnabled = true;
+
+
+    /**
      * @return The source to load the wiki from
      */
     @PropertyName("The source")
@@ -802,5 +813,46 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setObjectIdRanges(ConfluenceIdRangeList objectIdRanges)
     {
         this.objectIdRanges = objectIdRanges;
+    }
+
+
+    /**
+     * @return whether attachments are imported.
+     * @since 9.35.0
+     */
+    @PropertyName("Import attachments")
+    @PropertyDescription("Import the document attachments.")
+    public boolean isAttachmentsEnabled()
+    {
+        return this.attachmentsEnabled;
+    }
+
+    /**
+     * @param attachmentsEnabled if true, import the attachments found in the confluence package
+     * @since 9.35.0
+     */
+    public void setAttachmentsEnabled(boolean attachmentsEnabled)
+    {
+        this.attachmentsEnabled = attachmentsEnabled;
+    }
+
+    /**
+     * @return whether attachments are imported.
+     * @since 9.35.0
+     */
+    @PropertyName("Import tags")
+    @PropertyDescription("Import the document tags.")
+    public boolean isTagsEnabled()
+    {
+        return this.tagsEnabled;
+    }
+
+    /**
+     * @param tagsEnabled if true, import the tags found in the confluence package
+     * @since 9.35.0
+     */
+    public void setTagsEnabled(boolean tagsEnabled)
+    {
+        this.tagsEnabled = tagsEnabled;
     }
 }

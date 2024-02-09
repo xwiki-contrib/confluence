@@ -1273,78 +1273,9 @@ public class ConfluenceInputFilterStream
         }
 
         try {
-            // Attachments
-            Map<String, ConfluenceProperties> pageAttachments = new LinkedHashMap<>();
-            for (Long attachmentId : this.confluencePackage.getAttachments(pageId)) {
-                if (!shouldSendObject(attachmentId)) {
-                    continue;
-                }
+            readAttachments(pageId, spaceKey, proxyFilter);
 
-                ConfluenceProperties attachmentProperties;
-                try {
-                    attachmentProperties = this.confluencePackage.getAttachmentProperties(pageId, attachmentId);
-                } catch (ConfigurationException e) {
-                    logger.error(
-                        "Failed to get the properties of the attachments from the document identified by [{}]",
-                        createPageIdentifier(pageId, spaceKey), e);
-                    continue;
-                }
-
-                String attachmentName = this.confluencePackage.getAttachmentName(attachmentProperties);
-
-                ConfluenceProperties currentAttachmentProperties = pageAttachments.get(attachmentName);
-                if (currentAttachmentProperties != null) {
-                    try {
-                        Date date = this.confluencePackage.getDate(attachmentProperties,
-                            ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE);
-                        Date currentDate = this.confluencePackage.getDate(currentAttachmentProperties,
-                            ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE);
-
-                        if (date.after(currentDate)) {
-                            pageAttachments.put(attachmentName, attachmentProperties);
-                        }
-                    } catch (Exception e) {
-                        this.logger.error(
-                            "Failed to parse the date of attachment [{}] from the page with id [{}], skipping it",
-                            createPageIdentifier(pageId, spaceKey), attachmentId, e);
-                    }
-                } else {
-                    pageAttachments.put(attachmentName, attachmentProperties);
-                }
-            }
-
-            for (ConfluenceProperties attachmentProperties : pageAttachments.values()) {
-                readAttachment(pageId, spaceKey, attachmentProperties, proxyFilter);
-            }
-
-            // Tags
-            Map<String, ConfluenceProperties> pageTags = new LinkedHashMap<>();
-            for (Object tagIdStringObject : pageProperties.getList(ConfluenceXMLPackage.KEY_PAGE_LABELLINGS)) {
-                Long tagId = Long.parseLong((String) tagIdStringObject);
-                if (!shouldSendObject(tagId)) {
-                    continue;
-                }
-                ConfluenceProperties tagProperties;
-                try {
-                    tagProperties = this.confluencePackage.getObjectProperties(tagId);
-                } catch (ConfigurationException e) {
-                    logger.error("Failed to get tag properties [{}] for the page with id [{}].", tagId,
-                        createPageIdentifier(pageId, spaceKey), e);
-                    continue;
-                }
-
-                String tagName = this.confluencePackage.getTagName(tagProperties);
-                if (tagName == null) {
-                    logger.warn("Failed to get the name of tag id [{}] for the page with id [{}].", tagId,
-                        createPageIdentifier(pageId, spaceKey));
-                } else {
-                    pageTags.put(tagName, tagProperties);
-                }
-            }
-
-            if (!pageTags.isEmpty()) {
-                readPageTags(proxyFilter, pageTags);
-            }
+            readTags(pageId, spaceKey, pageProperties, proxyFilter);
 
             // Comments
             Map<Long, ConfluenceProperties> pageComments = new LinkedHashMap<>();
@@ -1379,6 +1310,92 @@ public class ConfluenceInputFilterStream
         } finally {
             // < WikiDocumentRevision
             proxyFilter.endWikiDocumentRevision(revision, documentRevisionParameters);
+        }
+    }
+
+    private void readTags(long pageId, String spaceKey, ConfluenceProperties pageProperties,
+        ConfluenceFilter proxyFilter) throws FilterException
+    {
+        if (!this.properties.isTagsEnabled()) {
+            return;
+        }
+
+        Map<String, ConfluenceProperties> pageTags = new LinkedHashMap<>();
+        for (Object tagIdStringObject : pageProperties.getList(ConfluenceXMLPackage.KEY_PAGE_LABELLINGS)) {
+            Long tagId = Long.parseLong((String) tagIdStringObject);
+            if (!shouldSendObject(tagId)) {
+                continue;
+            }
+            ConfluenceProperties tagProperties;
+            try {
+                tagProperties = this.confluencePackage.getObjectProperties(tagId);
+            } catch (ConfigurationException e) {
+                logger.error("Failed to get tag properties [{}] for the page with id [{}].", tagId,
+                    createPageIdentifier(pageId, spaceKey), e);
+                continue;
+            }
+
+            String tagName = this.confluencePackage.getTagName(tagProperties);
+            if (tagName == null) {
+                logger.warn("Failed to get the name of tag id [{}] for the page with id [{}].", tagId,
+                    createPageIdentifier(pageId, spaceKey));
+            } else {
+                pageTags.put(tagName, tagProperties);
+            }
+        }
+
+        if (!pageTags.isEmpty()) {
+            readPageTags(proxyFilter, pageTags);
+        }
+    }
+
+    private void readAttachments(long pageId, String spaceKey, ConfluenceFilter proxyFilter) throws FilterException
+    {
+        if (!this.properties.isAttachmentsEnabled()) {
+            return;
+        }
+
+        Map<String, ConfluenceProperties> pageAttachments = new LinkedHashMap<>();
+        for (Long attachmentId : this.confluencePackage.getAttachments(pageId)) {
+            if (!shouldSendObject(attachmentId)) {
+                continue;
+            }
+
+            ConfluenceProperties attachmentProperties;
+            try {
+                attachmentProperties = this.confluencePackage.getAttachmentProperties(pageId, attachmentId);
+            } catch (ConfigurationException e) {
+                logger.error(
+                    "Failed to get the properties of the attachments from the document identified by [{}]",
+                    createPageIdentifier(pageId, spaceKey), e);
+                continue;
+            }
+
+            String attachmentName = this.confluencePackage.getAttachmentName(attachmentProperties);
+
+            ConfluenceProperties currentAttachmentProperties = pageAttachments.get(attachmentName);
+            if (currentAttachmentProperties != null) {
+                try {
+                    Date date = this.confluencePackage.getDate(attachmentProperties,
+                        ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE);
+                    Date currentDate = this.confluencePackage.getDate(currentAttachmentProperties,
+                        ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE);
+
+                    if (date.after(currentDate)) {
+                        pageAttachments.put(attachmentName, attachmentProperties);
+                    }
+                } catch (Exception e) {
+                    this.logger.error(
+                        "Failed to parse the date of attachment [{}] from the page with id [{}], skipping it",
+                        createPageIdentifier(pageId, spaceKey), attachmentId, e);
+                }
+            } else {
+                pageAttachments.put(attachmentName, attachmentProperties);
+            }
+        }
+
+        for (ConfluenceProperties attachmentProperties : pageAttachments.values()) {
+            readAttachment(pageId, spaceKey, attachmentProperties, proxyFilter);
         }
     }
 
