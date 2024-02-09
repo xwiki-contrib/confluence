@@ -297,7 +297,7 @@ public class ConfluenceInputFilterStream
 
             pushLevelProgress(users.size() + groups.size() + pagesCount);
 
-            sendUsers(users, groups, proxyFilter);
+            sendUsersAndGroups(users, groups, proxyFilter);
         } else {
             pushLevelProgress(pagesCount);
         }
@@ -531,9 +531,14 @@ public class ConfluenceInputFilterStream
                             right = Right.COMMENT;
                             break;
                         default:
-                            this.logger.warn("Unknown space permission right type [{}].", right);
-                            continue;
+                            // nothing
                     }
+
+                    if (right == null) {
+                        this.logger.warn("Unknown space permission right type [{}].", right);
+                        continue;
+                    }
+
 
                     String group = confluenceRight.group;
                     if (right != null && group != null && !group.isEmpty()) {
@@ -692,7 +697,7 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void sendUsers(Collection<Long> users, Collection<Long> groups, ConfluenceFilter proxyFilter)
+    private void sendUsersAndGroups(Collection<Long> users, Collection<Long> groups, ConfluenceFilter proxyFilter)
         throws FilterException
     {
         // Switch the wiki if a specific one is forced
@@ -700,40 +705,19 @@ public class ConfluenceInputFilterStream
             proxyFilter.beginWiki(this.properties.getUsersWiki(), FilterEventParameters.EMPTY);
         }
 
-        // Generate users events
-        for (Long userId : users) {
-            this.progress.startStep(this);
+        sendUsers(users, proxyFilter);
+        sendGroups(groups, proxyFilter);
 
-            if (shouldSendObject(userId)) {
-                sendUser(proxyFilter, userId);
-            }
-
-            this.progress.endStep(this);
+        // Get back to default wiki
+        if (this.properties.getUsersWiki() != null) {
+            proxyFilter.endWiki(this.properties.getUsersWiki(), FilterEventParameters.EMPTY);
         }
+    }
 
-        // Generate groups events
-
+    private void sendGroups(Collection<Long> groupIds, ConfluenceFilter proxyFilter) throws FilterException
+    {
         // Group groups by XWiki group name. There can be several Confluence groups mapping to a unique XWiki group.
-        Map<String, Collection<ConfluenceProperties>> groupsByXWikiName = new HashMap<>();
-        for (long groupInt : groups) {
-            this.progress.startStep(this);
-
-            ConfluenceProperties groupProperties;
-            try {
-                groupProperties = this.confluencePackage.getGroupProperties(groupInt);
-            } catch (ConfigurationException e) {
-                throw new FilterException("Failed to get group properties", e);
-            }
-
-            String groupName = getConfluenceToXWikiGroupName(
-                groupProperties.getString(ConfluenceXMLPackage.KEY_GROUP_NAME, String.valueOf(groupInt)));
-
-            if (!groupName.isEmpty()) {
-                Collection<ConfluenceProperties> l = groupsByXWikiName.getOrDefault(groupName, new ArrayList<>());
-                l.add(groupProperties);
-                groupsByXWikiName.put(groupName, l);
-            }
-        }
+        Map<String, Collection<ConfluenceProperties>> groupsByXWikiName = getGroupsByXWikiName(groupIds);
 
         // Loop over the XWiki groups
         for (Map.Entry<String, Collection<ConfluenceProperties>> groupEntry: groupsByXWikiName.entrySet()) {
@@ -742,8 +726,9 @@ public class ConfluenceInputFilterStream
 
             // We arbitrarily take the creation and revision date of the first Confluence group mapped to this
             // XWiki group.
+            Collection<ConfluenceProperties> groups = groupEntry.getValue();
             try {
-                ConfluenceProperties firstGroupProperties = groupEntry.getValue().iterator().next();
+                ConfluenceProperties firstGroupProperties = groups.iterator().next();
                 groupParameters.put(GroupFilter.PARAMETER_REVISION_DATE,
                     this.confluencePackage.getDate(firstGroupProperties, ConfluenceXMLPackage.KEY_GROUP_REVISION_DATE));
                 groupParameters.put(GroupFilter.PARAMETER_CREATION_DATE,
@@ -759,50 +744,9 @@ public class ConfluenceInputFilterStream
 
             // We add members of all the Confluence groups mapped to this XWiki group to the XWiki group.
             Collection<String> alreadyAddedMembers = new HashSet<>();
-            for (ConfluenceProperties groupProperties : groupEntry.getValue()) {
-                // Members users
-                if (groupProperties.containsKey(ConfluenceXMLPackage.KEY_GROUP_MEMBERUSERS)) {
-                    List<Long> groupMembers =
-                        this.confluencePackage.getLongList(groupProperties, ConfluenceXMLPackage.KEY_GROUP_MEMBERUSERS);
-                    for (Long memberInt : groupMembers) {
-                        FilterEventParameters memberParameters = new FilterEventParameters();
-
-                        try {
-                            String memberId = confluenceConverter.toUserReferenceName(
-                                this.confluencePackage.getInternalUserProperties(memberInt)
-                                    .getString(ConfluenceXMLPackage.KEY_USER_NAME, String.valueOf(memberInt)));
-
-                            if (!alreadyAddedMembers.contains(memberId)) {
-                                proxyFilter.onGroupMemberGroup(memberId, memberParameters);
-                                alreadyAddedMembers.add(memberId);
-                            }
-                        } catch (Exception e) {
-                            this.logger.error(FAILED_TO_GET_USER_PROPERTIES, e);
-                        }
-                    }
-                }
-
-                // Members groups
-                if (groupProperties.containsKey(ConfluenceXMLPackage.KEY_GROUP_MEMBERGROUPS)) {
-                    List<Long> groupMembers = this.confluencePackage.getLongList(groupProperties,
-                        ConfluenceXMLPackage.KEY_GROUP_MEMBERGROUPS);
-                    for (Long memberInt : groupMembers) {
-                        FilterEventParameters memberParameters = new FilterEventParameters();
-
-                        try {
-                            String memberId = getConfluenceToXWikiGroupName(
-                                this.confluencePackage.getGroupProperties(memberInt)
-                                    .getString(ConfluenceXMLPackage.KEY_GROUP_NAME, String.valueOf(memberInt)));
-
-                            if (!alreadyAddedMembers.contains(memberId)) {
-                                proxyFilter.onGroupMemberGroup(memberId, memberParameters);
-                                alreadyAddedMembers.add(memberId);
-                            }
-                        } catch (Exception e) {
-                            this.logger.error("Failed to get group properties", e);
-                        }
-                    }
-                }
+            for (ConfluenceProperties groupProperties : groups) {
+                sendUserMembers(proxyFilter, groupProperties, alreadyAddedMembers);
+                sendGroupMembers(proxyFilter, groupProperties, alreadyAddedMembers);
             }
 
             // < Group
@@ -810,10 +754,94 @@ public class ConfluenceInputFilterStream
 
             this.progress.endStep(this);
         }
+    }
 
-        // Get back to default wiki
-        if (this.properties.getUsersWiki() != null) {
-            proxyFilter.endWiki(this.properties.getUsersWiki(), FilterEventParameters.EMPTY);
+    private void sendGroupMembers(ConfluenceFilter proxyFilter, ConfluenceProperties groupProperties,
+        Collection<String> alreadyAddedMembers)
+    {
+        if (groupProperties.containsKey(ConfluenceXMLPackage.KEY_GROUP_MEMBERGROUPS)) {
+            List<Long> groupMembers = this.confluencePackage.getLongList(groupProperties,
+                ConfluenceXMLPackage.KEY_GROUP_MEMBERGROUPS);
+            for (Long memberInt : groupMembers) {
+                FilterEventParameters memberParameters = new FilterEventParameters();
+
+                try {
+                    String memberId = getConfluenceToXWikiGroupName(
+                        this.confluencePackage.getGroupProperties(memberInt)
+                            .getString(ConfluenceXMLPackage.KEY_GROUP_NAME, String.valueOf(memberInt)));
+
+                    if (!alreadyAddedMembers.contains(memberId)) {
+                        proxyFilter.onGroupMemberGroup(memberId, memberParameters);
+                        alreadyAddedMembers.add(memberId);
+                    }
+                } catch (Exception e) {
+                    this.logger.error("Failed to get group properties", e);
+                }
+            }
+        }
+    }
+
+    private void sendUserMembers(ConfluenceFilter proxyFilter, ConfluenceProperties groupProperties,
+        Collection<String> alreadyAddedMembers)
+    {
+        if (groupProperties.containsKey(ConfluenceXMLPackage.KEY_GROUP_MEMBERUSERS)) {
+            List<Long> groupMembers =
+                this.confluencePackage.getLongList(groupProperties, ConfluenceXMLPackage.KEY_GROUP_MEMBERUSERS);
+            for (Long memberInt : groupMembers) {
+                FilterEventParameters memberParameters = new FilterEventParameters();
+
+                try {
+                    String memberId = confluenceConverter.toUserReferenceName(
+                        this.confluencePackage.getInternalUserProperties(memberInt)
+                            .getString(ConfluenceXMLPackage.KEY_USER_NAME, String.valueOf(memberInt)));
+
+                    if (!alreadyAddedMembers.contains(memberId)) {
+                        proxyFilter.onGroupMemberGroup(memberId, memberParameters);
+                        alreadyAddedMembers.add(memberId);
+                    }
+                } catch (Exception e) {
+                    this.logger.error(FAILED_TO_GET_USER_PROPERTIES, e);
+                }
+            }
+        }
+    }
+
+    private Map<String, Collection<ConfluenceProperties>> getGroupsByXWikiName(Collection<Long> groups)
+        throws FilterException
+    {
+        Map<String, Collection<ConfluenceProperties>> groupsByXWikiName = new HashMap<>();
+        for (long groupId : groups) {
+            this.progress.startStep(this);
+
+            ConfluenceProperties groupProperties;
+            try {
+                groupProperties = this.confluencePackage.getGroupProperties(groupId);
+            } catch (ConfigurationException e) {
+                throw new FilterException("Failed to get group properties", e);
+            }
+
+            String groupName = getConfluenceToXWikiGroupName(
+                groupProperties.getString(ConfluenceXMLPackage.KEY_GROUP_NAME, String.valueOf(groupId)));
+
+            if (!groupName.isEmpty()) {
+                Collection<ConfluenceProperties> l = groupsByXWikiName.getOrDefault(groupName, new ArrayList<>());
+                l.add(groupProperties);
+                groupsByXWikiName.put(groupName, l);
+            }
+        }
+        return groupsByXWikiName;
+    }
+
+    private void sendUsers(Collection<Long> users, ConfluenceFilter proxyFilter) throws FilterException
+    {
+        for (Long userId : users) {
+            this.progress.startStep(this);
+
+            if (shouldSendObject(userId)) {
+                sendUser(proxyFilter, userId);
+            }
+
+            this.progress.endStep(this);
         }
     }
 
@@ -1144,7 +1172,103 @@ public class ConfluenceInputFilterStream
     {
         String revision = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION);
 
-        FilterEventParameters documentRevisionParameters = new FilterEventParameters();
+        FilterEventParameters docRevisionParameters = new FilterEventParameters();
+
+        prepareRevisionMetadata(pageId, spaceKey, pageProperties, docRevisionParameters);
+
+        beginPageRevision(pageId, spaceKey, pageProperties, filter, proxyFilter, revision, docRevisionParameters);
+
+        try {
+            readAttachments(pageId, spaceKey, proxyFilter);
+            readTags(pageId, spaceKey, pageProperties, proxyFilter);
+            readComments(pageId, spaceKey, pageProperties, proxyFilter);
+            storeConfluenceDetails(pageId, spaceKey, pageProperties, proxyFilter);
+        } finally {
+            // < WikiDocumentRevision
+            proxyFilter.endWikiDocumentRevision(revision, docRevisionParameters);
+        }
+    }
+
+    private void beginPageRevision(long pageId, String spaceKey, ConfluenceProperties pageProperties, Object filter,
+        ConfluenceFilter proxyFilter, String revision, FilterEventParameters docRevParameters) throws FilterException
+    {
+        boolean isBlog = pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_BLOGPOST);
+        String bodyContent = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_BODY, null);
+        if (bodyContent != null) {
+            // No bodyType means old Confluence syntax
+            int bodyType = pageProperties.getInt(ConfluenceXMLPackage.KEY_PAGE_BODY_TYPE, 0);
+
+            if (!isBlog && this.properties.isContentEvents() && filter instanceof Listener) {
+                // > WikiDocumentRevision
+                proxyFilter.beginWikiDocumentRevision(revision, docRevParameters);
+
+                try {
+                    parse(bodyContent, bodyType, this.properties.getMacroContentSyntax(), proxyFilter);
+                } catch (Exception e) {
+                    this.logger.error("Failed to parse content of page with id [{}]",
+                        createPageIdentifier(pageId, spaceKey), e);
+                }
+                return;
+            }
+
+            Syntax bodySyntax = getBodySyntax(pageId, spaceKey, bodyType);
+
+            if (this.properties.isConvertToXWiki()) {
+                try {
+                    bodyContent = convertToXWiki21(bodyContent, bodyType);
+                    bodySyntax = Syntax.XWIKI_2_1;
+                } catch (ParseException e) {
+                    this.logger.error("Failed to convert content of the page with id [{}]",
+                        createPageIdentifier(pageId, spaceKey), e);
+                }
+            }
+
+            if (!isBlog) {
+                docRevParameters.put(WikiDocumentFilter.PARAMETER_CONTENT, bodyContent);
+            }
+
+            docRevParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, bodySyntax);
+        }
+
+        // > WikiDocumentRevision
+        proxyFilter.beginWikiDocumentRevision(revision, docRevParameters);
+
+        // Generate page content when the page is a regular page or the value of the "content" property of the
+        // "Blog.BlogPostClass" object if the page is a blog post.
+        if (isBlog) {
+            // Add the Blog post object
+            Date publishDate = null;
+            try {
+                publishDate =
+                    this.confluencePackage.getDate(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISION_DATE);
+            } catch (Exception e) {
+                this.logger.error(
+                    "Failed to parse the publish date of the blog post document with id [{}]",
+                    createPageIdentifier(pageId, spaceKey), e);
+            }
+
+            addBlogPostObject(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE), bodyContent,
+                publishDate, proxyFilter);
+        }
+    }
+
+    private Syntax getBodySyntax(long pageId, String spaceKey, int bodyType)
+    {
+        switch (bodyType) {
+            case 0:
+                return ConfluenceParser.SYNTAX;
+            case 2:
+                return Syntax.CONFLUENCEXHTML_1_0;
+            default:
+                this.logger.warn("Unknown body type [{}] for the content of the document with id [{}].", bodyType,
+                    createPageIdentifier(pageId, spaceKey));
+                return null;
+        }
+    }
+
+    private void prepareRevisionMetadata(long pageId, String spaceKey, ConfluenceProperties pageProperties,
+        FilterEventParameters documentRevisionParameters)
+    {
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_PARENT)) {
             try {
                 documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_PARENT,
@@ -1179,145 +1303,35 @@ public class ConfluenceInputFilterStream
         }
         documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_TITLE,
             pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE));
+    }
 
-        String bodyContent = null;
-        Syntax bodySyntax = null;
-        int bodyType = -1;
-
-        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_BODY)) {
-            bodyContent = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_BODY);
-            bodyType = pageProperties.getInt(ConfluenceXMLPackage.KEY_PAGE_BODY_TYPE, -1);
-
-            switch (bodyType) {
-                // No bodyType means old Confluence syntax
-                case -1:
-                    bodyType = 0;
-                    /* fall through */
-                case 0:
-                    bodySyntax = ConfluenceParser.SYNTAX;
-                    break;
-                case 2:
-                    bodySyntax = Syntax.CONFLUENCEXHTML_1_0;
-                    break;
-                default:
-                    this.logger.warn("Unknown body type [{}] for the content of the document with id [{}].", bodyType,
-                        createPageIdentifier(pageId, spaceKey));
-                    break;
+    private void readComments(long pageId, String spaceKey, ConfluenceProperties pageProperties,
+        ConfluenceFilter proxyFilter) throws FilterException
+    {
+        Map<Long, ConfluenceProperties> pageComments = new LinkedHashMap<>();
+        Map<Long, Integer> commentIndices = new LinkedHashMap<>();
+        int commentIndex = 0;
+        for (Object commentIdStringObject : pageProperties.getList(ConfluenceXMLPackage.KEY_PAGE_COMMENTS)) {
+            Long commentId = Long.parseLong((String) commentIdStringObject);
+            if (!shouldSendObject(commentId)) {
+                continue;
             }
-        }
-
-        // Generate page content when the page is a regular page or the value of the "content" property of the
-        // "Blog.BlogPostClass" object if the page is a blog post.
-        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_BLOGPOST)) {
-            String blogPostContent = bodyContent;
-
-            if (bodyContent != null) {
-                if (this.properties.isConvertToXWiki()) {
-                    // Convert content to XWiki syntax
-                    try {
-                        blogPostContent = convertToXWiki21(bodyContent, bodyType);
-                        documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, Syntax.XWIKI_2_1);
-                    } catch (Exception e) {
-                        this.logger.error("Failed to convert content of the page with id [{}]",
-                            createPageIdentifier(pageId, spaceKey), e);
-                    }
-                } else {
-                    // Keep Confluence syntax
-                    documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, bodySyntax);
-                }
-            }
-
-            // > WikiDocumentRevision
-            proxyFilter.beginWikiDocumentRevision(revision, documentRevisionParameters);
-
-            // Add the Blog post object
-            Date publishDate = null;
+            ConfluenceProperties commentProperties;
             try {
-                publishDate =
-                    this.confluencePackage.getDate(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISION_DATE);
-            } catch (Exception e) {
-                this.logger.error(
-                    "Failed to parse the publish date of the blog post document with id [{}]",
-                    createPageIdentifier(pageId, spaceKey), e);
+                commentProperties = this.confluencePackage.getObjectProperties(commentId);
+            } catch (ConfigurationException e) {
+                logger.error("Failed to get the comment properties [{}] for the page with id [{}]",
+                    commentId, createPageIdentifier(pageId, spaceKey), e);
+                continue;
             }
 
-            addBlogPostObject(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE), blogPostContent,
-                publishDate, proxyFilter);
-        } else if (bodyContent != null) {
-            if (this.properties.isContentEvents() && filter instanceof Listener) {
-                // > WikiDocumentRevision
-                proxyFilter.beginWikiDocumentRevision(revision, documentRevisionParameters);
-
-                try {
-                    parse(bodyContent, bodyType, this.properties.getMacroContentSyntax(), proxyFilter);
-                } catch (Exception e) {
-                    this.logger.error("Failed to parse content of page with id [{}]",
-                        createPageIdentifier(pageId, spaceKey), e);
-                }
-            } else if (this.properties.isConvertToXWiki()) {
-                // Convert content to XWiki syntax
-                try {
-                    documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_CONTENT,
-                        convertToXWiki21(bodyContent, bodyType));
-                    documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, Syntax.XWIKI_2_1);
-                } catch (Exception e) {
-                    this.logger.error("Failed to convert content of the page with id [{}]",
-                        createPageIdentifier(pageId, spaceKey), e);
-                }
-
-                // > WikiDocumentRevision
-                proxyFilter.beginWikiDocumentRevision(revision, documentRevisionParameters);
-            } else {
-                // Keep Confluence syntax
-                documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_CONTENT, bodyContent);
-                documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, bodySyntax);
-
-                // > WikiDocumentRevision
-                proxyFilter.beginWikiDocumentRevision(revision, documentRevisionParameters);
-            }
-        } else {
-            // > WikiDocumentRevision
-            proxyFilter.beginWikiDocumentRevision(revision, documentRevisionParameters);
+            pageComments.put(commentId, commentProperties);
+            commentIndices.put(commentId, commentIndex);
+            commentIndex++;
         }
 
-        try {
-            readAttachments(pageId, spaceKey, proxyFilter);
-
-            readTags(pageId, spaceKey, pageProperties, proxyFilter);
-
-            // Comments
-            Map<Long, ConfluenceProperties> pageComments = new LinkedHashMap<>();
-            Map<Long, Integer> commentIndices = new LinkedHashMap<>();
-            int commentIndex = 0;
-            for (Object commentIdStringObject : pageProperties.getList(ConfluenceXMLPackage.KEY_PAGE_COMMENTS)) {
-                Long commentId = Long.parseLong((String) commentIdStringObject);
-                if (!shouldSendObject(commentId)) {
-                    continue;
-                }
-                ConfluenceProperties commentProperties;
-                try {
-                    commentProperties = this.confluencePackage.getObjectProperties(commentId);
-                } catch (ConfigurationException e) {
-                    logger.error("Failed to get the comment properties [{}] for the page with id [{}]",
-                        commentId, createPageIdentifier(pageId, spaceKey), e);
-                    continue;
-                }
-
-                pageComments.put(commentId, commentProperties);
-                commentIndices.put(commentId, commentIndex);
-                commentIndex++;
-            }
-
-            for (Long commentId : pageComments.keySet()) {
-                readPageComment(pageId, spaceKey, proxyFilter, commentId, pageComments, commentIndices);
-            }
-
-            if (this.properties.isStoreConfluenceDetailsEnabled()) {
-                storeConfluenceDetails(pageId, spaceKey, pageProperties, proxyFilter);
-            }
-        } finally {
-            // < WikiDocumentRevision
-            proxyFilter.endWikiDocumentRevision(revision, documentRevisionParameters);
+        for (Long commentId : pageComments.keySet()) {
+            readPageComment(pageId, spaceKey, proxyFilter, commentId, pageComments, commentIndices);
         }
     }
 
@@ -1451,6 +1465,10 @@ public class ConfluenceInputFilterStream
     private void storeConfluenceDetails(long pageId, String spaceKey, ConfluenceProperties pageProperties,
         ConfluenceFilter proxyFilter) throws FilterException
     {
+        if (!this.properties.isStoreConfluenceDetailsEnabled()) {
+            return;
+        }
+
         FilterEventParameters pageReportParameters = new FilterEventParameters();
 
         // Page report object
