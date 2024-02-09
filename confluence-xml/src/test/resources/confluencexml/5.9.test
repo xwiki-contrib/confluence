@@ -263,55 +263,6 @@
       <wikiObjectProperty name="users" value=""/>
     </wikiObject>
   </wikiDocument>
-  <wikiDocument name="WebHome">
-    <wikiDocumentLocale>
-      <p>
-        <parameters>
-          <entry>
-            <string>creation_date</string>
-            <date>2015-10-20 11:05:06.966 UTC</date>
-          </entry>
-          <entry>
-            <string>lastrevision</string>
-            <string>1</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiDocumentRevision revision="1">
-        <p>
-          <parameters>
-            <entry>
-              <string>revision_date</string>
-              <date>2016-05-10 15:00:04.75 UTC</date>
-            </entry>
-            <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>title</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>content</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>syntax</string>
-              <org.xwiki.rendering.syntax.Syntax>
-                <type>
-                  <name>XWiki</name>
-                  <id>xwiki</id>
-                  <variants class="empty-list"/>
-                </type>
-                <version>2.1</version>
-              </org.xwiki.rendering.syntax.Syntax>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
   <wikiDocument name="What is Confluence? (step 1 of 9)">
     <wikiDocumentLocale>
       <p>
@@ -418,6 +369,19 @@ Confluence puts your content online in a central place where your team can searc
     </wikiDocumentLocale>
   </wikiDocument>
   <wikiDocument name="Welcome to Confluence">
+    <wikiObject name="XWiki.RedirectClass">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.RedirectClass</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="location" value="WebHome"/>
+    </wikiObject>
+  </wikiDocument>
+  <wikiDocument name="WebHome">
     <wikiDocumentLocale>
       <p>
         <parameters>

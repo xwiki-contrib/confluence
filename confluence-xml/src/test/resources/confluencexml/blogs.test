@@ -469,64 +469,20 @@
       <wikiObjectProperty name="users" value="XWiki.34169017-dfe4-41cb-a8ae-6c3644475fb8@connect_atlassian_com"/>
     </wikiObject>
   </wikiDocument>
-  <wikiDocument name="WebHome">
-    <wikiDocumentLocale>
+  <wikiDocument name="SpaceA Home">
+    <wikiObject name="XWiki.RedirectClass">
       <p>
         <parameters>
           <entry>
-            <string>creation_author</string>
-            <string>XWiki.testuser@mail_com</string>
-          </entry>
-          <entry>
-            <string>creation_date</string>
-            <date>2023-09-27 17:02:25.738 UTC</date>
-          </entry>
-          <entry>
-            <string>lastrevision</string>
-            <string>1</string>
+            <string>class_reference</string>
+            <string>XWiki.RedirectClass</string>
           </entry>
         </parameters>
       </p>
-      <wikiDocumentRevision revision="1">
-        <p>
-          <parameters>
-            <entry>
-              <string>revision_author</string>
-              <string>XWiki.testuser@mail_com</string>
-            </entry>
-            <entry>
-              <string>revision_date</string>
-              <date>2023-09-27 17:02:25.738 UTC</date>
-            </entry>
-            <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>title</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>content</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>syntax</string>
-              <org.xwiki.rendering.syntax.Syntax>
-                <type>
-                  <name>XWiki</name>
-                  <id>xwiki</id>
-                  <variants class="empty-list"/>
-                </type>
-                <version>2.1</version>
-              </org.xwiki.rendering.syntax.Syntax>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
+      <wikiObjectProperty name="location" value="WebHome"/>
+    </wikiObject>
   </wikiDocument>
-  <wikiDocument name="SpaceA Home">
+  <wikiDocument name="WebHome">
     <wikiDocumentLocale>
       <p>
         <parameters>

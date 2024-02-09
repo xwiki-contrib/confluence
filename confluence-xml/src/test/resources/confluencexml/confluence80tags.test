@@ -3,74 +3,6 @@
 .# Content conversions
 .#------------------------------------------------------------------------------
 <wikiSpace name="AR">
-  <wikiDocument name="WebHome">
-    <wikiDocumentLocale>
-      <p>
-        <parameters>
-          <entry>
-            <string>creation_author</string>
-            <string>XWiki.exporter</string>
-          </entry>
-          <entry>
-            <string>creation_date</string>
-            <date>2015-08-12 17:14:17.610 UTC</date>
-          </entry>
-          <entry>
-            <string>lastrevision</string>
-            <string>2</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiDocumentRevision revision="2">
-        <p>
-          <parameters>
-            <entry>
-              <string>revision_author</string>
-              <string>XWiki.Admin</string>
-            </entry>
-            <entry>
-              <string>revision_date</string>
-              <date>2023-12-18 15:02:21.984 UTC</date>
-            </entry>
-            <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>title</string>
-              <null/>
-            </entry>
-            <entry>
-              <string>content</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>syntax</string>
-              <org.xwiki.rendering.syntax.Syntax>
-                <type>
-                  <name>XWiki</name>
-                  <id>xwiki</id>
-                  <variants class="empty-list"/>
-                </type>
-                <version>2.1</version>
-              </org.xwiki.rendering.syntax.Syntax>
-            </entry>
-          </parameters>
-        </p>
-        <wikiObject name="XWiki.TagClass">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.TagClass</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="tags" value="favourite"/>
-        </wikiObject>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
   <wikiDocument name="HoomePage">
     <wikiDocumentLocale>
       <p>
@@ -140,6 +72,19 @@
     </wikiDocumentLocale>
   </wikiDocument>
   <wikiDocument name="AreTagsImported">
+    <wikiObject name="XWiki.RedirectClass">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.RedirectClass</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="location" value="WebHome"/>
+    </wikiObject>
+  </wikiDocument>
+  <wikiDocument name="WebHome">
     <wikiDocumentLocale>
       <p>
         <parameters>

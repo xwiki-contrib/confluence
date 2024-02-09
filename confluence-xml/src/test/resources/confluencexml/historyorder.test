@@ -4,6 +4,19 @@
 .#------------------------------------------------------------------------------
 <wikiSpace name="SPACE">
   <wikiDocument name="Hello">
+    <wikiObject name="XWiki.RedirectClass">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.RedirectClass</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="location" value="WebHome"/>
+    </wikiObject>
+  </wikiDocument>
+  <wikiDocument name="WebHome">
     <wikiDocumentLocale>
       <p>
         <parameters>

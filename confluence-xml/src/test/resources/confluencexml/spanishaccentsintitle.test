@@ -2,48 +2,6 @@
 .expect|filter+xml
 .#------------------------------------------------------------------------------
 <wikiSpace name="MDE">
-  <wikiDocument name="Home">
-    <wikiDocumentLocale>
-      <p>
-        <parameters>
-          <entry>
-            <string>creation_author</string>
-            <string>XWiki.ff8080813fbbd3b2013fbbd48c530004</string>
-          </entry>
-          <entry>
-            <string>creation_date</string>
-            <date>2013-05-24 14:27:59.702 UTC</date>
-          </entry>
-          <entry>
-            <string>lastrevision</string>
-            <string>7</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiDocumentRevision revision="7">
-        <p>
-          <parameters>
-            <entry>
-              <string>revision_author</string>
-              <string>XWiki.ff808081477aa0320147cab567380005</string>
-            </entry>
-            <entry>
-              <string>revision_date</string>
-              <date>2018-08-20 16:42:24.31 UTC</date>
-            </entry>
-            <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>title</string>
-              <string>Home</string>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
   <wikiDocument name="Módulo">
     <wikiDocumentLocale>
       <p>
@@ -109,6 +67,19 @@
     </wikiDocumentLocale>
   </wikiDocument>
   <wikiDocument name="Home">
+    <wikiObject name="XWiki.RedirectClass">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.RedirectClass</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="location" value="WebHome"/>
+    </wikiObject>
+  </wikiDocument>
+  <wikiDocument name="WebHome">
     <wikiDocumentLocale>
       <p>
         <parameters>

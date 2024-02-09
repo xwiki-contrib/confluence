@@ -3,6 +3,19 @@
 .# Test that ascii char 28 is ignored
 .#------------------------------------------------------------------------------
 <wikiSpace name="MySpace">
+  <wikiDocument name="My Space Home">
+    <wikiObject name="XWiki.RedirectClass">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.RedirectClass</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="location" value="WebHome"/>
+    </wikiObject>
+  </wikiDocument>
   <wikiDocument name="WebHome">
     <wikiDocumentLocale>
       <p>
@@ -38,7 +51,7 @@
             </entry>
             <entry>
               <string>title</string>
-              <string></string>
+              <string>My Space Home</string>
             </entry>
           </parameters>
         </p>

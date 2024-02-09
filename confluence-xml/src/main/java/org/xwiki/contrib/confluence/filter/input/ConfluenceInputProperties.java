@@ -274,6 +274,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
 
     /**
      * @return The name to use for space home page
+     * Note: previously, this was incorrectly referring to the space description. This is fixed since version 9.35.0.
      */
     @PropertyName("Space home page")
     @PropertyDescription("The name to use for space home page")

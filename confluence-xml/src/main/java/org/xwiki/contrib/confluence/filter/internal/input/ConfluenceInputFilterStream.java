@@ -115,6 +115,8 @@ public class ConfluenceInputFilterStream
     private static final String WEB_PREFERENCES = "WebPreferences";
     private static final String FAILED_TO_GET_USER_PROPERTIES = "Failed to get user properties";
 
+    private static final String XWIKI_REDIRECT_CLASS = "XWiki.RedirectClass";
+
     @Inject
     @Named(ConfluenceParser.SYNTAX_STRING)
     private StreamParser confluenceWIKIParser;
@@ -281,12 +283,10 @@ public class ConfluenceInputFilterStream
         // Only count pages if we are going to send them
         boolean willSendPages = this.properties.isContentsEnabled() || this.properties.isRightsEnabled();
 
-        // The + 1 is for the space description
         int pagesCount = willSendPages
             ? (
                 (properties.isNonBlogContentEnabled() ? (pages.size() + countPages(pages)) : 0)
                     + (properties.isBlogsEnabled() ? countPages(blogPages) : 0)
-                    + 1
             )
             : 0;
 
@@ -387,14 +387,6 @@ public class ConfluenceInputFilterStream
                 sendSpaceRights(proxyFilter, spaceProperties, spaceKey, spaceId);
             }
 
-            if (this.properties.isContentsEnabled()) {
-                // Main page
-                Long descriptionId = spaceProperties.getLong(ConfluenceXMLPackage.KEY_SPACE_DESCRIPTION, null);
-                if (descriptionId != null) {
-                    sendPage(descriptionId, spaceKey, filter, proxyFilter, true);
-                }
-            }
-
             if (this.properties.isContentsEnabled() || this.properties.isRightsEnabled()) {
                 sendPages(spaceKey, pages, filter, proxyFilter);
             }
@@ -411,15 +403,14 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void sendPage(long pageId, String spaceKey, Object filter, ConfluenceFilter proxyFilter, boolean isMain)
+    private void sendPage(long pageId, String spaceKey, Object filter, ConfluenceFilter proxyFilter)
     {
         this.progress.startStep(this);
         if (this.properties.isIncluded(pageId)) {
             try {
                 readPage(pageId, spaceKey, filter, proxyFilter);
             } catch (Exception e) {
-                logger.error("Failed to filter the page with id [{}] (main page: [{}])",
-                    createPageIdentifier(pageId, spaceKey), isMain, e);
+                logger.error("Failed to filter the page with id [{}]", createPageIdentifier(pageId, spaceKey), e);
             }
         }
         this.progress.endStep(this);
@@ -448,7 +439,7 @@ public class ConfluenceInputFilterStream
     private void sendPages(String spaceKey, List<Long> blogPages, Object filter, ConfluenceFilter proxyFilter)
     {
         for (Long pageId : blogPages) {
-            sendPage(pageId, spaceKey, filter, proxyFilter, false);
+            sendPage(pageId, spaceKey, filter, proxyFilter);
         }
     }
 
@@ -892,11 +883,28 @@ public class ConfluenceInputFilterStream
             return;
         }
 
+        String title = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
+
         String documentName;
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
             documentName = this.properties.getSpacePageName();
+            if (documentName == null || documentName.isEmpty()) {
+                return;
+            }
+
+            if (!documentName.equals(title)) {
+                // Set up a redirect page for the home page so we don't break links from spaces that are not imported
+                // in the same package
+                proxyFilter.beginWikiDocument(title, FilterEventParameters.EMPTY);
+                FilterEventParameters redirectParameters = new FilterEventParameters();
+                redirectParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, XWIKI_REDIRECT_CLASS);
+                proxyFilter.beginWikiObject(XWIKI_REDIRECT_CLASS, redirectParameters);
+                proxyFilter.onWikiObjectProperty("location", documentName, FilterEventParameters.EMPTY);
+                proxyFilter.endWikiObject(XWIKI_REDIRECT_CLASS, redirectParameters);
+                proxyFilter.endWikiDocument(title, FilterEventParameters.EMPTY);
+            }
         } else {
-            documentName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
+            documentName = title;
         }
 
         // Skip pages with empty title

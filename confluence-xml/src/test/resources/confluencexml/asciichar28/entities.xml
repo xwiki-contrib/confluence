@@ -6,10 +6,12 @@
         <property name="lowerName"><![CDATA[47826731]]></property>
         <property name="email"/>
     </object>
-    <object class="SpaceDescription" package="com.atlassian.confluence.spaces">
+    <object class="Page" package="com.atlassian.confluence.spaces">
         <id name="id">45809845</id>
         <property name="hibernateVersion">5</property>
-        <property name="title"/><property name="lowerTitle"/><collection name="bodyContents" class="java.util.Collection"><element class="BodyContent" package="com.atlassian.confluence.core"><id name="id">156868656</id>
+        <property name="title">My Space Home</property>
+        <property name="lowerTitle">my space home</property>
+        <collection name="bodyContents" class="java.util.Collection"><element class="BodyContent" package="com.atlassian.confluence.core"><id name="id">156868656</id>
         </element>
         </collection>
         <property name="version">1</property>
@@ -31,9 +33,7 @@
         <property name="name"><![CDATA[My Space]]></property>
         <property name="key"><![CDATA[MySpace]]></property>
         <property name="lowerKey"><![CDATA[myspace]]></property>
-        <property name="description" class="SpaceDescription" package="com.atlassian.confluence.spaces"><id name="id">45809845</id>
-        </property>
-        <property name="homePage" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809846</id></property>
+        <property name="homePage" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809845</id></property>
         <collection name="permissions" class="java.util.Collection"></collection>
         <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
         </property>

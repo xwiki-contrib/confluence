@@ -113,6 +113,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String KEY_SPACE_DESCRIPTION = "description";
 
     /**
+     * The property key to access the space home page.
+     */
+    public static final String KEY_SPACE_HOMEPAGE = "homePage";
+
+    /**
      * The property key to access the space permissions.
      * @since 9.24.0
      */
@@ -550,7 +555,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
         "Labelling",
         "Page",
         "Space",
-        "SpaceDescription",
         "SpacePermission"
     ));
 
@@ -945,9 +949,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
             case "BodyContent":
                 readBodyContentObject(xmlReader);
                 break;
-            case "SpaceDescription":
-                readSpaceDescriptionObject(xmlReader);
-                break;
             case "SpacePermission":
                 readSpacePermissionObject(xmlReader);
                 break;
@@ -1055,6 +1056,13 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         saveSpaceProperties(properties, spaceId);
 
+        Long homePageId = properties.getLong(KEY_SPACE_HOMEPAGE, null);
+        if (homePageId != null) {
+            ConfluenceProperties homePageProperties = getPageProperties(homePageId, true);
+            homePageProperties.setProperty(KEY_PAGE_HOMEPAGE, true);
+            savePageProperties(homePageProperties, homePageId);
+        }
+
         // Register space by id
         this.pages.computeIfAbsent(spaceId, k -> new LinkedList<>());
 
@@ -1063,18 +1071,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
         if (spaceKey != null) {
             this.spacesByKey.put(spaceKey, spaceId);
         }
-    }
-
-    private void readSpaceDescriptionObject(XMLStreamReader xmlReader)
-        throws XMLStreamException, FilterException, ConfigurationException
-    {
-        ConfluenceProperties properties = new ConfluenceProperties();
-
-        long descriptionId = readObjectProperties(xmlReader, properties);
-
-        properties.setProperty(KEY_PAGE_HOMEPAGE, true);
-
-        savePageProperties(properties, descriptionId);
     }
 
     private void readSpacePermissionObject(XMLStreamReader xmlReader)

@@ -3812,48 +3812,6 @@
       <wikiObjectProperty name="users" value="XWiki.XWikiGuest"/>
     </wikiObject>
   </wikiDocument>
-  <wikiDocument name="WebHome">
-    <wikiDocumentLocale>
-      <p>
-        <parameters>
-          <entry>
-            <string>creation_author</string>
-            <string>XWiki.01251587</string>
-          </entry>
-          <entry>
-            <string>creation_date</string>
-            <date>2008-04-23 11:24:41.0 UTC</date>
-          </entry>
-          <entry>
-            <string>lastrevision</string>
-            <string>4</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiDocumentRevision revision="4">
-        <p>
-          <parameters>
-            <entry>
-              <string>revision_author</string>
-              <string>XWiki.01251587</string>
-            </entry>
-            <entry>
-              <string>revision_date</string>
-              <date>2009-07-10 10:16:53.0 UTC</date>
-            </entry>
-            <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>title</string>
-              <string></string>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
   <wikiDocument name="Nice Web">
     <wikiObject name="XWiki.XWikiRights">
       <p>
@@ -4240,6 +4198,19 @@
     </wikiDocumentLocale>
   </wikiDocument>
   <wikiDocument name="Office of Great Things">
+    <wikiObject name="XWiki.RedirectClass">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.RedirectClass</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="location" value="WebHome"/>
+    </wikiObject>
+  </wikiDocument>
+  <wikiDocument name="WebHome">
     <wikiDocumentLocale>
       <p>
         <parameters>
