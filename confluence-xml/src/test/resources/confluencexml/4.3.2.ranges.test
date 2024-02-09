@@ -1,0 +1,3469 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.#------------------------------------------------------------------------------
+<wikiSpace name="PRIV">
+  <wikiDocument name="WebPreferences">
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+  </wikiDocument>
+  <wikiDocument name="Private page 1">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.Admin</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2013-10-14 15:37:52.357 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>1</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>parent_reference</string>
+              <org.xwiki.model.reference.EntityReference>
+                <name>privatespace Home</name>
+                <type>DOCUMENT</type>
+              </org.xwiki.model.reference.EntityReference>
+            </entry>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2013-10-14 15:37:52.357 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>Private page 1</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>Content of private page 1</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+  <wikiDocument name="privatespace Home">
+    <wikiObject name="XWiki.RedirectClass">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.RedirectClass</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="location" value="WebHome"/>
+    </wikiObject>
+  </wikiDocument>
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.Admin</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2013-10-14 15:37:24.463 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>1</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2013-10-14 15:37:24.463 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>privatespace Home</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>(% class="contentLayout" data-atlassian-layout="{~"name~":~"pagelayout-two-right~",~"columns~":[~"large~",~"aside~"],~"header~":true,~"footer~":true}" %)
+(((
+(% class="header" %)
+(((
+This is the home of the privatespace space.
+
+To help you on your way, we've inserted some of our favourite macros on this home page. As you start creating pages, blogging and commenting you'll see the macros below fill up with all the activity in your space.
+)))
+
+(% class="columnLayout twoColumns" %)
+(((
+(% class="cell large" %)
+(((
+(% class="innerCell" %)
+(((
+
+
+{{recently-updated/}}
+)))
+)))
+
+(% class="cell aside" %)
+(((
+(% class="innerCell" %)
+(((
+====== Navigate space ======
+
+
+
+{{pagetreesearch/}}
+
+
+
+{{pagetree/}}
+)))
+)))
+)))
+
+(% class="footer" %)
+(((
+ 
+)))
+)))</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObject name="XWiki.XWikiComments">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.XWikiComments</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="author" value="XWiki.Admin"/>
+          <wikiObjectProperty name="comment" value="Comment on my private space"/>
+          <wikiObjectProperty name="date">
+            <p>
+              <value t="java.util.Date">2013-10-14 15:37:34.250 UTC</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="replyto"/>
+        </wikiObject>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+<wikiSpace name="SPACE2">
+  <wikiDocument name="WebPreferences">
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.XWikiAllGroup"/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.XWikiAllGroup"/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.XWikiAllGroup"/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+  </wikiDocument>
+  <wikiDocument name="Page 2">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.Admin</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2013-10-14 15:33:07.495 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>2</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2013-10-14 15:33:07.495 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>Page 2</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>Content of page 2
+
+Link to page 1 [[here>>doc:SPACE1.Page 1]]</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="2">
+        <p>
+          <parameters>
+            <entry>
+              <string>parent_reference</string>
+              <org.xwiki.model.reference.EntityReference>
+                <name>space2 Home</name>
+                <type>DOCUMENT</type>
+              </org.xwiki.model.reference.EntityReference>
+            </entry>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2013-10-14 15:35:10.951 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>Page 2</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>This page is tagged 'tag1'
+Content of page 2
+
+Link to page 1 [[here>>doc:SPACE1.Page 1]]</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObject name="XWiki.XWikiComments">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.XWikiComments</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="author" value="XWiki.Admin"/>
+          <wikiObjectProperty name="comment" value="Comment on page 2"/>
+          <wikiObjectProperty name="date">
+            <p>
+              <value t="java.util.Date">2013-10-14 15:34:23.725 UTC</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="replyto"/>
+        </wikiObject>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+  <wikiDocument name="space2 Home">
+    <wikiObject name="XWiki.RedirectClass">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.RedirectClass</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="location" value="WebHome"/>
+    </wikiObject>
+  </wikiDocument>
+  <wikiDocument name="WebHome">
+    <wikiObject name="XWiki.XWikiRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.Admin</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2013-10-14 15:32:33.982 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>1</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2013-10-14 15:32:33.982 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>space2 Home</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>(% class="contentLayout" data-atlassian-layout="{~"name~":~"pagelayout-two-right~",~"columns~":[~"large~",~"aside~"],~"header~":true,~"footer~":true}" %)
+(((
+(% class="header" %)
+(((
+This is the home of the space2 space.
+
+To help you on your way, we've inserted some of our favourite macros on this home page. As you start creating pages, blogging and commenting you'll see the macros below fill up with all the activity in your space.
+)))
+
+(% class="columnLayout twoColumns" %)
+(((
+(% class="cell large" %)
+(((
+(% class="innerCell" %)
+(((
+
+
+{{recently-updated/}}
+)))
+)))
+
+(% class="cell aside" %)
+(((
+(% class="innerCell" %)
+(((
+====== Navigate space ======
+
+
+
+{{pagetreesearch/}}
+
+
+
+{{pagetree/}}
+)))
+)))
+)))
+
+(% class="footer" %)
+(((
+ 
+)))
+)))</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObject name="XWiki.XWikiComments">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.XWikiComments</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="author" value="XWiki.Admin"/>
+          <wikiObjectProperty name="comment" value="Comment on homepage of space 2"/>
+          <wikiObjectProperty name="date">
+            <p>
+              <value t="java.util.Date">2013-10-14 15:35:40.689 UTC</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="replyto"/>
+        </wikiObject>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+<wikiSpace name="SPACE1">
+  <wikiDocument name="WebPreferences">
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.XWikiAllGroup"/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.XWikiAllGroup"/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.XWikiAllGroup"/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+  </wikiDocument>
+  <wikiDocument name="Page 1">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.Admin</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2013-10-14 15:07:38.580 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>7</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2013-10-14 15:07:38.580 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>Page 1</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string> 
+
+ 
+
+Content of the page including:
+
+* 1 list
+* 1 numeric list
+* 1 validated list
+* 2 images
+* toc macros as default
+* 6 titles of rank 1,2 and 3
+* 1 table of 3x3 with header line
+* text align left, middle then right
+* link to page of the same space
+* link to page of another space (space2)
+
+1. 1 numeric list
+1. 2\\
+11. 2a
+11. 2b\\
+111. 2ai
+111. 2aii
+11. 2c
+1. 3
+
+{{task-list}}
+{{task id="76" status="incomplete"}}
+Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du caractère @ pour la lui affecter
+{{/task}}
+
+{{task id="77" status="incomplete"}}
+task 2
+
+{{task-list}}
+ 
+
+{{task id="78" status="incomplete"}}
+task 2.1
+
+{{task-list}}
+ 
+
+{{task id="79" status="incomplete"}}
+task 2.1.1
+{{/task}}
+{{/task-list}}
+{{/task}}
+
+{{task id="80" status="incomplete"}}
+task 2.2
+{{/task}}
+{{/task-list}}
+{{/task}}
+
+{{task id="81" status="incomplete"}}
+task 3
+{{/task}}
+
+{{task id="82" status="incomplete"}}
+Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
+{{/task}}
+{{/task-list}}
+
+[[image:attach:9391963529_96f9f9b16c_o.jpg]]
+
+[[image:attach:271360617.jpg]]
+
+
+
+{{toc/}}
+
+= Titre 1 =
+
+== Titre 2 ==
+
+=== Titre 3 ===
+
+== Titre 2 ==
+
+= Titre 1 =
+
+=== Titre 3 ===
+
+|=(((
+h1
+)))|=(((
+h2
+)))|=(((
+h3
+)))
+|(((
+1
+)))|(((
+2
+)))|(((
+3
+)))
+|(((
+4
+)))|(((
+5
+)))|(((
+6
+)))
+
+(% style="text-align: left;" %)
+align left
+
+(% style="text-align: center;" %)
+align middle
+
+(% style="text-align: right;" %)
+align right
+
+Default alignment
+
+[[doc:space1 Home]]
+
+space2 page2
+
+[[attach:Config.xml]]&lt;= attached file auto added here
+
+©
+
+
+
+Some wiki text with **bold** content
+
+----
+
+ 
+
+ </string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="2">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2013-10-14 15:28:41.980 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>Page 1</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string> 
+
+ 
+
+Content of the page including:
+
+* 1 list
+* 1 numeric list
+* 1 validated list
+* 2 images
+* toc macros as default
+* 6 titles of rank 1,2 and 3
+* 1 table of 3x3 with header line
+* text align left, middle then right
+* link to page of the same space
+* link to page of another space (space2)
+* almost all macros (except long to configure ones)
+
+1. 1 numeric list
+1. 2\\
+11. 2a
+11. 2b\\
+111. 2ai
+111. 2aii
+11. 2c
+1. 3
+
+{{task-list}}
+{{task id="76" status="incomplete"}}
+Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du caractère @ pour la lui affecter
+{{/task}}
+
+{{task id="77" status="incomplete"}}
+task 2
+
+{{task-list}}
+ 
+
+{{task id="78" status="incomplete"}}
+task 2.1
+
+{{task-list}}
+ 
+
+{{task id="79" status="incomplete"}}
+task 2.1.1
+{{/task}}
+{{/task-list}}
+{{/task}}
+
+{{task id="80" status="incomplete"}}
+task 2.2
+{{/task}}
+{{/task-list}}
+{{/task}}
+
+{{task id="81" status="incomplete"}}
+task 3
+{{/task}}
+
+{{task id="82" status="incomplete"}}
+Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
+{{/task}}
+{{/task-list}}
+
+[[image:attach:9391963529_96f9f9b16c_o.jpg]]
+
+[[image:attach:271360617.jpg]]
+
+
+
+{{toc/}}
+
+= Titre 1 =
+
+== Titre 2 ==
+
+=== Titre 3 ===
+
+== Titre 2 ==
+
+= Titre 1 =
+
+=== Titre 3 ===
+
+|=(((
+h1
+)))|=(((
+h2
+)))|=(((
+h3
+)))
+|(((
+1
+)))|(((
+2
+)))|(((
+3
+)))
+|(((
+4
+)))|(((
+5
+)))|(((
+6
+)))
+
+(% style="text-align: left;" %)
+align left
+
+(% style="text-align: center;" %)
+align middle
+
+(% style="text-align: right;" %)
+align right
+
+Default alignment
+
+[[doc:space1 Home]]
+
+space2 page2
+
+[[attach:Config.xml]]&lt;= attached file auto added here
+
+©
+
+
+
+Some wiki text with **bold** content
+
+----
+
+{{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}} &lt;= user macro
+
+{{info title="info title"}}
+info default macro
+{{/info}}
+
+
+
+{{status title="State default macro"/}}
+
+
+
+{{gallery title="Gallerie default macro"/}}
+
+
+
+{{children page="space1 Home"/}}
+
+
+
+{{id name="anchor"/}}
+
+{{code title="Bloc code title for java with Django theme" theme="DJango" language="java"}}
+Content of bloc code
+{{/code}}
+
+
+
+{{blog-posts/}}
+
+
+
+{{create-space-button/}}
+
+
+
+{{change-history/}}
+
+{{column width="300px"}}
+Column macro
+{{/column}}
+
+
+
+{{gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
+
+
+
+{{contentbylabel labels="tag1"/}}
+
+
+
+{{content-by-user 0="admin"/}}
+
+
+
+{{contributors/}}
+
+
+
+{{contributors-summary/}}
+
+{{details}}
+Content of meta data detail macro
+{{/details}}
+
+{{expand}}
+Content of box to expand
+{{/expand}}
+
+{{excerpt atlassian-macro-output-type="BLOCK"}}
+Excerpt content
+{{/excerpt}}
+
+
+
+{{favpages/}}
+
+
+
+{{im service="jabber" 0="Admin"/}}
+
+{{info title="info title"}}
+content of info macro
+{{/info}}
+
+
+
+{{space-details width="80%"/}}
+
+
+
+{{listlabels/}}
+
+
+
+{{spaces/}}
+
+
+
+{{livesearch/}}
+
+"Video player" I won't add this macro because of the weight of the attached document
+
+
+
+{{navmap 0="tag1"/}}
+
+
+
+{{network 0="following"/}}
+
+{{note title="Optional Title of the macro"}}
+content of the macro
+{{/note}}
+
+3 macros named: excel macro, powerpoint macro and word macro
+
+
+
+{{index/}}
+
+
+
+{{pagetree/}}
+
+
+
+{{pagetreesearch/}}
+
+{{noformat}}
+no format content
+{{/noformat}}
+
+PDF macro
+
+
+
+{{space-attachments/}}
+
+
+
+{{attachments/}}
+
+
+
+{{popular-labels/}}
+
+
+
+{{profile-picture User="admin"/}}
+
+
+
+{{global-reports/}}
+
+
+
+{{recently-updated/}}
+
+
+
+{{recently-used-labels/}}
+
+
+
+{{related-labels/}}
+
+RSS feed macro
+
+
+
+{{spacejump space="space2"/}}
+
+{{section}}
+content of the macro
+{{/section}}
+
+
+
+{{recently-updated-dashboard/}}
+
+{{tip title="tip title"}}
+tip content
+{{/tip}}
+
+
+
+{{profile user="admin"/}}
+
+
+
+{{status-list username="admin"/}}
+
+{{panel}}
+content
+{{/panel}}
+
+{{error title="warning title"}}
+content
+{{/error}}
+
+Widget connector maccro
+
+{{toc-zone}}
+content
+{{/toc-zone}}
+
+ 
+
+ 
+
+ </string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="3">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2013-10-14 15:30:07.55 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>Page 1</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>There is comments attached to this page
+
+There is 3 documents attached to this page
+
+Content of the page including:
+
+* 1 list
+* 1 numeric list
+* 1 validated list
+* 2 images
+* toc macros as default
+* 6 titles of rank 1,2 and 3
+* 1 table of 3x3 with header line
+* text align left, middle then right
+* link to page of the same space
+* link to page of another space (space2)
+* almost all macros (except long to configure ones)
+
+1. 1 numeric list
+1. 2\\
+11. 2a
+11. 2b\\
+111. 2ai
+111. 2aii
+11. 2c
+1. 3
+
+{{task-list}}
+{{task id="76" status="incomplete"}}
+Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du caractère @ pour la lui affecter
+{{/task}}
+
+{{task id="77" status="incomplete"}}
+task 2
+
+{{task-list}}
+ 
+
+{{task id="78" status="incomplete"}}
+task 2.1
+
+{{task-list}}
+ 
+
+{{task id="79" status="incomplete"}}
+task 2.1.1
+{{/task}}
+{{/task-list}}
+{{/task}}
+
+{{task id="80" status="incomplete"}}
+task 2.2
+{{/task}}
+{{/task-list}}
+{{/task}}
+
+{{task id="81" status="incomplete"}}
+task 3
+{{/task}}
+
+{{task id="82" status="incomplete"}}
+Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
+{{/task}}
+{{/task-list}}
+
+[[image:attach:9391963529_96f9f9b16c_o.jpg]]
+
+[[image:attach:271360617.jpg]]
+
+
+
+{{toc/}}
+
+= Titre 1 =
+
+== Titre 2 ==
+
+=== Titre 3 ===
+
+== Titre 2 ==
+
+= Titre 1 =
+
+=== Titre 3 ===
+
+|=(((
+h1
+)))|=(((
+h2
+)))|=(((
+h3
+)))
+|(((
+1
+)))|(((
+2
+)))|(((
+3
+)))
+|(((
+4
+)))|(((
+5
+)))|(((
+6
+)))
+
+(% style="text-align: left;" %)
+align left
+
+(% style="text-align: center;" %)
+align middle
+
+(% style="text-align: right;" %)
+align right
+
+Default alignment
+
+[[doc:space1 Home]]
+
+space2 page2
+
+[[attach:Config.xml]]&lt;= attached file auto added here
+
+©
+
+
+
+Some wiki text with **bold** content
+
+----
+
+{{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}} &lt;= user macro
+
+{{info title="info title"}}
+info default macro
+{{/info}}
+
+
+
+{{status title="State default macro"/}}
+
+
+
+{{gallery title="Gallerie default macro"/}}
+
+
+
+{{children page="space1 Home"/}}
+
+
+
+{{id name="anchor"/}}
+
+{{code title="Bloc code title for java with Django theme" theme="DJango" language="java"}}
+Content of bloc code
+{{/code}}
+
+
+
+{{blog-posts/}}
+
+
+
+{{create-space-button/}}
+
+
+
+{{change-history/}}
+
+{{column width="300px"}}
+Column macro
+{{/column}}
+
+
+
+{{gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
+
+
+
+{{contentbylabel labels="tag1"/}}
+
+
+
+{{content-by-user 0="admin"/}}
+
+
+
+{{contributors/}}
+
+
+
+{{contributors-summary/}}
+
+{{details}}
+Content of meta data detail macro
+{{/details}}
+
+{{expand}}
+Content of box to expand
+{{/expand}}
+
+{{excerpt atlassian-macro-output-type="BLOCK"}}
+Excerpt content
+{{/excerpt}}
+
+
+
+{{favpages/}}
+
+
+
+{{im service="jabber" 0="Admin"/}}
+
+{{info title="info title"}}
+content of info macro
+{{/info}}
+
+
+
+{{space-details width="80%"/}}
+
+
+
+{{listlabels/}}
+
+
+
+{{spaces/}}
+
+
+
+{{livesearch/}}
+
+"Video player" I won't add this macro because of the weight of the attached document
+
+
+
+{{navmap 0="tag1"/}}
+
+
+
+{{network 0="following"/}}
+
+{{note title="Optional Title of the macro"}}
+content of the macro
+{{/note}}
+
+3 macros named: excel macro, powerpoint macro and word macro
+
+
+
+{{index/}}
+
+
+
+{{pagetree/}}
+
+
+
+{{pagetreesearch/}}
+
+{{noformat}}
+no format content
+{{/noformat}}
+
+PDF macro
+
+
+
+{{space-attachments/}}
+
+
+
+{{attachments/}}
+
+
+
+{{popular-labels/}}
+
+
+
+{{profile-picture User="admin"/}}
+
+
+
+{{global-reports/}}
+
+
+
+{{recently-updated/}}
+
+
+
+{{recently-used-labels/}}
+
+
+
+{{related-labels/}}
+
+RSS feed macro
+
+
+
+{{spacejump space="space2"/}}
+
+{{section}}
+content of the macro
+{{/section}}
+
+
+
+{{recently-updated-dashboard/}}
+
+{{tip title="tip title"}}
+tip content
+{{/tip}}
+
+
+
+{{profile user="admin"/}}
+
+
+
+{{status-list username="admin"/}}
+
+{{panel}}
+content
+{{/panel}}
+
+{{error title="warning title"}}
+content
+{{/error}}
+
+Widget connector maccro
+
+{{toc-zone}}
+content
+{{/toc-zone}}
+
+ 
+
+ 
+
+ </string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="4">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2013-10-14 15:30:16.93 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string>Task marked complete</string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>Page 1</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>There is comments attached to this page
+
+There is 3 documents attached to this page
+
+Content of the page including:
+
+* 1 list
+* 1 numeric list
+* 1 validated list
+* 2 images
+* toc macros as default
+* 6 titles of rank 1,2 and 3
+* 1 table of 3x3 with header line
+* text align left, middle then right
+* link to page of the same space
+* link to page of another space (space2)
+* almost all macros (except long to configure ones)
+
+1. 1 numeric list
+1. 2\\
+11. 2a
+11. 2b\\
+111. 2ai
+111. 2aii
+11. 2c
+1. 3
+
+{{task-list}}
+{{task id="76" status="complete"}}
+Saisissez la tâche ici et mentionnez le nom d'un utilisateur précédé du caractère @ pour la lui affecter
+{{/task}}
+
+{{task id="77" status="incomplete"}}
+task 2
+
+{{task-list}}
+ 
+
+{{task id="78" status="incomplete"}}
+task 2.1
+
+{{task-list}}
+ 
+
+{{task id="79" status="incomplete"}}
+task 2.1.1
+{{/task}}
+{{/task-list}}
+{{/task}}
+
+{{task id="80" status="incomplete"}}
+task 2.2
+{{/task}}
+{{/task-list}}
+{{/task}}
+
+{{task id="81" status="incomplete"}}
+task 3
+{{/task}}
+
+{{task id="82" status="incomplete"}}
+Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
+{{/task}}
+{{/task-list}}
+
+[[image:attach:9391963529_96f9f9b16c_o.jpg]]
+
+[[image:attach:271360617.jpg]]
+
+
+
+{{toc/}}
+
+= Titre 1 =
+
+== Titre 2 ==
+
+=== Titre 3 ===
+
+== Titre 2 ==
+
+= Titre 1 =
+
+=== Titre 3 ===
+
+|=(((
+h1
+)))|=(((
+h2
+)))|=(((
+h3
+)))
+|(((
+1
+)))|(((
+2
+)))|(((
+3
+)))
+|(((
+4
+)))|(((
+5
+)))|(((
+6
+)))
+
+(% style="text-align: left;" %)
+align left
+
+(% style="text-align: center;" %)
+align middle
+
+(% style="text-align: right;" %)
+align right
+
+Default alignment
+
+[[doc:space1 Home]]
+
+space2 page2
+
+[[attach:Config.xml]]&lt;= attached file auto added here
+
+©
+
+
+
+Some wiki text with **bold** content
+
+----
+
+{{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}} &lt;= user macro
+
+{{info title="info title"}}
+info default macro
+{{/info}}
+
+
+
+{{status title="State default macro"/}}
+
+
+
+{{gallery title="Gallerie default macro"/}}
+
+
+
+{{children page="space1 Home"/}}
+
+
+
+{{id name="anchor"/}}
+
+{{code title="Bloc code title for java with Django theme" theme="DJango" language="java"}}
+Content of bloc code
+{{/code}}
+
+
+
+{{blog-posts/}}
+
+
+
+{{create-space-button/}}
+
+
+
+{{change-history/}}
+
+{{column width="300px"}}
+Column macro
+{{/column}}
+
+
+
+{{gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
+
+
+
+{{contentbylabel labels="tag1"/}}
+
+
+
+{{content-by-user 0="admin"/}}
+
+
+
+{{contributors/}}
+
+
+
+{{contributors-summary/}}
+
+{{details}}
+Content of meta data detail macro
+{{/details}}
+
+{{expand}}
+Content of box to expand
+{{/expand}}
+
+{{excerpt atlassian-macro-output-type="BLOCK"}}
+Excerpt content
+{{/excerpt}}
+
+
+
+{{favpages/}}
+
+
+
+{{im service="jabber" 0="Admin"/}}
+
+{{info title="info title"}}
+content of info macro
+{{/info}}
+
+
+
+{{space-details width="80%"/}}
+
+
+
+{{listlabels/}}
+
+
+
+{{spaces/}}
+
+
+
+{{livesearch/}}
+
+"Video player" I won't add this macro because of the weight of the attached document
+
+
+
+{{navmap 0="tag1"/}}
+
+
+
+{{network 0="following"/}}
+
+{{note title="Optional Title of the macro"}}
+content of the macro
+{{/note}}
+
+3 macros named: excel macro, powerpoint macro and word macro
+
+
+
+{{index/}}
+
+
+
+{{pagetree/}}
+
+
+
+{{pagetreesearch/}}
+
+{{noformat}}
+no format content
+{{/noformat}}
+
+PDF macro
+
+
+
+{{space-attachments/}}
+
+
+
+{{attachments/}}
+
+
+
+{{popular-labels/}}
+
+
+
+{{profile-picture User="admin"/}}
+
+
+
+{{global-reports/}}
+
+
+
+{{recently-updated/}}
+
+
+
+{{recently-used-labels/}}
+
+
+
+{{related-labels/}}
+
+RSS feed macro
+
+
+
+{{spacejump space="space2"/}}
+
+{{section}}
+content of the macro
+{{/section}}
+
+
+
+{{recently-updated-dashboard/}}
+
+{{tip title="tip title"}}
+tip content
+{{/tip}}
+
+
+
+{{profile user="admin"/}}
+
+
+
+{{status-list username="admin"/}}
+
+{{panel}}
+content
+{{/panel}}
+
+{{error title="warning title"}}
+content
+{{/error}}
+
+Widget connector maccro
+
+{{toc-zone}}
+content
+{{/toc-zone}}
+
+ 
+
+ 
+
+ </string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="5">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2013-10-14 15:30:33.783 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>Page 1</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>There is comments attached to this page
+
+There is 3 documents attached to this page
+
+Content of the page including:
+
+* 1 list
+* 1 numeric list
+* 1 validated list
+* 2 images
+* toc macros as default
+* 6 titles of rank 1,2 and 3
+* 1 table of 3x3 with header line
+* text align left, middle then right
+* link to page of the same space
+* link to page of another space (space2)
+* almost all macros (except long to configure ones)
+
+1. 1 numeric list
+1. 2\\
+11. 2a
+11. 2b\\
+111. 2ai
+111. 2aii
+11. 2c
+1. 3
+
+{{task-list}}
+{{task id="76" status="complete"}}
+Task 1 is checked\\
+{{/task}}
+
+{{task id="77" status="incomplete"}}
+task 2
+
+{{task-list}}
+ 
+
+{{task id="78" status="incomplete"}}
+task 2.1
+
+{{task-list}}
+ 
+
+{{task id="79" status="incomplete"}}
+task 2.1.1
+{{/task}}
+{{/task-list}}
+{{/task}}
+
+{{task id="80" status="incomplete"}}
+task 2.2
+{{/task}}
+{{/task-list}}
+{{/task}}
+
+{{task id="81" status="incomplete"}}
+task 3
+{{/task}}
+
+{{task id="82" status="incomplete"}}
+Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
+{{/task}}
+{{/task-list}}
+
+[[image:attach:9391963529_96f9f9b16c_o.jpg]]
+
+[[image:attach:271360617.jpg]]
+
+
+
+{{toc/}}
+
+= Titre 1 =
+
+== Titre 2 ==
+
+=== Titre 3 ===
+
+== Titre 2 ==
+
+= Titre 1 =
+
+=== Titre 3 ===
+
+|=(((
+h1
+)))|=(((
+h2
+)))|=(((
+h3
+)))
+|(((
+1
+)))|(((
+2
+)))|(((
+3
+)))
+|(((
+4
+)))|(((
+5
+)))|(((
+6
+)))
+
+(% style="text-align: left;" %)
+align left
+
+(% style="text-align: center;" %)
+align middle
+
+(% style="text-align: right;" %)
+align right
+
+Default alignment
+
+[[doc:space1 Home]]
+
+space2 page2
+
+[[attach:Config.xml]]&lt;= attached file auto added here
+
+©
+
+
+
+Some wiki text with **bold** content
+
+----
+
+{{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}} &lt;= user macro
+
+{{info title="info title"}}
+info default macro
+{{/info}}
+
+
+
+{{status title="State default macro"/}}
+
+
+
+{{gallery title="Gallerie default macro"/}}
+
+
+
+{{children page="space1 Home"/}}
+
+
+
+{{id name="anchor"/}}
+
+{{code title="Bloc code title for java with Django theme" theme="DJango" language="java"}}
+Content of bloc code
+{{/code}}
+
+
+
+{{blog-posts/}}
+
+
+
+{{create-space-button/}}
+
+
+
+{{change-history/}}
+
+{{column width="300px"}}
+Column macro
+{{/column}}
+
+
+
+{{gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
+
+
+
+{{contentbylabel labels="tag1"/}}
+
+
+
+{{content-by-user 0="admin"/}}
+
+
+
+{{contributors/}}
+
+
+
+{{contributors-summary/}}
+
+{{details}}
+Content of meta data detail macro
+{{/details}}
+
+{{expand}}
+Content of box to expand
+{{/expand}}
+
+{{excerpt atlassian-macro-output-type="BLOCK"}}
+Excerpt content
+{{/excerpt}}
+
+
+
+{{favpages/}}
+
+
+
+{{im service="jabber" 0="Admin"/}}
+
+{{info title="info title"}}
+content of info macro
+{{/info}}
+
+
+
+{{space-details width="80%"/}}
+
+
+
+{{listlabels/}}
+
+
+
+{{spaces/}}
+
+
+
+{{livesearch/}}
+
+"Video player" I won't add this macro because of the weight of the attached document
+
+
+
+{{navmap 0="tag1"/}}
+
+
+
+{{network 0="following"/}}
+
+{{note title="Optional Title of the macro"}}
+content of the macro
+{{/note}}
+
+3 macros named: excel macro, powerpoint macro and word macro
+
+
+
+{{index/}}
+
+
+
+{{pagetree/}}
+
+
+
+{{pagetreesearch/}}
+
+{{noformat}}
+no format content
+{{/noformat}}
+
+PDF macro
+
+
+
+{{space-attachments/}}
+
+
+
+{{attachments/}}
+
+
+
+{{popular-labels/}}
+
+
+
+{{profile-picture User="admin"/}}
+
+
+
+{{global-reports/}}
+
+
+
+{{recently-updated/}}
+
+
+
+{{recently-used-labels/}}
+
+
+
+{{related-labels/}}
+
+RSS feed macro
+
+
+
+{{spacejump space="space2"/}}
+
+{{section}}
+content of the macro
+{{/section}}
+
+
+
+{{recently-updated-dashboard/}}
+
+{{tip title="tip title"}}
+tip content
+{{/tip}}
+
+
+
+{{profile user="admin"/}}
+
+
+
+{{status-list username="admin"/}}
+
+{{panel}}
+content
+{{/panel}}
+
+{{error title="warning title"}}
+content
+{{/error}}
+
+Widget connector maccro
+
+{{toc-zone}}
+content
+{{/toc-zone}}
+
+ 
+
+ 
+
+ </string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="6">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2013-10-14 15:32:14.75 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>Page 1</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>There is comments attached to this page
+There is 3 documents attached to this page
+There is no specific right on this page
+
+Content of the page including:
+
+* 1 list
+* 1 numeric list
+* 1 validated list
+* 2 images
+* toc macros as default
+* 6 titles of rank 1,2 and 3
+* 1 table of 3x3 with header line
+* text align left, middle then right
+* link to page of the same space
+* link to page of another space (space2)
+* almost all macros (except long to configure ones)
+
+1. 1 numeric list
+1. 2\\
+11. 2a
+11. 2b\\
+111. 2ai
+111. 2aii
+11. 2c
+1. 3
+
+{{task-list}}
+{{task id="76" status="complete"}}
+Task 1 is checked\\
+{{/task}}
+
+{{task id="77" status="incomplete"}}
+task 2
+
+{{task-list}}
+ 
+
+{{task id="78" status="incomplete"}}
+task 2.1
+
+{{task-list}}
+ 
+
+{{task id="79" status="incomplete"}}
+task 2.1.1
+{{/task}}
+{{/task-list}}
+{{/task}}
+
+{{task id="80" status="incomplete"}}
+task 2.2
+{{/task}}
+{{/task-list}}
+{{/task}}
+
+{{task id="81" status="incomplete"}}
+task 3
+{{/task}}
+
+{{task id="82" status="incomplete"}}
+Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
+{{/task}}
+{{/task-list}}
+
+[[image:attach:9391963529_96f9f9b16c_o.jpg]]
+
+[[image:attach:271360617.jpg]]
+
+
+
+{{toc/}}
+
+= Titre 1 =
+
+== Titre 2 ==
+
+=== Titre 3 ===
+
+== Titre 2 ==
+
+= Titre 1 =
+
+=== Titre 3 ===
+
+|=(((
+h1
+)))|=(((
+h2
+)))|=(((
+h3
+)))
+|(((
+1
+)))|(((
+2
+)))|(((
+3
+)))
+|(((
+4
+)))|(((
+5
+)))|(((
+6
+)))
+
+(% style="text-align: left;" %)
+align left
+
+(% style="text-align: center;" %)
+align middle
+
+(% style="text-align: right;" %)
+align right
+
+Default alignment
+
+[[doc:space1 Home]]
+
+space2 page2
+
+[[attach:Config.xml]]&lt;= attached file auto added here
+
+©
+
+
+
+Some wiki text with **bold** content
+
+----
+
+{{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}} &lt;= user macro
+
+{{info title="info title"}}
+info default macro
+{{/info}}
+
+
+
+{{status title="State default macro"/}}
+
+
+
+{{gallery title="Gallerie default macro"/}}
+
+
+
+{{children page="space1 Home"/}}
+
+
+
+{{id name="anchor"/}}
+
+{{code title="Bloc code title for java with Django theme" theme="DJango" language="java"}}
+Content of bloc code
+{{/code}}
+
+
+
+{{blog-posts/}}
+
+
+
+{{create-space-button/}}
+
+
+
+{{change-history/}}
+
+{{column width="300px"}}
+Column macro
+{{/column}}
+
+
+
+{{gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
+
+
+
+{{contentbylabel labels="tag1"/}}
+
+
+
+{{content-by-user 0="admin"/}}
+
+
+
+{{contributors/}}
+
+
+
+{{contributors-summary/}}
+
+{{details}}
+Content of meta data detail macro
+{{/details}}
+
+{{expand}}
+Content of box to expand
+{{/expand}}
+
+{{excerpt atlassian-macro-output-type="BLOCK"}}
+Excerpt content
+{{/excerpt}}
+
+
+
+{{favpages/}}
+
+
+
+{{im service="jabber" 0="Admin"/}}
+
+{{info title="info title"}}
+content of info macro
+{{/info}}
+
+
+
+{{space-details width="80%"/}}
+
+
+
+{{listlabels/}}
+
+
+
+{{spaces/}}
+
+
+
+{{livesearch/}}
+
+"Video player" I won't add this macro because of the weight of the attached document
+
+
+
+{{navmap 0="tag1"/}}
+
+
+
+{{network 0="following"/}}
+
+{{note title="Optional Title of the macro"}}
+content of the macro
+{{/note}}
+
+3 macros named: excel macro, powerpoint macro and word macro
+
+
+
+{{index/}}
+
+
+
+{{pagetree/}}
+
+
+
+{{pagetreesearch/}}
+
+{{noformat}}
+no format content
+{{/noformat}}
+
+PDF macro
+
+
+
+{{space-attachments/}}
+
+
+
+{{attachments/}}
+
+
+
+{{popular-labels/}}
+
+
+
+{{profile-picture User="admin"/}}
+
+
+
+{{global-reports/}}
+
+
+
+{{recently-updated/}}
+
+
+
+{{recently-used-labels/}}
+
+
+
+{{related-labels/}}
+
+RSS feed macro
+
+
+
+{{spacejump space="space2"/}}
+
+{{section}}
+content of the macro
+{{/section}}
+
+
+
+{{recently-updated-dashboard/}}
+
+{{tip title="tip title"}}
+tip content
+{{/tip}}
+
+
+
+{{profile user="admin"/}}
+
+
+
+{{status-list username="admin"/}}
+
+{{panel}}
+content
+{{/panel}}
+
+{{error title="warning title"}}
+content
+{{/error}}
+
+Widget connector maccro
+
+{{toc-zone}}
+content
+{{/toc-zone}}
+
+ 
+
+ 
+
+ </string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="7">
+        <p>
+          <parameters>
+            <entry>
+              <string>parent_reference</string>
+              <org.xwiki.model.reference.EntityReference>
+                <name>space1 Home</name>
+                <type>DOCUMENT</type>
+              </org.xwiki.model.reference.EntityReference>
+            </entry>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2013-10-14 15:34:06.749 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>Page 1</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>There is comments attached to this page
+There is 3 documents attached to this page
+There is no specific right on this page
+
+Content of the page including:
+
+* 1 list
+* 1 numeric list
+* 1 validated list
+* 2 images
+* toc macros as default
+* 6 titles of rank 1,2 and 3
+* 1 table of 3x3 with header line
+* text align left, middle then right
+* link to page of the same space
+* link to page of another space (space2)
+* almost all macros (except long to configure ones)
+
+1. 1 numeric list
+1. 2\\
+11. 2a
+11. 2b\\
+111. 2ai
+111. 2aii
+11. 2c
+1. 3
+
+{{task-list}}
+{{task id="76" status="complete"}}
+Task 1 is checked\\
+{{/task}}
+
+{{task id="77" status="incomplete"}}
+task 2
+
+{{task-list}}
+ 
+
+{{task id="78" status="incomplete"}}
+task 2.1
+
+{{task-list}}
+ 
+
+{{task id="79" status="incomplete"}}
+task 2.1.1
+{{/task}}
+{{/task-list}}
+{{/task}}
+
+{{task id="80" status="incomplete"}}
+task 2.2
+{{/task}}
+{{/task-list}}
+{{/task}}
+
+{{task id="81" status="incomplete"}}
+task 3
+{{/task}}
+
+{{task id="82" status="incomplete"}}
+Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}}\\
+{{/task}}
+{{/task-list}}
+
+[[image:attach:9391963529_96f9f9b16c_o.jpg]]
+
+[[image:attach:271360617.jpg]]
+
+
+
+{{toc/}}
+
+= Titre 1 =
+
+== Titre 2 ==
+
+=== Titre 3 ===
+
+== Titre 2 ==
+
+= Titre 1 =
+
+=== Titre 3 ===
+
+|=(((
+h1
+)))|=(((
+h2
+)))|=(((
+h3
+)))
+|(((
+1
+)))|(((
+2
+)))|(((
+3
+)))
+|(((
+4
+)))|(((
+5
+)))|(((
+6
+)))
+
+(% style="text-align: left;" %)
+align left
+
+(% style="text-align: center;" %)
+align middle
+
+(% style="text-align: right;" %)
+align right
+
+Default alignment
+
+[[doc:space1 Home]]
+
+[[space2 page2>>doc:SPACE2.Page 2]]
+
+[[attach:Config.xml]]&lt;= attached file auto added here
+
+©
+
+
+
+Some wiki text with **bold** content
+
+----
+
+{{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Admin"/}} &lt;= user macro
+
+{{info title="info title"}}
+info default macro
+{{/info}}
+
+
+
+{{status title="State default macro"/}}
+
+
+
+{{gallery title="Gallerie default macro"/}}
+
+
+
+{{children page="space1 Home"/}}
+
+
+
+{{id name="anchor"/}}
+
+{{code title="Bloc code title for java with Django theme" theme="DJango" language="java"}}
+Content of bloc code
+{{/code}}
+
+
+
+{{blog-posts/}}
+
+
+
+{{create-space-button/}}
+
+
+
+{{change-history/}}
+
+{{column width="300px"}}
+Column macro
+{{/column}}
+
+
+
+{{gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
+
+
+
+{{contentbylabel labels="tag1"/}}
+
+
+
+{{content-by-user 0="admin"/}}
+
+
+
+{{contributors/}}
+
+
+
+{{contributors-summary/}}
+
+{{details}}
+Content of meta data detail macro
+{{/details}}
+
+{{expand}}
+Content of box to expand
+{{/expand}}
+
+{{excerpt atlassian-macro-output-type="BLOCK"}}
+Excerpt content
+{{/excerpt}}
+
+
+
+{{favpages/}}
+
+
+
+{{im service="jabber" 0="Admin"/}}
+
+{{info title="info title"}}
+content of info macro
+{{/info}}
+
+
+
+{{space-details width="80%"/}}
+
+
+
+{{listlabels/}}
+
+
+
+{{spaces/}}
+
+
+
+{{livesearch/}}
+
+"Video player" I won't add this macro because of the weight of the attached document
+
+
+
+{{navmap 0="tag1"/}}
+
+
+
+{{network 0="following"/}}
+
+{{note title="Optional Title of the macro"}}
+content of the macro
+{{/note}}
+
+3 macros named: excel macro, powerpoint macro and word macro
+
+
+
+{{index/}}
+
+
+
+{{pagetree/}}
+
+
+
+{{pagetreesearch/}}
+
+{{noformat}}
+no format content
+{{/noformat}}
+
+PDF macro
+
+
+
+{{space-attachments/}}
+
+
+
+{{attachments/}}
+
+
+
+{{popular-labels/}}
+
+
+
+{{profile-picture User="admin"/}}
+
+
+
+{{global-reports/}}
+
+
+
+{{recently-updated/}}
+
+
+
+{{recently-used-labels/}}
+
+
+
+{{related-labels/}}
+
+RSS feed macro
+
+
+
+{{spacejump space="space2"/}}
+
+{{section}}
+content of the macro
+{{/section}}
+
+
+
+{{recently-updated-dashboard/}}
+
+{{tip title="tip title"}}
+tip content
+{{/tip}}
+
+
+
+{{profile user="admin"/}}
+
+
+
+{{status-list username="admin"/}}
+
+{{panel}}
+content
+{{/panel}}
+
+{{error title="warning title"}}
+content
+{{/error}}
+
+Widget connector maccro
+
+{{toc-zone}}
+content
+{{/toc-zone}}
+
+ 
+
+ 
+
+ </string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObject name="XWiki.XWikiComments">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.XWikiComments</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="author" value="XWiki.Admin"/>
+          <wikiObjectProperty name="comment" value="comment 1"/>
+          <wikiObjectProperty name="date">
+            <p>
+              <value t="java.util.Date">2013-10-14 15:29:09.540 UTC</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="replyto"/>
+        </wikiObject>
+        <wikiObject name="XWiki.XWikiComments">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.XWikiComments</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="author" value="XWiki.Admin"/>
+          <wikiObjectProperty name="comment" value="Answer of comment 1"/>
+          <wikiObjectProperty name="date">
+            <p>
+              <value t="java.util.Date">2013-10-14 15:29:19.428 UTC</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="replyto">
+            <p>
+              <value t="java.lang.Integer">0</value>
+            </p>
+          </wikiObjectProperty>
+        </wikiObject>
+        <wikiObject name="XWiki.XWikiComments">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.XWikiComments</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="author" value="XWiki.Admin"/>
+          <wikiObjectProperty name="comment" value="Coment 2"/>
+          <wikiObjectProperty name="date">
+            <p>
+              <value t="java.util.Date">2013-10-14 15:29:25.282 UTC</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="replyto"/>
+        </wikiObject>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+  <wikiDocument name="space1 Home">
+    <wikiObject name="XWiki.RedirectClass">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.RedirectClass</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="location" value="WebHome"/>
+    </wikiObject>
+  </wikiDocument>
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.Admin</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2013-10-14 14:53:25.501 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>1</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2013-10-14 14:53:25.501 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>space1 Home</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>(% class="contentLayout" data-atlassian-layout="{~"name~":~"pagelayout-two-right~",~"columns~":[~"large~",~"aside~"],~"header~":true,~"footer~":true}" %)
+(((
+(% class="header" %)
+(((
+This is the home of the space1 space.
+
+To help you on your way, we've inserted some of our favourite macros on this home page. As you start creating pages, blogging and commenting you'll see the macros below fill up with all the activity in your space.
+)))
+
+(% class="columnLayout twoColumns" %)
+(((
+(% class="cell large" %)
+(((
+(% class="innerCell" %)
+(((
+
+
+{{recently-updated/}}
+)))
+)))
+
+(% class="cell aside" %)
+(((
+(% class="innerCell" %)
+(((
+====== Navigate space ======
+
+
+
+{{pagetreesearch/}}
+
+
+
+{{pagetree/}}
+)))
+)))
+)))
+
+(% class="footer" %)
+(((
+ 
+)))
+)))</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObject name="XWiki.XWikiComments">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.XWikiComments</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="author" value="XWiki.Admin"/>
+          <wikiObjectProperty name="comment">
+            <p>
+              <value>Comment on space 1 web home
+This space is in favourit</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="date">
+            <p>
+              <value t="java.util.Date">2013-10-14 15:38:26.69 UTC</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="replyto"/>
+        </wikiObject>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=4.3.2.xml.zip
+.configuration.objectIdRanges=[,753688], (753689,]
+.configuration.usersEnabled=false
+.configuration.attachmentsEnabled=false
+.configuration.tagsEnabled=false
+.#------------------------------------------------------------------------------
