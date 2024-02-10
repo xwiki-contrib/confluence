@@ -142,20 +142,44 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      */
     private boolean storeConfluenceDetailsEnabled;
 
+    /**
+     * @see #isBlogsEnabled()
+     */
     private boolean blogsEnabled = true;
 
+    /**
+     * @see #isNonBlogContentEnabled()
+     */
     private boolean nonBlogContentEnabled = true;
 
+    /**
+     * @see #isRightsEnabled()
+     */
     private boolean rightsEnabled = true;
 
+    /**
+     * @see #isContentsEnabled()
+     */
     private boolean contentsEnabled = true;
 
+    /**
+     * @see #isHistoryEnabled()
+     */
     private boolean historyEnabled = true;
 
+    /**
+     * @see #isArchivedDocumentsEnabled()
+     */
     private boolean archivedDocumentsEnabled;
 
+    /**
+     * @see #isArchivedSpacesEnabled()
+     */
     private boolean archivedSpacesEnabled;
 
+    /**
+     * @see #getCleanup()
+     */
     private String cleanup = CLEANUP_SYNC;
 
     /**
@@ -163,6 +187,9 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      */
     private String blogSpaceName = "Blog";
 
+    /**
+     * @see #getRootSpace()
+     */
     private SpaceReference rootSpace;
 
     /**
