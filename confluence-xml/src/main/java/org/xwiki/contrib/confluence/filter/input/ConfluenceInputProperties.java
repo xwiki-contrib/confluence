@@ -207,6 +207,10 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      */
     private boolean tagsEnabled = true;
 
+    /**
+     * @see #isNestedSpacesEnabled()
+     */
+    private boolean nestedSpacesEnabled;
 
     /**
      * @return The source to load the wiki from
@@ -907,5 +911,26 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setTagsEnabled(boolean tagsEnabled)
     {
         this.tagsEnabled = tagsEnabled;
+    }
+
+    /**
+     * @return whether spaces are nested during import.
+     * @since 9.35.0
+     */
+    @PropertyName("Nested import")
+    @PropertyDescription("Nest spaces during import.")
+    public boolean isNestedSpacesEnabled()
+    {
+        return nestedSpacesEnabled;
+    }
+
+    /**
+     * Set whether spaces are nested during import.
+     * @param nestedSpacesEnabled whether spaces should be nested during import
+     * @since 9.35.0
+     */
+    public void setNestedSpacesEnabled(boolean nestedSpacesEnabled)
+    {
+        this.nestedSpacesEnabled = nestedSpacesEnabled;
     }
 }

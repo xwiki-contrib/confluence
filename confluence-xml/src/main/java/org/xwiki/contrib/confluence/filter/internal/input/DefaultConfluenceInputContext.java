@@ -40,6 +40,8 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
 
     private ThreadLocal<ConfluenceXMLPackage> confluencePackage = new ThreadLocal<>();
 
+    private ThreadLocal<String> currentSpace = new ThreadLocal<>();
+
     /**
      * @param confluencePackage the Confluence input package
      * @param properties the Confluence input properties
@@ -48,6 +50,14 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
     {
         this.confluencePackage.set(confluencePackage);
         this.properties.set(properties);
+    }
+
+    /**
+     * @param space the space to set
+     */
+    public void setCurrentSpace(String space)
+    {
+        currentSpace.set(space);
     }
 
     /**
@@ -69,5 +79,11 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
     public ConfluenceXMLPackage getConfluencePackage()
     {
         return this.confluencePackage.get();
+    }
+
+    @Override
+    public String getCurrentSpace()
+    {
+        return currentSpace.get();
     }
 }

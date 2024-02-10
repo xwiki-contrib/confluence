@@ -25,11 +25,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.Mapping;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
 import org.xwiki.model.EntityType;
@@ -55,6 +58,8 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     private static final Pattern FORBIDDEN_USER_CHARACTERS = Pattern.compile("[. /]");
 
     private static final String XWIKI = "XWiki";
+
+    private static final String WEB_HOME = "WebHome";
 
     @Inject
     private XWikiConverter converter;
@@ -93,37 +98,54 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
      */
     public EntityReference convert(EntityReference entityReference)
     {
-        if (context.getProperties().isConvertToXWiki() && context.getProperties().isEntityNameValidation()) {
-            EntityReference newRef = null;
-
-            for (EntityReference entityElement : entityReference.getReversedReferenceChain()) {
-                if (entityElement.getType() == EntityType.DOCUMENT || entityElement.getType() == EntityType.SPACE) {
-                    newRef = new EntityReference(this.converter.convert(entityElement.getName()),
-                        entityElement.getType(), newRef);
-                } else if (newRef == null || entityElement.getParent() == newRef) {
-                    newRef = entityElement;
-                } else {
-                    newRef = new EntityReference(entityElement, newRef);
-                }
-            }
-
-            if (newRef == null) {
-                return null;
-            }
-
-            SpaceReference root = context.getProperties().getRootSpace();
-            if (root != null) {
-                EntityType rootType = newRef.getRoot().getType();
-                if (EntityType.SPACE.equals(rootType) || EntityType.WIKI.equals(rootType)) {
-                    // We don't want to add the root if the reference is a local document, otherwise we end up with a
-                    // broken reference (Root.Document instead of Root.SpaceContainingDocument.Document)
-                    newRef = newRef.appendParent(root);
-                }
-            }
-            return newRef;
+        if (!(context.getProperties().isConvertToXWiki() && context.getProperties().isEntityNameValidation())) {
+            return entityReference;
         }
 
-        return entityReference;
+        EntityReference parent = entityReference.getParent();
+        if (EntityType.ATTACHMENT.equals(entityReference.getType())) {
+            EntityReference convertedParent = parent == null ? null : convert(parent);
+            return new EntityReference(entityReference.getName(), EntityType.ATTACHMENT, convertedParent);
+        }
+
+        if (parent == null && EntityType.DOCUMENT.equals(entityReference.getType())
+            && this.context.getProperties().isNestedSpacesEnabled()) {
+            return toDocumentReference(context.getCurrentSpace(), entityReference.getName());
+        }
+
+        if (parent != null && parent.getParent() == null) {
+            // The reference is of shape "Space.Doc title", it needs to go through the normal Confluence
+            // document reference conversion.
+            return toDocumentReference(parent.getName(), entityReference.getName());
+        }
+
+        EntityReference newRef = null;
+
+        for (EntityReference entityElement : entityReference.getReversedReferenceChain()) {
+            if (entityElement.getType() == EntityType.DOCUMENT || entityElement.getType() == EntityType.SPACE) {
+                newRef = new EntityReference(this.converter.convert(entityElement.getName()),
+                    entityElement.getType(), newRef);
+            } else if (newRef == null || entityElement.getParent() == newRef) {
+                newRef = entityElement;
+            } else {
+                newRef = new EntityReference(entityElement, newRef);
+            }
+        }
+
+        if (newRef == null) {
+            return null;
+        }
+
+        SpaceReference root = context.getProperties().getRootSpace();
+        if (root != null) {
+            EntityType rootType = newRef.getRoot().getType();
+            if (EntityType.SPACE.equals(rootType) || EntityType.WIKI.equals(rootType)) {
+                // We don't want to add the root if the reference is a local document, otherwise we end up with a
+                // broken reference (Root.Document instead of Root.SpaceContainingDocument.Document)
+                newRef = newRef.appendParent(root);
+            }
+        }
+        return newRef;
     }
 
     /**
@@ -250,13 +272,119 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return resolveUserReference(new UserResourceReference(userId)).getReference();
     }
 
+    private EntityReference toNonNestedDocumentReference(String spaceKey, String documentName, boolean asSpace)
+    {
+        String convertedName = toEntityName(documentName);
+        EntityReference space = spaceKey == null ? null : fromSpaceKey(spaceKey);
+        return new EntityReference(convertedName, asSpace ? EntityType.SPACE : EntityType.DOCUMENT, space);
+    }
+
+    private EntityReference fromSpaceKey(String spaceKey)
+    {
+        String convertedSpace = toEntityName(spaceKey);
+        SpaceReference root = context.getProperties().getRootSpace();
+        return new EntityReference(convertedSpace, EntityType.SPACE, root);
+    }
+
+    EntityReference convertDocumentReference(long pageId, boolean asSpace) throws ConfigurationException
+    {
+        ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
+
+        ConfluenceProperties pageProperties = confluencePackage.getPageProperties(pageId, false);
+
+        if (pageProperties == null) {
+            return null;
+        }
+
+        Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
+        String spaceKey = spaceId == null ? null : confluencePackage.getSpaceKey(spaceId);
+
+        ConfluenceInputProperties properties = context.getProperties();
+
+        String documentName;
+        if (!properties.isNestedSpacesEnabled() && pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
+            if (asSpace) {
+                return new SpaceReference(spaceKey);
+            }
+            documentName = properties.getSpacePageName();
+        } else {
+            documentName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
+        }
+
+        if (properties.isNestedSpacesEnabled()) {
+            return toNestedDocumentReference(spaceKey, documentName, pageProperties, asSpace);
+        }
+
+        return toNonNestedDocumentReference(spaceKey, documentName, asSpace);
+    }
+
+    protected EntityReference toNestedDocumentReference(String spaceKey, String documentName)
+    {
+        String space = spaceKey == null ? context.getCurrentSpace() : spaceKey;
+        if (space != null) {
+            ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
+
+            Long pageId = WEB_HOME.equals(documentName)
+                ? confluencePackage.getHomePage(confluencePackage.getSpacesByKey().get(space))
+                : confluencePackage.getPageId(space, documentName);
+            // FIXME: ConfluenceXWikiGeneratorListener hardcodes a WebHome document name when encountering absolute URLs
+            // to Confluence spaces. It would be better to avoid anything XWiki from the links we handle here.
+            if (pageId == null) {
+                this.logger.error(
+                    "Could not find page id of page [{}] in space [{}], falling back to non nested conversion",
+                    documentName, space);
+            } else {
+                try {
+                    ConfluenceProperties pageProperties = confluencePackage.getPageProperties(pageId, false);
+                    if (pageProperties != null) {
+                        return toNestedDocumentReference(space, documentName, pageProperties, false);
+                    }
+                } catch (ConfigurationException e) {
+                    this.logger.error("Could not convert link, falling back to non nested conversion", e);
+                }
+            }
+        }
+        return toNonNestedDocumentReference(space, documentName, false);
+    }
+
+    private EntityReference toNestedDocumentReference(String spaceKey, String documentName,
+        ConfluenceProperties pageProperties, boolean asSpace) throws ConfigurationException
+    {
+        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
+            EntityReference space = fromSpaceKey(spaceKey);
+            if (asSpace) {
+                return space;
+            }
+
+            return new EntityReference(WEB_HOME, EntityType.DOCUMENT, space);
+        }
+
+        Long parentId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_PARENT, null);
+        EntityReference parent = parentId == null
+            ? fromSpaceKey(spaceKey)
+            : convertDocumentReference(parentId, true);
+        String convertedName = toEntityName(documentName);
+        if (asSpace) {
+            if (WEB_HOME.equals(convertedName)) {
+                return parent;
+            }
+            return new EntityReference(convertedName, EntityType.SPACE, parent);
+        }
+        parent = new EntityReference(convertedName, EntityType.SPACE, parent);
+        return new EntityReference(WEB_HOME, EntityType.DOCUMENT, parent);
+    }
+
+    EntityReference toDocumentReference(String spaceKey, String documentName)
+    {
+        return this.context.getProperties().isNestedSpacesEnabled()
+            ? toNestedDocumentReference(spaceKey, documentName)
+            : toNonNestedDocumentReference(spaceKey, documentName, false);
+    }
+
     @Override
     public String convertDocumentReference(String parentSpaceReference, String documentReference)
     {
-        if (parentSpaceReference == null || parentSpaceReference.isEmpty()) {
-            return convert(documentReference, EntityType.DOCUMENT);
-        }
-        return this.serializer.serialize(convert(new LocalDocumentReference(parentSpaceReference, documentReference)));
+        return this.serializer.serialize(toDocumentReference(parentSpaceReference, documentReference));
     }
 
     @Override

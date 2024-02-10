@@ -401,6 +401,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String KEY_LABELLING_LABEL = "label";
 
     /**
+     * The property key to access the page id to which the label is attached.
+     */
+    public static final String KEY_LABELLING_CONTENT = "content";
+
+    /**
      * The property key to access the group name.
      */
     public static final String KEY_GROUP_NAME = "name";
@@ -486,10 +491,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String KEY_USER_PASSWORD = "credential";
 
     /**
-     * The property key to access the blog post page.
+     * The property key that was formerly used to mark blog pages.
      *
      * @since 9.24.0
+     * @deprecated since 9.35.0
      */
+    @Deprecated
     public static final String KEY_PAGE_BLOGPOST = "blogpost";
 
     /**
@@ -589,11 +596,74 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private File tree;
 
+    // Maps a space id to all the pages in this space
     private final Map<Long, List<Long>> pages = new LinkedHashMap<>();
 
+    // Maps a space id to all the blog pages in this space
     private final Map<Long, List<Long>> blogPages = new LinkedHashMap<>();
 
+    // Maps a page id to its direct non-blog children
+    private final Map<Long, List<Long>> pageChildren = new LinkedHashMap<>();
+
+    // maps a space id to its home page
+    private final Map<Long, Long> homePages = new LinkedHashMap<>();
+
+    private final Map<Long, List<Long>> orphans = new LinkedHashMap<>();
+
     private final Map<String, Long> spacesByKey = new HashMap<>();
+
+    private final Map<Long, Map<String, Long>> pagesBySpaceAndTitle = new HashMap<>();
+
+    /**
+     * @return the children of the given page.
+     * @param pageId the page of which to get the children
+     * @since 9.35.0
+     */
+    public List<Long> getPageChildren(Long pageId)
+    {
+        return pageChildren.getOrDefault(pageId, Collections.emptyList());
+    }
+
+    /**
+     * @return the home page of the given space.
+     * @param spaceId the space of which to get the home page
+     * @since 9.35.0
+     */
+    public Long getHomePage(Long spaceId)
+    {
+        return homePages.get(spaceId);
+    }
+
+    /**
+     * @return the orphans (pages which don't have a parent) of the given space
+     * @param spaceId the space of which to get the orphans
+     * @since 9.35.0
+     */
+    public List<Long> getOrphans(Long spaceId)
+    {
+        return orphans.getOrDefault(spaceId, Collections.emptyList());
+    }
+
+    /**
+     * @return a page id from a space key and its title
+     * @param spaceKey the space in which the page is supposed to be
+     * @param pageTitle the title of the page
+     * @since 9.35.0
+     */
+    public Long getPageId(String spaceKey, String pageTitle)
+    {
+        Long spaceId = this.spacesByKey.get(spaceKey);
+        if (spaceId == null) {
+            return null;
+        }
+
+        Map<String, Long> pagesByTitle = this.pagesBySpaceAndTitle.get(spaceId);
+        if (pagesByTitle == null) {
+            return null;
+        }
+
+        return pagesByTitle.get(pageTitle);
+    }
 
     /**
      * @param source the source where to find the package to parse
@@ -1061,6 +1131,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
             ConfluenceProperties homePageProperties = getPageProperties(homePageId, true);
             homePageProperties.setProperty(KEY_PAGE_HOMEPAGE, true);
             savePageProperties(homePageProperties, homePageId);
+            homePages.put(spaceId, homePageId);
         }
 
         // Register space by id
@@ -1150,17 +1221,27 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         long pageId = readObjectProperties(xmlReader, properties);
 
-        if (isBlog) {
-            properties.setProperty(KEY_PAGE_BLOGPOST, true);
-        }
-
         savePageProperties(properties, pageId);
 
         // Register only current pages (they will take care of handling their history)
-        Long originalVersion = (Long) properties.getProperty(KEY_PAGE_ORIGINAL_VERSION);
+        Long originalVersion = properties.getLong(KEY_PAGE_ORIGINAL_VERSION, null);
         if (originalVersion == null) {
+            if (!isBlog) {
+                // FIXME only needed for nested migrations?
+                Long parent = properties.getLong(KEY_PAGE_PARENT, null);
+                if (parent == null) {
+                    orphans.computeIfAbsent(parent, k -> new ArrayList<>()).add(pageId);
+                } else {
+                    pageChildren.computeIfAbsent(parent, k -> new ArrayList<>()).add(pageId);
+                }
+            }
+
             Long spaceId = properties.getLong(KEY_PAGE_SPACE, null);
             (isBlog ? this.blogPages : this.pages).computeIfAbsent(spaceId, k -> new LinkedList<>()).add(pageId);
+            String title = properties.getString(KEY_PAGE_TITLE, null);
+            if (title != null) {
+                pagesBySpaceAndTitle.computeIfAbsent(spaceId, k -> new HashMap<>()).put(title, pageId);
+            }
         }
     }
 
@@ -1173,7 +1254,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
         saveObjectProperties(properties, labellingId);
 
         // Since confluence 8.0, the labellings are not part of the Page Object anymore.
-        Long pageId = properties.getLong("content", null);
+        Long pageId = properties.getLong(KEY_LABELLING_CONTENT, null);
 
         if (pageId != null) {
             ConfluenceProperties pageProperties = getPageProperties(pageId, true);

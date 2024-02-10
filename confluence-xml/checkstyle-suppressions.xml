@@ -9,7 +9,7 @@
             files="src/main/java/org/xwiki/contrib/confluence/filter/input/ConfluenceXMLPackage\.java$"/>
   <suppress checks="ClassFanOutComplexity|JavaNCSS|MethodLength|ExecutableStatementCount|NPathComplexity|CyclomaticComplexity|BooleanExpressionComplexity|MultipleStringLiterals"
             files="src/main/java/org/xwiki/contrib/confluence/filter/internal/input/ConfluenceInputFilterStream\.java$"/>
-  <suppress checks="CyclomaticComplexity"
+  <suppress checks="CyclomaticComplexity|ClassFanOutComplexity|NPathComplexity|ReturnCount"
             files="src/main/java/org/xwiki/contrib/confluence/filter/internal/input/ConfluenceConverter\.java$"/>
   <suppress checks="ClassFanOutComplexity"
             files="src/main/java/org/xwiki/contrib/confluence/filter/internal/input/ConfluenceConverterListener\.java$"/>

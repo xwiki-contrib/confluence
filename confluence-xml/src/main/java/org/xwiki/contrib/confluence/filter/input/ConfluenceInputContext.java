@@ -36,8 +36,17 @@ public interface ConfluenceInputContext
     ConfluenceInputProperties getProperties();
 
     /**
-     * @return the confluence package being filtered
+     * @return the Confluence package being filtered
      * @since 9.26.0
      */
     ConfluenceXMLPackage getConfluencePackage();
+
+    /**
+     * @return the Confluence space being filtered
+     * @since 9.35.0
+     */
+    default String getCurrentSpace()
+    {
+        return null;
+    }
 }

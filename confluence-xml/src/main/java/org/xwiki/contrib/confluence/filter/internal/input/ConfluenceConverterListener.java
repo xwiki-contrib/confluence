@@ -43,12 +43,9 @@ import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
-import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
-import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
-import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.listener.WrappingListener;
 import org.xwiki.rendering.listener.reference.AttachmentResourceReference;
@@ -174,7 +171,7 @@ public class ConfluenceConverterListener extends WrappingListener
 
     private ResourceReference convert(ResourceReference reference)
     {
-        ResourceReference fixedReference = reference;
+        ResourceReference fixedReference = reference.clone();
 
         if (CollectionUtils.isNotEmpty(context.getProperties().getBaseURLs())
             && Objects.equals(reference.getType(), ResourceType.URL)) {
@@ -211,10 +208,10 @@ public class ConfluenceConverterListener extends WrappingListener
             }
         } else if (Objects.equals(reference.getType(), ResourceType.DOCUMENT)) {
             // Make sure the reference follows the configured rules of conversion
-            reference.setReference(confluenceConverter.convert(reference.getReference(), EntityType.DOCUMENT));
+            fixedReference.setReference(confluenceConverter.convert(reference.getReference(), EntityType.DOCUMENT));
         } else if (Objects.equals(reference.getType(), ResourceType.ATTACHMENT)) {
             // Make sure the reference follows the configured rules of conversion
-            reference.setReference(confluenceConverter.convert(reference.getReference(), EntityType.ATTACHMENT));
+            fixedReference.setReference(confluenceConverter.convert(reference.getReference(), EntityType.ATTACHMENT));
         }
 
         return fixedReference;
@@ -222,41 +219,7 @@ public class ConfluenceConverterListener extends WrappingListener
 
     private EntityReference fromPageId(String id) throws NumberFormatException, ConfigurationException
     {
-        // Document name
-
-        ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
-
-        ConfluenceProperties pageProperties = confluencePackage.getPageProperties(Long.parseLong(id), false);
-
-        if (pageProperties != null) {
-            String documentName;
-            if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
-                documentName = context.getProperties().getSpacePageName();
-            } else {
-                documentName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
-            }
-
-            // Space name
-
-            Long spaceId = pageProperties.getLong("space", null);
-
-            String spaceKey = confluencePackage.getSpaceKey(spaceId);
-
-            // Reference
-
-            return createDocRef(spaceKey, documentName);
-        }
-
-        return null;
-    }
-
-    private EntityReference createDocRef(String spaceKey, String documentName)
-    {
-        String convertedName = confluenceConverter.toEntityName(documentName);
-        String convertedSpace = confluenceConverter.toEntityName(spaceKey);
-        SpaceReference root = context.getProperties().getRootSpace();
-        EntityReference parent = new EntityReference(convertedSpace, EntityType.SPACE, root);
-        return new EntityReference(convertedName, EntityType.DOCUMENT, parent);
+        return confluenceConverter.convertDocumentReference(Long.parseLong(id), false);
     }
 
     private AttachmentResourceReference createAttachmentResourceReference(EntityReference reference,
@@ -322,7 +285,9 @@ public class ConfluenceConverterListener extends WrappingListener
 
     private DocumentResourceReference simpleDocRef(Matcher m, List<String[]> urlParameters, String urlAnchor)
     {
-        EntityReference documentReference = createDocRef(decode(m.group(1)), decode(m.group(2)));
+        String spaceKey = decode(m.group(1));
+        String docRef = decode(m.group(2));
+        EntityReference documentReference = confluenceConverter.toDocumentReference(spaceKey, docRef);
 
         return createDocumentResourceReference(documentReference, urlParameters, urlAnchor);
     }
@@ -338,11 +303,8 @@ public class ConfluenceConverterListener extends WrappingListener
 
             // Try viewpage.action
             tryPattern(PATTERN_URL_VIEWPAGE, pattern, matcher -> {
-                EntityReference documentReference;
-                try {
-                    documentReference = fromPageId(matcher.group(1));
-                } catch (Exception e) {
-                    this.logger.error("Failed to get page for id [{}]", matcher.group(1), e);
+                EntityReference documentReference = getEntityReference(matcher);
+                if (documentReference == null) {
                     return null;
                 }
 
@@ -354,11 +316,8 @@ public class ConfluenceConverterListener extends WrappingListener
 
             // Try attachments
             tryPattern(PATTERN_URL_ATTACHMENT, pattern, matcher -> {
-                EntityReference documentReference;
-                try {
-                    documentReference = fromPageId(matcher.group(1));
-                } catch (Exception e) {
-                    this.logger.error("Failed to get attachment page for id [{}]", matcher.group(1), e);
+                EntityReference documentReference = getEntityReference(matcher);
+                if (documentReference == null) {
                     return null;
                 }
 
@@ -371,6 +330,16 @@ public class ConfluenceConverterListener extends WrappingListener
             // emoticons
             tryPattern(PATTERN_URL_EMOTICON, pattern, m -> new ResourceReference(decode(m.group(1)), ResourceType.ICON))
         );
+    }
+
+    private EntityReference getEntityReference(Matcher matcher)
+    {
+        try {
+            return fromPageId(matcher.group(1));
+        } catch (ConfigurationException | NumberFormatException e) {
+            this.logger.error("Failed to get page for id [{}]", matcher.group(1), e);
+        }
+        return null;
     }
 
     private ResourceReference convertLinkRef(ResourceReference reference)
@@ -386,12 +355,6 @@ public class ConfluenceConverterListener extends WrappingListener
         }
 
         return convert(reference);
-    }
-
-    @Override
-    public void beginLink(ResourceReference reference, boolean freestanding, Map<String, String> parameters)
-    {
-        super.beginLink(reference, freestanding, parameters);
     }
 
     @Override
