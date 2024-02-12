@@ -3,6 +3,14 @@
 .#------------------------------------------------------------------------------
 <wikiSpace name="PRIV">
   <wikiDocument name="privatespace Home">
+    <p>
+      <parameters>
+        <entry>
+          <string>hidden</string>
+          <boolean>true</boolean>
+        </entry>
+      </parameters>
+    </p>
     <wikiObject name="XWiki.RedirectClass">
       <p>
         <parameters>
@@ -12,7 +20,18 @@
           </entry>
         </parameters>
       </p>
-      <wikiObjectProperty name="location" value="WebHome"/>
+      <wikiObjectProperty name="location">
+        <p>
+          <value t="org.xwiki.model.reference.EntityReference">
+            <name>WebHome</name>
+            <parent>
+              <name>PRIV</name>
+              <type>SPACE</type>
+            </parent>
+            <type>DOCUMENT</type>
+          </value>
+        </p>
+      </wikiObjectProperty>
     </wikiObject>
   </wikiDocument>
   <wikiDocument name="WebHome">
@@ -311,7 +330,7 @@ Link to page 1 [[here>>doc:SPACE1.Page 1]]</string>
             <entry>
               <string>parent_reference</string>
               <org.xwiki.model.reference.EntityReference>
-                <name>space2 Home</name>
+                <name>WebHome</name>
                 <type>DOCUMENT</type>
               </org.xwiki.model.reference.EntityReference>
             </entry>
@@ -373,6 +392,14 @@ Link to page 1 [[here>>doc:SPACE1.Page 1]]</string>
     </wikiDocumentLocale>
   </wikiDocument>
   <wikiDocument name="space2 Home">
+    <p>
+      <parameters>
+        <entry>
+          <string>hidden</string>
+          <boolean>true</boolean>
+        </entry>
+      </parameters>
+    </p>
     <wikiObject name="XWiki.RedirectClass">
       <p>
         <parameters>
@@ -382,7 +409,18 @@ Link to page 1 [[here>>doc:SPACE1.Page 1]]</string>
           </entry>
         </parameters>
       </p>
-      <wikiObjectProperty name="location" value="WebHome"/>
+      <wikiObjectProperty name="location">
+        <p>
+          <value t="org.xwiki.model.reference.EntityReference">
+            <name>WebHome</name>
+            <parent>
+              <name>SPACE2</name>
+              <type>SPACE</type>
+            </parent>
+            <type>DOCUMENT</type>
+          </value>
+        </p>
+      </wikiObjectProperty>
     </wikiObject>
   </wikiDocument>
   <wikiDocument name="WebHome">
@@ -2745,7 +2783,7 @@ content
             <entry>
               <string>parent_reference</string>
               <org.xwiki.model.reference.EntityReference>
-                <name>space1 Home</name>
+                <name>WebHome</name>
                 <type>DOCUMENT</type>
               </org.xwiki.model.reference.EntityReference>
             </entry>
@@ -3188,6 +3226,14 @@ content
     </wikiDocumentLocale>
   </wikiDocument>
   <wikiDocument name="space1 Home">
+    <p>
+      <parameters>
+        <entry>
+          <string>hidden</string>
+          <boolean>true</boolean>
+        </entry>
+      </parameters>
+    </p>
     <wikiObject name="XWiki.RedirectClass">
       <p>
         <parameters>
@@ -3197,7 +3243,18 @@ content
           </entry>
         </parameters>
       </p>
-      <wikiObjectProperty name="location" value="WebHome"/>
+      <wikiObjectProperty name="location">
+        <p>
+          <value t="org.xwiki.model.reference.EntityReference">
+            <name>WebHome</name>
+            <parent>
+              <name>SPACE1</name>
+              <type>SPACE</type>
+            </parent>
+            <type>DOCUMENT</type>
+          </value>
+        </p>
+      </wikiObjectProperty>
     </wikiObject>
   </wikiDocument>
   <wikiDocument name="WebHome">

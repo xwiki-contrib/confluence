@@ -4198,6 +4198,14 @@
     </wikiDocumentLocale>
   </wikiDocument>
   <wikiDocument name="Office of Great Things">
+    <p>
+      <parameters>
+        <entry>
+          <string>hidden</string>
+          <boolean>true</boolean>
+        </entry>
+      </parameters>
+    </p>
     <wikiObject name="XWiki.RedirectClass">
       <p>
         <parameters>
@@ -4207,7 +4215,18 @@
           </entry>
         </parameters>
       </p>
-      <wikiObjectProperty name="location" value="WebHome"/>
+      <wikiObjectProperty name="location">
+        <p>
+          <value t="org.xwiki.model.reference.EntityReference">
+            <name>WebHome</name>
+            <parent>
+              <name>Great</name>
+              <type>SPACE</type>
+            </parent>
+            <type>DOCUMENT</type>
+          </value>
+        </p>
+      </wikiObjectProperty>
     </wikiObject>
   </wikiDocument>
   <wikiDocument name="WebHome">
@@ -4276,7 +4295,7 @@
             <entry>
               <string>parent_reference</string>
               <org.xwiki.model.reference.EntityReference>
-                <name>Office of Great Things</name>
+                <name>WebHome</name>
                 <type>DOCUMENT</type>
               </org.xwiki.model.reference.EntityReference>
             </entry>

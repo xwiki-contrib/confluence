@@ -283,7 +283,7 @@
             <entry>
               <string>parent_reference</string>
               <org.xwiki.model.reference.EntityReference>
-                <name>Welcome to Confluence</name>
+                <name>WebHome</name>
                 <type>DOCUMENT</type>
               </org.xwiki.model.reference.EntityReference>
             </entry>
@@ -369,6 +369,14 @@ Confluence puts your content online in a central place where your team can searc
     </wikiDocumentLocale>
   </wikiDocument>
   <wikiDocument name="Welcome to Confluence">
+    <p>
+      <parameters>
+        <entry>
+          <string>hidden</string>
+          <boolean>true</boolean>
+        </entry>
+      </parameters>
+    </p>
     <wikiObject name="XWiki.RedirectClass">
       <p>
         <parameters>
@@ -378,7 +386,18 @@ Confluence puts your content online in a central place where your team can searc
           </entry>
         </parameters>
       </p>
-      <wikiObjectProperty name="location" value="WebHome"/>
+      <wikiObjectProperty name="location">
+        <p>
+          <value t="org.xwiki.model.reference.EntityReference">
+            <name>WebHome</name>
+            <parent>
+              <name>ds</name>
+              <type>SPACE</type>
+            </parent>
+            <type>DOCUMENT</type>
+          </value>
+        </p>
+      </wikiObjectProperty>
     </wikiObject>
   </wikiDocument>
   <wikiDocument name="WebHome">
@@ -516,7 +535,7 @@ Confluence puts your content online in a central place where your team can searc
             <entry>
               <string>parent_reference</string>
               <org.xwiki.model.reference.EntityReference>
-                <name>Welcome to Confluence</name>
+                <name>WebHome</name>
                 <type>DOCUMENT</type>
               </org.xwiki.model.reference.EntityReference>
             </entry>
@@ -689,7 +708,7 @@ When// y//ou're ready, click **Save** and go to the next step or back to the sp
             <entry>
               <string>parent_reference</string>
               <org.xwiki.model.reference.EntityReference>
-                <name>Welcome to Confluence</name>
+                <name>WebHome</name>
                 <type>DOCUMENT</type>
               </org.xwiki.model.reference.EntityReference>
             </entry>
@@ -864,7 +883,7 @@ You can type into the editor as you would in any document, apply formatting, and
             <entry>
               <string>parent_reference</string>
               <org.xwiki.model.reference.EntityReference>
-                <name>Welcome to Confluence</name>
+                <name>WebHome</name>
                 <type>DOCUMENT</type>
               </org.xwiki.model.reference.EntityReference>
             </entry>
@@ -1078,7 +1097,7 @@ The Files button is not just for images, you can insert and preview a wide range
             <entry>
               <string>parent_reference</string>
               <org.xwiki.model.reference.EntityReference>
-                <name>Welcome to Confluence</name>
+                <name>WebHome</name>
                 <type>DOCUMENT</type>
               </org.xwiki.model.reference.EntityReference>
             </entry>
@@ -1220,7 +1239,7 @@ You can add as many sections as you need, and each section can have a different 
             <entry>
               <string>parent_reference</string>
               <org.xwiki.model.reference.EntityReference>
-                <name>Welcome to Confluence</name>
+                <name>WebHome</name>
                 <type>DOCUMENT</type>
               </org.xwiki.model.reference.EntityReference>
             </entry>
@@ -1384,7 +1403,7 @@ Add, remove, cut, and paste rows and columns – this makes working with tables 
             <entry>
               <string>parent_reference</string>
               <org.xwiki.model.reference.EntityReference>
-                <name>Welcome to Confluence</name>
+                <name>WebHome</name>
                 <type>DOCUMENT</type>
               </org.xwiki.model.reference.EntityReference>
             </entry>
@@ -1489,7 +1508,7 @@ The user will be notified that you mentioned them.
             <entry>
               <string>parent_reference</string>
               <org.xwiki.model.reference.EntityReference>
-                <name>Welcome to Confluence</name>
+                <name>WebHome</name>
                 <type>DOCUMENT</type>
               </org.xwiki.model.reference.EntityReference>
             </entry>
@@ -1555,7 +1574,7 @@ See yo</string>
             <entry>
               <string>parent_reference</string>
               <org.xwiki.model.reference.EntityReference>
-                <name>Welcome to Confluence</name>
+                <name>WebHome</name>
                 <type>DOCUMENT</type>
               </org.xwiki.model.reference.EntityReference>
             </entry>
@@ -1672,7 +1691,7 @@ Flickr photo streams, Twitter streams, Google maps and many more.
             <entry>
               <string>parent_reference</string>
               <org.xwiki.model.reference.EntityReference>
-                <name>Welcome to Confluence</name>
+                <name>WebHome</name>
                 <type>DOCUMENT</type>
               </org.xwiki.model.reference.EntityReference>
             </entry>

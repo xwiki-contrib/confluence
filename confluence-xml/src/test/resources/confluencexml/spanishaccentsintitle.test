@@ -26,7 +26,7 @@
             <entry>
               <string>parent_reference</string>
               <org.xwiki.model.reference.EntityReference>
-                <name>Home</name>
+                <name>WebHome</name>
                 <type>DOCUMENT</type>
               </org.xwiki.model.reference.EntityReference>
             </entry>
@@ -65,19 +65,6 @@
         </p>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
-  </wikiDocument>
-  <wikiDocument name="Home">
-    <wikiObject name="XWiki.RedirectClass">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.RedirectClass</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="location" value="WebHome"/>
-    </wikiObject>
   </wikiDocument>
   <wikiDocument name="WebHome">
     <wikiDocumentLocale>
@@ -125,4 +112,5 @@
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=spanishaccentsintitle
+.configuration.homeRedirectEnabled=false
 .#------------------------------------------------------------------------------

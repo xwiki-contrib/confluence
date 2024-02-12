@@ -78,6 +78,7 @@ import org.xwiki.filter.input.StringInputSource;
 import org.xwiki.job.event.status.JobProgressManager;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
+import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.observation.ObservationManager;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.parser.ParseException;
@@ -920,14 +921,17 @@ public class ConfluenceInputFilterStream
                 return;
             }
 
-            if (!documentName.equals(title)) {
-                // Set up a redirect page for the home page so we don't break links from spaces that are not imported
+            if (!documentName.equals(title) && this.properties.isHomeRedirectEnabled()) {
+                // Set up a redirect page for the home page, so we don't break links from spaces that are not imported
                 // in the same package
-                proxyFilter.beginWikiDocument(title, FilterEventParameters.EMPTY);
+                FilterEventParameters redirectDocParameters = new FilterEventParameters();
+                redirectDocParameters.put(WikiDocumentFilter.PARAMETER_HIDDEN, true);
+                proxyFilter.beginWikiDocument(title, redirectDocParameters);
                 FilterEventParameters redirectParameters = new FilterEventParameters();
                 redirectParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, XWIKI_REDIRECT_CLASS);
                 proxyFilter.beginWikiObject(XWIKI_REDIRECT_CLASS, redirectParameters);
-                proxyFilter.onWikiObjectProperty("location", documentName, FilterEventParameters.EMPTY);
+                EntityReference location = getReferenceForDocument(spaceKey, this.properties.getSpacePageName());
+                proxyFilter.onWikiObjectProperty("location", location, FilterEventParameters.EMPTY);
                 proxyFilter.endWikiObject(XWIKI_REDIRECT_CLASS, redirectParameters);
                 proxyFilter.endWikiDocument(title, FilterEventParameters.EMPTY);
             }
@@ -1438,10 +1442,12 @@ public class ConfluenceInputFilterStream
 
         ConfluenceProperties pageProperties = this.confluencePackage.getPageProperties(pageId, true);
 
-        Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE);
-        String pageTitle = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
+        Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
+        String docName = pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)
+            ? this.properties.getSpacePageName()
+            : confluenceConverter.toEntityName(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE));
 
-        if (StringUtils.isEmpty(pageTitle)) {
+        if (StringUtils.isEmpty(docName)) {
             throw new FilterException("Cannot create a reference to the page with id [" + pageId
                 + "] because it does not have any title");
         }
@@ -1456,7 +1462,19 @@ public class ConfluenceInputFilterStream
             }
         }
 
-        return new EntityReference(confluenceConverter.toEntityName(pageTitle), EntityType.DOCUMENT, spaceReference);
+        return new EntityReference(docName, EntityType.DOCUMENT, spaceReference);
+    }
+
+    private EntityReference getReferenceForDocument(String spaceKey, String docName)
+    {
+        // FIXME is this somewhat a duplicate of the end of getReferenceFromId?
+        SpaceReference rootSpace = this.properties.getRootSpace();
+        String convertedSpace = confluenceConverter.toEntityName(spaceKey);
+        EntityReference spaceReference = rootSpace == null
+            ? new EntityReference(convertedSpace, EntityType.SPACE)
+            : new SpaceReference(convertedSpace, rootSpace);
+
+        return new EntityReference(docName, EntityType.DOCUMENT, spaceReference);
     }
 
     /**

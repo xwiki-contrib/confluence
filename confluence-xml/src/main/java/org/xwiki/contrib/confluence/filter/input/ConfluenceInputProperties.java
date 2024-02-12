@@ -80,6 +80,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private String spacePageName = "WebHome";
 
     /**
+     * @see #isHomeRedirectEnabled()
+     */
+    private boolean homeRedirectEnabled = true;
+
+    /**
      * @see #getBaseURLs()
      */
     private List<URL> baseURLs;
@@ -316,6 +321,26 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setSpacePageName(String spacePageName)
     {
         this.spacePageName = spacePageName;
+    }
+
+    /**
+     * @return whether redirect documents should be output for home pages.
+     * @since 9.35.0
+     */
+    @PropertyName("Home redirects")
+    @PropertyDescription("Produce redirects for home pages")
+    public boolean isHomeRedirectEnabled()
+    {
+        return this.homeRedirectEnabled;
+    }
+
+    /**
+     * @param homeRedirectEnabled whether redirect documents should be output for home pages.
+     * @since 9.35.0
+     */
+    public void setHomeRedirectEnabled(boolean homeRedirectEnabled)
+    {
+        this.homeRedirectEnabled = homeRedirectEnabled;
     }
 
     /**

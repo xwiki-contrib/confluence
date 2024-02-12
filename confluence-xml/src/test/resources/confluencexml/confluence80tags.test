@@ -72,6 +72,14 @@
     </wikiDocumentLocale>
   </wikiDocument>
   <wikiDocument name="AreTagsImported">
+    <p>
+      <parameters>
+        <entry>
+          <string>hidden</string>
+          <boolean>true</boolean>
+        </entry>
+      </parameters>
+    </p>
     <wikiObject name="XWiki.RedirectClass">
       <p>
         <parameters>
@@ -81,7 +89,18 @@
           </entry>
         </parameters>
       </p>
-      <wikiObjectProperty name="location" value="WebHome"/>
+      <wikiObjectProperty name="location">
+        <p>
+          <value t="org.xwiki.model.reference.EntityReference">
+            <name>WebHome</name>
+            <parent>
+              <name>AR</name>
+              <type>SPACE</type>
+            </parent>
+            <type>DOCUMENT</type>
+          </value>
+        </p>
+      </wikiObjectProperty>
     </wikiObject>
   </wikiDocument>
   <wikiDocument name="WebHome">
@@ -343,7 +362,7 @@ Learn more about [[inviting your team to Confluence>>url:https://confluence.atla
             <entry>
               <string>parent_reference</string>
               <org.xwiki.model.reference.EntityReference>
-                <name>AreTagsImported</name>
+                <name>WebHome</name>
                 <type>DOCUMENT</type>
               </org.xwiki.model.reference.EntityReference>
             </entry>
@@ -409,7 +428,7 @@ fghgfgdffgfg</string>
             <entry>
               <string>parent_reference</string>
               <org.xwiki.model.reference.EntityReference>
-                <name>AreTagsImported</name>
+                <name>WebHome</name>
                 <type>DOCUMENT</type>
               </org.xwiki.model.reference.EntityReference>
             </entry>
