@@ -114,6 +114,7 @@ public class ConfluenceInputFilterStream
     private static final String XWIKIGLOBALRIGHTS_CLASSNAME = "XWiki.XWikiGlobalRights";
 
     private static final String WEB_PREFERENCES = "WebPreferences";
+
     private static final String FAILED_TO_GET_USER_PROPERTIES = "Failed to get user properties";
 
     private static final String XWIKI_REDIRECT_CLASS = "XWiki.RedirectClass";
@@ -1692,7 +1693,7 @@ public class ConfluenceInputFilterStream
     }
 
     private void readPageComment(Long pageId, String spaceKey, ConfluenceFilter proxyFilter, Long commentId,
-        Map<Long, ConfluenceProperties> pageComments, Map<Long, Integer> commentIndeces) throws FilterException
+        Map<Long, ConfluenceProperties> pageComments, Map<Long, Integer> commentIndices) throws FilterException
     {
         FilterEventParameters commentParameters = new FilterEventParameters();
 
@@ -1742,7 +1743,7 @@ public class ConfluenceInputFilterStream
             Integer parentIndex = null;
             if (commentProperties.containsKey("parent")) {
                 Long parentId = commentProperties.getLong("parent");
-                parentIndex = commentIndeces.get(parentId);
+                parentIndex = commentIndices.get(parentId);
             }
 
             proxyFilter.onWikiObjectProperty("author", commentCreatorReference, FilterEventParameters.EMPTY);
