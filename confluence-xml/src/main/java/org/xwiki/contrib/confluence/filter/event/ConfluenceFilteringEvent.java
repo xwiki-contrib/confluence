@@ -21,6 +21,10 @@ package org.xwiki.contrib.confluence.filter.event;
 
 import org.xwiki.observation.event.AbstractCancelableEvent;
 
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+
 /**
  * Event emitted after the confluence package has been read and the filtering process starts.
  *
@@ -34,4 +38,27 @@ import org.xwiki.observation.event.AbstractCancelableEvent;
  */
 public class ConfluenceFilteringEvent extends AbstractCancelableEvent
 {
+    private Collection<Long> disabledSpaces;
+
+    /**
+     * Don't import the given space.
+     * @param spaceId the space to disable
+     * @since 9.35.0
+     */
+    public void disableSpace(long spaceId)
+    {
+        if (disabledSpaces == null) {
+            disabledSpaces = new HashSet<>();
+        }
+        disabledSpaces.add(spaceId);
+    }
+
+    /**
+     * @return the disabled spaces
+     * @since 9.35.0
+     */
+    public Collection<Long> getDisabledSpaces()
+    {
+        return disabledSpaces == null ? Collections.emptyList() : disabledSpaces;
+    }
 }

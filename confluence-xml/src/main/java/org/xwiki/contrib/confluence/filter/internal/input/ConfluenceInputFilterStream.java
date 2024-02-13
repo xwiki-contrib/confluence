@@ -212,9 +212,15 @@ public class ConfluenceInputFilterStream
         return false;
     }
 
-    private int countPages(Map<Long, List<Long>> pages)
+    private int countPages(Map<Long, List<Long>> pagesBySpace, Collection<Long> disabledSpaces)
     {
-        return pages.values().stream().mapToInt(List::size).sum();
+        int n = 0;
+        for (Map.Entry<Long, List<Long>> pagesEntry : pagesBySpace.entrySet()) {
+            if (!disabledSpaces.contains(pagesEntry.getKey())) {
+                n += pagesEntry.getValue().size();
+            }
+        }
+        return n;
     }
 
     private void pushLevelProgress(int steps)
@@ -285,10 +291,11 @@ public class ConfluenceInputFilterStream
         // Only count pages if we are going to send them
         boolean willSendPages = this.properties.isContentsEnabled() || this.properties.isRightsEnabled();
 
+        Collection<Long> disabledSpaces = filteringEvent.getDisabledSpaces();
         int pagesCount = willSendPages
             ? (
-                (properties.isNonBlogContentEnabled() ? (pages.size() + countPages(pages)) : 0)
-                    + (properties.isBlogsEnabled() ? countPages(blogPages) : 0)
+                (properties.isNonBlogContentEnabled() ? countPages(pages, disabledSpaces) : 0)
+                    + (properties.isBlogsEnabled() ? countPages(blogPages, disabledSpaces) : 0)
             )
             : 0;
 
@@ -309,6 +316,7 @@ public class ConfluenceInputFilterStream
             Set<Long> rootSpaces = new LinkedHashSet<>();
             rootSpaces.addAll(pages.keySet());
             rootSpaces.addAll(blogPages.keySet());
+            rootSpaces.removeAll(disabledSpaces);
 
             for (Long spaceId : rootSpaces) {
                 if (!shouldSendObject(spaceId) || pagesCount == 0) {
