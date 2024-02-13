@@ -934,7 +934,7 @@ public class ConfluenceInputFilterStream
                 EntityReference location = getReferenceForDocument(spaceKey, this.properties.getSpacePageName());
                 proxyFilter.onWikiObjectProperty("location", location, FilterEventParameters.EMPTY);
                 proxyFilter.endWikiObject(XWIKI_REDIRECT_CLASS, redirectParameters);
-                proxyFilter.endWikiDocument(title, FilterEventParameters.EMPTY);
+                proxyFilter.endWikiDocument(title, redirectDocParameters);
             }
         } else {
             documentName = title;
