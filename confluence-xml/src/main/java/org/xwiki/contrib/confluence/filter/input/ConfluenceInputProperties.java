@@ -558,7 +558,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     }
 
     /**
-     * @return the wiki where to imports users
+     * @return the wiki where to import users
      * @since 9.11
      */
     @PropertyName("Users wiki")
