@@ -213,6 +213,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private boolean nestedSpacesEnabled;
 
     /**
+     * @see #getMaxPageCount()
+     */
+    private int maxPageCount = -1;
+
+    /**
      * @return The source to load the wiki from
      */
     @PropertyName("The source")
@@ -932,5 +937,26 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setNestedSpacesEnabled(boolean nestedSpacesEnabled)
     {
         this.nestedSpacesEnabled = nestedSpacesEnabled;
+    }
+
+
+    /**
+     * @return the maximum number of pages to read.
+     * @since 9.35.0
+     */
+    @PropertyName("Max page count")
+    @PropertyDescription("The maximum number of pages to import (-1 means to limit)")
+    public int getMaxPageCount()
+    {
+        return maxPageCount;
+    }
+
+    /**
+     * @param maxPageCount the maximum number of pages to import, -1 to disable
+     * @since 9.35.0
+     */
+    public void setMaxPageCount(int maxPageCount)
+    {
+        this.maxPageCount = maxPageCount;
     }
 }

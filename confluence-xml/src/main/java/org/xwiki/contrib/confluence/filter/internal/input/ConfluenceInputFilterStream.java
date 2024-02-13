@@ -158,6 +158,13 @@ public class ConfluenceInputFilterStream
 
     private List<Long> nextIdsForObjectIdRanges;
 
+    private int remainingPages = -1;
+
+    private static class MaxPageCountReachedException extends Exception
+    {
+
+    }
+
     @Override
     public void close() throws IOException
     {
@@ -299,6 +306,11 @@ public class ConfluenceInputFilterStream
             )
             : 0;
 
+        this.remainingPages = this.properties.getMaxPageCount();
+        if (this.remainingPages != -1) {
+            pagesCount = Integer.min(this.remainingPages, pagesCount);
+        }
+
         if (this.properties.isUsersEnabled()) {
             Collection<Long> users = this.confluencePackage.getInternalUsers();
             // TODO get users in new format (this.confluencePackage.getAllUsers())
@@ -327,6 +339,8 @@ public class ConfluenceInputFilterStream
                 List<Long> blogPageIds = blogPages.get(spaceId);
                 sendConfluenceRootSpace(spaceId, filter, proxyFilter, regularPageIds, blogPageIds);
             }
+        } catch (MaxPageCountReachedException e) {
+            logger.info("The maximum of pages to read has been reached.");
         } finally {
             endSpace(properties.getRootSpace(), proxyFilter);
         }
@@ -373,7 +387,7 @@ public class ConfluenceInputFilterStream
     }
 
     private void sendConfluenceRootSpace(Long spaceId, Object filter, ConfluenceFilter proxyFilter,
-        List<Long> pages, List<Long> blogPages) throws FilterException
+        List<Long> pages, List<Long> blogPages) throws FilterException, MaxPageCountReachedException
     {
         ConfluenceProperties spaceProperties;
         try {
@@ -421,19 +435,25 @@ public class ConfluenceInputFilterStream
     }
 
     private void sendPage(long pageId, String spaceKey, boolean blog, Object filter, ConfluenceFilter proxyFilter)
+        throws MaxPageCountReachedException
     {
+        if (this.remainingPages == 0) {
+            throw new MaxPageCountReachedException();
+        }
+
         if (this.properties.isIncluded(pageId)) {
             try {
                 readPage(pageId, spaceKey, blog, filter, proxyFilter);
             } catch (Exception e) {
-                logger.error("Failed to filter the page with id [{}]", createPageIdentifier(pageId, spaceKey), e);
+                if (!(e instanceof MaxPageCountReachedException)) {
+                    logger.error("Failed to filter the page with id [{}]", createPageIdentifier(pageId, spaceKey), e);
+                }
             }
         }
-        this.progress.endStep(this);
     }
 
     private void sendBlogs(String spaceKey, List<Long> blogPages, Object filter, ConfluenceFilter proxyFilter)
-        throws FilterException
+        throws FilterException, MaxPageCountReachedException
     {
         if (!this.properties.isBlogsEnabled() || blogPages == null || blogPages.isEmpty()) {
             return;
@@ -457,6 +477,7 @@ public class ConfluenceInputFilterStream
     }
 
     private void sendPages(String spaceKey, boolean blog, List<Long> pages, Object filter, ConfluenceFilter proxyFilter)
+        throws MaxPageCountReachedException
     {
         for (Long pageId : pages) {
             sendPage(pageId, spaceKey, blog, filter, proxyFilter);
@@ -934,7 +955,7 @@ public class ConfluenceInputFilterStream
     }
 
     private void readPage(long pageId, String spaceKey, boolean blog, Object filter, ConfluenceFilter proxyFilter)
-        throws FilterException
+        throws FilterException, MaxPageCountReachedException
     {
         if (!shouldSendObject(pageId)) {
             emptyStep();
@@ -1066,6 +1087,9 @@ public class ConfluenceInputFilterStream
                         macrosIds, documentName);
                 }
                 macrosIds.clear();
+            }
+            if (this.remainingPages > 0) {
+                this.remainingPages--;
             }
             this.progress.endStep(this);
         }
