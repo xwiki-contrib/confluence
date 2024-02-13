@@ -3,6 +3,24 @@
 .#------------------------------------------------------------------------------
 <wikiSpace name="TestDemo">
   <wikiDocument name="WebPreferences">
+    <p>
+      <parameters>
+        <entry>
+          <string>hidden</string>
+          <boolean>true</boolean>
+        </entry>
+      </parameters>
+    </p>
+    <wikiObject name="XWiki.XWikiPreferences">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiPreferences</string>
+          </entry>
+        </parameters>
+      </p>
+    </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>

@@ -139,6 +139,24 @@
 </groupContainer>
 <wikiSpace name="PRIV">
   <wikiDocument name="WebPreferences">
+    <p>
+      <parameters>
+        <entry>
+          <string>hidden</string>
+          <boolean>true</boolean>
+        </entry>
+      </parameters>
+    </p>
+    <wikiObject name="XWiki.XWikiPreferences">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiPreferences</string>
+          </entry>
+        </parameters>
+      </p>
+    </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
@@ -426,6 +444,24 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 </wikiSpace>
 <wikiSpace name="SPACE2">
   <wikiDocument name="WebPreferences">
+    <p>
+      <parameters>
+        <entry>
+          <string>hidden</string>
+          <boolean>true</boolean>
+        </entry>
+      </parameters>
+    </p>
+    <wikiObject name="XWiki.XWikiPreferences">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiPreferences</string>
+          </entry>
+        </parameters>
+      </p>
+    </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
@@ -900,6 +936,24 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 </wikiSpace>
 <wikiSpace name="SPACE1">
   <wikiDocument name="WebPreferences">
+    <p>
+      <parameters>
+        <entry>
+          <string>hidden</string>
+          <boolean>true</boolean>
+        </entry>
+      </parameters>
+    </p>
+    <wikiObject name="XWiki.XWikiPreferences">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiPreferences</string>
+          </entry>
+        </parameters>
+      </p>
+    </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>

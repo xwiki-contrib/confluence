@@ -119,6 +119,8 @@ public class ConfluenceInputFilterStream
 
     private static final String XWIKI_REDIRECT_CLASS = "XWiki.RedirectClass";
 
+    private static final String XWIKI_PREFERENCES_CLASS = "XWiki.XWikiPreferences";
+
     @Inject
     @Named(ConfluenceParser.SYNTAX_STRING)
     private StreamParser confluenceWIKIParser;
@@ -492,7 +494,7 @@ public class ConfluenceInputFilterStream
             return;
         }
 
-        boolean webPreferencesStarted = false;
+        FilterEventParameters webPreferencesParameters = null;
 
         try {
             // This lets us avoid duplicate XWiki right objects. For instance, REMOVEPAGE and REMOVEBLOG are both
@@ -609,17 +611,22 @@ public class ConfluenceInputFilterStream
                 }
 
                 if (right != null && !(users.isEmpty() && group.isEmpty())) {
-                    if (!webPreferencesStarted) {
-                        proxyFilter.beginWikiDocument(WEB_PREFERENCES, new FilterEventParameters());
-                        webPreferencesStarted = true;
+                    if (webPreferencesParameters == null) {
+                        webPreferencesParameters = new FilterEventParameters();
+                        webPreferencesParameters.put(WikiDocumentFilter.PARAMETER_HIDDEN, true);
+                        proxyFilter.beginWikiDocument(WEB_PREFERENCES, webPreferencesParameters);
+                        FilterEventParameters prefParameters = new FilterEventParameters();
+                        prefParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, XWIKI_PREFERENCES_CLASS);
+                        proxyFilter.beginWikiObject(XWIKI_PREFERENCES_CLASS, prefParameters);
+                        proxyFilter.endWikiObject(XWIKI_PREFERENCES_CLASS, prefParameters);
                     }
                     sendRight(proxyFilter, group, right, users, true);
                 }
             }
 
         } finally {
-            if (webPreferencesStarted) {
-                proxyFilter.endWikiDocument(WEB_PREFERENCES, new FilterEventParameters());
+            if (webPreferencesParameters != null) {
+                proxyFilter.endWikiDocument(WEB_PREFERENCES, webPreferencesParameters);
             }
         }
     }
