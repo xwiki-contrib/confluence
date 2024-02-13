@@ -778,6 +778,8 @@ public class ConfluenceInputFilterStream
 
         // Loop over the XWiki groups
         for (Map.Entry<String, Collection<ConfluenceProperties>> groupEntry: groupsByXWikiName.entrySet()) {
+            this.progress.startStep(this);
+
             String groupName = groupEntry.getKey();
             FilterEventParameters groupParameters = new FilterEventParameters();
 
