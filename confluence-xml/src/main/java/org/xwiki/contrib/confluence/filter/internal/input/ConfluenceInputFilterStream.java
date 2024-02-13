@@ -798,6 +798,10 @@ public class ConfluenceInputFilterStream
                 }
             }
 
+            if (properties.isVerbose()) {
+                logger.info("Sending group [{}]", groupName);
+            }
+
             // > Group
             proxyFilter.beginGroupContainer(groupName, groupParameters);
 
@@ -915,6 +919,10 @@ public class ConfluenceInputFilterStream
 
         String userName = confluenceConverter.toUserReferenceName(
             userProperties.getString(ConfluenceXMLPackage.KEY_USER_NAME, String.valueOf(userId)));
+
+        if (this.properties.isVerbose()) {
+            this.logger.info("Sending user [{}] (id = [{}])", userName, userId);
+        }
 
         FilterEventParameters userParameters = new FilterEventParameters();
 
