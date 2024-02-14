@@ -971,6 +971,20 @@ public class ConfluenceInputFilterStream
         return this.properties.getGroupMapping().getOrDefault(groupName, groupName);
     }
 
+    private String getSpaceTitle(Long spaceId)
+    {
+        try {
+            ConfluenceProperties spaceProperties = confluencePackage.getSpaceProperties(spaceId);
+            if (spaceProperties != null) {
+                return spaceProperties.getString(ConfluenceXMLPackage.KEY_SPACE_NAME, null);
+            }
+        } catch (ConfigurationException e) {
+            this.logger.warn("Could not get the title of space id=[{}]", spaceId, e);
+        }
+
+        return null;
+    }
+
     private void readPage(long pageId, String spaceKey, boolean blog, Object filter, ConfluenceFilter proxyFilter)
         throws FilterException, MaxPageCountReachedException
     {
@@ -1416,8 +1430,15 @@ public class ConfluenceInputFilterStream
             documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_REVISION_COMMENT,
                 pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION_COMMENT));
         }
-        documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_TITLE,
-            pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE));
+
+        String title = (!this.properties.isSpaceTitleFromHomePage()
+            && pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE))
+                ? getSpaceTitle(pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null))
+                : pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE, null);
+
+        if (title != null) {
+            documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_TITLE, title);
+        }
     }
 
     private void readComments(ConfluenceProperties pageProperties,

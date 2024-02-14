@@ -113,4 +113,5 @@
 .input|confluence+xml
 .configuration.source=spanishaccentsintitle
 .configuration.homeRedirectEnabled=false
+.configuration.spaceTitleFromHomePage=true
 .#------------------------------------------------------------------------------

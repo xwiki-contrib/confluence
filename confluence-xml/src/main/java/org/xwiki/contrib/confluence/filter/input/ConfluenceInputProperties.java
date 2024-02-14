@@ -132,6 +132,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
 
     private ConfluenceIdRangeList objectIdRanges;
 
+    private boolean spaceTitleFromHomePage;
+
     private Mapping groupMapping = new Mapping(Map.of(
         "confluence-administrators", XWIKI_ADMIN_GROUP_NAME,
         "administrators", XWIKI_ADMIN_GROUP_NAME,
@@ -939,6 +941,25 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
         this.nestedSpacesEnabled = nestedSpacesEnabled;
     }
 
+    /**
+     * @return whether spaces should be titled using home page titles
+     * @since 9.36.0
+     */
+    @PropertyName("Title spaces from their home page")
+    @PropertyDescription("Title spaces using the Confluence home page titles instead of the Confluence space names")
+    public boolean isSpaceTitleFromHomePage()
+    {
+        return spaceTitleFromHomePage;
+    }
+
+    /**
+     * @param spaceTitleFromHomePage whether spaces should be titled using the home page titles
+     * @since 9.36.0
+     */
+    public void setSpaceTitleFromHomePage(boolean spaceTitleFromHomePage)
+    {
+        this.spaceTitleFromHomePage = spaceTitleFromHomePage;
+    }
 
     /**
      * @return the maximum number of pages to read.

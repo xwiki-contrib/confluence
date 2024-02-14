@@ -96,4 +96,5 @@
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=cdatazerowidthspace
+.configuration.spaceTitleFromHomePage=true
 .#------------------------------------------------------------------------------

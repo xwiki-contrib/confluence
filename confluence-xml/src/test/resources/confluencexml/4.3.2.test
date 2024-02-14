@@ -359,7 +359,7 @@
             </entry>
             <entry>
               <string>title</string>
-              <string>privatespace Home</string>
+              <string>privatespace</string>
             </entry>
             <entry>
               <string>content</string>
@@ -805,7 +805,7 @@ Link to page 1 [[here>>doc:SPACE1.Page 1]]</string>
             </entry>
             <entry>
               <string>title</string>
-              <string>space2 Home</string>
+              <string>space2</string>
             </entry>
             <entry>
               <string>content</string>
@@ -3780,7 +3780,7 @@ content
             </entry>
             <entry>
               <string>title</string>
-              <string>space1 Home</string>
+              <string>space1</string>
             </entry>
             <entry>
               <string>content</string>
