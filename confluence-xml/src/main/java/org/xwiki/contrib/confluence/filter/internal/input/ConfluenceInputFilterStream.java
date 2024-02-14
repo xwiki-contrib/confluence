@@ -1076,7 +1076,7 @@ public class ConfluenceInputFilterStream
         }
 
         try {
-            sendTerminalDoc(blog, filter, proxyFilter, documentName, documentParameters, pageProperties);
+            sendTerminalDoc(blog, filter, proxyFilter, documentName, documentParameters, pageProperties, spaceKey);
 
             if (isNestedEnabled) {
                 sendPages(spaceKey, blog, confluencePackage.getPageChildren(pageId), filter, proxyFilter);
@@ -1095,7 +1095,8 @@ public class ConfluenceInputFilterStream
     }
 
     private void sendTerminalDoc(boolean blog, Object filter, ConfluenceFilter proxyFilter,  String documentName,
-        FilterEventParameters documentParameters, ConfluenceProperties pageProperties) throws FilterException
+        FilterEventParameters documentParameters, ConfluenceProperties pageProperties, String spaceKey)
+        throws FilterException
     {
         this.progress.startStep(this);
         // > WikiDocument
@@ -1107,7 +1108,7 @@ public class ConfluenceInputFilterStream
             }
 
             if (this.properties.isContentsEnabled()) {
-                sendRevisions(blog, filter, proxyFilter, pageProperties);
+                sendRevisions(blog, filter, proxyFilter, pageProperties, spaceKey);
             }
         } finally {
             // < WikiDocument
@@ -1127,7 +1128,7 @@ public class ConfluenceInputFilterStream
     }
 
     private void sendRevisions(boolean blog, Object filter, ConfluenceFilter proxyFilter,
-        ConfluenceProperties pageProperties) throws FilterException
+        ConfluenceProperties pageProperties, String spaceKey) throws FilterException
     {
         Locale locale = Locale.ROOT;
 
@@ -1175,7 +1176,7 @@ public class ConfluenceInputFilterStream
                             continue;
                         }
 
-                        readPageRevision(revisionProperties, blog, filter, proxyFilter);
+                        readPageRevision(revisionProperties, blog, filter, proxyFilter, spaceKey);
                     }
                 }
             }
@@ -1183,7 +1184,7 @@ public class ConfluenceInputFilterStream
             // Current version
             // Note: no need to check whether the object should be sent. Indeed, this is already checked by an upper
             // function
-            readPageRevision(pageProperties, blog, filter, proxyFilter);
+            readPageRevision(pageProperties, blog, filter, proxyFilter, spaceKey);
         } finally {
             // < WikiDocumentLocale
             proxyFilter.endWikiDocumentLocale(locale, documentLocaleParameters);
@@ -1296,8 +1297,11 @@ public class ConfluenceInputFilterStream
     }
 
     private void readPageRevision(ConfluenceProperties pageProperties, boolean blog, Object filter, ConfluenceFilter
-        proxyFilter) throws FilterException
+        proxyFilter, String spaceKey) throws FilterException
     {
+        // beware. Here, pageProperties might not have a space key. You need to use the one passed in parameters
+        // FIXME we could ensure it though with some work
+
         String revision = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION);
 
         FilterEventParameters docRevisionParameters = new FilterEventParameters();
@@ -1311,7 +1315,7 @@ public class ConfluenceInputFilterStream
             readAttachments(pageId, pageProperties, proxyFilter);
             readTags(pageProperties, proxyFilter);
             readComments(pageProperties, proxyFilter);
-            storeConfluenceDetails(pageId, pageProperties, proxyFilter);
+            storeConfluenceDetails(spaceKey, pageId, pageProperties, proxyFilter);
         } finally {
             // < WikiDocumentRevision
             proxyFilter.endWikiDocumentRevision(revision, docRevisionParameters);
@@ -1584,7 +1588,7 @@ public class ConfluenceInputFilterStream
                 + "] because it does not have any title");
         }
 
-        long currentSpaceId = currentProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE);
+        long currentSpaceId = currentProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
 
         EntityReference spaceReference = null;
         if (spaceId != null && !spaceId.equals(currentSpaceId)) {
@@ -1612,18 +1616,11 @@ public class ConfluenceInputFilterStream
     /**
      * @since 9.13
      */
-    private void storeConfluenceDetails(Long pageId, ConfluenceProperties pageProperties, ConfluenceFilter proxyFilter)
-        throws FilterException
+    private void storeConfluenceDetails(String spaceKey, Long pageId, ConfluenceProperties pageProperties,
+        ConfluenceFilter proxyFilter) throws FilterException
     {
         if (!this.properties.isStoreConfluenceDetailsEnabled()) {
             return;
-        }
-
-        String spaceKey = null;
-        try {
-            spaceKey = confluencePackage.getSpaceKey(pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE));
-        } catch (ConfigurationException e) {
-            this.logger.error("Could not get the space of page [{}]", pageId, e);
         }
 
         FilterEventParameters pageReportParameters = new FilterEventParameters();
@@ -1632,6 +1629,7 @@ public class ConfluenceInputFilterStream
         pageReportParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, CONFLUENCEPAGE_CLASSNAME);
         proxyFilter.beginWikiObject(CONFLUENCEPAGE_CLASSNAME, pageReportParameters);
         try {
+            proxyFilter.onWikiObjectProperty("id", pageId, FilterEventParameters.EMPTY);
             StringBuilder pageURLBuilder = new StringBuilder();
             if (this.properties.getBaseURLs() != null) {
                 pageURLBuilder.append(this.properties.getBaseURLs().get(0).toString());
@@ -1641,8 +1639,6 @@ public class ConfluenceInputFilterStream
                     pageURLBuilder.append("/pages/").append(pageId).append("/").append(pageName);
                 }
             }
-
-            proxyFilter.onWikiObjectProperty("id", pageId, FilterEventParameters.EMPTY);
             proxyFilter.onWikiObjectProperty("url", pageURLBuilder.toString(), FilterEventParameters.EMPTY);
             proxyFilter.onWikiObjectProperty("space", spaceKey, FilterEventParameters.EMPTY);
         } finally {
