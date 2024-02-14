@@ -330,9 +330,10 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             // FIXME: ConfluenceXWikiGeneratorListener hardcodes a WebHome document name when encountering absolute URLs
             // to Confluence spaces. It would be better to avoid anything XWiki from the links we handle here.
             if (pageId == null) {
-                this.logger.error(
-                    "Could not find page id of page [{}] in space [{}], falling back to non nested conversion",
-                    documentName, space);
+                this.logger.warn(
+                    "Could not find page [{}] in space [{}]. Links to this page may be broken. "
+                    + "This may happen when importing a space that links to another space which is not present in this "
+                    + "Confluence export, or the page is missing", documentName, space);
             } else {
                 try {
                     ConfluenceProperties pageProperties = confluencePackage.getPageProperties(pageId, false);
