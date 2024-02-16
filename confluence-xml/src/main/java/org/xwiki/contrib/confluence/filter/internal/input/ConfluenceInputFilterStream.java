@@ -880,9 +880,12 @@ public class ConfluenceInputFilterStream
         throws FilterException
     {
         Map<String, Collection<ConfluenceProperties>> groupsByXWikiName = new HashMap<>();
+        int i = 0;
         for (long groupId : groups) {
             this.progress.startStep(this);
-
+            if (properties.isVerbose()) {
+                logger.info("Reading group [{}] ({}/{})", groupId, ++i, groups.size());
+            }
             ConfluenceProperties groupProperties;
             try {
                 groupProperties = this.confluencePackage.getGroupProperties(groupId);
