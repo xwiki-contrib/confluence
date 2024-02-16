@@ -1044,15 +1044,9 @@ public class ConfluenceInputFilterStream
             return;
         }
 
-        // Skip deleted, archived or draft pages
-        String contentStatus = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS);
-        if (contentStatus != null
-            && (
-                contentStatus.equals("deleted")
-                || (contentStatus.equals("archived") && !this.properties.isArchivedDocumentsEnabled())
-                || contentStatus.equals("draft")
-            )
-        ) {
+        // Skip archived pages
+        String status = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS);
+        if ("archived".equals(status) && !this.properties.isArchivedDocumentsEnabled()) {
             emptyStep();
             return;
         }

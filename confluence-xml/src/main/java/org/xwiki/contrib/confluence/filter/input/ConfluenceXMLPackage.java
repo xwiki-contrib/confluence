@@ -1221,6 +1221,13 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         long pageId = readObjectProperties(xmlReader, properties);
 
+        // Skip deleted, archived or draft pages
+        // Note that some draft pages don't have spaces and this causes issues.
+        String contentStatus = properties.getString(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS);
+        if (contentStatus != null && (contentStatus.equals("deleted") || contentStatus.equals("draft"))) {
+            return;
+        }
+
         savePageProperties(properties, pageId);
 
         // Register only current pages (they will take care of handling their history)
