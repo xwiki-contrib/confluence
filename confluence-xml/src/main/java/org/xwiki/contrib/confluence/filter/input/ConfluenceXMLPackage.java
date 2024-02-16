@@ -1244,10 +1244,14 @@ public class ConfluenceXMLPackage implements AutoCloseable
             }
 
             Long spaceId = properties.getLong(KEY_PAGE_SPACE, null);
-            (isBlog ? this.blogPages : this.pages).computeIfAbsent(spaceId, k -> new LinkedList<>()).add(pageId);
-            String title = properties.getString(KEY_PAGE_TITLE, null);
-            if (title != null) {
-                pagesBySpaceAndTitle.computeIfAbsent(spaceId, k -> new HashMap<>()).put(title, pageId);
+            if (spaceId == null) {
+                this.logger.error("Could not find space of page [{}]. Importing it may fail.", pageId);
+            } else {
+                (isBlog ? this.blogPages : this.pages).computeIfAbsent(spaceId, k -> new LinkedList<>()).add(pageId);
+                String title = properties.getString(KEY_PAGE_TITLE, null);
+                if (title != null) {
+                    pagesBySpaceAndTitle.computeIfAbsent(spaceId, k -> new HashMap<>()).put(title, pageId);
+                }
             }
         }
     }
