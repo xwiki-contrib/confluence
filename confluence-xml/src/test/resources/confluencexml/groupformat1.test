@@ -1,0 +1,37 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.#------------------------------------------------------------------------------
+<groupContainer name="group 2Group">
+  <p>
+    <parameters>
+      <entry>
+        <string>revision_date</string>
+        <null/>
+      </entry>
+      <entry>
+        <string>creation_date</string>
+        <null/>
+      </entry>
+    </parameters>
+  </p>
+</groupContainer>
+<groupContainer name="MyGroup">
+  <p>
+    <parameters>
+      <entry>
+        <string>revision_date</string>
+        <null/>
+      </entry>
+      <entry>
+        <string>creation_date</string>
+        <null/>
+      </entry>
+    </parameters>
+  </p>
+</groupContainer>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=group
+.configuration.groupMapping=group 1=MyGroup
+.configuration.groupFormat=${group}Group
+.#------------------------------------------------------------------------------

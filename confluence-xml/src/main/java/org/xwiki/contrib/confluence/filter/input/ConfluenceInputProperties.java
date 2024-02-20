@@ -220,6 +220,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private int maxPageCount = -1;
 
     /**
+     * @see #getGroupFormat()
+     */
+    private String groupFormat;
+
+    /**
      * @return The source to load the wiki from
      */
     @PropertyName("The source")
@@ -979,5 +984,27 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setMaxPageCount(int maxPageCount)
     {
         this.maxPageCount = maxPageCount;
+    }
+
+    /**
+     * @return the group format to use
+     * @since 9.37.0
+     */
+    @PropertyName("Group format")
+    @PropertyDescription("The group format to use to transform a Confluence group names to XWiki group names. "
+        + "String ${group} will be replaced with the group Confluence name; "
+        + "String ${group._clean} same with the special characters removed.")
+    public String getGroupFormat()
+    {
+        return groupFormat;
+    }
+
+    /**
+     * @param groupFormat the group format to use
+     * @since 9.37.0
+     */
+    public void setGroupFormat(String groupFormat)
+    {
+        this.groupFormat = groupFormat;
     }
 }

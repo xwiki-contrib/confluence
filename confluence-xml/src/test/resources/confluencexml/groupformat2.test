@@ -1,0 +1,23 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.#------------------------------------------------------------------------------
+<groupContainer name="group2Group">
+  <p>
+    <parameters>
+      <entry>
+        <string>revision_date</string>
+        <null/>
+      </entry>
+      <entry>
+        <string>creation_date</string>
+        <null/>
+      </entry>
+    </parameters>
+  </p>
+</groupContainer>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=group
+.configuration.groupMapping=group 1=
+.configuration.groupFormat=${group._clean}Group
+.#------------------------------------------------------------------------------

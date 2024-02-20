@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic>
+<object class="InternalGroup" package="com.atlassian.crowd.model.group">
+    <id name="id">229381</id>
+    <property name="name"><![CDATA[group 1]]></property>
+    <property name="lowerName"><![CDATA[group 1]]></property>
+    <property name="active">true</property>
+    <property name="local">false</property>
+    <property name="type" enum-class="GroupType" package="com.atlassian.crowd.model.group">GROUP</property>
+</object>
+<object class="InternalGroup" package="com.atlassian.crowd.model.group">
+    <id name="id">229382</id>
+    <property name="name"><![CDATA[group 2]]></property>
+    <property name="lowerName"><![CDATA[group 2]]></property>
+    <property name="active">true</property>
+    <property name="local">false</property>
+    <property name="type" enum-class="GroupType" package="com.atlassian.crowd.model.group">GROUP</property>
+</object>
+</hibernate-generic>

@@ -967,11 +967,31 @@ public class ConfluenceInputFilterStream
 
     private String getConfluenceToXWikiGroupName(String groupName)
     {
+        if (groupName == null) {
+            return null;
+        }
+
         if (!this.properties.isConvertToXWiki() || this.properties.getGroupMapping() == null) {
             return groupName;
         }
 
-        return this.properties.getGroupMapping().getOrDefault(groupName, groupName);
+        String group = this.properties.getGroupMapping().get(groupName);
+        if (group != null) {
+            return group;
+        }
+
+        String format = this.properties.getGroupFormat();
+        if (StringUtils.isEmpty(format)) {
+            return groupName;
+        }
+
+        return format.replace("${group}", groupName).replace("${group._clean}", clean(groupName));
+    }
+
+    // taken from ldap-authenticator (DefaultLDAPDocumentHelper.java)
+    private String clean(String str)
+    {
+        return StringUtils.removePattern(str, "[\\.\\:\\s,@\\^\\/]");
     }
 
     private String getSpaceTitle(Long spaceId)
