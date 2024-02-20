@@ -23,10 +23,17 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.net.URI;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -574,6 +581,9 @@ public class ConfluenceXMLPackage implements AutoCloseable
         KEY_PAGE_SPACE
     };
 
+    private static final String RESTORING_FROM_ANOTHER_VERSION_UNSUPPORTED_WARNING =
+        "Restoring from a different version is unsupported and may lead to unexpected results.";
+
     @Inject
     private Environment environment;
 
@@ -681,10 +691,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * @param source the source where to find the package to parse
+     * @param workingDirectory the directory to use to extract the conflence package for processing (can be null)
      * @throws IOException when failing to access the package content
      * @throws FilterException when any error happen during the reading of the package
+     * @since 9.37.0
      */
-    public void read(InputSource source) throws IOException, FilterException
+    public void read(InputSource source, String workingDirectory) throws IOException, FilterException
     {
         if (source instanceof FileInputSource) {
             fromFile(((FileInputSource) source).getFile());
@@ -716,10 +728,157 @@ public class ConfluenceXMLPackage implements AutoCloseable
         // Initialize
 
         try {
-            createTree();
+            createTree(workingDirectory);
         } catch (Exception e) {
             throw new FilterException("Failed to analyze the package index", e);
         }
+    }
+
+    /**
+     * @param source the source where to find the package to parse
+     * @throws IOException when failing to access the package content
+     * @throws FilterException when any error happen during the reading of the package
+     */
+    public void read(InputSource source) throws IOException, FilterException
+    {
+        read(source, null);
+    }
+
+    private void saveState() throws IllegalAccessException, IOException
+    {
+        File state = new File(this.tree, "state");
+        state.mkdir();
+        Files.write(getExtractedPackageVersionPath(state), getVersion().getBytes());
+        for (Field field : this.getClass().getDeclaredFields()) {
+            if (isStateField(field)) {
+                FileOutputStream fos = new FileOutputStream(new File(state, field.getName()));
+                ObjectOutputStream myObjectOutStream = new ObjectOutputStream(fos);
+                myObjectOutStream.writeObject(field.get(this));
+                fos.close();
+            }
+        }
+    }
+
+    private void clearState()
+    {
+        for (Field field : this.getClass().getDeclaredFields()) {
+            if (isStateField(field)) {
+                Object f;
+                try {
+                    f = field.get(this);
+                } catch (IllegalAccessException e) {
+                    logger.error("Unexpected error when clearing the state of field [{}]", field.getName(), e);
+                    continue;
+                }
+                if (f instanceof Collection) {
+                    ((Collection) f).clear();
+                } else if (f instanceof Map) {
+                    ((Map) f).clear();
+                }
+            }
+        }
+    }
+
+    private static boolean isStateField(Field field)
+    {
+        Class<?> type = field.getType();
+        return !Modifier.isStatic(field.getModifiers())
+            && (Map.class.isAssignableFrom(type) || Collection.class.isAssignableFrom(type));
+    }
+
+    private String getVersion()
+    {
+        String version = getClass().getPackage().getSpecificationVersion();
+        return version == null ? "" : version;
+    }
+
+    private boolean restoreState(File tree)
+    {
+        if (!tree.exists()) {
+            return false;
+        }
+
+        File state = new File(tree, "state");
+        if (!state.exists()) {
+            return false;
+        }
+
+        checkExtractedPackageVersion(tree, state);
+
+        for (Field field : this.getClass().getDeclaredFields()) {
+            if (isStateField(field) && !restoreStateField(field, state)) {
+                clearState();
+                return false;
+            }
+        }
+
+        this.tree = tree;
+
+        return true;
+    }
+
+    private boolean restoreStateField(Field field, File state)
+    {
+        String name = field.getName();
+        FileInputStream fis;
+        Object property;
+        try {
+            fis = new FileInputStream(new File(state, name));
+            ObjectInputStream objectInput = new ObjectInputStream(fis);
+
+            property = objectInput.readObject();
+            objectInput.close();
+            fis.close();
+        } catch (IOException | ClassNotFoundException e) {
+            logger.warn("Could not restore the package state: field [{}] is unreadable", name, e);
+            return false;
+        }
+        try {
+            Object f = field.get(this);
+            if (f instanceof Collection && property instanceof Collection) {
+                ((Collection) f).addAll((Collection) property);
+            } else if (f instanceof Map && property instanceof Map) {
+                ((Map) f).putAll((Map) property);
+            } else {
+                logger.warn("Could not restore the package state: wrong type for field [{}]", name);
+                return false;
+            }
+        } catch (IllegalAccessException e) {
+            logger.warn("Could not restore the Confluence package state", e);
+            return false;
+        }
+        return true;
+    }
+
+    private void checkExtractedPackageVersion(File tree, File state)
+    {
+        logger.info("Restoring from extracted Confluence package found at [{}]", tree.getPath());
+        try {
+            String version = Files.readString(getExtractedPackageVersionPath(state)).trim();
+            if (!getVersion().equals(version)) {
+                this.logger.warn(
+                    "The package was extracted by version [{}]. Current version is [{}]. "
+                        + RESTORING_FROM_ANOTHER_VERSION_UNSUPPORTED_WARNING, version, getVersion());
+            }
+        } catch (IOException e) {
+            this.logger.warn(
+                "Could not determine the version of the extracted package. "
+                + RESTORING_FROM_ANOTHER_VERSION_UNSUPPORTED_WARNING, e);
+        }
+    }
+
+    private static Path getExtractedPackageVersionPath(File state)
+    {
+        return Paths.get(state.getPath() + "/version.txt");
+    }
+
+    /**
+     * @param workingDirectoryPath the path to the working directory to restore the state from
+     * @return whether restoring succeeded
+     */
+    public boolean restoreState(String workingDirectoryPath)
+    {
+        return restoreState(new File(workingDirectoryPath));
     }
 
     private void fromFile(File file) throws FilterException
@@ -954,15 +1113,13 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return this.blogPages;
     }
 
-    private void createTree()
+    private void createTree(String workingDirectory)
         throws XMLStreamException, FactoryConfigurationError, IOException, ConfigurationException, FilterException
     {
-        if (this.temporaryDirectory) {
-            this.tree = new File(this.directory, "tree");
-        } else {
-            this.tree = Files
-                .createTempDirectory(this.environment.getTemporaryDirectory().toPath(), "confluencexml-tree").toFile();
-        }
+        this.tree = workingDirectory == null
+            ? Files.createTempDirectory(this.environment.getTemporaryDirectory().toPath(),
+                "confluencexml-tree").toFile()
+            : new File(workingDirectory);
         this.tree.mkdir();
 
         try (CountingInputStream s = new CountingInputStream(new BufferedInputStream(new FileInputStream(entities)))) {
@@ -997,6 +1154,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
             }
             if (inStep) {
                 progress.endStep(this);
+            }
+            try {
+                saveState();
+            } catch (IllegalAccessException | IOException e) {
+                logger.warn("Unable to save the package state, restoring for later migrations won't work", e);
             }
             progress.popLevelProgress(this);
         }

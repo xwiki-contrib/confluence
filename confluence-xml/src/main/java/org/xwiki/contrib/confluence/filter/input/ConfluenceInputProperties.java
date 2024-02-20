@@ -224,6 +224,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      */
     private String groupFormat;
 
+    /*
+     * @see #getWorkingDirectory()
+     */
+    private String workingDirectory;
+
     /**
      * @return The source to load the wiki from
      */
@@ -1006,5 +1011,29 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setGroupFormat(String groupFormat)
     {
         this.groupFormat = groupFormat;
+    }
+
+    /**
+     * @return the directory used to extract the Confluence package for processing
+     * @since 9.38.0
+     */
+    @PropertyName("Working directory")
+    @PropertyDescription("The directory used to extract the Confluence package for processing. "
+        + "If an extracted package is found, the analyze will be sped up, "
+        + "but this is only supported when using the same version of Confluence XML. Mixing versions is not supported "
+        + "and should not be attempted. To use this feature, set the Cleanup mode to NO."
+    )
+    public String getWorkingDirectory()
+    {
+        return workingDirectory;
+    }
+
+    /**
+     * @param workingDirectory the directory to use
+     * @since 9.38.0
+     */
+    public void setWorkingDirectory(String workingDirectory)
+    {
+        this.workingDirectory = workingDirectory;
     }
 }

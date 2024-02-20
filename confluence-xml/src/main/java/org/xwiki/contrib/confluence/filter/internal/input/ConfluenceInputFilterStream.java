@@ -272,10 +272,17 @@ public class ConfluenceInputFilterStream
 
     private void readInternal(Object filter, ConfluenceFilter proxyFilter) throws FilterException
     {
-        pushLevelProgress(2);
         // Prepare package
         try {
-            this.confluencePackage.read(this.properties.getSource());
+            boolean restored = false;
+            String wd = this.properties.getWorkingDirectory();
+            if (StringUtils.isNotEmpty(wd)) {
+                restored = this.confluencePackage.restoreState(wd);
+            }
+            pushLevelProgress(restored ? 1 : 2);
+            if (!restored) {
+                this.confluencePackage.read(this.properties.getSource(), wd);
+            }
         } catch (Exception e) {
             throw new FilterException("Failed to read package", e);
         }
