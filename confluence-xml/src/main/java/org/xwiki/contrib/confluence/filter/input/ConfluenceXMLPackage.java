@@ -496,7 +496,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
      * @since 9.24.0
      * @deprecated since 9.35.0
      */
-    @Deprecated
+    @Deprecated(since = "9.35.0")
     public static final String KEY_PAGE_BLOGPOST = "blogpost";
 
     /**
