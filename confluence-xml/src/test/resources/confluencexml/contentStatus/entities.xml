@@ -12,6 +12,9 @@
       <id name="id">100</id>
     </property>
     <property name="title"><![CDATA[TestContent]]></property>
+    <property name="parent" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">42</id>
+    </property>
   </object>
 
   <object class="Page" package="com.atlassian.confluence.pages">
@@ -21,6 +24,9 @@
     </property>
     <property name="title"><![CDATA[Archived Page]]></property>
     <property name="contentStatus"><![CDATA[archived]]></property>
+    <property name="parent" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">42</id>
+    </property>
   </object>
 
   <object class="Page" package="com.atlassian.confluence.pages">
@@ -30,5 +36,8 @@
     </property>
     <property name="title"><![CDATA[Draft Page]]></property>
     <property name="contentStatus"><![CDATA[draft]]></property>
+    <property name="parent" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">42</id>
+    </property>
   </object>
 </hibernate-generic>

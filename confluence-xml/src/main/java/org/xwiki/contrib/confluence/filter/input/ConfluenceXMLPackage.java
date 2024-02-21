@@ -605,6 +605,9 @@ public class ConfluenceXMLPackage implements AutoCloseable
     // Maps a page id to its direct non-blog children
     private final Map<Long, List<Long>> pageChildren = new LinkedHashMap<>();
 
+    // List of parent pages that have not been seen
+    private final Map<Long, Set<Long>> missingParents = new LinkedHashMap<>();
+
     // maps a space id to its home page
     private final Map<Long, Long> homePages = new LinkedHashMap<>();
 
@@ -641,7 +644,18 @@ public class ConfluenceXMLPackage implements AutoCloseable
      */
     public List<Long> getOrphans(Long spaceId)
     {
-        return orphans.getOrDefault(spaceId, Collections.emptyList());
+        List<Long> spaceOrphans = this.orphans.getOrDefault(spaceId, Collections.emptyList());
+        Collection<Long> spaceMissingParents = this.missingParents.get(spaceId);
+
+        if (spaceMissingParents == null || spaceMissingParents.isEmpty()) {
+            return spaceOrphans;
+        }
+
+        spaceOrphans = new ArrayList<>(spaceOrphans);
+        for (Long missingParent : spaceMissingParents) {
+            spaceOrphans.addAll(getPageChildren(missingParent));
+        }
+        return spaceOrphans;
     }
 
     /**
@@ -1128,10 +1142,21 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         Long homePageId = properties.getLong(KEY_SPACE_HOMEPAGE, null);
         if (homePageId != null) {
-            ConfluenceProperties homePageProperties = getPageProperties(homePageId, true);
-            homePageProperties.setProperty(KEY_PAGE_HOMEPAGE, true);
-            savePageProperties(homePageProperties, homePageId);
-            homePages.put(spaceId, homePageId);
+            Long formerHome = homePages.get(spaceId);
+            if (!homePageId.equals(formerHome)) {
+                ConfluenceProperties homePageProperties = getPageProperties(homePageId, true);
+                homePageProperties.setProperty(KEY_PAGE_HOMEPAGE, true);
+                savePageProperties(homePageProperties, homePageId);
+                if (formerHome != null) {
+                    ConfluenceProperties formerHomePageProperties = getPageProperties(formerHome, false);
+                    if (formerHomePageProperties != null) {
+                        formerHomePageProperties.clearProperty(KEY_PAGE_HOMEPAGE);
+                        savePageProperties(formerHomePageProperties, formerHome);
+                        orphans.computeIfAbsent(spaceId, k -> new ArrayList<>()).add(formerHome);
+                    }
+                }
+                setHomePage(spaceId, homePageId);
+            }
         }
 
         // Register space by id
@@ -1228,22 +1253,35 @@ public class ConfluenceXMLPackage implements AutoCloseable
             return;
         }
 
-        savePageProperties(properties, pageId);
-
         // Register only current pages (they will take care of handling their history)
         Long originalVersion = properties.getLong(KEY_PAGE_ORIGINAL_VERSION, null);
         if (originalVersion == null) {
+            Long spaceId = properties.getLong(KEY_PAGE_SPACE, null);
+            Set<Long> missingParentsForSpace = missingParents.get(spaceId);
+            if (missingParentsForSpace != null) {
+                missingParentsForSpace.remove(pageId);
+            }
+
             if (!isBlog) {
                 // FIXME only needed for nested migrations?
                 Long parent = properties.getLong(KEY_PAGE_PARENT, null);
                 if (parent == null) {
-                    orphans.computeIfAbsent(parent, k -> new ArrayList<>()).add(pageId);
+                    Long homePage = homePages.get(spaceId);
+                    if (homePage == null) {
+                        // some spaces don't have a homePage property, but the property is here, we try to fix this.
+                        properties.setProperty(KEY_PAGE_HOMEPAGE, true);
+                        setHomePage(spaceId, pageId);
+                    } else if (!homePage.equals(pageId)) {
+                        orphans.computeIfAbsent(spaceId, k -> new ArrayList<>()).add(pageId);
+                    }
                 } else {
                     pageChildren.computeIfAbsent(parent, k -> new ArrayList<>()).add(pageId);
+                    if (!pages.getOrDefault(spaceId, Collections.emptyList()).contains(parent)) {
+                        missingParents.computeIfAbsent(spaceId, k -> new LinkedHashSet<>()).add(parent);
+                    }
                 }
             }
 
-            Long spaceId = properties.getLong(KEY_PAGE_SPACE, null);
             if (spaceId == null) {
                 this.logger.error("Could not find space of page [{}]. Importing it may fail.", pageId);
             } else {
@@ -1253,6 +1291,17 @@ public class ConfluenceXMLPackage implements AutoCloseable
                     pagesBySpaceAndTitle.computeIfAbsent(spaceId, k -> new HashMap<>()).put(title, pageId);
                 }
             }
+        }
+
+        savePageProperties(properties, pageId);
+    }
+
+    private void setHomePage(Long spaceId, long pageId)
+    {
+        homePages.put(spaceId, pageId);
+        Collection<Long> spaceOrphans = orphans.get(spaceId);
+        if (spaceOrphans != null) {
+            spaceOrphans.remove(pageId);
         }
     }
 

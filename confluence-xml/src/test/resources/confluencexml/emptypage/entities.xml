@@ -13,6 +13,9 @@
       <id name="id">100</id>
     </property>
     <property name="title"/>
+    <property name="parent" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">42</id>
+    </property>
   </object>
 
 </hibernate-generic>

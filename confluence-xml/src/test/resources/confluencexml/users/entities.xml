@@ -62,6 +62,9 @@
         <id name="id">40</id>
       </element>
     </collection>
+    <property name="parent" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">42</id>
+    </property>
   </object>
 
   <object class="BodyContent" package="com.atlassian.confluence.core">

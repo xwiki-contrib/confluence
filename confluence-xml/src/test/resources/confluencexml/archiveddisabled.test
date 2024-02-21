@@ -2,7 +2,54 @@
 .expect|filter+xml
 .# Content conversions
 .#------------------------------------------------------------------------------
-<wikiSpace name="TestSpace"/>
+<wikiSpace name="TestSpace">
+  <wikiDocument name="">
+    <p>
+      <parameters>
+        <entry>
+          <string>hidden</string>
+          <boolean>true</boolean>
+        </entry>
+      </parameters>
+    </p>
+    <wikiObject name="XWiki.RedirectClass">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.RedirectClass</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="location">
+        <p>
+          <value t="org.xwiki.model.reference.EntityReference">
+            <name>WebHome</name>
+            <parent>
+              <name>TestSpace</name>
+              <type>SPACE</type>
+            </parent>
+            <type>DOCUMENT</type>
+          </value>
+        </p>
+      </wikiObjectProperty>
+    </wikiObject>
+  </wikiDocument>
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <wikiDocumentRevision>
+        <p>
+          <parameters>
+            <entry>
+              <string>title</string>
+              <string>TestSpace</string>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=archived

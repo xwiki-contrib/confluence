@@ -738,6 +738,9 @@ public class ConfluenceInputFilterStream
     {
         Long pageId = pageProperties.getLong("id");
         Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
+        if (spaceId == null) {
+            return null;
+        }
         String spaceKey;
         try {
             spaceKey = confluencePackage.getSpaceKey(spaceId);
@@ -1421,8 +1424,10 @@ public class ConfluenceInputFilterStream
     {
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_PARENT) && !properties.isNestedSpacesEnabled()) {
             try {
-                documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_PARENT,
-                    getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT));
+                EntityReference parentRef = getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT);
+                if (parentRef != null) {
+                    documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_PARENT, parentRef);
+                }
             } catch (Exception e) {
                 this.logger.error("Failed to parse parent for the document with id [{}]",
                     createPageIdentifier(pageProperties), e);
@@ -1593,7 +1598,10 @@ public class ConfluenceInputFilterStream
             return null;
         }
 
-        ConfluenceProperties pageProperties = this.confluencePackage.getPageProperties(pageId, true);
+        ConfluenceProperties pageProperties = this.confluencePackage.getPageProperties(pageId, false);
+        if (pageProperties == null) {
+            return null;
+        }
 
         Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
         String docName = pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)

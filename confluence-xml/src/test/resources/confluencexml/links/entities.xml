@@ -84,6 +84,9 @@
       <id name="id">101</id>
     </property>
     <property name="title"><![CDATA[Other Page]]></property>
+    <property name="parent" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">42</id>
+    </property>
   </object>
 
   <object class="Space" package="com.atlassian.confluence.spaces">
@@ -103,5 +106,8 @@
         <id name="id">0</id>
       </element>
     </collection>
+    <property name="parent" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">42</id>
+    </property>
   </object>
 </hibernate-generic>
