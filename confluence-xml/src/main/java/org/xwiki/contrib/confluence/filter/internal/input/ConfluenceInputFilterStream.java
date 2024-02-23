@@ -333,6 +333,10 @@ public class ConfluenceInputFilterStream
             rootSpaces.removeAll(disabledSpaces);
 
             for (Long spaceId : rootSpaces) {
+                if (spaceId == null) {
+                    this.logger.error("A null space has been found. This likely means that there is a bug. Skipping.");
+                    continue;
+                }
                 if (!shouldSendObject(spaceId) || pagesCount == 0) {
                     continue;
                 }
@@ -398,7 +402,15 @@ public class ConfluenceInputFilterStream
             throw new FilterException("Failed to get space properties", e);
         }
 
+        if (spaceProperties == null) {
+            this.logger.error("Could not get the properties of space id=[{}]. Skipping.", spaceId);
+            return;
+        }
         String spaceKey = confluenceConverter.toEntityName(ConfluenceXMLPackage.getSpaceKey(spaceProperties));
+        if (StringUtils.isEmpty(spaceKey)) {
+            this.logger.error("Could not determine the key of space id=[{}]. Skipping.", spaceId);
+            return;
+        }
         ((DefaultConfluenceInputContext) this.context).setCurrentSpace(spaceKey);
 
         FilterEventParameters spaceParameters = new FilterEventParameters();

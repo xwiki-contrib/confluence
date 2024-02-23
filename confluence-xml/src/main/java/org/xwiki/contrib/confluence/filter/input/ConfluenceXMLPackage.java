@@ -1262,29 +1262,28 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 missingParentsForSpace.remove(pageId);
             }
 
-            if (!isBlog) {
-                // FIXME only needed for nested migrations?
-                Long parent = properties.getLong(KEY_PAGE_PARENT, null);
-                if (parent == null) {
-                    Long homePage = homePages.get(spaceId);
-                    if (homePage == null) {
-                        // some spaces don't have a homePage property, but the property is here, we try to fix this.
-                        properties.setProperty(KEY_PAGE_HOMEPAGE, true);
-                        setHomePage(spaceId, pageId);
-                    } else if (!homePage.equals(pageId)) {
-                        orphans.computeIfAbsent(spaceId, k -> new ArrayList<>()).add(pageId);
-                    }
-                } else {
-                    pageChildren.computeIfAbsent(parent, k -> new ArrayList<>()).add(pageId);
-                    if (!pages.getOrDefault(spaceId, Collections.emptyList()).contains(parent)) {
-                        missingParents.computeIfAbsent(spaceId, k -> new LinkedHashSet<>()).add(parent);
-                    }
-                }
-            }
-
             if (spaceId == null) {
                 this.logger.error("Could not find space of page [{}]. Importing it may fail.", pageId);
             } else {
+                if (!isBlog) {
+                    // FIXME only needed for nested migrations?
+                    Long parent = properties.getLong(KEY_PAGE_PARENT, null);
+                    if (parent == null) {
+                        Long homePage = homePages.get(spaceId);
+                        if (homePage == null) {
+                            // some spaces don't have a homePage property, but the property is here, we try to fix this.
+                            properties.setProperty(KEY_PAGE_HOMEPAGE, true);
+                            setHomePage(spaceId, pageId);
+                        } else if (!homePage.equals(pageId)) {
+                            orphans.computeIfAbsent(spaceId, k -> new ArrayList<>()).add(pageId);
+                        }
+                    } else {
+                        pageChildren.computeIfAbsent(parent, k -> new ArrayList<>()).add(pageId);
+                        if (!this.pages.getOrDefault(spaceId, Collections.emptyList()).contains(parent)) {
+                            missingParents.computeIfAbsent(spaceId, k -> new LinkedHashSet<>()).add(parent);
+                        }
+                    }
+                }
                 (isBlog ? this.blogPages : this.pages).computeIfAbsent(spaceId, k -> new LinkedList<>()).add(pageId);
                 String title = properties.getString(KEY_PAGE_TITLE, null);
                 if (title != null) {
