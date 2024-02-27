@@ -443,6 +443,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.usersEnabled=false
+.configuration.groupsEnabled=false
 .configuration.attachmentsEnabled=false
 .configuration.maxPageCount=2
 .configuration.source=4.3.2.xml.zip

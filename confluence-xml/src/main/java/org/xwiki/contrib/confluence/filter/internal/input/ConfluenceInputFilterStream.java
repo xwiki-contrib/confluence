@@ -320,18 +320,34 @@ public class ConfluenceInputFilterStream
             pagesCount = Integer.min(this.remainingPages, pagesCount);
         }
 
+        int progressCount = pagesCount;
+
+        Collection<Long> users = null;
         if (this.properties.isUsersEnabled()) {
-            Collection<Long> users = this.confluencePackage.getInternalUsers();
-            // TODO get users in new format (this.confluencePackage.getAllUsers())
-            Collection<Long> groups = this.confluencePackage.getGroups();
-
-            pushLevelProgress(users.size() + groups.size() + pagesCount);
-
-            sendUsersAndGroups(users, groups, proxyFilter);
-        } else {
-            pushLevelProgress(pagesCount);
+            users = this.confluencePackage.getInternalUsers();
+            progressCount += users.size();
         }
 
+        Collection<Long> groups = null;
+        if (this.properties.isGroupsEnabled()) {
+            groups = this.confluencePackage.getGroups();
+            progressCount += groups.size();
+        }
+
+        pushLevelProgress(progressCount);
+        sendUsersAndGroups(users, groups, proxyFilter);
+        if (this.properties.isContentsEnabled() || this.properties.isRightsEnabled()) {
+            sendSpaces(filter, proxyFilter, pages, blogPages, disabledSpaces);
+        }
+        popLevelProgress();
+        observationManager.notify(new ConfluenceFilteredEvent(), this, this.confluencePackage);
+        closeConfluencePackage();
+        popLevelProgress();
+    }
+
+    private void sendSpaces(Object filter, ConfluenceFilter proxyFilter, Map<Long, List<Long>> pages,
+        Map<Long, List<Long>> blogPages, Collection<Long> disabledSpaces) throws FilterException
+    {
         beginSpace(properties.getRootSpace(), proxyFilter);
         try {
             Set<Long> rootSpaces = new LinkedHashSet<>();
@@ -344,27 +360,21 @@ public class ConfluenceInputFilterStream
                     this.logger.error("A null space has been found. This likely means that there is a bug. Skipping.");
                     continue;
                 }
-                if (!shouldSendObject(spaceId) || pagesCount == 0) {
+                if (!shouldSendObject(spaceId)) {
                     continue;
                 }
 
                 List<Long> regularPageIds = pages.getOrDefault(spaceId, Collections.emptyList());
-                List<Long> blogPageIds = blogPages.get(spaceId);
-                sendConfluenceRootSpace(spaceId, filter, proxyFilter, regularPageIds, blogPageIds);
+                List<Long> blogPageIds = blogPages.getOrDefault(spaceId, Collections.emptyList());
+                if (!regularPageIds.isEmpty() || !blogPageIds.isEmpty()) {
+                    sendConfluenceRootSpace(spaceId, filter, proxyFilter, regularPageIds, blogPageIds);
+                }
             }
         } catch (MaxPageCountReachedException e) {
             logger.info("The maximum of pages to read has been reached.");
         } finally {
             endSpace(properties.getRootSpace(), proxyFilter);
         }
-
-        popLevelProgress();
-        // Cleanup
-
-        observationManager.notify(new ConfluenceFilteredEvent(), this, this.confluencePackage);
-
-        closeConfluencePackage();
-        popLevelProgress();
     }
 
     private void prepareNextObjectRangeId() throws FilterException
@@ -433,19 +443,19 @@ public class ConfluenceInputFilterStream
                 sendSpaceRights(proxyFilter, spaceProperties, spaceKey, spaceId);
             }
 
-            if (this.properties.isNestedSpacesEnabled()) {
-                if (this.properties.isContentsEnabled() || this.properties.isRightsEnabled()) {
+            if (this.properties.isContentsEnabled()) {
+                if (this.properties.isNestedSpacesEnabled()) {
                     Long homePageId = confluencePackage.getHomePage(spaceId);
                     if (homePageId != null) {
                         sendPage(homePageId, spaceKey, false, filter, proxyFilter);
                     }
 
                     sendPages(spaceKey, false, confluencePackage.getOrphans(spaceId), filter, proxyFilter);
+                } else {
+                    sendPages(spaceKey, false, pages, filter, proxyFilter);
                 }
-            } else {
-                sendPages(spaceKey, false, pages, filter, proxyFilter);
+                sendBlogs(spaceKey, blogPages, filter, proxyFilter);
             }
-            sendBlogs(spaceKey, blogPages, filter, proxyFilter);
         } finally {
             // < WikiSpace
             proxyFilter.endWikiSpace(spaceKey, spaceParameters);
@@ -786,13 +796,22 @@ public class ConfluenceInputFilterStream
     private void sendUsersAndGroups(Collection<Long> users, Collection<Long> groups, ConfluenceFilter proxyFilter)
         throws FilterException
     {
+        if (users == null && groups == null) {
+            return;
+        }
+
         // Switch the wiki if a specific one is forced
         if (this.properties.getUsersWiki() != null) {
             proxyFilter.beginWiki(this.properties.getUsersWiki(), FilterEventParameters.EMPTY);
         }
 
-        sendUsers(users, proxyFilter);
-        sendGroups(groups, proxyFilter);
+        if (users != null) {
+            sendUsers(users, proxyFilter);
+        }
+
+        if (groups != null) {
+            sendGroups(groups, proxyFilter);
+        }
 
         // Get back to default wiki
         if (this.properties.getUsersWiki() != null) {

@@ -3575,6 +3575,7 @@ This space is in favourit</value>
 .configuration.source=4.3.2.xml.zip
 .configuration.objectIdRanges=[,753688], (753689,]
 .configuration.usersEnabled=false
+.configuration.groupsEnabled=false
 .configuration.attachmentsEnabled=false
 .configuration.tagsEnabled=false
 .#------------------------------------------------------------------------------

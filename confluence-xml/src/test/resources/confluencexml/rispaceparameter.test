@@ -33,7 +33,6 @@
     </wikiDocumentLocale>
   </wikiDocument>
 </wikiSpace>
-<wikiSpace name="validatedspace"/>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=rispaceparameter

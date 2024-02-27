@@ -110,6 +110,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private boolean usersEnabled = true;
 
     /**
+     * @see #isGroupsEnabled()
+     */
+    private boolean groupsEnabled = true;
+
+    /**
      * @see #isUserReferences()
      */
     private boolean userReferences;
@@ -471,7 +476,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @since 9.6
      */
     @PropertyName("Import users")
-    @PropertyDescription("Import the users and groups found in the confluence package.")
+    @PropertyDescription("Import the users found in the confluence package.")
     public boolean isUsersEnabled()
     {
         return this.usersEnabled;
@@ -484,6 +489,26 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setUsersEnabled(boolean usersEnabled)
     {
         this.usersEnabled = usersEnabled;
+    }
+
+    /**
+     * @return if true, import the groups found in the confluence package
+     * @since 9.38.0
+     */
+    @PropertyName("Import groups")
+    @PropertyDescription("Import the groups found in the confluence package.")
+    public boolean isGroupsEnabled()
+    {
+        return this.groupsEnabled;
+    }
+
+    /**
+     * @param groupsEnabled if true, import the users and groups found in the confluence package
+     * @since 9.38.0
+     */
+    public void setGroupsEnabled(boolean groupsEnabled)
+    {
+        this.groupsEnabled = groupsEnabled;
     }
 
     /**
