@@ -932,7 +932,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         DateFormat format = new SimpleDateFormat(DATE_FORMAT);
 
-        return str != null ? format.parse(str) : null;
+        return (str == null || str.isEmpty()) ? null : format.parse(str);
     }
 
     /**
