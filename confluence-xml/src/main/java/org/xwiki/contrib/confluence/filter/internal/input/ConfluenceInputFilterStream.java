@@ -826,9 +826,13 @@ public class ConfluenceInputFilterStream
 
         // Loop over the XWiki groups
         for (Map.Entry<String, Collection<ConfluenceProperties>> groupEntry: groupsByXWikiName.entrySet()) {
+            String groupName = groupEntry.getKey();
+            if ("XWikiAllGroup".equals(groupName)) {
+                continue;
+            }
+
             this.progress.startStep(this);
 
-            String groupName = groupEntry.getKey();
             FilterEventParameters groupParameters = new FilterEventParameters();
 
             // We arbitrarily take the creation and revision date of the first Confluence group mapped to this

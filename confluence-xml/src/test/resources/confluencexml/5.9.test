@@ -77,20 +77,6 @@
   <groupMemberGroup name="Admin"/>
   <groupMemberGroup name="sysadmin"/>
 </groupContainer>
-<groupContainer name="XWikiAllGroup">
-  <p>
-    <parameters>
-      <entry>
-        <string>revision_date</string>
-        <date>2016-05-10 15:00:03.896 UTC</date>
-      </entry>
-      <entry>
-        <string>creation_date</string>
-        <date>2016-05-10 15:00:03.896 UTC</date>
-      </entry>
-    </parameters>
-  </p>
-</groupContainer>
 <groupContainer name="atlassian-addons">
   <p>
     <parameters>

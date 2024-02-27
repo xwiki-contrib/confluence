@@ -106,23 +106,6 @@
   </p>
   <groupMemberGroup name="Admin"/>
 </groupContainer>
-<groupContainer name="XWikiAllGroup">
-  <p>
-    <parameters>
-      <entry>
-        <string>revision_date</string>
-        <date>2013-10-14 12:18:48.847 UTC</date>
-      </entry>
-      <entry>
-        <string>creation_date</string>
-        <date>2013-10-14 12:18:48.847 UTC</date>
-      </entry>
-    </parameters>
-  </p>
-  <groupMemberGroup name="user2"/>
-  <groupMemberGroup name="Admin"/>
-  <groupMemberGroup name="user1"/>
-</groupContainer>
 <groupContainer name="twistedgroup">
   <p>
     <parameters>
