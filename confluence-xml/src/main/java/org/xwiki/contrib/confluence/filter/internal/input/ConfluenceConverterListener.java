@@ -23,7 +23,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Deque;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -46,8 +49,11 @@ import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
+import org.xwiki.rendering.listener.HeaderLevel;
 import org.xwiki.rendering.listener.Listener;
+import org.xwiki.rendering.listener.QueueListener;
 import org.xwiki.rendering.listener.WrappingListener;
+import org.xwiki.rendering.listener.chaining.EventType;
 import org.xwiki.rendering.listener.reference.AttachmentResourceReference;
 import org.xwiki.rendering.listener.reference.DocumentResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceReference;
@@ -77,6 +83,14 @@ public class ConfluenceConverterListener extends WrappingListener
     private static final Pattern PATTERN_URL_EMOTICON =
         Pattern.compile("^/images/icons/emoticons/([^?#]+)(\\....)(\\?.*)?$");
 
+    /**
+     * The auto-cursor-target class that appears on some paragraphs and headings in Confluence, most of the
+     * paragraphs are empty and should be removed, but not all.
+     */
+    private static final String AUTO_CURSOR_TARGET_CLASS = "auto-cursor-target";
+
+    private static final String CLASS_ATTRIBUTE = "class";
+
     @Inject
     private MacroConverter macroConverter;
 
@@ -91,6 +105,21 @@ public class ConfluenceConverterListener extends WrappingListener
 
     @Inject
     private ConfluenceConverter confluenceConverter;
+
+    /**
+     * A stack of queues that are used to record the content of a paragraph with the auto-cursor-target class. For
+     * the unlikely case that paragraphs are nested (e.g., because there is a paragraph in a nested macro), a stack
+     * is used instead of a single listener.
+     */
+    private final Deque<QueueListener> contentListenerStack = new ArrayDeque<>();
+
+    /**
+     * A stack of previous listeners that is used to record the previous wrapped listener when a new listener is set
+     * while examining the content of a paragraph with the auto-cursor-target class. This is used to restore the
+     * previous listener at the end of the paragraph. Again, a stack is used instead of a single listener to handle
+     * the unlikely case of nested paragraphs.
+     */
+    private final Deque<Listener> previousListenerStack = new ArrayDeque<>();
 
     private Map<String, Integer> macroIds;
     private final WrappingListener wrappingListener = new WrappingListener() {
@@ -125,6 +154,88 @@ public class ConfluenceConverterListener extends WrappingListener
     public void setMacroIds(Map<String, Integer> macroIds)
     {
         this.macroIds = macroIds;
+    }
+
+    @Override
+    public void beginParagraph(Map<String, String> parameters)
+    {
+        if (hasAutoCursorTargetClass(parameters)) {
+            // Record the content of the paragraph to check if it is empty and should be removed, or if we should just
+            // remove the class parameter.
+            this.contentListenerStack.push(new QueueListener());
+            // We need to get the actual wrapped listener, not the wrappingListener instance, to be able to restore it
+            // later.
+            this.previousListenerStack.push(wrappingListener.getWrappedListener());
+            setWrappedListener(this.contentListenerStack.element());
+
+            super.beginParagraph(removeClassParameter(parameters));
+        } else {
+            super.beginParagraph(parameters);
+        }
+    }
+
+    @Override
+    public void endParagraph(Map<String, String> parameters)
+    {
+        // Check if we reached the end of a paragraph with the auto-cursor-target class.
+        if (hasAutoCursorTargetClass(parameters) && !this.contentListenerStack.isEmpty()) {
+            // Check if the content of the paragraph is empty.
+            QueueListener contentListener = this.contentListenerStack.pop();
+            boolean isEmpty = contentListener.stream()
+                // Skip the first event which is the beginning of the paragraph
+                .skip(1)
+                .allMatch(event -> event.eventType == EventType.ON_NEW_LINE
+                    || event.eventType == EventType.ON_SPACE);
+            // Restore the previous listener.
+            Listener previousListener = this.previousListenerStack.pop();
+            setWrappedListener(previousListener);
+            if (!isEmpty) {
+                // Relay the recorded events directly to the previous listener to avoid counting macros twice.
+                contentListener.consumeEvents(previousListener);
+                super.endParagraph(removeClassParameter(parameters));
+            }
+        } else {
+            super.endParagraph(parameters);
+        }
+    }
+
+    @Override
+    public void beginHeader(HeaderLevel level, String id, Map<String, String> parameters)
+    {
+        if (hasAutoCursorTargetClass(parameters)) {
+            super.beginHeader(level, id, removeClassParameter(parameters));
+        } else {
+            super.beginHeader(level, id, parameters);
+        }
+    }
+
+    @Override
+    public void endHeader(HeaderLevel level, String id, Map<String, String> parameters)
+    {
+        if (hasAutoCursorTargetClass(parameters)) {
+            super.endHeader(level, id, removeClassParameter(parameters));
+        } else {
+            super.endHeader(level, id, parameters);
+        }
+    }
+
+    private static boolean hasAutoCursorTargetClass(Map<String, String> parameters)
+    {
+        return parameters.get(CLASS_ATTRIBUTE) != null
+            && parameters.get(CLASS_ATTRIBUTE).contains(AUTO_CURSOR_TARGET_CLASS);
+    }
+
+    private static Map<String, String> removeClassParameter(Map<String, String> parameters)
+    {
+        Map<String, String> cleanedParameters;
+        // Remove the class parameter.
+        if (parameters.size() == 1) {
+            cleanedParameters = Listener.EMPTY_PARAMETERS;
+        } else {
+            cleanedParameters = new LinkedHashMap<>(parameters);
+            cleanedParameters.remove(CLASS_ATTRIBUTE);
+        }
+        return cleanedParameters;
     }
 
     private List<String[]> parseURLParameters(String queryString)
