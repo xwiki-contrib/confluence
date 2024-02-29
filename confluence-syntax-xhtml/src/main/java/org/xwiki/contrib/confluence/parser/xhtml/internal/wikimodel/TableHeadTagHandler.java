@@ -35,7 +35,7 @@ public class TableHeadTagHandler extends XWikiTableDataTagHandler
     {
         super.begin(context);
 
-        beginDocument(context, context.getParams());
+        beginDocument(context);
     }
 
     @Override

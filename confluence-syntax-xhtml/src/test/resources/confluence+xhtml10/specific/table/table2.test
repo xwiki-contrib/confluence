@@ -1,0 +1,62 @@
+.#-----------------------------------------------------
+.input|confluence+xhtml/1.0
+.# Make sure that table cell parameters aren't copied to the nested group syntax.
+.#-----------------------------------------------------
+<table>
+  <tbody>
+    <tr>
+      <td style="text-align: center;">
+      <p style="text-align: left;">Disposer d'un mail (2)</p></td>
+      <td class="highlight-green" data-highlight-colour="green">Oui</td>
+      <td class="highlight-red" data-highlight-colour="red">Non</td>
+      <td class="highlight-red" data-highlight-colour="red"><span>Non</span></td>
+    </tr>
+  </tbody>
+</table>
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+beginTable
+beginTableRow
+beginTableCell [[style]=[text-align: center;]]
+beginGroup
+beginParagraph [[style]=[text-align: left;]]
+onWord [Disposer]
+onSpace
+onWord [d]
+onSpecialSymbol [']
+onWord [un]
+onSpace
+onWord [mail]
+onSpace
+onSpecialSymbol [(]
+onWord [2]
+onSpecialSymbol [)]
+endParagraph [[style]=[text-align: left;]]
+endGroup
+endTableCell [[style]=[text-align: center;]]
+beginTableCell [[class]=[highlight-green][data-highlight-colour]=[green]]
+beginGroup
+beginParagraph
+onWord [Oui]
+endParagraph
+endGroup
+endTableCell [[class]=[highlight-green][data-highlight-colour]=[green]]
+beginTableCell [[class]=[highlight-red][data-highlight-colour]=[red]]
+beginGroup
+beginParagraph
+onWord [Non]
+endParagraph
+endGroup
+endTableCell [[class]=[highlight-red][data-highlight-colour]=[red]]
+beginTableCell [[class]=[highlight-red][data-highlight-colour]=[red]]
+beginGroup
+beginParagraph
+onWord [Non]
+endParagraph
+endGroup
+endTableCell [[class]=[highlight-red][data-highlight-colour]=[red]]
+endTableRow
+endTable
+endDocument

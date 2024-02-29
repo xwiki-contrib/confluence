@@ -35,7 +35,7 @@ public class TableCellTagHandler extends TableDataTagHandler
     {
         super.begin(context);
 
-        beginDocument(context, context.getParams());
+        beginDocument(context);
     }
 
     @Override
