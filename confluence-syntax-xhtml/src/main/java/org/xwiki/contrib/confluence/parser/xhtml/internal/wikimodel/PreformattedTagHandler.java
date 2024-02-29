@@ -20,7 +20,7 @@
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
 import org.xwiki.rendering.wikimodel.WikiParameters;
-import org.xwiki.rendering.wikimodel.xhtml.handler.PreserveTagHandler;
+import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
@@ -35,8 +35,16 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  * @version $Id$
  * @since 9.5
  */
-public class PreformattedTagHandler extends PreserveTagHandler implements ConfluenceTagHandler
+public class PreformattedTagHandler extends TagHandler implements ConfluenceTagHandler
 {
+    /**
+     * Default constructor.
+     */
+    public PreformattedTagHandler()
+    {
+        super(true);
+    }
+
     @Override
     protected void begin(TagContext context)
     {
