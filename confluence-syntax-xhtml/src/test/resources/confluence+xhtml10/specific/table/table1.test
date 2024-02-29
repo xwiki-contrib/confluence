@@ -34,24 +34,106 @@ beginTable
 beginTableRow
 beginTableHeadCell
 beginGroup
-onVerbatim [
-          th line 1
-
-
-          th line 2
-        ] [false]
+beginGroup [[class]=[code]]
+beginParagraph
+onNewLine
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onWord [th]
+onSpace
+onWord [line]
+onSpace
+onWord [1]
+onNewLine
+onNewLine
+onNewLine
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onWord [th]
+onSpace
+onWord [line]
+onSpace
+onWord [2]
+onNewLine
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+endParagraph
+endGroup [[class]=[code]]
 endGroup
 endTableHeadCell
 endTableRow
 beginTableRow
 beginTableCell
 beginGroup
-onVerbatim [
-          td line 1
-
-
-          td line 2
-        ] [false]
+beginGroup [[class]=[code]]
+beginParagraph
+onNewLine
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onWord [td]
+onSpace
+onWord [line]
+onSpace
+onWord [1]
+onNewLine
+onNewLine
+onNewLine
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onWord [td]
+onSpace
+onWord [line]
+onSpace
+onWord [2]
+onNewLine
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+onSpace
+endParagraph
+endGroup [[class]=[code]]
 endGroup
 endTableCell
 endTableRow
