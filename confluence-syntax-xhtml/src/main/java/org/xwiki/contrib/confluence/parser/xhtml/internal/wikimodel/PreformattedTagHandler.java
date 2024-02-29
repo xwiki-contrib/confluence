@@ -19,6 +19,8 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import org.xwiki.rendering.wikimodel.WikiParameters;
+import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
@@ -33,10 +35,10 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  * @version $Id$
  * @since 9.5
  */
-public class PreformattedTagHandler extends AbstractConfluenceTagHandler implements ConfluenceTagHandler
+public class PreformattedTagHandler extends TagHandler implements ConfluenceTagHandler
 {
     /**
-     * Constructor (checkstyle complains that this comment is missing although the other classes don't have it).
+     * Default constructor.
      */
     public PreformattedTagHandler()
     {
@@ -46,12 +48,16 @@ public class PreformattedTagHandler extends AbstractConfluenceTagHandler impleme
     @Override
     protected void begin(TagContext context)
     {
-        setAccumulateContent(true);
+        WikiParameters wikiParameters = new WikiParameters();
+        wikiParameters = wikiParameters.setParameter("class", "code");
+        context.getScannerContext().beginDocument(wikiParameters);
+        context.getTagStack().setInsideBlockElement();
     }
 
     @Override
     protected void end(TagContext context)
     {
-        context.getScannerContext().onVerbatim(context.getContent(), false);
+        context.getTagStack().unsetInsideBlockElement();
+        context.getScannerContext().endDocument();
     }
 }

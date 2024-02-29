@@ -1,0 +1,31 @@
+.#-----------------------------------------------------
+.input|confluence+xhtml/1.0
+.# Make sure any number of white spaces is ignored between non inline elements
+.#-----------------------------------------------------
+<pre>Some text <code>code1</code>
+and
+<code>code2</code> some other text</pre>
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+beginGroup [[class]=[code]]
+beginParagraph
+onWord [Some]
+onSpace
+onWord [text]
+onSpace
+onMacroInline [code] [language=none] [code1]
+onNewLine
+onWord [and]
+onNewLine
+onMacroInline [code] [language=none] [code2]
+onSpace
+onWord [some]
+onSpace
+onWord [other]
+onSpace
+onWord [text]
+endParagraph
+endGroup [[class]=[code]]
+endDocument

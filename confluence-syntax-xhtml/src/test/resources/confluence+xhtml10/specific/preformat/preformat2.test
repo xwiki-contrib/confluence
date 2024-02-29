@@ -1,0 +1,27 @@
+.#-----------------------------------------------------
+.input|confluence+xhtml/1.0
+.# Make sure any number of white spaces is ignored between non inline elements
+.#-----------------------------------------------------
+<pre>Some text <a href="https://domain.com/path/to/resource">link text</a> other text</pre>
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+beginGroup [[class]=[code]]
+beginParagraph
+onWord [Some]
+onSpace
+onWord [text]
+onSpace
+beginLink [Typed = [true] Type = [url] Reference = [https://domain.com/path/to/resource]] [false] [[shape]=[rect]]
+onWord [link]
+onSpace
+onWord [text]
+endLink [Typed = [true] Type = [url] Reference = [https://domain.com/path/to/resource]] [false] [[shape]=[rect]]
+onSpace
+onWord [other]
+onSpace
+onWord [text]
+endParagraph
+endGroup [[class]=[code]]
+endDocument
