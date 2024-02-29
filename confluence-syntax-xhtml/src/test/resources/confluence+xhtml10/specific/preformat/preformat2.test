@@ -1,6 +1,6 @@
 .#-----------------------------------------------------
 .input|confluence+xhtml/1.0
-.# Make sure any number of white spaces is ignored between non inline elements
+.# Make sure pre tags support rich content.
 .#-----------------------------------------------------
 <pre>Some text <a href="https://domain.com/path/to/resource">link text</a> other text</pre>
 .#-----------------------------------------------------

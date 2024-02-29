@@ -1,0 +1,17 @@
+.#-----------------------------------------------------
+.input|confluence+xhtml/1.0
+.# Make sure any additional parameters are taken into consideration.
+.#-----------------------------------------------------
+<pre class="oldclass" style="text-align: right;">Some text</pre>
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+beginGroup [[class]=[oldclass code][style]=[text-align: right;]]
+beginParagraph
+onWord [Some]
+onSpace
+onWord [text]
+endParagraph
+endGroup [[class]=[oldclass code][style]=[text-align: right;]]
+endDocument

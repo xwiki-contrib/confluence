@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import org.xwiki.rendering.wikimodel.WikiParameter;
 import org.xwiki.rendering.wikimodel.WikiParameters;
 import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
@@ -37,6 +38,10 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public class PreformattedTagHandler extends TagHandler implements ConfluenceTagHandler
 {
+    private static final String PARAMETER_CLASS = "class";
+
+    private static final String PARAMETER_VALUE_CLASS = "code";
+
     /**
      * Default constructor.
      */
@@ -48,8 +53,14 @@ public class PreformattedTagHandler extends TagHandler implements ConfluenceTagH
     @Override
     protected void begin(TagContext context)
     {
-        WikiParameters wikiParameters = new WikiParameters();
-        wikiParameters = wikiParameters.setParameter("class", "code");
+        WikiParameters wikiParameters = context.getParams();
+        WikiParameter classParameter = wikiParameters.getParameter(PARAMETER_CLASS);
+        if (classParameter != null) {
+            wikiParameters = wikiParameters.setParameter(PARAMETER_CLASS,
+                String.join(" ", classParameter.getValue(), PARAMETER_VALUE_CLASS));
+        } else {
+            wikiParameters = wikiParameters.setParameter(PARAMETER_CLASS, PARAMETER_VALUE_CLASS);
+        }
         context.getScannerContext().beginDocument(wikiParameters);
         context.getTagStack().setInsideBlockElement();
     }

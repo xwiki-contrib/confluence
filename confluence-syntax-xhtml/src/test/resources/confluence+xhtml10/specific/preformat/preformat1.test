@@ -1,6 +1,6 @@
 .#-----------------------------------------------------
 .input|confluence+xhtml/1.0
-.# Make sure any number of white spaces is ignored between non inline elements
+.# Make sure the formatting does not change.
 .#-----------------------------------------------------
 <pre>Some text <code>code1</code>
 and
