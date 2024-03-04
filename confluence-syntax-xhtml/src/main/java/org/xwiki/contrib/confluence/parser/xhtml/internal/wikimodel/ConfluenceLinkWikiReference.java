@@ -27,7 +27,7 @@ import org.xwiki.rendering.wikimodel.WikiReference;
  * @since 9.0
  */
 public class ConfluenceLinkWikiReference extends WikiReference
-    implements UserContainer, AttachmentContainer, PageContainer, SpaceContainer, LabelContainer, Cloneable
+    implements UserContainer, AttachmentContainer, PageContainer, SpaceContainer, LabelContainer
 {
     private String anchor;
 
@@ -47,25 +47,6 @@ public class ConfluenceLinkWikiReference extends WikiReference
     public ConfluenceLinkWikiReference()
     {
         super("");
-    }
-
-    @Override
-    public ConfluenceLinkWikiReference clone()
-    {
-        ConfluenceLinkWikiReference cloned;
-        try {
-            cloned = (ConfluenceLinkWikiReference) super.clone();
-        } catch (CloneNotSupportedException e) {
-            cloned = new ConfluenceLinkWikiReference();
-        }
-
-        cloned.anchor = this.anchor;
-        cloned.attachment = this.attachment;
-        cloned.document = this.document;
-        cloned.space = this.space;
-        cloned.user = this.user;
-        cloned.label = this.label;
-        return cloned;
     }
 
     /**
