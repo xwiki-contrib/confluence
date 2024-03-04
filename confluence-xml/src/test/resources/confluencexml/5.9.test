@@ -333,7 +333,7 @@ Confluence puts your content online in a central place where your team can searc
 (% style="color: rgb(153, 153, 153); color: rgb(0, 0, 0)" %) 
 
 (% style="text-align: center;" %)
-= [[image:attach:Let's edit this page (step 3 of 9)@prev.jpg]][[doc:Welcome to Confluence]] [[image:attach:Let's edit this page (step 3 of 9)@home.jpg]][[doc:Welcome to Confluence]] [[image:attach:Let's edit this page (step 3 of 9)@next.jpg]][[doc:A quick look at the editor (step 2 of 9)]] =
+= [[~[~[image:attach:Let's edit this page (step 3 of 9)@prev.jpg~]~]&gt;&gt;doc:Welcome to Confluence]] [[~[~[image:attach:Let's edit this page (step 3 of 9)@home.jpg~]~]&gt;&gt;doc:Welcome to Confluence]] [[~[~[image:attach:Let's edit this page (step 3 of 9)@next.jpg~]~]&gt;&gt;doc:A quick look at the editor (step 2 of 9)]] =
 
 (% style="color: rgb(51,51,51);" %)
 
@@ -448,16 +448,16 @@ Confluence puts your content online in a central place where your team can searc
 == (% style="color: rgb(0,0,128);" %)
 (%%) ==
 
-1. (% style="color: rgb(0,0,128);" %)
-\\[[What is Confluence?>>doc:What is Confluence? (step 1 of 9)]]
+1. (% style="color: rgb(0,0,128);" %)[[What is Confluence?
+\\>>doc:What is Confluence? (step 1 of 9)]]
 1. (% style="color: rgb(0,0,128);" %)[[A quick look at the editor>>doc:A quick look at the editor (step 2 of 9)]]
  
 1. (% style="color: rgb(0,0,128);" %)[[Let's edit this page>>doc:Let's edit this page (step 3 of 9)]]
 \\
-1. (% style="color: rgb(0,0,128);" %)
-\\[[Prettify the page with an image>>doc:Prettify the page with an image (step 4 of 9)]]
-1. (% style="color: rgb(0,0,128);" %)
-[[Get serious with a table>>doc:Get serious with a table (step 5 of 9)]] 
+1. (% style="color: rgb(0,0,128);" %)[[Prettify the page with an image
+\\>>doc:Prettify the page with an image (step 4 of 9)]]
+1. (% style="color: rgb(0,0,128);" %)[[Get serious with a table
+>>doc:Get serious with a table (step 5 of 9)]] 
 1. (% style="color: rgb(0,0,128);" %)[[Lay out your page>>doc:Lay out your page (step 6 of 9)]] 
 \\
 1. [[Learn the wonders of autoconvert>>doc:Learn the wonders of autoconvert (step 7 of 9)]] 
@@ -596,7 +596,7 @@ When// y//ou're ready, click **Save** and go to the next step or back to the sp
 (%%) =
 
 (% style="text-align: center;" %)
-= (% style="color: rgb(51,51,51);" %)[[image:attach:prev.jpg]][[doc:A quick look at the editor (step 2 of 9)]] [[image:attach:home.jpg]][[doc:Welcome to Confluence]] [[image:attach:next.jpg]][[doc:Prettify the page with an image (step 4 of 9)]](%%) =
+= (% style="color: rgb(51,51,51);" %)[[~[~[image:attach:prev.jpg~]~]&gt;&gt;doc:A quick look at the editor (step 2 of 9)]] [[~[~[image:attach:home.jpg~]~]&gt;&gt;doc:Welcome to Confluence]] [[~[~[image:attach:next.jpg~]~]&gt;&gt;doc:Prettify the page with an image (step 4 of 9)]](%%) =
 
  </string>
             </entry>
@@ -770,7 +770,7 @@ You can type into the editor as you would in any document, apply formatting, and
 (%%) =
 
 (% style="text-align: center;" %)
-= (% style="color: rgb(51,51,51);" %)[[image:attach:Let's edit this page (step 3 of 9)@prev.jpg]][[doc:What is Confluence? (step 1 of 9)]] [[image:attach:Let's edit this page (step 3 of 9)@home.jpg]][[doc:Welcome to Confluence]] [[image:attach:Let's edit this page (step 3 of 9)@next.jpg]][[doc:Let's edit this page (step 3 of 9)]](%%) =
+= (% style="color: rgb(51,51,51);" %)[[~[~[image:attach:Let's edit this page (step 3 of 9)@prev.jpg~]~]&gt;&gt;doc:What is Confluence? (step 1 of 9)]] [[~[~[image:attach:Let's edit this page (step 3 of 9)@home.jpg~]~]&gt;&gt;doc:Welcome to Confluence]] [[~[~[image:attach:Let's edit this page (step 3 of 9)@next.jpg~]~]&gt;&gt;doc:Let's edit this page (step 3 of 9)]](%%) =
 
 (% style="color: rgb(51,51,51);" %)
 </string>
@@ -962,7 +962,7 @@ The Files button is not just for images, you can insert and preview a wide range
 (%%) =
 
 (% style="text-align: center;" %)
-= (% style="color: rgb(51,51,51);" %)[[image:attach:Let's edit this page (step 3 of 9)@prev.jpg]][[doc:Let's edit this page (step 3 of 9)]] [[image:attach:Let's edit this page (step 3 of 9)@home.jpg]][[doc:Welcome to Confluence]] [[image:attach:Let's edit this page (step 3 of 9)@next.jpg]][[doc:Get serious with a table (step 5 of 9)]](%%) =
+= (% style="color: rgb(51,51,51);" %)[[~[~[image:attach:Let's edit this page (step 3 of 9)@prev.jpg~]~]&gt;&gt;doc:Let's edit this page (step 3 of 9)]] [[~[~[image:attach:Let's edit this page (step 3 of 9)@home.jpg~]~]&gt;&gt;doc:Welcome to Confluence]] [[~[~[image:attach:Let's edit this page (step 3 of 9)@next.jpg~]~]&gt;&gt;doc:Get serious with a table (step 5 of 9)]](%%) =
 
 (% style="color: rgb(51,51,51);" %)
 
@@ -1148,7 +1148,7 @@ You can add as many sections as you need, and each section can have a different 
 (%%) =
 
 (% style="text-align: center;" %)
-= (% style="color: rgb(51,51,51);" %)[[image:attach:Let's edit this page (step 3 of 9)@prev.jpg]][[doc:Get serious with a table (step 5 of 9)]] [[image:attach:Let's edit this page (step 3 of 9)@home.jpg]][[doc:Welcome to Confluence]] [[image:attach:Let's edit this page (step 3 of 9)@next.jpg]][[doc:Learn the wonders of autoconvert (step 7 of 9)]](%%) =</string>
+= (% style="color: rgb(51,51,51);" %)[[~[~[image:attach:Let's edit this page (step 3 of 9)@prev.jpg~]~]&gt;&gt;doc:Get serious with a table (step 5 of 9)]] [[~[~[image:attach:Let's edit this page (step 3 of 9)@home.jpg~]~]&gt;&gt;doc:Welcome to Confluence]] [[~[~[image:attach:Let's edit this page (step 3 of 9)@next.jpg~]~]&gt;&gt;doc:Learn the wonders of autoconvert (step 7 of 9)]](%%) =</string>
             </entry>
             <entry>
               <string>syntax</string>
@@ -1309,7 +1309,7 @@ Add, remove, cut, and paste rows and columns – this makes working with tables 
 (%%) =
 
 (% style="text-align: center;" %)
-= (% style="color: rgb(51,51,51);" %)[[image:attach:Let's edit this page (step 3 of 9)@prev.jpg]][[doc:Prettify the page with an image (step 4 of 9)]] [[image:attach:Let's edit this page (step 3 of 9)@home.jpg]][[doc:Welcome to Confluence]] [[image:attach:Let's edit this page (step 3 of 9)@next.jpg]][[doc:Lay out your page (step 6 of 9)]](%%) =
+= (% style="color: rgb(51,51,51);" %)[[~[~[image:attach:Let's edit this page (step 3 of 9)@prev.jpg~]~]&gt;&gt;doc:Prettify the page with an image (step 4 of 9)]] [[~[~[image:attach:Let's edit this page (step 3 of 9)@home.jpg~]~]&gt;&gt;doc:Welcome to Confluence]] [[~[~[image:attach:Let's edit this page (step 3 of 9)@next.jpg~]~]&gt;&gt;doc:Lay out your page (step 6 of 9)]](%%) =
 {{/layout-cell}}
 {{/layout-section}}
 {{/layout}}</string>
@@ -1448,7 +1448,7 @@ The user will be notified that you mentioned them.
 (%%) =
 
 (% style="text-align: center;" %)
-= [[image:attach:Let's edit this page (step 3 of 9)@prev.jpg||width="106" height="40"]][[doc:Learn the wonders of autoconvert (step 7 of 9)]] [[image:attach:Let's edit this page (step 3 of 9)@home.jpg]][[doc:Welcome to Confluence]] [[image:attach:Let's edit this page (step 3 of 9)@next.jpg]][[doc:Share your page with a team member (step 9 of 9)]] =
+= [[~[~[image:attach:Let's edit this page (step 3 of 9)@prev.jpg~|~|width="106" height="40"~]~]&gt;&gt;doc:Learn the wonders of autoconvert (step 7 of 9)]] [[~[~[image:attach:Let's edit this page (step 3 of 9)@home.jpg~]~]&gt;&gt;doc:Welcome to Confluence]] [[~[~[image:attach:Let's edit this page (step 3 of 9)@next.jpg~]~]&gt;&gt;doc:Share your page with a team member (step 9 of 9)]] =
 
 (% style="color: rgb(51,51,51);" %)
 </string>
@@ -1651,7 +1651,7 @@ Flickr photo streams, Twitter streams, Google maps and many more.
 (%%) =
 
 (% style="text-align: center;" %)
-= (% style="color: rgb(51,51,51);" %)[[image:attach:Let's edit this page (step 3 of 9)@prev.jpg]][[doc:Lay out your page (step 6 of 9)]] [[image:attach:Let's edit this page (step 3 of 9)@home.jpg]][[doc:Welcome to Confluence]] [[image:attach:Let's edit this page (step 3 of 9)@next.jpg]][[doc:Tell people what you think in a comment (step 8 of 9)]](%%) =
+= (% style="color: rgb(51,51,51);" %)[[~[~[image:attach:Let's edit this page (step 3 of 9)@prev.jpg~]~]&gt;&gt;doc:Lay out your page (step 6 of 9)]] [[~[~[image:attach:Let's edit this page (step 3 of 9)@home.jpg~]~]&gt;&gt;doc:Welcome to Confluence]] [[~[~[image:attach:Let's edit this page (step 3 of 9)@next.jpg~]~]&gt;&gt;doc:Tell people what you think in a comment (step 8 of 9)]](%%) =
 
 (% style="color: rgb(51,51,51);" %)
 
@@ -1743,7 +1743,7 @@ Confluence will send the person an email message about this page. Shared!
 
 
 (% style="text-align: center;" %)
-= (% style="color: rgb(51,51,51);" %)[[image:attach:Let's edit this page (step 3 of 9)@prev.jpg]][[doc:Tell people what you think in a comment (step 8 of 9)]] [[image:attach:Let's edit this page (step 3 of 9)@home.jpg]][[doc:Welcome to Confluence]] (%%) =
+= (% style="color: rgb(51,51,51);" %)[[~[~[image:attach:Let's edit this page (step 3 of 9)@prev.jpg~]~]&gt;&gt;doc:Tell people what you think in a comment (step 8 of 9)]] [[~[~[image:attach:Let's edit this page (step 3 of 9)@home.jpg~]~]&gt;&gt;doc:Welcome to Confluence]] (%%) =
 
 (% style="margin-left: 30.0px;" %)
 (% style="color: rgb(51,51,51);" %)

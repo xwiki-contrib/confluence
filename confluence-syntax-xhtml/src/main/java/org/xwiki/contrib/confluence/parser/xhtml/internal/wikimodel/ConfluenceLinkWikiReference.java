@@ -20,6 +20,7 @@
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler.ConfluenceAttachment;
+import org.xwiki.rendering.block.XDOM;
 import org.xwiki.rendering.wikimodel.WikiReference;
 
 /**
@@ -40,6 +41,8 @@ public class ConfluenceLinkWikiReference extends WikiReference
     private String user;
 
     private String label;
+
+    private XDOM labelXDOM;
 
     /**
      * Default constructor.
@@ -122,6 +125,14 @@ public class ConfluenceLinkWikiReference extends WikiReference
         this.document = document;
     }
 
+    /**
+     * @return the label.
+     */
+    public XDOM getLabelXDOM()
+    {
+        return this.labelXDOM;
+    }
+
     @Override
     public String getLabel()
     {
@@ -132,5 +143,11 @@ public class ConfluenceLinkWikiReference extends WikiReference
     public void setLabel(String label)
     {
         this.label = label;
+    }
+
+    @Override
+    public void setLabel(XDOM label)
+    {
+        this.labelXDOM = label;
     }
 }

@@ -202,7 +202,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("ri:space", new SpaceTagHandler(referenceConverter));
         handlers.put("ri:user", new UserTagHandler(referenceConverter));
         handlers.put("ac:plain-text-link-body", new PlainTextLinkBodyTagHandler());
-        handlers.put("ac:link-body", new LinkBodyTagHandler());
+        handlers.put("ac:link-body", new LinkBodyTagHandler(this));
 
         // Directly convert into https://extensions.xwiki.org/xwiki/bin/view/Extension/Container%20Macro ?
         handlers.put("ac:layout", new ElementMacroTagHandler(this));

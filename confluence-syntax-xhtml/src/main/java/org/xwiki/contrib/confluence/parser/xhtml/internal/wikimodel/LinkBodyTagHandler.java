@@ -19,6 +19,11 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import org.xwiki.contrib.confluence.parser.xhtml.internal.ConfluenceXHTMLParser;
+import org.xwiki.rendering.block.XDOM;
+import org.xwiki.rendering.internal.parser.XDOMGeneratorListener;
+import org.xwiki.rendering.internal.parser.wikimodel.XWikiGeneratorListener;
+import org.xwiki.rendering.wikimodel.impl.WikiScannerContext;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
@@ -35,27 +40,39 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public class LinkBodyTagHandler extends AbstractConfluenceTagHandler implements ConfluenceTagHandler
 {
+    private ConfluenceXHTMLParser parser;
+
     /**
-     * The default constructor.
+     * @param parser the Confluence parser
      */
-    public LinkBodyTagHandler()
+    public LinkBodyTagHandler(ConfluenceXHTMLParser parser)
     {
         super(true);
+        this.parser = parser;
     }
 
     @Override
     protected void begin(TagContext context)
     {
-        setAccumulateContent(true);
+        XDOMGeneratorListener labelListener = new XDOMGeneratorListener();
+        XWikiGeneratorListener xwikiListener = this.parser.createXWikiGeneratorListener(labelListener, null);
+        context.getTagStack().pushScannerContext(new WikiScannerContext(xwikiListener));
+        context.getScannerContext().beginDocument();
     }
 
     @Override
     protected void end(TagContext context)
     {
+        context.getScannerContext().endDocument();
+        WikiScannerContext scannerContext = context.getTagStack().popScannerContext();
         Object container = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
 
         if (container instanceof LabelContainer) {
-            ((LabelContainer) container).setLabel(getContent(context));
+            XWikiGeneratorListener xwikiListener = (XWikiGeneratorListener) scannerContext.getfListener();
+            XDOMGeneratorListener labelListener = (XDOMGeneratorListener) xwikiListener.getListener();
+
+            XDOM label = labelListener.getXDOM();
+            ((LabelContainer) container).setLabel(label);
         }
     }
 }

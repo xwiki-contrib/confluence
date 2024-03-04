@@ -19,12 +19,20 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import org.xwiki.rendering.block.XDOM;
+
 /**
  * @version $Id$
  * @since 9.0
  */
 public interface LabelContainer extends SpaceContainer
 {
+    /**
+     * Set the label.
+     * @param label the label to set
+     */
+    void setLabel(XDOM label);
+
     /**
      * Set the label.
      * @param label the label to set

@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler.ConfluenceAttachment;
+import org.xwiki.rendering.block.XDOM;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XHTMLXWikiGeneratorListener;
 import org.xwiki.rendering.listener.InlineFilterListener;
 import org.xwiki.rendering.listener.Listener;
@@ -166,11 +167,15 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
             }
 
             if (resourceReference != null) {
-                // Since WikiModel doesn't handle syntax in link labels and thus doesn't have begin/end events for
-                // links, we need to call the XWiki events and use an inline parser to parse the syntax in the label.
                 getListener().beginLink(resourceReference, false, Collections.<String, String>emptyMap());
-                if (reference.getLabel() != null) {
-                    parsePlainInline(reference.getLabel(), getListener());
+                XDOM labelXDOM = confluenceReference.getLabelXDOM();
+                String label = confluenceReference.getLabel();
+                if (labelXDOM != null) {
+                    InlineFilterListener inlineFilterListener = new InlineFilterListener();
+                    inlineFilterListener.setWrappedListener(getListener());
+                    labelXDOM.traverse(inlineFilterListener);
+                } else if (label != null) {
+                    parsePlainInline(label, getListener());
                 }
                 getListener().endLink(resourceReference, false, Collections.<String, String>emptyMap());
             }
