@@ -30,11 +30,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
+import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentLookupException;
@@ -243,7 +245,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         return parser;
     }
 
-    private XMLReader createXMLReader() throws Exception
+    private XMLReader createXMLReader() throws ParserConfigurationException, SAXException
     {
         SAXParserFactory parserFactory = SAXParserFactory.newInstance();
         SAXParser parser = parserFactory.newSAXParser();
