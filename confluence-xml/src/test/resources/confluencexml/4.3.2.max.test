@@ -242,8 +242,6 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 (((
 (% class="innerCell" %)
 (((
-
-
 {{recently-updated/}}
 )))
 )))
@@ -254,11 +252,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 (((
 ====== Navigate space ======
 
-
-
 {{pagetreesearch/}}
-
-
 
 {{pagetree/}}
 )))

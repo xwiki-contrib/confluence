@@ -1445,13 +1445,9 @@ It links to Under Page A: [[Under Page A>>doc:SmallNested.Page A.Under Page A.We
 
 Default Page Tree:
 
-
-
 {{pagetree/}}
 
 It shows Page A:
-
-
 
 {{pagetree root="SmallNested.Page A.WebHome" startDepth="1"/}}
 

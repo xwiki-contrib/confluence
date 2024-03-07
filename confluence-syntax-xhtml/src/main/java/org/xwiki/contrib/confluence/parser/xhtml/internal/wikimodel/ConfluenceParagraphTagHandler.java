@@ -19,12 +19,8 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
-import org.xwiki.rendering.wikimodel.WikiParameters;
-import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
+import org.xwiki.rendering.wikimodel.xhtml.handler.ParagraphTagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
-import org.xwiki.rendering.wikimodel.xhtml.impl.TagStack;
-
-import java.util.Objects;
 
 /**
  * Handles macros.
@@ -43,58 +39,27 @@ import java.util.Objects;
  * @version $Id$
  * @since 9.0
  */
-public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
+public class ConfluenceParagraphTagHandler extends ParagraphTagHandler implements ConfluenceTagHandler
 {
-    /**
-     * A Confluence Macro.
-     */
-    public static class ConfluenceMacro
-    {
-        /**
-         * The name of the Confluence macro.
-         */
-        public String name;
-
-        /**
-         * The macro parameters.
-         */
-        public WikiParameters parameters = new WikiParameters();
-
-        /**
-         * The macro content.
-         */
-        public String content;
-
-        /**
-         * The macro index.
-         */
-        public int index = -1;
-    }
-
     /**
      * Default constructor.
      */
-    public MacroTagHandler()
+    public ConfluenceParagraphTagHandler()
     {
-        super(false);
+        super();
     }
 
     @Override
     protected void begin(TagContext context)
     {
-        ConfluenceMacro macro = new ConfluenceMacro();
-
-        macro.name = context.getParams().getParameter("ac:name").getValue();
-
-        context.getTagStack().pushStackParameter(CONFLUENCE_CONTAINER, macro);
+        super.begin(context);
+        context.getTagStack().pushStackParameter(CONFLUENCE_IN_PARAGRAPH, true);
     }
 
     @Override
     protected void end(TagContext context)
     {
-        TagStack stack = context.getTagStack();
-        ConfluenceMacro macro = (ConfluenceMacro) stack.popStackParameter(CONFLUENCE_CONTAINER);
-        boolean inline = Objects.equals(true, stack.getStackParameter(CONFLUENCE_IN_PARAGRAPH));
-        context.getScannerContext().onMacro(macro.name, macro.parameters, macro.content, inline);
+        super.end(context);
+        context.getTagStack().popStackParameter(CONFLUENCE_IN_PARAGRAPH);
     }
 }

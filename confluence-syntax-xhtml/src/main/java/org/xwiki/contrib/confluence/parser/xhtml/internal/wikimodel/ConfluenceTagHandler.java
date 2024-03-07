@@ -32,4 +32,9 @@ public interface ConfluenceTagHandler
      * Stack parameter key pointing to the current confluence container.
      */
     String CONFLUENCE_CONTAINER = "confluence-container";
+
+    /**
+     * Stack parameter key used if in a paragraph.
+     */
+    String CONFLUENCE_IN_PARAGRAPH = "confluence-in-paragraph";
 }
