@@ -19,44 +19,47 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import org.xwiki.rendering.wikimodel.xhtml.handler.ParagraphTagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
- * Handles task list items.
+ * Handles macros.
  * <p>
- * Example (ending tags written with backslash instead of normal slash because of checkstyle):
+ * Example:
  * <p>
  * {@code
- * <ac:task>
- * <ac:task-id>1<\ac:task-id>
- * <ac:task-status>complete<\ac:task-status>
- * <ac:task-body>First task<\ac:task-body>
- * <\ac:task>
+ * <ac:macro ac:name="code">
+ *   <ac:parameter ac:name="title">Bloc code title</ac:parameter>
+ *   <ac:parameter ac:name="theme">theme</ac:parameter>
+ *   <ac:parameter ac:name="language">language</ac:parameter>
+ *   <ac:plain-text-body><![CDATA[Content of bloc code]]></ac:plain-text-body>
+ * </ac:macro>
  * }
  *
  * @version $Id$
- * @since 9.5
+ * @since 9.0
  */
-public class TaskTagHandler extends MacroTagHandler
+public class ConfluenceParagraphTagHandler extends ParagraphTagHandler implements ConfluenceTagHandler
 {
     /**
-     * Constructor.
+     * Default constructor.
      */
+    public ConfluenceParagraphTagHandler()
+    {
+        super();
+    }
+
     @Override
     protected void begin(TagContext context)
     {
-        ConfluenceMacro macro = new ConfluenceMacro();
-
-        macro.name = "task";
-
-        context.getTagStack().pushStackParameter(CONFLUENCE_CONTAINER, macro);
+        super.begin(context);
+        context.getTagStack().pushStackParameter(CONFLUENCE_IN_PARAGRAPH, true);
     }
 
     @Override
     protected void end(TagContext context)
     {
-        ConfluenceMacro macro = (ConfluenceMacro) context.getTagStack().popStackParameter(CONFLUENCE_CONTAINER);
-
-        context.getScannerContext().onMacroBlock(macro.name, macro.parameters, macro.content);
+        super.end(context);
+        context.getTagStack().popStackParameter(CONFLUENCE_IN_PARAGRAPH);
     }
 }

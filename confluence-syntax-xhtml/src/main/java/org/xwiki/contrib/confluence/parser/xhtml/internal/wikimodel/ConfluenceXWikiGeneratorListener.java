@@ -20,16 +20,21 @@
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
 import java.io.StringReader;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler.ConfluenceAttachment;
 import org.xwiki.rendering.block.XDOM;
+import org.xwiki.rendering.internal.parser.wikimodel.DefaultXWikiGeneratorListener;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XHTMLXWikiGeneratorListener;
 import org.xwiki.rendering.listener.InlineFilterListener;
 import org.xwiki.rendering.listener.Listener;
+import org.xwiki.rendering.listener.QueueListener;
 import org.xwiki.rendering.listener.WrappingListener;
+import org.xwiki.rendering.listener.chaining.EventType;
 import org.xwiki.rendering.listener.reference.AttachmentResourceReference;
 import org.xwiki.rendering.listener.reference.DocumentResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceReference;
@@ -40,6 +45,7 @@ import org.xwiki.rendering.parser.StreamParser;
 import org.xwiki.rendering.renderer.PrintRendererFactory;
 import org.xwiki.rendering.syntax.Syntax;
 import org.xwiki.rendering.util.IdGenerator;
+import org.xwiki.rendering.wikimodel.WikiParameters;
 import org.xwiki.rendering.wikimodel.WikiReference;
 
 /**
@@ -62,7 +68,13 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
 
     private static final String[] REPLACE_SPACE_NEXT = new String[] {"\\\\", "\\.", "\\:"};
 
+    private final Method pushListenerMethod;
+
+    private final Method popListenerMethod;
+
     private StreamParser plainParser;
+
+    private int mustCallPopListener;
 
     /**
      * @param parser the parser to use to parse link labels
@@ -80,8 +92,24 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         PrintRendererFactory plainRendererFactory, IdGenerator idGenerator, Syntax syntax, StreamParser plainParser)
     {
         super(parser, listener, linkReferenceParser, imageReferenceParser, plainRendererFactory, idGenerator, syntax);
-
         this.plainParser = plainParser;
+
+        // We need pushListener and popListener but they are private. For a lack of better solution, we use reflection
+        // to access them. When we stop supporting 14.10, we should remove these reflection tricks as these methods are
+        // now protected.
+        Method push;
+        Method pop;
+        try {
+            push = DefaultXWikiGeneratorListener.class.getDeclaredMethod("pushListener", Listener.class);
+            pop = DefaultXWikiGeneratorListener.class.getDeclaredMethod("popListener");
+            push.setAccessible(true);
+            pop.setAccessible(true);
+        } catch (NoSuchMethodException e) {
+            push = null;
+            pop = null;
+        }
+        this.pushListenerMethod = push;
+        this.popListenerMethod = pop;
     }
 
     private String escapeSpace(String space)
@@ -255,6 +283,74 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
             }
         } else {
             super.onImage(reference);
+        }
+    }
+
+    @Override
+    public void beginParagraph(WikiParameters params)
+    {
+        maybePushListener(new QueueListener());
+        super.beginParagraph(params);
+    }
+
+    private void maybePushListener(Listener l)
+    {
+        if (this.pushListenerMethod == null) {
+            return;
+        }
+
+        this.mustCallPopListener++;
+
+        try {
+            this.pushListenerMethod.invoke(this, l);
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            // ignore
+        }
+    }
+
+    private QueueListener maybePopListener()
+    {
+        Listener l = getListener();
+        if (this.mustCallPopListener < 1 || this.popListenerMethod == null || !(l instanceof QueueListener)) {
+            return null;
+        }
+        try {
+            this.popListenerMethod.invoke(this);
+            mustCallPopListener--;
+            return (QueueListener) l;
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            // ignore
+        }
+        return null;
+    }
+
+    @Override
+    public void endParagraph(WikiParameters params)
+    {
+        super.endParagraph(params);
+
+        // We work around an issue in Confluence exports. They contain things like <p>[macro]</p>, where macro
+        // can be a block macro. We detect this pattern and remove the paragraphs in this case.
+        // If macro was inline, it doesn't hurt because the macro will be in its own line in the XWiki syntax anyway.
+
+        QueueListener queueListener = maybePopListener();
+        if (queueListener == null) {
+            // reflection failed, fall back to the default behavior
+            return;
+        }
+
+        // Check if the second event is a macro event. Then this macro should actually be a block macro without
+        // begin/end paragraph.
+        if (queueListener.size() == 3 && queueListener.get(1).eventType == EventType.ON_MACRO) {
+            QueueListener.Event macroEvent = queueListener.get(1);
+            // Set the inline parameter to false in macros that are alone in paragraph. These macros can be block
+            // macros. If they are inline, not having the inline attribute should not hurt when generating XWiki syntax.
+            if (macroEvent.eventParameters.length == 4 && macroEvent.eventParameters[3] instanceof Boolean) {
+                macroEvent.eventParameters[3] = false;
+            }
+            macroEvent.eventType.fireEvent(this.getListener(), macroEvent.eventParameters);
+        } else {
+            queueListener.consumeEvents(this.getListener());
         }
     }
 }

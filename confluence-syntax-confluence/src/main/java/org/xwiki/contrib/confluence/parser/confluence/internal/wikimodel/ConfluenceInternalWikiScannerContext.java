@@ -214,4 +214,10 @@ public class ConfluenceInternalWikiScannerContext extends
             endList();
         }
     }
+
+    @Override
+    public void onMacro(String name, WikiParameters params, String content)
+    {
+        onMacro(name, params, content, fBlockType != IBlockTypes.NONE);
+    }
 }

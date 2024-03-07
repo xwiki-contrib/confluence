@@ -80,6 +80,6 @@ public class ElementMacroTagHandler extends AbstractRichContentTagHandler
     {
         UnknownMacro macro = (UnknownMacro) context.getTagStack().popStackParameter(CONFLUENCE_CONTAINER);
 
-        context.getScannerContext().onMacro(macro.name, macro.parameters, content);
+        context.getScannerContext().onMacroBlock(macro.name, macro.parameters, content);
     }
 }

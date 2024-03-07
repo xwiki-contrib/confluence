@@ -1,0 +1,42 @@
+.#------------------------------------------------------------------------------
+.input|confluence+xhtml/1.0
+.configuration.macroContentSyntax=event/1.0
+.#------------------------------------------------------------------------------
+<p><ac:structured-macro ac:name="status" /> <ac:structured-macro ac:name="status" /></p>
+
+<p>Hello</p>
+
+<p><ac:structured-macro ac:name="block" /></p>
+
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.#------------------------------------------------------------------------------
+<document>
+  <p>
+    <metadata>
+      <metadata>
+        <entry>
+          <string>syntax</string>
+          <org.xwiki.rendering.syntax.Syntax>
+            <type>
+              <name>Confluence (XHTML)</name>
+              <id>confluence</id>
+              <variants>
+                <string>xhtml</string>
+              </variants>
+            </type>
+            <version>1.0</version>
+          </org.xwiki.rendering.syntax.Syntax>
+        </entry>
+      </metadata>
+    </metadata>
+  </p>
+  <paragraph>
+    <macro id="status" inline="true"/>
+    <macro id="status" inline="true"/>
+  </paragraph>
+  <paragraph>
+    <word>Hello</word>
+  </paragraph>
+  <macro id="block"/>
+</document>

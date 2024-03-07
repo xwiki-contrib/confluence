@@ -50,6 +50,7 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ADFNodeHandl
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.CaptionHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.CodeTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceParagraphTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXHTMLWhitespaceXMLFilter;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXWikiGeneratorListener;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.DefaultMacroParameterTagHandler;
@@ -187,6 +188,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("h5", handler);
         handlers.put("h6", handler);
         handlers.put("a", createXWikiReferenceTagHandler());
+        handlers.put("p", new ConfluenceParagraphTagHandler());
 
         handlers.put("ac:macro", new MacroTagHandler());
         handlers.put("ac:structured-macro", new MacroTagHandler());

@@ -20,6 +20,7 @@
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
 import org.xwiki.rendering.wikimodel.WikiParameters;
+import org.xwiki.rendering.wikimodel.impl.IWikiScannerContext;
 import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
@@ -91,6 +92,14 @@ public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
     {
         ConfluenceMacro macro = (ConfluenceMacro) context.getTagStack().popStackParameter(CONFLUENCE_CONTAINER);
 
-        context.getScannerContext().onMacro(macro.name, macro.parameters, macro.content);
+        // We want to make sure macros in paragraphs and titles are marked as inline.
+        // We observe that Confluence exports list items like this: <li><p>content</p></li> and
+        // table cells like this: <td><p>...</p></td> so these two cases are covered.
+        // Confluence also exports block macros as <p>{block macro}</p>. We remove the extra paragraph
+        // in ConfluenceXWikiGeneratorListener.
+        IWikiScannerContext s = context.getScannerContext();
+        boolean isInline = s.isInHeader() || context.getTagStack().getStackParameter(CONFLUENCE_IN_PARAGRAPH) != null;
+
+        s.onMacro(macro.name, macro.parameters, macro.content, isInline);
     }
 }
