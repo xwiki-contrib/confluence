@@ -20,16 +20,23 @@
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
 import java.io.StringReader;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler.ConfluenceAttachment;
 import org.xwiki.rendering.block.XDOM;
+import org.xwiki.rendering.internal.parser.wikimodel.DefaultXWikiGeneratorListener;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XHTMLXWikiGeneratorListener;
 import org.xwiki.rendering.listener.InlineFilterListener;
 import org.xwiki.rendering.listener.Listener;
+import org.xwiki.rendering.listener.QueueListener;
 import org.xwiki.rendering.listener.WrappingListener;
+import org.xwiki.rendering.listener.chaining.EventType;
 import org.xwiki.rendering.listener.reference.AttachmentResourceReference;
 import org.xwiki.rendering.listener.reference.DocumentResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceReference;
@@ -40,6 +47,7 @@ import org.xwiki.rendering.parser.StreamParser;
 import org.xwiki.rendering.renderer.PrintRendererFactory;
 import org.xwiki.rendering.syntax.Syntax;
 import org.xwiki.rendering.util.IdGenerator;
+import org.xwiki.rendering.wikimodel.WikiParameters;
 import org.xwiki.rendering.wikimodel.WikiReference;
 
 /**
@@ -50,6 +58,10 @@ import org.xwiki.rendering.wikimodel.WikiReference;
  */
 public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListener
 {
+    private final Method pushListenerMethod;
+
+    private final Method popListenerMethod;
+
     // Not using model API to not trigger a dependency on platform
     // TODO: Should probably introduce a component implemented on confluence-xml module side but based on actual model
     // API this time to be safe at least in this use case
@@ -63,6 +75,8 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
     private static final String[] REPLACE_SPACE_NEXT = new String[] {"\\\\", "\\.", "\\:"};
 
     private StreamParser plainParser;
+    private boolean pushedListener;
+    private boolean inParagraph;
 
     /**
      * @param parser the parser to use to parse link labels
@@ -80,8 +94,50 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         PrintRendererFactory plainRendererFactory, IdGenerator idGenerator, Syntax syntax, StreamParser plainParser)
     {
         super(parser, listener, linkReferenceParser, imageReferenceParser, plainRendererFactory, idGenerator, syntax);
+        Method push, pop;
+        try {
+            push = DefaultXWikiGeneratorListener.class.getDeclaredMethod("pushListener", Listener.class);
+            pop = DefaultXWikiGeneratorListener.class.getDeclaredMethod("popListener");
+            push.setAccessible(true);
+            pop.setAccessible(true);
+        } catch (NoSuchMethodException e) {
+            push = null;
+            pop = null;
+        }
+        this.pushListenerMethod = push;
+        this.popListenerMethod = pop;
 
         this.plainParser = plainParser;
+    }
+
+    private boolean pushListener(Listener l)
+    {
+        if (this.pushListenerMethod == null) {
+            return false;
+        }
+
+        try {
+            this.pushListenerMethod.invoke(this, l);
+            return true;
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            // ignore
+        }
+        return false;
+    }
+
+    private boolean popListener()
+    {
+        if (this.popListenerMethod == null) {
+            return false;
+        }
+        try {
+            this.popListenerMethod.invoke(this);
+            return true;
+        } catch (InvocationTargetException | IllegalAccessException e) {
+            // ignore
+        }
+
+        return false;
     }
 
     private String escapeSpace(String space)
@@ -256,5 +312,87 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         } else {
             super.onImage(reference);
         }
+    }
+
+    @Override
+    public void beginParagraph(WikiParameters params)
+    {
+        if (pushedListener) {
+            flushParagraph(params);
+        }
+
+        inParagraph = true;
+
+        if (pushListener(new QueueListener())) {
+            pushedListener = true;
+        } else {
+            super.beginParagraph(params);
+        }
+    }
+
+    @Override
+    public void endParagraph(WikiParameters params)
+    {
+        if (inParagraph && !pushedListener) {
+            inParagraph = false;
+            super.endParagraph(params);
+            return;
+        }
+
+        flushParagraph(params);
+    }
+
+    private void flushParagraph(WikiParameters params)
+    {
+        if (!pushedListener) {
+            return;
+        }
+
+        // in Confluence exports, some block macros are put in paragraph. We work around this issue here
+        Listener l = null;
+        try {
+             l = getListener();
+        } catch (NoSuchElementException e) {
+            // ignore
+        }
+
+        if (!(l instanceof QueueListener) ) {
+            inParagraph = false;
+            // FIXME We are using reflection, which can fail. This needs to be removed when possible.
+            super.endParagraph(params);
+            return;
+        }
+
+        QueueListener queue = (QueueListener) l;
+        if (queue.isEmpty()) {
+            return;
+        }
+
+        inParagraph = false;
+
+        if (!popListener()) {
+            // FIXME We are using reflection, which can fail. This needs to be removed when possible.
+            super.endParagraph(params);
+            return;
+        }
+
+        pushedListener = false;
+
+        boolean shouldProduceParagraph = !(queue.size() == 1 && EventType.ON_MACRO.equals(queue.getFirst().eventType));
+        if (shouldProduceParagraph) {
+            super.beginParagraph(params);
+        }
+
+        queue.consumeEvents(getListener());
+
+        if (shouldProduceParagraph) {
+            super.endParagraph(params);
+        }
+    }
+
+    @Override
+    public void onMacroInline(String macroName, WikiParameters params, String content)
+    {
+        super.onMacroBlock(macroName, params, content);
     }
 }

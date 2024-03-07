@@ -88,8 +88,6 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 (((
 (% class="innerCell" %)
 (((
-
-
 {{recently-updated/}}
 )))
 )))
@@ -100,11 +98,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 (((
 ====== Navigate space ======
 
-
-
 {{pagetreesearch/}}
-
-
 
 {{pagetree/}}
 )))
@@ -523,8 +517,6 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 (((
 (% class="innerCell" %)
 (((
-
-
 {{recently-updated/}}
 )))
 )))
@@ -535,11 +527,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 (((
 ====== Navigate space ======
 
-
-
 {{pagetreesearch/}}
-
-
 
 {{pagetree/}}
 )))
@@ -827,8 +815,6 @@ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Adm
 
 [[image:attach:271360617.jpg]]
 
-
-
 {{toc/}}
 
 = Titre 1 =
@@ -998,8 +984,6 @@ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Adm
 
 [[image:attach:271360617.jpg]]
 
-
-
 {{toc/}}
 
 = Titre 1 =
@@ -1067,19 +1051,11 @@ Some wiki text with **bold** content
 info default macro
 {{/info}}
 
-
-
 {{status title="State default macro"/}}
-
-
 
 {{gallery title="Gallerie default macro"/}}
 
-
-
 {{children page="space1 Home"/}}
-
-
 
 {{id name="anchor"/}}
 
@@ -1087,15 +1063,9 @@ info default macro
 Content of bloc code
 {{/code}}
 
-
-
 {{blog-posts/}}
 
-
-
 {{create-space-button/}}
-
-
 
 {{change-history/}}
 
@@ -1103,23 +1073,13 @@ Content of bloc code
 Column macro
 {{/column}}
 
-
-
 {{gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
-
-
 
 {{contentbylabel labels="tag1"/}}
 
-
-
 {{content-by-user 0="admin"/}}
 
-
-
 {{contributors/}}
-
-
 
 {{contributors-summary/}}
 
@@ -1135,11 +1095,7 @@ Content of box to expand
 Excerpt content
 {{/excerpt}}
 
-
-
 {{favpages/}}
-
-
 
 {{im service="jabber" 0="Admin"/}}
 
@@ -1147,29 +1103,17 @@ Excerpt content
 content of info macro
 {{/info}}
 
-
-
 {{space-details width="80%"/}}
-
-
 
 {{listlabels/}}
 
-
-
 {{spaces/}}
-
-
 
 {{livesearch/}}
 
 "Video player" I won't add this macro because of the weight of the attached document
 
-
-
 {{navmap 0="tag1"/}}
-
-
 
 {{network 0="following"/}}
 
@@ -1179,15 +1123,9 @@ content of the macro
 
 3 macros named: excel macro, powerpoint macro and word macro
 
-
-
 {{index/}}
 
-
-
 {{pagetree/}}
-
-
 
 {{pagetreesearch/}}
 
@@ -1197,41 +1135,23 @@ no format content
 
 PDF macro
 
-
-
 {{space-attachments/}}
-
-
 
 {{attachments/}}
 
-
-
 {{popular-labels/}}
-
-
 
 {{profile-picture User="admin"/}}
 
-
-
 {{global-reports/}}
-
-
 
 {{recently-updated/}}
 
-
-
 {{recently-used-labels/}}
-
-
 
 {{related-labels/}}
 
 RSS feed macro
-
-
 
 {{spacejump space="space2"/}}
 
@@ -1239,19 +1159,13 @@ RSS feed macro
 content of the macro
 {{/section}}
 
-
-
 {{recently-updated-dashboard/}}
 
 {{tip title="tip title"}}
 tip content
 {{/tip}}
 
-
-
 {{profile user="admin"/}}
-
-
 
 {{status-list username="admin"/}}
 
@@ -1379,8 +1293,6 @@ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Adm
 
 [[image:attach:271360617.jpg]]
 
-
-
 {{toc/}}
 
 = Titre 1 =
@@ -1448,19 +1360,11 @@ Some wiki text with **bold** content
 info default macro
 {{/info}}
 
-
-
 {{status title="State default macro"/}}
-
-
 
 {{gallery title="Gallerie default macro"/}}
 
-
-
 {{children page="space1 Home"/}}
-
-
 
 {{id name="anchor"/}}
 
@@ -1468,15 +1372,9 @@ info default macro
 Content of bloc code
 {{/code}}
 
-
-
 {{blog-posts/}}
 
-
-
 {{create-space-button/}}
-
-
 
 {{change-history/}}
 
@@ -1484,23 +1382,13 @@ Content of bloc code
 Column macro
 {{/column}}
 
-
-
 {{gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
-
-
 
 {{contentbylabel labels="tag1"/}}
 
-
-
 {{content-by-user 0="admin"/}}
 
-
-
 {{contributors/}}
-
-
 
 {{contributors-summary/}}
 
@@ -1516,11 +1404,7 @@ Content of box to expand
 Excerpt content
 {{/excerpt}}
 
-
-
 {{favpages/}}
-
-
 
 {{im service="jabber" 0="Admin"/}}
 
@@ -1528,29 +1412,17 @@ Excerpt content
 content of info macro
 {{/info}}
 
-
-
 {{space-details width="80%"/}}
-
-
 
 {{listlabels/}}
 
-
-
 {{spaces/}}
-
-
 
 {{livesearch/}}
 
 "Video player" I won't add this macro because of the weight of the attached document
 
-
-
 {{navmap 0="tag1"/}}
-
-
 
 {{network 0="following"/}}
 
@@ -1560,15 +1432,9 @@ content of the macro
 
 3 macros named: excel macro, powerpoint macro and word macro
 
-
-
 {{index/}}
 
-
-
 {{pagetree/}}
-
-
 
 {{pagetreesearch/}}
 
@@ -1578,41 +1444,23 @@ no format content
 
 PDF macro
 
-
-
 {{space-attachments/}}
-
-
 
 {{attachments/}}
 
-
-
 {{popular-labels/}}
-
-
 
 {{profile-picture User="admin"/}}
 
-
-
 {{global-reports/}}
-
-
 
 {{recently-updated/}}
 
-
-
 {{recently-used-labels/}}
-
-
 
 {{related-labels/}}
 
 RSS feed macro
-
-
 
 {{spacejump space="space2"/}}
 
@@ -1620,19 +1468,13 @@ RSS feed macro
 content of the macro
 {{/section}}
 
-
-
 {{recently-updated-dashboard/}}
 
 {{tip title="tip title"}}
 tip content
 {{/tip}}
 
-
-
 {{profile user="admin"/}}
-
-
 
 {{status-list username="admin"/}}
 
@@ -1760,8 +1602,6 @@ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Adm
 
 [[image:attach:271360617.jpg]]
 
-
-
 {{toc/}}
 
 = Titre 1 =
@@ -1829,19 +1669,11 @@ Some wiki text with **bold** content
 info default macro
 {{/info}}
 
-
-
 {{status title="State default macro"/}}
-
-
 
 {{gallery title="Gallerie default macro"/}}
 
-
-
 {{children page="space1 Home"/}}
-
-
 
 {{id name="anchor"/}}
 
@@ -1849,15 +1681,9 @@ info default macro
 Content of bloc code
 {{/code}}
 
-
-
 {{blog-posts/}}
 
-
-
 {{create-space-button/}}
-
-
 
 {{change-history/}}
 
@@ -1865,23 +1691,13 @@ Content of bloc code
 Column macro
 {{/column}}
 
-
-
 {{gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
-
-
 
 {{contentbylabel labels="tag1"/}}
 
-
-
 {{content-by-user 0="admin"/}}
 
-
-
 {{contributors/}}
-
-
 
 {{contributors-summary/}}
 
@@ -1897,11 +1713,7 @@ Content of box to expand
 Excerpt content
 {{/excerpt}}
 
-
-
 {{favpages/}}
-
-
 
 {{im service="jabber" 0="Admin"/}}
 
@@ -1909,29 +1721,17 @@ Excerpt content
 content of info macro
 {{/info}}
 
-
-
 {{space-details width="80%"/}}
-
-
 
 {{listlabels/}}
 
-
-
 {{spaces/}}
-
-
 
 {{livesearch/}}
 
 "Video player" I won't add this macro because of the weight of the attached document
 
-
-
 {{navmap 0="tag1"/}}
-
-
 
 {{network 0="following"/}}
 
@@ -1941,15 +1741,9 @@ content of the macro
 
 3 macros named: excel macro, powerpoint macro and word macro
 
-
-
 {{index/}}
 
-
-
 {{pagetree/}}
-
-
 
 {{pagetreesearch/}}
 
@@ -1959,41 +1753,23 @@ no format content
 
 PDF macro
 
-
-
 {{space-attachments/}}
-
-
 
 {{attachments/}}
 
-
-
 {{popular-labels/}}
-
-
 
 {{profile-picture User="admin"/}}
 
-
-
 {{global-reports/}}
-
-
 
 {{recently-updated/}}
 
-
-
 {{recently-used-labels/}}
-
-
 
 {{related-labels/}}
 
 RSS feed macro
-
-
 
 {{spacejump space="space2"/}}
 
@@ -2001,19 +1777,13 @@ RSS feed macro
 content of the macro
 {{/section}}
 
-
-
 {{recently-updated-dashboard/}}
 
 {{tip title="tip title"}}
 tip content
 {{/tip}}
 
-
-
 {{profile user="admin"/}}
-
-
 
 {{status-list username="admin"/}}
 
@@ -2141,8 +1911,6 @@ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Adm
 
 [[image:attach:271360617.jpg]]
 
-
-
 {{toc/}}
 
 = Titre 1 =
@@ -2210,19 +1978,11 @@ Some wiki text with **bold** content
 info default macro
 {{/info}}
 
-
-
 {{status title="State default macro"/}}
-
-
 
 {{gallery title="Gallerie default macro"/}}
 
-
-
 {{children page="space1 Home"/}}
-
-
 
 {{id name="anchor"/}}
 
@@ -2230,15 +1990,9 @@ info default macro
 Content of bloc code
 {{/code}}
 
-
-
 {{blog-posts/}}
 
-
-
 {{create-space-button/}}
-
-
 
 {{change-history/}}
 
@@ -2246,23 +2000,13 @@ Content of bloc code
 Column macro
 {{/column}}
 
-
-
 {{gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
-
-
 
 {{contentbylabel labels="tag1"/}}
 
-
-
 {{content-by-user 0="admin"/}}
 
-
-
 {{contributors/}}
-
-
 
 {{contributors-summary/}}
 
@@ -2278,11 +2022,7 @@ Content of box to expand
 Excerpt content
 {{/excerpt}}
 
-
-
 {{favpages/}}
-
-
 
 {{im service="jabber" 0="Admin"/}}
 
@@ -2290,29 +2030,17 @@ Excerpt content
 content of info macro
 {{/info}}
 
-
-
 {{space-details width="80%"/}}
-
-
 
 {{listlabels/}}
 
-
-
 {{spaces/}}
-
-
 
 {{livesearch/}}
 
 "Video player" I won't add this macro because of the weight of the attached document
 
-
-
 {{navmap 0="tag1"/}}
-
-
 
 {{network 0="following"/}}
 
@@ -2322,15 +2050,9 @@ content of the macro
 
 3 macros named: excel macro, powerpoint macro and word macro
 
-
-
 {{index/}}
 
-
-
 {{pagetree/}}
-
-
 
 {{pagetreesearch/}}
 
@@ -2340,41 +2062,23 @@ no format content
 
 PDF macro
 
-
-
 {{space-attachments/}}
-
-
 
 {{attachments/}}
 
-
-
 {{popular-labels/}}
-
-
 
 {{profile-picture User="admin"/}}
 
-
-
 {{global-reports/}}
-
-
 
 {{recently-updated/}}
 
-
-
 {{recently-used-labels/}}
-
-
 
 {{related-labels/}}
 
 RSS feed macro
-
-
 
 {{spacejump space="space2"/}}
 
@@ -2382,19 +2086,13 @@ RSS feed macro
 content of the macro
 {{/section}}
 
-
-
 {{recently-updated-dashboard/}}
 
 {{tip title="tip title"}}
 tip content
 {{/tip}}
 
-
-
 {{profile user="admin"/}}
-
-
 
 {{status-list username="admin"/}}
 
@@ -2522,8 +2220,6 @@ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Adm
 
 [[image:attach:271360617.jpg]]
 
-
-
 {{toc/}}
 
 = Titre 1 =
@@ -2591,19 +2287,11 @@ Some wiki text with **bold** content
 info default macro
 {{/info}}
 
-
-
 {{status title="State default macro"/}}
-
-
 
 {{gallery title="Gallerie default macro"/}}
 
-
-
 {{children page="space1 Home"/}}
-
-
 
 {{id name="anchor"/}}
 
@@ -2611,15 +2299,9 @@ info default macro
 Content of bloc code
 {{/code}}
 
-
-
 {{blog-posts/}}
 
-
-
 {{create-space-button/}}
-
-
 
 {{change-history/}}
 
@@ -2627,23 +2309,13 @@ Content of bloc code
 Column macro
 {{/column}}
 
-
-
 {{gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
-
-
 
 {{contentbylabel labels="tag1"/}}
 
-
-
 {{content-by-user 0="admin"/}}
 
-
-
 {{contributors/}}
-
-
 
 {{contributors-summary/}}
 
@@ -2659,11 +2331,7 @@ Content of box to expand
 Excerpt content
 {{/excerpt}}
 
-
-
 {{favpages/}}
-
-
 
 {{im service="jabber" 0="Admin"/}}
 
@@ -2671,29 +2339,17 @@ Excerpt content
 content of info macro
 {{/info}}
 
-
-
 {{space-details width="80%"/}}
-
-
 
 {{listlabels/}}
 
-
-
 {{spaces/}}
-
-
 
 {{livesearch/}}
 
 "Video player" I won't add this macro because of the weight of the attached document
 
-
-
 {{navmap 0="tag1"/}}
-
-
 
 {{network 0="following"/}}
 
@@ -2703,15 +2359,9 @@ content of the macro
 
 3 macros named: excel macro, powerpoint macro and word macro
 
-
-
 {{index/}}
 
-
-
 {{pagetree/}}
-
-
 
 {{pagetreesearch/}}
 
@@ -2721,41 +2371,23 @@ no format content
 
 PDF macro
 
-
-
 {{space-attachments/}}
-
-
 
 {{attachments/}}
 
-
-
 {{popular-labels/}}
-
-
 
 {{profile-picture User="admin"/}}
 
-
-
 {{global-reports/}}
-
-
 
 {{recently-updated/}}
 
-
-
 {{recently-used-labels/}}
-
-
 
 {{related-labels/}}
 
 RSS feed macro
-
-
 
 {{spacejump space="space2"/}}
 
@@ -2763,19 +2395,13 @@ RSS feed macro
 content of the macro
 {{/section}}
 
-
-
 {{recently-updated-dashboard/}}
 
 {{tip title="tip title"}}
 tip content
 {{/tip}}
 
-
-
 {{profile user="admin"/}}
-
-
 
 {{status-list username="admin"/}}
 
@@ -2910,8 +2536,6 @@ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Adm
 
 [[image:attach:271360617.jpg]]
 
-
-
 {{toc/}}
 
 = Titre 1 =
@@ -2979,19 +2603,11 @@ Some wiki text with **bold** content
 info default macro
 {{/info}}
 
-
-
 {{status title="State default macro"/}}
-
-
 
 {{gallery title="Gallerie default macro"/}}
 
-
-
 {{children page="space1 Home"/}}
-
-
 
 {{id name="anchor"/}}
 
@@ -2999,15 +2615,9 @@ info default macro
 Content of bloc code
 {{/code}}
 
-
-
 {{blog-posts/}}
 
-
-
 {{create-space-button/}}
-
-
 
 {{change-history/}}
 
@@ -3015,23 +2625,13 @@ Content of bloc code
 Column macro
 {{/column}}
 
-
-
 {{gadget url="rest/gadgets/1.0/g/com.atlassian.confluence.plugins.gadgets:gadget-search/gadgets/gadget-search.xml"/}}
-
-
 
 {{contentbylabel labels="tag1"/}}
 
-
-
 {{content-by-user 0="admin"/}}
 
-
-
 {{contributors/}}
-
-
 
 {{contributors-summary/}}
 
@@ -3047,11 +2647,7 @@ Content of box to expand
 Excerpt content
 {{/excerpt}}
 
-
-
 {{favpages/}}
-
-
 
 {{im service="jabber" 0="Admin"/}}
 
@@ -3059,29 +2655,17 @@ Excerpt content
 content of info macro
 {{/info}}
 
-
-
 {{space-details width="80%"/}}
-
-
 
 {{listlabels/}}
 
-
-
 {{spaces/}}
-
-
 
 {{livesearch/}}
 
 "Video player" I won't add this macro because of the weight of the attached document
 
-
-
 {{navmap 0="tag1"/}}
-
-
 
 {{network 0="following"/}}
 
@@ -3091,15 +2675,9 @@ content of the macro
 
 3 macros named: excel macro, powerpoint macro and word macro
 
-
-
 {{index/}}
 
-
-
 {{pagetree/}}
-
-
 
 {{pagetreesearch/}}
 
@@ -3109,41 +2687,23 @@ no format content
 
 PDF macro
 
-
-
 {{space-attachments/}}
-
-
 
 {{attachments/}}
 
-
-
 {{popular-labels/}}
-
-
 
 {{profile-picture User="admin"/}}
 
-
-
 {{global-reports/}}
-
-
 
 {{recently-updated/}}
 
-
-
 {{recently-used-labels/}}
-
-
 
 {{related-labels/}}
 
 RSS feed macro
-
-
 
 {{spacejump space="space2"/}}
 
@@ -3151,19 +2711,13 @@ RSS feed macro
 content of the macro
 {{/section}}
 
-
-
 {{recently-updated-dashboard/}}
 
 {{tip title="tip title"}}
 tip content
 {{/tip}}
 
-
-
 {{profile user="admin"/}}
-
-
 
 {{status-list username="admin"/}}
 
@@ -3347,8 +2901,6 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 (((
 (% class="innerCell" %)
 (((
-
-
 {{recently-updated/}}
 )))
 )))
@@ -3359,11 +2911,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 (((
 ====== Navigate space ======
 
-
-
 {{pagetreesearch/}}
-
-
 
 {{pagetree/}}
 )))
