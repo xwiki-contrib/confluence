@@ -619,7 +619,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @since 9.11
      */
     @PropertyName("User id mapping")
-    @PropertyDescription("A mapping between Confluence user id located in the package and wanted ids.")
+    @PropertyDescription("A mapping between Confluence user id located in the package and wanted ids. "
+        + "The format is confluenceuser=XWikiUser pairs separated by pipes (\"|\"). "
+        + "For instance: myuser=MyUser|user2=User2"
+
+    )
     public Mapping getUserIdMapping()
     {
         return this.userIdMapping;
@@ -650,7 +654,13 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @since 9.24.0
      */
     @PropertyName("Group name mapping")
-    @PropertyDescription("A mapping between Confluence group names located in the package and wanted ids.")
+    @PropertyDescription("A mapping between Confluence group names and XWiki group names. "
+        + "The format is confluencegroup=XWikiGroup pairs separated by pipes (\"|\"). "
+        + "Use an empty value to ignore the group."
+        + "For instance: atlassian-addons=|balsamiq-mockups-editors=MockupEditors|"
+        + "administrators=XWikiAdminGroup|site-admins=XWikiAdminGroup|_licensed-confluence=|"
+        + "confluence-users=XWikiAllGroup|confluence-administrators=XWikiAdminGroup|"
+        + "system-administrators=XWikiAdminGroup|group 1=MyGroup")
     public Mapping getGroupMapping()
     {
         return this.groupMapping;
