@@ -32,8 +32,8 @@
     </metadata>
   </p>
   <paragraph>
-    <macro id="status"/>
-    <macro id="status"/>
+    <macro id="status" inline="true" />
+    <macro id="status" inline="true" />
   </paragraph>
   <paragraph>
     <word>Hello</word>

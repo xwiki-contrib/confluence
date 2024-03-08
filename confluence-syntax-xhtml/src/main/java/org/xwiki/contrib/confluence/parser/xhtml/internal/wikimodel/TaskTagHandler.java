@@ -51,4 +51,12 @@ public class TaskTagHandler extends MacroTagHandler
 
         context.getTagStack().pushStackParameter(CONFLUENCE_CONTAINER, macro);
     }
+
+    @Override
+    protected void end(TagContext context)
+    {
+        ConfluenceMacro macro = (ConfluenceMacro) context.getTagStack().popStackParameter(CONFLUENCE_CONTAINER);
+
+        context.getScannerContext().onMacroBlock(macro.name, macro.parameters, macro.content);
+    }
 }

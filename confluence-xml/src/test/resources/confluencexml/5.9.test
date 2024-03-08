@@ -1609,9 +1609,7 @@ Flickr photo streams, Twitter streams, Google maps and many more.
 {{layout-section ac:type="two_equal"}}
 {{layout-cell}}
 ===   
- ===
-
-{{widget url="https://www.youtube.com/watch?v=zy5ycJO4alo"/}}
+{{widget url="https://www.youtube.com/watch?v=zy5ycJO4alo"/}} ===
 {{/layout-cell}}
 
 {{layout-cell}}

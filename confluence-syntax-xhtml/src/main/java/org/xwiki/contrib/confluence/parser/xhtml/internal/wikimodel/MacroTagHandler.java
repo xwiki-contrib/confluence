@@ -20,11 +20,9 @@
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
 import org.xwiki.rendering.wikimodel.WikiParameters;
+import org.xwiki.rendering.wikimodel.impl.IWikiScannerContext;
 import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
-import org.xwiki.rendering.wikimodel.xhtml.impl.TagStack;
-
-import java.util.Objects;
 
 /**
  * Handles macros.
@@ -92,9 +90,22 @@ public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
     @Override
     protected void end(TagContext context)
     {
-        TagStack stack = context.getTagStack();
-        ConfluenceMacro macro = (ConfluenceMacro) stack.popStackParameter(CONFLUENCE_CONTAINER);
-        boolean inline = Objects.equals(true, stack.getStackParameter(CONFLUENCE_IN_PARAGRAPH));
-        context.getScannerContext().onMacro(macro.name, macro.parameters, macro.content, inline);
+        ConfluenceMacro macro = (ConfluenceMacro) context.getTagStack().popStackParameter(CONFLUENCE_CONTAINER);
+
+        IWikiScannerContext internContext = context.getScannerContext().getContext();
+        // Use reflection to get the fBlockType field from the internContext.
+        // This is a hack to get the current block type.
+        // This is needed because the WikiModel API doesn't provide a way to get the current block type.
+        boolean isInline = false;
+        try {
+            java.lang.reflect.Field fBlockType = internContext.getClass().getDeclaredField("fBlockType");
+            fBlockType.setAccessible(true);
+            int blockType = fBlockType.getInt(internContext);
+            isInline = blockType != 0;
+        } catch (Exception e) {
+            // Ignore
+        }
+
+        context.getScannerContext().onMacro(macro.name, macro.parameters, macro.content, isInline);
     }
 }

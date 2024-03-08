@@ -29,7 +29,9 @@ import org.xwiki.rendering.block.XDOM;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XHTMLXWikiGeneratorListener;
 import org.xwiki.rendering.listener.InlineFilterListener;
 import org.xwiki.rendering.listener.Listener;
+import org.xwiki.rendering.listener.QueueListener;
 import org.xwiki.rendering.listener.WrappingListener;
+import org.xwiki.rendering.listener.chaining.EventType;
 import org.xwiki.rendering.listener.reference.AttachmentResourceReference;
 import org.xwiki.rendering.listener.reference.DocumentResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceReference;
@@ -40,6 +42,7 @@ import org.xwiki.rendering.parser.StreamParser;
 import org.xwiki.rendering.renderer.PrintRendererFactory;
 import org.xwiki.rendering.syntax.Syntax;
 import org.xwiki.rendering.util.IdGenerator;
+import org.xwiki.rendering.wikimodel.WikiParameters;
 import org.xwiki.rendering.wikimodel.WikiReference;
 
 /**
@@ -255,6 +258,34 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
             }
         } else {
             super.onImage(reference);
+        }
+    }
+
+    @Override
+    public void beginParagraph(WikiParameters params)
+    {
+        pushListener(new QueueListener());
+        super.beginParagraph(params);
+    }
+
+    @Override
+    public void endParagraph(WikiParameters params)
+    {
+        super.endParagraph(params);
+        QueueListener queueListener = (QueueListener) getListener();
+        popListener();
+
+        // Check if the second event is a macro event. Then this macro should actually be a block macro without
+        // begin/end paragraph.
+        if (queueListener.size() == 3 && queueListener.get(1).eventType == EventType.ON_MACRO) {
+            QueueListener.Event macroEvent = queueListener.get(1);
+            // Set the inline parameter to false.
+            if (macroEvent.eventParameters.length == 4 && macroEvent.eventParameters[3] instanceof Boolean) {
+                macroEvent.eventParameters[3] = false;
+            }
+            macroEvent.eventType.fireEvent(this.getListener(), macroEvent.eventParameters);
+        } else {
+            queueListener.consumeEvents(this.getListener());
         }
     }
 }
