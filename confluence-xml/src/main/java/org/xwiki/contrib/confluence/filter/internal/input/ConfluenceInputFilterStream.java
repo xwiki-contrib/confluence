@@ -1178,7 +1178,7 @@ public class ConfluenceInputFilterStream
             if (!macrosIds.isEmpty()) {
                 if (properties.isVerbose()) {
                     logger.info(ConfluenceFilter.LOG_MACROS_FOUND, "The following macros [{}] were found on page [{}].",
-                        macrosIds, documentName);
+                        macrosIds, createPageIdentifier(pageProperties));
                 }
                 macrosIds.clear();
             }
