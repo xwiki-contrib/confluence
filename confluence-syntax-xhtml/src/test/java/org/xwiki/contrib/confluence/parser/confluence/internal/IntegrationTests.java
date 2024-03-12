@@ -31,7 +31,7 @@ import org.xwiki.test.annotation.AllComponents;
  */
 @RunWith(FilterTestSuite.class)
 @AllComponents
-@FilterTestSuite.Scope(value = "confluencexhtml10.filter", pattern = "inlinemacrosinparagraphs.test")
+@FilterTestSuite.Scope(value = "confluencexhtml10.filter")
 public class IntegrationTests
 {
 }
