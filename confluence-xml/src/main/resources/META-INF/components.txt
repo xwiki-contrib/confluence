@@ -2,11 +2,13 @@ org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage
 org.xwiki.contrib.confluence.filter.internal.ConfluencePageClassDocumentInitializer
 org.xwiki.contrib.confluence.filter.internal.MappingConverter
 org.xwiki.contrib.confluence.filter.internal.idrange.ConfluenceIdRangeListConverter
+org.xwiki.contrib.confluence.filter.internal.LinkMappingConverter
 org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter
 org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverterListener
 org.xwiki.contrib.confluence.filter.internal.input.ConfluenceInputFilterStream
 org.xwiki.contrib.confluence.filter.internal.input.ConfluenceInputFilterStreamFactory
 org.xwiki.contrib.confluence.filter.internal.input.DefaultConfluenceInputContext
+org.xwiki.contrib.confluence.filter.internal.input.DefaultLinkMapper
 org.xwiki.contrib.confluence.filter.internal.input.XWikiConverter
 org.xwiki.contrib.confluence.filter.internal.macros.AnchorMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.DefaultMacroConverter

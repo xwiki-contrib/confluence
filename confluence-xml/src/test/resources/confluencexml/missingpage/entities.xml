@@ -1,0 +1,520 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic datetime="2024-02-12 08:13:49.467">
+    <object class="Page" package="com.atlassian.confluence.pages">
+        <id name="id">655097973</id>
+        <property name="hibernateVersion">8</property>
+        <property name="title"><![CDATA[Small Nested Home]]></property>
+        <property name="lowerTitle"><![CDATA[small nested home]]></property>
+        <collection name="bodyContents" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.bodyContents)">
+            <element class="BodyContent" package="com.atlassian.confluence.core">
+                <id name="id">655097974</id>
+            </element>
+        </collection>
+        <collection name="adfContentBodies" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.adfContentBodies)"/>
+        <collection name="contentProperties" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.contentProperties)">
+            <element class="ContentProperty" package="com.atlassian.confluence.content">
+                <id name="id">655294466</id>
+            </element>
+            <element class="ContentProperty" package="com.atlassian.confluence.content">
+                <id name="id">655097975</id>
+            </element>
+            <element class="ContentProperty" package="com.atlassian.confluence.content">
+                <id name="id">655097976</id>
+            </element>
+            <element class="ContentProperty" package="com.atlassian.confluence.content">
+                <id name="id">655097992</id>
+            </element>
+            <element class="ContentProperty" package="com.atlassian.confluence.content">
+                <id name="id">655294465</id>
+            </element>
+            <element class="ContentProperty" package="com.atlassian.confluence.content">
+                <id name="id">655261706</id>
+            </element>
+        </collection>
+        <property name="version">2</property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+        </property>
+        <property name="creationDate">2024-02-12 08:05:02.261</property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+        </property>
+        <property name="lastModificationDate">2024-02-12 08:05:30.967</property>
+        <property name="versionComment"><![CDATA[]]></property>
+        <collection name="historicalVersions" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.historicalVersions)">
+            <element class="Page" package="com.atlassian.confluence.pages">
+                <id name="id">655261697</id>
+            </element>
+        </collection>
+        <property name="contentStatus"><![CDATA[current]]></property>
+        <property name="navigationType">1</property>
+        <collection name="customContent" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.customContent)">
+            <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+                <id name="id">655097983</id>
+            </element>
+            <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+                <id name="id">655130625</id>
+            </element>
+            <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+                <id name="id">655098533</id>
+            </element>
+        </collection>
+        <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+            <id name="id">655097859</id>
+        </property>
+        <property name="position">876</property>
+        <collection name="childrens" class="java.util.Collection(com.atlassian.confluence.pages.AbstractHierarchical.childrens)">
+            <element class="Page" package="com.atlassian.confluence.pages">
+                <id name="id">654934018</id>
+            </element>
+            <element class="Page" package="com.atlassian.confluence.pages">
+                <id name="id">655392769</id>
+            </element>
+        </collection>
+    </object>
+    <object class="Space" package="com.atlassian.confluence.spaces">
+        <id name="id">655097859</id>
+        <property name="name"><![CDATA[Small Nested]]></property>
+        <property name="key"><![CDATA[SmallNested]]></property>
+        <property name="lowerKey"><![CDATA[smallnested]]></property>
+        <property name="description" class="SpaceDescription" package="com.atlassian.confluence.spaces">
+            <id name="id">655097858</id>
+        </property>
+        <property name="homePage" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">655097973</id>
+        </property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+        </property>
+        <property name="creationDate">2024-02-12 08:05:01.439</property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+        </property>
+        <property name="lastModificationDate">2024-02-12 08:05:01.439</property>
+        <property name="spaceType">global</property>
+        <property name="spaceStatus" enum-class="SpaceStatus" package="com.atlassian.confluence.spaces">CURRENT</property>
+    </object>
+    <object class="Page" package="com.atlassian.confluence.pages">
+        <id name="id">655491073</id>
+        <property name="hibernateVersion">19</property>
+        <property name="title"><![CDATA[Under Page B]]></property>
+        <property name="lowerTitle"><![CDATA[under page b]]></property>
+        <collection name="bodyContents" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.bodyContents)">
+            <element class="BodyContent" package="com.atlassian.confluence.core">
+                <id name="id">655098541</id>
+            </element>
+        </collection>
+        <collection name="adfContentBodies" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.adfContentBodies)"/>
+        <property name="version">1</property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+        </property>
+        <property name="creationDate">2024-02-12 08:07:45.179</property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+        </property>
+        <property name="lastModificationDate">2024-02-12 08:13:00.739</property>
+        <property name="versionComment"><![CDATA[]]></property>
+        <property name="contentStatus"><![CDATA[current]]></property>
+        <property name="navigationType">1</property>
+        <collection name="customContent" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.customContent)">
+            <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+                <id name="id">655491076</id>
+            </element>
+            <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+                <id name="id">655098544</id>
+            </element>
+            <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+                <id name="id">655622147</id>
+            </element>
+        </collection>
+        <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+            <id name="id">655097859</id>
+        </property>
+        <property name="position">162</property>
+        <property name="parent" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">655392769</id>
+        </property>
+    </object>
+    <object class="SpaceDescription" package="com.atlassian.confluence.spaces">
+        <id name="id">655097858</id>
+        <property name="hibernateVersion">1</property>
+        <property name="title"/>
+        <property name="lowerTitle"/>
+        <collection name="bodyContents" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.bodyContents)">
+            <element class="BodyContent" package="com.atlassian.confluence.core">
+                <id name="id">655097860</id>
+            </element>
+        </collection>
+        <property name="version">1</property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+        </property>
+        <property name="creationDate">2024-02-12 08:05:01.438</property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+        </property>
+        <property name="lastModificationDate">2024-02-12 08:05:01.438</property>
+        <property name="versionComment"><![CDATA[]]></property>
+        <property name="originalVersionId"/>
+        <property name="contentStatus"><![CDATA[current]]></property>
+        <property name="navigationType"/>
+        <collection name="attachments" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.attachments)">
+            <element class="Attachment" package="com.atlassian.confluence.pages">
+                <id name="id">655097965</id>
+            </element>
+        </collection>
+        <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+            <id name="id">655097859</id>
+        </property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">654934023</id>
+        <property name="body"><![CDATA["v2"]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">654934022</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="Page" package="com.atlassian.confluence.pages">
+        <id name="id">655196161</id>
+        <property name="hibernateVersion">6</property>
+        <property name="title"><![CDATA[Small Nested Home]]></property>
+        <property name="lowerTitle"><![CDATA[small nested home]]></property>
+        <collection name="bodyContents" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.bodyContents)">
+            <element class="BodyContent" package="com.atlassian.confluence.core">
+                <id name="id">655196162</id>
+            </element>
+        </collection>
+        <collection name="contentProperties" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.contentProperties)">
+            <element class="ContentProperty" package="com.atlassian.confluence.content">
+                <id name="id">655294467</id>
+            </element>
+            <element class="ContentProperty" package="com.atlassian.confluence.content">
+                <id name="id">655294468</id>
+            </element>
+            <element class="ContentProperty" package="com.atlassian.confluence.content">
+                <id name="id">655196163</id>
+            </element>
+            <element class="ContentProperty" package="com.atlassian.confluence.content">
+                <id name="id">655196164</id>
+            </element>
+        </collection>
+        <property name="version">1</property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+        </property>
+        <property name="creationDate">2024-02-12 08:05:10.930</property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+        </property>
+        <property name="lastModificationDate">2024-02-12 08:05:31.390</property>
+        <property name="versionComment"><![CDATA[]]></property>
+        <property name="originalVersion" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">655097973</id>
+        </property>
+        <property name="originalVersionId">655097973</property>
+        <property name="contentStatus"><![CDATA[draft]]></property>
+        <property name="navigationType">0</property>
+        <collection name="customContent" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.customContent)">
+            <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+                <id name="id">655294469</id>
+            </element>
+            <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+                <id name="id">655294472</id>
+            </element>
+        </collection>
+        <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+            <id name="id">655097859</id>
+        </property>
+        <property name="position">892</property>
+    </object>
+    <object class="Page" package="com.atlassian.confluence.pages">
+        <id name="id">655261697</id>
+        <property name="hibernateVersion">5</property>
+        <property name="title"><![CDATA[Small Nested Home]]></property>
+        <property name="lowerTitle"><![CDATA[small nested home]]></property>
+        <collection name="bodyContents" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.bodyContents)">
+            <element class="BodyContent" package="com.atlassian.confluence.core">
+                <id name="id">655261698</id>
+            </element>
+        </collection>
+        <collection name="contentProperties" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.contentProperties)">
+            <element class="ContentProperty" package="com.atlassian.confluence.content">
+                <id name="id">655261699</id>
+            </element>
+            <element class="ContentProperty" package="com.atlassian.confluence.content">
+                <id name="id">655261700</id>
+            </element>
+            <element class="ContentProperty" package="com.atlassian.confluence.content">
+                <id name="id">655261701</id>
+            </element>
+            <element class="ContentProperty" package="com.atlassian.confluence.content">
+                <id name="id">655261702</id>
+            </element>
+            <element class="ContentProperty" package="com.atlassian.confluence.content">
+                <id name="id">655261703</id>
+            </element>
+            <element class="ContentProperty" package="com.atlassian.confluence.content">
+                <id name="id">655261704</id>
+            </element>
+        </collection>
+        <property name="version">1</property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+        </property>
+        <property name="creationDate">2024-02-12 08:05:02.261</property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+        </property>
+        <property name="lastModificationDate">2024-02-12 08:05:02.261</property>
+        <property name="versionComment"><![CDATA[]]></property>
+        <property name="originalVersion" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">655097973</id>
+        </property>
+        <property name="originalVersionId">655097973</property>
+        <property name="contentStatus"><![CDATA[current]]></property>
+        <property name="navigationType">0</property>
+        <collection name="customContent" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.customContent)">
+            <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+                <id name="id">655294475</id>
+            </element>
+            <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+                <id name="id">655294478</id>
+            </element>
+        </collection>
+        <property name="position">876</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655622148</id>
+        <property name="body"><![CDATA[{"name":{"value":"Page numbering is off"},"icon":{"width":16,"height":16,"url":"logo-black-16.png"},"tooltip":{"value":"Enable and configure page numbering"}}]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655622147</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655556611</id>
+        <property name="body"><![CDATA[{"name":{"value":"Page numbering is off"},"icon":{"width":16,"height":16,"url":"logo-black-16.png"},"tooltip":{"value":"Enable and configure page numbering"}}]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655556610</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655360005</id>
+        <property name="body"><![CDATA["v2"]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655360004</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655294470</id>
+        <property name="body"><![CDATA["full-width"]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655294469</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655392773</id>
+        <property name="body"><![CDATA["v2"]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655392772</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655491077</id>
+        <property name="body"><![CDATA["v2"]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655491076</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655130626</id>
+        <property name="body"><![CDATA[SUPPORTED]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655130625</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655458306</id>
+        <property name="body"><![CDATA[{"name":{"value":"Page numbering is off"},"icon":{"width":16,"height":16,"url":"logo-black-16.png"},"tooltip":{"value":"Enable and configure page numbering"}}]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655458305</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655425537</id>
+        <property name="body"><![CDATA[<p>This page is under Small Nested</p>]]></property>
+        <property name="content" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">655392769</id>
+        </property>
+        <property name="bodyType">2</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655360014</id>
+        <property name="body"><![CDATA[{"edmStatusProp1":[],"edmStatusProp2":[],"edmStatusProp3":[],"edmStatusProp4":[],"edmTextProp1":[],"edmTextProp2":[],"edmTextProp3":[],"edmTextProp4":[],"edmAllProp":[]}]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655360013</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655294473</id>
+        <property name="body"><![CDATA["full-width"]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655294472</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655360011</id>
+        <property name="body"><![CDATA[<p>This page is under Page A.</p><p /><ac:structured-macro ac:name="excerpt" ac:schema-version="1" data-layout="default" ac:local-id="1838ba58-f519-4c40-b1b9-e98566728244" ac:macro-id="c40b28d0-d058-4468-a94e-85e46f04c77e"><ac:rich-text-body><p>This is an excerpt</p></ac:rich-text-body></ac:structured-macro>]]></property>
+        <property name="content" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">655360001</id>
+        </property>
+        <property name="bodyType">2</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655294486</id>
+        <property name="body"><![CDATA["full-width"]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655294485</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">654999574</id>
+        <property name="body"><![CDATA[{"edmStatusProp1":[],"edmStatusProp2":[],"edmStatusProp3":[],"edmStatusProp4":[],"edmTextProp1":[],"edmTextProp2":[],"edmTextProp3":[],"edmTextProp4":[],"edmAllProp":[]}]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">654999573</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655294489</id>
+        <property name="body"><![CDATA["full-width"]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655294488</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655097974</id>
+        <property name="body"><![CDATA[<p>Home of Nested Space.</p>]]></property>
+        <property name="content" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">655097973</id>
+        </property>
+        <property name="bodyType">2</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655097984</id>
+        <property name="body"><![CDATA["v2"]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655097983</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655098534</id>
+        <property name="body"><![CDATA[{"edmStatusProp1":[],"edmStatusProp2":[],"edmStatusProp3":[],"edmStatusProp4":[],"edmTextProp1":[],"edmTextProp2":[],"edmTextProp3":[],"edmTextProp4":[],"edmAllProp":[]}]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655098533</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655098539</id>
+        <property name="body"><![CDATA[{"edmStatusProp1":[],"edmStatusProp2":[],"edmStatusProp3":[],"edmStatusProp4":[],"edmTextProp1":[],"edmTextProp2":[],"edmTextProp3":[],"edmTextProp4":[],"edmAllProp":[]}]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655098538</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655098545</id>
+        <property name="body"><![CDATA[{"edmStatusProp1":[],"edmStatusProp2":[],"edmStatusProp3":[],"edmStatusProp4":[],"edmTextProp1":[],"edmTextProp2":[],"edmTextProp3":[],"edmTextProp4":[],"edmAllProp":[]}]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655098544</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655097860</id>
+        <property name="body"><![CDATA[]]></property>
+        <property name="content" class="SpaceDescription" package="com.atlassian.confluence.spaces">
+            <id name="id">655097858</id>
+        </property>
+        <property name="bodyType">0</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655196162</id>
+        <property name="body"><![CDATA[<p>Home of Nested Space.</p>]]></property>
+        <property name="content" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">655196161</id>
+        </property>
+        <property name="bodyType">2</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655261698</id>
+        <property name="body"><![CDATA[<p>Hello</p>]]></property>
+        <property name="content" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">655261697</id>
+        </property>
+        <property name="bodyType">2</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655523855</id>
+        <property name="body"><![CDATA[{"name":{"value":"Page numbering is off"},"icon":{"width":16,"height":16,"url":"logo-black-16.png"},"tooltip":{"value":"Enable and configure page numbering"}}]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655523854</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655294479</id>
+        <property name="body"><![CDATA["full-width"]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655294478</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655294476</id>
+        <property name="body"><![CDATA["full-width"]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655294475</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655294496</id>
+        <property name="body"><![CDATA["full-width"]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655294495</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655294499</id>
+        <property name="body"><![CDATA["full-width"]]></property>
+        <property name="content" class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+            <id name="id">655294498</id>
+        </property>
+        <property name="bodyType">1</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">655098541</id>
+        <property name="body"><![CDATA[<p>It links to Under Page A: <ac:link ac:card-appearance="inline"><ri:page ri:content-title="Under Page A" ri:version-at-save="2" /><ac:link-body>Under Page A</ac:link-body></ac:link></p><p>It includes Under Page A:</p><ac:structured-macro ac:name="excerpt-include" ac:schema-version="1" data-layout="default" ac:local-id="6a15dfa6-2865-4b8e-a1fe-b73ef7bcbcd0" ac:macro-id="74fa4f34-1de5-4a91-a2fa-f1e1fb202d5d"><ac:parameter ac:name=""><ac:link><ri:page ri:content-title="Under Page A" ri:version-at-save="2" /></ac:link></ac:parameter></ac:structured-macro>]]></property>
+        <property name="content" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">655491073</id>
+        </property>
+        <property name="bodyType">2</property>
+    </object>
+</hibernate-generic>

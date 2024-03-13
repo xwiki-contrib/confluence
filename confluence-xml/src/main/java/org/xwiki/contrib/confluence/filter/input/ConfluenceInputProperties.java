@@ -31,6 +31,7 @@ import org.xwiki.contrib.confluence.filter.Mapping;
 import org.xwiki.contrib.confluence.filter.internal.idrange.ConfluenceIdRangeList;
 import org.xwiki.filter.DefaultFilterStreamProperties;
 import org.xwiki.filter.input.InputSource;
+import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.properties.annotation.PropertyDescription;
 import org.xwiki.properties.annotation.PropertyMandatory;
@@ -233,6 +234,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @see #getWorkingDirectory()
      */
     private String workingDirectory;
+
+    /**
+     * @see #getLinkMapping()
+     */
+    private Map<String, Map<String, EntityReference>> linkMapping = Collections.emptyMap();
 
     /**
      * @return The source to load the wiki from
@@ -1070,5 +1076,30 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setWorkingDirectory(String workingDirectory)
     {
         this.workingDirectory = workingDirectory;
+    }
+
+    /**
+     * @return the link mapping used to produce the correct links to pages not in the Confluence package.
+     * @since 9.40.0
+     */
+    @PropertyName("Link Mapping")
+    @PropertyDescription("The link mapping used to produce the correct links to pages missing from the"
+        +  "Confluence package. "
+        + "Format : {\"spaceKey1\": {\"page title 1\": \"Space.Doc1\"}, "
+        + "{\"page title 2\": \"Space1.Doc1\"}, \"spaceKey2\": {\"page title 3\": \"Space.Doc3\"}, "
+        + "{\"page title 4\": \"Space2.Doc4\"}}"
+    )
+    public Map<String, Map<String, EntityReference>> getLinkMapping()
+    {
+        return linkMapping;
+    }
+
+    /**
+     * @param linkMapping the link mapping used to produce the correct links to pages not in the Confluence package.
+     * @since 9.40.0
+     */
+    public void setLinkMapping(Map<String, Map<String, EntityReference>> linkMapping)
+    {
+        this.linkMapping = linkMapping;
     }
 }
