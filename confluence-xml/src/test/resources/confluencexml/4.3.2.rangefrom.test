@@ -500,34 +500,6 @@ Link to page 1 [[here>>doc:SPACE1.Page 1]]</string>
     </wikiObject>
   </wikiDocument>
   <wikiDocument name="WebHome">
-    <wikiObject name="XWiki.XWikiRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.Admin"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.Admin"/>
-    </wikiObject>
     <wikiDocumentLocale>
       <p>
         <parameters>
@@ -617,6 +589,34 @@ To help you on your way, we've inserted some of our favourite macros on this hom
             </entry>
           </parameters>
         </p>
+        <wikiObject name="XWiki.XWikiRights">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.XWikiRights</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="allow" value="1"/>
+          <wikiObjectProperty name="groups" value=""/>
+          <wikiObjectProperty name="levels" value="edit"/>
+          <wikiObjectProperty name="users" value="XWiki.Admin"/>
+        </wikiObject>
+        <wikiObject name="XWiki.XWikiRights">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.XWikiRights</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="allow" value="1"/>
+          <wikiObjectProperty name="groups" value=""/>
+          <wikiObjectProperty name="levels" value="view"/>
+          <wikiObjectProperty name="users" value="XWiki.Admin"/>
+        </wikiObject>
         <wikiObject name="XWiki.XWikiComments">
           <p>
             <parameters>

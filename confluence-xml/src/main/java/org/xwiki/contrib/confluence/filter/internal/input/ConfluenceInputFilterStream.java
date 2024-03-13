@@ -1165,10 +1165,6 @@ public class ConfluenceInputFilterStream
         proxyFilter.beginWikiDocument(documentName, documentParameters);
 
         try {
-            if (this.properties.isRightsEnabled()) {
-                sendPageRights(proxyFilter, pageProperties);
-            }
-
             if (this.properties.isContentsEnabled()) {
                 sendRevisions(blog, filter, proxyFilter, pageProperties, spaceKey);
             }
@@ -1371,6 +1367,10 @@ public class ConfluenceInputFilterStream
         prepareRevisionMetadata(pageProperties, docRevisionParameters);
 
         beginPageRevision(blog, pageProperties, filter, proxyFilter, revision, docRevisionParameters);
+
+        if (this.properties.isRightsEnabled()) {
+            sendPageRights(proxyFilter, pageProperties);
+        }
 
         Long pageId = pageProperties.getLong("id");
         try {
