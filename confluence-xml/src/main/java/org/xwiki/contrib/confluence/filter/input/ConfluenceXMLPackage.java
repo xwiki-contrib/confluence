@@ -1313,7 +1313,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
                     ConfluenceProperties formerHomePageProperties = getPageProperties(formerHome, false);
                     if (formerHomePageProperties != null) {
                         formerHomePageProperties.clearProperty(KEY_PAGE_HOMEPAGE);
-                        savePageProperties(formerHomePageProperties, formerHome);
+                        formerHomePageProperties.save();
                         orphans.computeIfAbsent(spaceId, k -> new ArrayList<>()).add(formerHome);
                     }
                 }

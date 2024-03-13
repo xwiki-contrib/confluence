@@ -1,0 +1,126 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.#------------------------------------------------------------------------------
+<wikiSpace name="MS">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.2c9586aa49d707400149d707e59233a4</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2012-09-25 11:33:29.490 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>14</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="14">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.2c9599c94d60dc1d014d6c98e38c0010</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-01-07 09:29:54.247 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>MySpace</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>The home page content</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+  <wikiSpace name="Not the home page title">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9586aa49d707400149d707e59233a4</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2014-09-11 19:49:20.933 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>2</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="2">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9586aa49d707400149d707e59233a4</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2014-09-11 19:49:21.933 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string>Migrated to Confluence 5.3</string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Not the home page title</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Not the home page content</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=homepagerewrite
+.configuration.nestedSpacesEnabled=true
+.#------------------------------------------------------------------------------
