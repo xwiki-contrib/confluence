@@ -2,96 +2,6 @@
 .expect|filter+xml
 .#------------------------------------------------------------------------------
 <wikiSpace name="PRIV">
-  <wikiDocument name="WebPreferences">
-    <p>
-      <parameters>
-        <entry>
-          <string>hidden</string>
-          <boolean>true</boolean>
-        </entry>
-      </parameters>
-    </p>
-    <wikiObject name="XWiki.XWikiPreferences">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiPreferences</string>
-          </entry>
-        </parameters>
-      </p>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.Admin"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="comment"/>
-      <wikiObjectProperty name="users" value="XWiki.Admin"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.Admin"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.Admin"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.Admin"/>
-    </wikiObject>
-  </wikiDocument>
   <wikiDocument name="Private page 1">
     <wikiDocumentLocale>
       <p>
@@ -298,6 +208,96 @@ To help you on your way, we've inserted some of our favourite macros on this hom
         </wikiObject>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
+  </wikiDocument>
+  <wikiDocument name="WebPreferences">
+    <p>
+      <parameters>
+        <entry>
+          <string>hidden</string>
+          <boolean>true</boolean>
+        </entry>
+      </parameters>
+    </p>
+    <wikiObject name="XWiki.XWikiPreferences">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiPreferences</string>
+          </entry>
+        </parameters>
+      </p>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.Admin"/>
+    </wikiObject>
   </wikiDocument>
 </wikiSpace>
 <wikiSpace name="SPACE2">

@@ -5,6 +5,192 @@
 .# Test that Blog post is created
 .#------------------------------------------------------------------------------
 <wikiSpace name="SpaceA">
+  <wikiDocument name="SpaceA Home">
+    <p>
+      <parameters>
+        <entry>
+          <string>hidden</string>
+          <boolean>true</boolean>
+        </entry>
+      </parameters>
+    </p>
+    <wikiObject name="XWiki.RedirectClass">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.RedirectClass</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="location">
+        <p>
+          <value t="org.xwiki.model.reference.EntityReference">
+            <name>WebHome</name>
+            <parent>
+              <name>SpaceA</name>
+              <type>SPACE</type>
+            </parent>
+            <type>DOCUMENT</type>
+          </value>
+        </p>
+      </wikiObjectProperty>
+    </wikiObject>
+  </wikiDocument>
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.testuser@mail_com</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2023-09-27 17:02:26.883 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>1</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.testuser@mail_com</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2023-09-27 17:02:26.883 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>SpaceA</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>Hello !</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+  <wikiSpace name="Blog">
+    <wikiDocument name="WebHome">
+      <wikiObject name="Blog.BlogClass">
+        <p>
+          <parameters>
+            <entry>
+              <string>class_reference</string>
+              <string>Blog.BlogClass</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObjectProperty name="title" value="Blog"/>
+        <wikiObjectProperty name="postsLayout" value="image"/>
+        <wikiObjectProperty name="displayType" value="paginated"/>
+      </wikiObject>
+    </wikiDocument>
+    <wikiDocument name="Blog post">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.testuser@mail_com</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-09-27 17:02:59.448 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>1</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="1">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.testuser@mail_com</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-09-27 17:02:59.635 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Blog post</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="Blog.BlogPostClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>Blog.BlogPostClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="title" value="Blog post"/>
+            <wikiObjectProperty name="content" value="Content of the blog post"/>
+            <wikiObjectProperty name="publishDate">
+              <p>
+                <value t="java.util.Date">2023-09-27 17:02:59.635 UTC</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="published">
+              <p>
+                <value t="java.lang.Integer">1</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="hidden">
+              <p>
+                <value t="java.lang.Integer">0</value>
+              </p>
+            </wikiObjectProperty>
+          </wikiObject>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
   <wikiDocument name="WebPreferences">
     <p>
       <parameters>
@@ -487,192 +673,6 @@
       <wikiObjectProperty name="users" value="XWiki.34169017-dfe4-41cb-a8ae-6c3644475fb8@connect_atlassian_com"/>
     </wikiObject>
   </wikiDocument>
-  <wikiDocument name="SpaceA Home">
-    <p>
-      <parameters>
-        <entry>
-          <string>hidden</string>
-          <boolean>true</boolean>
-        </entry>
-      </parameters>
-    </p>
-    <wikiObject name="XWiki.RedirectClass">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.RedirectClass</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="location">
-        <p>
-          <value t="org.xwiki.model.reference.EntityReference">
-            <name>WebHome</name>
-            <parent>
-              <name>SpaceA</name>
-              <type>SPACE</type>
-            </parent>
-            <type>DOCUMENT</type>
-          </value>
-        </p>
-      </wikiObjectProperty>
-    </wikiObject>
-  </wikiDocument>
-  <wikiDocument name="WebHome">
-    <wikiDocumentLocale>
-      <p>
-        <parameters>
-          <entry>
-            <string>creation_author</string>
-            <string>XWiki.testuser@mail_com</string>
-          </entry>
-          <entry>
-            <string>creation_date</string>
-            <date>2023-09-27 17:02:26.883 UTC</date>
-          </entry>
-          <entry>
-            <string>lastrevision</string>
-            <string>1</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiDocumentRevision revision="1">
-        <p>
-          <parameters>
-            <entry>
-              <string>revision_author</string>
-              <string>XWiki.testuser@mail_com</string>
-            </entry>
-            <entry>
-              <string>revision_date</string>
-              <date>2023-09-27 17:02:26.883 UTC</date>
-            </entry>
-            <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>title</string>
-              <string>SpaceA</string>
-            </entry>
-            <entry>
-              <string>content</string>
-              <string>Hello !</string>
-            </entry>
-            <entry>
-              <string>syntax</string>
-              <org.xwiki.rendering.syntax.Syntax>
-                <type>
-                  <name>XWiki</name>
-                  <id>xwiki</id>
-                  <variants class="empty-list"/>
-                </type>
-                <version>2.1</version>
-              </org.xwiki.rendering.syntax.Syntax>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
-  <wikiSpace name="Blog">
-    <wikiDocument name="WebHome">
-      <wikiObject name="Blog.BlogClass">
-        <p>
-          <parameters>
-            <entry>
-              <string>class_reference</string>
-              <string>Blog.BlogClass</string>
-            </entry>
-          </parameters>
-        </p>
-        <wikiObjectProperty name="title" value="Blog"/>
-        <wikiObjectProperty name="postsLayout" value="image"/>
-        <wikiObjectProperty name="displayType" value="paginated"/>
-      </wikiObject>
-    </wikiDocument>
-    <wikiDocument name="Blog post">
-      <wikiDocumentLocale>
-        <p>
-          <parameters>
-            <entry>
-              <string>creation_author</string>
-              <string>XWiki.testuser@mail_com</string>
-            </entry>
-            <entry>
-              <string>creation_date</string>
-              <date>2023-09-27 17:02:59.448 UTC</date>
-            </entry>
-            <entry>
-              <string>lastrevision</string>
-              <string>1</string>
-            </entry>
-          </parameters>
-        </p>
-        <wikiDocumentRevision revision="1">
-          <p>
-            <parameters>
-              <entry>
-                <string>revision_author</string>
-                <string>XWiki.testuser@mail_com</string>
-              </entry>
-              <entry>
-                <string>revision_date</string>
-                <date>2023-09-27 17:02:59.635 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>title</string>
-                <string>Blog post</string>
-              </entry>
-              <entry>
-                <string>syntax</string>
-                <org.xwiki.rendering.syntax.Syntax>
-                  <type>
-                    <name>XWiki</name>
-                    <id>xwiki</id>
-                    <variants class="empty-list"/>
-                  </type>
-                  <version>2.1</version>
-                </org.xwiki.rendering.syntax.Syntax>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObject name="Blog.BlogPostClass">
-            <p>
-              <parameters>
-                <entry>
-                  <string>class_reference</string>
-                  <string>Blog.BlogPostClass</string>
-                </entry>
-              </parameters>
-            </p>
-            <wikiObjectProperty name="title" value="Blog post"/>
-            <wikiObjectProperty name="content" value="Content of the blog post"/>
-            <wikiObjectProperty name="publishDate">
-              <p>
-                <value t="java.util.Date">2023-09-27 17:02:59.635 UTC</value>
-              </p>
-            </wikiObjectProperty>
-            <wikiObjectProperty name="published">
-              <p>
-                <value t="java.lang.Integer">1</value>
-              </p>
-            </wikiObjectProperty>
-            <wikiObjectProperty name="hidden">
-              <p>
-                <value t="java.lang.Integer">0</value>
-              </p>
-            </wikiObjectProperty>
-          </wikiObject>
-        </wikiDocumentRevision>
-      </wikiDocumentLocale>
-    </wikiDocument>
-  </wikiSpace>
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
