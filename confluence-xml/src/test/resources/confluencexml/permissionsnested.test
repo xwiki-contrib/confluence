@@ -3830,423 +3830,6 @@
       <wikiObjectProperty name="users" value="XWiki.XWikiGuest"/>
     </wikiObject>
   </wikiDocument>
-  <wikiDocument name="Nice Web">
-    <wikiDocumentLocale>
-      <p>
-        <parameters>
-          <entry>
-            <string>creation_author</string>
-            <string>XWiki.01251587</string>
-          </entry>
-          <entry>
-            <string>creation_date</string>
-            <date>2015-01-14 10:19:54.0 UTC</date>
-          </entry>
-          <entry>
-            <string>lastrevision</string>
-            <string>2</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiDocumentRevision revision="2">
-        <p>
-          <parameters>
-            <entry>
-              <string>parent_reference</string>
-              <org.xwiki.model.reference.EntityReference>
-                <name>Archive</name>
-                <type>DOCUMENT</type>
-              </org.xwiki.model.reference.EntityReference>
-            </entry>
-            <entry>
-              <string>revision_author</string>
-              <string>XWiki.01251587</string>
-            </entry>
-            <entry>
-              <string>revision_date</string>
-              <date>2015-09-21 16:28:55.0 UTC</date>
-            </entry>
-            <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>title</string>
-              <string>Nice Web</string>
-            </entry>
-          </parameters>
-        </p>
-        <wikiObject name="XWiki.XWikiRights">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.XWikiRights</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="allow" value="1"/>
-          <wikiObjectProperty name="groups" value="XWiki.Great_Web"/>
-          <wikiObjectProperty name="levels" value="view"/>
-          <wikiObjectProperty name="users" value=""/>
-        </wikiObject>
-        <wikiObject name="XWiki.XWikiRights">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.XWikiRights</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="allow" value="1"/>
-          <wikiObjectProperty name="groups" value="XWiki.Great_ALL"/>
-          <wikiObjectProperty name="levels" value="view"/>
-          <wikiObjectProperty name="users" value=""/>
-        </wikiObject>
-        <wikiObject name="XWiki.XWikiRights">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.XWikiRights</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="allow" value="1"/>
-          <wikiObjectProperty name="groups" value="XWiki.Super_Team"/>
-          <wikiObjectProperty name="levels" value="view"/>
-          <wikiObjectProperty name="users" value=""/>
-        </wikiObject>
-        <wikiObject name="XWiki.XWikiRights">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.XWikiRights</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="allow" value="1"/>
-          <wikiObjectProperty name="groups" value=""/>
-          <wikiObjectProperty name="levels" value="view"/>
-          <wikiObjectProperty name="users" value="XWiki.00019356"/>
-        </wikiObject>
-        <wikiObject name="XWiki.XWikiRights">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.XWikiRights</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="allow" value="1"/>
-          <wikiObjectProperty name="groups" value=""/>
-          <wikiObjectProperty name="levels" value="view"/>
-          <wikiObjectProperty name="users" value="XWiki.00020695"/>
-        </wikiObject>
-        <wikiObject name="XWiki.XWikiRights">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.XWikiRights</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="allow" value="1"/>
-          <wikiObjectProperty name="groups" value=""/>
-          <wikiObjectProperty name="levels" value="view"/>
-          <wikiObjectProperty name="users" value="XWiki.01251587"/>
-        </wikiObject>
-        <wikiObject name="XWiki.XWikiRights">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.XWikiRights</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="allow" value="1"/>
-          <wikiObjectProperty name="groups" value=""/>
-          <wikiObjectProperty name="levels" value="view"/>
-          <wikiObjectProperty name="users" value="XWiki.01463994"/>
-        </wikiObject>
-        <wikiObject name="XWiki.XWikiRights">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.XWikiRights</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="allow" value="1"/>
-          <wikiObjectProperty name="groups" value=""/>
-          <wikiObjectProperty name="levels" value="view"/>
-          <wikiObjectProperty name="users" value="XWiki.24405073"/>
-        </wikiObject>
-        <wikiObject name="XWiki.XWikiRights">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.XWikiRights</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="allow" value="1"/>
-          <wikiObjectProperty name="groups" value=""/>
-          <wikiObjectProperty name="levels" value="view"/>
-          <wikiObjectProperty name="users" value="XWiki.31299168"/>
-        </wikiObject>
-        <wikiObject name="XWiki.XWikiRights">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.XWikiRights</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="allow" value="1"/>
-          <wikiObjectProperty name="groups" value=""/>
-          <wikiObjectProperty name="levels" value="view"/>
-          <wikiObjectProperty name="users" value="XWiki.41224551"/>
-        </wikiObject>
-        <wikiObject name="XWiki.XWikiRights">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.XWikiRights</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="allow" value="1"/>
-          <wikiObjectProperty name="groups" value=""/>
-          <wikiObjectProperty name="levels" value="view"/>
-          <wikiObjectProperty name="users" value="XWiki.45685345"/>
-        </wikiObject>
-        <wikiObject name="XWiki.XWikiRights">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.XWikiRights</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="allow" value="1"/>
-          <wikiObjectProperty name="groups" value=""/>
-          <wikiObjectProperty name="levels" value="view"/>
-          <wikiObjectProperty name="users" value="XWiki.46758721"/>
-        </wikiObject>
-        <wikiObject name="XWiki.XWikiRights">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.XWikiRights</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="allow" value="1"/>
-          <wikiObjectProperty name="groups" value=""/>
-          <wikiObjectProperty name="levels" value="view"/>
-          <wikiObjectProperty name="users" value="XWiki.46759696"/>
-        </wikiObject>
-        <wikiObject name="XWiki.XWikiRights">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.XWikiRights</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="allow" value="1"/>
-          <wikiObjectProperty name="groups" value=""/>
-          <wikiObjectProperty name="levels" value="view"/>
-          <wikiObjectProperty name="users" value="XWiki.46764636"/>
-        </wikiObject>
-        <wikiObject name="XWiki.XWikiRights">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.XWikiRights</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="allow" value="1"/>
-          <wikiObjectProperty name="groups" value=""/>
-          <wikiObjectProperty name="levels" value="view"/>
-          <wikiObjectProperty name="users" value="XWiki.46779482"/>
-        </wikiObject>
-        <wikiObject name="XWiki.XWikiRights">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.XWikiRights</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="allow" value="1"/>
-          <wikiObjectProperty name="groups" value=""/>
-          <wikiObjectProperty name="levels" value="view"/>
-          <wikiObjectProperty name="users" value="XWiki.46857243"/>
-        </wikiObject>
-        <wikiObject name="XWiki.XWikiRights">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.XWikiRights</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="allow" value="1"/>
-          <wikiObjectProperty name="groups" value=""/>
-          <wikiObjectProperty name="levels" value="view"/>
-          <wikiObjectProperty name="users" value="XWiki.SPN02514"/>
-        </wikiObject>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
-  <wikiDocument name="Archive">
-    <wikiDocumentLocale>
-      <p>
-        <parameters>
-          <entry>
-            <string>creation_author</string>
-            <string>XWiki.01251587</string>
-          </entry>
-          <entry>
-            <string>creation_date</string>
-            <date>2015-02-17 10:46:25.0 UTC</date>
-          </entry>
-          <entry>
-            <string>lastrevision</string>
-            <string>2</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiDocumentRevision revision="2">
-        <p>
-          <parameters>
-            <entry>
-              <string>parent_reference</string>
-              <org.xwiki.model.reference.EntityReference>
-                <name>The Nice Web Team</name>
-                <type>DOCUMENT</type>
-              </org.xwiki.model.reference.EntityReference>
-            </entry>
-            <entry>
-              <string>revision_author</string>
-              <string>XWiki.01251587</string>
-            </entry>
-            <entry>
-              <string>revision_date</string>
-              <date>2023-01-26 09:38:54.0 UTC</date>
-            </entry>
-            <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>title</string>
-              <string>Archive</string>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
-  <wikiDocument name="The Nice Web Team">
-    <wikiDocumentLocale>
-      <p>
-        <parameters>
-          <entry>
-            <string>creation_author</string>
-            <string>XWiki.01251587</string>
-          </entry>
-          <entry>
-            <string>creation_date</string>
-            <date>2008-04-29 09:52:10.0 UTC</date>
-          </entry>
-          <entry>
-            <string>lastrevision</string>
-            <string>21</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiDocumentRevision revision="21">
-        <p>
-          <parameters>
-            <entry>
-              <string>parent_reference</string>
-              <org.xwiki.model.reference.EntityReference>
-                <name>Teams</name>
-                <type>DOCUMENT</type>
-              </org.xwiki.model.reference.EntityReference>
-            </entry>
-            <entry>
-              <string>revision_author</string>
-              <string>XWiki.01251587</string>
-            </entry>
-            <entry>
-              <string>revision_date</string>
-              <date>2023-01-26 09:33:59.0 UTC</date>
-            </entry>
-            <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>title</string>
-              <string>The Nice Web Team</string>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
-  <wikiDocument name="Office of Great Things">
-    <p>
-      <parameters>
-        <entry>
-          <string>hidden</string>
-          <boolean>true</boolean>
-        </entry>
-      </parameters>
-    </p>
-    <wikiObject name="XWiki.RedirectClass">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.RedirectClass</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="location">
-        <p>
-          <value t="org.xwiki.model.reference.EntityReference">
-            <name>WebHome</name>
-            <parent>
-              <name>Great</name>
-              <type>SPACE</type>
-            </parent>
-            <type>DOCUMENT</type>
-          </value>
-        </p>
-      </wikiObjectProperty>
-    </wikiObject>
-  </wikiDocument>
   <wikiDocument name="WebHome">
     <wikiDocumentLocale>
       <p>
@@ -4289,58 +3872,425 @@
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
-  <wikiDocument name="Teams">
-    <wikiDocumentLocale>
-      <p>
-        <parameters>
-          <entry>
-            <string>creation_author</string>
-            <string>XWiki.01251587</string>
-          </entry>
-          <entry>
-            <string>creation_date</string>
-            <date>2008-04-29 09:51:48.0 UTC</date>
-          </entry>
-          <entry>
-            <string>lastrevision</string>
-            <string>4</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiDocumentRevision revision="4">
+  <wikiSpace name="Teams">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
         <p>
           <parameters>
             <entry>
-              <string>parent_reference</string>
-              <org.xwiki.model.reference.EntityReference>
-                <name>WebHome</name>
-                <type>DOCUMENT</type>
-              </org.xwiki.model.reference.EntityReference>
-            </entry>
-            <entry>
-              <string>revision_author</string>
+              <string>creation_author</string>
               <string>XWiki.01251587</string>
             </entry>
             <entry>
-              <string>revision_date</string>
-              <date>2008-08-13 10:56:27.0 UTC</date>
+              <string>creation_date</string>
+              <date>2008-04-29 09:51:48.0 UTC</date>
             </entry>
             <entry>
-              <string>revision_comment</string>
-              <string>Migrated to Confluence 5.3</string>
-            </entry>
-            <entry>
-              <string>title</string>
-              <string>Teams</string>
+              <string>lastrevision</string>
+              <string>4</string>
             </entry>
           </parameters>
         </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
+        <wikiDocumentRevision revision="4">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.01251587</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2008-08-13 10:56:27.0 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string>Migrated to Confluence 5.3</string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Teams</string>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+    <wikiSpace name="The Nice Web Team">
+      <wikiDocument name="WebHome">
+        <wikiDocumentLocale>
+          <p>
+            <parameters>
+              <entry>
+                <string>creation_author</string>
+                <string>XWiki.01251587</string>
+              </entry>
+              <entry>
+                <string>creation_date</string>
+                <date>2008-04-29 09:52:10.0 UTC</date>
+              </entry>
+              <entry>
+                <string>lastrevision</string>
+                <string>21</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiDocumentRevision revision="21">
+            <p>
+              <parameters>
+                <entry>
+                  <string>revision_author</string>
+                  <string>XWiki.01251587</string>
+                </entry>
+                <entry>
+                  <string>revision_date</string>
+                  <date>2023-01-26 09:33:59.0 UTC</date>
+                </entry>
+                <entry>
+                  <string>revision_comment</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>title</string>
+                  <string>The Nice Web Team</string>
+                </entry>
+              </parameters>
+            </p>
+          </wikiDocumentRevision>
+        </wikiDocumentLocale>
+      </wikiDocument>
+      <wikiSpace name="Archive">
+        <wikiDocument name="WebHome">
+          <wikiDocumentLocale>
+            <p>
+              <parameters>
+                <entry>
+                  <string>creation_author</string>
+                  <string>XWiki.01251587</string>
+                </entry>
+                <entry>
+                  <string>creation_date</string>
+                  <date>2015-02-17 10:46:25.0 UTC</date>
+                </entry>
+                <entry>
+                  <string>lastrevision</string>
+                  <string>2</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiDocumentRevision revision="2">
+              <p>
+                <parameters>
+                  <entry>
+                    <string>revision_author</string>
+                    <string>XWiki.01251587</string>
+                  </entry>
+                  <entry>
+                    <string>revision_date</string>
+                    <date>2023-01-26 09:38:54.0 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision_comment</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>title</string>
+                    <string>Archive</string>
+                  </entry>
+                </parameters>
+              </p>
+            </wikiDocumentRevision>
+          </wikiDocumentLocale>
+        </wikiDocument>
+        <wikiSpace name="Nice Web">
+          <wikiDocument name="WebHome">
+            <wikiDocumentLocale>
+              <p>
+                <parameters>
+                  <entry>
+                    <string>creation_author</string>
+                    <string>XWiki.01251587</string>
+                  </entry>
+                  <entry>
+                    <string>creation_date</string>
+                    <date>2015-01-14 10:19:54.0 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>lastrevision</string>
+                    <string>2</string>
+                  </entry>
+                </parameters>
+              </p>
+              <wikiDocumentRevision revision="2">
+                <p>
+                  <parameters>
+                    <entry>
+                      <string>revision_author</string>
+                      <string>XWiki.01251587</string>
+                    </entry>
+                    <entry>
+                      <string>revision_date</string>
+                      <date>2015-09-21 16:28:55.0 UTC</date>
+                    </entry>
+                    <entry>
+                      <string>revision_comment</string>
+                      <string></string>
+                    </entry>
+                    <entry>
+                      <string>title</string>
+                      <string>Nice Web</string>
+                    </entry>
+                  </parameters>
+                </p>
+                <wikiObject name="XWiki.XWikiRights">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>XWiki.XWikiRights</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="allow" value="1"/>
+                  <wikiObjectProperty name="groups" value="XWiki.Great_Web"/>
+                  <wikiObjectProperty name="levels" value="view"/>
+                  <wikiObjectProperty name="users" value=""/>
+                </wikiObject>
+                <wikiObject name="XWiki.XWikiRights">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>XWiki.XWikiRights</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="allow" value="1"/>
+                  <wikiObjectProperty name="groups" value="XWiki.Great_ALL"/>
+                  <wikiObjectProperty name="levels" value="view"/>
+                  <wikiObjectProperty name="users" value=""/>
+                </wikiObject>
+                <wikiObject name="XWiki.XWikiRights">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>XWiki.XWikiRights</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="allow" value="1"/>
+                  <wikiObjectProperty name="groups" value="XWiki.Super_Team"/>
+                  <wikiObjectProperty name="levels" value="view"/>
+                  <wikiObjectProperty name="users" value=""/>
+                </wikiObject>
+                <wikiObject name="XWiki.XWikiRights">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>XWiki.XWikiRights</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="allow" value="1"/>
+                  <wikiObjectProperty name="groups" value=""/>
+                  <wikiObjectProperty name="levels" value="view"/>
+                  <wikiObjectProperty name="users" value="XWiki.00019356"/>
+                </wikiObject>
+                <wikiObject name="XWiki.XWikiRights">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>XWiki.XWikiRights</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="allow" value="1"/>
+                  <wikiObjectProperty name="groups" value=""/>
+                  <wikiObjectProperty name="levels" value="view"/>
+                  <wikiObjectProperty name="users" value="XWiki.00020695"/>
+                </wikiObject>
+                <wikiObject name="XWiki.XWikiRights">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>XWiki.XWikiRights</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="allow" value="1"/>
+                  <wikiObjectProperty name="groups" value=""/>
+                  <wikiObjectProperty name="levels" value="view"/>
+                  <wikiObjectProperty name="users" value="XWiki.01251587"/>
+                </wikiObject>
+                <wikiObject name="XWiki.XWikiRights">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>XWiki.XWikiRights</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="allow" value="1"/>
+                  <wikiObjectProperty name="groups" value=""/>
+                  <wikiObjectProperty name="levels" value="view"/>
+                  <wikiObjectProperty name="users" value="XWiki.01463994"/>
+                </wikiObject>
+                <wikiObject name="XWiki.XWikiRights">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>XWiki.XWikiRights</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="allow" value="1"/>
+                  <wikiObjectProperty name="groups" value=""/>
+                  <wikiObjectProperty name="levels" value="view"/>
+                  <wikiObjectProperty name="users" value="XWiki.24405073"/>
+                </wikiObject>
+                <wikiObject name="XWiki.XWikiRights">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>XWiki.XWikiRights</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="allow" value="1"/>
+                  <wikiObjectProperty name="groups" value=""/>
+                  <wikiObjectProperty name="levels" value="view"/>
+                  <wikiObjectProperty name="users" value="XWiki.31299168"/>
+                </wikiObject>
+                <wikiObject name="XWiki.XWikiRights">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>XWiki.XWikiRights</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="allow" value="1"/>
+                  <wikiObjectProperty name="groups" value=""/>
+                  <wikiObjectProperty name="levels" value="view"/>
+                  <wikiObjectProperty name="users" value="XWiki.41224551"/>
+                </wikiObject>
+                <wikiObject name="XWiki.XWikiRights">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>XWiki.XWikiRights</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="allow" value="1"/>
+                  <wikiObjectProperty name="groups" value=""/>
+                  <wikiObjectProperty name="levels" value="view"/>
+                  <wikiObjectProperty name="users" value="XWiki.45685345"/>
+                </wikiObject>
+                <wikiObject name="XWiki.XWikiRights">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>XWiki.XWikiRights</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="allow" value="1"/>
+                  <wikiObjectProperty name="groups" value=""/>
+                  <wikiObjectProperty name="levels" value="view"/>
+                  <wikiObjectProperty name="users" value="XWiki.46758721"/>
+                </wikiObject>
+                <wikiObject name="XWiki.XWikiRights">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>XWiki.XWikiRights</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="allow" value="1"/>
+                  <wikiObjectProperty name="groups" value=""/>
+                  <wikiObjectProperty name="levels" value="view"/>
+                  <wikiObjectProperty name="users" value="XWiki.46759696"/>
+                </wikiObject>
+                <wikiObject name="XWiki.XWikiRights">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>XWiki.XWikiRights</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="allow" value="1"/>
+                  <wikiObjectProperty name="groups" value=""/>
+                  <wikiObjectProperty name="levels" value="view"/>
+                  <wikiObjectProperty name="users" value="XWiki.46764636"/>
+                </wikiObject>
+                <wikiObject name="XWiki.XWikiRights">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>XWiki.XWikiRights</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="allow" value="1"/>
+                  <wikiObjectProperty name="groups" value=""/>
+                  <wikiObjectProperty name="levels" value="view"/>
+                  <wikiObjectProperty name="users" value="XWiki.46779482"/>
+                </wikiObject>
+                <wikiObject name="XWiki.XWikiRights">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>XWiki.XWikiRights</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="allow" value="1"/>
+                  <wikiObjectProperty name="groups" value=""/>
+                  <wikiObjectProperty name="levels" value="view"/>
+                  <wikiObjectProperty name="users" value="XWiki.46857243"/>
+                </wikiObject>
+                <wikiObject name="XWiki.XWikiRights">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>XWiki.XWikiRights</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="allow" value="1"/>
+                  <wikiObjectProperty name="groups" value=""/>
+                  <wikiObjectProperty name="levels" value="view"/>
+                  <wikiObjectProperty name="users" value="XWiki.SPN02514"/>
+                </wikiObject>
+              </wikiDocumentRevision>
+            </wikiDocumentLocale>
+          </wikiDocument>
+        </wikiSpace>
+      </wikiSpace>
+    </wikiSpace>
+  </wikiSpace>
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=permissions
+.configuration.nestedSpacesEnabled=true
 .configuration.contentsEnabled=false
+.configuration.historyEnabled=false
 .#------------------------------------------------------------------------------

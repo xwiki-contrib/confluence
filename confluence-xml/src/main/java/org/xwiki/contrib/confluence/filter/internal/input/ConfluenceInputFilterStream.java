@@ -443,7 +443,7 @@ public class ConfluenceInputFilterStream
                 sendSpaceRights(proxyFilter, spaceProperties, spaceKey, spaceId);
             }
 
-            if (this.properties.isContentsEnabled()) {
+            if (this.properties.isContentsEnabled() || this.properties.isRightsEnabled()) {
                 if (this.properties.isNestedSpacesEnabled()) {
                     Long homePageId = confluencePackage.getHomePage(spaceId);
                     if (homePageId != null) {
@@ -1165,7 +1165,7 @@ public class ConfluenceInputFilterStream
         proxyFilter.beginWikiDocument(documentName, documentParameters);
 
         try {
-            if (this.properties.isContentsEnabled()) {
+            if (this.properties.isContentsEnabled() || this.properties.isRightsEnabled()) {
                 sendRevisions(blog, filter, proxyFilter, pageProperties, spaceKey);
             }
         } finally {
@@ -1389,7 +1389,7 @@ public class ConfluenceInputFilterStream
         throws FilterException
     {
         String bodyContent = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_BODY, null);
-        if (bodyContent != null) {
+        if (bodyContent != null && this.properties.isContentsEnabled()) {
             // No bodyType means old Confluence syntax
             int bodyType = pageProperties.getInt(ConfluenceXMLPackage.KEY_PAGE_BODY_TYPE, 0);
 
