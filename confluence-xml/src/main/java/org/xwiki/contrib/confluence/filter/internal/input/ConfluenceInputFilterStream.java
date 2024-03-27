@@ -1189,7 +1189,8 @@ public class ConfluenceInputFilterStream
 
         String spaceName = isNestedEnabled ? confluenceConverter.toEntityName(title) : "";
 
-        if (isNestedEnabled) {
+        boolean nested = isNestedEnabled && !blog;
+        if (nested) {
             if (!isHomePage) {
                 proxyFilter.beginWikiSpace(spaceName, FilterEventParameters.EMPTY);
             }
@@ -1208,11 +1209,11 @@ public class ConfluenceInputFilterStream
                 homePageInheritedRights = inheritedRights;
             }
 
-            if (isNestedEnabled) {
+            if (nested) {
                 sendPages(spaceKey, blog, confluencePackage.getPageChildren(pageId), filter, proxyFilter);
             }
         } finally {
-            if (isNestedEnabled && !isHomePage) {
+            if (nested && !isHomePage) {
                 proxyFilter.endWikiSpace(spaceName, FilterEventParameters.EMPTY);
             }
         }

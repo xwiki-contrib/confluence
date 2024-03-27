@@ -5,38 +5,6 @@
 .# Test that Blog post is created
 .#------------------------------------------------------------------------------
 <wikiSpace name="SpaceA">
-  <wikiDocument name="SpaceA Home">
-    <p>
-      <parameters>
-        <entry>
-          <string>hidden</string>
-          <boolean>true</boolean>
-        </entry>
-      </parameters>
-    </p>
-    <wikiObject name="XWiki.RedirectClass">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.RedirectClass</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="location">
-        <p>
-          <value t="org.xwiki.model.reference.EntityReference">
-            <name>WebHome</name>
-            <parent>
-              <name>SpaceA</name>
-              <type>SPACE</type>
-            </parent>
-            <type>DOCUMENT</type>
-          </value>
-        </p>
-      </wikiObjectProperty>
-    </wikiObject>
-  </wikiDocument>
   <wikiDocument name="WebHome">
     <wikiDocumentLocale>
       <p>
@@ -677,4 +645,5 @@
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=blogs
+.configuration.nestedSpacesEnabled=true
 .#------------------------------------------------------------------------------
