@@ -152,6 +152,14 @@ class DefaultLinkMapperTest
         smallNested.put("Under Page B", docRef("xwiki:Root.SmallNested.Page B.Under Page B.WebHome"));
         smallNested.put("Under Page A", docRef("xwiki:Root.SmallNested.Page A.Under Page A.WebHome"));
 
+        Map<String, EntityReference> smallNestedIds = new LinkedHashMap<>(5);
+        expected.put("SmallNested:ids", smallNestedIds);
+        smallNestedIds.put("655097973", docRef("xwiki:Root.SmallNested.WebHome"));
+        smallNestedIds.put("654934018", docRef("xwiki:Root.SmallNested.Page A.WebHome"));
+        smallNestedIds.put("655392769", docRef("xwiki:Root.SmallNested.Page B.WebHome"));
+        smallNestedIds.put("655491073", docRef("xwiki:Root.SmallNested.Page B.Under Page B.WebHome"));
+        smallNestedIds.put("655360001", docRef("xwiki:Root.SmallNested.Page A.Under Page A.WebHome"));
+
         Assertions.assertEquals(expected, actual);
     }
 
@@ -166,6 +174,10 @@ class DefaultLinkMapperTest
         expected.put("SpaceA", blogs);
         blogs.put("SpaceA Home", docRef("xwiki:Root.SpaceA.WebHome"));
         blogs.put("Blog post", docRef("xwiki:Root.SpaceA.Blog post.WebHome"));
+        Map<String, EntityReference> blogsIds = new LinkedHashMap<>(2);
+        expected.put("SpaceA:ids", blogsIds);
+        blogsIds.put("2616328494", docRef("xwiki:Root.SpaceA.WebHome"));
+        blogsIds.put("2616164357", docRef("xwiki:Root.SpaceA.Blog post.WebHome"));
 
         Assertions.assertEquals(expected, actual);
     }
@@ -183,9 +195,18 @@ class DefaultLinkMapperTest
         spaceA.put("Page0", docRef("xwiki:Root.SpaceA.Page0.WebHome"));
         spaceA.put("Page1", docRef("xwiki:Root.SpaceA.Page1.WebHome"));
 
+        Map<String, EntityReference> spaceAIds = new LinkedHashMap<>(2);
+        expected.put("SpaceA:ids", spaceAIds);
+        spaceAIds.put("0", docRef("xwiki:Root.SpaceA.Page0.WebHome"));
+        spaceAIds.put("1", docRef("xwiki:Root.SpaceA.Page1.WebHome"));
+
         Map<String, EntityReference> spaceB = new LinkedHashMap<>(1);
         expected.put("SpaceB", spaceB);
         spaceB.put("Page10", docRef("xwiki:Root.SpaceB.Page10.WebHome"));
+
+        Map<String, EntityReference> spaceBIds = new LinkedHashMap<>(1);
+        expected.put("SpaceB:ids", spaceBIds);
+        spaceBIds.put("10", docRef("xwiki:Root.SpaceB.Page10.WebHome"));
 
         Assertions.assertEquals(expected, actual);
     }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic datetime="2023-10-02 11:40:11">
+    <object class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+        <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+        <property name="name"><![CDATA[47826731]]></property>
+        <property name="lowerName"><![CDATA[47826731]]></property>
+        <property name="email"/>
+    </object>
+    <object class="Space" package="com.atlassian.confluence.spaces">
+        <id name="id">46268417</id>
+        <property name="name"><![CDATA[My Space]]></property>
+        <property name="key"><![CDATA[MySpace]]></property>
+        <property name="lowerKey"><![CDATA[myspace]]></property>
+        <property name="homePage" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">45809846</id>
+        </property>
+        <collection name="permissions" class="java.util.Collection"/>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+        </property>
+        <property name="creationDate">2012-08-21 15:37:47.000</property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+        </property>
+        <property name="lastModificationDate">2016-10-11 14:47:37.000</property>
+        <property name="spaceType">global</property>
+        <property name="spaceStatus" enum-class="SpaceStatus" package="com.atlassian.confluence.spaces">CURRENT</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">156868656</id>
+        <property name="body"><![CDATA[<p><a href="http://my.wiki.invalid/wiki/display/TEST/Deal+Portal">Deal Portal - Test - My Wiki</a></p><p>&nbsp;</p><p><a href="http://my.wiki.invalid/wiki/pages/viewpage.action?pageId=18384226">Maintenance Window (Post Checks) - Test - My Wiki</a></p><p>&nbsp;</p><p><a href="http://my.wiki.invalid/wiki/display/TEST/Archivist+-+Installation+manual">Archivist - Installation manual - Test - My Wiki</a></p><p>&nbsp;</p><p>&nbsp;</p><p><a href="http://my.wiki.invalid/wiki/display/ABDoc/Maciej_test">Maciej_test - z_Sandbox Admin Testing - My Wiki</a></p><p>&nbsp;</p><p><a href="http://my.wiki.invalid/wiki/pages/viewpage.action?pageId=134979879">Data+Privacy+&amp;+Data+Protection - z_Sandbox Admin Testing - My Wiki</a></p><p>&nbsp;</p><p><a href="http://my.wiki.invalid/wiki/download/attachments/11045169/MyFile.pdf?api=v2">http://my.wiki.invalid/wiki/download/attachments/11045169/MyFile.pdf?api=v2</a></p>]]></property>
+        <property name="content" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">45809846</id>
+        </property>
+        <property name="bodyType">2</property>
+    </object>
+    <object class="Page" package="com.atlassian.confluence.pages">
+        <id name="id">45809846</id>
+        <property name="hibernateVersion">13</property>
+        <property name="title"><![CDATA[Links]]></property>
+        <property name="lowerTitle"><![CDATA[links]]></property>
+        <collection name="bodyContents" class="java.util.Collection">
+            <element class="BodyContent" package="com.atlassian.confluence.core">
+                <id name="id">156868656</id>
+            </element>
+        </collection>
+        <collection name="outgoingLinks" class="java.util.Collection">
+        </collection>
+        <property name="version">1</property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+        </property>
+        <property name="creationDate">2019-02-13 08:05:54.000</property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+        </property>
+        <property name="lastModificationDate">2019-02-13 08:16:56.000</property>
+        <property name="versionComment"><![CDATA[]]></property>
+        <property name="contentStatus"><![CDATA[current]]></property>
+        <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+            <id name="id">46268417</id>
+        </property>
+        <property name="position"/>
+    </object>
+</hibernate-generic>

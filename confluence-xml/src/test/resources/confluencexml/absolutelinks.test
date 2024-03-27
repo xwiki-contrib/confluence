@@ -1,0 +1,91 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.#------------------------------------------------------------------------------
+<wikiSpace name="MySpace">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.47826731</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2019-02-13 08:05:54.0 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>1</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.47826731</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-02-13 08:16:56.0 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>My Space</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>[[Deal Portal - Test - My Wiki>>doc:TEST.Deal Portal||shape="rect"]]
+
+ 
+
+[[Maintenance Window (Post Checks) - Test - My Wiki>>url:http://my.wiki.invalid/wiki/pages/viewpage.action?pageId=18384226||shape="rect"]]
+
+ 
+
+[[Archivist - Installation manual - Test - My Wiki>>doc:TEST.Archivist - Installation manual||shape="rect"]]
+
+ 
+
+ 
+
+[[Maciej_test - z_Sandbox Admin Testing - My Wiki>>doc:ABDoc.Maciej_test||shape="rect"]]
+
+ 
+
+[[Data+Privacy+&amp;+Data+Protection - z_Sandbox Admin Testing - My Wiki>>doc:xwiki:Test1.MyDoc.WebHome||shape="rect"]]
+
+ 
+
+[[http:~~/~~/my.wiki.invalid/wiki/download/attachments/11045169/MyFile.pdf?api=v2>>attach:xwiki:MySpace.Test.WebHome@MyFile.pdf||queryString="api=v2" shape="rect"]]</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=absolutelinks
+.configuration.nestedSpacesEnabled=true
+.configuration.baseURLs=http://my.wiki.invalid/wiki
+.configuration.linkMapping={":ids": {"134979879": "xwiki:Test1.MyDoc.WebHome"}, "myspace:ids": {"11045169": "xwiki:MySpace.Test.WebHome"}}
+.#------------------------------------------------------------------------------
