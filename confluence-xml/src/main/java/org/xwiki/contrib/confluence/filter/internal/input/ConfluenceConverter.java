@@ -125,8 +125,14 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
         for (EntityReference entityElement : entityReference.getReversedReferenceChain()) {
             if (entityElement.getType() == EntityType.DOCUMENT || entityElement.getType() == EntityType.SPACE) {
-                newRef = new EntityReference(this.converter.convert(entityElement.getName()),
-                    entityElement.getType(), newRef);
+                String name = entityElement.getName();
+                String convertedName = this.converter.convert(name);
+                if (convertedName == null) {
+                    logger.warn("Could not convert entity part [{}] in [{}]. This is a bug, please report it", name,
+                        entityReference);
+                    return null;
+                }
+                newRef = new EntityReference(convertedName, entityElement.getType(), newRef);
             } else if (newRef == null || entityElement.getParent() == newRef) {
                 newRef = entityElement;
             } else {
