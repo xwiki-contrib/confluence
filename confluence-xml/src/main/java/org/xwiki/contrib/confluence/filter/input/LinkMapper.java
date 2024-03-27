@@ -34,6 +34,8 @@ public interface LinkMapper
 {
     /**
      * @return the link mapping. Keys are space keys, values are maps mapping document titles to document references.
+     * Since version 9.42.0, entries with a "[spacekey]:ids" key contains a mapping from page IDs (as string) to
+     * document references.
      */
     Map<String, Map<String, EntityReference>> getLinkMapping();
 }

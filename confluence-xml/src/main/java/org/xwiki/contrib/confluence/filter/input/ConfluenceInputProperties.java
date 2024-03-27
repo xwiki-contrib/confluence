@@ -1087,7 +1087,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
         +  "Confluence package. "
         + "Format : {\"spaceKey1\": {\"page title 1\": \"Space.Doc1\"}, "
         + "{\"page title 2\": \"Space1.Doc1\"}, \"spaceKey2\": {\"page title 3\": \"Space.Doc3\"}, "
-        + "{\"page title 4\": \"Space2.Doc4\"}}"
+        + "{\"page title 4\": \"Space2.Doc4\"}, \"spaceKey:ids\": {\"42\": \"Space.Doc5\"},"
+        + "\":ids\": {\"42\": \"Space.Doc6\"}}"
     )
     public Map<String, Map<String, EntityReference>> getLinkMapping()
     {

@@ -67,18 +67,20 @@ public class DefaultLinkMapper implements LinkMapper
             Long spaceId = spaceEntry.getValue();
             List<Long> spacePages = pages.getOrDefault(spaceId, Collections.emptyList());
             List<Long> spaceBlogPages = blogPages.getOrDefault(spaceId, Collections.emptyList());
-            Map<String, EntityReference> spaceMapping = new LinkedHashMap<>(spacePages.size() + blogPages.size());
-
-            addMapping(confluencePackage, spacePages, spaceMapping, spaceKey);
-            addMapping(confluencePackage, spaceBlogPages, spaceMapping, spaceKey);
+            int capacity = spacePages.size() + blogPages.size();
+            Map<String, EntityReference> spaceMapping = new LinkedHashMap<>(capacity);
+            Map<String, EntityReference> pageIdMapping = new LinkedHashMap<>(capacity);
+            addMapping(confluencePackage, spacePages, spaceMapping, pageIdMapping, spaceKey);
+            addMapping(confluencePackage, spaceBlogPages, spaceMapping, pageIdMapping, spaceKey);
             mapping.put(spaceKey, spaceMapping);
+            mapping.put(spaceKey + ":ids", pageIdMapping);
         }
 
         return mapping;
     }
 
     private void addMapping(ConfluenceXMLPackage confluencePackage, List<Long> pages,
-        Map<String, EntityReference> spaceMapping, String spaceKey)
+        Map<String, EntityReference> spaceMapping, Map<String, EntityReference> pageIdMapping, String spaceKey)
     {
         for (Long pageId : pages) {
             try {
@@ -91,6 +93,7 @@ public class DefaultLinkMapper implements LinkMapper
                                 + "the computed reference is null", pageId, pageTitle, spaceKey);
                     } else {
                         spaceMapping.put(pageTitle, docRef);
+                        pageIdMapping.put(pageId.toString(), docRef);
                     }
                 }
             } catch (Exception e) {

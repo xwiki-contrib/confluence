@@ -20,6 +20,7 @@
 package org.xwiki.contrib.confluence.filter.internal.input;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
@@ -294,7 +295,14 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         ConfluenceProperties pageProperties = confluencePackage.getPageProperties(pageId, false);
 
         if (pageProperties == null) {
-            return null;
+            EntityReference docRef = getDocRefFromLinkMapping(pageId);
+            if (docRef == null) {
+                return null;
+            }
+            if (asSpace) {
+                return new EntityReference(docRef.getName(), EntityType.SPACE, docRef.getParameters());
+            }
+            return docRef;
         }
 
         Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
@@ -377,6 +385,25 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     {
         return context.getProperties().getLinkMapping()
             .getOrDefault(spaceKey, Collections.emptyMap()).get(documentName);
+    }
+
+    private EntityReference getDocRefFromLinkMapping(long pageId)
+    {
+        String pageIdString = Long.toString(pageId);
+        Map<String, Map<String, EntityReference>> linkMapping = context.getProperties().getLinkMapping();
+        for (Map.Entry<String, Map<String, EntityReference>> mappingEntry : linkMapping.entrySet()) {
+            // FIXME: this loop might be inefficient, should we group all the [spaceKey]:ids entries once and for all?
+            if (mappingEntry.getKey().endsWith(":ids")) {
+                Map<String, EntityReference> spaceMapping = mappingEntry.getValue();
+                if (spaceMapping != null) {
+                    EntityReference docRef = spaceMapping.get(pageIdString);
+                    if (docRef != null) {
+                        return docRef;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     private EntityReference toNestedDocumentReference(String spaceKey, String documentName,

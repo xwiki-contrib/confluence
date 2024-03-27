@@ -330,7 +330,15 @@ public class ConfluenceConverterListener extends WrappingListener
 
     private EntityReference fromPageId(String id) throws NumberFormatException, ConfigurationException
     {
-        return confluenceConverter.convertDocumentReference(Long.parseLong(id), false);
+        long pageId = Long.parseLong(id);
+        EntityReference ref = confluenceConverter.convertDocumentReference(pageId, false);
+        if (ref == null) {
+            this.logger.warn(
+                "Could not find page id [{}]. Links to this page may be broken. "
+                + "This may happen when importing a space that links to another space which is not present "
+                + "in this Confluence export, or the page is missing", pageId);
+        }
+        return ref;
     }
 
     private AttachmentResourceReference createAttachmentResourceReference(EntityReference reference,
