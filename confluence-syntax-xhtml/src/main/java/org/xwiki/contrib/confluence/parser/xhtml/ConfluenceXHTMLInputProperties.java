@@ -101,7 +101,7 @@ public class ConfluenceXHTMLInputProperties extends DefaultFilterStreamPropertie
 
     /**
      * @return the referenceConverter to use to convert references
-     * @since 2.29.0
+     * @since 9.29.0
      */
     @PropertyName("Reference converter")
     @PropertyDescription("The reference converter to use to convert references.")
@@ -112,7 +112,7 @@ public class ConfluenceXHTMLInputProperties extends DefaultFilterStreamPropertie
 
     /**
      * @param referenceConverter the converter to use to convert references
-     * @since 2.29.0
+     * @since 9.29.0
      */
     public void setReferenceConverter(ConfluenceReferenceConverter referenceConverter)
     {
