@@ -63,6 +63,11 @@ public class ConfluenceXHTMLInputProperties extends DefaultFilterStreamPropertie
     private ConfluenceReferenceConverter referenceConverter;
 
     /**
+     * @see #getMacroSupport(ConfluenceMacroSupport)
+     */
+    private ConfluenceMacroSupport macroSupport;
+
+    /**
      * @return The source to load the wiki from
      */
     @PropertyName("Source")
@@ -117,5 +122,22 @@ public class ConfluenceXHTMLInputProperties extends DefaultFilterStreamPropertie
     public void setReferenceConverter(ConfluenceReferenceConverter referenceConverter)
     {
         this.referenceConverter = referenceConverter;
+    }
+
+    /**
+     * @return macroSupport the object providing information about macros
+     * @since 9.43.0
+     */
+    public ConfluenceMacroSupport getMacroSupport()
+    {
+        return this.macroSupport;
+    }
+
+    /**
+     * @param macroSupport the object providing information about macros
+     */
+    public void setMacroSupport(ConfluenceMacroSupport macroSupport)
+    {
+        this.macroSupport = macroSupport;
     }
 }

@@ -51,4 +51,10 @@ public class IncludeMacroConverter extends AbstractMacroConverter
         parameters.put("reference", parameters.remove("0"));
         return parameters;
     }
+
+    @Override
+    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    {
+        return InlineSupport.NO;
+    }
 }

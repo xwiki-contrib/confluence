@@ -19,10 +19,15 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceMacroSupport;
+import org.xwiki.rendering.wikimodel.WikiParameter;
 import org.xwiki.rendering.wikimodel.WikiParameters;
 import org.xwiki.rendering.wikimodel.impl.IWikiScannerContext;
 import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Handles macros.
@@ -43,6 +48,8 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
 {
+    private ConfluenceMacroSupport macroSupport;
+
     /**
      * A Confluence Macro.
      */
@@ -71,10 +78,12 @@ public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
 
     /**
      * Default constructor.
+     * @param macroSupport macro support.
      */
-    public MacroTagHandler()
+    public MacroTagHandler(ConfluenceMacroSupport macroSupport)
     {
         super(false);
+        this.macroSupport = macroSupport;
     }
 
     @Override
@@ -98,8 +107,24 @@ public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
         // Confluence also exports block macros as <p>{block macro}</p>. We remove the extra paragraph
         // in ConfluenceXWikiGeneratorListener.
         IWikiScannerContext s = context.getScannerContext();
-        boolean isInline = s.isInHeader() || context.getTagStack().getStackParameter(CONFLUENCE_IN_PARAGRAPH) != null;
+        boolean isInline = supportsInlineMode(macro) && (
+            s.isInHeader() || context.getTagStack().getStackParameter(CONFLUENCE_IN_PARAGRAPH) != null
+        );
 
         s.onMacro(macro.name, macro.parameters, macro.content, isInline);
+    }
+
+    private boolean supportsInlineMode(ConfluenceMacro macro)
+    {
+        if (macroSupport == null) {
+            return true;
+        }
+
+        Map<String, String> parameters = new LinkedHashMap<>(macro.parameters.getSize());
+        for (WikiParameter p : macro.parameters) {
+            parameters.put(p.getKey(), p.getValue());
+        }
+
+        return macroSupport.supportsInlineMode(macro.name, parameters, macro.content);
     }
 }

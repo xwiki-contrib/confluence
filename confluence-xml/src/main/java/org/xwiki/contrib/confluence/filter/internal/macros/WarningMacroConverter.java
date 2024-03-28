@@ -42,4 +42,10 @@ public class WarningMacroConverter extends AbstractMacroConverter
     {
         return "error";
     }
+
+    @Override
+    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    {
+        return InlineSupport.NO;
+    }
 }

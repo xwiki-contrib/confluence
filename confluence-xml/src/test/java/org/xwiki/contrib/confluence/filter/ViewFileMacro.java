@@ -17,43 +17,51 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.confluence.filter.internal.macros;
+package org.xwiki.contrib.confluence.filter;
 
-import java.util.Map;
+import org.xwiki.component.annotation.Component;
+import org.xwiki.rendering.block.Block;
+import org.xwiki.rendering.macro.Macro;
+import org.xwiki.rendering.macro.MacroExecutionException;
+import org.xwiki.rendering.macro.descriptor.MacroDescriptor;
+import org.xwiki.rendering.transformation.MacroTransformationContext;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
+import java.util.List;
 
-import org.xwiki.component.annotation.Component;
-
-/**
- * Convert Confluence noformat macro.
- * 
- * @version $Id$
- * @since 9.43.0
- */
 @Component
 @Singleton
-@Named("noformat")
-public class NoformatMacroConverter extends AbstractMacroConverter
+@Named("view-file")
+public class ViewFileMacro implements Macro
 {
     @Override
-    protected String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
-        boolean inline)
+    public int getPriority()
     {
-        return "code";
+        return 0;
     }
 
     @Override
-    protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
-        String content)
+    public MacroDescriptor getDescriptor()
     {
-        return Map.of("language", "none");
+        return null;
     }
 
     @Override
-    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    public boolean supportsInlineMode()
     {
-        return InlineSupport.NO;
+        return false;
+    }
+
+    @Override
+    public List<Block> execute(Object parameters, String content, MacroTransformationContext context) throws MacroExecutionException
+    {
+        return null;
+    }
+
+    @Override
+    public int compareTo(Object o)
+    {
+        return 0;
     }
 }

@@ -41,6 +41,7 @@ import org.xml.sax.XMLReader;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceMacroSupport;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceXHTMLInputProperties;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ADFAttributeHandler;
@@ -139,6 +140,8 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
 
     private ConfluenceReferenceConverter referenceConverter;
 
+    private ConfluenceMacroSupport macroSupport;
+
     @Override
     public Syntax getSyntax()
     {
@@ -190,8 +193,8 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("a", createXWikiReferenceTagHandler());
         handlers.put("p", new ConfluenceParagraphTagHandler());
 
-        handlers.put("ac:macro", new MacroTagHandler());
-        handlers.put("ac:structured-macro", new MacroTagHandler());
+        handlers.put("ac:macro", new MacroTagHandler(this.macroSupport));
+        handlers.put("ac:structured-macro", new MacroTagHandler(this.macroSupport));
         handlers.put("ac:default-parameter", new DefaultMacroParameterTagHandler());
         handlers.put("ac:parameter", new MacroParameterTagHandler());
         handlers.put("ac:plain-text-body", new PlainTextBodyTagHandler());
@@ -221,17 +224,17 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("pre", new PreformattedTagHandler());
         handlers.put("code", new CodeTagHandler());
 
-        handlers.put("time", new TimeTagHandler());
+        handlers.put("time", new TimeTagHandler(this.macroSupport));
 
         handlers.put("ac:task-list", new ElementMacroTagHandler(this));
-        handlers.put("ac:task", new TaskTagHandler());
+        handlers.put("ac:task", new TaskTagHandler(this.macroSupport));
         handlers.put("ac:task-id", new TaskIdTagHandler());
         handlers.put("ac:task-status", new TaskStatusTagHandler());
         handlers.put("ac:task-body", new TaskBodyTagHandler(this));
 
         // ac:adf-extension tags are ignored, but their content parsed. Nothing to do.
         handlers.put("ac:adf-fallback", new IgnoredTagHandler(this));
-        handlers.put("ac:adf-node", new ADFNodeHandler());
+        handlers.put("ac:adf-node", new ADFNodeHandler(this.macroSupport));
         handlers.put("ac:adf-attribute", new ADFAttributeHandler());
         handlers.put("ac:adf-content", new ADFContentHandler(this));
         handlers.put("ac:adf-mark", new ADFMarkHandler());
@@ -327,6 +330,15 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
     public void setReferenceConverter(ConfluenceReferenceConverter referenceConverter)
     {
         this.referenceConverter = referenceConverter;
+    }
+
+    /**
+     * @param macroSupport the object providing information about macros
+     * @since 9.43.0
+     */
+    public void setMacroSupport(ConfluenceMacroSupport macroSupport)
+    {
+        this.macroSupport = macroSupport;
     }
 
     /**

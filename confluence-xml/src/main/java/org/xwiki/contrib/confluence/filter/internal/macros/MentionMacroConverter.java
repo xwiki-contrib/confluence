@@ -78,4 +78,10 @@ public class MentionMacroConverter extends AbstractMacroConverter
     {
         return stringReference.replace('.', '-') + '-' + RandomStringUtils.random(5, true, false);
     }
+
+    @Override
+    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    {
+        return InlineSupport.YES;
+    }
 }

@@ -149,6 +149,9 @@ public class ConfluenceInputFilterStream
     private ConfluenceConverter confluenceConverter;
 
     @Inject
+    private ConfluenceXMLMacroSupport macroSupport;
+
+    @Inject
     private ConfluenceXMLPackage confluencePackage;
 
     @Inject
@@ -1871,6 +1874,7 @@ public class ConfluenceInputFilterStream
         filterProperties.setSource(new StringInputSource(bodyContent));
         filterProperties.setMacroContentSyntax(macroContentSyntax);
         filterProperties.setReferenceConverter(confluenceConverter);
+        filterProperties.setMacroSupport(macroSupport);
 
         if (this.properties.isConvertToXWiki()) {
             filterProperties.setConverter(createConverter(null));

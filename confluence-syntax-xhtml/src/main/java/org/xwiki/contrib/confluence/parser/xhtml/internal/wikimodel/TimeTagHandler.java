@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceMacroSupport;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
@@ -38,11 +39,13 @@ public class TimeTagHandler extends MacroTagHandler
     private static final String DATETIME_PARAMETER = "datetime";
 
     /**
-     * Constructor (checkstyle complains that this comment is missing although the other classes don't have it).
+     * Default constructor.
+     *
+     * @param macroSupport macro support.
      */
-    public TimeTagHandler()
+    public TimeTagHandler(ConfluenceMacroSupport macroSupport)
     {
-        super();
+        super(macroSupport);
     }
 
     @Override

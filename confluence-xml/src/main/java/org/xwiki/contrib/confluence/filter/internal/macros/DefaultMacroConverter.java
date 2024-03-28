@@ -31,6 +31,10 @@ import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.rendering.listener.Listener;
+import org.xwiki.rendering.macro.Macro;
+import org.xwiki.rendering.macro.MacroId;
+import org.xwiki.rendering.macro.MacroLookupException;
+import org.xwiki.rendering.macro.MacroManager;
 
 /**
  * Find converter for passed macro.
@@ -50,21 +54,36 @@ public class DefaultMacroConverter extends AbstractMacroConverter
     @Inject
     private ConfluenceInputContext context;
 
+    @Inject
+    private MacroManager macroManager;
+
+    protected MacroConverter getMacroConverter(String macroId)
+    {
+        if (this.componentManager.hasComponent(MacroConverter.class, macroId)) {
+            try {
+                return this.componentManager.getInstance(MacroConverter.class, macroId);
+            } catch (ComponentLookupException e) {
+                this.logger.error("Failed to lookup converter for macro [{}] ", macroId);
+            }
+            return null;
+        }
+        return this;
+    }
+
     @Override
     public void toXWiki(String id, Map<String, String> parameters, String content, boolean inline, Listener listener)
     {
-        if (this.componentManager.hasComponent(MacroConverter.class, id)) {
-            try {
-                MacroConverter converter = this.componentManager.getInstance(MacroConverter.class, id);
-                converter.toXWiki(id, parameters, content, inline, listener);
-            } catch (ComponentLookupException e) {
-                this.logger.error("Failed to lookup converter for macro [{}] (id=[{}], parameters={}, inline=[{}])", id,
-                    parameters, content, inline, e);
-            }
-        } else {
-            // If we haven't found a specific macro converter matching this id, we use the default behavior
+        MacroConverter converter = getMacroConverter(id);
+        if (converter == this) {
             super.toXWiki(id, parameters, content, inline, listener);
+            return;
         }
+
+        if (converter != null) {
+            converter.toXWiki(id, parameters, content, inline, listener);
+        }
+
+        // If we haven't found a specific macro converter matching this id, we use the default behavior
     }
 
     @Override
@@ -87,5 +106,19 @@ public class DefaultMacroConverter extends AbstractMacroConverter
 
         // By default macros are not prefixed
         return confluenceId;
+    }
+
+    @Override
+    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    {
+        try {
+            Macro<?> macro = macroManager.getMacro(new MacroId(toXWikiId(id, parameters, content, true)));
+            if (macro != null) {
+                return macro.supportsInlineMode() ? InlineSupport.YES : InlineSupport.NO;
+            }
+        } catch (MacroLookupException e) {
+            // Ignore
+        }
+        return InlineSupport.MAYBE;
     }
 }

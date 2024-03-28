@@ -100,6 +100,7 @@ public class ConfluenceXHTMLInputFilterStream
                     throw new FilterException("Failed to initialize the Confluence XHTML input filter", e);
                 }
                 parser.setReferenceConverter(this.properties.getReferenceConverter());
+                parser.setMacroSupport(this.properties.getMacroSupport());
             } else {
                 this.renderingContext.getTargetSyntax();
             }

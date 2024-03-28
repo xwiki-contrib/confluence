@@ -17,43 +17,22 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.confluence.filter.internal.macros;
+package org.xwiki.contrib.confluence.parser.xhtml;
 
 import java.util.Map;
 
-import javax.inject.Named;
-import javax.inject.Singleton;
-
-import org.xwiki.component.annotation.Component;
-
 /**
- * Convert Confluence noformat macro.
- * 
- * @version $Id$
+ * Confluence Macro Support.
  * @since 9.43.0
+ * @version $Id$
  */
-@Component
-@Singleton
-@Named("noformat")
-public class NoformatMacroConverter extends AbstractMacroConverter
+public interface ConfluenceMacroSupport
 {
-    @Override
-    protected String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
-        boolean inline)
-    {
-        return "code";
-    }
-
-    @Override
-    protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
-        String content)
-    {
-        return Map.of("language", "none");
-    }
-
-    @Override
-    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
-    {
-        return InlineSupport.NO;
-    }
+    /**
+     * @return whether the given macro supports inline.
+     * @param macroId the macro id (eg "toc" for the TOC macro)
+     * @param parameters the macro parameters
+     * @param content the macro content
+     */
+    boolean supportsInlineMode(String macroId, Map<String, String> parameters, String content);
 }
