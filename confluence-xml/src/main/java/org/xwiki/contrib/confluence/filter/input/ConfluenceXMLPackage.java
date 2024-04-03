@@ -73,13 +73,18 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
 import org.xwiki.contrib.confluence.filter.internal.WithoutControlCharactersReader;
+import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceCanceledException;
 import org.xwiki.environment.Environment;
 import org.xwiki.filter.FilterException;
 import org.xwiki.filter.input.FileInputSource;
 import org.xwiki.filter.input.InputSource;
 import org.xwiki.filter.input.InputStreamInputSource;
 import org.xwiki.filter.input.URLInputSource;
+import org.xwiki.job.Job;
+import org.xwiki.job.JobContext;
+import org.xwiki.job.event.status.CancelableJobStatus;
 import org.xwiki.job.event.status.JobProgressManager;
+import org.xwiki.job.event.status.JobStatus;
 import org.xwiki.xml.stax.StAXUtils;
 
 import com.google.common.base.Strings;
@@ -592,6 +597,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     @Inject
     private Logger logger;
+
+    @Inject
+    private JobContext jobContext;
+
+    private CancelableJobStatus jobStatus;
 
     private File directory;
 
@@ -1114,13 +1124,16 @@ public class ConfluenceXMLPackage implements AutoCloseable
     }
 
     private void createTree(String workingDirectory)
-        throws XMLStreamException, FactoryConfigurationError, IOException, ConfigurationException, FilterException
+        throws XMLStreamException, FactoryConfigurationError, IOException, ConfigurationException, FilterException,
+        ConfluenceCanceledException
     {
         this.tree = workingDirectory == null
             ? Files.createTempDirectory(this.environment.getTemporaryDirectory().toPath(),
                 "confluencexml-tree").toFile()
             : new File(workingDirectory);
         this.tree.mkdir();
+
+        getJobStatus();
 
         try (CountingInputStream s = new CountingInputStream(new BufferedInputStream(new FileInputStream(entities)))) {
             XMLStreamReader xmlReader = XML_INPUT_FACTORY.createXMLStreamReader(new WithoutControlCharactersReader(s));
@@ -1164,9 +1177,24 @@ public class ConfluenceXMLPackage implements AutoCloseable
         }
     }
 
-    private void readObject(XMLStreamReader xmlReader)
-        throws XMLStreamException, ConfigurationException, FilterException
+    private void getJobStatus()
     {
+        Job job = this.jobContext.getCurrentJob();
+        if (job != null) {
+            JobStatus status = job.getStatus();
+            if (status instanceof CancelableJobStatus) {
+                this.jobStatus = (CancelableJobStatus) status;
+            }
+        }
+    }
+
+    private void readObject(XMLStreamReader xmlReader)
+        throws XMLStreamException, ConfigurationException, FilterException, ConfluenceCanceledException
+    {
+        if (this.jobStatus != null && this.jobStatus.isCanceled()) {
+            throw new ConfluenceCanceledException();
+        }
+
         String type = xmlReader.getAttributeValue(null, "class");
 
         if (type == null) {

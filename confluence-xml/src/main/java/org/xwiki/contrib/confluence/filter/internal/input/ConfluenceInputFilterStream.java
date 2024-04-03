@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.CancellationException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -75,7 +76,11 @@ import org.xwiki.filter.input.BeanInputFilterStream;
 import org.xwiki.filter.input.BeanInputFilterStreamFactory;
 import org.xwiki.filter.input.InputFilterStreamFactory;
 import org.xwiki.filter.input.StringInputSource;
+import org.xwiki.job.Job;
+import org.xwiki.job.JobContext;
+import org.xwiki.job.event.status.CancelableJobStatus;
 import org.xwiki.job.event.status.JobProgressManager;
+import org.xwiki.job.event.status.JobStatus;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.SpaceReference;
@@ -121,6 +126,8 @@ public class ConfluenceInputFilterStream
 
     private static final String XWIKI_PREFERENCES_CLASS = "XWiki.XWikiPreferences";
 
+    private static final String FAILED_TO_READ_PACKAGE = "Failed to read package";
+
     @Inject
     @Named(ConfluenceParser.SYNTAX_STRING)
     private StreamParser confluenceWIKIParser;
@@ -157,6 +164,9 @@ public class ConfluenceInputFilterStream
     @Inject
     private Logger logger;
 
+    @Inject
+    private JobContext jobContext;
+
     private final Map<String, Integer> macrosIds = new HashMap<>();
 
     private ConfluenceIdRangeList objectIdRanges;
@@ -165,7 +175,9 @@ public class ConfluenceInputFilterStream
 
     private int remainingPages = -1;
 
-    private static class MaxPageCountReachedException extends Exception
+    private CancelableJobStatus jobStatus;
+
+    private static class MaxPageCountReachedException extends ConfluenceInterruptedException
     {
 
     }
@@ -273,22 +285,44 @@ public class ConfluenceInputFilterStream
         endSpace(space.getParent(), proxyFilter);
     }
 
+    private void getJobStatus()
+    {
+        Job job = this.jobContext.getCurrentJob();
+        if (job != null) {
+            JobStatus status = job.getStatus();
+            if (status instanceof CancelableJobStatus) {
+                this.jobStatus = (CancelableJobStatus) status;
+            }
+        }
+    }
+
     private void readInternal(Object filter, ConfluenceFilter proxyFilter) throws FilterException
     {
         // Prepare package
+        boolean restored = false;
+        String wd = this.properties.getWorkingDirectory();
+        if (StringUtils.isNotEmpty(wd)) {
+            restored = this.confluencePackage.restoreState(wd);
+        }
+
         try {
-            boolean restored = false;
-            String wd = this.properties.getWorkingDirectory();
-            if (StringUtils.isNotEmpty(wd)) {
-                restored = this.confluencePackage.restoreState(wd);
-            }
             pushLevelProgress(restored ? 1 : 2);
             if (!restored) {
                 this.confluencePackage.read(this.properties.getSource(), wd);
             }
         } catch (Exception e) {
-            throw new FilterException("Failed to read package", e);
+            if (e.getCause() instanceof ConfluenceCanceledException) {
+                this.logger.warn("The job was canceled", e);
+                closeConfluencePackage();
+            } else {
+                this.logger.error(FAILED_TO_READ_PACKAGE, e);
+                closeConfluencePackage();
+                throw new FilterException(FAILED_TO_READ_PACKAGE, e);
+            }
+            return;
         }
+
+        getJobStatus();
 
         maybeRemoveArchivedSpaces();
 
@@ -338,18 +372,26 @@ public class ConfluenceInputFilterStream
         }
 
         pushLevelProgress(progressCount);
-        sendUsersAndGroups(users, groups, proxyFilter);
-        if (this.properties.isContentsEnabled() || this.properties.isRightsEnabled()) {
-            sendSpaces(filter, proxyFilter, pages, blogPages, disabledSpaces);
+        try {
+            sendUsersAndGroups(users, groups, proxyFilter);
+            if (this.properties.isContentsEnabled() || this.properties.isRightsEnabled()) {
+                sendSpaces(filter, proxyFilter, pages, blogPages, disabledSpaces);
+            }
+        } catch (MaxPageCountReachedException e) {
+            logger.info("The maximum of pages to read has been reached.");
+        } catch (ConfluenceInterruptedException e) {
+            logger.warn("The job was canceled.");
+        } finally {
+            popLevelProgress();
+            observationManager.notify(new ConfluenceFilteredEvent(), this, this.confluencePackage);
+            closeConfluencePackage();
+            popLevelProgress();
         }
-        popLevelProgress();
-        observationManager.notify(new ConfluenceFilteredEvent(), this, this.confluencePackage);
-        closeConfluencePackage();
-        popLevelProgress();
     }
 
     private void sendSpaces(Object filter, ConfluenceFilter proxyFilter, Map<Long, List<Long>> pages,
-        Map<Long, List<Long>> blogPages, Collection<Long> disabledSpaces) throws FilterException
+        Map<Long, List<Long>> blogPages, Collection<Long> disabledSpaces)
+        throws FilterException, ConfluenceInterruptedException
     {
         beginSpace(properties.getRootSpace(), proxyFilter);
         try {
@@ -373,8 +415,6 @@ public class ConfluenceInputFilterStream
                     sendConfluenceRootSpace(spaceId, filter, proxyFilter, regularPageIds, blogPageIds);
                 }
             }
-        } catch (MaxPageCountReachedException e) {
-            logger.info("The maximum of pages to read has been reached.");
         } finally {
             endSpace(properties.getRootSpace(), proxyFilter);
         }
@@ -413,7 +453,7 @@ public class ConfluenceInputFilterStream
     }
 
     private void sendConfluenceRootSpace(Long spaceId, Object filter, ConfluenceFilter proxyFilter,
-        List<Long> pages, List<Long> blogPages) throws FilterException, MaxPageCountReachedException
+        List<Long> pages, List<Long> blogPages) throws FilterException, ConfluenceInterruptedException
     {
         ConfluenceProperties spaceProperties;
         try {
@@ -460,7 +500,7 @@ public class ConfluenceInputFilterStream
                     }
                     sendBlogs(spaceKey, blogPages, filter, proxyFilter);
                 }
-            } catch (MaxPageCountReachedException e) {
+            } catch (ConfluenceInterruptedException e) {
                 // Even if we reached the maximum page count, we want to send the space rights.
                 if (this.properties.isRightsEnabled()) {
                     sendSpaceRights(proxyFilter, spaceProperties, spaceKey, spaceId, inheritedRights,
@@ -480,22 +520,33 @@ public class ConfluenceInputFilterStream
         }
     }
 
+    private void checkCanceled() throws ConfluenceCanceledException
+    {
+        if (jobStatus != null && jobStatus.isCanceled()) {
+            throw new ConfluenceCanceledException();
+        }
+    }
+
     private Collection<ConfluenceRight> sendPage(long pageId, String spaceKey, boolean blog, Object filter,
-        ConfluenceFilter proxyFilter) throws MaxPageCountReachedException
+        ConfluenceFilter proxyFilter) throws ConfluenceInterruptedException
     {
         if (this.remainingPages == 0) {
             throw new MaxPageCountReachedException();
         }
+
+        checkCanceled();
 
         Collection<ConfluenceRight> inheritedRights = null;
 
         if (this.properties.isIncluded(pageId)) {
             try {
                 inheritedRights = readPage(pageId, spaceKey, blog, filter, proxyFilter);
+            } catch (MaxPageCountReachedException e) {
+                // ignore
+            } catch (CancellationException e) {
+                throw e;
             } catch (Exception e) {
-                if (!(e instanceof MaxPageCountReachedException)) {
-                    logger.error("Failed to filter the page with id [{}]", createPageIdentifier(pageId, spaceKey), e);
-                }
+                logger.error("Failed to filter the page with id [{}]", createPageIdentifier(pageId, spaceKey), e);
             }
         }
 
@@ -503,7 +554,7 @@ public class ConfluenceInputFilterStream
     }
 
     private void sendBlogs(String spaceKey, List<Long> blogPages, Object filter, ConfluenceFilter proxyFilter)
-        throws FilterException, MaxPageCountReachedException
+        throws FilterException, ConfluenceInterruptedException
     {
         if (!this.properties.isBlogsEnabled() || blogPages == null || blogPages.isEmpty()) {
             return;
@@ -527,7 +578,7 @@ public class ConfluenceInputFilterStream
     }
 
     private void sendPages(String spaceKey, boolean blog, List<Long> pages, Object filter, ConfluenceFilter proxyFilter)
-        throws MaxPageCountReachedException
+        throws ConfluenceInterruptedException
     {
         for (Long pageId : pages) {
             sendPage(pageId, spaceKey, blog, filter, proxyFilter);
@@ -857,7 +908,7 @@ public class ConfluenceInputFilterStream
     }
 
     private void sendUsersAndGroups(Collection<Long> users, Collection<Long> groups, ConfluenceFilter proxyFilter)
-        throws FilterException
+        throws FilterException, ConfluenceCanceledException
     {
         if (users == null && groups == null) {
             return;
@@ -882,13 +933,15 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void sendGroups(Collection<Long> groupIds, ConfluenceFilter proxyFilter) throws FilterException
+    private void sendGroups(Collection<Long> groupIds, ConfluenceFilter proxyFilter)
+        throws FilterException, ConfluenceCanceledException
     {
         // Group groups by XWiki group name. There can be several Confluence groups mapping to a unique XWiki group.
         Map<String, Collection<ConfluenceProperties>> groupsByXWikiName = getGroupsByXWikiName(groupIds);
 
         // Loop over the XWiki groups
         for (Map.Entry<String, Collection<ConfluenceProperties>> groupEntry: groupsByXWikiName.entrySet()) {
+            checkCanceled();
             String groupName = groupEntry.getKey();
             if ("XWikiAllGroup".equals(groupName)) {
                 continue;
@@ -917,30 +970,30 @@ public class ConfluenceInputFilterStream
                 logger.info("Sending group [{}]", groupName);
             }
 
-            // > Group
             proxyFilter.beginGroupContainer(groupName, groupParameters);
-
-            // We add members of all the Confluence groups mapped to this XWiki group to the XWiki group.
-            Collection<String> alreadyAddedMembers = new HashSet<>();
-            for (ConfluenceProperties groupProperties : groups) {
-                sendUserMembers(proxyFilter, groupProperties, alreadyAddedMembers);
-                sendGroupMembers(proxyFilter, groupProperties, alreadyAddedMembers);
+            try {
+                // We add members of all the Confluence groups mapped to this XWiki group to the XWiki group.
+                Collection<String> alreadyAddedMembers = new HashSet<>();
+                for (ConfluenceProperties groupProperties : groups) {
+                    sendUserMembers(proxyFilter, groupProperties, alreadyAddedMembers);
+                    sendGroupMembers(proxyFilter, groupProperties, alreadyAddedMembers);
+                }
+            } finally {
+                proxyFilter.endGroupContainer(groupName, groupParameters);
             }
-
-            // < Group
-            proxyFilter.endGroupContainer(groupName, groupParameters);
 
             this.progress.endStep(this);
         }
     }
 
     private void sendGroupMembers(ConfluenceFilter proxyFilter, ConfluenceProperties groupProperties,
-        Collection<String> alreadyAddedMembers)
+        Collection<String> alreadyAddedMembers) throws ConfluenceCanceledException
     {
         if (groupProperties.containsKey(ConfluenceXMLPackage.KEY_GROUP_MEMBERGROUPS)) {
             List<Long> groupMembers = this.confluencePackage.getLongList(groupProperties,
                 ConfluenceXMLPackage.KEY_GROUP_MEMBERGROUPS);
             for (Long memberInt : groupMembers) {
+                checkCanceled();
                 FilterEventParameters memberParameters = new FilterEventParameters();
 
                 try {
@@ -960,12 +1013,13 @@ public class ConfluenceInputFilterStream
     }
 
     private void sendUserMembers(ConfluenceFilter proxyFilter, ConfluenceProperties groupProperties,
-        Collection<String> alreadyAddedMembers)
+        Collection<String> alreadyAddedMembers) throws ConfluenceCanceledException
     {
         if (groupProperties.containsKey(ConfluenceXMLPackage.KEY_GROUP_MEMBERUSERS)) {
             List<Long> groupMembers =
                 this.confluencePackage.getLongList(groupProperties, ConfluenceXMLPackage.KEY_GROUP_MEMBERUSERS);
             for (Long memberInt : groupMembers) {
+                checkCanceled();
                 FilterEventParameters memberParameters = new FilterEventParameters();
 
                 try {
@@ -1013,9 +1067,11 @@ public class ConfluenceInputFilterStream
         return groupsByXWikiName;
     }
 
-    private void sendUsers(Collection<Long> users, ConfluenceFilter proxyFilter) throws FilterException
+    private void sendUsers(Collection<Long> users, ConfluenceFilter proxyFilter)
+        throws FilterException, ConfluenceCanceledException
     {
         for (Long userId : users) {
+            checkCanceled();
             this.progress.startStep(this);
 
             if (shouldSendObject(userId)) {
@@ -1117,7 +1173,7 @@ public class ConfluenceInputFilterStream
     }
 
     private Collection<ConfluenceRight> readPage(long pageId, String spaceKey, boolean blog, Object filter,
-        ConfluenceFilter proxyFilter) throws FilterException, MaxPageCountReachedException
+        ConfluenceFilter proxyFilter) throws FilterException, ConfluenceInterruptedException
     {
         if (!shouldSendObject(pageId)) {
             emptyStep();

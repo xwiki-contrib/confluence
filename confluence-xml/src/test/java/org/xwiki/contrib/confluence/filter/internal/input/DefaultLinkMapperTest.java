@@ -31,6 +31,7 @@ import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.environment.Environment;
 import org.xwiki.filter.FilterException;
 import org.xwiki.filter.input.DefaultFileInputSource;
+import org.xwiki.job.JobContext;
 import org.xwiki.job.event.status.JobProgressManager;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.internal.reference.DefaultStringEntityReferenceResolver;
@@ -83,6 +84,9 @@ class DefaultLinkMapperTest
 
     @MockComponent
     private JobProgressManager jobProgressManager;
+
+    @MockComponent
+    private JobContext jobContext;
 
     @InjectMockComponents
     DefaultStringEntityReferenceResolver resolver;
