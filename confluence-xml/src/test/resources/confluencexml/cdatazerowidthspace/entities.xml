@@ -24,7 +24,7 @@
     </object>
     <object class="BodyContent" package="com.atlassian.confluence.core">
         <id name="id">156868656</id>
-        <property name="body"><![CDATA[<h2 style="text-align: center;"><strong>Hello world</strong></h2>]]></property>
+        <property name="body"><![CDATA[<h2 style="text-align: center;"><strong>Hello world</strong>. And here's a LS Character</h2>]]></property>
         <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809846</id></property>
         <property name="bodyType">2</property>
     </object>

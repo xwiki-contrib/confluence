@@ -1274,7 +1274,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
                     String idName = xmlReader.getAttributeValue(null, "name");
 
                     if (idName.equals(idProperty)) {
-                        id = fixCData(xmlReader.getElementText());
+                        id = fixCDataAndNL(xmlReader.getElementText());
 
                         properties.setProperty(ID, id);
                     } else {
@@ -1585,7 +1585,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         if (propertyClass == null) {
             try {
-                return fixCData(xmlReader.getElementText());
+                return fixCDataAndNL(xmlReader.getElementText());
             } catch (XMLStreamException e) {
                 // Probably an empty element
             }
@@ -1608,13 +1608,17 @@ public class ConfluenceXMLPackage implements AutoCloseable
      * To protect content with cdata section inside cdata elements confluence adds a single space after two
      * consecutive curly braces. we need to undo this patch as otherwise the content parser will complain about invalid
      * content. Strictly speaking this needs only to be done for string valued properties.
+     * What's more, Confluence may export LS characters that don't mix well with ConfluenceProperties, so we replace
+     * them with regular new lines.
      */
-    private String fixCData(String elementText)
+    private String fixCDataAndNL(String elementText)
     {
         if (elementText == null) {
             return null;
         }
-        return FIND_BROKEN_CDATA_PATTERN.matcher(elementText).replaceAll(REPAIRED_CDATA_END);
+        return FIND_BROKEN_CDATA_PATTERN.matcher(elementText).replaceAll(REPAIRED_CDATA_END)
+            .replace('\u2028', '\n')
+            .replace('\u2029', '\n');
     }
 
     private Long readObjectReference(XMLStreamReader xmlReader) throws FilterException, XMLStreamException
@@ -1642,7 +1646,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 String.format("Was expecting id element but found [%s]", xmlReader.getLocalName()));
         }
 
-        String key = fixCData(xmlReader.getElementText());
+        String key = fixCDataAndNL(xmlReader.getElementText());
 
         xmlReader.nextTag();
 

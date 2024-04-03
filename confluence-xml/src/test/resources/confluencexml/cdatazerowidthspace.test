@@ -74,7 +74,7 @@
             <entry>
               <string>content</string>
               <string>(% style="text-align: center;" %)
-== **Hello world** ==</string>
+== **Hello world**. And here's a LS Character ==</string>
             </entry>
             <entry>
               <string>syntax</string>
