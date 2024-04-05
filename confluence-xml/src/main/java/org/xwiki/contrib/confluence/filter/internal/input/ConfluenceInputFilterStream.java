@@ -759,7 +759,7 @@ public class ConfluenceInputFilterStream
         }
         String group = (groupStr == null || groupStr.isEmpty())
             ? ""
-            : (confluenceConverter.toUserReference(getConfluenceToXWikiGroupName(groupStr)));
+            : (confluenceConverter.toGroupReference(groupStr));
 
         String users = "";
 
@@ -997,7 +997,7 @@ public class ConfluenceInputFilterStream
                 FilterEventParameters memberParameters = new FilterEventParameters();
 
                 try {
-                    String memberId = getConfluenceToXWikiGroupName(
+                    String memberId = confluenceConverter.toGroupReference(
                         this.confluencePackage.getGroupProperties(memberInt)
                             .getString(ConfluenceXMLPackage.KEY_GROUP_NAME, String.valueOf(memberInt)));
 
@@ -1055,7 +1055,7 @@ public class ConfluenceInputFilterStream
                 throw new FilterException("Failed to get group properties", e);
             }
 
-            String groupName = getConfluenceToXWikiGroupName(
+            String groupName = confluenceConverter.toGroupReferenceName(
                 groupProperties.getString(ConfluenceXMLPackage.KEY_GROUP_NAME, String.valueOf(groupId)));
 
             if (!groupName.isEmpty()) {
@@ -1127,35 +1127,6 @@ public class ConfluenceInputFilterStream
 
         // < User
         proxyFilter.endUser(userName, userParameters);
-    }
-
-    private String getConfluenceToXWikiGroupName(String groupName)
-    {
-        if (groupName == null) {
-            return null;
-        }
-
-        if (!this.properties.isConvertToXWiki() || this.properties.getGroupMapping() == null) {
-            return groupName;
-        }
-
-        String group = this.properties.getGroupMapping().get(groupName);
-        if (group != null) {
-            return group;
-        }
-
-        String format = this.properties.getGroupFormat();
-        if (StringUtils.isEmpty(format)) {
-            return groupName;
-        }
-
-        return format.replace("${group}", groupName).replace("${group._clean}", clean(groupName));
-    }
-
-    // taken from ldap-authenticator (DefaultLDAPDocumentHelper.java)
-    private String clean(String str)
-    {
-        return StringUtils.removePattern(str, "[\\.\\:\\s,@\\^\\/]");
     }
 
     private String getSpaceTitle(Long spaceId)

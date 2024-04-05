@@ -192,6 +192,42 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return confluenceUser;
     }
 
+    // taken from ldap-authenticator (DefaultLDAPDocumentHelper.java)
+    private String clean(String str)
+    {
+        return StringUtils.removePattern(str, "[\\.\\:\\s,@\\^\\/]");
+    }
+
+    /**
+     * @param groupName the Confluence username
+     * @return the corresponding XWiki username, without forbidden characters
+     * @since 9.45.0
+     */
+    public String toGroupReferenceName(String groupName)
+    {
+        if (groupName == null) {
+            return null;
+        }
+
+        ConfluenceInputProperties properties = context.getProperties();
+
+        if (!properties.isConvertToXWiki() || properties.getGroupMapping() == null) {
+            return groupName;
+        }
+
+        String group = properties.getGroupMapping().get(groupName);
+        if (group != null) {
+            return group;
+        }
+
+        String format = properties.getGroupFormat();
+        if (StringUtils.isEmpty(format)) {
+            return groupName;
+        }
+
+        return format.replace("${group}", groupName).replace("${group._clean}", clean(groupName));
+    }
+
     /**
      * @param userName the Confluence username
      * @return the corresponding XWiki username, without forbidden characters
@@ -219,8 +255,22 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
      */
     public String toUserReference(String userName)
     {
+        return getUserOrGroupReference(toUserReferenceName(userName));
+    }
+
+    /**
+     * @param groupName the Confluence username
+     * @return the corresponding XWiki user reference
+     * @since 9.45.0
+     */
+    public String toGroupReference(String groupName)
+    {
+        return getUserOrGroupReference(toGroupReferenceName(groupName));
+    }
+
+    private String getUserOrGroupReference(String userReferenceName)
+    {
         // Transform user name according to configuration
-        String userReferenceName = toUserReferenceName(userName);
         if (userReferenceName == null || userReferenceName.isEmpty()) {
             return null;
         }
