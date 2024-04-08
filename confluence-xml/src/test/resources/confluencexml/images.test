@@ -3,29 +3,18 @@
 .# Various images related tests
 .#------------------------------------------------------------------------------
 <wikiSpace name="TestSpace">
-  <wikiDocument name="TestContent">
+  <wikiDocument name="WebHome">
     <wikiDocumentLocale>
       <wikiDocumentRevision>
         <p>
           <parameters>
             <entry>
-              <string>parent_reference</string>
-              <org.xwiki.model.reference.EntityReference>
-                <name>validatedpage</name>
-                <parent>
-                  <name>validatedspace</name>
-                  <type>SPACE</type>
-                </parent>
-                <type>DOCUMENT</type>
-              </org.xwiki.model.reference.EntityReference>
-            </entry>
-            <entry>
               <string>title</string>
-              <string>TestContent</string>
+              <string>TestSpace</string>
             </entry>
             <entry>
               <string>content</string>
-              <string>[[image:attach:validatedspace.validatedpage@image.png]]
+              <string>[[image:attach:validatedspace.validatedpage.WebHome@image.png]]
 
 [[sos//asdas//ame ca**sasd**ion>>image:attach:rock.jpg||custom-width="true" original-height="1200" data-xwiki-image-style-alignment="start" alt="some alt text" width="50" align="left" original-width="1200" data-xwiki-image-style-border="true"]]
 
@@ -55,36 +44,54 @@
   </wikiDocument>
 </wikiSpace>
 <wikiSpace name="Other Space">
-  <wikiDocument name="Other Page">
-    <wikiDocumentLocale>
-      <wikiDocumentRevision>
-        <p>
-          <parameters>
-            <entry>
-              <string>title</string>
-              <string>Other Page</string>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
+  <wikiSpace name="Other Page">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <wikiDocumentRevision>
+          <p>
+            <parameters>
+              <entry>
+                <string>title</string>
+                <string>Other Page</string>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
 </wikiSpace>
 <wikiSpace name="validatedspace">
-  <wikiDocument name="validatedpage">
+  <wikiDocument name="WebHome">
     <wikiDocumentLocale>
       <wikiDocumentRevision>
         <p>
           <parameters>
             <entry>
               <string>title</string>
-              <string>pagetovalidate</string>
+              <string>spacetovalidate</string>
             </entry>
           </parameters>
         </p>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
+  <wikiSpace name="validatedpage">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <wikiDocumentRevision>
+          <p>
+            <parameters>
+              <entry>
+                <string>title</string>
+                <string>pagetovalidate</string>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml

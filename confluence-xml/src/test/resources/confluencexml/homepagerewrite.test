@@ -122,5 +122,4 @@
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=homepagerewrite
-.configuration.nestedSpacesEnabled=true
 .#------------------------------------------------------------------------------

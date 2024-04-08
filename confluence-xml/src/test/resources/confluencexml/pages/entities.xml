@@ -42,9 +42,6 @@
       <id name="id">101</id>
     </property>
     <property name="title"><![CDATA[Page10]]></property>
-    <property name="parent" class="Page" package="com.atlassian.confluence.pages">
-      <id name="id">42</id>
-    </property>
   </object>
 
 </hibernate-generic>

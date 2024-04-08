@@ -12,9 +12,6 @@
       <id name="id">100</id>
     </property>
     <property name="title"><![CDATA[TestContent]]></property>
-    <property name="parent" class="Page" package="com.atlassian.confluence.pages">
-      <id name="id">12</id>
-    </property>
     <collection name="bodyContents">
       <element class="BodyContent" package="com.atlassian.confluence.core">
         <id name="id">0</id>
@@ -97,6 +94,22 @@
     <id name="id">102</id>
     <property name="name"><![CDATA[spacetovalidate]]></property>
     <property name="key"><![CDATA[spacetovalidate]]></property>
+    <property name="homePage" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">13</id>
+    </property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">13</id>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+      <id name="id">102</id>
+    </property>
+    <property name="title"><![CDATA[Home]]></property>
+    <collection name="bodyContents">
+      <element class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">2</id>
+      </element>
+    </collection>
   </object>
 
   <object class="Page" package="com.atlassian.confluence.pages">
@@ -107,11 +120,18 @@
     <property name="title"><![CDATA[pagetovalidate]]></property>
     <collection name="bodyContents">
       <element class="BodyContent" package="com.atlassian.confluence.core">
-        <id name="id">0</id>
+        <id name="id">1</id>
       </element>
     </collection>
-    <property name="parent" class="Page" package="com.atlassian.confluence.pages">
-      <id name="id">42</id>
-    </property>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">1</id>
+    <property name="body"><![CDATA[target page]]></property>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">2</id>
+    <property name="body"><![CDATA[Home content]]></property>
   </object>
 </hibernate-generic>

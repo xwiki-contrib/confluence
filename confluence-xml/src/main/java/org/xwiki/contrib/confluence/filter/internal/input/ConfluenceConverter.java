@@ -110,8 +110,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             return new EntityReference(entityReference.getName(), EntityType.ATTACHMENT, convertedParent);
         }
 
-        if (parent == null && EntityType.DOCUMENT.equals(entityReference.getType())
-            && this.context.getProperties().isNestedSpacesEnabled()) {
+        if (parent == null && EntityType.DOCUMENT.equals(entityReference.getType())) {
             return toDocumentReference(context.getCurrentSpace(), entityReference.getName());
         }
 
@@ -330,11 +329,11 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return resolveUserReference(new UserResourceReference(userId)).getReference();
     }
 
-    private EntityReference toNonNestedDocumentReference(String spaceKey, String documentName, boolean asSpace)
+    private EntityReference toNonNestedDocumentReference(String spaceKey, String documentName)
     {
         String convertedName = toEntityName(documentName);
         EntityReference space = spaceKey == null ? null : fromSpaceKey(spaceKey);
-        return new EntityReference(convertedName, asSpace ? EntityType.SPACE : EntityType.DOCUMENT, space);
+        return getDocumentReference(new EntityReference(convertedName, EntityType.SPACE, space), false);
     }
 
     private EntityReference fromSpaceKey(String spaceKey)
@@ -371,62 +370,47 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     EntityReference convertDocumentReference(ConfluenceProperties pageProperties, String spaceKey,
         boolean asSpace) throws ConfigurationException
     {
-
-        ConfluenceInputProperties properties = context.getProperties();
-
-        String documentName;
-        if (!properties.isNestedSpacesEnabled() && pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
-            if (asSpace) {
-                return new SpaceReference(spaceKey);
-            }
-            documentName = properties.getSpacePageName();
-        } else {
-            documentName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
-        }
+        String documentName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
 
         if (documentName == null) {
             return null;
         }
 
-        if (properties.isNestedSpacesEnabled()) {
-            return toNestedDocumentReference(spaceKey, documentName, pageProperties, asSpace);
-        }
-
-        return toNonNestedDocumentReference(spaceKey, documentName, asSpace);
+        return toNestedDocumentReference(spaceKey, documentName, pageProperties, asSpace);
     }
 
-    private EntityReference toNestedDocumentReference(String maybeSpaceKey, String documentName)
+    EntityReference toDocumentReference(String spaceKey, String documentName)
     {
         EntityReference docRef = null;
-        String spaceKey = maybeSpaceKey == null ? context.getCurrentSpace() : maybeSpaceKey;
-        if (spaceKey != null) {
+        String spaceKey1 = spaceKey == null ? context.getCurrentSpace() : spaceKey;
+        if (spaceKey1 != null) {
             ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
 
             Long pageId = WEB_HOME.equals(documentName)
-                ? confluencePackage.getHomePage(confluencePackage.getSpacesByKey().get(spaceKey))
-                : confluencePackage.getPageId(spaceKey, documentName);
+                ? confluencePackage.getHomePage(confluencePackage.getSpacesByKey().get(spaceKey1))
+                : confluencePackage.getPageId(spaceKey1, documentName);
             // FIXME: ConfluenceXWikiGeneratorListener hardcodes a WebHome document name when encountering absolute URLs
             // to Confluence spaces. It would be better to avoid anything XWiki from the links we handle here.
             if (pageId == null) {
-                docRef = getDocRefFromLinkMapping(spaceKey, documentName);
+                docRef = getDocRefFromLinkMapping(spaceKey1, documentName);
                 if (docRef == null) {
-                    warnMissingPage(spaceKey, documentName);
+                    warnMissingPage(spaceKey1, documentName);
                 }
             } else {
                 try {
                     ConfluenceProperties pageProperties = confluencePackage.getPageProperties(pageId, false);
                     if (pageProperties != null) {
-                        return toNestedDocumentReference(spaceKey, documentName, pageProperties, false);
+                        return toNestedDocumentReference(spaceKey1, documentName, pageProperties, false);
                     }
                 } catch (ConfigurationException e) {
-                    docRef = getDocRefFromLinkMapping(spaceKey, documentName);
+                    docRef = getDocRefFromLinkMapping(spaceKey1, documentName);
                     if (docRef == null) {
                         this.logger.error("Could not convert link, falling back to non nested conversion", e);
                     }
                 }
             }
         }
-        return docRef == null ? toNonNestedDocumentReference(spaceKey, documentName, false) : docRef;
+        return docRef == null ? toNonNestedDocumentReference(spaceKey1, documentName) : docRef;
     }
 
     private void warnMissingPage(String spaceKey, String documentName)
@@ -470,12 +454,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         }
 
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
-            EntityReference space = fromSpaceKey(spaceKey);
-            if (asSpace) {
-                return space;
-            }
-
-            return new EntityReference(WEB_HOME, EntityType.DOCUMENT, space);
+            return getDocumentReference(fromSpaceKey(spaceKey), asSpace);
         }
 
         Long parentId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_PARENT, null);
@@ -503,29 +482,25 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         }
 
         String convertedName = toEntityName(documentName);
-        if (asSpace) {
-            if (WEB_HOME.equals(convertedName)) {
-                return parent;
-            }
+
+        if (asSpace && WEB_HOME.equals(convertedName)) {
+            return parent;
         }
 
         if (convertedName == null) {
             return getDocRefFromLinkMapping(spaceKey, documentName);
         }
 
-        if (asSpace) {
-            return new EntityReference(convertedName, EntityType.SPACE, parent);
-        }
-
-        parent = new EntityReference(convertedName, EntityType.SPACE, parent);
-        return new EntityReference(WEB_HOME, EntityType.DOCUMENT, parent);
+        return getDocumentReference(new EntityReference(convertedName, EntityType.SPACE, parent), asSpace);
     }
 
-    EntityReference toDocumentReference(String spaceKey, String documentName)
+    private static EntityReference getDocumentReference(EntityReference space, boolean asSpace)
     {
-        return this.context.getProperties().isNestedSpacesEnabled()
-            ? toNestedDocumentReference(spaceKey, documentName)
-            : toNonNestedDocumentReference(spaceKey, documentName, false);
+        if (asSpace) {
+            return space;
+        }
+
+        return new EntityReference(WEB_HOME, EntityType.DOCUMENT, space);
     }
 
     @Override

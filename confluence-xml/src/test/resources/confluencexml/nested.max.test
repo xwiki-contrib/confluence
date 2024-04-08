@@ -400,7 +400,6 @@ This is an excerpt
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=nested
-.configuration.nestedSpacesEnabled=true
 .configuration.rightsEnabled=false
 .configuration.maxPageCount=4
 .#------------------------------------------------------------------------------

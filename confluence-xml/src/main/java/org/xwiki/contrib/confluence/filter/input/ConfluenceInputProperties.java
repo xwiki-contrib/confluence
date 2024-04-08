@@ -34,6 +34,7 @@ import org.xwiki.filter.input.InputSource;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.properties.annotation.PropertyDescription;
+import org.xwiki.properties.annotation.PropertyHidden;
 import org.xwiki.properties.annotation.PropertyMandatory;
 import org.xwiki.properties.annotation.PropertyName;
 import org.xwiki.rendering.syntax.Syntax;
@@ -74,16 +75,6 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @see #isEntityNameValidation()
      */
     private boolean entityNameValidation = true;
-
-    /**
-     * @see #getSpacePageName()
-     */
-    private String spacePageName = "WebHome";
-
-    /**
-     * @see #isHomeRedirectEnabled()
-     */
-    private boolean homeRedirectEnabled = true;
 
     /**
      * @see #getBaseURLs()
@@ -216,11 +207,6 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private boolean tagsEnabled = true;
 
     /**
-     * @see #isNestedSpacesEnabled()
-     */
-    private boolean nestedSpacesEnabled;
-
-    /**
      * @see #getMaxPageCount()
      */
     private int maxPageCount = -1;
@@ -339,40 +325,50 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     /**
      * @return The name to use for space home page
      * Note: previously, this was incorrectly referring to the space description. This is fixed since version 9.35.0.
+     * @deprecated since 9.46.0
      */
     @PropertyName("Space home page")
     @PropertyDescription("The name to use for space home page")
+    @Deprecated (since = "9.46.0")
+    @PropertyHidden
     public String getSpacePageName()
     {
-        return this.spacePageName;
+        return "WebHome";
     }
 
     /**
-     * @param spacePageName The name to use for space home page
+     * @param ignored is ignored
+     * @deprecated since 9.46.0
      */
-    public void setSpacePageName(String spacePageName)
+    @Deprecated (since = "9.46.0")
+    public void setSpacePageName(String ignored)
     {
-        this.spacePageName = spacePageName;
+        // ignore
     }
 
     /**
      * @return whether redirect documents should be output for home pages.
      * @since 9.35.0
+     * @deprecated since 9.46.0
      */
     @PropertyName("Home redirects")
     @PropertyDescription("Produce redirects for home pages")
+    @Deprecated (since = "9.46.0")
+    @PropertyHidden
     public boolean isHomeRedirectEnabled()
     {
-        return this.homeRedirectEnabled;
+        return false;
     }
 
     /**
-     * @param homeRedirectEnabled whether redirect documents should be output for home pages.
+     * @param ignored is ignored
      * @since 9.35.0
+     * @deprecated since 9.46.0
      */
-    public void setHomeRedirectEnabled(boolean homeRedirectEnabled)
+    @Deprecated (since = "9.46.0")
+    public void setHomeRedirectEnabled(boolean ignored)
     {
-        this.homeRedirectEnabled = homeRedirectEnabled;
+        // ignore
     }
 
     /**
@@ -973,23 +969,29 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
 
     /**
      * @return whether spaces are nested during import.
+     * Always true, nested space migration is the only supported mode now.
      * @since 9.35.0
+     * @deprecated since 9.46.0
      */
     @PropertyName("Nested import")
     @PropertyDescription("Nest spaces during import.")
+    @Deprecated (since = "9.46.0")
+    @PropertyHidden
     public boolean isNestedSpacesEnabled()
     {
-        return nestedSpacesEnabled;
+        return true;
     }
 
     /**
-     * Set whether spaces are nested during import.
-     * @param nestedSpacesEnabled whether spaces should be nested during import
+     * Set whether spaces are nested during import. Ignored, nested space migration is the only supported mode now.
+     * @param ignored is ignored
      * @since 9.35.0
+     * @deprecated since 9.46.0
      */
-    public void setNestedSpacesEnabled(boolean nestedSpacesEnabled)
+    @Deprecated (since = "9.46.0")
+    public void setNestedSpacesEnabled(boolean ignored)
     {
-        this.nestedSpacesEnabled = nestedSpacesEnabled;
+        // ignored
     }
 
     /**

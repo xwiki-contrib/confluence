@@ -122,7 +122,7 @@ public class ConfluenceInputFilterStream
 
     private static final String FAILED_TO_GET_USER_PROPERTIES = "Failed to get user properties";
 
-    private static final String XWIKI_REDIRECT_CLASS = "XWiki.RedirectClass";
+    private static final String WEB_HOME = "WebHome";
 
     private static final String XWIKI_PREFERENCES_CLASS = "XWiki.XWikiPreferences";
 
@@ -487,17 +487,13 @@ public class ConfluenceInputFilterStream
 
             try {
                 if (this.properties.isContentsEnabled() || this.properties.isRightsEnabled()) {
-                    if (this.properties.isNestedSpacesEnabled()) {
-                        Long homePageId = confluencePackage.getHomePage(spaceId);
-                        if (homePageId != null) {
-                            inheritedRights = sendPage(homePageId, spaceKey, false, filter, proxyFilter);
-                            homePageProperties = getPageProperties(homePageId);
-                        }
-
-                        sendPages(spaceKey, false, confluencePackage.getOrphans(spaceId), filter, proxyFilter);
-                    } else {
-                        sendPages(spaceKey, false, pages, filter, proxyFilter);
+                    Long homePageId = confluencePackage.getHomePage(spaceId);
+                    if (homePageId != null) {
+                        inheritedRights = sendPage(homePageId, spaceKey, false, filter, proxyFilter);
+                        homePageProperties = getPageProperties(homePageId);
                     }
+
+                    sendPages(spaceKey, false, confluencePackage.getOrphans(spaceId), filter, proxyFilter);
                     sendBlogs(spaceKey, blogPages, filter, proxyFilter);
                 }
             } catch (ConfluenceInterruptedException e) {
@@ -857,7 +853,7 @@ public class ConfluenceInputFilterStream
             if (pageProperties != null) {
                 String documentName;
                 if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
-                    documentName = this.properties.getSpacePageName();
+                    documentName = WEB_HOME;
                 } else {
                     documentName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
                 }
@@ -1161,32 +1157,15 @@ public class ConfluenceInputFilterStream
             return null;
         }
 
-        boolean isNestedEnabled = this.properties.isNestedSpacesEnabled();
-
         String title = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
 
         String documentName;
         boolean isHomePage = pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE);
         if (isHomePage) {
-            documentName = this.properties.getSpacePageName();
+            documentName = WEB_HOME;
             if (documentName == null || documentName.isEmpty()) {
                 emptyStep();
                 return null;
-            }
-
-            if (!documentName.equals(title) && !isNestedEnabled && this.properties.isHomeRedirectEnabled()) {
-                // Set up a redirect page for the home page, so we don't break links from spaces that are not imported
-                // in the same package
-                FilterEventParameters redirectDocParameters = new FilterEventParameters();
-                redirectDocParameters.put(WikiDocumentFilter.PARAMETER_HIDDEN, true);
-                proxyFilter.beginWikiDocument(title, redirectDocParameters);
-                FilterEventParameters redirectParameters = new FilterEventParameters();
-                redirectParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, XWIKI_REDIRECT_CLASS);
-                proxyFilter.beginWikiObject(XWIKI_REDIRECT_CLASS, redirectParameters);
-                EntityReference location = getReferenceForDocument(spaceKey, this.properties.getSpacePageName());
-                proxyFilter.onWikiObjectProperty("location", location, FilterEventParameters.EMPTY);
-                proxyFilter.endWikiObject(XWIKI_REDIRECT_CLASS, redirectParameters);
-                proxyFilter.endWikiDocument(title, redirectDocParameters);
             }
         } else {
             documentName = title;
@@ -1217,14 +1196,14 @@ public class ConfluenceInputFilterStream
             this.logger.info("Sending page [{}], Confluence id=[{}]", createPageIdentifier(pageId, spaceKey), pageId);
         }
 
-        String spaceName = isNestedEnabled ? confluenceConverter.toEntityName(title) : "";
+        String spaceName = confluenceConverter.toEntityName(title);
 
-        boolean nested = isNestedEnabled && !blog;
+        boolean nested = !blog;
         if (nested) {
             if (!isHomePage) {
                 proxyFilter.beginWikiSpace(spaceName, FilterEventParameters.EMPTY);
             }
-            documentName = this.properties.getSpacePageName();
+            documentName = WEB_HOME;
         } else {
             // Apply the standard entity name validator
             documentName = confluenceConverter.toEntityName(documentName);
@@ -1448,7 +1427,7 @@ public class ConfluenceInputFilterStream
                 }
 
                 if (right != null && !(confluenceRight.users.isEmpty() && confluenceRight.group.isEmpty())) {
-                    if (this.properties.isNestedSpacesEnabled() && Right.VIEW.equals(right)) {
+                    if (Right.VIEW.equals(right)) {
                         inheritedRights.add(confluenceRight);
                     } else {
                         sendRight(proxyFilter, confluenceRight.group, right, confluenceRight.users, false);
@@ -1602,17 +1581,6 @@ public class ConfluenceInputFilterStream
     private void prepareRevisionMetadata(ConfluenceProperties pageProperties,
         FilterEventParameters documentRevisionParameters)
     {
-        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_PARENT) && !properties.isNestedSpacesEnabled()) {
-            try {
-                EntityReference parentRef = getReferenceFromId(pageProperties, ConfluenceXMLPackage.KEY_PAGE_PARENT);
-                if (parentRef != null) {
-                    documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_PARENT, parentRef);
-                }
-            } catch (Exception e) {
-                this.logger.error("Failed to parse parent for the document with id [{}]",
-                    createPageIdentifier(pageProperties), e);
-            }
-        }
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISION_AUTHOR)) {
             documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_REVISION_EFFECTIVEMETADATA_AUTHOR,
                 confluenceConverter.toUserReference(
@@ -1785,7 +1753,7 @@ public class ConfluenceInputFilterStream
 
         Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
         String docName = pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)
-            ? this.properties.getSpacePageName()
+            ? WEB_HOME
             : confluenceConverter.toEntityName(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE));
 
         if (StringUtils.isEmpty(docName)) {
@@ -2098,7 +2066,7 @@ public class ConfluenceInputFilterStream
     private void addBlogDescriptorPage(ConfluenceFilter proxyFilter) throws FilterException
     {
         // Apply the standard entity name validator
-        String documentName = confluenceConverter.toEntityName(this.properties.getSpacePageName());
+        String documentName = confluenceConverter.toEntityName(WEB_HOME);
 
         // > WikiDocument
         proxyFilter.beginWikiDocument(documentName, FilterEventParameters.EMPTY);

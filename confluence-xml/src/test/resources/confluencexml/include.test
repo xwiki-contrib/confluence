@@ -3,55 +3,57 @@
 .# Various links and reference related tests
 .#------------------------------------------------------------------------------
 <wikiSpace name="TestSpace">
-  <wikiDocument name="TestContent">
-    <wikiDocumentLocale>
-      <wikiDocumentRevision>
-        <p>
-          <parameters>
-            <entry>
-              <string>title</string>
-              <string>TestContent</string>
-            </entry>
-            <entry>
-              <string>content</string>
-              <string>{{display reference="validatedspace.Includee"/}}
+  <wikiSpace name="TestContent">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <wikiDocumentRevision>
+          <p>
+            <parameters>
+              <entry>
+                <string>title</string>
+                <string>TestContent</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>{{display reference="validatedspace.Includee.WebHome"/}}
 
-{{display reference="recently-updated"/}}
+{{display reference="TestSpace.recently-updated.WebHome"/}}
 
-{{display reference="Attachments"/}}
+{{display reference="TestSpace.Attachments.WebHome"/}}
 
-{{display reference="note, tip, info, success, warning, error"/}}
+{{display reference="TestSpace.note, tip, info, success, warning, error.WebHome"/}}
 
-{{display reference="validatedpage"/}}
+{{display reference="TestSpace.validatedpage.WebHome"/}}
 
-{{excerpt-include 0="validatedpage"/}}</string>
-            </entry>
-            <entry>
-              <string>syntax</string>
-              <org.xwiki.rendering.syntax.Syntax>
-                <type>
-                  <name>XWiki</name>
-                  <id>xwiki</id>
-                  <variants class="empty-list"/>
-                </type>
-                <version>2.1</version>
-              </org.xwiki.rendering.syntax.Syntax>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
+{{excerpt-include 0="TestSpace.validatedpage.WebHome"/}}</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
 </wikiSpace>
 <wikiSpace name="validatedspace">
-  <wikiDocument name="validatedpage">
+  <wikiDocument name="WebHome">
     <wikiDocumentLocale>
       <wikiDocumentRevision>
         <p>
           <parameters>
             <entry>
               <string>title</string>
-              <string>pagetovalidate</string>
+              <string>spacetovalidate</string>
             </entry>
           </parameters>
         </p>

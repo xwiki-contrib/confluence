@@ -99,5 +99,4 @@ Other file:
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=viewfileblock
-.configuration.nestedSpacesEnabled=true
 .#------------------------------------------------------------------------------

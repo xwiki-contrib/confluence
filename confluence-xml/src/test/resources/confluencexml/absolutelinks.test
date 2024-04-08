@@ -41,7 +41,7 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>[[Deal Portal - Test - My Wiki>>doc:TEST.Deal Portal||shape="rect"]]
+              <string>[[Deal Portal - Test - My Wiki>>doc:TEST.Deal Portal.WebHome||shape="rect"]]
 
  
 
@@ -49,13 +49,13 @@
 
  
 
-[[Archivist - Installation manual - Test - My Wiki>>doc:TEST.Archivist - Installation manual||shape="rect"]]
+[[Archivist - Installation manual - Test - My Wiki>>doc:TEST.Archivist - Installation manual.WebHome||shape="rect"]]
 
  
 
  
 
-[[Maciej_test - z_Sandbox Admin Testing - My Wiki>>doc:ABDoc.Maciej_test||shape="rect"]]
+[[Maciej_test - z_Sandbox Admin Testing - My Wiki>>doc:ABDoc.Maciej_test.WebHome||shape="rect"]]
 
  
 
@@ -85,7 +85,6 @@
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=absolutelinks
-.configuration.nestedSpacesEnabled=true
 .configuration.baseURLs=http://my.wiki.invalid/wiki
 .configuration.linkMapping={":ids": {"134979879": "xwiki:Test1.MyDoc.WebHome"}, "myspace:ids": {"11045169": "xwiki:MySpace.Test.WebHome"}}
 .#------------------------------------------------------------------------------

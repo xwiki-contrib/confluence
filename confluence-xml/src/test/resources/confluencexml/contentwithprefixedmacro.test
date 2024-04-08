@@ -3,37 +3,39 @@
 .# Content conversions
 .#------------------------------------------------------------------------------
 <wikiSpace name="TestSpace">
-  <wikiDocument name="TestContent">
-    <wikiDocumentLocale>
-      <wikiDocumentRevision>
-        <p>
-          <parameters>
-            <entry>
-              <string>title</string>
-              <string>TestContent</string>
-            </entry>
-            <entry>
-              <string>content</string>
-              <string>{{id name="value1"/}}{{id name="value2"/}}{{confluence_macro parameter="value"}}rich **text** here{{/confluence_macro}}{{confluence_macro}}simple content{{/confluence_macro}}{{macrowithdefaultparameter 0="value"/}}{{confluence_macro}}{{confluence_submacro parameter="value"}}
+  <wikiSpace name="TestContent">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <wikiDocumentRevision>
+          <p>
+            <parameters>
+              <entry>
+                <string>title</string>
+                <string>TestContent</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>{{id name="value1"/}}{{id name="value2"/}}{{confluence_macro parameter="value"}}rich **text** here{{/confluence_macro}}{{confluence_macro}}simple content{{/confluence_macro}}{{macrowithdefaultparameter 0="value"/}}{{confluence_macro}}{{confluence_submacro parameter="value"}}
 sub macro rich **text** content
 {{/confluence_submacro}}{{/confluence_macro}}</string>
-            </entry>
-            <entry>
-              <string>syntax</string>
-              <org.xwiki.rendering.syntax.Syntax>
-                <type>
-                  <name>XWiki</name>
-                  <id>xwiki</id>
-                  <variants class="empty-list"/>
-                </type>
-                <version>2.1</version>
-              </org.xwiki.rendering.syntax.Syntax>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml

@@ -5,43 +5,32 @@
 <wikiSpace name="Composed">
   <wikiSpace name="Root">
     <wikiSpace name="TestSpace">
-      <wikiDocument name="TestContent">
+      <wikiDocument name="WebHome">
         <wikiDocumentLocale>
           <wikiDocumentRevision>
             <p>
               <parameters>
                 <entry>
-                  <string>parent_reference</string>
-                  <org.xwiki.model.reference.EntityReference>
-                    <name>validatedpage</name>
-                    <parent>
-                      <name>validatedspace</name>
-                      <type>SPACE</type>
-                    </parent>
-                    <type>DOCUMENT</type>
-                  </org.xwiki.model.reference.EntityReference>
-                </entry>
-                <entry>
                   <string>title</string>
-                  <string>TestContent</string>
+                  <string>TestSpace</string>
                 </entry>
                 <entry>
                   <string>content</string>
-                  <string>[[(% param="value" %)link1>>doc:xwiki:Composed.Root.Other Space.Other Page||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link1>>doc:xwiki:Composed.Root.Other Space.Other Page||shape="rect"]]
+                  <string>[[(% param="value" %)link1>>doc:xwiki:Composed.Root.Other Space.Other Page.WebHome||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link1>>doc:xwiki:Composed.Root.Other Space.Other Page.WebHome||shape="rect"]]
 
-[[(% param="value" %)link2>>doc:xwiki:Composed.Root.Other Space.Other Page||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link2>>doc:xwiki:Composed.Root.Other Space.Other Page||shape="rect"]]
+[[(% param="value" %)link2>>doc:xwiki:Composed.Root.Other Space.Other Page.WebHome||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link2>>doc:xwiki:Composed.Root.Other Space.Other Page.WebHome||shape="rect"]]
 
-[[(% param="value" %)link3>>attach:xwiki:Composed.Root.Other Space.Other Page@attachment.png||queryString="param=value" shape="rect"]](%%) [[(% param="value" %)link3>>attach:xwiki:Composed.Root.Other Space.Other Page@attachment.png||shape="rect"]]
+[[(% param="value" %)link3>>attach:xwiki:Composed.Root.Other Space.Other Page.WebHome@attachment.png||queryString="param=value" shape="rect"]](%%) [[(% param="value" %)link3>>attach:xwiki:Composed.Root.Other Space.Other Page.WebHome@attachment.png||shape="rect"]]
 
 [[(% param="value" %)link4>>icon:icon||shape="rect"]](%%) [[(% param="value" %)link4>>icon:icon||shape="rect"]]
 
-[[(% param="value" %)link5>>doc:xwiki:Composed.Root.Other Space.Other Page||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link5>>doc:xwiki:Composed.Root.Other Space.Other Page||shape="rect"]]
+[[(% param="value" %)link5>>doc:xwiki:Composed.Root.Other Space.Other Page.WebHome||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link5>>doc:xwiki:Composed.Root.Other Space.Other Page.WebHome||shape="rect"]]
 
-[[link6>>doc:xwiki:Composed.Root.validatedspace.validatedpage||shape="rect"]]
+[[link6>>doc:xwiki:Composed.Root.validatedspace.validatedpage.WebHome||shape="rect"]]
 
-[[pagetovalidate>>doc:validatedpage]]
+[[pagetovalidate>>doc:xwiki:Composed.Root.TestSpace.validatedpage.WebHome]]
 
-[[pagetovalidate>>doc:xwiki:Composed.Root.validatedspace.validatedpage||anchor="anchor"]]
+[[pagetovalidate>>doc:xwiki:Composed.Root.validatedspace.validatedpage.WebHome||anchor="anchor"]]
 
 [[Highlights>>doc:||anchor="anchor"]]</string>
                 </entry>
@@ -63,36 +52,54 @@
       </wikiDocument>
     </wikiSpace>
     <wikiSpace name="Other Space">
-      <wikiDocument name="Other Page">
-        <wikiDocumentLocale>
-          <wikiDocumentRevision>
-            <p>
-              <parameters>
-                <entry>
-                  <string>title</string>
-                  <string>Other Page</string>
-                </entry>
-              </parameters>
-            </p>
-          </wikiDocumentRevision>
-        </wikiDocumentLocale>
-      </wikiDocument>
+      <wikiSpace name="Other Page">
+        <wikiDocument name="WebHome">
+          <wikiDocumentLocale>
+            <wikiDocumentRevision>
+              <p>
+                <parameters>
+                  <entry>
+                    <string>title</string>
+                    <string>Other Page</string>
+                  </entry>
+                </parameters>
+              </p>
+            </wikiDocumentRevision>
+          </wikiDocumentLocale>
+        </wikiDocument>
+      </wikiSpace>
     </wikiSpace>
     <wikiSpace name="validatedspace">
-      <wikiDocument name="validatedpage">
+      <wikiDocument name="WebHome">
         <wikiDocumentLocale>
           <wikiDocumentRevision>
             <p>
               <parameters>
                 <entry>
                   <string>title</string>
-                  <string>pagetovalidate</string>
+                  <string>spacetovalidate</string>
                 </entry>
               </parameters>
             </p>
           </wikiDocumentRevision>
         </wikiDocumentLocale>
       </wikiDocument>
+      <wikiSpace name="validatedpage">
+        <wikiDocument name="WebHome">
+          <wikiDocumentLocale>
+            <wikiDocumentRevision>
+              <p>
+                <parameters>
+                  <entry>
+                    <string>title</string>
+                    <string>pagetovalidate</string>
+                  </entry>
+                </parameters>
+              </p>
+            </wikiDocumentRevision>
+          </wikiDocumentLocale>
+        </wikiDocument>
+      </wikiSpace>
     </wikiSpace>
   </wikiSpace>
 </wikiSpace>

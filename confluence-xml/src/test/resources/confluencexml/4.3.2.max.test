@@ -2,102 +2,6 @@
 .expect|filter+xml
 .#------------------------------------------------------------------------------
 <wikiSpace name="PRIV">
-  <wikiDocument name="Private page 1">
-    <wikiDocumentLocale>
-      <p>
-        <parameters>
-          <entry>
-            <string>creation_author</string>
-            <string>XWiki.Admin</string>
-          </entry>
-          <entry>
-            <string>creation_date</string>
-            <date>2013-10-14 15:37:52.357 UTC</date>
-          </entry>
-          <entry>
-            <string>lastrevision</string>
-            <string>1</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiDocumentRevision revision="1">
-        <p>
-          <parameters>
-            <entry>
-              <string>parent_reference</string>
-              <org.xwiki.model.reference.EntityReference>
-                <name>WebHome</name>
-                <type>DOCUMENT</type>
-              </org.xwiki.model.reference.EntityReference>
-            </entry>
-            <entry>
-              <string>revision_author</string>
-              <string>XWiki.Admin</string>
-            </entry>
-            <entry>
-              <string>revision_date</string>
-              <date>2013-10-14 15:37:52.357 UTC</date>
-            </entry>
-            <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>title</string>
-              <string>Private page 1</string>
-            </entry>
-            <entry>
-              <string>content</string>
-              <string>Content of private page 1</string>
-            </entry>
-            <entry>
-              <string>syntax</string>
-              <org.xwiki.rendering.syntax.Syntax>
-                <type>
-                  <name>XWiki</name>
-                  <id>xwiki</id>
-                  <variants class="empty-list"/>
-                </type>
-                <version>2.1</version>
-              </org.xwiki.rendering.syntax.Syntax>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
-  <wikiDocument name="privatespace Home">
-    <p>
-      <parameters>
-        <entry>
-          <string>hidden</string>
-          <boolean>true</boolean>
-        </entry>
-      </parameters>
-    </p>
-    <wikiObject name="XWiki.RedirectClass">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.RedirectClass</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="location">
-        <p>
-          <value t="org.xwiki.model.reference.EntityReference">
-            <name>WebHome</name>
-            <parent>
-              <name>PRIV</name>
-              <type>SPACE</type>
-            </parent>
-            <type>DOCUMENT</type>
-          </value>
-        </p>
-      </wikiObjectProperty>
-    </wikiObject>
-  </wikiDocument>
   <wikiDocument name="WebHome">
     <wikiDocumentLocale>
       <p>
@@ -209,6 +113,65 @@ To help you on your way, we've inserted some of our favourite macros on this hom
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
+  <wikiSpace name="Private page 1">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2013-10-14 15:37:52.357 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>1</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="1">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.Admin</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2013-10-14 15:37:52.357 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Private page 1</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Content of private page 1</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
   <wikiDocument name="WebPreferences">
     <p>
       <parameters>

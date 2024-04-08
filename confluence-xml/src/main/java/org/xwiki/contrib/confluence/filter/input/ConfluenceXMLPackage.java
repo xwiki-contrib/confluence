@@ -1456,7 +1456,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 this.logger.error("Could not find space of page [{}]. Importing it may fail.", pageId);
             } else {
                 if (!isBlog) {
-                    // FIXME only needed for nested migrations?
                     Long parent = properties.getLong(KEY_PAGE_PARENT, null);
                     if (parent == null) {
                         Long homePage = homePages.get(spaceId);

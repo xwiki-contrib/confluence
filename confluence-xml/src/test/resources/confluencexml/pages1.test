@@ -2,30 +2,32 @@
 .expect|filter+xml
 .#------------------------------------------------------------------------------
 <wikiSpace name="SpaceA">
-  <wikiDocument name="Page0">
-    <wikiDocumentLocale>
-      <wikiDocumentRevision>
-        <p>
-          <parameters>
-            <entry>
-              <string>title</string>
-              <string>Page0</string>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
+  <wikiSpace name="Page0">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <wikiDocumentRevision>
+          <p>
+            <parameters>
+              <entry>
+                <string>title</string>
+                <string>Page0</string>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
 </wikiSpace>
 <wikiSpace name="SpaceB">
-  <wikiDocument name="Page10">
+  <wikiDocument name="WebHome">
     <wikiDocumentLocale>
       <wikiDocumentRevision>
         <p>
           <parameters>
             <entry>
               <string>title</string>
-              <string>Page10</string>
+              <string>SpaceB</string>
             </entry>
           </parameters>
         </p>

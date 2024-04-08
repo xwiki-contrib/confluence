@@ -23,7 +23,6 @@ import com.xpn.xwiki.test.reference.ReferenceComponentList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
@@ -103,14 +102,7 @@ class DefaultLinkMapperTest
     {
         when(environment.getTemporaryDirectory()).thenReturn(XWikiTempDirUtil.createTemporaryDirectory());
         when(validationManager.getEntityReferenceNameStrategy()).thenReturn(validation);
-        when(validation.transform(anyString())).thenAnswer(new Answer<String>()
-        {
-            @Override
-            public String answer(InvocationOnMock invocation) throws Throwable
-            {
-                return (String) invocation.getArgument(0);
-            }
-        });
+        when(validation.transform(anyString())).thenAnswer((Answer<String>) invocation -> invocation.getArgument(0));
         when(validation.transform("spacetovalidate")).thenReturn("validatedspace");
         when(validation.transform("pagetovalidate")).thenReturn("validatedpage");;
     }
@@ -121,7 +113,6 @@ class DefaultLinkMapperTest
         contextField.setAccessible(true);
         DefaultConfluenceInputContext context = (DefaultConfluenceInputContext) contextField.get(linkMapper);
         ConfluenceInputProperties properties = new ConfluenceInputProperties();
-        properties.setNestedSpacesEnabled(true);
         properties.setRootSpace(new SpaceReference("xwiki", "Root"));
         ConfluenceXMLPackage confluencePackage = componentManager.getInstance(ConfluenceXMLPackage.class);
         context.set(confluencePackage, properties);
@@ -206,11 +197,11 @@ class DefaultLinkMapperTest
 
         Map<String, EntityReference> spaceB = new LinkedHashMap<>(1);
         expected.put("SpaceB", spaceB);
-        spaceB.put("Page10", docRef("xwiki:Root.SpaceB.Page10.WebHome"));
+        spaceB.put("Page10", docRef("xwiki:Root.SpaceB.WebHome"));
 
         Map<String, EntityReference> spaceBIds = new LinkedHashMap<>(1);
         expected.put("SpaceB:ids", spaceBIds);
-        spaceBIds.put("10", docRef("xwiki:Root.SpaceB.Page10.WebHome"));
+        spaceBIds.put("10", docRef("xwiki:Root.SpaceB.WebHome"));
 
         Assertions.assertEquals(expected, actual);
     }

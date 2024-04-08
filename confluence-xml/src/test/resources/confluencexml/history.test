@@ -2,122 +2,124 @@
 .expect|filter+xml
 .#------------------------------------------------------------------------------
 <wikiSpace name="TestSpace">
-  <wikiDocument name="Pricing Reports">
-    <wikiDocumentLocale>
-      <p>
-        <parameters>
-          <entry>
-            <string>creation_author</string>
-            <string>XWiki.331651</string>
-          </entry>
-          <entry>
-            <string>creation_date</string>
-            <date>2014-07-29 21:11:24.0 UTC</date>
-          </entry>
-          <entry>
-            <string>lastrevision</string>
-            <string>43</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiDocumentRevision revision="41">
+  <wikiSpace name="Pricing Reports">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
         <p>
           <parameters>
             <entry>
-              <string>revision_author</string>
-              <string>XWiki.496262</string>
+              <string>creation_author</string>
+              <string>XWiki.331651</string>
             </entry>
             <entry>
-              <string>revision_date</string>
-              <date>2015-06-08 13:44:07.0 UTC</date>
+              <string>creation_date</string>
+              <date>2014-07-29 21:11:24.0 UTC</date>
             </entry>
             <entry>
-              <string>revision_comment</string>
-              <string>comment 1</string>
-            </entry>
-            <entry>
-              <string>title</string>
-              <string>Pricing Reports</string>
-            </entry>
-            <entry>
-              <string>content</string>
-              <string>content 1</string>
-            </entry>
-            <entry>
-              <string>syntax</string>
-              <org.xwiki.rendering.syntax.Syntax>
-                <type>
-                  <name>XWiki</name>
-                  <id>xwiki</id>
-                  <variants class="empty-list"/>
-                </type>
-                <version>2.1</version>
-              </org.xwiki.rendering.syntax.Syntax>
+              <string>lastrevision</string>
+              <string>43</string>
             </entry>
           </parameters>
         </p>
-      </wikiDocumentRevision>
-      <wikiDocumentRevision revision="42">
-        <p>
-          <parameters>
-            <entry>
-              <string>revision_author</string>
-              <string>XWiki.496262</string>
-            </entry>
-            <entry>
-              <string>revision_date</string>
-              <date>2015-06-18 18:37:41.0 UTC</date>
-            </entry>
-            <entry>
-              <string>revision_comment</string>
-              <string>comment 2</string>
-            </entry>
-            <entry>
-              <string>title</string>
-              <string>Pricing Reports</string>
-            </entry>
-            <entry>
-              <string>content</string>
-              <string>content 2</string>
-            </entry>
-            <entry>
-              <string>syntax</string>
-              <org.xwiki.rendering.syntax.Syntax>
-                <type>
-                  <name>XWiki</name>
-                  <id>xwiki</id>
-                  <variants class="empty-list"/>
-                </type>
-                <version>2.1</version>
-              </org.xwiki.rendering.syntax.Syntax>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-      <wikiDocumentRevision revision="43">
-        <p>
-          <parameters>
-            <entry>
-              <string>revision_author</string>
-              <string>XWiki.408010</string>
-            </entry>
-            <entry>
-              <string>revision_date</string>
-              <date>2016-04-14 17:59:20.0 UTC</date>
-            </entry>
-            <entry>
-              <string>revision_comment</string>
-              <string>comment 3</string>
-            </entry>
-            <entry>
-              <string>title</string>
-              <string>Pricing Reports</string>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
+        <wikiDocumentRevision revision="41">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.496262</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2015-06-08 13:44:07.0 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string>comment 1</string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Pricing Reports</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>content 1</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+        <wikiDocumentRevision revision="42">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.496262</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2015-06-18 18:37:41.0 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string>comment 2</string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Pricing Reports</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>content 2</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+        <wikiDocumentRevision revision="43">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.408010</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2016-04-14 17:59:20.0 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string>comment 3</string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Pricing Reports</string>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml

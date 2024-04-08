@@ -3,106 +3,6 @@
 .# Content conversions
 .#------------------------------------------------------------------------------
 <wikiSpace name="AR">
-  <wikiDocument name="HoomePage">
-    <wikiDocumentLocale>
-      <p>
-        <parameters>
-          <entry>
-            <string>creation_author</string>
-            <string>XWiki.Admin</string>
-          </entry>
-          <entry>
-            <string>creation_date</string>
-            <date>2023-12-18 15:02:23.349 UTC</date>
-          </entry>
-          <entry>
-            <string>lastrevision</string>
-            <string>1</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiDocumentRevision revision="1">
-        <p>
-          <parameters>
-            <entry>
-              <string>revision_author</string>
-              <string>XWiki.Admin</string>
-            </entry>
-            <entry>
-              <string>revision_date</string>
-              <date>2023-12-18 15:02:55.147 UTC</date>
-            </entry>
-            <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>title</string>
-              <string>HoomePage</string>
-            </entry>
-            <entry>
-              <string>content</string>
-              <string>Hello there!</string>
-            </entry>
-            <entry>
-              <string>syntax</string>
-              <org.xwiki.rendering.syntax.Syntax>
-                <type>
-                  <name>XWiki</name>
-                  <id>xwiki</id>
-                  <variants class="empty-list"/>
-                </type>
-                <version>2.1</version>
-              </org.xwiki.rendering.syntax.Syntax>
-            </entry>
-          </parameters>
-        </p>
-        <wikiObject name="XWiki.TagClass">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.TagClass</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="tags" value="pagelabel"/>
-        </wikiObject>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
-  <wikiDocument name="AreTagsImported">
-    <p>
-      <parameters>
-        <entry>
-          <string>hidden</string>
-          <boolean>true</boolean>
-        </entry>
-      </parameters>
-    </p>
-    <wikiObject name="XWiki.RedirectClass">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.RedirectClass</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="location">
-        <p>
-          <value t="org.xwiki.model.reference.EntityReference">
-            <name>WebHome</name>
-            <parent>
-              <name>AR</name>
-              <type>SPACE</type>
-            </parent>
-            <type>DOCUMENT</type>
-          </value>
-        </p>
-      </wikiObjectProperty>
-    </wikiObject>
-  </wikiDocument>
   <wikiDocument name="WebHome">
     <wikiDocumentLocale>
       <p>
@@ -332,147 +232,207 @@ Learn more about [[inviting your team to Confluence>>url:https://confluence.atla
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
-  <wikiDocument name="notagspage">
-    <wikiDocumentLocale>
-      <p>
-        <parameters>
-          <entry>
-            <string>creation_author</string>
-            <string>XWiki.Admin</string>
-          </entry>
-          <entry>
-            <string>creation_date</string>
-            <date>2023-12-18 15:06:10.427 UTC</date>
-          </entry>
-          <entry>
-            <string>lastrevision</string>
-            <string>1</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiDocumentRevision revision="1">
+  <wikiSpace name="notagspage">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
         <p>
           <parameters>
             <entry>
-              <string>parent_reference</string>
-              <org.xwiki.model.reference.EntityReference>
-                <name>WebHome</name>
-                <type>DOCUMENT</type>
-              </org.xwiki.model.reference.EntityReference>
-            </entry>
-            <entry>
-              <string>revision_author</string>
+              <string>creation_author</string>
               <string>XWiki.Admin</string>
             </entry>
             <entry>
-              <string>revision_date</string>
-              <date>2023-12-18 15:09:19.915 UTC</date>
+              <string>creation_date</string>
+              <date>2023-12-18 15:06:10.427 UTC</date>
             </entry>
             <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>title</string>
-              <string>notagspage</string>
-            </entry>
-            <entry>
-              <string>content</string>
-              <string>sdasdafvcb
-
-fghgfgdffgfg</string>
-            </entry>
-            <entry>
-              <string>syntax</string>
-              <org.xwiki.rendering.syntax.Syntax>
-                <type>
-                  <name>XWiki</name>
-                  <id>xwiki</id>
-                  <variants class="empty-list"/>
-                </type>
-                <version>2.1</version>
-              </org.xwiki.rendering.syntax.Syntax>
+              <string>lastrevision</string>
+              <string>1</string>
             </entry>
           </parameters>
         </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
-  <wikiDocument name="three tags page">
-    <wikiDocumentLocale>
-      <p>
-        <parameters>
-          <entry>
-            <string>creation_author</string>
-            <string>XWiki.Admin</string>
-          </entry>
-          <entry>
-            <string>creation_date</string>
-            <date>2023-12-18 15:09:33.97 UTC</date>
-          </entry>
-          <entry>
-            <string>lastrevision</string>
-            <string>1</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiDocumentRevision revision="1">
-        <p>
-          <parameters>
-            <entry>
-              <string>parent_reference</string>
-              <org.xwiki.model.reference.EntityReference>
-                <name>WebHome</name>
-                <type>DOCUMENT</type>
-              </org.xwiki.model.reference.EntityReference>
-            </entry>
-            <entry>
-              <string>revision_author</string>
-              <string>XWiki.Admin</string>
-            </entry>
-            <entry>
-              <string>revision_date</string>
-              <date>2023-12-18 15:09:51.558 UTC</date>
-            </entry>
-            <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>title</string>
-              <string>three tags page</string>
-            </entry>
-            <entry>
-              <string>content</string>
-              <string>ffsd sdfsfs dsfsf</string>
-            </entry>
-            <entry>
-              <string>syntax</string>
-              <org.xwiki.rendering.syntax.Syntax>
-                <type>
-                  <name>XWiki</name>
-                  <id>xwiki</id>
-                  <variants class="empty-list"/>
-                </type>
-                <version>2.1</version>
-              </org.xwiki.rendering.syntax.Syntax>
-            </entry>
-          </parameters>
-        </p>
-        <wikiObject name="XWiki.TagClass">
+        <wikiDocumentRevision revision="1">
           <p>
             <parameters>
               <entry>
-                <string>class_reference</string>
-                <string>XWiki.TagClass</string>
+                <string>revision_author</string>
+                <string>XWiki.Admin</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-12-18 15:09:19.915 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>notagspage</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>sdasdafvcb
+
+fghgfgdffgfg</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
               </entry>
             </parameters>
           </p>
-          <wikiObjectProperty name="tags" value="three1|three2|generic"/>
-        </wikiObject>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+  <wikiSpace name="three tags page">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-12-18 15:09:33.97 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>1</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="1">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.Admin</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-12-18 15:09:51.558 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>three tags page</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>ffsd sdfsfs dsfsf</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="XWiki.TagClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.TagClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="tags" value="three1|three2|generic"/>
+          </wikiObject>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+  <wikiSpace name="HoomePage">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-12-18 15:02:23.349 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>1</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="1">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.Admin</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-12-18 15:02:55.147 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>HoomePage</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Hello there!</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="XWiki.TagClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.TagClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="tags" value="pagelabel"/>
+          </wikiObject>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml

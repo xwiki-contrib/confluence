@@ -3,34 +3,38 @@
 .# Content conversions
 .#------------------------------------------------------------------------------
 <wikiSpace name="TestSpace">
-  <wikiDocument name="TestContent">
-    <wikiDocumentLocale>
-      <wikiDocumentRevision>
-        <p>
-          <parameters>
-            <entry>
-              <string>title</string>
-              <string>TestContent</string>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
-  <wikiDocument name="Archived Page">
-    <wikiDocumentLocale>
-      <wikiDocumentRevision>
-        <p>
-          <parameters>
-            <entry>
-              <string>title</string>
-              <string>Archived Page</string>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
+  <wikiSpace name="TestContent">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <wikiDocumentRevision>
+          <p>
+            <parameters>
+              <entry>
+                <string>title</string>
+                <string>TestContent</string>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+  <wikiSpace name="Archived Page">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <wikiDocumentRevision>
+          <p>
+            <parameters>
+              <entry>
+                <string>title</string>
+                <string>Archived Page</string>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml

@@ -69,5 +69,4 @@ some [[line]]"
 .input|confluence+xml
 .configuration.source=noformat
 .configuration.homeRedirectEnabled=false
-.configuration.nestedSpaceEnabled=true
 .#------------------------------------------------------------------------------

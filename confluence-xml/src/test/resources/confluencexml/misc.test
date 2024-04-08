@@ -7,89 +7,90 @@
 .# XWIKI-10014 - Failed to import attachments with multiple versions in some version of Confluence
 .#------------------------------------------------------------------------------
 <wikiSpace name="TestSpace">
-  <wikiDocument name="with [[brace]]s (and [single brace])">
-    <wikiDocumentLocale>
-      <p>
-        <parameters>
-          <entry>
-            <string>creation_author</string>
-            <string>XWiki.clemens</string>
-          </entry>
-          <entry>
-            <string>creation_date</string>
-            <date>2013-12-12 13:30:15.120 UTC</date>
-          </entry>
-          <entry>
-            <string>lastrevision</string>
-            <string>2</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiDocumentRevision revision="1">
+  <wikiSpace name="with [[brace]]s (and [single brace])">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
         <p>
           <parameters>
             <entry>
-              <string>revision_author</string>
+              <string>creation_author</string>
               <string>XWiki.clemens</string>
             </entry>
             <entry>
-              <string>revision_date</string>
+              <string>creation_date</string>
               <date>2013-12-12 13:30:15.120 UTC</date>
             </entry>
             <entry>
-              <string>revision_comment</string>
-              <string></string>
+              <string>lastrevision</string>
+              <string>2</string>
             </entry>
-            <entry>
-              <string>title</string>
-              <string>with [[braces]] (and [single brace])</string>
-            </entry>
-            <entry>
-              <string>content</string>
-              <string>Test ~[~[brace]]s
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="1">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.clemens</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2013-12-12 13:30:15.120 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>with [[braces]] (and [single brace])</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Test ~[~[brace]]s
 
 {{code}}
 in [[code block]]
 {{/code}}
 
 [[image:attach:blind.gif]]</string>
-            </entry>
-            <entry>
-              <string>syntax</string>
-              <org.xwiki.rendering.syntax.Syntax>
-                <type>
-                  <name>XWiki</name>
-                  <id>xwiki</id>
-                  <variants class="empty-list"/>
-                </type>
-                <version>2.1</version>
-              </org.xwiki.rendering.syntax.Syntax>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-      <wikiDocumentRevision revision="2">
-        <p>
-          <parameters>
-            <entry>
-              <string>revision_author</string>
-              <string>XWiki.clemens</string>
-            </entry>
-            <entry>
-              <string>revision_date</string>
-              <date>2013-12-12 13:38:02.510 UTC</date>
-            </entry>
-            <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>title</string>
-              <string>with [[brace]]s (and [single brace])</string>
-            </entry>
-            <entry>
-              <string>content</string>
-              <string>Test ~[~[braces]]
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+        <wikiDocumentRevision revision="2">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.clemens</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2013-12-12 13:38:02.510 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>with [[brace]]s (and [single brace])</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Test ~[~[braces]]
 
 {{code}}
 in [[code block]]
@@ -98,72 +99,75 @@ in [[code block]]
 {{excerpt hidden="true" atlassian-macro-output-type="BLOCK"}}
 in //ex//cerpt
 {{/excerpt}}</string>
-            </entry>
-            <entry>
-              <string>syntax</string>
-              <org.xwiki.rendering.syntax.Syntax>
-                <type>
-                  <name>XWiki</name>
-                  <id>xwiki</id>
-                  <variants class="empty-list"/>
-                </type>
-                <version>2.1</version>
-              </org.xwiki.rendering.syntax.Syntax>
-            </entry>
-          </parameters>
-        </p>
-        <wikiAttachment name="blind.gif" size="111">
-          <p>
-            <content>R0lGODlhAQABALMAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAICAgCH5BAEAAA8AIf4WR0lGIFNtYXJ0U2F2ZXIgVmVyMS4xYQAsAAAAAAEAAQBABALwAQA7</content>
-            <parameters>
-              <entry>
-                <string>content_type</string>
-                <string>image/gif</string>
               </entry>
               <entry>
-                <string>creation_date</string>
-                <date>2013-12-12 13:38:37.720 UTC</date>
-              </entry>
-              <entry>
-                <string>revision</string>
-                <string>2</string>
-              </entry>
-              <entry>
-                <string>revision_date</string>
-                <date>2013-12-12 13:38:37.720 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string>second</string>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
               </entry>
             </parameters>
           </p>
-        </wikiAttachment>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
-  <wikiDocument name="empty">
-    <wikiDocumentLocale>
-      <p>
-        <parameters>
-          <entry>
-            <string>lastrevision</string>
-            <string>1</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiDocumentRevision revision="1">
+          <wikiAttachment name="blind.gif" size="111">
+            <p>
+              <content>R0lGODlhAQABALMAAP///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAICAgCH5BAEAAA8AIf4WR0lGIFNtYXJ0U2F2ZXIgVmVyMS4xYQAsAAAAAAEAAQBABALwAQA7</content>
+              <parameters>
+                <entry>
+                  <string>content_type</string>
+                  <string>image/gif</string>
+                </entry>
+                <entry>
+                  <string>creation_date</string>
+                  <date>2013-12-12 13:38:37.720 UTC</date>
+                </entry>
+                <entry>
+                  <string>revision</string>
+                  <string>2</string>
+                </entry>
+                <entry>
+                  <string>revision_date</string>
+                  <date>2013-12-12 13:38:37.720 UTC</date>
+                </entry>
+                <entry>
+                  <string>revision_comment</string>
+                  <string>second</string>
+                </entry>
+              </parameters>
+            </p>
+          </wikiAttachment>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+  <wikiSpace name="empty">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
         <p>
           <parameters>
             <entry>
-              <string>title</string>
-              <string>empty</string>
+              <string>lastrevision</string>
+              <string>1</string>
             </entry>
           </parameters>
         </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
+        <wikiDocumentRevision revision="1">
+          <p>
+            <parameters>
+              <entry>
+                <string>title</string>
+                <string>empty</string>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
   <wikiDocument name="WebPreferences">
     <p>
       <parameters>

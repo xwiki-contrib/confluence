@@ -2,37 +2,39 @@
 .expect|filter+xml
 .#------------------------------------------------------------------------------
 <wikiSpace name="SpaceA">
-  <wikiDocument name="Page0">
-    <wikiDocumentLocale>
-      <wikiDocumentRevision>
-        <p>
-          <parameters>
-            <entry>
-              <string>title</string>
-              <string>Page0</string>
-            </entry>
-          </parameters>
-        </p>
-        <wikiObject name="Confluence.Code.ConfluencePageClass">
+  <wikiSpace name="Page0">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <wikiDocumentRevision>
           <p>
             <parameters>
               <entry>
-                <string>class_reference</string>
-                <string>Confluence.Code.ConfluencePageClass</string>
+                <string>title</string>
+                <string>Page0</string>
               </entry>
             </parameters>
           </p>
-          <wikiObjectProperty name="id">
+          <wikiObject name="Confluence.Code.ConfluencePageClass">
             <p>
-              <value t="java.lang.Long">0</value>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>Confluence.Code.ConfluencePageClass</string>
+                </entry>
+              </parameters>
             </p>
-          </wikiObjectProperty>
-          <wikiObjectProperty name="url" value=""/>
-          <wikiObjectProperty name="space" value="SpaceA"/>
-        </wikiObject>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
+            <wikiObjectProperty name="id">
+              <p>
+                <value t="java.lang.Long">0</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="url" value=""/>
+            <wikiObjectProperty name="space" value="SpaceA"/>
+          </wikiObject>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
 </wikiSpace>
 <wikiSpace name="SpaceB"/>
 .#------------------------------------------------------------------------------
