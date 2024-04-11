@@ -1159,17 +1159,8 @@ public class ConfluenceInputFilterStream
 
         String title = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
 
-        String documentName;
         boolean isHomePage = pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE);
-        if (isHomePage) {
-            documentName = WEB_HOME;
-            if (documentName == null || documentName.isEmpty()) {
-                emptyStep();
-                return null;
-            }
-        } else {
-            documentName = title;
-        }
+        String documentName = isHomePage ? WEB_HOME : title;
 
         // Skip pages with empty title
         if (StringUtils.isEmpty(documentName)) {
