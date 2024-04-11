@@ -19,14 +19,6 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.input;
 
-import java.util.Collections;
-import java.util.Map;
-import java.util.regex.Pattern;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Singleton;
-
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -47,6 +39,13 @@ import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.rendering.listener.reference.DocumentResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceReference;
 import org.xwiki.rendering.listener.reference.UserResourceReference;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
+import java.util.Collections;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 /**
  * Default implementation of ConfluenceConverter.
