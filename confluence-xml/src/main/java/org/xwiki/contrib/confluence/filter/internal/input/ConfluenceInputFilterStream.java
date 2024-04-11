@@ -37,7 +37,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.CancellationException;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -539,7 +538,7 @@ public class ConfluenceInputFilterStream
                 inheritedRights = readPage(pageId, spaceKey, blog, filter, proxyFilter);
             } catch (MaxPageCountReachedException e) {
                 // ignore
-            } catch (CancellationException e) {
+            } catch (ConfluenceCanceledException e) {
                 throw e;
             } catch (Exception e) {
                 logger.error("Failed to filter the page with id [{}]", createPageIdentifier(pageId, spaceKey), e);
