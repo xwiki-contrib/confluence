@@ -126,7 +126,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             if (entityElement.getType() == EntityType.DOCUMENT || entityElement.getType() == EntityType.SPACE) {
                 String name = entityElement.getName();
                 String convertedName = this.converter.convert(name);
-                if (convertedName == null) {
+                if (convertedName == null || convertedName.isEmpty()) {
                     logger.warn("Could not convert entity part [{}] in [{}]. This is a bug, please report it", name,
                         entityReference);
                     return null;
