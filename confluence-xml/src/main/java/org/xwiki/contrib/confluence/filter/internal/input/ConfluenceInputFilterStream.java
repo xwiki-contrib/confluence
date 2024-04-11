@@ -1227,7 +1227,7 @@ public class ConfluenceInputFilterStream
 
     private Collection<ConfluenceRight> sendTerminalDoc(boolean blog, Object filter, ConfluenceFilter proxyFilter,
         String documentName, FilterEventParameters documentParameters, ConfluenceProperties pageProperties,
-        String spaceKey, boolean isHomePage) throws FilterException
+        String spaceKey, boolean isHomePage) throws FilterException, ConfluenceCanceledException
     {
         this.progress.startStep(this);
         // > WikiDocument
@@ -1271,7 +1271,7 @@ public class ConfluenceInputFilterStream
     }
 
     private Collection<ConfluenceRight> sendRevisions(boolean blog, Object filter, ConfluenceFilter proxyFilter,
-        ConfluenceProperties pageProperties, String spaceKey) throws FilterException
+        ConfluenceProperties pageProperties, String spaceKey) throws FilterException, ConfluenceCanceledException
     {
         Locale locale = Locale.ROOT;
 
@@ -1321,6 +1321,7 @@ public class ConfluenceInputFilterStream
                         }
 
                         readPageRevision(revisionProperties, blog, filter, proxyFilter, spaceKey);
+                        checkCanceled();
                     }
                 }
             }
