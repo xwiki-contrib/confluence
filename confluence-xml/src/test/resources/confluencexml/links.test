@@ -5,7 +5,7 @@
 <wikiSpace name="TestSpace">
   <wikiDocument name="WebHome">
     <wikiDocumentLocale>
-      <wikiDocumentRevision>
+      <wikiDocumentRevision revision="10">
         <p>
           <parameters>
             <entry>
@@ -53,7 +53,7 @@
   <wikiSpace name="Other Page">
     <wikiDocument name="WebHome">
       <wikiDocumentLocale>
-        <wikiDocumentRevision>
+        <wikiDocumentRevision revision="11">
           <p>
             <parameters>
               <entry>
@@ -70,7 +70,7 @@
 <wikiSpace name="validatedspace">
   <wikiDocument name="WebHome">
     <wikiDocumentLocale>
-      <wikiDocumentRevision>
+      <wikiDocumentRevision revision="13">
         <p>
           <parameters>
             <entry>
@@ -85,7 +85,7 @@
   <wikiSpace name="validatedpage">
     <wikiDocument name="WebHome">
       <wikiDocumentLocale>
-        <wikiDocumentRevision>
+        <wikiDocumentRevision revision="12">
           <p>
             <parameters>
               <entry>

@@ -5,7 +5,7 @@
   <wikiSpace name="Page0">
     <wikiDocument name="WebHome">
       <wikiDocumentLocale>
-        <wikiDocumentRevision>
+        <wikiDocumentRevision revision="0">
           <p>
             <parameters>
               <entry>
@@ -22,7 +22,7 @@
 <wikiSpace name="SpaceB">
   <wikiDocument name="WebHome">
     <wikiDocumentLocale>
-      <wikiDocumentRevision>
+      <wikiDocumentRevision revision="10">
         <p>
           <parameters>
             <entry>

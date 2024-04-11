@@ -6,7 +6,7 @@
   <wikiSpace name="TestContent">
     <wikiDocument name="WebHome">
       <wikiDocumentLocale>
-        <wikiDocumentRevision>
+        <wikiDocumentRevision revision="10">
           <p>
             <parameters>
               <entry>
@@ -22,7 +22,7 @@
   <wikiSpace name="Archived Page">
     <wikiDocument name="WebHome">
       <wikiDocumentLocale>
-        <wikiDocumentRevision>
+        <wikiDocumentRevision revision="1359218091">
           <p>
             <parameters>
               <entry>

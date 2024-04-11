@@ -1410,8 +1410,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
             // There is no way we need it, we already have the id of the content in the id property.
             properties.clearProperty(KEY_BODY_CONTENT_CONTENT);
 
-            // We remove the id, as it is wrong to overwrite the object id of the page
-            properties.clearProperty(ID);
+            // We replace the id of the body content object with the page id, as it is this one which is correct for the
+            // page property object in which we save the body content.
+            // We could have cleared it and let this property be set when reading the page object, but we've seen cases
+            // where the page object is missing from the Vonfluence export (!!).
+            properties.setProperty(ID, pageId);
 
             savePageProperties(properties, pageId);
         }

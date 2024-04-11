@@ -1464,7 +1464,13 @@ public class ConfluenceInputFilterStream
         // beware. Here, pageProperties might not have a space key. You need to use the one passed in parameters
         // FIXME we could ensure it though with some work
 
-        String revision = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION);
+        Long pageId = pageProperties.getLong("id", null);
+        if (pageId == null) {
+            throw new FilterException("Found a null revision id in space [" + spaceKey + "], this should not happen.");
+        }
+
+        // pageId is used as a fallback, an empty revision would prevent the revision from going through.
+        String revision = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION, pageId.toString());
 
         FilterEventParameters docRevisionParameters = new FilterEventParameters();
 
@@ -1478,7 +1484,6 @@ public class ConfluenceInputFilterStream
             inheritedRights = sendPageRights(proxyFilter, pageProperties);
         }
 
-        Long pageId = pageProperties.getLong("id");
         try {
             readAttachments(pageId, pageProperties, proxyFilter);
             readTags(pageProperties, proxyFilter);
