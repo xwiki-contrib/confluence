@@ -1320,7 +1320,12 @@ public class ConfluenceInputFilterStream
                             continue;
                         }
 
-                        readPageRevision(revisionProperties, blog, filter, proxyFilter, spaceKey);
+                        try {
+                            readPageRevision(revisionProperties, blog, filter, proxyFilter, spaceKey);
+                        } catch (Exception e) {
+                            logger.error("Failed to filter the page revision with id [{}]",
+                                createPageIdentifier(revisionId, spaceKey), e);
+                        }
                         checkCanceled();
                     }
                 }
