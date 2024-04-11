@@ -1406,8 +1406,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
         // We save properties of the body content object in the corresponding page object.
         Long pageId = properties.getLong(KEY_BODY_CONTENT_CONTENT, null);
         if (pageId != null) {
-            // This property mess with code that finds parents of objects, so we remove it. There is no way we need it,
-            // we already have the id of the content in the id property.
+            // This property messes with code that finds parents of objects, so we remove it.
+            // There is no way we need it, we already have the id of the content in the id property.
             properties.clearProperty(KEY_BODY_CONTENT_CONTENT);
 
             // We remove the id, as it is wrong to overwrite the object id of the page
