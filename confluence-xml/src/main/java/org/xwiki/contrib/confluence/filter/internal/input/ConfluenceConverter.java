@@ -337,7 +337,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
     private EntityReference fromSpaceKey(String spaceKey)
     {
-        String convertedSpace = toEntityName(spaceKey);
+        String convertedSpace = toEntityName(ensureNonEmptySpaceKey(spaceKey));
         SpaceReference root = context.getProperties().getRootSpace();
         return new EntityReference(convertedSpace, EntityType.SPACE, root);
     }
@@ -381,7 +381,8 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     EntityReference toDocumentReference(String spaceKey, String documentName)
     {
         EntityReference docRef = null;
-        String spaceKey1 = spaceKey == null ? context.getCurrentSpace() : spaceKey;
+        String spaceKey1 = ensureNonEmptySpaceKey(spaceKey);
+
         if (spaceKey1 != null) {
             ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
 
@@ -410,6 +411,13 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             }
         }
         return docRef == null ? toNonNestedDocumentReference(spaceKey1, documentName) : docRef;
+    }
+
+    private String ensureNonEmptySpaceKey(String spaceKey)
+    {
+        return (spaceKey == null || spaceKey.equals("currentSpace()"))
+            ? context.getCurrentSpace()
+            : spaceKey;
     }
 
     private void warnMissingPage(String spaceKey, String documentName)
@@ -511,6 +519,6 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     @Override
     public String convertSpaceReference(String spaceReference)
     {
-        return convert(spaceReference, EntityType.SPACE);
+        return this.serializer.serialize(fromSpaceKey(spaceReference));
     }
 }
