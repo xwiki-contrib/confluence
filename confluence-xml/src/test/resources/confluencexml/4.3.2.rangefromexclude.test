@@ -1174,7 +1174,7 @@ content of info macro
 
 {{spaces/}}
 
-{{livesearch/}}
+{{locationSearch excerpt="false"/}}
 
 "Video player" I won't add this macro because of the weight of the attached document
 
@@ -1483,7 +1483,7 @@ content of info macro
 
 {{spaces/}}
 
-{{livesearch/}}
+{{locationSearch excerpt="false"/}}
 
 "Video player" I won't add this macro because of the weight of the attached document
 
@@ -1792,7 +1792,7 @@ content of info macro
 
 {{spaces/}}
 
-{{livesearch/}}
+{{locationSearch excerpt="false"/}}
 
 "Video player" I won't add this macro because of the weight of the attached document
 
@@ -2101,7 +2101,7 @@ content of info macro
 
 {{spaces/}}
 
-{{livesearch/}}
+{{locationSearch excerpt="false"/}}
 
 "Video player" I won't add this macro because of the weight of the attached document
 
@@ -2410,7 +2410,7 @@ content of info macro
 
 {{spaces/}}
 
-{{livesearch/}}
+{{locationSearch excerpt="false"/}}
 
 "Video player" I won't add this macro because of the weight of the attached document
 
@@ -2719,7 +2719,7 @@ content of info macro
 
 {{spaces/}}
 
-{{livesearch/}}
+{{locationSearch excerpt="false"/}}
 
 "Video player" I won't add this macro because of the weight of the attached document
 

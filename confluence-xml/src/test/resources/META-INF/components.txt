@@ -1,2 +1,3 @@
 500:org.xwiki.contrib.confluence.filter.DeterministicMentionMacroConverter
+500:org.xwiki.contrib.confluence.filter.LivesearchMacroConverter
 500:org.xwiki.contrib.confluence.filter.ViewFileMacro
