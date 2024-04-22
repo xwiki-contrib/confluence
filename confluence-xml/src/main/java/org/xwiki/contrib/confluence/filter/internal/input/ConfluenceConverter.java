@@ -521,4 +521,14 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     {
         return this.serializer.serialize(fromSpaceKey(spaceReference));
     }
+
+    @Override
+    public String convertSpaceReference(String spaceReference, boolean asDocument)
+    {
+        EntityReference ref = fromSpaceKey(spaceReference);
+        if (asDocument) {
+            ref = new EntityReference(WEB_HOME, EntityType.DOCUMENT, ref);
+        }
+        return this.serializer.serialize(ref);
+    }
 }

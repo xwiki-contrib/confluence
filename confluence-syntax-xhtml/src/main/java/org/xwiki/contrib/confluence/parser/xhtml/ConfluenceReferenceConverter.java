@@ -40,8 +40,23 @@ public interface ConfluenceReferenceConverter
     String convertDocumentReference(String parentSpaceReference, String documentReference);
 
     /**
-     * @return the converted space reference
+     * @return the converted space reference, as SPACE
      * @param spaceReference the space reference to convert
      */
     String convertSpaceReference(String spaceReference);
+
+    /**
+     * @return the converted space reference
+     * @param spaceReference the space reference to convert
+     * @param asDocument whether the space reference should be the WebHome of this space (type DOCUMENT)
+     * @since 9.47.0
+     */
+    default String convertSpaceReference(String spaceReference, boolean asDocument)
+    {
+        String ref = convertSpaceReference(spaceReference);
+        if (asDocument && ref != null && !ref.isEmpty()) {
+            return ref + ".WebHome";
+        }
+        return ref;
+    }
 }
