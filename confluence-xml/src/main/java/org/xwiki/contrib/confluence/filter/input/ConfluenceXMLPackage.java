@@ -193,6 +193,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String KEY_PAGE_SPACE = "space";
 
     /**
+     * The property key to access the space permission's space.
+     * @since 9.47.0
+     */
+    public static final String KEY_SPACE_PERMISSION_SPACE = "space";
+
+    /**
      * The property key to access the page title.
      */
     public static final String KEY_PAGE_TITLE = "title";
@@ -297,9 +303,21 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String KEY_ATTACHMENT_CONTENT = "content";
 
     /**
+     * Field containing content property page id or attachment id or comment id.
+     * @since 9.47.0
+     */
+    public static final String KEY_CONTENT_PROPERTY_CONTENT = "content";
+
+    /**
      * The property key to access the attachment content key.
      */
     public static final String KEY_ATTACHMENT_CONTAINERCONTENT = "containerContent";
+
+    /**
+     * The property key to access the comment content key.
+     * @since 9.47.0
+     */
+    public static final String KEY_COMMENT_CONTAINERCONTENT = "containerContent";
 
     /**
      * Old property to indicate attachment size.
@@ -531,7 +549,23 @@ public class ConfluenceXMLPackage implements AutoCloseable
      */
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
 
-    private static final String ID = "id";
+    /**
+     * The id property key.
+     * @since 9.47.0
+     */
+    public static final String KEY_ID = "id";
+
+    /**
+     * The old content permission sets key in pages.
+     * @since 9.47.0
+     */
+    public static final String KEY_CONTENT_CONTENT_PERMISSION_SETS = "contentPermissionSets";
+
+    /**
+     * The old content permission key in content permission sets.
+     * @since 9.47.0
+     */
+    public static final String KEY_CONTENT_PERMISSION_SET_CONTENT_PERMISSIONS = "contentPermissions";
 
     /**
      * Pattern to find the end of "intentionally damaged" CDATA end sections. Confluence does this to nest CDATA
@@ -560,21 +594,53 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private static final String SPACE_STATUS_ARCHIVED = "ARCHIVED";
 
+    private static final String OBJECT_TYPE_SPACE = "Space";
+
+    private static final String OBJECT_TYPE_PAGE = "Page";
+
+    private static final String OBJECT_TYPE_BLOG_POST = "BlogPost";
+
+    private static final String OBJECT_TYPE_COMMENT = "Comment";
+
+    private static final String OBJECT_TYPE_CONTENT_PERMISSION_SET = "ContentPermissionSet";
+
+    private static final String OBJECT_TYPE_CONTENT_PERMISSION = "ContentPermission";
+
+    private static final String OBJECT_TYPE_SPACE_PERMISSION = "SpacePermission";
+
+    private static final String OBJECT_TYPE_ATTACHMENT = "Attachment";
+
+    private static final String OBJECT_TYPE_BODY_CONTENT = "BodyContent";
+
+    private static final String OBJECT_TYPE_CONTENT_PROPERTY = "ContentProperty";
+
+    private static final String OBJECT_TYPE_INTERNAL_GROUP = "InternalGroup";
+
+    private static final String OBJECT_TYPE_INTERNAL_USER = "InternalUser";
+
+    private static final String OBJECT_TYPE_LABEL = "Label";
+
+    private static final String OBJECT_TYPE_LABELLING = "Labelling";
+
+    private static final String OBJECT_TYPE_HIBERNATE_MEMBERSHIP = "HibernateMembership";
+
+    private static final String OBJECT_TYPE_CONFLUENCE_USER_IMPL = "ConfluenceUserImpl";
+
     private static final Collection<String> SUPPORTED_OBJECTS = new HashSet<>(Arrays.asList(
-        "Attachment",
-        "BlogPost",
-        "BodyContent",
-        "Comment",
-        "ContentPermission",
-        "ContentPermissionSet",
-        "ContentProperty",
-        "InternalGroup",
-        "InternalUser",
-        "Label",
-        "Labelling",
-        "Page",
-        "Space",
-        "SpacePermission"
+        OBJECT_TYPE_ATTACHMENT,
+        OBJECT_TYPE_BLOG_POST,
+        OBJECT_TYPE_BODY_CONTENT,
+        OBJECT_TYPE_COMMENT,
+        OBJECT_TYPE_CONTENT_PERMISSION,
+        OBJECT_TYPE_CONTENT_PERMISSION_SET,
+        OBJECT_TYPE_CONTENT_PROPERTY,
+        OBJECT_TYPE_INTERNAL_GROUP,
+        OBJECT_TYPE_INTERNAL_USER,
+        OBJECT_TYPE_LABEL,
+        OBJECT_TYPE_LABELLING,
+        OBJECT_TYPE_PAGE,
+        OBJECT_TYPE_SPACE,
+        OBJECT_TYPE_SPACE_PERMISSION
     ));
 
     private static final String[] PARENT_PROPERTIES = new String[] {
@@ -588,6 +654,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private static final String RESTORING_FROM_ANOTHER_VERSION_UNSUPPORTED_WARNING =
         "Restoring from a different version is unsupported and may lead to unexpected results.";
+
+    private static final String ATTRIBUTE_CLASS = "class";
 
     @Inject
     private Environment environment;
@@ -1195,50 +1263,50 @@ public class ConfluenceXMLPackage implements AutoCloseable
             throw new ConfluenceCanceledException();
         }
 
-        String type = xmlReader.getAttributeValue(null, "class");
+        String type = xmlReader.getAttributeValue(null, ATTRIBUTE_CLASS);
 
         if (type == null) {
             return;
         }
 
         switch (type) {
-            case "Page":
+            case OBJECT_TYPE_PAGE:
                 readPageObject(xmlReader);
                 break;
-            case "Space":
+            case OBJECT_TYPE_SPACE:
                 readSpaceObject(xmlReader);
                 break;
-            case "InternalUser":
+            case OBJECT_TYPE_INTERNAL_USER:
                 readInternalUserObject(xmlReader);
                 break;
-            case "ConfluenceUserImpl":
+            case OBJECT_TYPE_CONFLUENCE_USER_IMPL:
                 readUserImplObject(xmlReader);
                 break;
-            case "InternalGroup":
+            case OBJECT_TYPE_INTERNAL_GROUP:
                 readGroupObject(xmlReader);
                 break;
-            case "HibernateMembership":
+            case OBJECT_TYPE_HIBERNATE_MEMBERSHIP:
                 readMembershipObject(xmlReader);
                 break;
-            case "BodyContent":
+            case OBJECT_TYPE_BODY_CONTENT:
                 readBodyContentObject(xmlReader);
                 break;
-            case "SpacePermission":
+            case OBJECT_TYPE_SPACE_PERMISSION:
                 readSpacePermissionObject(xmlReader);
                 break;
-            case "ContentPermission":
+            case OBJECT_TYPE_CONTENT_PERMISSION:
                 readContentPermissionObject(xmlReader);
                 break;
-            case "ContentPermissionSet":
+            case OBJECT_TYPE_CONTENT_PERMISSION_SET:
                 readContentPermissionSetObject(xmlReader);
                 break;
-            case "Attachment":
+            case OBJECT_TYPE_ATTACHMENT:
                 readAttachmentObject(xmlReader);
                 break;
-            case "BlogPost":
+            case OBJECT_TYPE_BLOG_POST:
                 readBlogPostObject(xmlReader);
                 break;
-            case "Labelling":
+            case OBJECT_TYPE_LABELLING:
                 readLabellingObject(xmlReader);
                 break;
             default:
@@ -1254,7 +1322,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private long readObjectProperties(XMLStreamReader xmlReader, ConfluenceProperties properties)
         throws XMLStreamException, FilterException
     {
-        return Long.parseLong(readObjectProperties(xmlReader, properties, ID));
+        return Long.parseLong(readObjectProperties(xmlReader, properties, KEY_ID));
     }
 
     private String readImplObjectProperties(XMLStreamReader xmlReader, ConfluenceProperties properties)
@@ -1270,13 +1338,13 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         for (xmlReader.nextTag(); xmlReader.isStartElement(); xmlReader.nextTag()) {
             switch (xmlReader.getLocalName()) {
-                case ID:
+                case KEY_ID:
                     String idName = xmlReader.getAttributeValue(null, "name");
 
                     if (idName.equals(idProperty)) {
                         id = fixCDataAndNL(xmlReader.getElementText());
 
-                        properties.setProperty(ID, id);
+                        properties.setProperty(KEY_ID, id);
                     } else {
                         StAXUtils.skipElement(xmlReader);
                     }
@@ -1583,7 +1651,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private Object readProperty(XMLStreamReader xmlReader) throws XMLStreamException, FilterException
     {
-        String propertyClass = xmlReader.getAttributeValue(null, "class");
+        String propertyClass = xmlReader.getAttributeValue(null, ATTRIBUTE_CLASS);
 
         if (propertyClass == null) {
             try {
@@ -1597,7 +1665,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
             return readSetProperty(xmlReader);
         } else if (SUPPORTED_OBJECTS.contains(propertyClass)) {
             return readObjectReference(xmlReader);
-        } else if (propertyClass.equals("ConfluenceUserImpl")) {
+        } else if (propertyClass.equals(OBJECT_TYPE_CONFLUENCE_USER_IMPL)) {
             return readImplObjectReference(xmlReader);
         }
 
@@ -1627,7 +1695,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     {
         xmlReader.nextTag();
 
-        if (!xmlReader.getLocalName().equals(ID)) {
+        if (!xmlReader.getLocalName().equals(KEY_ID)) {
             throw new FilterException(
                 String.format("Was expecting id element but found [%s]", xmlReader.getLocalName()));
         }
@@ -1643,7 +1711,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     {
         xmlReader.nextTag();
 
-        if (!xmlReader.getLocalName().equals(ID)) {
+        if (!xmlReader.getLocalName().equals(KEY_ID)) {
             throw new FilterException(
                 String.format("Was expecting id element but found [%s]", xmlReader.getLocalName()));
         }
