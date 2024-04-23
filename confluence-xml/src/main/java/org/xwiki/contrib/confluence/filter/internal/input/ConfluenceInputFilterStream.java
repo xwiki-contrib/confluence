@@ -1347,7 +1347,7 @@ public class ConfluenceInputFilterStream
         ConfluenceProperties pageProperties) throws FilterException
     {
         Collection<ConfluenceRight> inheritedRights = new ArrayList<>();
-        for (Object permissionSetIdObject : pageProperties.getList("contentPermissionSets")) {
+        for (Object permissionSetIdObject : ConfluenceXMLPackage.getContentPermissionSets(pageProperties)) {
             Long permissionSetId = toLong(permissionSetIdObject);
             if (permissionSetId == null) {
                 logger.error("Space permission set id is null for page [{}]", createPageIdentifier(pageProperties));
@@ -1373,7 +1373,7 @@ public class ConfluenceInputFilterStream
                 continue;
             }
 
-            for (Object permissionIdObject : permissionSetProperties.getList("contentPermissions")) {
+            for (Object permissionIdObject : ConfluenceXMLPackage.getContentPermissions(permissionSetProperties)) {
                 Long permissionId = toLong(permissionIdObject);
                 if (permissionId == null) {
                     logger.error("Permission id is null for page [{}]", createPageIdentifier(pageProperties));
@@ -1616,14 +1616,12 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void readComments(ConfluenceProperties pageProperties,
-        ConfluenceFilter proxyFilter) throws FilterException
+    private void readComments(ConfluenceProperties pageProperties, ConfluenceFilter proxyFilter) throws FilterException
     {
         Map<Long, ConfluenceProperties> pageComments = new LinkedHashMap<>();
         Map<Long, Integer> commentIndices = new LinkedHashMap<>();
         int commentIndex = 0;
-        for (Object commentIdStringObject : pageProperties.getList(ConfluenceXMLPackage.KEY_PAGE_COMMENTS)) {
-            Long commentId = Long.parseLong((String) commentIdStringObject);
+        for (Long commentId : confluencePackage.getPageComments(pageProperties)) {
             if (!shouldSendObject(commentId)) {
                 continue;
             }
@@ -2027,8 +2025,8 @@ public class ConfluenceInputFilterStream
             String commentCreatorReference = confluenceConverter.toUserReference(commentCreator);
 
             // content
-            String commentBodyContent = this.confluencePackage.getCommentText(commentId);
-            int commentBodyType = this.confluencePackage.getCommentBodyType(commentId);
+            String commentBodyContent = this.confluencePackage.getCommentText(commentProperties);
+            int commentBodyType = this.confluencePackage.getCommentBodyType(commentProperties);
             String commentText = commentBodyContent;
             if (commentBodyContent != null && this.properties.isConvertToXWiki()) {
                 try {
