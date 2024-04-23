@@ -1,6 +1,5 @@
 .#------------------------------------------------------------------------------
 .expect|filter+xml
-.# Test that ascii char 28 is ignored
 .#------------------------------------------------------------------------------
 <wikiSpace name="MySpace">
   <wikiDocument name="WebHome">
