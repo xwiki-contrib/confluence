@@ -42,6 +42,8 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
 
     private ThreadLocal<String> currentSpace = new ThreadLocal<>();
 
+    private ThreadLocal<Long> currentPage = new ThreadLocal<>();
+
     /**
      * @param confluencePackage the Confluence input package
      * @param properties the Confluence input properties
@@ -58,6 +60,14 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
     public void setCurrentSpace(String space)
     {
         currentSpace.set(space);
+    }
+
+    /**
+     * @param pageId the page to set
+     */
+    public void setCurrentPage(long pageId)
+    {
+        currentPage.set(pageId);
     }
 
     /**
@@ -85,5 +95,11 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
     public String getCurrentSpace()
     {
         return currentSpace.get();
+    }
+
+    @Override
+    public Long getCurrentPage()
+    {
+        return currentPage.get();
     }
 }

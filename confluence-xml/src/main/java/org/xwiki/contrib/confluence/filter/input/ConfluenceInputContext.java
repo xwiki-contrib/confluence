@@ -49,4 +49,13 @@ public interface ConfluenceInputContext
     {
         return null;
     }
+
+    /**
+     * @return the Confluence page being filtered
+     * @since 9.47.0
+     */
+    default Long getCurrentPage()
+    {
+        return null;
+    }
 }

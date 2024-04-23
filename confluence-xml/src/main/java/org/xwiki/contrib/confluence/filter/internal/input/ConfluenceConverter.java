@@ -62,6 +62,12 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
     private static final String WEB_HOME = "WebHome";
 
+    private static final String AT_SELF = "@self";
+
+    private static final String AT_HOME = "@home";
+
+    private static final String AT_PARENT = "@parent";
+
     @Inject
     private XWikiConverter converter;
 
@@ -380,6 +386,34 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
     EntityReference toDocumentReference(String spaceKey, String documentName)
     {
+        if (AT_SELF.equals(documentName)) {
+            return new EntityReference(WEB_HOME, EntityType.DOCUMENT);
+        }
+
+        if (AT_HOME.equals(documentName)) {
+            return getDocumentReference(fromSpaceKey(spaceKey), false);
+        }
+
+        if (AT_PARENT.equals(documentName)) {
+            Long currentPageId = context.getCurrentPage();
+            ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
+
+            try {
+                if (currentPageId != null) {
+                    ConfluenceProperties pageProperties = confluencePackage.getPageProperties(currentPageId, false);
+                    Long parentId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_PARENT, null);
+                    if (parentId != null) {
+                        return convertDocumentReference(parentId, false);
+                    }
+                }
+            } catch (ConfigurationException e) {
+                logger.error("Could not get the properties of a page with resolving @parent.", e);
+            }
+
+            // Should not happen
+            return new EntityReference(AT_PARENT, EntityType.DOCUMENT);
+        }
+
         EntityReference docRef = null;
         String spaceKey1 = ensureNonEmptySpaceKey(spaceKey);
 
@@ -415,7 +449,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
     private String ensureNonEmptySpaceKey(String spaceKey)
     {
-        return (spaceKey == null || spaceKey.equals("currentSpace()"))
+        return (spaceKey == null || spaceKey.equals("currentSpace()") || spaceKey.equals(AT_SELF))
             ? context.getCurrentSpace()
             : spaceKey;
     }

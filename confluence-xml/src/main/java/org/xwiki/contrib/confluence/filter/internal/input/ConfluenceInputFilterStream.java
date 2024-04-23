@@ -534,6 +534,7 @@ public class ConfluenceInputFilterStream
         Collection<ConfluenceRight> inheritedRights = null;
 
         if (this.properties.isIncluded(pageId)) {
+            ((DefaultConfluenceInputContext) this.context).setCurrentPage(pageId);
             try {
                 inheritedRights = readPage(pageId, spaceKey, blog, filter, proxyFilter);
             } catch (MaxPageCountReachedException e) {
