@@ -63,7 +63,7 @@ public class MentionMacroConverter extends AbstractMacroConverter
 
         ResourceReference reference = confluenceConverter.resolveUserReference(userReference);
         if (reference == null) {
-            this.logger.error("Failed to find the mentioned user for macro [{}] (id=[{}], parameters={}, inline=[{}])",
+            this.logger.error("Failed to find the mentioned user for macro [{}] (parameters={}, inline=[{}])",
                 confluenceId, confluenceParameters, inline);
         } else {
             String stringReference = reference.getReference();
