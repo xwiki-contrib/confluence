@@ -23,7 +23,6 @@ import org.slf4j.Logger;
 import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.internal.macros.AbstractMacroConverter;
-import org.xwiki.model.EntityType;
 
 import javax.inject.Inject;
 import javax.inject.Named;
