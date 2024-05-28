@@ -178,7 +178,7 @@ public class ConfluenceInputFilterStream
 
     private static class MaxPageCountReachedException extends ConfluenceInterruptedException
     {
-
+        private static final long serialVersionUID = 1L;
     }
 
     @Override
