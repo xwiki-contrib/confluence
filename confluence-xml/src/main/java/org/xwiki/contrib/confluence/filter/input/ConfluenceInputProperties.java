@@ -597,11 +597,13 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     }
 
     /**
-     * @return the wiki where to import users
+     * @return the wiki where users and groups are located
      * @since 9.11
      */
     @PropertyName("Users wiki")
-    @PropertyDescription("The wiki where to import users.")
+    @PropertyDescription("The wiki is which users and groups are located. "
+        + "If applicable, users will be imported in this wiki; any user "
+        + "reference, including ones in permissions, will include this wiki.")
     public String getUsersWiki()
     {
         return this.usersWiki;
