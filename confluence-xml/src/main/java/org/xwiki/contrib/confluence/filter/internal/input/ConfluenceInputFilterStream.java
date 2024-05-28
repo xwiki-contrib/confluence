@@ -906,7 +906,7 @@ public class ConfluenceInputFilterStream
     private void sendUsersAndGroups(Collection<Long> users, Collection<Long> groups, ConfluenceFilter proxyFilter)
         throws FilterException, ConfluenceCanceledException
     {
-        if (users == null && groups == null) {
+        if ((users == null || users.isEmpty()) && (groups == null || groups.isEmpty())) {
             return;
         }
 
