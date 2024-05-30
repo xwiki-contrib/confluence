@@ -2025,12 +2025,11 @@ public class ConfluenceInputFilterStream
             }
             String commentCreatorReference = confluenceConverter.toUserReference(commentCreator);
 
-            // content
             String commentBodyContent = this.confluencePackage.getCommentText(commentProperties);
-            int commentBodyType = this.confluencePackage.getCommentBodyType(commentProperties);
             String commentText = commentBodyContent;
             if (commentBodyContent != null && this.properties.isConvertToXWiki()) {
                 try {
+                    int commentBodyType = this.confluencePackage.getCommentBodyType(commentProperties);
                     commentText = convertToXWiki21(commentBodyContent, commentBodyType);
                 } catch (Exception e) {
                     this.logger.error("Failed to convert content of the comment with id [{}] for page [{}]",
