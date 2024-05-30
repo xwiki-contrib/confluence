@@ -1531,7 +1531,7 @@ public class ConfluenceInputFilterStream
                 try {
                     bodyContent = convertToXWiki21(bodyContent, bodyType);
                     bodySyntax = Syntax.XWIKI_2_1;
-                } catch (ParseException e) {
+                } catch (Exception e) {
                     this.logger.error("Failed to convert content of the page with id [{}]",
                         createPageIdentifier(pageProperties), e);
                 }
