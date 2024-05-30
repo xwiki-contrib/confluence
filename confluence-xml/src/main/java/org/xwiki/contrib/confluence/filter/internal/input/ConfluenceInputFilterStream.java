@@ -411,7 +411,7 @@ public class ConfluenceInputFilterStream
                 List<Long> regularPageIds = pages.getOrDefault(spaceId, Collections.emptyList());
                 List<Long> blogPageIds = blogPages.getOrDefault(spaceId, Collections.emptyList());
                 if (!regularPageIds.isEmpty() || !blogPageIds.isEmpty()) {
-                    sendConfluenceRootSpace(spaceId, filter, proxyFilter, regularPageIds, blogPageIds);
+                    sendConfluenceRootSpace(spaceId, filter, proxyFilter, blogPageIds);
                 }
             }
         } finally {
@@ -452,7 +452,7 @@ public class ConfluenceInputFilterStream
     }
 
     private void sendConfluenceRootSpace(Long spaceId, Object filter, ConfluenceFilter proxyFilter,
-        List<Long> pages, List<Long> blogPages) throws FilterException, ConfluenceInterruptedException
+        List<Long> blogPages) throws FilterException, ConfluenceInterruptedException
     {
         ConfluenceProperties spaceProperties;
         try {
