@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -59,19 +60,20 @@ public class MentionMacroConverter extends AbstractMacroConverter
         UserResourceReference userReference =
             new UserResourceReference(confluenceParameters.get(REFERENCE_PARAMETER_KEY));
 
-        confluenceParameters.put("style", "FULL_NAME");
+        Map<String, String  > parameters = new HashMap<>(confluenceParameters);
+        parameters.put("style", "FULL_NAME");
 
         ResourceReference reference = confluenceConverter.resolveUserReference(userReference);
         if (reference == null) {
             this.logger.error("Failed to find the mentioned user for macro [{}] (parameters={}, inline=[{}])",
-                confluenceId, confluenceParameters, inline);
+                confluenceId, parameters, inline);
         } else {
             String stringReference = reference.getReference();
-            confluenceParameters.put("anchor", createAnchor(stringReference));
-            confluenceParameters.put(REFERENCE_PARAMETER_KEY, stringReference);
+            parameters.put("anchor", createAnchor(stringReference));
+            parameters.put(REFERENCE_PARAMETER_KEY, stringReference);
         }
 
-        super.toXWiki(confluenceId, confluenceParameters, confluenceContent, inline, listener);
+        super.toXWiki(confluenceId, parameters, confluenceContent, inline, listener);
     }
 
     protected String createAnchor(String stringReference)
