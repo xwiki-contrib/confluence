@@ -36,13 +36,13 @@ import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 @Singleton
 public class DefaultConfluenceInputContext implements ConfluenceInputContext
 {
-    private ThreadLocal<ConfluenceInputProperties> properties = new ThreadLocal<>();
+    private final ThreadLocal<ConfluenceInputProperties> properties = new ThreadLocal<>();
 
-    private ThreadLocal<ConfluenceXMLPackage> confluencePackage = new ThreadLocal<>();
+    private final ThreadLocal<ConfluenceXMLPackage> confluencePackage = new ThreadLocal<>();
 
-    private ThreadLocal<String> currentSpace = new ThreadLocal<>();
+    private final ThreadLocal<String> currentSpace = new ThreadLocal<>();
 
-    private ThreadLocal<Long> currentPage = new ThreadLocal<>();
+    private final ThreadLocal<Long> currentPage = new ThreadLocal<>();
 
     /**
      * @param confluencePackage the Confluence input package
