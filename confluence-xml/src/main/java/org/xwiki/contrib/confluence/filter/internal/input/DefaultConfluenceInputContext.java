@@ -77,6 +77,8 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
     {
         this.confluencePackage.remove();
         this.properties.remove();
+        this.currentPage.remove();
+        this.currentSpace.remove();
     }
 
     @Override
