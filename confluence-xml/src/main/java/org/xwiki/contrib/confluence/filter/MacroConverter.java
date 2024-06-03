@@ -58,7 +58,7 @@ public interface MacroConverter
      * Convert passed macro to the XWiki equivalent.
      * 
      * @param id the macro id (eg "toc" for the TOC macro)
-     * @param parameters the macro parameters
+     * @param parameters the macro parameters (which can be an unmodifiable map, so please don't attempt to modify it)
      * @param content the macro content
      * @param inline if true the macro is located in an inline content (like paragraph, etc.)
      * @param listener the listener to send events to
