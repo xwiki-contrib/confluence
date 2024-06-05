@@ -1430,11 +1430,14 @@ public class ConfluenceXMLPackage implements AutoCloseable
     }
 
     private void saveInParent(ConfluenceProperties childProperties, String parentInChildField, String parentType,
-        String childrenInParentField, long childId) throws ConfigurationException, FilterException
+        String childrenInParentField, long childId) throws ConfigurationException
     {
         Long parentId = childProperties.getLong(parentInChildField, null);
         if (parentId != null) {
-            ConfluenceProperties parentProperties = getObjectByType(parentType, parentId);
+            ConfluenceProperties parentProperties = getParentObjectByType(parentType, parentId);
+            if (parentProperties == null) {
+                return;
+            }
             List<Long> childIds = getLongList(parentProperties, childrenInParentField);
             if (childIds == null) {
                 childIds = new ArrayList<>();
@@ -1447,8 +1450,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
         }
     }
 
-    private ConfluenceProperties getObjectByType(String type, Long id)
-        throws ConfigurationException, FilterException
+    private ConfluenceProperties getParentObjectByType(String type, Long id) throws ConfigurationException
     {
         switch (type) {
             case OBJECT_TYPE_SPACE:
@@ -1461,8 +1463,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
             case OBJECT_TYPE_COMMENT:
                 return getObjectProperties(FOLDER_OBJECTS, id.toString(), true);
             default:
-                throw new FilterException("Unexpected object type. This is a bug in confluence-xml, please report.");
+                logger.error(
+                    "Unexpected type [{}] for parent object id [{}]. This is a bug in confluence-xml, please report.",
+                    type, id);
         }
+        return null;
     }
 
     private Long getAttachmentPageId(ConfluenceProperties properties)
@@ -1576,7 +1581,10 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 // Nothing to lose at this point... should not happen.
                 className = OBJECT_TYPE_PAGE;
             }
-            ConfluenceProperties parent = getObjectByType(className, parentId);
+            ConfluenceProperties parent = getParentObjectByType(className, parentId);
+            if (parent == null) {
+                return;
+            }
 
             // This property messes with code that finds parents of objects, so we remove it.
             // There is no way we need it, we already have the id of the content in the id property.
