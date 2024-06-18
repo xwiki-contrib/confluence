@@ -26,6 +26,7 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
  * Handles spaces.
+ * Preceding whitespaces are handled by adding ri:space to EMPTYVISIBLE_ELEMENTS in ConfluenceXHTMLWhitespaceXMLFilter.
  * <p>
  * Example:
  * <p>

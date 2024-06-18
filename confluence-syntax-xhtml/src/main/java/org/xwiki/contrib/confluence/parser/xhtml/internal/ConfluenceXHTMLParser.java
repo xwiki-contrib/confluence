@@ -183,6 +183,9 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         // Override some of the WikiModel XHTML parser tag handlers to introduce our own logic.
         Map<String, TagHandler> handlers = new HashMap<>();
 
+        // NOTE: when adding support for an inline tag (that may have no content), consider adding it
+        // to EMPTYVISIBLE_ELEMENTS in ConfluenceXHTMLWhitespaceXMLFilter so spaces before it are not eaten.
+
         TagHandler handler = new XWikiHeaderTagHandler();
         handlers.put("h1", handler);
         handlers.put("h2", handler);
