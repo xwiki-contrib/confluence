@@ -5,7 +5,7 @@
         "http://www.puppycrawl.com/dtds/suppressions_1_0.dtd">
 
 <suppressions>
-  <suppress checks="ExecutableStatementCount|ExecutableStatementCount|ClassFanOutComplexity"
+  <suppress checks="ExecutableStatementCount|ClassFanOutComplexity"
             files="src/main/java/org/xwiki/contrib/confluence/parser/xhtml/internal/ConfluenceXHTMLParser\.java$"/>
   <suppress checks="BooleanExpressionComplexity|CyclomaticComplexity"
             files="src/main/java/org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/LinkTagHandler\.java$"/>
