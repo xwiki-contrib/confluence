@@ -56,6 +56,7 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXH
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXWikiGeneratorListener;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.DefaultMacroParameterTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ElementMacroTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.EmoticonTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.IgnoredTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ImageTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.LinkBodyTagHandler;
@@ -196,6 +197,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("a", createXWikiReferenceTagHandler());
         handlers.put("p", new ConfluenceParagraphTagHandler());
 
+        handlers.put("ac:emoticon", new EmoticonTagHandler());
         handlers.put("ac:macro", new MacroTagHandler(this.macroSupport));
         handlers.put("ac:structured-macro", new MacroTagHandler(this.macroSupport));
         handlers.put("ac:default-parameter", new DefaultMacroParameterTagHandler());

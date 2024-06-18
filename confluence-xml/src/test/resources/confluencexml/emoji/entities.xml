@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic>
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">100</id>
+    <property name="name"><![CDATA[TestSpace]]></property>
+    <property name="key"><![CDATA[TestSpace]]></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">10</id>
+    <property name="space" class="Space"
+      package="com.atlassian.confluence.spaces">
+      <id name="id">100</id>
+    </property>
+    <property name="title"><![CDATA[TestContent]]></property>
+    <collection name="bodyContents">
+      <element class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">0</id>
+      </element>
+    </collection>
+    <property name="parent" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">42</id>
+    </property>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">0</id>
+    <property name="body"><![CDATA[
+      <p>My emoticon:<ac:emoticon ac:name="smile" ac:emoji-shortname=":slight_smile:" ac:emoji-id="1f642" ac:emoji-fallback="🙂" /> </p>
+      <p>Also <ac:emoticon ac:emoji-fallback="😮‍💨" /> </p>
+      <p>Also <ac:emoticon ac:emoji-shortname=":face_exhaling:" /> </p>
+      <p>Also <ac:emoticon ac:emoji-shortname=":hypothetical_unknown_emoji:" ac:emoji-fallback="🥳" /></p>
+      <p>Also <ac:emoticon ac:emoji-shortname=":hypothetical_unknown_emoji_with_no_fallback" ac:unknown-parameters-are-kept="1f642" /></p>
+      <p>Several emojis on the same line, no spaces between: <ac:emoticon ac:name="smile" ac:emoji-shortname=":slight_smile:" ac:emoji-id="1f642" ac:emoji-fallback="🙂" /><ac:emoticon ac:emoji-fallback="🧐" /></p>
+    ]]></property>
+    <property name="content" class="Page"
+      package="com.atlassian.confluence.pages">
+      <id name="id">10</id>
+    </property>
+    <property name="bodyType">2</property>
+  </object>
+
+</hibernate-generic>

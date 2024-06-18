@@ -1,0 +1,98 @@
+.#------------------------------------------------------------------------------
+.input|confluence+xhtml/1.0
+.configuration.macroContentSyntax=event/1.0
+.#------------------------------------------------------------------------------
+<p>My emoticon:<ac:emoticon ac:name="smile" ac:emoji-shortname=":slight_smile:" ac:emoji-id="1f642" ac:emoji-fallback="🙂" /> </p>
+<p>Also <ac:emoticon ac:emoji-fallback="😮‍💨" /> </p>
+<p>Also <ac:emoticon ac:emoji-shortname=":face_exhaling:" /> </p>
+<p>Also <ac:emoticon ac:emoji-shortname=":hypothetical_unknown_emoji:" ac:emoji-fallback="🥳" /></p>
+<p>Also <ac:emoticon ac:emoji-shortname=":hypothetical_unknown_emoji_with_no_fallback" ac:unknown-parameters-are-kept="1f642" /></p>
+<p>Several emojis on the same line, no spaces between: <ac:emoticon ac:name="smile" ac:emoji-shortname=":slight_smile:" ac:emoji-id="1f642" ac:emoji-fallback="🙂" /><ac:emoticon ac:emoji-fallback="🧐" /></p>
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.#------------------------------------------------------------------------------
+<document>
+  <p>
+    <metadata>
+      <metadata>
+        <entry>
+          <string>syntax</string>
+          <org.xwiki.rendering.syntax.Syntax>
+            <type>
+              <name>Confluence (XHTML)</name>
+              <id>confluence</id>
+              <variants>
+                <string>xhtml</string>
+              </variants>
+            </type>
+            <version>1.0</version>
+          </org.xwiki.rendering.syntax.Syntax>
+        </entry>
+      </metadata>
+    </metadata>
+  </p>
+  <paragraph>
+    <word>My</word>
+    <space/>
+    <word>emoticon</word>
+    <specialSymbol>:</specialSymbol>
+    <word>🙂</word>
+  </paragraph>
+  <paragraph>
+    <word>Also</word>
+    <space/>
+    <word>😮‍💨</word>
+  </paragraph>
+  <paragraph>
+    <word>Also</word>
+    <space/>
+    <word>😮‍💨</word>
+  </paragraph>
+  <paragraph>
+    <word>Also</word>
+    <space/>
+    <word>🥳</word>
+  </paragraph>
+  <paragraph>
+    <word>Also</word>
+    <space/>
+    <macro id="confluence_emoticon" inline="true">
+      <p>
+        <parameters>
+          <entry>
+            <string>ac:emoji-shortname</string>
+            <string>:hypothetical_unknown_emoji_with_no_fallback</string>
+          </entry>
+          <entry>
+            <string>ac:unknown-parameters-are-kept</string>
+            <string>1f642</string>
+          </entry>
+        </parameters>
+      </p>
+    </macro>
+  </paragraph>
+  <paragraph>
+    <word>Several</word>
+    <space/>
+    <word>emojis</word>
+    <space/>
+    <word>on</word>
+    <space/>
+    <word>the</word>
+    <space/>
+    <word>same</word>
+    <space/>
+    <word>line</word>
+    <specialSymbol>,</specialSymbol>
+    <space/>
+    <word>no</word>
+    <space/>
+    <word>spaces</word>
+    <space/>
+    <word>between</word>
+    <specialSymbol>:</specialSymbol>
+    <space/>
+    <word>🙂</word>
+    <word>🧐</word>
+  </paragraph>
+</document>

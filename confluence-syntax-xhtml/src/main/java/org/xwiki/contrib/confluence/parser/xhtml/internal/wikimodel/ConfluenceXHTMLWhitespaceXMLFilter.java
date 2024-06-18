@@ -42,7 +42,7 @@ public class ConfluenceXHTMLWhitespaceXMLFilter extends XHTMLWhitespaceXMLFilter
      * Visible elements like images count in the inline text to clean white spaces.
      */
     private static final Set<String> EMPTYVISIBLE_ELEMENTS =
-        new HashSet<>(Arrays.asList("ri:page", "ri:space", "ri:user"));
+        new HashSet<>(Arrays.asList("ri:page", "ri:space", "ri:user", "ac:emoticon"));
 
     private LexicalHandler lexicalHandler;
 

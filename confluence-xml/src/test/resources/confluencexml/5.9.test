@@ -1492,7 +1492,7 @@ Confluence will send the person an email message about this page. Shared!
 
  
 
-(% style="color: rgb(64,64,64);" %)The (%%)**Share**(% style="color: rgb(64,64,64);" %) button only appears if your administrator has configured a mail server. In Confluence Cloud, this is all set up for you.
+⚠️(% style="color: rgb(64,64,64);" %) The (%%)**Share**(% style="color: rgb(64,64,64);" %) button only appears if your administrator has configured a mail server. In Confluence Cloud, this is all set up for you.
 
 
 (% style="text-align: center;" %)
