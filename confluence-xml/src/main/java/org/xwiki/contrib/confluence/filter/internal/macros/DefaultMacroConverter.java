@@ -91,7 +91,8 @@ public class DefaultMacroConverter extends AbstractMacroConverter
         boolean inline)
     {
         if (!this.context.getProperties().getUnprefixedMacros().isEmpty()) {
-            if (this.context.getProperties().getUnprefixedMacros().contains(confluenceId)) {
+            if (this.context.getProperties().getUnprefixedMacros().contains(confluenceId)
+                || confluenceId.startsWith("confluence_")) {
                 return confluenceId;
             }
 

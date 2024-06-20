@@ -48,4 +48,5 @@ Several emojis on the same line, no spaces between: 🙂🧐</string>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=emoji
+.configuration.unprefixedMacros=code
 .#------------------------------------------------------------------------------
