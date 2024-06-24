@@ -32,6 +32,7 @@
       <p>Also <ac:emoticon ac:emoji-shortname=":hypothetical_unknown_emoji:" ac:emoji-fallback="🥳" /></p>
       <p>Also <ac:emoticon ac:emoji-shortname=":hypothetical_unknown_emoji_with_no_fallback" ac:unknown-parameters-are-kept="1f642" /></p>
       <p>Several emojis on the same line, no spaces between: <ac:emoticon ac:name="smile" ac:emoji-shortname=":slight_smile:" ac:emoji-id="1f642" ac:emoji-fallback="🙂" /><ac:emoticon ac:emoji-fallback="🧐" /></p>
+      <p>Named emojis: <ac:emoticon ac:name="smile"/> <ac:emoticon ac:name="sad"/> <ac:emoticon ac:name="cheeky"/> <ac:emoticon ac:name="laugh"/> <ac:emoticon ac:name="wink"/> <ac:emoticon ac:name="thumbs-up"/> <ac:emoticon ac:name="thumbs-down"/> <ac:emoticon ac:name="information"/> <ac:emoticon ac:name="tick"/> <ac:emoticon ac:name="cross"/> <ac:emoticon ac:name="warning"/> <ac:emoticon ac:name="plus"/> <ac:emoticon ac:name="minus"/> <ac:emoticon ac:name="question"/> <ac:emoticon ac:name="light-on"/> <ac:emoticon ac:name="light-off"/> <ac:emoticon ac:name="yellow-star"/> <ac:emoticon ac:name="red-star"/> <ac:emoticon ac:name="green-star"/> <ac:emoticon ac:name="blue-star"/></p>
     ]]></property>
     <property name="content" class="Page"
       package="com.atlassian.confluence.pages">

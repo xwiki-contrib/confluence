@@ -111,6 +111,30 @@ public class EmoticonTagHandler extends AbstractConfluenceTagHandler implements 
         EMOJI_MAP.put(":slight_smile:", "🙂️");
     }
 
+    private static final Map<String, String> NAME_MAP = new HashMap<>();
+    static {
+        NAME_MAP.put("smile", "🙂️");
+        NAME_MAP.put("sad", "😞️");
+        NAME_MAP.put("cheeky", "😛️");
+        NAME_MAP.put("laugh", "😃️");
+        NAME_MAP.put("wink", "😉️");
+        NAME_MAP.put("thumbs-up", "👍️");
+        NAME_MAP.put("thumbs-down", "👎️");
+        NAME_MAP.put("information", "ℹ️");
+        NAME_MAP.put("tick", "✅️");
+        NAME_MAP.put("cross", "❌️");
+        NAME_MAP.put("warning", "⚠️");
+        NAME_MAP.put("plus", "➕️");
+        NAME_MAP.put("minus", "➖️");
+        NAME_MAP.put("question", "❓️");
+        NAME_MAP.put("light-on", "💡️");
+        NAME_MAP.put("light-off", "⚪️");
+        NAME_MAP.put("yellow-star", "🟡️");
+        NAME_MAP.put("green-star", "🟢️");
+        NAME_MAP.put("red-star", "🔴️");
+        NAME_MAP.put("blue-star", "🔵️");
+    }
+
     /**
      * Default constructor.
      * @since 9.48.0
@@ -140,7 +164,10 @@ public class EmoticonTagHandler extends AbstractConfluenceTagHandler implements 
             // Let's try anyway.
             String name = nameParam.getValue();
             if (name != null && !name.isEmpty()) {
-                String emoji = "warning".equals(name) ? "⚠️" : EMOJI_MAP.get(':' + name + ':');
+                String emoji = NAME_MAP.get(name);
+                if (emoji == null || emoji.isEmpty()) {
+                    emoji = EMOJI_MAP.get(':' + name + ':');
+                }
                 if (emoji != null && !emoji.isEmpty()) {
                     context.getScannerContext().onWord(emoji);
                     return true;

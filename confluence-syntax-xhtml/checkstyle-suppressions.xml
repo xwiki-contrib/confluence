@@ -17,4 +17,6 @@
             files="src/main/java/org/xwiki/contrib/confluence/parser/xhtml/internal/ConfluenceXHTMLParser\.java$"/>
   <suppress checks="JavaNCSS|ExecutableStatementCount"
             files="src/main/java/org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/EmoticonTagHandler\.java$"/>
+  <suppress checks="MultipleStringLiterals"
+            files="src/main/java/org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/EmoticonTagHandler\.java$"/>
 </suppressions>

@@ -25,7 +25,9 @@ Also 🥳
 
 Also {{confluence_emoticon ac:emoji-shortname=":hypothetical_unknown_emoji_with_no_fallback" ac:unknown-parameters-are-kept="1f642"/}}
 
-Several emojis on the same line, no spaces between: 🙂🧐</string>
+Several emojis on the same line, no spaces between: 🙂🧐
+
+Named emojis: 🙂️ 😞️ 😛️ 😃️ 😉️ 👍️ 👎️ ℹ️ ✅️ ❌️ ⚠️ ➕️ ➖️ ❓️ 💡️ ⚪️ 🟡️ 🔴️ 🟢️ 🔵️</string>
               </entry>
               <entry>
                 <string>syntax</string>
