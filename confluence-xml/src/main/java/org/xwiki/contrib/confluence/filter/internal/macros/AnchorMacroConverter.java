@@ -38,7 +38,7 @@ import org.xwiki.component.annotation.Component;
 public class AnchorMacroConverter extends AbstractMacroConverter
 {
     @Override
-    protected String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
+    public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
         return "id";

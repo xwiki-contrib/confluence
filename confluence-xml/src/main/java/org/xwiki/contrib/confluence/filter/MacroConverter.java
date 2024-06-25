@@ -23,6 +23,7 @@ import java.util.Map;
 
 import org.xwiki.component.annotation.Role;
 import org.xwiki.rendering.listener.Listener;
+import org.xwiki.rendering.listener.WrappingListener;
 
 /**
  * Converter Confluence standard macros to XWiki equivalent.
@@ -57,7 +58,7 @@ public interface MacroConverter
     /**
      * Convert passed macro to the XWiki equivalent.
      * 
-     * @param id the macro id (eg "toc" for the TOC macro)
+     * @param id the Confluence macro id (eg "toc" for the TOC macro)
      * @param parameters the macro parameters (which can be an unmodifiable map, so please don't attempt to modify it)
      * @param content the macro content
      * @param inline if true the macro is located in an inline content (like paragraph, etc.)
@@ -74,5 +75,31 @@ public interface MacroConverter
     default InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
     {
         return InlineSupport.MAYBE;
+    }
+
+    /**
+     * @return the id of the macro after conversion given the parameters, the content and whether the context is inline.
+     *         The default implementation uses toXWiki to return the converted id.
+     * @param id the Confluence macro id
+     * @param parameters the macro parameters
+     * @param content the macro content
+     * @param inline whether the macro is being converted in an inline context
+     * @since 9.49.0
+     */
+    default String toXWikiId(String id, Map<String, String> parameters, String content, boolean inline)
+    {
+        String[] mid = new String[1];
+        toXWiki(id, parameters, content, inline,
+            new WrappingListener()
+            {
+                @Override
+                public void onMacro(String id, Map<String, String> parameters, String content, boolean inline)
+                {
+                    if (mid[0] == null) {
+                        mid[0] = id;
+                    }
+                }
+            });
+        return mid[0];
     }
 }

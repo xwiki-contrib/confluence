@@ -42,7 +42,7 @@ public class LivesearchMacroConverter extends AbstractMacroConverter
     private Logger logger;
 
     @Override
-    protected String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
+    public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
         return "locationSearch";

@@ -17,35 +17,29 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.confluence.filter.internal.macros;
+package org.xwiki.contrib.confluence.filter;
 
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.confluence.filter.internal.macros.AbstractMacroConverter;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.Map;
 
 /**
- * Convert Confluence warning macro.
- *
+ * Converts to a block macro.
+ * 
  * @version $Id$
- * @since 9.24.0
  */
 @Component
 @Singleton
-@Named("warning")
-public class WarningMacroConverter extends AbstractMacroConverter
+@Named("convertedtoblock")
+public class FakeBlockMacroConverter extends AbstractMacroConverter
 {
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
-        return "error";
-    }
-
-    @Override
-    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
-    {
-        return InlineSupport.NO;
+        return "view-file";
     }
 }

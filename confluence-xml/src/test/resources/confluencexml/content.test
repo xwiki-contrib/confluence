@@ -17,7 +17,13 @@
                 <string>content</string>
                 <string>{{id name="value1"/}}{{id name="value2"/}}{{macro parameter="value"}}rich **text** here{{/macro}}{{macro}}simple content{{/macro}}{{macrowithdefaultparameter 0="value"/}}{{macro}}{{submacro parameter="value"}}
 sub macro rich **text** content
-{{/submacro}}{{/macro}}</string>
+{{/submacro}}{{/macro}}
+
+
+
+{{view-file/}}
+
+{{view-file/}}</string>
               </entry>
               <entry>
                 <string>syntax</string>

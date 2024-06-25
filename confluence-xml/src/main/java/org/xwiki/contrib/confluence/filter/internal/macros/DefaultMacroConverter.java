@@ -87,7 +87,7 @@ public class DefaultMacroConverter extends AbstractMacroConverter
     }
 
     @Override
-    protected String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
+    public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
         if (!this.context.getProperties().getUnprefixedMacros().isEmpty()) {
@@ -112,8 +112,13 @@ public class DefaultMacroConverter extends AbstractMacroConverter
     @Override
     public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
     {
+        MacroConverter conv = getMacroConverter(id);
+        if (conv == null) {
+            // should not happen
+            conv = this;
+        }
         try {
-            Macro<?> macro = macroManager.getMacro(new MacroId(toXWikiId(id, parameters, content, true)));
+            Macro<?> macro = macroManager.getMacro(new MacroId(conv.toXWikiId(id, parameters, content, true)));
             if (macro != null) {
                 return macro.supportsInlineMode() ? InlineSupport.YES : InlineSupport.NO;
             }

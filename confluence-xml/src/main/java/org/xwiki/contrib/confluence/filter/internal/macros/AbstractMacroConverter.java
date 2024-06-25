@@ -46,7 +46,8 @@ public abstract class AbstractMacroConverter implements MacroConverter
         listener.onMacro(id, parameters, content, inline);
     }
 
-    protected String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
+    @Override
+    public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
         return confluenceId;

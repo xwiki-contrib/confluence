@@ -60,6 +60,7 @@
             </ac:rich-text-body>
           </ac:structured-macro>
         </p>
+        <p><ac:structured-macro ac:name="convertedtoblock"/><ac:structured-macro ac:name="convertedtoblock"/></p>
       ]]>
     </property>
     <property name="content" class="Page"
