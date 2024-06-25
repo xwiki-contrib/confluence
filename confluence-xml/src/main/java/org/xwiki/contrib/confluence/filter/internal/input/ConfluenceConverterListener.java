@@ -136,7 +136,7 @@ public class ConfluenceConverterListener extends WrappingListener
     @Override
     public void onMacro(String id, Map<String, String> parameters, String content, boolean inline)
     {
-        this.macroConverter.toXWiki(id, parameters, content, inline, this);
+        this.macroConverter.toXWiki(id, parameters, content, inline, getWrappedListener());
     }
 
     @Override
