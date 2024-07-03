@@ -27,11 +27,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Handles emojis.
- * Preceding whitespaces are handled by adding ac:emoticon to EMPTYVISIBLE_ELEMENTS
- * in ConfluenceXHTMLWhitespaceXMLFilter.
- * @since 9.48.0
+ * Handles emojis. Preceding whitespaces are handled by adding ac:emoticon to EMPTYVISIBLE_ELEMENTS in
+ * ConfluenceXHTMLWhitespaceXMLFilter.
+ *
  * @version $Id$
+ * @since 9.48.0
  */
 public class EmoticonTagHandler extends AbstractConfluenceTagHandler implements ConfluenceTagHandler
 {
@@ -58,6 +58,7 @@ public class EmoticonTagHandler extends AbstractConfluenceTagHandler implements 
      *  5. the mapping is in emojiMap. Save it and close the page or at least call clearInterval(t).
      */
     private static final Map<String, String> EMOJI_MAP = new HashMap<>();
+
     static {
         EMOJI_MAP.put(":smile:", "😄️");
         EMOJI_MAP.put(":laughing:", "😆️");
@@ -112,6 +113,7 @@ public class EmoticonTagHandler extends AbstractConfluenceTagHandler implements 
     }
 
     private static final Map<String, String> NAME_MAP = new HashMap<>();
+
     static {
         NAME_MAP.put("smile", "🙂️");
         NAME_MAP.put("sad", "😞️");
@@ -137,6 +139,7 @@ public class EmoticonTagHandler extends AbstractConfluenceTagHandler implements 
 
     /**
      * Default constructor.
+     *
      * @since 9.48.0
      */
     public EmoticonTagHandler()
@@ -149,7 +152,9 @@ public class EmoticonTagHandler extends AbstractConfluenceTagHandler implements 
     {
         WikiParameters params = context.getParams();
 
-        if (!sendFallback(context, params) && !sendShortName(context, params) && !sendName(context, params)) {
+        if (!sendFallback(context, params) && !sendEmojiId(context, params) && !sendShortName(context, params)
+            && !sendName(context, params))
+        {
             context.getScannerContext().onMacro("confluence_emoticon", params, null, true);
         }
 
@@ -201,6 +206,25 @@ public class EmoticonTagHandler extends AbstractConfluenceTagHandler implements 
             if (emoji != null && !emoji.isEmpty()) {
                 context.getScannerContext().onWord(emoji);
                 return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean sendEmojiId(TagContext context, WikiParameters params)
+    {
+        WikiParameter emojiIdParam = params.getParameter("ac:emoji-id");
+        if (emojiIdParam != null) {
+            String emojiId = emojiIdParam.getValue();
+            if (emojiId != null && !emojiId.isEmpty()) {
+                try {
+                    int emojiCodePoint = Integer.parseInt(emojiId, 16);
+                    if (Character.isValidCodePoint(emojiCodePoint)) {
+                        context.getScannerContext().onWord(Character.toString(emojiCodePoint));
+                        return true;
+                    }
+                } catch (NumberFormatException ignored) {
+                }
             }
         }
         return false;
