@@ -27,7 +27,17 @@ Also {{confluence_emoticon ac:emoji-shortname=":hypothetical_unknown_emoji_with_
 
 Several emojis on the same line, no spaces between: 🙂🧐
 
-Named emojis: 🙂️ 😞️ 😛️ 😃️ 😉️ 👍️ 👎️ ℹ️ ✅️ ❌️ ⚠️ ➕️ ➖️ ❓️ 💡️ ⚪️ 🟡️ 🔴️ 🟢️ 🔵️</string>
+Named emojis: 🙂️ 😞️ 😛️ 😃️ 😉️ 👍️ 👎️ ℹ️ ✅️ ❌️ ⚠️ ➕️ ➖️ ❓️ 💡️ ⚪️ 🟡️ 🔴️ 🟢️ 🔵️
+
+Emojis that do not have a fallback attribute.
+
+Clipboard 📋
+
+Thought balloon 💭
+
+Check mark button ✅
+
+Emoji tag with wrong id and a shortname 😮‍💨</string>
               </entry>
               <entry>
                 <string>syntax</string>
