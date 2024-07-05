@@ -19,6 +19,8 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xwiki.rendering.wikimodel.WikiParameter;
 import org.xwiki.rendering.wikimodel.WikiParameters;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
@@ -137,6 +139,8 @@ public class EmoticonTagHandler extends AbstractConfluenceTagHandler implements 
         NAME_MAP.put("blue-star", "🔵️");
     }
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmoticonTagHandler.class);
+
     /**
      * Default constructor.
      *
@@ -224,6 +228,7 @@ public class EmoticonTagHandler extends AbstractConfluenceTagHandler implements 
                         return true;
                     }
                 } catch (NumberFormatException ignored) {
+                    LOGGER.warn("Failed to parse the [ac:emoji-id] parameter with value [{}].", emojiId);
                 }
             }
         }
