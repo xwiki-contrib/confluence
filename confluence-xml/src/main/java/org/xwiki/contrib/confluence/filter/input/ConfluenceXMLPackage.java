@@ -1816,6 +1816,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
             .replace('\u2029', '\n');
     }
 
+    private String escapeWindowsFolderName(String folderName)
+    {
+        return folderName.replace(":", "=");
+    }
+
     private Long readObjectReference(XMLStreamReader xmlReader) throws FilterException, XMLStreamException
     {
         xmlReader.nextTag();
@@ -1917,12 +1922,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private File getObjectFolder(String folderName, String objectId)
     {
-        return new File(getObjectsFolder(folderName), objectId.replace(":", "="));
+        return new File(getObjectsFolder(folderName), escapeWindowsFolderName(objectId));
     }
 
     private File getObjectFolder(File folder, String objectId)
     {
-        return new File(folder, objectId.replace(":", "="));
+        return new File(folder, escapeWindowsFolderName(objectId));
     }
 
     private File getPagePropertiesFile(long pageId)
