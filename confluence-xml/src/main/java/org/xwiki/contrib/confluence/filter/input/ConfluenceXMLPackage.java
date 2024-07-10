@@ -1380,7 +1380,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 String idName = xmlReader.getAttributeValue(null, "name");
 
                 if (idName.equals(idProperty)) {
-                    id = fixCDataAndNL(xmlReader.getElementText()).replace(":", "=");
+                    id = fixCDataAndNL(xmlReader.getElementText());
 
                     properties.setProperty(KEY_ID, id);
                 } else {
