@@ -1380,7 +1380,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 String idName = xmlReader.getAttributeValue(null, "name");
 
                 if (idName.equals(idProperty)) {
-                    id = fixCDataAndNL(xmlReader.getElementText());
+                    id = fixCDataAndNL(xmlReader.getElementText()).replace(":", "=");
 
                     properties.setProperty(KEY_ID, id);
                 } else {
@@ -1917,12 +1917,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private File getObjectFolder(String folderName, String objectId)
     {
-        return new File(getObjectsFolder(folderName), objectId);
+        return new File(getObjectsFolder(folderName), objectId.replace(":", "="));
     }
 
     private File getObjectFolder(File folder, String objectId)
     {
-        return new File(folder, objectId);
+        return new File(folder, objectId.replace(":", "="));
     }
 
     private File getPagePropertiesFile(long pageId)
