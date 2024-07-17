@@ -227,6 +227,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private Map<String, Map<String, EntityReference>> linkMapping = Collections.emptyMap();
 
     /**
+     * @see #getConfluenceInstanceType()
+     */
+    private String confluenceInstanceType;
+
+    /**
      * @return The source to load the wiki from
      */
     @PropertyName("The source")
@@ -1118,5 +1123,30 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setLinkMapping(Map<String, Map<String, EntityReference>> linkMapping)
     {
         this.linkMapping = linkMapping;
+    }
+
+    /**
+     * @return the type of Confluence instance used to produce the backup package being filtered.
+     * @since 9.50.0
+     */
+    @PropertyName("Confluence Instance Type")
+    @PropertyDescription("The type of Confluence instance used to produce the backup package being imported. "
+        + "There are some differences in how content is managed, anchors for example are not the same. "
+        + "Knowing the right Confluence instance will improve the fidelity of the import. "
+        + "Detecting the right type of instance will be attempted if an empty value is provided. " +
+        "Possible values: SERVER, CLOUD."
+    )
+    public String getConfluenceInstanceType()
+    {
+        return confluenceInstanceType;
+    }
+
+    /**
+     * @param confluenceInstanceType the type to set
+     * @since 9.50.0
+     */
+    public void setConfluenceInstanceType(String confluenceInstanceType)
+    {
+        this.confluenceInstanceType = confluenceInstanceType;
     }
 }

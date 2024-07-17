@@ -11,7 +11,7 @@
             files="src/main/java/org/xwiki/contrib/confluence/filter/internal/input/ConfluenceInputFilterStream\.java$"/>
   <suppress checks="CyclomaticComplexity|ClassFanOutComplexity|NPathComplexity|ReturnCount"
             files="src/main/java/org/xwiki/contrib/confluence/filter/internal/input/ConfluenceConverter\.java$"/>
-  <suppress checks="ClassFanOutComplexity"
+  <suppress checks="ClassFanOutComplexity|AnonInnerLength"
             files="src/main/java/org/xwiki/contrib/confluence/filter/internal/input/ConfluenceConverterListener\.java$"/>
   <suppress checks="CyclomaticComplexity"
             files="src/main/java/org/xwiki/contrib/confluence/filter/internal/idrange/ConfluenceIdRange\.java$"/>

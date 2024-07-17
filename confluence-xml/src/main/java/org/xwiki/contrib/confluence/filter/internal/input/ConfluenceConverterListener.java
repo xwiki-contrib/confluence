@@ -35,6 +35,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.configuration2.ex.ConfigurationException;
@@ -46,8 +47,11 @@ import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
+import org.xwiki.model.reference.EntityReferenceResolver;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.rendering.listener.HeaderLevel;
 import org.xwiki.rendering.listener.Listener;
@@ -91,6 +95,10 @@ public class ConfluenceConverterListener extends WrappingListener
 
     private static final String CLASS_ATTRIBUTE = "class";
 
+    private static final String ID_MACRO_NAME = "id";
+    private static final String ID_MACRO_NAME_PARAMETER = "name";
+    private static final String ANCHOR = "anchor";
+
     @Inject
     private MacroConverter macroConverter;
 
@@ -105,6 +113,10 @@ public class ConfluenceConverterListener extends WrappingListener
 
     @Inject
     private ConfluenceConverter confluenceConverter;
+
+    @Inject
+    @Named("relative")
+    private EntityReferenceResolver<String> relativeResolver;
 
     /**
      * A stack of queues that are used to record the content of a paragraph with the auto-cursor-target class. For
@@ -126,17 +138,111 @@ public class ConfluenceConverterListener extends WrappingListener
         @Override
         public void onMacro(String id, Map<String, String> parameters, String content, boolean inline)
         {
-            if (macroIds != null) {
+            if (macroIds != null && !isQueuingEvents()) {
+                // Don't count the macros if we are recording events, we only count them when actually rendering.
                 macroIds.put(id, macroIds.getOrDefault(id, 0) + 1);
             }
-            super.onMacro(id, parameters, content, inline);
+
+            if (ID_MACRO_NAME.equals(id)) {
+                handleIdMacro(parameters, content, inline);
+            } else {
+                super.onMacro(id, parameters, content, inline);
+            }
+        }
+
+        private void handleIdMacro(Map<String, String> parameters, String content, boolean inline)
+        {
+            String name = parameters.get(ID_MACRO_NAME_PARAMETER);
+            if (name == null || name.isEmpty()) {
+                return;
+            }
+
+            String currentPageTitle = getCurrentPageTitleForAnchor();
+
+            if (isConfluenceCloud()) {
+                String dashedName = spacesToDash(name);
+                getWrappedListener().onMacro(
+                    ID_MACRO_NAME,
+                    Map.of(ID_MACRO_NAME_PARAMETER, dashedName),
+                    content,
+                    inline
+                );
+
+                if (currentPageTitle != null) {
+                    getWrappedListener().onId(spacesToDash(currentPageTitle) + '-' + dashedName);
+                }
+            } else if (currentPageTitle != null) {
+                getWrappedListener().onMacro(
+                    ID_MACRO_NAME,
+                    Map.of(ID_MACRO_NAME_PARAMETER, getConfluenceServerAnchor(currentPageTitle, name)),
+                    content,
+                    inline
+                );
+            }
         }
     };
 
     @Override
     public void onMacro(String id, Map<String, String> parameters, String content, boolean inline)
     {
-        this.macroConverter.toXWiki(id, parameters, content, inline, getWrappedListener());
+        this.macroConverter.toXWiki(id, parameters, content, inline, wrappingListener);
+    }
+
+    private String getPageTitleForAnchor(long pageId)
+    {
+        String title = null;
+        try {
+            ConfluenceProperties pageProperties = context.getConfluencePackage().getPageProperties(pageId, false);
+            if (pageProperties != null) {
+                title = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
+            }
+        } catch (ConfigurationException e) {
+            logger.warn("Failed to get the title of page [{}] to produce the anchor. Links may be broken.", pageId, e);
+        }
+
+        if (StringUtils.isEmpty(title)) {
+            logger.warn("Could not get the title of page [{}] to produce the anchor. Links may be broken.", pageId);
+        }
+
+        return title;
+    }
+
+    private String getCurrentPageTitleForAnchor()
+    {
+        return getPageTitleForAnchor(context.getCurrentPage());
+    }
+
+    private boolean isConfluenceCloud()
+    {
+        return "cloud".equals(context.getProperties().getConfluenceInstanceType());
+    }
+
+    String convertAnchor(String pageTitle, String anchor)
+    {
+        if (isConfluenceCloud()) {
+            return spacesToDash(anchor);
+        }
+
+        return getConfluenceServerAnchor(pageTitle, anchor);
+    }
+
+    private static String clean(String name, boolean removeWhitespace)
+    {
+        return (name == null ? "" : name).replaceAll("\\p{Z}+", removeWhitespace ? "" : " ").strip();
+    }
+
+    private static String spacesToDash(String name)
+    {
+        return clean(name, false).replaceAll("\\s+", "-");
+    }
+
+    private static String getConfluenceServerAnchor(String pageTitle, String name)
+    {
+        String convertedAnchor = clean(name, true);
+        if (!StringUtils.isEmpty(pageTitle)) {
+            convertedAnchor = clean(pageTitle, true) + '-' + convertedAnchor;
+        }
+        return convertedAnchor;
     }
 
     @Override
@@ -163,15 +269,35 @@ public class ConfluenceConverterListener extends WrappingListener
             // Record the content of the paragraph to check if it is empty and should be removed, or if we should just
             // remove the class parameter.
             this.contentListenerStack.push(new QueueListener());
-            // We need to get the actual wrapped listener, not the wrappingListener instance, to be able to restore it
-            // later.
-            this.previousListenerStack.push(wrappingListener.getWrappedListener());
+            // We need to get the wrapped listener to be able to restore it later.
+            this.previousListenerStack.push(getWrappedListener());
             setWrappedListener(this.contentListenerStack.element());
 
             super.beginParagraph(removeClassParameter(parameters));
         } else {
             super.beginParagraph(parameters);
         }
+    }
+
+    private void queueEvents()
+    {
+        this.contentListenerStack.push(new QueueListener());
+        // We need to get the actual wrapped listener, not the wrappingListener instance, to be able to restore it
+        // later.
+        this.previousListenerStack.push(wrappingListener.getWrappedListener());
+        setWrappedListener(this.contentListenerStack.element());
+    }
+
+    private QueueListener dequeueEvents()
+    {
+        Listener previousListener = this.previousListenerStack.pop();
+        setWrappedListener(previousListener);
+        return this.contentListenerStack.pop();
+    }
+
+    private boolean isQueuingEvents()
+    {
+        return !this.contentListenerStack.isEmpty();
     }
 
     @Override
@@ -190,8 +316,8 @@ public class ConfluenceConverterListener extends WrappingListener
             Listener previousListener = this.previousListenerStack.pop();
             setWrappedListener(previousListener);
             if (!isEmpty) {
-                // Relay the recorded events directly to the previous listener to avoid counting macros twice.
-                contentListener.consumeEvents(previousListener);
+                // Relay the recorded events
+                contentListener.consumeEvents(this);
                 super.endParagraph(removeClassParameter(parameters));
             }
         } else {
@@ -319,18 +445,45 @@ public class ConfluenceConverterListener extends WrappingListener
             }
         } else if (Objects.equals(reference.getType(), ResourceType.DOCUMENT)) {
             // Make sure the reference follows the configured rules of conversion
+            fixReferenceAnchor(fixedReference, EntityType.DOCUMENT);
             fixedReference.setReference(confluenceConverter.convert(reference.getReference(), EntityType.DOCUMENT));
         } else if (Objects.equals(reference.getType(), ResourceType.ATTACHMENT)) {
             // Make sure the reference follows the configured rules of conversion
+            fixReferenceAnchor(fixedReference, EntityType.ATTACHMENT);
             fixedReference.setReference(confluenceConverter.convert(reference.getReference(), EntityType.ATTACHMENT));
         }
 
         return fixedReference;
     }
 
-    private EntityReference fromPageId(String id) throws NumberFormatException, ConfigurationException
+    private void fixReferenceAnchor(ResourceReference reference, EntityType type)
     {
-        long pageId = Long.parseLong(id);
+        String anchor = reference.getParameter(ANCHOR);
+        if (StringUtils.isEmpty(anchor)) {
+            return;
+        }
+
+        String refStr = reference.getReference();
+        String pageTitle = null;
+        if (StringUtils.isEmpty(refStr)) {
+            pageTitle = getCurrentPageTitleForAnchor();
+        } else {
+            EntityReference ref = relativeResolver.resolve(refStr, type);
+
+            while (ref != null && ref.getType() != EntityType.DOCUMENT) {
+                ref = ref.getParent();
+            }
+
+            if (ref != null) {
+                pageTitle = ref.getName();
+            }
+        }
+
+        reference.setParameter(ANCHOR, convertAnchor(pageTitle, anchor));
+    }
+
+    private EntityReference fromPageId(long pageId) throws NumberFormatException, ConfigurationException
+    {
         EntityReference ref = confluenceConverter.convertDocumentReference(pageId, false);
         if (ref == null) {
             this.logger.warn(
@@ -342,7 +495,7 @@ public class ConfluenceConverterListener extends WrappingListener
     }
 
     private AttachmentResourceReference createAttachmentResourceReference(EntityReference reference,
-        List<String[]> urlParameters, String urlAnchor)
+        List<String[]> urlParameters, String pageTitle, String urlAnchor)
     {
         if (reference == null) {
             return null;
@@ -358,14 +511,14 @@ public class ConfluenceConverterListener extends WrappingListener
 
         // Anchor
         if (StringUtils.isNotBlank(urlAnchor)) {
-            resourceReference.setAnchor(urlAnchor);
+            resourceReference.setAnchor(convertAnchor(pageTitle, urlAnchor));
         }
 
         return resourceReference;
     }
 
     private DocumentResourceReference createDocumentResourceReference(EntityReference reference,
-        List<String[]> urlParameters, String urlAnchor)
+        List<String[]> urlParameters, String pageTitle, String urlAnchor)
     {
         if (reference == null) {
             return null;
@@ -381,7 +534,7 @@ public class ConfluenceConverterListener extends WrappingListener
 
         // Anchor
         if (StringUtils.isNotBlank(urlAnchor)) {
-            resourceReference.setAnchor(urlAnchor);
+            resourceReference.setAnchor(convertAnchor(pageTitle, urlAnchor));
         }
 
         return resourceReference;
@@ -405,10 +558,10 @@ public class ConfluenceConverterListener extends WrappingListener
     private DocumentResourceReference simpleDocRef(Matcher m, List<String[]> urlParameters, String urlAnchor)
     {
         String spaceKey = decode(m.group(1));
-        String docRef = decode(m.group(2));
-        EntityReference documentReference = confluenceConverter.toDocumentReference(spaceKey, docRef);
+        String pageTitle = decode(m.group(2));
+        EntityReference documentReference = confluenceConverter.toDocumentReference(spaceKey, pageTitle);
 
-        return createDocumentResourceReference(documentReference, urlParameters, urlAnchor);
+        return createDocumentResourceReference(documentReference, urlParameters, pageTitle, urlAnchor);
     }
 
     private ResourceReference fixReference(String pattern, List<String[]> urlParameters, String urlAnchor)
@@ -422,7 +575,8 @@ public class ConfluenceConverterListener extends WrappingListener
 
             // Try viewpage.action
             tryPattern(PATTERN_URL_VIEWPAGE, pattern, matcher -> {
-                EntityReference documentReference = getEntityReference(matcher);
+                long pageId = Long.parseLong(matcher.group(1));
+                EntityReference documentReference = getEntityReference(pageId);
                 if (documentReference == null) {
                     return null;
                 }
@@ -430,12 +584,14 @@ public class ConfluenceConverterListener extends WrappingListener
                 // Clean id parameter
                 urlParameters.removeIf(parameter -> parameter[0].equals("pageId"));
 
-                return createDocumentResourceReference(documentReference, urlParameters, urlAnchor);
+                String pageTitle = this.getPageTitleForAnchor(pageId);
+                return createDocumentResourceReference(documentReference, urlParameters, pageTitle, urlAnchor);
             }),
 
             // Try attachments
             tryPattern(PATTERN_URL_ATTACHMENT, pattern, matcher -> {
-                EntityReference documentReference = getEntityReference(matcher);
+                long pageId = Long.parseLong(matcher.group(1));
+                EntityReference documentReference = getEntityReference(pageId);
                 if (documentReference == null) {
                     return null;
                 }
@@ -443,7 +599,8 @@ public class ConfluenceConverterListener extends WrappingListener
                 EntityReference attachmentReference =
                     new EntityReference(decode(matcher.group(2)), EntityType.ATTACHMENT, documentReference);
 
-                return createAttachmentResourceReference(attachmentReference, urlParameters, urlAnchor);
+                String pageTitle = this.getPageTitleForAnchor(pageId);
+                return createAttachmentResourceReference(attachmentReference, urlParameters, pageTitle, urlAnchor);
             }),
 
             // emoticons
@@ -451,12 +608,12 @@ public class ConfluenceConverterListener extends WrappingListener
         );
     }
 
-    private EntityReference getEntityReference(Matcher matcher)
+    private EntityReference getEntityReference(long pageId)
     {
         try {
-            return fromPageId(matcher.group(1));
+            return fromPageId(pageId);
         } catch (ConfigurationException | NumberFormatException e) {
-            this.logger.error("Failed to get page for id [{}]", matcher.group(1), e);
+            this.logger.error("Failed to get page for id [{}]", pageId, e);
         }
         return null;
     }

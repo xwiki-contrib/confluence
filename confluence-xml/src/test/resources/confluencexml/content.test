@@ -15,7 +15,7 @@
               </entry>
               <entry>
                 <string>content</string>
-                <string>{{id name="value1"/}}{{id name="value2"/}}{{macro parameter="value"}}rich **text** here{{/macro}}{{macro}}simple content{{/macro}}{{macrowithdefaultparameter 0="value"/}}{{macro}}{{submacro parameter="value"}}
+                <string>{{id name="TestContent-value1"/}}{{id name="TestContent-value2"/}}{{macro parameter="value"}}rich **text** here{{/macro}}{{macro}}simple content{{/macro}}{{macrowithdefaultparameter 0="value"/}}{{macro}}{{submacro parameter="value"}}
 sub macro rich **text** content
 {{/submacro}}{{/macro}}
 

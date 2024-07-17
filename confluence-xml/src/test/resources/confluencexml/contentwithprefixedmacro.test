@@ -15,7 +15,7 @@
               </entry>
               <entry>
                 <string>content</string>
-                <string>{{id name="value1"/}}{{id name="value2"/}}{{confluence_macro parameter="value"}}rich **text** here{{/confluence_macro}}{{confluence_macro}}simple content{{/confluence_macro}}{{macrowithdefaultparameter 0="value"/}}{{confluence_macro}}{{confluence_submacro parameter="value"}}
+                <string>{{id name="TestContent-value1"/}}{{id name="TestContent-value2"/}}{{confluence_macro parameter="value"}}rich **text** here{{/confluence_macro}}{{confluence_macro}}simple content{{/confluence_macro}}{{macrowithdefaultparameter 0="value"/}}{{confluence_macro}}{{confluence_submacro parameter="value"}}
 sub macro rich **text** content
 {{/confluence_submacro}}{{/confluence_macro}}
 
