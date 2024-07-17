@@ -63,7 +63,7 @@ public class ConfluenceXHTMLInputProperties extends DefaultFilterStreamPropertie
     private ConfluenceReferenceConverter referenceConverter;
 
     /**
-     * @see #getMacroSupport(ConfluenceMacroSupport)
+     * @see #getMacroSupport()
      */
     private ConfluenceMacroSupport macroSupport;
 
@@ -125,7 +125,7 @@ public class ConfluenceXHTMLInputProperties extends DefaultFilterStreamPropertie
     }
 
     /**
-     * @return macroSupport the object providing information about macros
+     * @return the object providing information about macros
      * @since 9.43.0
      */
     public ConfluenceMacroSupport getMacroSupport()
