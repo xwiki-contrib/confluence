@@ -116,23 +116,23 @@ h6. Navigate space
               </entry>
               <entry>
                 <string>content</string>
-                <string>==== Project: Test demo ====
+                <string>==== {{id name="TestdemoinConfluence3.4.7-Project:Testdemo"/}}Project: Test demo ====
 
-==== Developer: dev1 ====
+==== {{id name="TestdemoinConfluence3.4.7-Developer:dev1"/}}Developer: dev1 ====
 
-==== Tasks Completed or Worked On: ====
+==== {{id name="TestdemoinConfluence3.4.7-TasksCompletedorWorkedOn:"/}}Tasks Completed or Worked On: ====
 
 |= JIRA Link |= Status |= Summary |= Remarks |=
  | [[TICKET-1>>http://www.aspose.com]] | Open |  test ticket 1 |  | 
 
-==== Developer: dev2 ====
+==== {{id name="TestdemoinConfluence3.4.7-Developer:dev2"/}}Developer: dev2 ====
 
-==== Tasks Completed or Worked On: ====
+==== {{id name="TestdemoinConfluence3.4.7-TasksCompletedorWorkedOn:"/}}Tasks Completed or Worked On: ====
 
 |= JIRA Link |= Status |= Summary |= Remarks |=
  | [[TICKET-2>>http://www.aspose.com]] | Open |  test ticket 2 |  | 
 
-==== Next Week Tasks: ====
+==== {{id name="TestdemoinConfluence3.4.7-NextWeekTasks:"/}}Next Week Tasks: ====
 
 |= JIRA Link |= Status |= Summary |= Remarks |=
  | [[TICKET-3>>http://www.aspose.com]] | Open |  test ticket 3 |  | </string>

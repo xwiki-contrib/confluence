@@ -64,7 +64,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 (((
 (% class="innerCell" %)
 (((
-====== Navigate space ======
+====== {{id name="Navigate-space"/}}Navigate space ======
 
 {{pagetreesearch/}}
 
@@ -326,7 +326,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 (((
 (% class="innerCell" %)
 (((
-====== Navigate space ======
+====== {{id name="Navigate-space"/}}Navigate space ======
 
 {{pagetreesearch/}}
 
@@ -718,7 +718,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 (((
 (% class="innerCell" %)
 (((
-====== Navigate space ======
+====== {{id name="Navigate-space"/}}Navigate space ======
 
 {{pagetreesearch/}}
 
@@ -882,17 +882,17 @@ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Adm
 
 {{toc/}}
 
-= Titre 1 =
+= {{id name="Titre-1"/}}Titre 1 =
 
-== Titre 2 ==
+== {{id name="Titre-2"/}}Titre 2 ==
 
-=== Titre 3 ===
+=== {{id name="Titre-3"/}}Titre 3 ===
 
-== Titre 2 ==
+== {{id name="Titre-2"/}}Titre 2 ==
 
-= Titre 1 =
+= {{id name="Titre-1"/}}Titre 1 =
 
-=== Titre 3 ===
+=== {{id name="Titre-3"/}}Titre 3 ===
 
 |=(((
 h1
@@ -1051,17 +1051,17 @@ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Adm
 
 {{toc/}}
 
-= Titre 1 =
+= {{id name="Titre-1"/}}Titre 1 =
 
-== Titre 2 ==
+== {{id name="Titre-2"/}}Titre 2 ==
 
-=== Titre 3 ===
+=== {{id name="Titre-3"/}}Titre 3 ===
 
-== Titre 2 ==
+== {{id name="Titre-2"/}}Titre 2 ==
 
-= Titre 1 =
+= {{id name="Titre-1"/}}Titre 1 =
 
-=== Titre 3 ===
+=== {{id name="Titre-3"/}}Titre 3 ===
 
 |=(((
 h1
@@ -1360,17 +1360,17 @@ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Adm
 
 {{toc/}}
 
-= Titre 1 =
+= {{id name="Titre-1"/}}Titre 1 =
 
-== Titre 2 ==
+== {{id name="Titre-2"/}}Titre 2 ==
 
-=== Titre 3 ===
+=== {{id name="Titre-3"/}}Titre 3 ===
 
-== Titre 2 ==
+== {{id name="Titre-2"/}}Titre 2 ==
 
-= Titre 1 =
+= {{id name="Titre-1"/}}Titre 1 =
 
-=== Titre 3 ===
+=== {{id name="Titre-3"/}}Titre 3 ===
 
 |=(((
 h1
@@ -1669,17 +1669,17 @@ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Adm
 
 {{toc/}}
 
-= Titre 1 =
+= {{id name="Titre-1"/}}Titre 1 =
 
-== Titre 2 ==
+== {{id name="Titre-2"/}}Titre 2 ==
 
-=== Titre 3 ===
+=== {{id name="Titre-3"/}}Titre 3 ===
 
-== Titre 2 ==
+== {{id name="Titre-2"/}}Titre 2 ==
 
-= Titre 1 =
+= {{id name="Titre-1"/}}Titre 1 =
 
-=== Titre 3 ===
+=== {{id name="Titre-3"/}}Titre 3 ===
 
 |=(((
 h1
@@ -1978,17 +1978,17 @@ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Adm
 
 {{toc/}}
 
-= Titre 1 =
+= {{id name="Titre-1"/}}Titre 1 =
 
-== Titre 2 ==
+== {{id name="Titre-2"/}}Titre 2 ==
 
-=== Titre 3 ===
+=== {{id name="Titre-3"/}}Titre 3 ===
 
-== Titre 2 ==
+== {{id name="Titre-2"/}}Titre 2 ==
 
-= Titre 1 =
+= {{id name="Titre-1"/}}Titre 1 =
 
-=== Titre 3 ===
+=== {{id name="Titre-3"/}}Titre 3 ===
 
 |=(((
 h1
@@ -2287,17 +2287,17 @@ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Adm
 
 {{toc/}}
 
-= Titre 1 =
+= {{id name="Titre-1"/}}Titre 1 =
 
-== Titre 2 ==
+== {{id name="Titre-2"/}}Titre 2 ==
 
-=== Titre 3 ===
+=== {{id name="Titre-3"/}}Titre 3 ===
 
-== Titre 2 ==
+== {{id name="Titre-2"/}}Titre 2 ==
 
-= Titre 1 =
+= {{id name="Titre-1"/}}Titre 1 =
 
-=== Titre 3 ===
+=== {{id name="Titre-3"/}}Titre 3 ===
 
 |=(((
 h1
@@ -2596,17 +2596,17 @@ Task 4 for {{mention reference="XWiki.Admin" style="FULL_NAME" anchor="XWiki-Adm
 
 {{toc/}}
 
-= Titre 1 =
+= {{id name="Titre-1"/}}Titre 1 =
 
-== Titre 2 ==
+== {{id name="Titre-2"/}}Titre 2 ==
 
-=== Titre 3 ===
+=== {{id name="Titre-3"/}}Titre 3 ===
 
-== Titre 2 ==
+== {{id name="Titre-2"/}}Titre 2 ==
 
-= Titre 1 =
+= {{id name="Titre-1"/}}Titre 1 =
 
-=== Titre 3 ===
+=== {{id name="Titre-3"/}}Titre 3 ===
 
 |=(((
 h1
@@ -3015,4 +3015,5 @@ content
 .configuration.groupsEnabled=false
 .configuration.attachmentsEnabled=false
 .configuration.tagsEnabled=false
+.configuration.confluenceInstanceType=cloud
 .#------------------------------------------------------------------------------

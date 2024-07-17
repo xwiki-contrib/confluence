@@ -144,7 +144,7 @@
 (% style="color: rgb(153,153,153);" %)
 
 
-== [[image:attach:welcome.png]]
+== {{id name="With-Confluence-it-is-easy-to-create,-edit-and-share-content-with-your-team.-Choose-a-topic-below-to-start-learning-how."/}}[[image:attach:welcome.png]]
   (% style="color: rgb(128,128,128);" %)With Confluence it is easy to create, edit and share content with your team. 
   Choose a topic below to start learning how.(%%) ==
 
@@ -160,7 +160,7 @@
 1. (% style="color: rgb(0,0,128);" %)[[Prettify the page with an image
 \\>>doc:ds.Prettify the page with an image (step 4 of 9).WebHome]]
 1. (% style="color: rgb(0,0,128);" %)[[Get serious with a table
->>doc:ds.Get serious with a table (step 5 of 9).WebHome]] 
+>&gt;doc:ds.Get serious with a table (step 5 of 9).WebHome]] 
 1. (% style="color: rgb(0,0,128);" %)[[Lay out your page>>doc:ds.Lay out your page (step 6 of 9).WebHome]] 
 \\
 1. [[Learn the wonders of autoconvert>>doc:ds.Learn the wonders of autoconvert (step 7 of 9).WebHome]] 
@@ -533,23 +533,23 @@ You can type into the editor as you would in any document, apply formatting, and
  
 [[image:attach:step-2-image-1.png||width="675"]] 
 
-== Here is a description of the components: ==
+== {{id name="Here-is-a-description-of-the-components:"/}}Here is a description of the components: ==
 
 1. (((
-=== (% style="color: rgb(0,0,0);" %)Editor toolbar(%%) ===
+=== {{id name="Editor-toolbar"/}}(% style="color: rgb(0,0,0);" %)Editor toolbar(%%) ===
 
 (% style="color: rgb(51,51,51);" %)The editor toolbar provides tools to format and color page content, create lists and tables, indent and align text, and insert other content into the page such as symbols, links, images, multimedia files, and macros.(%%)
 \\[[image:attach:step-2-image-3.png||width="900"]]
 \\
 )))
 1. (((
-=== (% style="color: rgb(0,0,0);" %)Page content(%%) ===
+=== {{id name="Page-content"/}}(% style="color: rgb(0,0,0);" %)Page content(%%) ===
 
 (% style="color: rgb(51,51,51);" %)This is where you will type the content for your page. You can also drag attachments from your desktop here.(%%)
 \\\\
 )))
 1. (((
-=== (% style="color: rgb(0,0,0);" %)Save button(%%) ===
+=== {{id name="Save-button"/}}(% style="color: rgb(0,0,0);" %)Save button(%%) ===
 
 (% style="color: rgb(0,0,0);" %)Click the Save button to publish your page so others can see your changes.(%%)
  
@@ -1381,7 +1381,7 @@ Flickr photo streams, Twitter streams, Google maps and many more.
 
 {{layout-section ac:type="two_equal"}}
 {{layout-cell}}
-=== (% style="color: rgb(51,51,51);" %)Try it yourself:(%%) ===
+=== {{id name="Try-it-yourself:"/}}(% style="color: rgb(51,51,51);" %)Try it yourself:(%%) ===
 
 1. (% style="color: rgb(51,51,51);" %)**Edit** this page.
 1. (% style="color: rgb(51,51,51);" %)Copy this link [[https:~~/~~/youtu.be/r7WIRd_8poI>>url:https://youtu.be/r7WIRd_8poI||shape="rect"]] and paste it onto the page.
@@ -1392,7 +1392,7 @@ Flickr photo streams, Twitter streams, Google maps and many more.
 {{/layout-cell}}
 
 {{layout-cell}}
-=== (% style="color: rgb(51, 51, 51); color: rgb(51, 51, 51)" %)Try it yourself(% style="color: rgb(51,51,51);" %):(%%) ===
+=== {{id name="Try-it-yourself:"/}}(% style="color: rgb(51, 51, 51); color: rgb(51, 51, 51)" %)Try it yourself(% style="color: rgb(51,51,51);" %):(%%) ===
 
 1. **Edit** this page.
 1. Copy this link  [[https:~~/~~/maps.google.com/maps?q=Atlassian,+George+Street,+New+South+Wales,+Australia&amp;hl=en&amp;ll=-33.866572,151.207001&amp;spn=0.004321,0.008256&amp;sll=-33.870509,151.203707&amp;sspn=0.008641,0.016512&amp;oq=atlassian,&amp;hq=Atlassian,+George+Street,+New+South+Wales,+Australia&amp;radius=15000&amp;t=m&amp;z=18&amp;iwloc=A>>url:https://maps.google.com/maps?q=Atlassian,+George+Street,+New+South+Wales,+Australia&amp;hl=en&amp;ll=-33.866572,151.207001&amp;spn=0.004321,0.008256&amp;sll=-33.870509,151.203707&amp;sspn=0.008641,0.016512&amp;oq=atlassian,&amp;hq=Atlassian,+George+Street,+New+South+Wales,+Australia&amp;radius=15000&amp;t=m&amp;z=18&amp;iwloc=A||shape="rect"]] and paste it onto the page. 
@@ -1683,4 +1683,5 @@ Confluence will send the person an email message about this page. Shared!
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=5.9.zip
+.configuration.confluenceInstanceType=cloud
 .#------------------------------------------------------------------------------

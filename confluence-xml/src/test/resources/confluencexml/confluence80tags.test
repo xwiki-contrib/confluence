@@ -116,15 +116,15 @@ Welcome to your first space. Go ahead, edit and customize this home page any way
 {{layout-cell}}
 ----
 
-= **Goal** =
+= {{id name="AreTagsImported-Goal"/}}**Goal** =
 
-== //Your space homepage should summarize what the space is for, and provide links to key resources for your team. // ==
+== {{id name="AreTagsImported-Yourspacehomepageshouldsummarizewhatthespaceisfor,andprovidelinkstokeyresourcesforyourteam."/}}//Your space homepage should summarize what the space is for, and provide links to key resources for your team. // ==
 
 ----
 
 \\
 
-= **Core team** =
+= {{id name="AreTagsImported-Coreteam"/}}**Core team** =
 
 (% class="wrapped" %)
 |(((
@@ -171,7 +171,7 @@ Welcome to your first space. Go ahead, edit and customize this home page any way
 
 \\
 
-= **Roadmap** =
+= {{id name="AreTagsImported-Roadmap"/}}**Roadmap** =
 
 You can edit this roadmap or create a new one by adding the Roadmap Planner macro from the Insert menu. Link your Confluence pages to each bar to add visibility, and find more tips by reading the Atlassian blog: [[Plan better in 2015 with the Roadmap Planner macro>>url:http://blogs.atlassian.com/2015/01/roadmap-planner-macro/||shape="rect"]].
 
@@ -179,13 +179,13 @@ You can edit this roadmap or create a new one by adding the Roadmap Planner macr
 
 \\
 
-= **Know your spaces**  =
+= {{id name="AreTagsImported-Knowyourspaces"/}}**Know your spaces**  =
 
 Everything your team is working on - meeting notes and agendas, project plans and timelines, technical documentation and more - is located in a space; it's home base for your team.
 
 A small team should plan to have a space for the team, and a space for each big project. If you'll be working in Confluence with several other teams and departments, we recommend a space for each team as well as a space for each major cross-team project. The key is to think of a space as the container that holds all the important stuff - like pages, files, and blog posts - a team, group, or project needs to work.
 
-= **Know your pages** =
+= {{id name="AreTagsImported-Knowyourpages"/}}**Know your pages** =
 
 If you're working on something related to your team - project plans, product requirements, blog posts, internal communications, you name it - create and store it in a Confluence page. Confluence pages offer a lot of flexibility in creating and storing information, and there are a number of useful page templates included to get you started, like the meeting notes template. Your spaces should be filled with pages that document your business processes, outline your plans, contain your files, and report on your progress. The more you learn to do in Confluence (adding tables and graphs, or embedding video and links are great places to start), the more engaging and helpful your pages will become.
 
@@ -199,13 +199,13 @@ Learn more by reading [[Confluence 101: organize your work in spaces>>url:https
 {{/layout-cell}}
 
 {{layout-cell}}
-= **Quick navigation** =
+= {{id name="AreTagsImported-Quicknavigation"/}}**Quick navigation** =
 
 When you create new pages in this space, they'll appear here automatically.
 
 {{children/}}
 
-= **Useful links** =
+= {{id name="AreTagsImported-Usefullinks"/}}**Useful links** =
 
 (% class="wrapped" %)
 |=(((

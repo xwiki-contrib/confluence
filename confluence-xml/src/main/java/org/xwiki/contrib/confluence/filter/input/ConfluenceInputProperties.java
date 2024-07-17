@@ -232,6 +232,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private String confluenceInstanceType;
 
     /**
+     * @see #isTitleAnchorGenerationEnabled()
+     */
+    private boolean generateTitleAnchors = true;
+
+    /**
      * @return The source to load the wiki from
      */
     @PropertyName("The source")
@@ -1148,5 +1153,25 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setConfluenceInstanceType(String confluenceInstanceType)
     {
         this.confluenceInstanceType = confluenceInstanceType;
+    }
+
+    /**
+     * @return whether to generate automatic anchors for titles, trying tio mimick the ones Confluence would generate.
+     * @since 9.50.0
+     */
+    @PropertyName("Generate title anchors")
+    @PropertyDescription("Generate automatic anchors for titles, trying to mimic the ones Confluence would generate.")
+    public boolean isTitleAnchorGenerationEnabled()
+    {
+        return generateTitleAnchors;
+    }
+
+    /**
+     * @param generateTitleAnchors whether to generate automatic anchors for titles
+     * @since 9.50.0
+     */
+    public void setTitleAnchorGenerationEnabled(boolean generateTitleAnchors)
+    {
+        this.generateTitleAnchors = generateTitleAnchors;
     }
 }

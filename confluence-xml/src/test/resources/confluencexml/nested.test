@@ -43,14 +43,14 @@
             <entry>
               <string>content</string>
               <string>{{panel bgColor="#E3FCEF"}}
-=== **Welcome to your new space!** ===
+=== {{id name="Welcome-to-your-new-space!"/}}**Welcome to your new space!** ===
 
 Spaces help your team structure, organize, and share work, so every team member has visibility into institutional knowledge and access to the information they need to do their best work.
 {{/panel}}
 
 
 
-= **Get started with the basics** =
+= {{id name="Get-started-with-the-basics"/}}**Get started with the basics** =
 
 **Start editing this page:**
 
@@ -108,7 +108,7 @@ publish
 
 
 
-==== 🪄 Need some inspiration? ====
+==== {{id name="🪄-Need-some-inspiration?"/}}🪄 Need some inspiration? ====
 
 * (((
 Check out our [[Confluence best practices guide>>url:https://www.atlassian.com/software/confluence/guides/get-started/best-practices||shape="rect"]].
@@ -1477,4 +1477,5 @@ It includes Under Page A:
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=nested
+.configuration.confluenceInstanceType=cloud
 .#------------------------------------------------------------------------------

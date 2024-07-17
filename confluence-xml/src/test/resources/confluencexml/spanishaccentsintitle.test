@@ -84,7 +84,7 @@
               </entry>
               <entry>
                 <string>content</string>
-                <string>====== Un días, entrar al módulo de imprimir etiquetas ======</string>
+                <string>====== {{id name="Un-días,-entrar-al-módulo-de-imprimir-etiquetas"/}}Un días, entrar al módulo de imprimir etiquetas ======</string>
               </entry>
               <entry>
                 <string>syntax</string>
@@ -109,4 +109,5 @@
 .configuration.source=spanishaccentsintitle
 .configuration.homeRedirectEnabled=false
 .configuration.spaceTitleFromHomePage=true
+.# We are testing automatic detection of cloud instance through the exportDescriptor.properties file
 .#------------------------------------------------------------------------------
