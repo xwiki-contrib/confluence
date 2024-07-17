@@ -1133,8 +1133,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     @PropertyDescription("The type of Confluence instance used to produce the backup package being imported. "
         + "There are some differences in how content is managed, anchors for example are not the same. "
         + "Knowing the right Confluence instance will improve the fidelity of the import. "
-        + "Detecting the right type of instance will be attempted if an empty value is provided. " +
-        "Possible values: SERVER, CLOUD."
+        + "Detecting the right type of instance will be attempted if an empty value is provided. "
+        + "Possible values: SERVER, CLOUD."
     )
     public String getConfluenceInstanceType()
     {

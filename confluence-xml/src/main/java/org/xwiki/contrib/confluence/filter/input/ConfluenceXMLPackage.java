@@ -49,6 +49,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.CompletableFuture;
@@ -2508,6 +2509,32 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public File getDescriptor()
     {
         return this.descriptor;
+    }
+
+    /**
+     * @return the value of the given field in the descriptor file, null if not found
+     * @param field the field to get.
+     * NOTE: Results are not cached, please don't repeatedly call.
+     * @since 9.50.0
+     */
+    public String getDescriptorField(String field)
+    {
+        if (this.descriptor == null) {
+            return null;
+        }
+
+        try (Scanner scanner = new Scanner(this.descriptor)) {
+            String lineStart = field + '=';
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                if (line.startsWith(lineStart)) {
+                    return line.substring(lineStart.length()).trim();
+                }
+            }
+        } catch (FileNotFoundException e) {
+            // ignore
+        }
+        return null;
     }
 
     /**

@@ -127,6 +127,8 @@ public class ConfluenceInputFilterStream
 
     private static final String FAILED_TO_READ_PACKAGE = "Failed to read package";
 
+    private static final String DESCRIPTOR_SOURCE_FIELD = "source";
+
     @Inject
     @Named(ConfluenceParser.SYNTAX_STRING)
     private StreamParser confluenceWIKIParser;
@@ -319,6 +321,11 @@ public class ConfluenceInputFilterStream
                 throw new FilterException(FAILED_TO_READ_PACKAGE, e);
             }
             return;
+        }
+
+        if (StringUtils.isEmpty(this.properties.getConfluenceInstanceType())) {
+            // Attempt to auto-detect the source Confluence instance type (cloud or server)
+            this.properties.setConfluenceInstanceType(confluencePackage.getDescriptorField(DESCRIPTOR_SOURCE_FIELD));
         }
 
         getJobStatus();
