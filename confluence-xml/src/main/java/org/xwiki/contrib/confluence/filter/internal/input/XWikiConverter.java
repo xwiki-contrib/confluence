@@ -27,7 +27,6 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.component.phase.Initializable;
-import org.xwiki.component.phase.InitializationException;
 import org.xwiki.model.validation.EntityNameValidationManager;
 
 /**
@@ -44,16 +43,23 @@ public class XWikiConverter implements Initializable
     @Inject
     private Logger logger;
 
-    private EntityNameValidationManager validaton;
+    private EntityNameValidationManager validation;
 
     @Override
-    public void initialize() throws InitializationException
+    public void initialize()
+    {
+        this.validation = getValidationManager();
+    }
+
+    private EntityNameValidationManager getValidationManager()
     {
         try {
-            this.validaton = this.componentManager.getInstance(EntityNameValidationManager.class);
+            return this.componentManager.getInstance(EntityNameValidationManager.class);
         } catch (ComponentLookupException e) {
-            this.logger.debug("No EntityNameValidationManager implementation could be found", e);
+            this.logger.warn("No EntityNameValidationManager implementation could be found", e);
         }
+
+        return null;
     }
 
     /**
@@ -62,7 +68,17 @@ public class XWikiConverter implements Initializable
      */
     public String convert(String entityName)
     {
-        return this.validaton != null ? this.validaton.getEntityReferenceNameStrategy().transform(entityName)
-            : entityName;
+        if (this.validation == null) {
+            // Workaround for https://jira.xwiki.org/projects/CONFLUENCE/issues/CONFLUENCE-256
+            // We don't know how this.validation can be null here, if you figure this out, please
+            // fix the root cause.
+            this.validation = getValidationManager();
+        }
+
+        if (this.validation == null) {
+            return entityName;
+        }
+
+        return this.validation.getEntityReferenceNameStrategy().transform(entityName);
     }
 }
