@@ -1818,7 +1818,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private String escapeWindowsFolderName(String folderName)
     {
-        return folderName.replace(":", "=");
+        return folderName.replace("[<>:\"/\\|?*]", "");
     }
 
     private Long readObjectReference(XMLStreamReader xmlReader) throws FilterException, XMLStreamException
