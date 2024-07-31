@@ -63,6 +63,7 @@ import javax.xml.stream.XMLStreamReader;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.io.FileSystem;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.CloseShieldInputStream;
 import org.apache.commons.io.input.CountingInputStream;
@@ -1818,7 +1819,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private String escapeWindowsFolderName(String folderName)
     {
-        return folderName.replace("[<>:\"/\\|?*]", "");
+        return FileSystem.getCurrent().toLegalFileName(folderName, '_');
     }
 
     private Long readObjectReference(XMLStreamReader xmlReader) throws FilterException, XMLStreamException
