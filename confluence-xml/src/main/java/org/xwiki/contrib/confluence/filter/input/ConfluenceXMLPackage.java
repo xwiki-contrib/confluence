@@ -64,6 +64,7 @@ import javax.xml.stream.XMLStreamReader;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.io.FileSystem;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.CloseShieldInputStream;
 import org.apache.commons.io.input.CountingInputStream;
@@ -1817,6 +1818,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
             .replace('\u2029', '\n');
     }
 
+    private String escapeWindowsFolderName(String folderName)
+    {
+        return FileSystem.getCurrent().toLegalFileName(folderName, '_');
+    }
+
     private Long readObjectReference(XMLStreamReader xmlReader) throws FilterException, XMLStreamException
     {
         xmlReader.nextTag();
@@ -1918,12 +1924,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private File getObjectFolder(String folderName, String objectId)
     {
-        return new File(getObjectsFolder(folderName), objectId);
+        return new File(getObjectsFolder(folderName), escapeWindowsFolderName(objectId));
     }
 
     private File getObjectFolder(File folder, String objectId)
     {
-        return new File(folder, objectId);
+        return new File(folder, escapeWindowsFolderName(objectId));
     }
 
     private File getPagePropertiesFile(long pageId)
