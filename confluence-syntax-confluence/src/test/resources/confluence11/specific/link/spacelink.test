@@ -1,0 +1,28 @@
+.#-----------------------------------------------------
+.input|confluence/1.1
+.#-----------------------------------------------------
+[label|space:]
+
+[label2|page.with.dots]
+
+[label3|space:page.with.dots]
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+beginParagraph
+beginLink [Typed = [true] Type = [space] Reference = [space]] [false]
+onWord [label]
+endLink [Typed = [true] Type = [space] Reference = [space]] [false]
+endParagraph
+beginParagraph
+beginLink [Typed = [true] Type = [doc] Reference = [page\.with\.dots]] [false]
+onWord [label2]
+endLink [Typed = [true] Type = [doc] Reference = [page\.with\.dots]] [false]
+endParagraph
+beginParagraph
+beginLink [Typed = [true] Type = [doc] Reference = [space.page\.with\.dots]] [false]
+onWord [label3]
+endLink [Typed = [true] Type = [doc] Reference = [space.page\.with\.dots]] [false]
+endParagraph
+endDocument

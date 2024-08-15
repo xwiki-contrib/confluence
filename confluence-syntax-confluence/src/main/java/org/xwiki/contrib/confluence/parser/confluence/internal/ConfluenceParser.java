@@ -56,7 +56,7 @@ public class ConfluenceParser extends AbstractWikiModelParser
      * @see #getLinkReferenceParser()
      */
     @Inject
-    @Named("default/link")
+    @Named("confluence/link")
     private ResourceReferenceParser referenceParser;
 
     /**

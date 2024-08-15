@@ -183,7 +183,7 @@ class DefaultLinkMapperTest
         // tests pages with missing parents, and packages with several spaces
         Map<String, Map<String, EntityReference>> actual = getLinkMapping("pages");
 
-        Map<String, Map<String, EntityReference>> expected = new LinkedHashMap<>(2);
+        Map<String, Map<String, EntityReference>> expected = new LinkedHashMap<>(4);
 
         Map<String, EntityReference> spaceA = new LinkedHashMap<>(2);
         expected.put("SpaceA", spaceA);
@@ -205,4 +205,28 @@ class DefaultLinkMapperTest
 
         Assertions.assertEquals(expected, actual);
     }
+
+    @Test
+    void getLinksForPagesWithDots() throws Exception
+    {
+        // tests page with a dot in the name
+        Map<String, Map<String, EntityReference>> actual = getLinkMapping("pageswithdots");
+
+        Map<String, Map<String, EntityReference>> expected = new LinkedHashMap<>(2);
+
+        Map<String, EntityReference> spaceA = new LinkedHashMap<>(3);
+        expected.put("testLinks", spaceA);
+        spaceA.put("Space Home Page", docRef("xwiki:Root.testLinks.WebHome"));
+        spaceA.put("page with links to check", docRef("xwiki:Root.testLinks.page with links to check.WebHome"));
+        spaceA.put("1. page with dot in title", docRef("xwiki:Root.testLinks.1\\. page with dot in title.WebHome"));
+
+        Map<String, EntityReference> spaceAIds = new LinkedHashMap<>(3);
+        expected.put("testLinks:ids", spaceAIds);
+        spaceAIds.put("200", docRef("xwiki:Root.testLinks.WebHome"));
+        spaceAIds.put("201", docRef("xwiki:Root.testLinks.page with links to check.WebHome"));
+        spaceAIds.put("202", docRef("xwiki:Root.testLinks.1\\. page with dot in title.WebHome"));
+
+        Assertions.assertEquals(expected, actual);
+    }
+
 }
