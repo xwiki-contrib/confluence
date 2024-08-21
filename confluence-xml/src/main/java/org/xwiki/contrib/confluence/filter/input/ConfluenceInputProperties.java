@@ -1161,7 +1161,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     }
 
     /**
-     * @return whether to generate automatic anchors for titles, trying tio mimick the ones Confluence would generate.
+     * @return whether to generate automatic anchors for titles, trying tio mimic the ones Confluence would generate.
      * @since 9.50.0
      */
     @PropertyName("Generate title anchors")
