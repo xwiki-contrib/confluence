@@ -1478,4 +1478,5 @@ It includes Under Page A:
 .input|confluence+xml
 .configuration.source=nested
 .configuration.confluenceInstanceType=cloud
+.configuration.pageOrderEnabled=false
 .#------------------------------------------------------------------------------

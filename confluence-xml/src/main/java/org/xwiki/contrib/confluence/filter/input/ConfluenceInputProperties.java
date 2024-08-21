@@ -237,6 +237,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private boolean generateTitleAnchors = true;
 
     /**
+     * @see #isPageOrderEnabled()
+     */
+    private boolean pageOrderEnabled = true;
+
+    /**
      * @return The source to load the wiki from
      */
     @PropertyName("The source")
@@ -611,7 +616,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @since 9.11
      */
     @PropertyName("Users wiki")
-    @PropertyDescription("The wiki is which users and groups are located. "
+    @PropertyDescription("The wiki in which users and groups are located. "
         + "If applicable, users will be imported in this wiki; any user "
         + "reference, including ones in permissions, will include this wiki.")
     public String getUsersWiki()
@@ -1031,7 +1036,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @since 9.35.0
      */
     @PropertyName("Max page count")
-    @PropertyDescription("The maximum number of pages to import (-1 means to limit)")
+    @PropertyDescription("The maximum number of pages to import (-1 means no limit)")
     public int getMaxPageCount()
     {
         return maxPageCount;
@@ -1173,5 +1178,25 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setTitleAnchorGenerationEnabled(boolean generateTitleAnchors)
     {
         this.generateTitleAnchors = generateTitleAnchors;
+    }
+
+    /**
+     * @return whether to send PinnedChildPagesClass objects to reflect the page ordering in Confluence
+     * @since 9.51.0
+     */
+    @PropertyName("Keep page ordering")
+    @PropertyDescription("Use XWiki's pinned pages feature to keep the page ordering from Confluence.")
+    public boolean isPageOrderEnabled()
+    {
+        return pageOrderEnabled;
+    }
+
+    /**
+     * @param pageOrderEnabled whether to send PinnedChildPagesClass objects to reflect the page ordering in Confluence
+     * @since 9.51.0
+     */
+    public void setPageOrderEnabled(boolean pageOrderEnabled)
+    {
+        this.pageOrderEnabled = pageOrderEnabled;
     }
 }

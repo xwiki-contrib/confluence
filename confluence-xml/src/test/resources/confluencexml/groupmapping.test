@@ -97,5 +97,6 @@
 .configuration.source=5.9.zip
 .configuration.contentsEnabled=false
 .configuration.rightsEnabled=false
+.configuration.pageOrderEnabled=false
 .configuration.groupMapping=atlassian-addons=|balsamiq-mockups-editors=MockupEditors|administrators=XWikiAdminGroup|site-admins=XWikiAdminGroup|_licensed-confluence=|confluence-users=XWikiAllGroup|confluence-administrators=XWikiAdminGroup|system-administrators=XWikiAdminGroup
 .#------------------------------------------------------------------------------

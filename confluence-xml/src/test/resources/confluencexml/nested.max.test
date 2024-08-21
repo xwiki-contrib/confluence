@@ -396,6 +396,44 @@ This is an excerpt
       </wikiDocumentLocale>
     </wikiDocument>
   </wikiSpace>
+  <wikiDocument name="WebPreferences">
+    <p>
+      <parameters>
+        <entry>
+          <string>hidden</string>
+          <boolean>true</boolean>
+        </entry>
+      </parameters>
+    </p>
+    <wikiObject name="XWiki.XWikiPreferences">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiPreferences</string>
+          </entry>
+        </parameters>
+      </p>
+    </wikiObject>
+    <wikiObject name="XWiki.PinnedChildPagesClass">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.PinnedChildPagesClass</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="pinnedChildPages">
+        <p>
+          <value t="java.util.ArrayList">
+            <string>Page A/</string>
+            <string>Page B/</string>
+          </value>
+        </p>
+      </wikiObjectProperty>
+    </wikiObject>
+  </wikiDocument>
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml

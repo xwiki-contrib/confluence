@@ -1,0 +1,50 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.#------------------------------------------------------------------------------
+<wikiSpace name="TestNavOrder">
+  <wikiDocument name="WebPreferences">
+    <p>
+      <parameters>
+        <entry>
+          <string>hidden</string>
+          <boolean>true</boolean>
+        </entry>
+      </parameters>
+    </p>
+    <wikiObject name="XWiki.XWikiPreferences">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiPreferences</string>
+          </entry>
+        </parameters>
+      </p>
+    </wikiObject>
+    <wikiObject name="XWiki.PinnedChildPagesClass">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.PinnedChildPagesClass</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="pinnedChildPages">
+        <p>
+          <value t="java.util.ArrayList">
+            <string>Page 1/</string>
+            <string>Page 3/</string>
+            <string>Page 2/</string>
+          </value>
+        </p>
+      </wikiObjectProperty>
+    </wikiObject>
+  </wikiDocument>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=pageorder
+.configuration.contentsEnabled=false
+.configuration.rightsEnabled=false
+.#------------------------------------------------------------------------------

@@ -286,6 +286,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String KEY_PAGE_ORIGINAL_VERSION = "originalVersion";
 
     /**
+     * The property key to access the position page property.
+     */
+    public static final String KEY_PAGE_POSITION = "position";
+
+    /**
      * Old property to indicate attachment name.
      *
      * @see #KEY_ATTACHMENT_TITLE
@@ -1397,6 +1402,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 } else {
                     properties.setProperty(attributeName, readProperty(xmlReader));
                 }
+            } else if (KEY_PAGE_POSITION.equals(localName)) {
+                properties.setProperty(KEY_PAGE_POSITION, xmlReader.getElementText());
             } else {
                 StAXUtils.skipElement(xmlReader);
             }

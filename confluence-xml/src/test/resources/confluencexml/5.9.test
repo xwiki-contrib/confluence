@@ -1538,6 +1538,32 @@ Confluence will send the person an email message about this page. Shared!
         </parameters>
       </p>
     </wikiObject>
+    <wikiObject name="XWiki.PinnedChildPagesClass">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.PinnedChildPagesClass</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="pinnedChildPages">
+        <p>
+          <value t="java.util.ArrayList">
+            <string>What is Confluence? (step 1 of 9)/</string>
+            <string>A quick look at the editor (step 2 of 9)/</string>
+            <string>Let's edit this page (step 3 of 9)/</string>
+            <string>Prettify the page with an image (step 4 of 9)/</string>
+            <string>Get serious with a table (step 5 of 9)/</string>
+            <string>Lay out your page (step 6 of 9)/</string>
+            <string>Learn the wonders of autoconvert (step 7 of 9)/</string>
+            <string>Tell people what you think in a comment (step 8 of 9)/</string>
+            <string>Share your page with a team member (step 9 of 9)/</string>
+            <string>toto/</string>
+          </value>
+        </p>
+      </wikiObjectProperty>
+    </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
         <parameters>
