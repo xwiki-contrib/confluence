@@ -15,8 +15,8 @@
             files="src/main/java/org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/ConfluenceXWikiGeneratorListener\.java$"/>
   <suppress checks="JavaNCSS"
             files="src/main/java/org/xwiki/contrib/confluence/parser/xhtml/internal/ConfluenceXHTMLParser\.java$"/>
-  <suppress checks="JavaNCSS|ExecutableStatementCount"
+  <suppress checks="JavaNCSS|ExecutableStatementCount|MultipleStringLiterals"
             files="src/main/java/org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/EmoticonTagHandler\.java$"/>
-  <suppress checks="MultipleStringLiterals"
-            files="src/main/java/org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/EmoticonTagHandler\.java$"/>
+  <suppress checks="BooleanExpressionComplexity"
+            files="src/main/java/org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/MacroTagHandler\.java$"/>
 </suppressions>
