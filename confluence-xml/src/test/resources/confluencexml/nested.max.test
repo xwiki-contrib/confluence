@@ -56,33 +56,11 @@ Spaces help your team structure, organize, and share work, so every team member 
 
 {{task-list}}
 {{task id="11" status="incomplete"}}
-(% class="placeholder-inline-tasks" %)Click the pencil icon ✏️ or 
-
-{{code language="none"}}
-e
-{{/code}}
-
- on your keyboard to edit and start typing. You can edit anywhere.
+(% class="placeholder-inline-tasks" %)Click the pencil icon ✏️ or {{code language="none"}}e{{/code}} on your keyboard to edit and start typing. You can edit anywhere.
 {{/task}}
 
 {{task id="13" status="incomplete"}}
-(% class="placeholder-inline-tasks" %)Hit 
-
-{{code language="none"}}
-/
-{{/code}}
-
- to see all the types of content you can add to your page. Try 
-
-{{code language="none"}}
-/image
-{{/code}}
-
- or 
-
-{{code language="none"}}
-/table
-{{/code}}
+(% class="placeholder-inline-tasks" %)Hit {{code language="none"}}/{{/code}} to see all the types of content you can add to your page. Try {{code language="none"}}/image{{/code}} or {{code language="none"}}/table{{/code}}
 {{/task}}
 
 {{task id="14" status="incomplete"}}
@@ -90,19 +68,7 @@ e
 {{/task}}
 
 {{task id="15" status="incomplete"}}
-(% class="placeholder-inline-tasks" %)Click 
-
-{{code language="none"}}
-close
-{{/code}}
-
- to save your draft or 
-
-{{code language="none"}}
-publish
-{{/code}}
-
- when your page is ready to be shared
+(% class="placeholder-inline-tasks" %)Click {{code language="none"}}close{{/code}} to save your draft or {{code language="none"}}publish{{/code}} when your page is ready to be shared
 {{/task}}
 {{/task-list}}
 
