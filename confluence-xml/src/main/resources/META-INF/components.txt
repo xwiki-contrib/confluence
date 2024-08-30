@@ -17,4 +17,5 @@ org.xwiki.contrib.confluence.filter.internal.macros.JiraMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.MentionMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.NoformatMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.WarningMacroConverter
+org.xwiki.contrib.confluence.filter.internal.macros.IframeMacroConverter
 org.xwiki.contrib.confluence.filter.internal.MappingConverter
