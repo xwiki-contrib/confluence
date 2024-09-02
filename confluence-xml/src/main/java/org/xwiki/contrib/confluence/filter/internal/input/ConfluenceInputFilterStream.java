@@ -515,8 +515,12 @@ public class ConfluenceInputFilterStream
         parameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, PINNED_CHILD_PAGES_CLASS);
         proxyFilter.beginWikiObject(PINNED_CHILD_PAGES_CLASS, parameters);
         try {
-            List<String> pages = orderedTitles.stream().map(title -> confluenceConverter.toEntityName(title) + "/")
-                .collect(Collectors.toList());
+            List<String> pages = orderedTitles.stream().map(title ->
+                confluenceConverter.toEntityName(title)
+                    .replace("%", "%25")
+                    .replace("/", "%2F")
+                    + "/"
+            ).collect(Collectors.toList());
             proxyFilter.onWikiObjectProperty("pinnedChildPages", pages, FilterEventParameters.EMPTY);
         } finally {
             proxyFilter.endWikiObject(PINNED_CHILD_PAGES_CLASS, parameters);

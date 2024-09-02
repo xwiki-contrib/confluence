@@ -27,9 +27,10 @@
     <property name="body">
       <![CDATA[
         <ac:structured-macro ac:name="content-report-table">
-            <ac:parameter ac:name="spaces">
-                <ri:space ri:space-key="spacetovalidate" />
-            </ac:parameter>
+            <ac:parameter ac:name="spaces"><ri:space ri:space-key="spacetovalidate" /></ac:parameter>
+        </ac:structured-macro>
+        <ac:structured-macro ac:name="outgoing-links">
+          <ac:parameter ac:name="spaces"><ri:space ri:space-key="DEMO" /><ri:space ri:space-key="TEST" /></ac:parameter>
         </ac:structured-macro>
       ]]>
     </property>

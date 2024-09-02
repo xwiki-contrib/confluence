@@ -15,7 +15,9 @@
               </entry>
               <entry>
                 <string>content</string>
-                <string>{{content-report-table spaces="validatedspace"/}}</string>
+                <string>{{content-report-table spaces="validatedspace"/}}
+
+{{outgoing-links spaces="DEMO,TEST"/}}</string>
               </entry>
               <entry>
                 <string>syntax</string>
