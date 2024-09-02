@@ -36,6 +36,7 @@
             <string>Page 1/</string>
             <string>Page 3/</string>
             <string>Page 2/</string>
+            <string>Page %2F %25/</string>
           </value>
         </p>
       </wikiObjectProperty>
