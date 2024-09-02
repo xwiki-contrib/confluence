@@ -59,10 +59,10 @@ public class IframeMacroConverter extends AbstractMacroConverter
         StringBuilder builder = new StringBuilder();
         builder.append("<iframe ");
         for (Map.Entry<String, String> entry : confluenceParameter.entrySet()) {
-            builder.append(XMLUtils.escape(entry.getKey()));
+            builder.append(XMLUtils.escapeAttributeValue(entry.getKey()));
             builder.append("=");
             builder.append(SEPARATOR);
-            builder.append(XMLUtils.escape(entry.getValue()));
+            builder.append(XMLUtils.escapeAttributeValue(entry.getValue()));
             builder.append(SEPARATOR);
             builder.append(" ");
         }
