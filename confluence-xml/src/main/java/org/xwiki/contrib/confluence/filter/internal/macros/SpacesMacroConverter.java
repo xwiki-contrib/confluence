@@ -43,7 +43,7 @@ public class SpacesMacroConverter extends AbstractMacroConverter
     public void toXWiki(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline, Listener listener)
     {
-        super.toXWiki("documentTree", confluenceParameters, confluenceContent, inline, listener);
+        super.toXWiki(confluenceId, confluenceParameters, confluenceContent, inline, listener);
     }
 
     @Override
