@@ -26,7 +26,6 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
-import org.xwiki.rendering.listener.Listener;
 
 /**
  * Convert the spaces macro.
@@ -40,10 +39,10 @@ import org.xwiki.rendering.listener.Listener;
 public class SpacesMacroConverter extends AbstractMacroConverter
 {
     @Override
-    public void toXWiki(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
-        boolean inline, Listener listener)
+    public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
+        boolean inline)
     {
-        super.toXWiki(confluenceId, confluenceParameters, confluenceContent, inline, listener);
+        return "documentTree";
     }
 
     @Override
@@ -53,12 +52,5 @@ public class SpacesMacroConverter extends AbstractMacroConverter
         Map<String, String> xwikiParameters = new HashMap<>();
         xwikiParameters.put("finder", "true");
         return xwikiParameters;
-    }
-
-    @Override
-    public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
-        boolean inline)
-    {
-        return "documentTree";
     }
 }
