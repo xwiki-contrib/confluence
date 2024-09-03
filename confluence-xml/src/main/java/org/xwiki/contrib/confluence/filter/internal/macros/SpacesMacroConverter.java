@@ -54,4 +54,11 @@ public class SpacesMacroConverter extends AbstractMacroConverter
         xwikiParameters.put("finder", "true");
         return xwikiParameters;
     }
+
+    @Override
+    public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
+        boolean inline)
+    {
+        return "documentTree";
+    }
 }
