@@ -24,6 +24,8 @@ import org.xwiki.rendering.syntax.Syntax;
 
 /**
  * Converts a macro call to a group, retaining the id, class and content.
+ *
+ * @since 9.51.1
  */
 @Component(hints = { "ul", "legend", "auihorizontalnav", "auibuttongroup", "auihorizontalnavpage", "tableenhancer",
     "footnote" })

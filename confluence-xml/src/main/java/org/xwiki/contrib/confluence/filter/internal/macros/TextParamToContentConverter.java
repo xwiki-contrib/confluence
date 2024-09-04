@@ -8,6 +8,8 @@ import org.xwiki.component.annotation.Component;
 
 /**
  * Converts a macro call into a group, using the value of the "text" parameter as its content.
+ *
+ * @since 9.51.1
  */
 @Component(hints = { "cfm-footnote", "cfm-tooltip", "tooltip" })
 @Singleton
