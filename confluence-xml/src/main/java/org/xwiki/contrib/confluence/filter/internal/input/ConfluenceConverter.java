@@ -348,28 +348,33 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return new EntityReference(convertedSpace, EntityType.SPACE, root);
     }
 
-    EntityReference convertDocumentReference(long pageId, boolean asSpace) throws ConfigurationException
+    public EntityReference convertDocumentReference(long pageId, boolean asSpace)
     {
-        ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
+        try {
+            ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
 
-        ConfluenceProperties pageProperties = confluencePackage.getPageProperties(pageId, false);
+            ConfluenceProperties pageProperties = confluencePackage.getPageProperties(pageId, false);
 
-        if (pageProperties == null) {
-            EntityReference docRef = getDocRefFromLinkMapping(pageId);
-            if (docRef == null) {
+            if (pageProperties == null) {
+                EntityReference docRef = getDocRefFromLinkMapping(pageId);
+                if (docRef == null) {
+                    return null;
+                }
+                if (asSpace) {
+                    return new EntityReference(docRef.getName(), EntityType.SPACE, docRef.getParameters());
+                }
+                return docRef;
+            }
+
+            Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
+            if (spaceId == null) {
                 return null;
             }
-            if (asSpace) {
-                return new EntityReference(docRef.getName(), EntityType.SPACE, docRef.getParameters());
-            }
-            return docRef;
-        }
-
-        Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
-        if (spaceId == null) {
+            return convertDocumentReference(pageProperties, confluencePackage.getSpaceKey(spaceId), asSpace);
+        } catch (ConfigurationException exception) {
+            logger.error(exception.getMessage(), exception);
             return null;
         }
-        return convertDocumentReference(pageProperties, confluencePackage.getSpaceKey(spaceId), asSpace);
     }
 
     EntityReference convertDocumentReference(ConfluenceProperties pageProperties, String spaceKey,
@@ -488,7 +493,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     }
 
     private EntityReference toNestedDocumentReference(String spaceKey, String documentName,
-        ConfluenceProperties pageProperties, boolean asSpace) throws ConfigurationException
+        ConfluenceProperties pageProperties, boolean asSpace)
     {
         if (StringUtils.isEmpty(documentName)) {
             return null;

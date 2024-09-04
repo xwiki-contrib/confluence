@@ -514,7 +514,7 @@ public class ConfluenceConverterListener extends WrappingListener
         reference.setParameter(ANCHOR, convertAnchor(pageTitle, anchor));
     }
 
-    private EntityReference fromPageId(long pageId) throws NumberFormatException, ConfigurationException
+    private EntityReference fromPageId(long pageId) throws NumberFormatException
     {
         EntityReference ref = confluenceConverter.convertDocumentReference(pageId, false);
         if (ref == null) {
@@ -644,7 +644,7 @@ public class ConfluenceConverterListener extends WrappingListener
     {
         try {
             return fromPageId(pageId);
-        } catch (ConfigurationException | NumberFormatException e) {
+        } catch (NumberFormatException e) {
             this.logger.error("Failed to get page for id [{}]", pageId, e);
         }
         return null;
