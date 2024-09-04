@@ -14,8 +14,10 @@ org.xwiki.contrib.confluence.filter.internal.macros.AnchorMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.DefaultMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.IncludeMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.JiraMacroConverter
+org.xwiki.contrib.confluence.filter.internal.macros.MacroToContentConverter
 org.xwiki.contrib.confluence.filter.internal.macros.MentionMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.NoformatMacroConverter
+org.xwiki.contrib.confluence.filter.internal.macros.TextParamToContentConverter
 org.xwiki.contrib.confluence.filter.internal.macros.WarningMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.SpacesMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.IframeMacroConverter
