@@ -1348,7 +1348,7 @@ content of info macro
 
 {{listlabels/}}
 
-{{spaces/}}
+{{documentTree finder="true"/}}
 
 {{locationSearch excerpt="false"/}}
 
@@ -1657,7 +1657,7 @@ content of info macro
 
 {{listlabels/}}
 
-{{spaces/}}
+{{documentTree finder="true"/}}
 
 {{locationSearch excerpt="false"/}}
 
@@ -1966,7 +1966,7 @@ content of info macro
 
 {{listlabels/}}
 
-{{spaces/}}
+{{documentTree finder="true"/}}
 
 {{locationSearch excerpt="false"/}}
 
@@ -2275,7 +2275,7 @@ content of info macro
 
 {{listlabels/}}
 
-{{spaces/}}
+{{documentTree finder="true"/}}
 
 {{locationSearch excerpt="false"/}}
 
@@ -2584,7 +2584,7 @@ content of info macro
 
 {{listlabels/}}
 
-{{spaces/}}
+{{documentTree finder="true"/}}
 
 {{locationSearch excerpt="false"/}}
 
@@ -2893,7 +2893,7 @@ content of info macro
 
 {{listlabels/}}
 
-{{spaces/}}
+{{documentTree finder="true"/}}
 
 {{locationSearch excerpt="false"/}}
 
