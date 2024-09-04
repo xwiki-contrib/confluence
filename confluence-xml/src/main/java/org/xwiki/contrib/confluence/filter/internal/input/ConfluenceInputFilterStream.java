@@ -134,6 +134,8 @@ public class ConfluenceInputFilterStream
 
     private static final String PINNED_CHILD_PAGES_CLASS = "XWiki.PinnedChildPagesClass";
 
+    private static final String TITLE = "title";
+
     @Inject
     @Named(ConfluenceParser.SYNTAX_STRING)
     private StreamParser confluenceWIKIParser;
@@ -1914,6 +1916,8 @@ public class ConfluenceInputFilterStream
                     pageURLBuilder.append("/pages/").append(pageId).append("/").append(pageName);
                 }
             }
+            String title = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE, null);
+            proxyFilter.onWikiObjectProperty(TITLE, title, FilterEventParameters.EMPTY);
             proxyFilter.onWikiObjectProperty("url", pageURLBuilder.toString(), FilterEventParameters.EMPTY);
             proxyFilter.onWikiObjectProperty("space", spaceKey, FilterEventParameters.EMPTY);
         } finally {
@@ -2181,7 +2185,7 @@ public class ConfluenceInputFilterStream
             proxyFilter.beginWikiObject(BLOG_CLASSNAME, blogParameters);
             try {
                 // Object properties
-                proxyFilter.onWikiObjectProperty("title", blogSpaceName, FilterEventParameters.EMPTY);
+                proxyFilter.onWikiObjectProperty(TITLE, blogSpaceName, FilterEventParameters.EMPTY);
                 proxyFilter.onWikiObjectProperty("postsLayout", "image", FilterEventParameters.EMPTY);
                 proxyFilter.onWikiObjectProperty("displayType", "paginated", FilterEventParameters.EMPTY);
             } finally {
@@ -2204,7 +2208,7 @@ public class ConfluenceInputFilterStream
         proxyFilter.beginWikiObject(BLOG_POST_CLASSNAME, blogPostParameters);
         try {
             // Object properties
-            proxyFilter.onWikiObjectProperty("title", title, FilterEventParameters.EMPTY);
+            proxyFilter.onWikiObjectProperty(TITLE, title, FilterEventParameters.EMPTY);
             proxyFilter.onWikiObjectProperty("content", content, FilterEventParameters.EMPTY);
             proxyFilter.onWikiObjectProperty("publishDate", publishDate, FilterEventParameters.EMPTY);
 

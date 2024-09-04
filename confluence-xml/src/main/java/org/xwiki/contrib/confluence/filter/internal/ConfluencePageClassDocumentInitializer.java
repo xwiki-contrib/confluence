@@ -61,5 +61,6 @@ public class ConfluencePageClassDocumentInitializer extends AbstractMandatoryCla
         xclass.addNumberField("id", "Id", 30, "long");
         xclass.addTextField("url", "URL", 30);
         xclass.addTextField("space", "Space", 30);
+        xclass.addTextField("title", "Title", 30);
     }
 }
