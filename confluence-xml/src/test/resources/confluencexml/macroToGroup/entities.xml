@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic datetime="2023-10-02 11:40:11">
+  <object class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+    <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    <property name="name"><![CDATA[Teo]]></property>
+    <property name="lowerName"><![CDATA[Smecherus]]></property>
+    <property name="email"><![CDATA[teo@email.com]]></property>
+  </object>
+  <object class="Page" package="com.atlassian.confluence.spaces">
+    <id name="id">45809845</id>
+    <property name="hibernateVersion">5</property>
+    <property name="title">My Space Home</property>
+    <property name="lowerTitle">my space home</property>
+    <collection name="bodyContents" class="java.util.Collection"><element class="BodyContent" package="com.atlassian.confluence.core"><id name="id">156868656</id>
+    </element>
+    </collection>
+    <property name="version">1</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="creationDate">2012-08-21 15:37:47.000</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="lastModificationDate">2016-10-11 14:47:37.000</property>
+    <property name="versionComment"><![CDATA[]]></property>
+    <property name="contentStatus"><![CDATA[current]]></property>
+    <collection name="labellings" class="java.util.Collection"></collection>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">46268417</id>
+    </property>
+    <collection name="attachments" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.attachments)"><element class="Attachment" package="com.atlassian.confluence.pages"><id name="id">134204920</id></element></collection>
+  </object>
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">46268417</id>
+    <property name="name"><![CDATA[My Space]]></property>
+    <property name="key"><![CDATA[MySpace]]></property>
+    <property name="lowerKey"><![CDATA[myspace]]></property>
+    <property name="homePage" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809845</id></property>
+    <collection name="permissions" class="java.util.Collection"></collection>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="creationDate">2012-08-21 15:37:47.000</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="lastModificationDate">2016-10-11 14:47:37.000</property>
+    <property name="spaceType">global</property>
+    <property name="spaceStatus" enum-class="SpaceStatus" package="com.atlassian.confluence.spaces">CURRENT</property>
+  </object>
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">156868656</id>
+    <property name="body"><![CDATA[
+    <p></p>
+    <h1>CFMFootNote</h1>
+    <ac:structured-macro ac:name="cfm-footnote" ac:schema-version="1"
+        ac:local-id="09fb9453-4b39-4deb-a1c1-a459ee1eb6f5"
+        ac:macro-id="bc880543-2512-4982-97fb-a9eb625a92b6">
+        <ac:parameter ac:name="an.spaceKey">TEOS</ac:parameter>
+        <ac:parameter ac:name="text">Hello there, general kenobi. how are you doing?
+            Im doing very well. thank u</ac:parameter>
+        <ac:parameter ac:name="id">j61cfghrf8</ac:parameter>
+    </ac:structured-macro>
+    <h1>cfmTooltip</h1>
+    <ac:structured-macro ac:name="cfm-tooltip" ac:schema-version="1"
+        ac:local-id="9e4bff11-e8e0-4f6d-87cc-05f556e8f054"
+        ac:macro-id="b53ddb88-a74a-4cde-b86d-b611e13de84f">
+        <ac:parameter ac:name="an.spaceKey">TEOS</ac:parameter>
+        <ac:parameter ac:name="previewTheme">dark</ac:parameter>
+        <ac:parameter ac:name="text">This is some tooltip</ac:parameter>
+        <ac:parameter ac:name="id">0s1ra5xwsnad</ac:parameter>
+    </ac:structured-macro>
+    <h1>Footnote</h1>
+    <ac:structured-macro ac:name="footnote" ac:schema-version="1"
+        ac:macro-id="4d0c7e18-1acb-464a-8384-ccddddb7f1a3">
+        <ac:parameter ac:name="atlassian-macro-output-type">INLINE</ac:parameter>
+        <ac:rich-text-body>
+            <p>This is some <strong>footnote</strong>.</p>
+        </ac:rich-text-body>
+    </ac:structured-macro>
+    <h1>Tooltip</h1>
+    <p>
+        <ac:structured-macro ac:name="tooltip" ac:schema-version="1"
+            ac:macro-id="266cbff9-d10e-404f-8c6c-702c90a3fe2b">
+            <ac:parameter ac:name="id">someId</ac:parameter>
+            <ac:parameter ac:name="text">Some text</ac:parameter>
+            <ac:parameter ac:name="direction">S</ac:parameter>
+        </ac:structured-macro>
+    </p>
+    <h1>UL</h1>
+    <ac:structured-macro ac:name="ul" ac:schema-version="1"
+        ac:macro-id="471cdea3-8a53-482b-8496-de85f6792c67">
+        <ac:parameter ac:name="style">width: 150px</ac:parameter>
+        <ac:parameter ac:name="id">someId</ac:parameter>
+        <ac:parameter ac:name="dir">ltr</ac:parameter>
+        <ac:parameter ac:name="lang">ro</ac:parameter>
+        <ac:parameter ac:name="title">Some title</ac:parameter>
+        <ac:parameter ac:name="class">SomeClass</ac:parameter>
+        <ac:rich-text-body>
+            <p>Something</p>
+            <p>Something2</p>
+            <p>Something3?</p>
+        </ac:rich-text-body>
+    </ac:structured-macro>
+    <p>
+        <br />
+    </p>
+    <h1>Legend</h1>
+    <ac:structured-macro ac:name="legend">
+        <ac:rich-text-body>
+            <p>Something</p>
+        </ac:rich-text-body>
+    </ac:structured-macro>
+    <h1>AUIHorizontalNav</h1>
+    <ac:structured-macro ac:name="auihorizontalnav" ac:schema-version="1"
+        ac:macro-id="0843be4c-6e4e-49b9-ac3b-ae7e49ba80a5">
+        <ac:parameter ac:name="id">SomeID</ac:parameter>
+        <ac:parameter ac:name="title">Some title</ac:parameter>
+        <ac:parameter ac:name="class">SomeClass</ac:parameter>
+        <ac:rich-text-body>
+            <p>Some content. That is <strong>also</strong> rich text</p>
+        </ac:rich-text-body>
+    </ac:structured-macro>
+    <p>
+        <br />
+    </p>
+    <h1>AUIButtonGroup</h1>
+    <ac:structured-macro ac:name="auibuttongroup" ac:schema-version="1"
+        ac:macro-id="290b2323-eb56-49e5-9396-3e09cdda12de">
+        <ac:parameter ac:name="id">SomeID</ac:parameter>
+        <ac:parameter ac:name="title">Some text on hover</ac:parameter>
+        <ac:parameter ac:name="class">SomeClass</ac:parameter>
+        <ac:parameter ac:name="atlassian-macro-output-type">INLINE</ac:parameter>
+        <ac:rich-text-body>
+            <p>Some <strong>content</strong></p>
+        </ac:rich-text-body>
+    </ac:structured-macro>
+    <p>
+        <br />
+    </p>
+    <h1>AUIHorizontalNavPage</h1>
+    <ac:structured-macro ac:name="auihorizontalnavpage" ac:schema-version="1"
+        ac:macro-id="bfe9afb4-f3d7-475b-8307-8ff862945d7b">
+        <ac:parameter ac:name="id">someID</ac:parameter>
+        <ac:parameter ac:name="title">Some title</ac:parameter>
+        <ac:parameter ac:name="class">someClass</ac:parameter>
+        <ac:rich-text-body>
+            <p>Some content?</p>
+        </ac:rich-text-body>
+    </ac:structured-macro>
+    <p>
+        <br />
+    </p>
+    <h1>TableEnhancer</h1>
+    <ac:structured-macro ac:name="tableenhancer" ac:schema-version="1"
+        ac:macro-id="890a0b1b-c11a-4d71-9049-f77f0674fb90">
+        <ac:parameter ac:name="unaccentedSorting">true</ac:parameter>
+        <ac:parameter ac:name="rowNumbers">onceBeforeSorting</ac:parameter>
+        <ac:parameter ac:name="rowNumbersBgColor">green</ac:parameter>
+        <ac:parameter ac:name="decimalMark">, (comma)</ac:parameter>
+        <ac:parameter ac:name="totalLine">true</ac:parameter>
+        <ac:rich-text-body>
+            <table>
+                <colgroup>
+                    <col />
+                    <col />
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th scope="col">Some title</th>
+                        <th scope="col">Some title2</th>
+                    </tr>
+                    <tr>
+                        <td>Some element</td>
+                        <td>Some element</td>
+                    </tr>
+                </tbody>
+            </table>
+        </ac:rich-text-body>
+    </ac:structured-macro>
+    <p></p>
+]]></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809845</id></property>
+    <property name="bodyType">2</property>
+  </object>
+</hibernate-generic>
