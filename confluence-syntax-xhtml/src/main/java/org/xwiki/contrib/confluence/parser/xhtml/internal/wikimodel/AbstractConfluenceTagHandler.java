@@ -34,7 +34,7 @@ public abstract class AbstractConfluenceTagHandler extends TagHandler
     /**
      * @param contentContainer when false, text content is dropped.
      */
-    public AbstractConfluenceTagHandler(boolean contentContainer)
+    AbstractConfluenceTagHandler(boolean contentContainer)
     {
         super(contentContainer);
     }
@@ -42,7 +42,7 @@ public abstract class AbstractConfluenceTagHandler extends TagHandler
     protected String getContent(TagContext context)
     {
         String escapedContent = context.getContent();
-        // Not really sure why but TagContext#getContent() escape the content
+        // Not really sure why but TagContext#getContent() escapes the content
         return StringEscapeUtils.unescapeXml(escapedContent);
     }
 }

@@ -313,11 +313,11 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
     @Override
     public void beginParagraph(WikiParameters params)
     {
-        maybePushListener(new QueueListener());
+        maybePushListener();
         super.beginParagraph(params);
     }
 
-    private void maybePushListener(Listener l)
+    private void maybePushListener()
     {
         if (this.pushListenerMethod == null) {
             return;
@@ -326,7 +326,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         this.mustCallPopListener++;
 
         try {
-            this.pushListenerMethod.invoke(this, l);
+            this.pushListenerMethod.invoke(this, new QueueListener());
         } catch (InvocationTargetException | IllegalAccessException e) {
             // ignore
         }

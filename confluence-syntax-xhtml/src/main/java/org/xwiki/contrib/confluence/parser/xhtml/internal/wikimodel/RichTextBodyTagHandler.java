@@ -38,7 +38,7 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 public class RichTextBodyTagHandler extends AbstractRichContentTagHandler
 {
     /**
-     * @param parser is used access the parser and the rendering to use to manipulate the content
+     * @param parser is used to access the parser and the rendering to use to manipulate the content
      */
     public RichTextBodyTagHandler(ConfluenceXHTMLParser parser)
     {
