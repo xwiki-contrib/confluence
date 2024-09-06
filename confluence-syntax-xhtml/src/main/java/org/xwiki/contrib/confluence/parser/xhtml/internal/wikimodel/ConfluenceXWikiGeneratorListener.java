@@ -23,6 +23,8 @@ import java.io.StringReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
@@ -30,6 +32,7 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTa
 import org.xwiki.rendering.block.XDOM;
 import org.xwiki.rendering.internal.parser.wikimodel.DefaultXWikiGeneratorListener;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XHTMLXWikiGeneratorListener;
+import org.xwiki.rendering.listener.Format;
 import org.xwiki.rendering.listener.InlineFilterListener;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.listener.QueueListener;
@@ -42,9 +45,12 @@ import org.xwiki.rendering.listener.reference.ResourceType;
 import org.xwiki.rendering.parser.ParseException;
 import org.xwiki.rendering.parser.ResourceReferenceParser;
 import org.xwiki.rendering.parser.StreamParser;
+import org.xwiki.rendering.renderer.PrintRenderer;
 import org.xwiki.rendering.renderer.PrintRendererFactory;
+import org.xwiki.rendering.renderer.printer.DefaultWikiPrinter;
 import org.xwiki.rendering.syntax.Syntax;
 import org.xwiki.rendering.util.IdGenerator;
+import org.xwiki.rendering.wikimodel.WikiParameter;
 import org.xwiki.rendering.wikimodel.WikiParameters;
 import org.xwiki.rendering.wikimodel.WikiReference;
 
@@ -68,11 +74,25 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
 
     private static final String[] REPLACE_SPACE_NEXT = new String[] {"\\\\", "\\.", "\\:"};
 
+    private static final List<EventType> PLAIN_TEXT_EVENTS = List.of(
+        EventType.ON_SPACE,
+        EventType.ON_RAW_TEXT,
+        EventType.ON_NEW_LINE,
+        EventType.ON_EMPTY_LINES,
+        EventType.ON_SPECIAL_SYMBOL,
+        EventType.ON_VERBATIM,
+        EventType.ON_WORD
+    );
+
     private final Method pushListenerMethod;
 
     private final Method popListenerMethod;
 
     private StreamParser plainParser;
+
+    private StreamParser xwikiParser;
+
+    private PrintRendererFactory plainRendererFactory;
 
     private int mustCallPopListener;
 
@@ -85,14 +105,18 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
      * @param idGenerator used to generate header ids
      * @param syntax the syntax of the parsed source
      * @param plainParser the parser to use to parse link labels
+     * @param xwikiParser the parser to use to parse XWiki syntax
      * @since 3.0M3
      */
     public ConfluenceXWikiGeneratorListener(StreamParser parser, Listener listener,
         ResourceReferenceParser linkReferenceParser, ResourceReferenceParser imageReferenceParser,
-        PrintRendererFactory plainRendererFactory, IdGenerator idGenerator, Syntax syntax, StreamParser plainParser)
+        PrintRendererFactory plainRendererFactory, IdGenerator idGenerator, Syntax syntax, StreamParser plainParser,
+        StreamParser xwikiParser)
     {
         super(parser, listener, linkReferenceParser, imageReferenceParser, plainRendererFactory, idGenerator, syntax);
         this.plainParser = plainParser;
+        this.xwikiParser = xwikiParser;
+        this.plainRendererFactory = plainRendererFactory;
 
         // We need pushListener and popListener but they are private. For a lack of better solution, we use reflection
         // to access them. When we stop supporting 14.10, we should remove these reflection tricks as these methods are
@@ -322,6 +346,123 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
             // ignore
         }
         return null;
+    }
+
+    @Override
+    public void onMacroInline(String macroName, WikiParameters params, String content)
+    {
+        if ("confluence_code".equals(macroName)) {
+            WikiParameter classParam = params.getParameter("class");
+            Map<String, String> classFormat = null;
+            if (classParam != null && !StringUtils.isEmpty(classParam.getValue())) {
+                classFormat = Map.of("class", classParam.getValue());
+                getListener().beginFormat(Format.NONE, classFormat);
+            }
+
+            handleCodeMacro(content);
+            if (classParam != null) {
+                getListener().endFormat(Format.NONE, classFormat);
+            }
+            return;
+        }
+
+        super.onMacroInline(macroName, params, content);
+    }
+
+    private void handleCodeMacro(String content)
+    {
+        if (content.isEmpty()) {
+            // let's ignore empty code tags
+            return;
+        }
+
+        try {
+            QueueListener queueListener = new QueueListener();
+            if (xwikiParser != null) {
+                xwikiParser.parse(new StringReader(content), queueListener);
+            }
+            int s = queueListener.size();
+
+            if (queueListener.size() > 4
+                && queueListener.get(0).eventType.equals(EventType.BEGIN_DOCUMENT)
+                && queueListener.get(1).eventType.equals(EventType.BEGIN_PARAGRAPH)
+                && queueListener.get(s - 2).eventType.equals(EventType.END_PARAGRAPH)
+                && queueListener.get(s - 1).eventType.equals(EventType.END_DOCUMENT)
+            ) {
+                // we skip BEGIN_DOCUMENT,  BEGIN_PARAGRAPH at the start and END_PARAGRAPH, END_DOCUMENT at the end
+                List<QueueListener.Event> relevantEvents = queueListener.subList(2, s - 2);
+                Iterator<QueueListener.Event> relevantEventsIterator = relevantEvents.iterator();
+                boolean useFormat = false;
+                while (relevantEventsIterator.hasNext()) {
+                    QueueListener.Event e = relevantEventsIterator.next();
+                    if (isClassPre(e)) {
+                        // Let's just ignore <span class="pre"> elements in <code>
+                        relevantEventsIterator.remove();
+                    } else if (!PLAIN_TEXT_EVENTS.contains(e.eventType)) {
+                        useFormat = true;
+                        break;
+                    }
+                }
+
+                if (useFormat) {
+                    this.getListener().beginFormat(Format.MONOSPACE, Collections.emptyMap());
+                    for (QueueListener.Event e : relevantEvents) {
+                        e.eventType.fireEvent(getListener(), e.eventParameters);
+                    }
+                    this.getListener().endFormat(Format.MONOSPACE, Collections.emptyMap());
+                    return;
+                }
+                PrintRenderer plainTextRenderer = plainRendererFactory.createRenderer(new DefaultWikiPrinter());
+                relevantEvents.forEach(e -> e.eventType.fireEvent(plainTextRenderer, e.eventParameters));
+                outputCodeMacro(plainTextRenderer.getPrinter().toString());
+                return;
+            }
+
+        } catch (ParseException e) {
+            // fallback to code
+        }
+
+        outputCodeMacro(content);
+    }
+
+    private void outputCodeMacro(String content)
+    {
+        WikiParameters params = new WikiParameters().addParameter("language", "none");
+        if (content.contains("{{/code}}")) {
+            params = params.addParameter("source", "string:" + content);
+            super.onMacroInline("code", params, null);
+            return;
+        }
+        super.onMacroInline("code", params, content);
+    }
+
+    private static boolean isClassPre(QueueListener.Event e)
+    {
+        if (e.eventType != EventType.BEGIN_FORMAT && e.eventType != EventType.END_FORMAT) {
+            return false;
+        }
+
+        for (Object eventParameter : e.eventParameters) {
+            if (!isFormatNone(eventParameter) && !isClassPre(eventParameter)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static boolean isFormatNone(Object eventParameter)
+    {
+        return eventParameter instanceof Format && Format.NONE.equals(eventParameter);
+    }
+
+    private static boolean isClassPre(Object eventParameter)
+    {
+        if (eventParameter instanceof Map) {
+            Map<String, String> params = (Map<String, String>) eventParameter;
+            return params.size() == 1 && "pre".equals(params.get("class"));
+        }
+        return false;
     }
 
     @Override

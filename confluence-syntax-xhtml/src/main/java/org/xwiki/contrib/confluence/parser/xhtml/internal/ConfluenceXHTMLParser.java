@@ -227,7 +227,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("td", new TableCellTagHandler());
 
         handlers.put("pre", new PreformattedTagHandler());
-        handlers.put("code", new CodeTagHandler());
+        handlers.put("code", new CodeTagHandler(this));
 
         handlers.put("time", new TimeTagHandler(this.macroSupport));
 
@@ -309,8 +309,15 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
     @Override
     public XWikiGeneratorListener createXWikiGeneratorListener(Listener listener, IdGenerator idGenerator)
     {
+        StreamParser xwikiParser;
+        try {
+            xwikiParser = componentManagerProvider.get().getInstance(StreamParser.class, "xwiki/2.1");
+        } catch (ComponentLookupException e) {
+            xwikiParser = null;
+        }
         return new ConfluenceXWikiGeneratorListener(getLinkLabelParser(), listener, getLinkReferenceParser(),
-            getImageReferenceParser(), this.plainRendererFactory, idGenerator, getSyntax(), this.plainParser);
+            getImageReferenceParser(), this.plainRendererFactory, idGenerator, getSyntax(), this.plainParser,
+            xwikiParser);
     }
 
     /**

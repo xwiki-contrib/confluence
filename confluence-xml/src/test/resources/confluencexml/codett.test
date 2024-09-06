@@ -1,0 +1,102 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Content conversions
+.#------------------------------------------------------------------------------
+<wikiSpace name="MySpace">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.47826731</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2019-02-13 08:05:54.0 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>1</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.47826731</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-02-13 08:16:56.0 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>My Space</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>Hello code.
+
+(% class="simple" %)
+* (% style="color: rgb(255,0,255);" class="reference download internal" %)**(% class="xref download docutils literal" %){{code language="none"}}CodeCodeCodac Software 0.2.10{{/code}}(%%)**(%%) , see (% class="reference download internal" %)(% class="xref download docutils literal" %)##[[doc:WebHome]](%%)##(%%)
+(% class="reference download internal pre" %)(located in "devdev/pathy/_lolol_releases", as of some date)
+
+* (((
+(% class="first" %)
+Some procedure
+
+(% class="simple" %)
+* ex.g. (% class="xref download docutils literal" %){{code language="none"}}CodeCodeCodac Software 0.2.10{{/code}}
+* (% class="xref download docutils literal" %){{code language="none"}}update script{{/code}}
+* (% class="xref download docutils literal" %){{code language="none"}}some_script.sh{{/code}}
+)))
+* (((
+(% class="first" %)
+in the bash shell: run (% class="docutils literal" %){{code language="none"}}source some_script.sh &lt;tar.gz file> &lt;ip-address> 22{{/code}}
+)))
+
+{{code language="none"}}# ------- START{{/code}}
+##/^name.surname@[[perdu.com>>url:http://perdu.com||shape="rect"]]$/ REJECT intra sender_access##
+##/^hamed.[[mail@perdu.com>>mailto:mail@perdu.com||shape="rect"]]$/ REJECT intra sender_access##
+##/^anothermail@[[perdu.com>>url:http://perdu.com||shape="rect"]]$/ REJECT intra sender_access##
+{{code language="none"}}# ------- END{{/code}}
+
+\\
+
+{{code language="none"}}
+# postfix -c /etc/postfix-incoming reload
+{{/code}}
+
+\\
+
+{{code language="none" source="string:{{/code~}~}"/}}</string>
+</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=codett
+.#------------------------------------------------------------------------------

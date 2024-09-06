@@ -19,43 +19,35 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
-import org.xwiki.rendering.wikimodel.WikiParameters;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.ConfluenceXHTMLParser;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
- * Handles code blocks.
+ * Handles inline code snippets.
  * <p>
  * Example:
  * <p>
  * {@code
- * <code>code content</code>
+ * <p>This is some <code>code content</code></p>
  * }
  *
  * @version $Id$
  * @since 9.18.0
  */
-public class CodeTagHandler extends AbstractConfluenceTagHandler implements ConfluenceTagHandler
+public class CodeTagHandler extends AbstractRichContentTagHandler implements ConfluenceTagHandler
 {
     /**
-     * The default constructor.
+     * @param parser the XHTML parser
      */
-    public CodeTagHandler()
+    public CodeTagHandler(ConfluenceXHTMLParser parser)
     {
-        super(true);
+        super(parser);
     }
 
     @Override
-    protected void begin(TagContext context)
+    protected void endContent(String content, TagContext context)
     {
-        setAccumulateContent(true);
-    }
-
-    @Override
-    protected void end(TagContext context)
-    {
-        String content = getContent(context);
-
-        context.getScannerContext().onMacro("code", new WikiParameters().setParameter("language", "none"), content,
-            true);
+        // See ConfluenceXWikiGeneratorListener#onMacroInline to see the complex treatment we reserve for this macro
+        context.getScannerContext().onMacro("confluence_code", context.getParams(), content, true);
     }
 }

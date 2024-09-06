@@ -61,7 +61,7 @@ public abstract class AbstractRichContentTagHandler extends PreserveTagHandler i
             WrappingListener converter = this.parser.getConverter();
             if (converter != null) {
                 // Remember the current listener to put it back
-                context.getTagStack().setStackParameter(CURRENT_LISTENER, getActualWrappedListener(converter));
+                context.getTagStack().setStackParameter(CURRENT_LISTENER, getActualWrappedListener());
 
                 // Put a converter in front of the renderer if one is provided
                 converter.setWrappedListener(contentRenderer);
@@ -96,7 +96,7 @@ public abstract class AbstractRichContentTagHandler extends PreserveTagHandler i
             WrappingListener converter = this.parser.getConverter();
             if (converter != null) {
                 // Get the wrapped renderer
-                contentRenderer = (PrintRenderer) getActualWrappedListener(converter);
+                contentRenderer = (PrintRenderer) getActualWrappedListener();
 
                 // Put back the current listener
                 converter.setWrappedListener((Listener) context.getTagStack().getStackParameter(CURRENT_LISTENER));
@@ -119,8 +119,8 @@ public abstract class AbstractRichContentTagHandler extends PreserveTagHandler i
         endContent(preservedContent, context);
     }
 
-    private Listener getActualWrappedListener(WrappingListener converter)
+    protected Listener getActualWrappedListener()
     {
-        return ((WrappingListener) converter.getWrappedListener()).getWrappedListener();
+        return ((WrappingListener) this.parser.getConverter().getWrappedListener()).getWrappedListener();
     }
 }
