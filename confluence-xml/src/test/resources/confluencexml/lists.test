@@ -1,6 +1,6 @@
 .#------------------------------------------------------------------------------
 .expect|filter+xml
-.# Content conversions
+.# Various links and reference related tests
 .#------------------------------------------------------------------------------
 <wikiSpace name="MySpace">
   <wikiDocument name="WebHome">
@@ -9,11 +9,11 @@
         <parameters>
           <entry>
             <string>creation_author</string>
-            <string>XWiki.47826731</string>
+            <string>XWiki.Teo</string>
           </entry>
           <entry>
             <string>creation_date</string>
-            <date>2019-02-13 08:05:54.0 UTC</date>
+            <date>2012-08-21 15:37:47.0 UTC</date>
           </entry>
           <entry>
             <string>lastrevision</string>
@@ -26,11 +26,11 @@
           <parameters>
             <entry>
               <string>revision_author</string>
-              <string>XWiki.47826731</string>
+              <string>XWiki.Teo</string>
             </entry>
             <entry>
               <string>revision_date</string>
-              <date>2019-02-13 08:16:56.0 UTC</date>
+              <date>2016-10-11 14:47:37.0 UTC</date>
             </entry>
             <entry>
               <string>revision_comment</string>
@@ -42,32 +42,30 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>Hello code.
+              <string>1. Hello
+1. world
+11. Hello nested
+11. world nested
 
-* (% style="color: rgb(255,0,255);" class="reference download internal" %)**(% class="xref download docutils literal" %){{code language="none"}}CodeCodeCodac Software 0.2.10{{/code}}(%%)**(%%) , see (% class="reference download internal" %)(% class="xref download docutils literal" %)##[[doc:WebHome]](%%)##(%%)
-(% class="reference download internal pre" %)(located in "devdev/pathy/_lolol_releases", as of some date)
+* List entry 1
+*1. Numbered list entry 1
+*1. Numbered list entry 2
+*1. Numbered list entry
 
-* Some procedure
-** ex.g. (% class="xref download docutils literal" %){{code language="none"}}CodeCodeCodac Software 0.2.10{{/code}}
-** (% class="xref download docutils literal" %){{code language="none"}}update script{{/code}}
-** (% class="xref download docutils literal" %){{code language="none"}}some_script.sh{{/code}}
-* in the bash shell: run (% class="docutils literal" %){{code language="none"}}source some_script.sh &lt;tar.gz file> &lt;ip-address> 22{{/code}}
+1. (((
+== {{id name="MySpaceHome-Installationandsetup"/}}**Installation and setup** ==
 
-{{code language="none"}}# ------- START{{/code}}
-##/^name.surname@[[perdu.com>>url:http://perdu.com||shape="rect"]]$/ REJECT intra sender_access##
-##/^hamed.[[mail@perdu.com>>mailto:mail@perdu.com||shape="rect"]]$/ REJECT intra sender_access##
-##/^anothermail@[[perdu.com>>url:http://perdu.com||shape="rect"]]$/ REJECT intra sender_access##
-{{code language="none"}}# ------- END{{/code}}
+1. (((
+=== {{id name="MySpaceHome-DownloadtheSetup:"/}}**Download the Setup:** ===
 
-\\
+1. (% style="color: rgb(51, 51, 51); color: rgb(0, 0, 0)" %)Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old(% style="color: rgb(51,51,51);" %).
+)))
+1. (((
+=== {{id name="MySpaceHome-Installation:"/}}(% style="color: rgb(51,51,51);margin-left: 0.0px;" %)**Installation:**(%%) ===
 
-{{code language="none"}}
-# postfix -c /etc/postfix-incoming reload
-{{/code}}
-
-\\
-
-{{code language="none" source="string:{{/code~}~}"/}}</string>
+1. (% style="color: rgb(0,0,0);" %)Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
+)))
+)))</string>
             </entry>
             <entry>
               <string>syntax</string>
@@ -88,5 +86,5 @@
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
-.configuration.source=codett
+.configuration.source=lists
 .#------------------------------------------------------------------------------

@@ -26,8 +26,6 @@ import org.xwiki.rendering.wikimodel.impl.IWikiScannerContext;
 import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -111,7 +109,7 @@ public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
         IWikiScannerContext s = context.getScannerContext();
         boolean isInline = supportsInlineMode(macro) && (
             s.isInHeader()
-                || isInListItem(s)
+                || isInListItem(context)
                 || isInParagraph(context)
                 || isInSpan(context)
         );
@@ -129,18 +127,9 @@ public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
         return context.getTagStack().getStackParameter(CONFLUENCE_IN_PARAGRAPH) != null;
     }
 
-    private boolean isInListItem(IWikiScannerContext s)
+    private boolean isInListItem(TagContext context)
     {
-        try {
-            Method getContext = s.getClass().getDeclaredMethod("getContext");
-            getContext.setAccessible(true);
-            Object context = getContext.invoke(s);
-            Method isInListItem = context.getClass().getDeclaredMethod("isInListItem");
-            isInListItem.setAccessible(true);
-            return (Boolean) isInListItem.invoke(context);
-        } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            return false;
-        }
+        return context.getParent().isTag("li");
     }
 
     private boolean supportsInlineMode(ConfluenceMacro macro)

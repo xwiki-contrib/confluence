@@ -23,6 +23,7 @@ import java.io.StringReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ import org.xwiki.rendering.internal.parser.wikimodel.DefaultXWikiGeneratorListen
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XHTMLXWikiGeneratorListener;
 import org.xwiki.rendering.listener.Format;
 import org.xwiki.rendering.listener.InlineFilterListener;
+import org.xwiki.rendering.listener.ListType;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.listener.QueueListener;
 import org.xwiki.rendering.listener.WrappingListener;
@@ -352,21 +354,200 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
     public void onMacroInline(String macroName, WikiParameters params, String content)
     {
         if ("confluence_code".equals(macroName)) {
-            WikiParameter classParam = params.getParameter("class");
-            Map<String, String> classFormat = null;
-            if (classParam != null && !StringUtils.isEmpty(classParam.getValue())) {
-                classFormat = Map.of("class", classParam.getValue());
-                getListener().beginFormat(Format.NONE, classFormat);
-            }
-
+            Map<String, String> classFormat = beginFormat(params);
             handleCodeMacro(content);
-            if (classParam != null) {
-                getListener().endFormat(Format.NONE, classFormat);
-            }
+            endFormat(classFormat);
             return;
         }
 
         super.onMacroInline(macroName, params, content);
+    }
+
+    @Override
+    public void onMacroBlock(String macroName, WikiParameters params, String content)
+    {
+        /**
+         * Wikimodel doesn't handle nested lists and lists with unique paragraphs  well.
+         * We bypass it by manually handling list-related tags.
+         */
+        switch (macroName) {
+            case "confluence_ul_start":
+                getListener().beginList(ListType.BULLETED, Collections.emptyMap());
+                return;
+
+            case "confluence_ol_start":
+                getListener().beginList(ListType.NUMBERED, Collections.emptyMap());
+                return;
+
+            case "confluence_ul_end":
+                super.endList(params, false);
+                return;
+
+            case "confluence_ol_end":
+                super.endList(params, true);
+                return;
+
+            case "confluence_li_start":
+                // we begin the list item and then record the following events. This will allow us to do some cleanup
+                // that will avoid clunky syntax and broken rendering. See handleListItem().
+                getListener().beginListItem();
+                maybePushListener();
+                return;
+
+            case "confluence_li_end":
+                handleListItem();
+                return;
+
+            default:
+                // ignore
+        }
+
+        super.onMacroBlock(macroName, params, content);
+    }
+
+    private void endFormat(Map<String, String> format)
+    {
+        if (format != null) {
+            getListener().endFormat(Format.NONE, format);
+        }
+    }
+
+    private Map<String, String> beginFormat(WikiParameters params)
+    {
+        WikiParameter classParam = params.getParameter("class");
+        WikiParameter styleParam = params.getParameter("style");
+        Map<String, String> format = new HashMap<>(2);
+
+        if (styleParam != null && !StringUtils.isEmpty(styleParam.getValue())) {
+            format.put("style", styleParam.getValue());
+        }
+
+        if (classParam != null && !StringUtils.isEmpty(classParam.getValue())) {
+            format.put("class", classParam.getValue());
+        }
+
+        if (format.isEmpty()) {
+            return null;
+        }
+
+        getListener().beginFormat(Format.NONE, format);
+        return format;
+    }
+
+    private List<QueueListener.Event> parseContent(String content)
+    {
+        QueueListener queueListener = new QueueListener();
+        if (xwikiParser != null) {
+            try {
+                xwikiParser.parse(new StringReader(content), queueListener);
+            } catch (ParseException e) {
+                return null;
+            }
+        }
+        int s = queueListener.size();
+
+        if (queueListener.size() > 4
+            && queueListener.get(0).eventType.equals(EventType.BEGIN_DOCUMENT)
+            && queueListener.get(1).eventType.equals(EventType.BEGIN_PARAGRAPH)
+            && queueListener.get(s - 2).eventType.equals(EventType.END_PARAGRAPH)
+            && queueListener.get(s - 1).eventType.equals(EventType.END_DOCUMENT)
+        ) {
+            // we skip BEGIN_DOCUMENT,  BEGIN_PARAGRAPH at the start and END_PARAGRAPH, END_DOCUMENT at the end
+            return queueListener.subList(2, s - 2);
+        }
+        return null;
+    }
+
+    private void handleListItem()
+    {
+        /*
+         * We make sure the list item content is wrapped in a group if necessary.
+         * This avoids broken syntax like having empty list items and then the content of the list item standalone.
+         *
+         * We handle some common situations where the events can be simplified so the group is not necessary.
+         * In particular, groups are not necessary when:
+         *  - a paragraph is alone in the list item. In this case, we can simply remove it to allow cleaner syntax and
+         *    unnecessary vertical spacing.
+         *  - a list is alone in the list item. In this case, not producing a group leads to a much cleaner syntax for
+         *    nested lists
+         *  - the list item starts with a paragraph and is followed by a unique list. Then, the paragraph can be removed
+         *    to unnecessary vertical spacing and allow the cleaner nested list syntax as well.
+         */
+
+        QueueListener queueListener = maybePopListener();
+        if (queueListener != null) {
+            removeParagraphImmediatelyFollowedByList(queueListener);
+
+            boolean wrapInGroup = needsGroupWrapInListItem(queueListener);
+
+            if (wrapInGroup) {
+                getListener().beginGroup(Collections.emptyMap());
+            }
+
+            fireEvents(queueListener);
+
+            if (wrapInGroup) {
+                getListener().endGroup(Collections.emptyMap());
+            }
+        }
+        getListener().endListItem();
+    }
+
+    private void removeParagraphImmediatelyFollowedByList(QueueListener queueListener)
+    {
+        int s = queueListener.size();
+        if (s > 1 && queueListener.get(0).eventType.equals(EventType.BEGIN_PARAGRAPH)) {
+            int i = 1;
+            while (i < s && !queueListener.get(i).eventType.equals(EventType.END_PARAGRAPH)) {
+                i++;
+            }
+
+            if (i < s && queueListener.get(i).eventType.equals(EventType.END_PARAGRAPH)
+                && (i + 1 >= s || queueListener.get(i + 1).eventType.equals(EventType.BEGIN_LIST))
+            ) {
+                queueListener.remove(i);
+                queueListener.remove(0);
+            }
+        }
+    }
+
+    private boolean needsGroupWrapInListItem(QueueListener contentEvents)
+    {
+        for (int i = 0; i < contentEvents.size(); i++) {
+            QueueListener.Event e = contentEvents.get(i);
+            if (e.eventType.isInlineEnd()) {
+                return !wrappedInList(contentEvents.subList(i, contentEvents.size()));
+            }
+        }
+        return false;
+    }
+
+    private boolean wrappedInList(List<QueueListener.Event> contentEvents)
+    {
+        int s = contentEvents.size();
+        if (s < 2
+            || !contentEvents.get(0).eventType.equals(EventType.BEGIN_LIST)
+            || !contentEvents.get(s - 1).eventType.equals(EventType.END_LIST)
+        ) {
+            return false;
+        }
+
+        int level = 0;
+        boolean forbidLists = false;
+        for (QueueListener.Event e : contentEvents) {
+            if (e.eventType.equals(EventType.BEGIN_LIST)) {
+                if (forbidLists) {
+                    return false;
+                }
+                level++;
+            } else  if (e.eventType.equals(EventType.END_LIST)) {
+                level--;
+                if (level == 0) {
+                    forbidLists = true;
+                }
+            }
+        }
+        return true;
     }
 
     private void handleCodeMacro(String content)
@@ -376,53 +557,50 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
             return;
         }
 
-        try {
-            QueueListener queueListener = new QueueListener();
-            if (xwikiParser != null) {
-                xwikiParser.parse(new StringReader(content), queueListener);
+        List<QueueListener.Event> contentEvents = parseContent(content);
+        if (contentEvents == null) {
+            outputCodeMacro(content);
+            return;
+        }
+        Iterator<QueueListener.Event> relevantEventsIterator = contentEvents.iterator();
+        boolean useFormat = false;
+        while (relevantEventsIterator.hasNext()) {
+            QueueListener.Event e = relevantEventsIterator.next();
+            if (isClassPre(e)) {
+                // Let's just ignore <span class="pre"> elements in <code>
+                relevantEventsIterator.remove();
+            } else if (!PLAIN_TEXT_EVENTS.contains(e.eventType)) {
+                useFormat = true;
+                break;
             }
-            int s = queueListener.size();
-
-            if (queueListener.size() > 4
-                && queueListener.get(0).eventType.equals(EventType.BEGIN_DOCUMENT)
-                && queueListener.get(1).eventType.equals(EventType.BEGIN_PARAGRAPH)
-                && queueListener.get(s - 2).eventType.equals(EventType.END_PARAGRAPH)
-                && queueListener.get(s - 1).eventType.equals(EventType.END_DOCUMENT)
-            ) {
-                // we skip BEGIN_DOCUMENT,  BEGIN_PARAGRAPH at the start and END_PARAGRAPH, END_DOCUMENT at the end
-                List<QueueListener.Event> relevantEvents = queueListener.subList(2, s - 2);
-                Iterator<QueueListener.Event> relevantEventsIterator = relevantEvents.iterator();
-                boolean useFormat = false;
-                while (relevantEventsIterator.hasNext()) {
-                    QueueListener.Event e = relevantEventsIterator.next();
-                    if (isClassPre(e)) {
-                        // Let's just ignore <span class="pre"> elements in <code>
-                        relevantEventsIterator.remove();
-                    } else if (!PLAIN_TEXT_EVENTS.contains(e.eventType)) {
-                        useFormat = true;
-                        break;
-                    }
-                }
-
-                if (useFormat) {
-                    this.getListener().beginFormat(Format.MONOSPACE, Collections.emptyMap());
-                    for (QueueListener.Event e : relevantEvents) {
-                        e.eventType.fireEvent(getListener(), e.eventParameters);
-                    }
-                    this.getListener().endFormat(Format.MONOSPACE, Collections.emptyMap());
-                    return;
-                }
-                PrintRenderer plainTextRenderer = plainRendererFactory.createRenderer(new DefaultWikiPrinter());
-                relevantEvents.forEach(e -> e.eventType.fireEvent(plainTextRenderer, e.eventParameters));
-                outputCodeMacro(plainTextRenderer.getPrinter().toString());
-                return;
-            }
-
-        } catch (ParseException e) {
-            // fallback to code
         }
 
-        outputCodeMacro(content);
+        if (useFormat) {
+            this.getListener().beginFormat(Format.MONOSPACE, Collections.emptyMap());
+            fireEvents(contentEvents);
+            this.getListener().endFormat(Format.MONOSPACE, Collections.emptyMap());
+            return;
+        }
+        outputCodeMacro(eventsToText(contentEvents));
+    }
+
+    private void fireEvents(Iterable<QueueListener.Event> contentEvents, Listener listener)
+    {
+        for (QueueListener.Event e : contentEvents) {
+            e.eventType.fireEvent(listener, e.eventParameters);
+        }
+    }
+
+    private void fireEvents(Iterable<QueueListener.Event> contentEvents)
+    {
+        fireEvents(contentEvents, getListener());
+    }
+
+    private String eventsToText(List<QueueListener.Event> contentEvents)
+    {
+        PrintRenderer plainTextRenderer = plainRendererFactory.createRenderer(new DefaultWikiPrinter());
+        fireEvents(contentEvents, plainTextRenderer);
+        return plainTextRenderer.getPrinter().toString();
     }
 
     private void outputCodeMacro(String content)

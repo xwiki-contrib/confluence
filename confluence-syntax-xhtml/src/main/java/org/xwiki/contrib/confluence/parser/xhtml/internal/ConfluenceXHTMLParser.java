@@ -51,7 +51,10 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ADFNodeHandl
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.CaptionHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.CodeTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceListItemTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceOrderedListTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceParagraphTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceUnorderedListTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXHTMLWhitespaceXMLFilter;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXWikiGeneratorListener;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.DefaultMacroParameterTagHandler;
@@ -196,6 +199,9 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("h6", handler);
         handlers.put("a", createXWikiReferenceTagHandler());
         handlers.put("p", new ConfluenceParagraphTagHandler());
+        handlers.put("li", new ConfluenceListItemTagHandler());
+        handlers.put("ul", new ConfluenceUnorderedListTagHandler());
+        handlers.put("ol", new ConfluenceOrderedListTagHandler());
 
         handlers.put("ac:emoticon", new EmoticonTagHandler());
         handlers.put("ac:macro", new MacroTagHandler(this.macroSupport));

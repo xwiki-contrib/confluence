@@ -76,18 +76,10 @@ Spaces help your team structure, organize, and share work, so every team member 
 
 ==== {{id name="🪄-Need-some-inspiration?"/}}🪄 Need some inspiration? ====
 
-* (((
-Check out our [[Confluence best practices guide>>url:https://www.atlassian.com/software/confluence/guides/get-started/best-practices||shape="rect"]].
-)))
-* (((
-Get a quick intro into what spaces are and how to best use them at [[Set up your site and spaces>>url:https://www.atlassian.com/software/confluence/guides/get-started/set-up||shape="rect"]].
-)))
-* (((
-Check out our guide for ideas on how to [[set up your space overview>>url:https://confluence.atlassian.com/confcloud/set-up-your-space-homepage-827106219.html||shape="rect"]].
-)))
-* (((
-If starting from a blank space is daunting, try using one of the [[space templates>>url:https://confluence.atlassian.com/display/ConfCloud/Create+a+Space+From+a+Template||shape="rect"]] instead.
-)))</string>
+* Check out our [[Confluence best practices guide>>url:https://www.atlassian.com/software/confluence/guides/get-started/best-practices||shape="rect"]].
+* Get a quick intro into what spaces are and how to best use them at [[Set up your site and spaces>>url:https://www.atlassian.com/software/confluence/guides/get-started/set-up||shape="rect"]].
+* Check out our guide for ideas on how to [[set up your space overview>>url:https://confluence.atlassian.com/confcloud/set-up-your-space-homepage-827106219.html||shape="rect"]].
+* If starting from a blank space is daunting, try using one of the [[space templates>>url:https://confluence.atlassian.com/display/ConfCloud/Create+a+Space+From+a+Template||shape="rect"]] instead.</string>
             </entry>
             <entry>
               <string>syntax</string>

@@ -11,7 +11,7 @@
             files="src/main/java/org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/LinkTagHandler\.java$"/>
   <suppress checks="MultipleStringLiterals"
             files="src/main/java/org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/ImageTagHandler\.java$"/>
-  <suppress checks="MultipleStringLiterals|ExecutableStatementCount|JavaNCSS|CyclomaticComplexity|ParameterNumber|ClassFanOutComplexity|BooleanExpressionComplexity"
+  <suppress checks="MultipleStringLiterals|ExecutableStatementCount|JavaNCSS|CyclomaticComplexity|ParameterNumber|ClassFanOutComplexity|BooleanExpressionComplexity|ReturnCount"
             files="src/main/java/org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/ConfluenceXWikiGeneratorListener\.java$"/>
   <suppress checks="JavaNCSS"
             files="src/main/java/org/xwiki/contrib/confluence/parser/xhtml/internal/ConfluenceXHTMLParser\.java$"/>

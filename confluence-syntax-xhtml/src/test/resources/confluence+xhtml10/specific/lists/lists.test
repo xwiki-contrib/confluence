@@ -1,0 +1,75 @@
+.#-----------------------------------------------------
+.input|confluence+xhtml/1.0
+.#-----------------------------------------------------
+<ol>
+  <li><p>Hello</p></li>
+  <li><p>world</p>
+    <ol>
+      <li><p>Hello nested</p></li>
+      <li><p>world nested</p></li>
+    </ol>
+  </li>
+</ol>
+
+<ul><li><p>List entry 1</p><ol><li><p>Numbered list entry 1</p></li><li><p>Numbered list entry 2</p></li><li><p>Numbered list entry </p></li></ol></li></ul>
+.#-----------------------------------------------------
+.expect|event/1.0
+beginDocument
+beginList [NUMBERED]
+beginListItem
+onWord [Hello]
+endListItem
+beginListItem
+onWord [world]
+beginList [NUMBERED]
+beginListItem
+onWord [Hello]
+onSpace
+onWord [nested]
+endListItem
+beginListItem
+onWord [world]
+onSpace
+onWord [nested]
+endListItem
+endList [NUMBERED]
+endListItem
+endList [NUMBERED]
+beginList [BULLETED]
+beginListItem
+onWord [List]
+onSpace
+onWord [entry]
+onSpace
+onWord [1]
+beginList [NUMBERED]
+beginListItem
+onWord [Numbered]
+onSpace
+onWord [list]
+onSpace
+onWord [entry]
+onSpace
+onWord [1]
+endListItem
+beginListItem
+onWord [Numbered]
+onSpace
+onWord [list]
+onSpace
+onWord [entry]
+onSpace
+onWord [2]
+endListItem
+beginListItem
+onWord [Numbered]
+onSpace
+onWord [list]
+onSpace
+onWord [entry]
+endListItem
+endList [NUMBERED]
+endListItem
+endList [BULLETED]
+endDocument
+.#-----------------------------------------------------
