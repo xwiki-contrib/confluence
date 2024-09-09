@@ -88,11 +88,11 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
 
     private final Method popListenerMethod;
 
-    private StreamParser plainParser;
+    private final StreamParser plainParser;
 
-    private StreamParser xwikiParser;
+    private final StreamParser xwikiParser;
 
-    private PrintRendererFactory plainRendererFactory;
+    private final PrintRendererFactory plainRendererFactory;
 
     private int mustCallPopListener;
 
