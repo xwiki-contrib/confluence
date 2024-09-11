@@ -25,6 +25,14 @@ import java.util.Map;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.dom4j.Document;
+import org.dom4j.DocumentHelper;
+import org.dom4j.Element;
+import org.dom4j.io.OutputFormat;
+import org.dom4j.io.XMLWriter;
+
+import java.io.StringWriter;
+
 import org.xwiki.component.annotation.Component;
 
 /**
@@ -57,22 +65,27 @@ public class StyleMacroConvertor extends AbstractMacroConverter
     @Override
     protected String toXWikiContent(String confluenceId, Map<String, String> parameters, String confluenceContent)
     {
-        StringBuilder stringBuilder = new StringBuilder();
 
+        Document document = DocumentHelper.createDocument();
+        Element root = document.addElement("root");
         if (confluenceContent != null && !confluenceContent.isEmpty()) {
-            stringBuilder.append("<style>");
-            stringBuilder.append(confluenceContent);
-            stringBuilder.append("</style>");
+            Element styleElement = root.addElement("style");
+            styleElement.addText(confluenceContent);
         }
 
-        if (parameters.containsKey(IMPORT)) {
-            stringBuilder.append("<link rel=\"stylesheet\"");
-            stringBuilder.append("href=");
-            stringBuilder.append(parameters.get(IMPORT));
-            stringBuilder.append(">");
+        if(parameters.containsKey(IMPORT)) {
+            Element linkElement =
+                root.addElement("link").addAttribute("rel", "stylesheet").addAttribute("href", parameters.get(IMPORT));
         }
-        return stringBuilder.toString();
+        StringBuilder builder = new StringBuilder();
+        for (Element element : document.getRootElement().elements())
+        {
+            builder.append(element.asXML());
+        }
+
+        return builder.toString();
     }
+
 }
 
 

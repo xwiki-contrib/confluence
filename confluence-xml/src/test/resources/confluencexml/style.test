@@ -49,7 +49,7 @@
 {{/html}}
 
 {{html clean="false"}}
-&lt;link rel="stylesheet"href=https://gist.githubusercontent.com/eirikbakke/1059266/raw/d81dba46c76169c2b253de0baed790677883c221/gistfile1.css>
+&lt;link rel="stylesheet" href="https://gist.githubusercontent.com/eirikbakke/1059266/raw/d81dba46c76169c2b253de0baed790677883c221/gistfile1.css"/>
 {{/html}}
 
  ></string>
