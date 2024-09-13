@@ -28,11 +28,6 @@ import javax.inject.Singleton;
 import org.dom4j.Document;
 import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.XMLWriter;
-
-import java.io.StringWriter;
-
 import org.xwiki.component.annotation.Component;
 
 /**
@@ -73,19 +68,17 @@ public class StyleMacroConvertor extends AbstractMacroConverter
             styleElement.addText(confluenceContent);
         }
 
-        if(parameters.containsKey(IMPORT)) {
+        if (parameters.containsKey(IMPORT)) {
             Element linkElement =
                 root.addElement("link").addAttribute("rel", "stylesheet").addAttribute("href", parameters.get(IMPORT));
         }
         StringBuilder builder = new StringBuilder();
-        for (Element element : document.getRootElement().elements())
-        {
+        for (Element element : document.getRootElement().elements()) {
             builder.append(element.asXML());
         }
 
         return builder.toString();
     }
-
 }
 
 
