@@ -59,32 +59,26 @@ public class MacroToContentConverter extends AbstractMacroConverter
     private static final String HTML_ATTRIBUTE_CLASS = "class";
 
     @Inject
-    private ConfluenceInputContext context;
+    protected ConfluenceInputContext context;
 
     @Inject
-    private ComponentManager componentManager;
+    protected ComponentManager componentManager;
 
     @Override
     public void toXWiki(String id, Map<String, String> parameters, String content, boolean inline, Listener listener)
     {
-        Map<String, String> divWrapperParams = new HashMap<>();
-
-        List<String> classes = new ArrayList<>();
-        classes.add(String.format(DIV_CLASS_FORMAT, id));
-        if (parameters.containsKey(HTML_ATTRIBUTE_CLASS)) {
-            classes.add(parameters.get(HTML_ATTRIBUTE_CLASS));
-        }
-        divWrapperParams.put(HTML_ATTRIBUTE_CLASS, String.join(" ", classes));
-
-        if (parameters.containsKey(HTML_ATTRIBUTE_ID)) {
-            divWrapperParams.put(HTML_ATTRIBUTE_ID, parameters.get(HTML_ATTRIBUTE_ID));
-        }
-
-        listener.beginGroup(divWrapperParams);
+        Map<String, String> divWrapperParams = toXWikiParameters(id, parameters, content);
         ConfluenceInputProperties inputProperties = context.getProperties();
         Syntax macroContentSyntax = inputProperties == null ? null : inputProperties.getMacroContentSyntax();
         String syntaxId = macroContentSyntax != null ? macroContentSyntax.toIdString() : Syntax.XWIKI_2_1.toIdString();
         String newContent = toXWikiContent(id, parameters, content);
+        beginEvent(id, divWrapperParams, newContent, inline, listener);
+        parseContent(id, listener, syntaxId, newContent);
+        endEvent(id, divWrapperParams, newContent, inline, listener);
+    }
+
+    protected void parseContent(String id, Listener listener, String syntaxId, String newContent)
+    {
         try {
             Parser parser = componentManager.getInstance(Parser.class, syntaxId);
             XDOM contentXDOM = parser.parse(new StringReader(newContent));
@@ -94,6 +88,36 @@ public class MacroToContentConverter extends AbstractMacroConverter
                 String.format("Failed to parse the content of the [%s] macro with the syntax [%s].", id, syntaxId),
                 false).traverse(listener);
         }
-        listener.endGroup(divWrapperParams);
+    }
+
+    protected void beginEvent(String id, Map<String, String> parameters, String content, boolean inline,
+        Listener listener)
+    {
+        listener.beginGroup(parameters);
+    }
+
+    protected void endEvent(String id, Map<String, String> parameters, String content, boolean inline,
+        Listener listener)
+    {
+        listener.endGroup(parameters);
+    }
+
+    @Override
+    protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
+        String content)
+    {
+        Map<String, String> divWrapperParams = new HashMap<>();
+
+        List<String> classes = new ArrayList<>();
+        classes.add(String.format(DIV_CLASS_FORMAT, confluenceId));
+        if (confluenceParameters.containsKey(HTML_ATTRIBUTE_CLASS)) {
+            classes.add(confluenceParameters.get(HTML_ATTRIBUTE_CLASS));
+        }
+        divWrapperParams.put(HTML_ATTRIBUTE_CLASS, String.join(" ", classes));
+
+        if (confluenceParameters.containsKey(HTML_ATTRIBUTE_ID)) {
+            divWrapperParams.put(HTML_ATTRIBUTE_ID, confluenceParameters.get(HTML_ATTRIBUTE_ID));
+        }
+        return divWrapperParams;
     }
 }
