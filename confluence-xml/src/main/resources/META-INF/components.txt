@@ -23,4 +23,6 @@ org.xwiki.contrib.confluence.filter.internal.macros.WarningMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.SpacesMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.IframeMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.StyleMacroConvertor
+org.xwiki.contrib.confluence.filter.internal.macros.AlertMacroConverter
 org.xwiki.contrib.confluence.filter.internal.MappingConverter
+
