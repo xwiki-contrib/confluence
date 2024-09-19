@@ -55,7 +55,6 @@
       <name>XWiki Development Team</name>
     </developer>
   </developers>
-
   <build>
     <plugins>
       <plugin>
