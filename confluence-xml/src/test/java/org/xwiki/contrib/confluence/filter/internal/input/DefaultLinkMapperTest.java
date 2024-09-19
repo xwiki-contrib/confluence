@@ -60,8 +60,7 @@ import static org.mockito.Mockito.when;
 @ComponentList({
     DefaultConfluenceInputContext.class,
     ConfluenceXMLPackage.class,
-    ConfluenceConverter.class,
-    XWikiConverter.class
+    ConfluenceConverter.class
 })
 @ComponentTest
 class DefaultLinkMapperTest

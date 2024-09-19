@@ -8,7 +8,6 @@ org.xwiki.contrib.confluence.filter.internal.input.ConfluenceInputFilterStreamFa
 org.xwiki.contrib.confluence.filter.internal.input.ConfluenceXMLMacroSupport
 org.xwiki.contrib.confluence.filter.internal.input.DefaultConfluenceInputContext
 org.xwiki.contrib.confluence.filter.internal.input.DefaultLinkMapper
-org.xwiki.contrib.confluence.filter.internal.input.XWikiConverter
 org.xwiki.contrib.confluence.filter.internal.LinkMappingConverter
 org.xwiki.contrib.confluence.filter.internal.macros.AnchorMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.AUIMessageConverter

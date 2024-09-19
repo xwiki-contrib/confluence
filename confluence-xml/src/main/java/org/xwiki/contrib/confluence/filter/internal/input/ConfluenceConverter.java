@@ -36,12 +36,14 @@ import org.xwiki.model.reference.EntityReferenceResolver;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.model.reference.SpaceReference;
+import org.xwiki.model.validation.EntityNameValidationManager;
 import org.xwiki.rendering.listener.reference.DocumentResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceReference;
 import org.xwiki.rendering.listener.reference.UserResourceReference;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 import java.util.Collections;
 import java.util.Map;
@@ -69,7 +71,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     private static final String AT_PARENT = "@parent";
 
     @Inject
-    private XWikiConverter converter;
+    private Provider<EntityNameValidationManager> entityNameValidationManagerProvider;
 
     @Inject
     private Logger logger;
@@ -92,10 +94,15 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     public String toEntityName(String name)
     {
         if (context.getProperties().isConvertToXWiki() && context.getProperties().isEntityNameValidation()) {
-            return this.converter.convert(name);
+            return applyNamingStrategy(name);
         }
 
         return name;
+    }
+
+    private String applyNamingStrategy(String entityName)
+    {
+        return entityNameValidationManagerProvider.get().getEntityReferenceNameStrategy().transform(entityName);
     }
 
     /**
@@ -130,7 +137,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         for (EntityReference entityElement : entityReference.getReversedReferenceChain()) {
             if (entityElement.getType() == EntityType.DOCUMENT || entityElement.getType() == EntityType.SPACE) {
                 String name = entityElement.getName();
-                String convertedName = this.converter.convert(name);
+                String convertedName = applyNamingStrategy(name);
                 if (convertedName == null || convertedName.isEmpty()) {
                     logger.warn("Could not convert entity part [{}] in [{}]. This is a bug, please report it", name,
                         entityReference);
