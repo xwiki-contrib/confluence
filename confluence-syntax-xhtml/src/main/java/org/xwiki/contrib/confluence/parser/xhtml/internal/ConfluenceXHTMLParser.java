@@ -323,7 +323,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         }
         return new ConfluenceXWikiGeneratorListener(getLinkLabelParser(), listener, getLinkReferenceParser(),
             getImageReferenceParser(), this.plainRendererFactory, idGenerator, getSyntax(), this.plainParser,
-            xwikiParser);
+            xwikiParser, referenceConverter);
     }
 
     /**

@@ -60,9 +60,6 @@ public class SpaceTagHandler extends TagHandler implements ConfluenceTagHandler
         }
 
         String space = spaceParameter.getValue();
-        if (referenceConverter != null) {
-            space = referenceConverter.convertSpaceReference(space);
-        }
 
         if (context.getTagStack().getStackParameter(AbstractMacroParameterTagHandler.IN_CONFLUENCE_PARAMETER) != null) {
             // We are in a confluence macro parameter, we store the space in it.
@@ -71,7 +68,7 @@ public class SpaceTagHandler extends TagHandler implements ConfluenceTagHandler
             if (parameterContent != null && !parameterContent.isEmpty()) {
                 parentContext.appendContent(",");
             }
-            parentContext.appendContent(space);
+            parentContext.appendContent(referenceConverter.convertSpaceReference(space));
             return;
         }
 

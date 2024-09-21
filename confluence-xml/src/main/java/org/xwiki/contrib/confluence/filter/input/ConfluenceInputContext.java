@@ -58,4 +58,12 @@ public interface ConfluenceInputContext
     {
         return null;
     }
+
+    /**
+     * @return whether the Confluence instance is a cloud instance
+     */
+    default boolean isConfluenceCloud()
+    {
+        return "cloud".equals(getProperties().getConfluenceInstanceType());
+    }
 }
