@@ -497,7 +497,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
               </entry>
               <entry>
                 <string>creation_author</string>
-                <string>admin</string>
+                <string>XWiki.Admin</string>
               </entry>
               <entry>
                 <string>creation_date</string>
@@ -509,7 +509,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
               </entry>
               <entry>
                 <string>revision_author</string>
-                <string>admin</string>
+                <string>XWiki.Admin</string>
               </entry>
               <entry>
                 <string>revision_date</string>
@@ -2998,7 +2998,7 @@ content
                 </entry>
                 <entry>
                   <string>creation_author</string>
-                  <string>admin</string>
+                  <string>XWiki.Admin</string>
                 </entry>
                 <entry>
                   <string>creation_date</string>
@@ -3010,7 +3010,7 @@ content
                 </entry>
                 <entry>
                   <string>revision_author</string>
-                  <string>admin</string>
+                  <string>XWiki.Admin</string>
                 </entry>
                 <entry>
                   <string>revision_date</string>
@@ -3033,7 +3033,7 @@ content
                 </entry>
                 <entry>
                   <string>creation_author</string>
-                  <string>admin</string>
+                  <string>XWiki.Admin</string>
                 </entry>
                 <entry>
                   <string>creation_date</string>
@@ -3045,7 +3045,7 @@ content
                 </entry>
                 <entry>
                   <string>revision_author</string>
-                  <string>admin</string>
+                  <string>XWiki.Admin</string>
                 </entry>
                 <entry>
                   <string>revision_date</string>
@@ -3068,7 +3068,7 @@ content
                 </entry>
                 <entry>
                   <string>creation_author</string>
-                  <string>admin</string>
+                  <string>XWiki.Admin</string>
                 </entry>
                 <entry>
                   <string>creation_date</string>
@@ -3080,7 +3080,7 @@ content
                 </entry>
                 <entry>
                   <string>revision_author</string>
-                  <string>admin</string>
+                  <string>XWiki.Admin</string>
                 </entry>
                 <entry>
                   <string>revision_date</string>

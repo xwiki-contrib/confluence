@@ -2038,8 +2038,12 @@ public class ConfluenceInputFilterStream
             attachmentParameters.put(WikiAttachmentFilter.PARAMETER_CONTENT_TYPE, mediaType);
         }
         if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CREATION_AUTHOR)) {
-            attachmentParameters.put(WikiAttachmentFilter.PARAMETER_CREATION_AUTHOR,
-                attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_CREATION_AUTHOR));
+            addAttachmentCreator(
+                attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_CREATION_AUTHOR),
+                attachmentName,
+                attachmentParameters,
+                WikiAttachmentFilter.PARAMETER_CREATION_AUTHOR
+            );
         }
         if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CREATION_DATE)) {
             try {
@@ -2053,8 +2057,21 @@ public class ConfluenceInputFilterStream
 
         attachmentParameters.put(WikiAttachmentFilter.PARAMETER_REVISION, String.valueOf(version));
         if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_AUTHOR)) {
-            attachmentParameters.put(WikiAttachmentFilter.PARAMETER_REVISION_AUTHOR,
-                attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_AUTHOR));
+            addAttachmentCreator(attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_AUTHOR),
+                attachmentName, attachmentParameters, WikiAttachmentFilter.PARAMETER_REVISION_AUTHOR);
+        }
+        if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CREATION_AUTHOR_KEY)) {
+            String creatorKey = attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_CREATION_AUTHOR_KEY);
+            ConfluenceProperties creatorProperties = null;
+            try {
+                creatorProperties = confluencePackage.getUserImplProperties(creatorKey);
+            } catch (ConfigurationException e) {
+                logger.error("Could not resolve the creator of attachment [{}]", attachmentName, e);
+            }
+            if (creatorProperties != null) {
+                addAttachmentCreator(creatorProperties.getString(ConfluenceXMLPackage.KEY_USER_NAME, ""),
+                    attachmentName, attachmentParameters, WikiAttachmentFilter.PARAMETER_REVISION_AUTHOR);
+            }
         }
         if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE)) {
             try {
@@ -2079,6 +2096,17 @@ public class ConfluenceInputFilterStream
             this.logger.error("Failed to read attachment [{}] for the page [{}].", attachmentId,
                 createPageIdentifier(pageProperties), e);
         }
+    }
+
+    private void addAttachmentCreator(String creatorName, String attachmentName,
+        FilterEventParameters attachmentParameters, String authorParameter)
+    {
+        if (StringUtils.isEmpty(creatorName)) {
+            logger.error("the creator name of attachment [{}] is empty", attachmentName);
+            return;
+        }
+        String xwikiUserName = confluenceConverter.toUserReference(creatorName);
+        attachmentParameters.put(authorParameter, xwikiUserName);
     }
 
     private void readPageTags(ConfluenceFilter proxyFilter, Map<String, ConfluenceProperties> pageTags)

@@ -368,9 +368,14 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String KEY_ATTACHMENT_CONTENT_MEDIA_TYPE = "MEDIA_TYPE";
 
     /**
-     * The property key to access the attachment creation author.
+     * The property key to access the attachment creation author name.
      */
     public static final String KEY_ATTACHMENT_CREATION_AUTHOR = "creatorName";
+
+    /**
+     * The property key to access the attachment creation author key.
+     */
+    public static final String KEY_ATTACHMENT_CREATION_AUTHOR_KEY = "creator";
 
     /**
      * The property key to access the attachment creation date.

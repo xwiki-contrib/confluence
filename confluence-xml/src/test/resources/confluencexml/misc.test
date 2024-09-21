@@ -130,6 +130,10 @@ in //ex//cerpt
                   <string>2</string>
                 </entry>
                 <entry>
+                  <string>revision_author</string>
+                  <string>XWiki.clemens</string>
+                </entry>
+                <entry>
                   <string>revision_date</string>
                   <date>2013-12-12 13:38:37.720 UTC</date>
                 </entry>
