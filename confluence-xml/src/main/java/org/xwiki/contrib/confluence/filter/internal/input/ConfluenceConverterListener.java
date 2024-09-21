@@ -38,7 +38,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -47,8 +46,6 @@ import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
-import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
-import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceResolver;
@@ -65,6 +62,9 @@ import org.xwiki.rendering.listener.reference.ResourceType;
 import org.xwiki.rendering.listener.reference.UserResourceReference;
 import org.xwiki.rendering.renderer.PrintRenderer;
 import org.xwiki.rendering.renderer.printer.DefaultWikiPrinter;
+
+import static org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter.getConfluenceServerAnchor;
+import static org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter.spacesToDash;
 
 /**
  * Convert various Confluence content elements to their XWiki equivalent.
@@ -163,9 +163,9 @@ public class ConfluenceConverterListener extends WrappingListener
                 return;
             }
 
-            String currentPageTitle = getCurrentPageTitleForAnchor();
+            String currentPageTitle = confluenceConverter.getCurrentPageTitleForAnchor();
 
-            if (isConfluenceCloud()) {
+            if (context.isConfluenceCloud()) {
                 String dashedName = spacesToDash(name);
                 getWrappedListener().onMacro(
                     ID_MACRO_NAME,
@@ -192,63 +192,6 @@ public class ConfluenceConverterListener extends WrappingListener
     public void onMacro(String id, Map<String, String> parameters, String content, boolean inline)
     {
         this.macroConverter.toXWiki(id, parameters, content, inline, wrappingListener);
-    }
-
-    private String getPageTitleForAnchor(long pageId)
-    {
-        String title = null;
-        try {
-            ConfluenceProperties pageProperties = context.getConfluencePackage().getPageProperties(pageId, false);
-            if (pageProperties != null) {
-                title = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
-            }
-        } catch (ConfigurationException e) {
-            logger.warn("Failed to get the title of page [{}] to produce the anchor. Links may be broken.", pageId, e);
-        }
-
-        if (StringUtils.isEmpty(title)) {
-            logger.warn("Could not get the title of page [{}] to produce the anchor. Links may be broken.", pageId);
-        }
-
-        return title;
-    }
-
-    private String getCurrentPageTitleForAnchor()
-    {
-        return getPageTitleForAnchor(context.getCurrentPage());
-    }
-
-    private boolean isConfluenceCloud()
-    {
-        return "cloud".equals(context.getProperties().getConfluenceInstanceType());
-    }
-
-    String convertAnchor(String pageTitle, String anchor)
-    {
-        if (isConfluenceCloud()) {
-            return spacesToDash(anchor);
-        }
-
-        return getConfluenceServerAnchor(pageTitle, anchor);
-    }
-
-    private static String clean(String name, boolean removeWhitespace)
-    {
-        return (name == null ? "" : name).replaceAll("\\p{Z}+", removeWhitespace ? "" : " ").strip();
-    }
-
-    private static String spacesToDash(String name)
-    {
-        return clean(name, false).replaceAll("\\s+", "-");
-    }
-
-    private static String getConfluenceServerAnchor(String pageTitle, String name)
-    {
-        String convertedAnchor = clean(name, true);
-        if (!StringUtils.isEmpty(pageTitle)) {
-            convertedAnchor = clean(pageTitle, true) + '-' + convertedAnchor;
-        }
-        return convertedAnchor;
     }
 
     @Override
@@ -351,13 +294,12 @@ public class ConfluenceConverterListener extends WrappingListener
             // events so the title content is correctly rendered.
 
             QueueListener contentListener = this.dequeueEvents();
-            String currentPageTitle = getCurrentPageTitleForAnchor();
 
             DefaultWikiPrinter printer = new DefaultWikiPrinter();
             plainTextRenderer.setPrinter(printer);
             contentListener.forEach(event -> event.eventType.fireEvent(plainTextRenderer, event.eventParameters));
             String titleText = printer.toString();
-            String anchor = convertAnchor(currentPageTitle, titleText);
+            String anchor = confluenceConverter.convertAnchor("", "", titleText);
 
             if (!anchor.isEmpty()) {
                 wrappingListener.getWrappedListener().onMacro(
@@ -440,6 +382,7 @@ public class ConfluenceConverterListener extends WrappingListener
 
     private ResourceReference convert(ResourceReference reference)
     {
+
         ResourceReference fixedReference = reference.clone();
 
         if (CollectionUtils.isNotEmpty(context.getProperties().getBaseURLs())
@@ -475,43 +418,9 @@ public class ConfluenceConverterListener extends WrappingListener
                     }
                 }
             }
-        } else if (Objects.equals(reference.getType(), ResourceType.DOCUMENT)) {
-            // Make sure the reference follows the configured rules of conversion
-            fixReferenceAnchor(fixedReference, EntityType.DOCUMENT);
-            fixedReference.setReference(confluenceConverter.convert(reference.getReference(), EntityType.DOCUMENT));
-        } else if (Objects.equals(reference.getType(), ResourceType.ATTACHMENT)) {
-            // Make sure the reference follows the configured rules of conversion
-            fixReferenceAnchor(fixedReference, EntityType.ATTACHMENT);
-            fixedReference.setReference(confluenceConverter.convert(reference.getReference(), EntityType.ATTACHMENT));
         }
 
         return fixedReference;
-    }
-
-    private void fixReferenceAnchor(ResourceReference reference, EntityType type)
-    {
-        String anchor = reference.getParameter(ANCHOR);
-        if (StringUtils.isEmpty(anchor)) {
-            return;
-        }
-
-        String refStr = reference.getReference();
-        String pageTitle = null;
-        if (StringUtils.isEmpty(refStr)) {
-            pageTitle = getCurrentPageTitleForAnchor();
-        } else {
-            EntityReference ref = relativeResolver.resolve(refStr, type);
-
-            while (ref != null && ref.getType() != EntityType.DOCUMENT) {
-                ref = ref.getParent();
-            }
-
-            if (ref != null) {
-                pageTitle = ref.getName();
-            }
-        }
-
-        reference.setParameter(ANCHOR, convertAnchor(pageTitle, anchor));
     }
 
     private EntityReference fromPageId(long pageId) throws NumberFormatException
@@ -543,7 +452,7 @@ public class ConfluenceConverterListener extends WrappingListener
 
         // Anchor
         if (StringUtils.isNotBlank(urlAnchor)) {
-            resourceReference.setAnchor(convertAnchor(pageTitle, urlAnchor));
+            resourceReference.setAnchor(confluenceConverter.convertAnchor("", pageTitle, urlAnchor));
         }
 
         return resourceReference;
@@ -566,7 +475,7 @@ public class ConfluenceConverterListener extends WrappingListener
 
         // Anchor
         if (StringUtils.isNotBlank(urlAnchor)) {
-            resourceReference.setAnchor(convertAnchor(pageTitle, urlAnchor));
+            resourceReference.setAnchor(confluenceConverter.convertAnchor("", pageTitle, urlAnchor));
         }
 
         return resourceReference;
@@ -616,7 +525,7 @@ public class ConfluenceConverterListener extends WrappingListener
                 // Clean id parameter
                 urlParameters.removeIf(parameter -> parameter[0].equals("pageId"));
 
-                String pageTitle = this.getPageTitleForAnchor(pageId);
+                String pageTitle = confluenceConverter.getPageTitleForAnchor(pageId);
                 return createDocumentResourceReference(documentReference, urlParameters, pageTitle, urlAnchor);
             }),
 
@@ -631,7 +540,7 @@ public class ConfluenceConverterListener extends WrappingListener
                 EntityReference attachmentReference =
                     new EntityReference(decode(matcher.group(2)), EntityType.ATTACHMENT, documentReference);
 
-                String pageTitle = this.getPageTitleForAnchor(pageId);
+                String pageTitle = confluenceConverter.getPageTitleForAnchor(pageId);
                 return createAttachmentResourceReference(attachmentReference, urlParameters, pageTitle, urlAnchor);
             }),
 

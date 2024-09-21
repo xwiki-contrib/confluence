@@ -46,6 +46,19 @@ public interface ConfluenceReferenceConverter
     String convertSpaceReference(String spaceReference);
 
     /**
+     * @return the converted anchor
+     * @param spaceKey the space key to use if targetting the home page, empty/null for the current space or if the
+     *                 page title is provided
+     * @param pageTitle the page title, or empty/null for the current page
+     * @param anchor the anchor to convert
+     * @since 9.53.0
+     */
+    default String convertAnchor(String spaceKey, String pageTitle, String anchor)
+    {
+        return anchor;
+    }
+
+    /**
      * @return the converted space reference
      * @param spaceReference the space reference to convert
      * @param asDocument whether the space reference should be the WebHome of this space (type DOCUMENT)

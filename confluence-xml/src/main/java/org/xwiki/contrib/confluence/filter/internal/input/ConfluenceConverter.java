@@ -345,7 +345,12 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     {
         String convertedName = toEntityName(documentName);
         EntityReference space = spaceKey == null ? null : fromSpaceKey(spaceKey);
-        return getDocumentReference(new EntityReference(convertedName, EntityType.SPACE, space), false);
+        return getDocumentReference(
+            WEB_HOME.equals(documentName)
+                ? space
+                : new EntityReference(convertedName, EntityType.SPACE, space),
+            false
+        );
     }
 
     private EntityReference fromSpaceKey(String spaceKey)
@@ -568,6 +573,78 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     {
         return this.serializer.serialize(toDocumentReference(parentSpaceReference, documentReference));
     }
+
+    static String spacesToDash(String name)
+    {
+        return clean(name, false).replaceAll("\\s+", "-");
+    }
+
+
+    String getPageTitleForAnchor(long pageId)
+    {
+        String title = null;
+        try {
+            ConfluenceProperties pageProperties = context.getConfluencePackage().getPageProperties(pageId, false);
+            if (pageProperties != null) {
+                title = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
+            }
+        } catch (ConfigurationException e) {
+            logger.warn("Failed to get the title of page [{}] to produce the anchor. Links may be broken.", pageId, e);
+        }
+
+        if (StringUtils.isEmpty(title)) {
+            logger.warn("Could not get the title of page [{}] to produce the anchor. Links may be broken.", pageId);
+        }
+
+        return title;
+    }
+
+    String getCurrentPageTitleForAnchor()
+    {
+        return getPageTitleForAnchor(context.getCurrentPage());
+    }
+
+    private static String clean(String name, boolean removeWhitespace)
+    {
+        return (name == null ? "" : name).replaceAll("\\p{Z}+", removeWhitespace ? "" : " ").strip();
+    }
+
+    static String getConfluenceServerAnchor(String pageTitle, String name)
+    {
+        String convertedAnchor = clean(name, true);
+        if (!StringUtils.isEmpty(pageTitle)) {
+            convertedAnchor = clean(pageTitle, true) + '-' + convertedAnchor;
+        }
+        return convertedAnchor;
+    }
+
+    @Override
+    public String convertAnchor(String spaceKey, String pageTitle, String anchor)
+    {
+        if (context.isConfluenceCloud()) {
+            return spacesToDash(anchor);
+        }
+
+        String title = pageTitle;
+        if (StringUtils.isEmpty(title)) {
+            if (StringUtils.isEmpty(spaceKey)) {
+                title = getCurrentPageTitleForAnchor();
+            } else {
+                ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
+                Long spaceId = confluencePackage.getSpacesByKey().get(context.getCurrentSpace());
+                if (spaceId == null) {
+                    logger.warn("Could not get the home page of space [{}], anchor [{}] might be broken",
+                        spaceKey, anchor);
+                    title = "";
+                } else {
+                    title = getPageTitleForAnchor(confluencePackage.getHomePage(spaceId));
+                }
+            }
+        }
+
+        return getConfluenceServerAnchor(title, anchor);
+    }
+
 
     @Override
     public String convertSpaceReference(String spaceReference)

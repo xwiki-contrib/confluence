@@ -61,6 +61,9 @@
         <p>
           <ac:link ac:anchor="anchor"><ac:link-body>Highlights</ac:link-body></ac:link>
         </p>
+        <p>
+          <ac:link><ri:space ri:space-key="MYSPACE" /></ac:link>
+        </p>
       ]]>
     </property>
     <property name="content" class="Page" package="com.atlassian.confluence.pages">
