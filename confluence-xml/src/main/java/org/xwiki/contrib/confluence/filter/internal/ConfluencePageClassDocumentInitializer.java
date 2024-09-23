@@ -24,7 +24,7 @@ import java.util.Arrays;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import com.xpn.xwiki.objects.LargeStringProperty;
+import com.xpn.xwiki.objects.classes.TextAreaClass;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.model.reference.LocalDocumentReference;
 
@@ -48,8 +48,6 @@ public class ConfluencePageClassDocumentInitializer extends AbstractMandatoryCla
     public static final LocalDocumentReference CONFLUENCE_PAGE_CLASS_DOCUMENT_REFERENCE =
         new LocalDocumentReference(Arrays.asList("Confluence", "Code"), "ConfluencePageClass");
 
-    private static final String TITLE = "title";
-
     /**
      * Default constructor.
      */
@@ -64,10 +62,6 @@ public class ConfluencePageClassDocumentInitializer extends AbstractMandatoryCla
         xclass.addNumberField("id", "Id", 30, "long");
         xclass.addTextField("url", "URL", 30);
         xclass.addTextField("space", "Space", 30);
-        LargeStringProperty titleProperty = new LargeStringProperty();
-        titleProperty.setName(TITLE);
-        titleProperty.setPrettyName("Title");
-        titleProperty.setObject(xclass);
-        xclass.put(TITLE, titleProperty);
+        xclass.addTextAreaField("title", "Title", 30, 15, TextAreaClass.ContentType.PURE_TEXT);
     }
 }
