@@ -1,0 +1,4 @@
+org.xwiki.contrib.confluence.urlmapping.internal.ConfluenceAttachmentURLMapper
+org.xwiki.contrib.confluence.urlmapping.internal.ConfluenceDisplayURLMapper
+org.xwiki.contrib.confluence.urlmapping.internal.ConfluenceURLMappingPrefixHandler
+org.xwiki.contrib.confluence.urlmapping.internal.ConfluenceViewPageURLMapper

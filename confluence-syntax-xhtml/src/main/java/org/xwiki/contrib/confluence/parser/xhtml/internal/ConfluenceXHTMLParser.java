@@ -29,7 +29,6 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
-import javax.inject.Singleton;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
@@ -39,6 +38,8 @@ import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xwiki.component.annotation.Component;
+import org.xwiki.component.annotation.InstantiationStrategy;
+import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceMacroSupport;
@@ -108,7 +109,7 @@ import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
  */
 @Component
 @Named(ConfluenceXHTMLParser.SYNTAX_STRING)
-@Singleton
+@InstantiationStrategy(ComponentInstantiationStrategy.PER_LOOKUP)
 public class ConfluenceXHTMLParser extends AbstractWikiModelParser
 {
     /**
