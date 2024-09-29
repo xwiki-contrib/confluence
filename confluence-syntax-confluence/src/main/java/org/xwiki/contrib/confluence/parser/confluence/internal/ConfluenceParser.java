@@ -40,7 +40,7 @@ import org.xwiki.rendering.wikimodel.IWikiParser;
 @Component
 @Named(ConfluenceParser.SYNTAX_STRING)
 @Singleton
-public class ConfluenceParser extends AbstractWikiModelParser
+public class ConfluenceParser extends AbstractWikiModelParser implements Cloneable
 {
     /**
      * The identifier of the syntax.
@@ -56,7 +56,7 @@ public class ConfluenceParser extends AbstractWikiModelParser
      * @see #getLinkReferenceParser()
      */
     @Inject
-    @Named("confluence/link")
+    @Named("default/link")
     private ResourceReferenceParser referenceParser;
 
     /**
@@ -84,9 +84,35 @@ public class ConfluenceParser extends AbstractWikiModelParser
         return this.referenceParser;
     }
 
+    /**
+     * Sets the link reference parser to be used for this instance.
+     * This should only be called on clones of the component (unless
+     * one really wants to change the reference parser globally).
+     *
+     * @see #clone()
+     * @param referenceParser the reference parser to be used by this instance
+     */
+    public void setLinkReferenceParser(ResourceReferenceParser referenceParser)
+    {
+        this.referenceParser = referenceParser;
+    }
+
     @Override
     public ResourceReferenceParser getImageReferenceParser()
     {
         return this.imageReferenceParser;
+    }
+
+    /**
+     * Return a (shallow) copy of this parser.
+     * This is needed to change the link reference parser
+     * (and possibly the image reference parser) in clones of the singleton
+     * component for special cases.
+     * @return a shallow copy of this instance
+     * @throws CloneNotSupportedException as inherited from base class
+     */
+    public ConfluenceParser clone() throws CloneNotSupportedException
+    {
+        return (ConfluenceParser) super.clone();
     }
 }

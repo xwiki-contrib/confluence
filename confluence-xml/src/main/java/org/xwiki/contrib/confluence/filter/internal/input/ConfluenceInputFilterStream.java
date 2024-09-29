@@ -48,6 +48,7 @@ import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
+import org.xwiki.component.phase.InitializationException;
 import org.xwiki.contrib.confluence.filter.PageIdentifier;
 import org.xwiki.contrib.confluence.filter.event.ConfluenceFilteredEvent;
 import org.xwiki.contrib.confluence.filter.event.ConfluenceFilteringEvent;
@@ -86,6 +87,7 @@ import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.observation.ObservationManager;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.parser.ParseException;
+import org.xwiki.rendering.parser.ResourceReferenceParser;
 import org.xwiki.rendering.parser.StreamParser;
 import org.xwiki.rendering.renderer.PrintRenderer;
 import org.xwiki.rendering.renderer.PrintRendererFactory;
@@ -141,6 +143,10 @@ public class ConfluenceInputFilterStream
     private Provider<ConfluenceConverterListener> converterProvider;
 
     @Inject
+    @Named("confluence/link")
+    private ResourceReferenceParser referenceParser;
+
+    @Inject
     private JobProgressManager progress;
 
     @Inject
@@ -187,6 +193,26 @@ public class ConfluenceInputFilterStream
     public void close() throws IOException
     {
         this.properties.getSource().close();
+    }
+
+    @Override
+    public void initialize() throws InitializationException
+    {
+        super.initialize();
+        if (confluenceWIKIParser instanceof ConfluenceParser) {
+            ConfluenceParser parser = (ConfluenceParser) confluenceWIKIParser;
+            try {
+                parser = parser.clone();
+                parser.setLinkReferenceParser(referenceParser);
+                confluenceWIKIParser = parser;
+            } catch (CloneNotSupportedException e) {
+                // this should never happen
+                throw new InitializationException("cannot create copy of the ConfluenceParser", e);
+            }
+        } else {
+            logger.warn("reading confluence input stream without a confluence wiki parser;"
+                + " references might not be properly resolved.");
+        }
     }
 
     @Override
