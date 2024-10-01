@@ -35,7 +35,7 @@ import org.xwiki.rendering.listener.reference.ResourceType;
 /**
  * Converts reference strings into typed references.
  * @version $Id$
- * @since 9.50.3
+ * @since 9.54.0
  */
 @Component
 @Named("confluence/link")
