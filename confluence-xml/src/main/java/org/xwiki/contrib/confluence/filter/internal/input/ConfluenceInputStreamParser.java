@@ -17,76 +17,44 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.confluence.parser.confluence.internal;
+package org.xwiki.contrib.confluence.filter.internal.input;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.confluence.parser.confluence.internal.wikimodel.ConfluenceWikiParser;
-import org.xwiki.rendering.internal.parser.wikimodel.AbstractWikiModelParser;
+import org.xwiki.contrib.confluence.parser.confluence.internal.ConfluenceParser;
 import org.xwiki.rendering.parser.ResourceReferenceParser;
-import org.xwiki.rendering.syntax.Syntax;
-import org.xwiki.rendering.syntax.SyntaxType;
-import org.xwiki.rendering.wikimodel.IWikiParser;
 
 /**
- * Parser for Confluence syntax.
+ * Parser for Confluence syntax and references.
+ *
+ * Similar to the {@link ConfluenceParser} but also resolves references the Confluence way.
  *
  * @version $Id$
- * @since 9.0
+ * @since 9.50.3
  */
 @Component
-@Named(ConfluenceParser.SYNTAX_STRING)
+@Named(ConfluenceInputStreamParser.COMPONENT_NAME)
 @Singleton
-public class ConfluenceParser extends AbstractWikiModelParser
+public class ConfluenceInputStreamParser extends ConfluenceParser
 {
     /**
-     * The identifier of the syntax.
+     * The name of the component.
      */
-    public static final String SYNTAX_STRING = "confluence/1.1";
-
-    /**
-     * The syntax object.
-     */
-    public static final Syntax SYNTAX = new Syntax(SyntaxType.CONFLUENCE, "1.1");
+    public static final String COMPONENT_NAME = "confluence/1.1+xml";
 
     /**
      * @see #getLinkReferenceParser()
      */
     @Inject
-    @Named("default/link")
+    @Named("confluence/link")
     private ResourceReferenceParser referenceParser;
-
-    /**
-     * @see #getImageReferenceParser()
-     */
-    @Inject
-    @Named("default/image")
-    private ResourceReferenceParser imageReferenceParser;
-
-    @Override
-    public Syntax getSyntax()
-    {
-        return SYNTAX;
-    }
-
-    @Override
-    public IWikiParser createWikiModelParser()
-    {
-        return new ConfluenceWikiParser();
-    }
 
     @Override
     public ResourceReferenceParser getLinkReferenceParser()
     {
         return this.referenceParser;
-    }
-
-    @Override
-    public ResourceReferenceParser getImageReferenceParser()
-    {
-        return this.imageReferenceParser;
     }
 }
