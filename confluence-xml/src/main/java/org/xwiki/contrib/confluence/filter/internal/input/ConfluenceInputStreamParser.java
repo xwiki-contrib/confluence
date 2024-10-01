@@ -33,7 +33,7 @@ import org.xwiki.rendering.parser.ResourceReferenceParser;
  * Similar to the {@link ConfluenceParser} but also resolves references the Confluence way.
  *
  * @version $Id$
- * @since 9.50.3
+ * @since 9.54.0
  */
 @Component
 @Named(ConfluenceInputStreamParser.COMPONENT_NAME)

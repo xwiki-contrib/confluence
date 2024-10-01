@@ -29,7 +29,7 @@ import org.xwiki.test.annotation.ComponentList;
 import org.xwiki.test.junit5.mockito.ComponentTest;
 import org.xwiki.test.junit5.mockito.InjectMockComponents;
 
-@ComponentList({
+@ComponentList({ 
     WikiModel.class
 })
 @ComponentTest
@@ -41,28 +41,33 @@ public class ConfluenceResourceReferenceParserTest
     @Test
     public void testBasicTypes()
     {
-        assertEquals( new ResourceReference("simple page", ResourceType.DOCUMENT),  parser.parse("simple page"));
-        assertEquals( new ResourceReference("space.page", ResourceType.DOCUMENT),  parser.parse("space:page"));
-        assertEquals( new ResourceReference("space", ResourceType.SPACE),  parser.parse("space:"));
-        assertEquals( new ResourceReference("filename", ResourceType.ATTACHMENT),  parser.parse("^filename"));
+        assertEquals(new ResourceReference("simple page", ResourceType.DOCUMENT),
+            parser.parse("simple page"));
+        assertEquals(new ResourceReference("space.page", ResourceType.DOCUMENT), parser.parse("space:page"));
+        assertEquals(new ResourceReference("space", ResourceType.SPACE), parser.parse("space:"));
+        assertEquals(new ResourceReference("filename", ResourceType.ATTACHMENT), parser.parse("^filename"));
         // could this be of type ResourceType.PAGE_ATTACHMENT instead?
         // FIXME: instead should have baseReferences instead
-        assertEquals( new ResourceReference("page@filename", ResourceType.ATTACHMENT),  parser.parse("page^filename"));
-        assertEquals( new ResourceReference("space.page@filename", ResourceType.ATTACHMENT),  parser.parse("space:page^filename"));
-        assertEquals( new ResourceReference("username", ResourceType.USER),  parser.parse("~username"));
-        assertEquals( new ResourceReference("https://extensions.xwiki.org/", ResourceType.URL),  parser.parse("https://extensions.xwiki.org/"));
+        assertEquals(new ResourceReference("page@filename", ResourceType.ATTACHMENT),
+            parser.parse("page^filename"));
+        assertEquals(new ResourceReference("space.page@filename", ResourceType.ATTACHMENT),
+            parser.parse("space:page^filename"));
+        assertEquals(new ResourceReference("username", ResourceType.USER), parser.parse("~username"));
+        assertEquals(new ResourceReference("https://extensions.xwiki.org/", ResourceType.URL),
+            parser.parse("https://extensions.xwiki.org/"));
         // files containing an '^' are forbidden in confluence
         // the integration tests expect an URL instead of unknown?
         ResourceReference unparseable = new ResourceReference("broken^file^refernce", ResourceType.URL);
         unparseable.setTyped(false);
-        assertEquals(unparseable,  parser.parse("broken^file^refernce"));
+        assertEquals(unparseable, parser.parse("broken^file^refernce"));
     }
 
     @Test
     public void testDotEscape()
     {
-        assertEquals(new ResourceReference("space.dot\\.name", ResourceType.DOCUMENT), parser.parse("space:dot.name"));
-        assertEquals( new ResourceReference("dot\\.name", ResourceType.DOCUMENT), parser.parse("dot.name"));
+        assertEquals(new ResourceReference("space.dot\\.name", ResourceType.DOCUMENT),
+            parser.parse("space:dot.name"));
+        assertEquals(new ResourceReference("dot\\.name", ResourceType.DOCUMENT), parser.parse("dot.name"));
     }
 
     @Test
