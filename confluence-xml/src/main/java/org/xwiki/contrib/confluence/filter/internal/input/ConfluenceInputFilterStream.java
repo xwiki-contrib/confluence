@@ -89,6 +89,7 @@ import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.observation.ObservationManager;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.parser.ParseException;
+import org.xwiki.rendering.parser.ResourceReferenceParser;
 import org.xwiki.rendering.parser.StreamParser;
 import org.xwiki.rendering.renderer.PrintRenderer;
 import org.xwiki.rendering.renderer.PrintRendererFactory;
@@ -137,7 +138,7 @@ public class ConfluenceInputFilterStream
     private static final String TITLE = "title";
 
     @Inject
-    @Named(ConfluenceParser.SYNTAX_STRING)
+    @Named(ConfluenceInputStreamParser.COMPONENT_NAME)
     private StreamParser confluenceWIKIParser;
 
     @Inject
@@ -146,6 +147,10 @@ public class ConfluenceInputFilterStream
 
     @Inject
     private Provider<ConfluenceConverterListener> converterProvider;
+
+    @Inject
+    @Named("confluence/link")
+    private ResourceReferenceParser referenceParser;
 
     @Inject
     private JobProgressManager progress;
