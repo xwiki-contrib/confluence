@@ -40,50 +40,6 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 public class AttachmentTagHandler extends TagHandler implements ConfluenceTagHandler
 {
     /**
-     * Represents an attachment from Confluence.
-     */
-    public class ConfluenceAttachment implements UserContainer, PageContainer
-    {
-        /**
-         * The filename.
-         */
-        public String filename;
-
-        /**
-         * The space.
-         */
-        public String space;
-
-        /**
-         * The page.
-         */
-        public String page;
-
-        /**
-         * The user.
-         */
-        public String user;
-
-        @Override
-        public void setUser(String user)
-        {
-            this.user = user;
-        }
-
-        @Override
-        public void setDocument(String page)
-        {
-            this.page = page;
-        }
-
-        @Override
-        public void setSpace(String space)
-        {
-            this.space = space;
-        }
-    }
-
-    /**
      * Default constructor.
      */
     public AttachmentTagHandler()
@@ -94,7 +50,7 @@ public class AttachmentTagHandler extends TagHandler implements ConfluenceTagHan
     @Override
     protected void begin(TagContext context)
     {
-        ConfluenceAttachment attachment = new ConfluenceAttachment();
+        ConfluenceXHTMLAttachment attachment = new ConfluenceXHTMLAttachment();
 
         WikiParameter filenameParameter = context.getParams().getParameter("ri:filename");
 
@@ -116,8 +72,8 @@ public class AttachmentTagHandler extends TagHandler implements ConfluenceTagHan
     @Override
     protected void end(TagContext context)
     {
-        ConfluenceAttachment attachment =
-            (ConfluenceAttachment) context.getTagStack().popStackParameter(CONFLUENCE_CONTAINER);
+        ConfluenceXHTMLAttachment attachment =
+            (ConfluenceXHTMLAttachment) context.getTagStack().popStackParameter(CONFLUENCE_CONTAINER);
 
         Object container = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
 

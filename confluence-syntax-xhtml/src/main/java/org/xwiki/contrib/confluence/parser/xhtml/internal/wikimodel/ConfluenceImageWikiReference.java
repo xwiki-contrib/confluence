@@ -19,7 +19,6 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
-import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler.ConfluenceAttachment;
 import org.xwiki.rendering.block.XDOM;
 import org.xwiki.rendering.wikimodel.WikiReference;
 
@@ -32,7 +31,7 @@ import java.util.Map;
  */
 public class ConfluenceImageWikiReference extends WikiReference implements AttachmentContainer, URLContainer
 {
-    private ConfluenceAttachment attachment;
+    private ConfluenceXHTMLAttachment attachment;
 
     private String url;
 
@@ -51,13 +50,13 @@ public class ConfluenceImageWikiReference extends WikiReference implements Attac
     /**
      * @return the attachment.
      */
-    public ConfluenceAttachment getAttachment()
+    public ConfluenceXHTMLAttachment getAttachment()
     {
         return this.attachment;
     }
 
     @Override
-    public void setAttachment(ConfluenceAttachment attachment)
+    public void setAttachment(ConfluenceXHTMLAttachment attachment)
     {
         this.attachment = attachment;
     }

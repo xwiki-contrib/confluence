@@ -645,7 +645,6 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return getConfluenceServerAnchor(title, anchor);
     }
 
-
     @Override
     public String convertSpaceReference(String spaceReference)
     {

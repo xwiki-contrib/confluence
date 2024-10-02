@@ -1,45 +1,8 @@
 .#------------------------------------------------------------------------------
 .expect|filter+xml
 .#------------------------------------------------------------------------------
-<wikiSpace name="testLinks">
-  <wikiDocument name="WebHome">
-    <wikiDocumentLocale>
-      <p>
-        <parameters>
-          <entry>
-            <string>lastrevision</string>
-            <string>1</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiDocumentRevision revision="1">
-        <p>
-          <parameters>
-            <entry>
-              <string>title</string>
-              <string>Test Space for Links</string>
-            </entry>
-            <entry>
-              <string>content</string>
-              <string></string>
-            </entry>
-            <entry>
-              <string>syntax</string>
-              <org.xwiki.rendering.syntax.Syntax>
-                <type>
-                  <name>XWiki</name>
-                  <id>xwiki</id>
-                  <variants class="empty-list"/>
-                </type>
-                <version>2.1</version>
-              </org.xwiki.rendering.syntax.Syntax>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
-  <wikiSpace name="page with links to check">
+<wikiSpace name="Root">
+  <wikiSpace name="testLinks">
     <wikiDocument name="WebHome">
       <wikiDocumentLocale>
         <p>
@@ -54,83 +17,129 @@
           <p>
             <parameters>
               <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
                 <string>title</string>
-                <string>page with links to check</string>
+                <string>Test Space for Links</string>
               </entry>
               <entry>
                 <string>content</string>
-                <string>[[space:[testLinks]]
+                <string></string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+    <wikiSpace name="page with links to check">
+      <wikiDocument name="WebHome">
+        <wikiDocumentLocale>
+          <p>
+            <parameters>
+              <entry>
+                <string>lastrevision</string>
+                <string>1</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiDocumentRevision revision="1">
+            <p>
+              <parameters>
+                <entry>
+                  <string>revision_comment</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>title</string>
+                  <string>page with links to check</string>
+                </entry>
+                <entry>
+                  <string>content</string>
+                  <string>[[space:xwiki:Root.testLinks]]
 
-[[doc:testLinks.1\. page with dot in title.WebHome]]</string>
-              </entry>
-              <entry>
-                <string>syntax</string>
-                <org.xwiki.rendering.syntax.Syntax>
-                  <type>
-                    <name>XWiki</name>
-                    <id>xwiki</id>
-                    <variants class="empty-list"/>
-                  </type>
-                  <version>2.1</version>
-                </org.xwiki.rendering.syntax.Syntax>
-              </entry>
-            </parameters>
-          </p>
-        </wikiDocumentRevision>
-      </wikiDocumentLocale>
-    </wikiDocument>
-  </wikiSpace>
-  <wikiSpace name="1. page with dot in title">
-    <wikiDocument name="WebHome">
-      <wikiDocumentLocale>
-        <p>
-          <parameters>
-            <entry>
-              <string>lastrevision</string>
-              <string>1</string>
-            </entry>
-          </parameters>
-        </p>
-        <wikiDocumentRevision revision="1">
+[[doc:xwiki:Root.testLinks.1\. page with dot in title.WebHome]]
+
+[[attach:xwiki:Root.testLinks.1\. page with dot in title.WebHome@filename.png]]
+
+[[attach:filename.png]]
+
+[[attach:xwiki:Root.testLinks.WebHome@filename.png]]</string>
+                </entry>
+                <entry>
+                  <string>syntax</string>
+                  <org.xwiki.rendering.syntax.Syntax>
+                    <type>
+                      <name>XWiki</name>
+                      <id>xwiki</id>
+                      <variants class="empty-list"/>
+                    </type>
+                    <version>2.1</version>
+                  </org.xwiki.rendering.syntax.Syntax>
+                </entry>
+              </parameters>
+            </p>
+          </wikiDocumentRevision>
+        </wikiDocumentLocale>
+      </wikiDocument>
+    </wikiSpace>
+    <wikiSpace name="1. page with dot in title">
+      <wikiDocument name="WebHome">
+        <wikiDocumentLocale>
           <p>
             <parameters>
               <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>title</string>
-                <string>1. page with dot in title</string>
-              </entry>
-              <entry>
-                <string>content</string>
-                <string>no content</string>
-              </entry>
-              <entry>
-                <string>syntax</string>
-                <org.xwiki.rendering.syntax.Syntax>
-                  <type>
-                    <name>XWiki</name>
-                    <id>xwiki</id>
-                    <variants class="empty-list"/>
-                  </type>
-                  <version>2.1</version>
-                </org.xwiki.rendering.syntax.Syntax>
+                <string>lastrevision</string>
+                <string>1</string>
               </entry>
             </parameters>
           </p>
-        </wikiDocumentRevision>
-      </wikiDocumentLocale>
-    </wikiDocument>
+          <wikiDocumentRevision revision="1">
+            <p>
+              <parameters>
+                <entry>
+                  <string>revision_comment</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>title</string>
+                  <string>1. page with dot in title</string>
+                </entry>
+                <entry>
+                  <string>content</string>
+                  <string>no content</string>
+                </entry>
+                <entry>
+                  <string>syntax</string>
+                  <org.xwiki.rendering.syntax.Syntax>
+                    <type>
+                      <name>XWiki</name>
+                      <id>xwiki</id>
+                      <variants class="empty-list"/>
+                    </type>
+                    <version>2.1</version>
+                  </org.xwiki.rendering.syntax.Syntax>
+                </entry>
+              </parameters>
+            </p>
+          </wikiDocumentRevision>
+        </wikiDocumentLocale>
+      </wikiDocument>
+    </wikiSpace>
   </wikiSpace>
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=pageswithdots
+.configuration.rootSpace=Root
 .configuration.baseURLs=http://localhost:8080/confluence
 .configuration.includedPages=200, 201, 202
 .#------------------------------------------------------------------------------

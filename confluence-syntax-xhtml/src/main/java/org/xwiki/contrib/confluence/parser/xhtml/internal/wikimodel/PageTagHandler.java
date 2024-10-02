@@ -53,7 +53,7 @@ public class PageTagHandler extends TagHandler implements ConfluenceTagHandler
 
         WikiParameter pageParameter = context.getParams().getParameter("ri:content-title");
         if (pageParameter != null && container instanceof PageContainer) {
-            ((PageContainer) container).setDocument(pageParameter.getValue());
+            ((PageContainer) container).setPage(pageParameter.getValue());
         }
 
         WikiParameter spaceParameter = context.getParams().getParameter("ri:space-key");

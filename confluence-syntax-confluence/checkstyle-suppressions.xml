@@ -7,6 +7,6 @@
 <suppressions>
   <suppress checks="BooleanExpressionComplexity|JavaNCSS|AnonInnerLength"
             files="src/main/java/org/xwiki/contrib/confluence/parser/confluence/internal/wikimodel/ConfluenceInternalWikiScannerContext\.java$"/>
-  <suppress checks="CyclomaticComplexity|ExecutableStatementCount|JavaNCSS|NPathComplexity"
+  <suppress checks="ExecutableStatementCount|ReturnCount|JavaNCSS|NPathComplexity"
             files="src/main/java/org/xwiki/contrib/confluence/parser/confluence/internal/wikimodel/ConfluenceResourceReferenceParser\.java$"/>
 </suppressions>

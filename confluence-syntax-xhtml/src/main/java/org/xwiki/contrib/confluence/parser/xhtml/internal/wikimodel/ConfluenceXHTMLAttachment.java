@@ -20,14 +20,47 @@
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
 /**
+ * Represents an attachment from Confluence XHTML.
  * @version $Id$
- * @since 9.0
+ * @since 9.54.0
  */
-public interface AttachmentContainer
+public class ConfluenceXHTMLAttachment implements UserContainer, PageContainer
 {
     /**
-     * Set the attachment.
-     * @param attachment the attachment to set
+     * The filename.
      */
-    void setAttachment(ConfluenceXHTMLAttachment attachment);
+    public String filename;
+
+    /**
+     * The space.
+     */
+    public String space;
+
+    /**
+     * The page.
+     */
+    public String page;
+
+    /**
+     * The user.
+     */
+    public String user;
+
+    @Override
+    public void setUser(String user)
+    {
+        this.user = user;
+    }
+
+    @Override
+    public void setPage(String page)
+    {
+        this.page = page;
+    }
+
+    @Override
+    public void setSpace(String space)
+    {
+        this.space = space;
+    }
 }

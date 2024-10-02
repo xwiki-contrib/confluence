@@ -46,6 +46,7 @@ import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
+import org.xwiki.contrib.confluence.parser.confluence.internal.wikimodel.ConfluenceResourceReference;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceResolver;
@@ -382,6 +383,9 @@ public class ConfluenceConverterListener extends WrappingListener
 
     private ResourceReference convert(ResourceReference reference)
     {
+        if (reference instanceof ConfluenceResourceReference) {
+            return convertConfluenceResourceReference((ConfluenceResourceReference) reference);
+        }
 
         ResourceReference fixedReference = reference.clone();
 
@@ -421,6 +425,49 @@ public class ConfluenceConverterListener extends WrappingListener
         }
 
         return fixedReference;
+    }
+
+    private ResourceReference convertAttachmentReference(String space, String page, String filename)
+    {
+        // FIXME somewhat duplicate of getAttachmentResourceReference in ConfluenceXWikiGeneratorListener
+        DocumentResourceReference documentResourceReference;
+        if (!StringUtils.isEmpty(page)) {
+            documentResourceReference = new DocumentResourceReference(
+                confluenceConverter.convertDocumentReference(space, page));
+        } else if (!StringUtils.isEmpty(space)) {
+            documentResourceReference = new DocumentResourceReference(
+                confluenceConverter.convertSpaceReference(space));
+        } else {
+            documentResourceReference = new DocumentResourceReference("");
+        }
+
+        String ref = documentResourceReference.getReference();
+        if (!ref.isEmpty()) {
+            ref += '@';
+        }
+        return new AttachmentResourceReference(ref + filename);
+    }
+
+    private ResourceReference convertConfluenceResourceReference(ConfluenceResourceReference ref)
+    {
+        if (ref.getType() == ResourceType.SPACE) {
+            return new ResourceReference(
+                confluenceConverter.convertSpaceReference(ref.getSpace()),
+                ResourceType.SPACE);
+        }
+
+        if (ref.getType() == ResourceType.DOCUMENT) {
+            return new ResourceReference(
+                confluenceConverter.convertDocumentReference(ref.getSpace(), ref.getPage()),
+                ResourceType.DOCUMENT);
+        }
+
+        if (ref.getType() == ResourceType.ATTACHMENT) {
+            return convertAttachmentReference(ref.getSpace(), ref.getPage(), ref.getAttachmentFilename());
+        }
+
+        logger.error("Unexpected Confluence resource reference type for [{}]", ref);
+        return new ResourceReference(ref.toString(), ResourceType.UNKNOWN);
     }
 
     private EntityReference fromPageId(long pageId) throws NumberFormatException

@@ -30,7 +30,6 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
-import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler.ConfluenceAttachment;
 import org.xwiki.rendering.block.XDOM;
 import org.xwiki.rendering.internal.parser.wikimodel.DefaultXWikiGeneratorListener;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XHTMLXWikiGeneratorListener;
@@ -172,12 +171,12 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
     @Override
     public void onReference(WikiReference reference)
     {
-        if (!(reference instanceof ConfluenceLinkWikiReference)) {
+        if (!(reference instanceof ConfluenceXHTMLWikiReference)) {
             super.onReference(reference);
             return;
         }
 
-        ConfluenceLinkWikiReference confluenceReference = (ConfluenceLinkWikiReference) reference;
+        ConfluenceXHTMLWikiReference confluenceReference = (ConfluenceXHTMLWikiReference) reference;
 
         ResourceReference resourceReference;
         if (confluenceReference.getAttachment() != null) {
@@ -185,11 +184,11 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         }  else {
             DocumentResourceReference documentResourceReference = null;
 
-            if (confluenceReference.getDocument() != null) {
+            if (confluenceReference.getPage() != null) {
                 documentResourceReference = new DocumentResourceReference(
                     convertDocumentReference(
                         confluenceReference.getSpace(),
-                        confluenceReference.getDocument()
+                        confluenceReference.getPage()
                     )
                 );
             } else if (confluenceReference.getSpace() != null) {
@@ -203,7 +202,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
             if (anchor != null) {
                 documentResourceReference.setAnchor(convertAnchor(
                     confluenceReference.getSpace(),
-                    confluenceReference.getDocument(),
+                    confluenceReference.getPage(),
                     confluenceReference.getAnchor()
                 ));
             }
@@ -224,9 +223,8 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         getListener().endLink(resourceReference, false, Collections.<String, String>emptyMap());
     }
 
-    private ResourceReference getAttachmentResourceReference(ConfluenceAttachment attachment)
+    private ResourceReference getAttachmentResourceReference(ConfluenceXHTMLAttachment attachment)
     {
-        ResourceReference resourceReference;
         DocumentResourceReference documentResourceReference;
         if (attachment.page != null) {
             documentResourceReference = new DocumentResourceReference(
@@ -241,8 +239,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         if (!ref.isEmpty()) {
             ref += '@';
         }
-        resourceReference = new AttachmentResourceReference(ref + attachment.filename);
-        return resourceReference;
+        return new AttachmentResourceReference(ref + attachment.filename);
     }
 
     /**

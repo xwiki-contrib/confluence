@@ -72,7 +72,7 @@ public class LinkTagHandler extends TagHandler implements ConfluenceTagHandler
     @Override
     protected void begin(TagContext context)
     {
-        ConfluenceLinkWikiReference link = new ConfluenceLinkWikiReference();
+        ConfluenceXHTMLWikiReference link = new ConfluenceXHTMLWikiReference();
 
         WikiParameter anchorParameter = context.getParams().getParameter("ac:anchor");
 
@@ -86,8 +86,8 @@ public class LinkTagHandler extends TagHandler implements ConfluenceTagHandler
     @Override
     protected void end(TagContext context)
     {
-        ConfluenceLinkWikiReference link =
-            (ConfluenceLinkWikiReference) context.getTagStack().popStackParameter(CONFLUENCE_CONTAINER);
+        ConfluenceXHTMLWikiReference link =
+            (ConfluenceXHTMLWikiReference) context.getTagStack().popStackParameter(CONFLUENCE_CONTAINER);
 
         // If a user tag was inside the link tag, it was transformed into a mention macro.
         if (link.getUser() != null) {
@@ -95,7 +95,7 @@ public class LinkTagHandler extends TagHandler implements ConfluenceTagHandler
         }
 
         // Make sure to have a label for local anchors
-        if (link.getLabelXDOM() == null && link.getDocument() == null
+        if (link.getLabelXDOM() == null && link.getPage() == null
             && link.getSpace() == null && link.getUser() == null && link.getAttachment() == null) {
             if (StringUtils.isEmpty(link.getAnchor())) {
                 // Skip empty links.
@@ -108,13 +108,13 @@ public class LinkTagHandler extends TagHandler implements ConfluenceTagHandler
             // We are in a confluence macro parameter, we put the link in the content instead of issuing a reference.
             String ref;
             if (referenceConverter == null) {
-                ref = link.getDocument();
+                ref = link.getPage();
                 String space = link.getSpace();
                 if (space != null && !space.isEmpty()) {
                     ref = space + "." + ref;
                 }
             } else {
-                ref = referenceConverter.convertDocumentReference(link.getSpace(), link.getDocument());
+                ref = referenceConverter.convertDocumentReference(link.getSpace(), link.getPage());
             }
             context.getParentContext().appendContent(ref);
         } else {

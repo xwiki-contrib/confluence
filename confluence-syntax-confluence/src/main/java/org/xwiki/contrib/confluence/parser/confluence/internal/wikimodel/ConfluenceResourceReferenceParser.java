@@ -42,110 +42,101 @@ import org.xwiki.rendering.listener.reference.ResourceType;
 @Singleton
 public class ConfluenceResourceReferenceParser extends AbstractResourceReferenceParser
 {
-
-    private static final Pattern ESCAPE_PAGE_CHARS = Pattern.compile("[.:@\\\\]");
-    private static final Pattern ESCAPE_ATTACHMENT_CHARS = Pattern.compile("[\\\\^@]");
-
     private static final Pattern MAILTO_PATTERN = Pattern.compile("mailto:(.+)", Pattern.CASE_INSENSITIVE);
     private static final Pattern URL_PATTERN = Pattern.compile("(https?|file):.*", Pattern.CASE_INSENSITIVE);
-    private static final Pattern SPACE_PATTERN = Pattern.compile("([^:]+):");
+    private static final Pattern SPACE_PATTERN = Pattern.compile("([a-zA-Z0-9]+):");
     private static final Pattern PAGE_PATTERN = Pattern.compile("([^:^\"]+)");
-    private static final Pattern PAGE_ON_SPACE_PATTERN = Pattern.compile("([^:]+):([^^]+)");
+    private static final Pattern PAGE_ON_SPACE_PATTERN = Pattern.compile("([a-zA-Z0-9]+):([^^]+)");
     private static final Pattern ATTACHMENT_PATTERN = Pattern.compile("\\^([^^]+)");
-    private static final Pattern ATTACHMENT_ON_PAGE_PATTERN = Pattern.compile("(.+?)\\^([^^]+)");
+    private static final Pattern ATTACHMENT_ON_SPACE_PAGE_PATTERN = Pattern.compile("([a-zA-Z0-9]+):([^^]+)\\^([^^]+)");
+    private static final Pattern ATTACHMENT_ON_PAGE_PATTERN = Pattern.compile("([^^]+)\\^([^^]+)");
     private static final Pattern USER_PATTERN = Pattern.compile("^~(.+)");
 
     @Inject
     private Logger logger;
 
     @Override
-    public ResourceReference parse(String rawReference)
+    public ResourceReference parse(String rawRef)
     {
-        String actualReference;
-        ResourceType type;
-        boolean isTyped = true;
+        Matcher m;
+        m = MAILTO_PATTERN.matcher(rawRef);
+        if (m.matches()) {
+            return getResourceReference(ResourceType.MAILTO, m.group(1));
+        }
 
-        // not nice: use a loop to allow "break"
-        // only to avoid too many nested ifs
-        do {
-            Matcher m;
-            m = MAILTO_PATTERN.matcher(rawReference);
-            if (m.matches()) {
-                type = ResourceType.MAILTO;
-                actualReference = m.group(1);
-                break;
-            }
-            m = URL_PATTERN.matcher(rawReference);
-            if (m.matches()) {
-                type = ResourceType.URL;
-                actualReference = rawReference;
-                break;
-            }
-            m = SPACE_PATTERN.matcher(rawReference);
-            if (m.matches()) {
-                type = ResourceType.SPACE;
-                actualReference = m.group(1);
-                break;
-            }
-            m = PAGE_ON_SPACE_PATTERN.matcher(rawReference);
-            if (m.matches()) {
-                type = ResourceType.DOCUMENT;
-                actualReference = escapePage(m.group(1)) + '.' + escapePage(m.group(2));
-                break;
-            }
-            m = ATTACHMENT_PATTERN.matcher(rawReference);
-            if (m.matches()) {
-                type = ResourceType.ATTACHMENT;
-                actualReference = escapeAttachment(m.group(1));
-                break;
-            }
-            m = ATTACHMENT_ON_PAGE_PATTERN.matcher(rawReference);
-            if (m.matches()) {
-                String pageName = m.group(1);
-                ResourceReference page = parse(pageName);
-                if (page.getType() == ResourceType.DOCUMENT) {
-                    type = ResourceType.ATTACHMENT;
-                    actualReference = page.getReference() + '@' + escapeAttachment(m.group(2));
-                    break;
-                }
-            }
-            m = USER_PATTERN.matcher(rawReference);
-            if (m.matches()) {
-                type = ResourceType.USER;
-                actualReference = m.group(1);
-                break;
-            }
-            // do this last: anything that does not contain any special chars is normally a page reference
-            m = PAGE_PATTERN.matcher(rawReference);
-            if (m.matches()) {
-                type = ResourceType.DOCUMENT;
-                actualReference = escapePage(rawReference);
-                break;
-            }
-            actualReference = rawReference;
-            type = ResourceType.URL;
-            isTyped = false;
-        } while (false);
+        m = URL_PATTERN.matcher(rawRef);
+        if (m.matches()) {
+            return getResourceReference(ResourceType.URL, rawRef);
+        }
 
-        ResourceReference result = new ResourceReference(actualReference, type);
-        result.setTyped(isTyped);
-        logger.debug("parsing [{}] results in [{}]", rawReference, result);
+        m = SPACE_PATTERN.matcher(rawRef);
+        if (m.matches()) {
+            ConfluenceResourceReference ref = new ConfluenceResourceReference(rawRef, ResourceType.SPACE);
+            ref.setTyped(true);
+            ref.setSpace(m.group(1));
+            return ref;
+        }
 
+        m = PAGE_ON_SPACE_PATTERN.matcher(rawRef);
+        if (m.matches()) {
+            ConfluenceResourceReference ref = new ConfluenceResourceReference(rawRef, ResourceType.DOCUMENT);
+            ref.setTyped(true);
+            ref.setSpace(m.group(1));
+            ref.setPage(m.group(2));
+            return ref;
+        }
+
+        m = ATTACHMENT_ON_SPACE_PAGE_PATTERN.matcher(rawRef);
+        if (m.matches()) {
+            ConfluenceResourceReference ref = new ConfluenceResourceReference(rawRef, ResourceType.ATTACHMENT);
+            ref.setSpace(m.group(1));
+            ref.setPage(m.group(2));
+            ref.setAttachmentFilename(m.group(3));
+            ref.setTyped(true);
+            return ref;
+        }
+
+        m = ATTACHMENT_ON_PAGE_PATTERN.matcher(rawRef);
+        if (m.matches()) {
+            ConfluenceResourceReference ref = new ConfluenceResourceReference(rawRef, ResourceType.ATTACHMENT);
+            ref.setPage(m.group(1));
+            ref.setAttachmentFilename(m.group(2));
+            ref.setTyped(true);
+            return ref;
+        }
+
+        m = ATTACHMENT_PATTERN.matcher(rawRef);
+        if (m.matches()) {
+            ConfluenceResourceReference ref = new ConfluenceResourceReference(rawRef, ResourceType.ATTACHMENT);
+            ref.setTyped(true);
+            ref.setAttachmentFilename(m.group(1));
+            return ref;
+        }
+
+        m = USER_PATTERN.matcher(rawRef);
+        if (m.matches()) {
+            return getResourceReference(ResourceType.USER, m.group(1));
+        }
+
+        // do this last: anything that does not contain any special chars is normally a page reference
+        m = PAGE_PATTERN.matcher(rawRef);
+        if (m.matches()) {
+            ConfluenceResourceReference ref = new ConfluenceResourceReference(rawRef, ResourceType.DOCUMENT);
+            ref.setTyped(true);
+            ref.setPage(rawRef);
+            return ref;
+        }
+
+        logger.warn("Could not parse reference [{}]", rawRef);
+        ResourceReference unknownRef = new ResourceReference(rawRef, ResourceType.UNKNOWN);
+        unknownRef.setTyped(false);
+        return unknownRef;
+    }
+
+    private static ResourceReference getResourceReference(ResourceType type, String ref)
+    {
+        ResourceReference result = new ResourceReference(ref, type);
+        result.setTyped(true);
         return result;
-    }
-
-    static final String escapePage(String text)
-    {
-        return escapeByRegexp(ESCAPE_PAGE_CHARS, text);
-    }
-
-    static final String escapeAttachment(String text)
-    {
-        return escapeByRegexp(ESCAPE_ATTACHMENT_CHARS, text);
-    }
-
-    private static String escapeByRegexp(Pattern escaping, String text)
-    {
-        return escaping.matcher(text).replaceAll("\\\\$0");
     }
 }

@@ -81,7 +81,7 @@ public class IntegrationTests
         // Many INFO-level logs are to inform the user about the progression of migrations but they spam the tests.
         Logger logger = (Logger) LoggerFactory.getLogger(ConfluenceXMLPackage.class);
         logger.setLevel(Level.WARN);
-        logger = (ch.qos.logback.classic.Logger) LoggerFactory.getLogger(ConfluenceInputFilterStream.class);
+        logger = (Logger) LoggerFactory.getLogger(ConfluenceInputFilterStream.class);
         logger.setLevel(Level.WARN);
     }
 }

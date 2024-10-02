@@ -19,22 +19,23 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
-import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler.ConfluenceAttachment;
 import org.xwiki.rendering.block.XDOM;
 import org.xwiki.rendering.wikimodel.WikiReference;
 
 /**
+ * a WikiReference coming from the Confluence XHTML syntax. The reference is to an entity in Confluence and will need to
+ * be converted to a reference pointing to something in XWiki, following the nested import.
  * @version $Id$
- * @since 9.0
+ * @since 9.54.0
  */
-public class ConfluenceLinkWikiReference extends WikiReference
+public class ConfluenceXHTMLWikiReference extends WikiReference
     implements UserContainer, AttachmentContainer, PageContainer, SpaceContainer, LabelContainer
 {
     private String anchor;
 
-    private ConfluenceAttachment attachment;
+    private ConfluenceXHTMLAttachment attachment;
 
-    private String document;
+    private String page;
 
     private String space;
 
@@ -47,7 +48,7 @@ public class ConfluenceLinkWikiReference extends WikiReference
     /**
      * Default constructor.
      */
-    public ConfluenceLinkWikiReference()
+    public ConfluenceXHTMLWikiReference()
     {
         super("");
     }
@@ -72,13 +73,13 @@ public class ConfluenceLinkWikiReference extends WikiReference
     /**
      * @return the attachment.
      */
-    public ConfluenceAttachment getAttachment()
+    public ConfluenceXHTMLAttachment getAttachment()
     {
         return this.attachment;
     }
 
     @Override
-    public void setAttachment(ConfluenceAttachment attachment)
+    public void setAttachment(ConfluenceXHTMLAttachment attachment)
     {
         this.attachment = attachment;
     }
@@ -114,15 +115,15 @@ public class ConfluenceLinkWikiReference extends WikiReference
     /**
      * @return the document.
      */
-    public String getDocument()
+    public String getPage()
     {
-        return this.document;
+        return this.page;
     }
 
     @Override
-    public void setDocument(String document)
+    public void setPage(String page)
     {
-        this.document = document;
+        this.page = page;
     }
 
     /**

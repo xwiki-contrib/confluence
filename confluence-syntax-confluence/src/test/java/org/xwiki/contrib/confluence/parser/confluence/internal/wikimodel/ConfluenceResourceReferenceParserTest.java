@@ -21,7 +21,11 @@ package org.xwiki.contrib.confluence.parser.confluence.internal.wikimodel;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
+
 import org.junit.jupiter.api.Test;
+import org.slf4j.LoggerFactory;
 import org.xwiki.rendering.listener.reference.ResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceType;
 import org.xwiki.rendering.wiki.WikiModel;
@@ -39,49 +43,30 @@ public class ConfluenceResourceReferenceParserTest
     private ConfluenceResourceReferenceParser parser;
 
     @Test
-    public void testBasicTypes()
+    void testBasicTypes()
     {
-        assertEquals(new ResourceReference("simple page", ResourceType.DOCUMENT),
-            parser.parse("simple page"));
-        assertEquals(new ResourceReference("space.page", ResourceType.DOCUMENT), parser.parse("space:page"));
-        assertEquals(new ResourceReference("space", ResourceType.SPACE), parser.parse("space:"));
-        assertEquals(new ResourceReference("filename", ResourceType.ATTACHMENT), parser.parse("^filename"));
-        // could this be of type ResourceType.PAGE_ATTACHMENT instead?
-        // FIXME: instead should have baseReferences instead
-        assertEquals(new ResourceReference("page@filename", ResourceType.ATTACHMENT),
-            parser.parse("page^filename"));
-        assertEquals(new ResourceReference("space.page@filename", ResourceType.ATTACHMENT),
-            parser.parse("space:page^filename"));
+        ((Logger) LoggerFactory.getLogger(ConfluenceResourceReferenceParser.class)).setLevel(Level.ERROR);
+        assertRef(null, "simple page", null,  ResourceType.DOCUMENT, parser.parse("simple page"));
+        assertRef("space", "page", null, ResourceType.DOCUMENT, parser.parse("space:page"));
+        assertRef("space", null, null, ResourceType.SPACE, parser.parse("space:"));
+        assertRef(null, null, "filename", ResourceType.ATTACHMENT, parser.parse("^filename"));
+        assertRef(null, "page", "filename", ResourceType.ATTACHMENT, parser.parse("page^filename"));
+        assertRef("space", "page", "filename", ResourceType.ATTACHMENT, parser.parse("space:page^filename"));
         assertEquals(new ResourceReference("username", ResourceType.USER), parser.parse("~username"));
         assertEquals(new ResourceReference("https://extensions.xwiki.org/", ResourceType.URL),
             parser.parse("https://extensions.xwiki.org/"));
         // files containing an '^' are forbidden in confluence
-        // the integration tests expect an URL instead of unknown?
-        ResourceReference unparseable = new ResourceReference("broken^file^refernce", ResourceType.URL);
+        ResourceReference unparseable = new ResourceReference("broken^file^reference", ResourceType.UNKNOWN);
         unparseable.setTyped(false);
-        assertEquals(unparseable, parser.parse("broken^file^refernce"));
+        assertEquals(unparseable, parser.parse("broken^file^reference"));
     }
 
-    @Test
-    public void testDotEscape()
+    private void assertRef(String space, String page, String filename, ResourceType type, ResourceReference ref)
     {
-        assertEquals(new ResourceReference("space.dot\\.name", ResourceType.DOCUMENT),
-            parser.parse("space:dot.name"));
-        assertEquals(new ResourceReference("dot\\.name", ResourceType.DOCUMENT), parser.parse("dot.name"));
-    }
-
-    @Test
-    public void testEscapePage()
-    {
-        assertEquals("a\\.b", ConfluenceResourceReferenceParser.escapePage("a.b"));
-        assertEquals("a\\.b\\.c", ConfluenceResourceReferenceParser.escapePage("a.b.c"));
-        assertEquals("a\\:b\\.c", ConfluenceResourceReferenceParser.escapePage("a:b.c"));
-        assertEquals("a\\\\b", ConfluenceResourceReferenceParser.escapePage("a\\b"));
-    }
-
-    @Test
-    public void testEscapeAttachment()
-    {
-        assertEquals("a\\@b", ConfluenceResourceReferenceParser.escapeAttachment("a@b"));
+        ConfluenceResourceReference cref = (ConfluenceResourceReference) ref;
+        assertEquals(space, cref.getSpace());
+        assertEquals(page, cref.getPage());
+        assertEquals(filename, cref.getAttachmentFilename());
+        assertEquals(type, ref.getType());
     }
 }

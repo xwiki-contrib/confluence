@@ -111,10 +111,17 @@
  -->
 <object class="BodyContent" package="com.atlassian.confluence.core">
   <id name="id">301</id>
-  <property name="body"><![CDATA[[
+  <property name="body"><![CDATA[
 [testLinks:]
 
 [testLinks:1. page with dot in title]
+
+[testLinks:1. page with dot in title^filename.png]
+
+[^filename.png]
+
+[Space Home Page^filename.png]
+
 ]]></property>
   <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">201</id></property>
 </object>
