@@ -86,6 +86,14 @@
     </ac:rich-text-body>
 </ac:structured-macro>
 <ac:structured-macro ac:name="alert" ac:schema-version="1"
+    ac:macro-id="6e81e804-5f71-434e-9d6a-c40f0dc7e68b">
+    <ac:parameter ac:name="title">Wohoo! u succeeded</ac:parameter>
+    <ac:parameter ac:name="type">unknown</ac:parameter>
+    <ac:rich-text-body>
+        <p>THis is more text of success</p>
+    </ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="alert" ac:schema-version="1"
     ac:macro-id="a6ee799e-1cbe-4e98-96cc-04e1392bf386">
     <ac:parameter ac:name="title">Wohoo! u succeeded</ac:parameter>
     <ac:parameter ac:name="type">Error</ac:parameter>

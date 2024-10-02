@@ -39,27 +39,50 @@ import org.xwiki.component.annotation.Component;
 @Named("alert")
 public class AlertMacroConverter extends AbstractMacroConverter
 {
+    private static final String INFO = "info";
+
+    private static final String TITLE = "title";
+
     private static final String TYPE = "type";
 
     @Inject
     private Logger logger;
 
     @Override
+    protected String toXWikiContent(String confluenceId, Map<String, String> parameters, String confluenceContent)
+    {
+        if (parameters.get(TITLE) != null)
+        {
+            StringBuilder builder = new StringBuilder();
+            builder.append(parameters.get(TITLE));
+            builder.append("\n");
+            builder.append(confluenceContent);
+            parameters.remove(TITLE);
+            return builder.toString();
+        }
+        return confluenceContent;
+    }
+
+    @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
-        switch (confluenceParameters.get(TYPE)) {
+        String type = confluenceParameters.get(TYPE);
+        confluenceParameters.remove(TYPE);
+        switch (type) {
             case "Success":
                 return "success";
             case "Error":
                 return "error";
             case "Info":
-                return "info";
+                return INFO;
             case "Warning":
                 return "warning";
             default:
-                logger.warn("The type of alert is not supported");
-                return confluenceParameters.get(TYPE);
+                logger.warn(String.format("The type of alert is not supported: %s", confluenceParameters.get(TYPE)));
+                // We add the type back to be able to identify this information in the future.
+                confluenceParameters.put(TYPE, type);
+                return INFO;
         }
     }
 }
