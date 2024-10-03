@@ -64,6 +64,12 @@
         <p>
           <ac:link><ri:space ri:space-key="MYSPACE" /></ac:link>
         </p>
+        <p><a href="https://confluence.atlassian.com/x/2EkGOQ">link</a></p>
+        <p><a href="https://confluence.atlassian.com/x/2yAC">link</a></p>
+        <p><a href="https://confluence.atlassian.com/x/ASEC">link</a></p>
+        <p><a href="https://confluence.atlassian.com/x/liAC">link</a></p>
+        <p><a href="https://confluence.atlassian.com/x/NgszKw">link</a></p>
+        <p><a href="https://confluence.atlassian.com/x/SRwC">link</a></p>
       ]]>
     </property>
     <property name="content" class="Page" package="com.atlassian.confluence.pages">

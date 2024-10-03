@@ -51,6 +51,9 @@ public class ConfluenceURLMappingPrefixHandler extends AbstractURLMappingPrefixH
     private ConfluenceViewPageURLMapper confluenceViewPageURLMapper;
 
     @Inject
+    private ConfluenceTinyLinkURLMapper confluenceTinyLinkURLMapper;
+
+    @Inject
     private ContextualLocalizationManager localizationManager;
 
     @Override
@@ -59,7 +62,8 @@ public class ConfluenceURLMappingPrefixHandler extends AbstractURLMappingPrefixH
         return new URLMapper[] {
             confluenceAttachmentURLMapper,
             confluenceDisplayURLMapper,
-            confluenceViewPageURLMapper
+            confluenceViewPageURLMapper,
+            confluenceTinyLinkURLMapper
         };
     }
 

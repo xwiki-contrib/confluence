@@ -17,7 +17,7 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-    package org.xwiki.contrib.confluence.urlmapping.internal;
+package org.xwiki.contrib.confluence.urlmapping.internal;
 
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -31,7 +31,6 @@ import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.AttachmentReference;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.EntityReference;
-import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.block.WordBlock;
 import org.xwiki.resource.entity.EntityResourceAction;
@@ -53,12 +52,10 @@ import static org.mockito.Mockito.when;
     ConfluenceAttachmentURLMapper.class,
     ConfluenceDisplayURLMapper.class,
     ConfluenceViewPageURLMapper.class,
+    ConfluenceTinyLinkURLMapper.class
 })
 class ConfluenceURLMappingTest
 {
-    private static final EntityReference MY_FALLBACK_SPACE = new EntityReference("MyFallback", EntityType.SPACE);
-    private static final EntityReference MY_FALLBACK_HOME = new LocalDocumentReference("WebHome", MY_FALLBACK_SPACE);
-
     private static final String MY_SPACE = "MySpace";
     private static final DocumentReference MY_DOC_REF = new DocumentReference(
         "xwiki",
@@ -90,6 +87,20 @@ class ConfluenceURLMappingTest
         when(suggestionUtils.getSuggestionsFromDocumentReference(any())).thenReturn(new WordBlock("mysuggestion"));
         when(confluencePageIdResolver.getDocumentById(42)).thenReturn(MY_DOC_REF);
         when(confluencePageTitleResolver.getDocumentByTitle("MySpace", "My Doc")).thenReturn(MY_DOC_REF);
+
+        // For tiny link tests
+        when(confluencePageIdResolver.getDocumentById(139414)).thenReturn(
+            new EntityReference("OK.liAC", EntityType.DOCUMENT));
+        when(confluencePageIdResolver.getDocumentById(724765494)).thenReturn(
+            new EntityReference("OK.NgszKw", EntityType.DOCUMENT));
+        when(confluencePageIdResolver.getDocumentById(138313)).thenReturn(
+            new EntityReference("OK.SRwC", EntityType.DOCUMENT));
+        when(confluencePageIdResolver.getDocumentById(139483)).thenReturn(
+            new EntityReference("OK.2yAC", EntityType.DOCUMENT));
+        when(confluencePageIdResolver.getDocumentById(956713432)).thenReturn(
+            new EntityReference("OK.2EkGOQ", EntityType.DOCUMENT));
+        when(confluencePageIdResolver.getDocumentById(139521)).thenReturn(
+            new EntityReference("OK.ASEC", EntityType.DOCUMENT));
     }
 
     @ParameterizedTest
@@ -170,6 +181,36 @@ class ConfluenceURLMappingTest
     {
         URLMappingResult converted = handler.convert(path, "get", null);
         assertInstanceOf(Block.class, converted.getSuggestions());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "x/liAC",
+        "x/NgszKw",
+        "x/SRwC",
+        "x/2yAC",
+        "x/2EkGOQ",
+        "x/ASEC"
+    })
+    void handleTinyLinks(String path) throws ConfluenceResolverException
+    {
+        URLMappingResult converted = handler.convert(path, "get", null);
+        assertEquals(
+            new EntityResourceReference(
+                new EntityReference("OK." + path.substring(2), EntityType.DOCUMENT),
+                EntityResourceAction.VIEW),
+            converted.getResourceReference());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "x/OQUAAA",
+        "x/=[@{]"
+    })
+    void tinyLinksBrokenOrDocIdNotFound()
+    {
+        URLMappingResult converted = handler.convert("/x/abab", "get", null);
+        assertFailedConversion(converted);
     }
 
     private void assertFailedConversion(URLMappingResult conversion)

@@ -32,7 +32,19 @@
 
 [[Highlights>>doc:||anchor="TestContent-anchor"]]
 
-[[doc:MYSPACE.WebHome]]</string>
+[[doc:MYSPACE.WebHome]]
+
+[[link>>doc:xwiki:OK.2EkGOQ||shape="rect"]]
+
+[[link>>doc:xwiki:OK.2yAC||shape="rect"]]
+
+[[link>>doc:xwiki:OK.ASEC||shape="rect"]]
+
+[[link>>doc:xwiki:OK.liAC||shape="rect"]]
+
+[[link>>doc:xwiki:OK.NgszKw||shape="rect"]]
+
+[[link>>doc:xwiki:OK.SRwC||shape="rect"]]</string>
             </entry>
             <entry>
               <string>syntax</string>
@@ -104,5 +116,6 @@
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=links
-.configuration.baseURLs=https://baseurl1.com,https://baseurl2.com,https://baseurl3.com,https://baseurl4.com,https://baseurl5.com/
+.configuration.baseURLs=https://baseurl1.com,https://baseurl2.com,https://baseurl3.com,https://baseurl4.com,https://baseurl5.com,https://confluence.atlassian.com/
+.configuration.linkMapping={":ids": {"139414": "OK.liAC", "724765494": "OK.NgszKw", "138313": "OK.SRwC", "139483": "OK.2yAC", "956713432": "OK.2EkGOQ", "139521": "OK.ASEC"}}
 .#------------------------------------------------------------------------------

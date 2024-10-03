@@ -22,9 +22,13 @@ package org.xwiki.contrib.confluence.filter.internal.input;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -82,6 +86,8 @@ public class ConfluenceConverterListener extends WrappingListener
     private static final Pattern PATTERN_URL_VIEWPAGE =
         Pattern.compile("^/pages/viewpage.action\\?pageId=(\\d+)(&.*)?$");
 
+    private static final Pattern PATTERN_TINY_LINK = Pattern.compile("^/x/([^?#]+)(\\?.*)?$");
+
     private static final Pattern PATTERN_URL_SPACES = Pattern.compile("^/spaces/(.+)/pages/\\d+/([^?#]+)(\\?.*)?$");
 
     private static final Pattern PATTERN_URL_ATTACHMENT =
@@ -100,7 +106,6 @@ public class ConfluenceConverterListener extends WrappingListener
 
     private static final String ID_MACRO_NAME = "id";
     private static final String ID_MACRO_NAME_PARAMETER = "name";
-    private static final String ANCHOR = "anchor";
 
     @Inject
     private MacroConverter macroConverter;
@@ -342,7 +347,7 @@ public class ConfluenceConverterListener extends WrappingListener
     private List<String[]> parseURLParameters(String queryString)
     {
         if (queryString == null) {
-            return null;
+            return Collections.emptyList();
         }
 
         String[] elements = StringUtils.split(queryString, '&');
@@ -409,12 +414,12 @@ public class ConfluenceConverterListener extends WrappingListener
                         continue;
                     }
 
-                    String pattern = enforceSlash(urlString.substring(baseURLString.length()));
+                    String path = enforceSlash(urlString.substring(baseURLString.length()));
 
                     List<String[]> urlParameters = parseURLParameters(url.getQuery());
                     String urlAnchor = url.getRef();
 
-                    ResourceReference ref = fixReference(pattern, urlParameters, urlAnchor);
+                    ResourceReference ref = fixReference(path, urlParameters, urlAnchor);
 
                     if (ref != null) {
                         fixedReference = ref;
@@ -552,32 +557,48 @@ public class ConfluenceConverterListener extends WrappingListener
         return createDocumentResourceReference(documentReference, urlParameters, pageTitle, urlAnchor);
     }
 
-    private ResourceReference fixReference(String pattern, List<String[]> urlParameters, String urlAnchor)
+    private long tinyPartToPageId(String part)
+    {
+        // FIXME copy-pasted from ConfluenceShortURLMapper
+        // Reverse-engineered and inspired by https://confluence.atlassian.com/x/2EkGOQ
+        // not sure the replaceChars part is necessary, but it shouldn't hurt
+        String base64WithoutPadding = StringUtils.replaceChars(part, "-_/", "/+\n");
+
+        byte[] decoded = new byte[8];
+        Base64.getUrlDecoder().decode(base64WithoutPadding.getBytes(), decoded);
+        return ByteBuffer.wrap(decoded).order(ByteOrder.LITTLE_ENDIAN).getLong();
+    }
+
+    private ResourceReference fixReference(String path, List<String[]> urlParameters, String urlAnchor)
     {
         return ObjectUtils.firstNonNull(
             // Try /display
-            tryPattern(PATTERN_URL_DISPLAY, pattern, matcher -> simpleDocRef(matcher, urlParameters, urlAnchor)),
+            tryPattern(PATTERN_URL_DISPLAY, path, matcher -> simpleDocRef(matcher, urlParameters, urlAnchor)),
 
             // Try /spaces
-            tryPattern(PATTERN_URL_SPACES, pattern, matcher -> simpleDocRef(matcher, urlParameters, urlAnchor)),
+            tryPattern(PATTERN_URL_SPACES, path, matcher -> simpleDocRef(matcher, urlParameters, urlAnchor)),
 
             // Try viewpage.action
-            tryPattern(PATTERN_URL_VIEWPAGE, pattern, matcher -> {
+            tryPattern(PATTERN_URL_VIEWPAGE, path, matcher -> {
                 long pageId = Long.parseLong(matcher.group(1));
-                EntityReference documentReference = getEntityReference(pageId);
-                if (documentReference == null) {
+                return convertPageIdToResourceReference(urlParameters, urlAnchor, pageId);
+            }),
+
+            // Try short URL
+            tryPattern(PATTERN_TINY_LINK, path, matcher -> {
+                long pageId;
+                try {
+                    pageId = tinyPartToPageId(matcher.group(1));
+                } catch (IllegalArgumentException e) {
+                    logger.error("Failed to decode the short link [{}]", path, e);
                     return null;
                 }
 
-                // Clean id parameter
-                urlParameters.removeIf(parameter -> parameter[0].equals("pageId"));
-
-                String pageTitle = confluenceConverter.getPageTitleForAnchor(pageId);
-                return createDocumentResourceReference(documentReference, urlParameters, pageTitle, urlAnchor);
+                return convertPageIdToResourceReference(urlParameters, urlAnchor, pageId);
             }),
 
             // Try attachments
-            tryPattern(PATTERN_URL_ATTACHMENT, pattern, matcher -> {
+            tryPattern(PATTERN_URL_ATTACHMENT, path, matcher -> {
                 long pageId = Long.parseLong(matcher.group(1));
                 EntityReference documentReference = getEntityReference(pageId);
                 if (documentReference == null) {
@@ -592,8 +613,23 @@ public class ConfluenceConverterListener extends WrappingListener
             }),
 
             // emoticons
-            tryPattern(PATTERN_URL_EMOTICON, pattern, m -> new ResourceReference(decode(m.group(1)), ResourceType.ICON))
+            tryPattern(PATTERN_URL_EMOTICON, path, m -> new ResourceReference(decode(m.group(1)), ResourceType.ICON))
         );
+    }
+
+    private DocumentResourceReference convertPageIdToResourceReference(List<String[]> urlParameters, String urlAnchor,
+        long pageId)
+    {
+        EntityReference documentReference = getEntityReference(pageId);
+        if (documentReference == null) {
+            return null;
+        }
+
+        // Clean id parameter
+        urlParameters.removeIf(parameter -> parameter[0].equals("pageId"));
+
+        String pageTitle = confluenceConverter.getPageTitleForAnchor(pageId);
+        return createDocumentResourceReference(documentReference, urlParameters, pageTitle, urlAnchor);
     }
 
     private EntityReference getEntityReference(long pageId)

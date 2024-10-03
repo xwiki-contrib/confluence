@@ -34,7 +34,19 @@
 
 [[Highlights>>doc:||anchor="anchor"]]
 
-[[doc:xwiki:Composed.Root.MYSPACE.WebHome]]</string>
+[[doc:xwiki:Composed.Root.MYSPACE.WebHome]]
+
+[[link>>url:https://confluence.atlassian.com/x/2EkGOQ||shape="rect"]]
+
+[[link>>url:https://confluence.atlassian.com/x/2yAC||shape="rect"]]
+
+[[link>>url:https://confluence.atlassian.com/x/ASEC||shape="rect"]]
+
+[[link>>url:https://confluence.atlassian.com/x/liAC||shape="rect"]]
+
+[[link>>url:https://confluence.atlassian.com/x/NgszKw||shape="rect"]]
+
+[[link>>url:https://confluence.atlassian.com/x/SRwC||shape="rect"]]</string>
                 </entry>
                 <entry>
                   <string>syntax</string>
@@ -110,5 +122,6 @@
 .configuration.source=links
 .configuration.rootSpace=Composed.Root
 .configuration.confluenceInstanceType=cloud
-.configuration.baseURLs=https://baseurl1.com,https://baseurl2.com,https://baseurl3.com,https://baseurl4.com,https://baseurl5.com/
+.configuration.baseURLs=https://baseurl1.com,https://baseurl2.com,https://baseurl3.com,https://baseurl4.com,https://baseurl5.com,https://confluence.atlassian.com/
+# no link mapping for short URLs to test correct fallback when the doc id is not known
 .#------------------------------------------------------------------------------
