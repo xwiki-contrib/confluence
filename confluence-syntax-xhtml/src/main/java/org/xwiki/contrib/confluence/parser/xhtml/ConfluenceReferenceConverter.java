@@ -19,6 +19,9 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml;
 
+import org.xwiki.rendering.listener.reference.ResourceReference;
+import org.xwiki.rendering.listener.reference.ResourceType;
+
 /**
  * Converts references from Confluence to XWiki, using the parameters set for the conversion.
  * @version $Id$
@@ -71,5 +74,16 @@ public interface ConfluenceReferenceConverter
             return ref + ".WebHome";
         }
         return ref;
+    }
+
+    /**
+     * @param url the URL to convert
+     * @return the URL converted to a resource reference (that can link to a document, attachment or the URL itself if
+     *         it doesn't need conversion or cannot be converted
+     * @since 9.56.0
+     */
+    default ResourceReference convertURL(String url)
+    {
+        return new ResourceReference(url, ResourceType.URL);
     }
 }

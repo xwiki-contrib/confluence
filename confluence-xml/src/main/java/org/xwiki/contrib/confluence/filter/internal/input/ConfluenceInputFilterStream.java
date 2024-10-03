@@ -1908,7 +1908,7 @@ public class ConfluenceInputFilterStream
         try {
             proxyFilter.onWikiObjectProperty("id", pageId, FilterEventParameters.EMPTY);
             StringBuilder pageURLBuilder = new StringBuilder();
-            if (this.properties.getBaseURLs() != null) {
+            if (!this.properties.getBaseURLs().isEmpty()) {
                 pageURLBuilder.append(this.properties.getBaseURLs().get(0).toString());
                 pageURLBuilder.append("/wiki/spaces/").append(spaceKey);
                 if (!pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {

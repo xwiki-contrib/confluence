@@ -19,7 +19,9 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.input;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
@@ -37,16 +39,29 @@ import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.model.validation.EntityNameValidationManager;
+import org.xwiki.rendering.listener.reference.AttachmentResourceReference;
 import org.xwiki.rendering.listener.reference.DocumentResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceReference;
+import org.xwiki.rendering.listener.reference.ResourceType;
 import org.xwiki.rendering.listener.reference.UserResourceReference;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -58,6 +73,21 @@ import java.util.regex.Pattern;
 @Singleton
 public class ConfluenceConverter implements ConfluenceReferenceConverter
 {
+    private static final Pattern PATTERN_URL_DISPLAY = Pattern.compile("^/display/(.+)/([^?#]+)(\\?.*)?$");
+
+    private static final Pattern PATTERN_URL_VIEWPAGE =
+        Pattern.compile("^/pages/viewpage.action\\?pageId=(\\d+)(&.*)?$");
+
+    private static final Pattern PATTERN_TINY_LINK = Pattern.compile("^/x/([^?#]+)(\\?.*)?$");
+
+    private static final Pattern PATTERN_URL_SPACES = Pattern.compile("^/spaces/(.+)/pages/\\d+/([^?#]+)(\\?.*)?$");
+
+    private static final Pattern PATTERN_URL_ATTACHMENT =
+        Pattern.compile("^/download/attachments/(\\d+)/([^?#]+)(\\?.*)?$");
+
+    private static final Pattern PATTERN_URL_EMOTICON =
+        Pattern.compile("^/images/icons/emoticons/([^?#]+)(\\....)(\\?.*)?$");
+
     private static final Pattern FORBIDDEN_USER_CHARACTERS = Pattern.compile("[. /]");
 
     private static final String XWIKI = "XWiki";
@@ -69,6 +99,10 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     private static final String AT_HOME = "@home";
 
     private static final String AT_PARENT = "@parent";
+
+    private static final String BROKEN_LINK_EXPLANATION = "Links to this page may be broken. "
+        + "This may happen when importing a space that links to another space which is not present "
+        + "in this Confluence export, or the page is missing";
 
     @Inject
     private Provider<EntityNameValidationManager> entityNameValidationManagerProvider;
@@ -480,10 +514,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
     private void warnMissingPage(String spaceKey, String documentName)
     {
-        this.logger.warn(
-            "Could not find page [{}] in space [{}]. Links to this page may be broken. "
-                + "This may happen when importing a space that links to another space which is not present "
-                + "in this Confluence export, or the page is missing", documentName, spaceKey);
+        this.logger.warn("Could not find page [{}] in space [{}]. " + BROKEN_LINK_EXPLANATION, documentName, spaceKey);
     }
 
     private EntityReference getDocRefFromLinkMapping(String spaceKey, String documentName)
@@ -659,5 +690,263 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             ref = new EntityReference(WEB_HOME, EntityType.DOCUMENT, ref);
         }
         return this.serializer.serialize(ref);
+    }
+
+    private String serializeURLParameters(List<String[]> parameters)
+    {
+        StringBuilder builder = new StringBuilder();
+
+        for (String[] parameter : parameters) {
+            if (builder.length() > 0) {
+                builder.append('&');
+            }
+
+            builder.append(parameter[0]);
+            builder.append('=');
+            builder.append(parameter[1]);
+        }
+
+        return builder.toString();
+    }
+
+    private EntityReference fromPageId(long pageId) throws NumberFormatException
+    {
+        EntityReference ref = convertDocumentReference(pageId, false);
+        if (ref == null) {
+            this.logger.warn(
+                "Could not find page id [{}]. "
+                    + BROKEN_LINK_EXPLANATION, pageId);
+        }
+        return ref;
+    }
+
+    private AttachmentResourceReference createAttachmentResourceReference(EntityReference reference,
+        List<String[]> urlParameters, String pageTitle, String urlAnchor)
+    {
+        if (reference == null) {
+            return null;
+        }
+
+        AttachmentResourceReference resourceReference =
+            new AttachmentResourceReference(this.serializer.serialize(reference));
+
+        // Query string
+        if (CollectionUtils.isNotEmpty(urlParameters)) {
+            resourceReference.setQueryString(serializeURLParameters(urlParameters));
+        }
+
+        // Anchor
+        if (StringUtils.isNotBlank(urlAnchor)) {
+            resourceReference.setAnchor(convertAnchor("", pageTitle, urlAnchor));
+        }
+
+        return resourceReference;
+    }
+
+    private DocumentResourceReference createDocumentResourceReference(EntityReference reference,
+        List<String[]> urlParameters, String pageTitle, String urlAnchor)
+    {
+        if (reference == null) {
+            return null;
+        }
+
+        DocumentResourceReference resourceReference =
+            new DocumentResourceReference(this.serializer.serialize(reference));
+
+        // Query string
+        if (CollectionUtils.isNotEmpty(urlParameters)) {
+            resourceReference.setQueryString(serializeURLParameters(urlParameters));
+        }
+
+        // Anchor
+        if (StringUtils.isNotBlank(urlAnchor)) {
+            resourceReference.setAnchor(convertAnchor("", pageTitle, urlAnchor));
+        }
+
+        return resourceReference;
+    }
+
+    private String decode(String encoded)
+    {
+        return URLDecoder.decode(encoded, StandardCharsets.UTF_8);
+    }
+
+    private ResourceReference tryPattern(Pattern pattern, String p, Function<Matcher, ResourceReference> f)
+    {
+        Matcher matcher = pattern.matcher(p);
+        if (matcher.matches()) {
+            return f.apply(matcher);
+        }
+
+        return null;
+    }
+
+    private DocumentResourceReference simpleDocRef(Matcher m, List<String[]> urlParameters, String urlAnchor)
+    {
+        String spaceKey = decode(m.group(1));
+        String pageTitle = decode(m.group(2));
+        EntityReference documentReference = toDocumentReference(spaceKey, pageTitle);
+
+        return createDocumentResourceReference(documentReference, urlParameters, pageTitle, urlAnchor);
+    }
+
+    private long tinyPartToPageId(String part)
+    {
+        // FIXME copy-pasted from ConfluenceShortURLMapper
+        // Reverse-engineered and inspired by https://confluence.atlassian.com/x/2EkGOQ
+        // not sure the replaceChars part is necessary, but it shouldn't hurt
+        String base64WithoutPadding = StringUtils.replaceChars(part, "-_/", "/+\n");
+
+        byte[] decoded = new byte[8];
+        Base64.getUrlDecoder().decode(base64WithoutPadding.getBytes(), decoded);
+        return ByteBuffer.wrap(decoded).order(ByteOrder.LITTLE_ENDIAN).getLong();
+    }
+
+    private DocumentResourceReference convertPageIdToResourceReference(List<String[]> urlParameters, String urlAnchor,
+        long pageId)
+    {
+        EntityReference documentReference = getEntityReference(pageId);
+        if (documentReference == null) {
+            return null;
+        }
+
+        // Clean id parameter
+        urlParameters.removeIf(parameter -> parameter[0].equals("pageId"));
+
+        String pageTitle = getPageTitleForAnchor(pageId);
+        return createDocumentResourceReference(documentReference, urlParameters, pageTitle, urlAnchor);
+    }
+
+    private EntityReference getEntityReference(long pageId)
+    {
+        try {
+            return fromPageId(pageId);
+        } catch (NumberFormatException e) {
+            this.logger.error("Failed to get page for id [{}]", pageId, e);
+        }
+        return null;
+    }
+
+
+    private String enforceSlash(String pattern)
+    {
+        if (pattern.isEmpty() || pattern.charAt(0) != '/') {
+            return "/" + pattern;
+        }
+        return pattern;
+    }
+
+
+    private List<String[]> parseURLParameters(String queryString)
+    {
+        if (queryString == null) {
+            return Collections.emptyList();
+        }
+
+        String[] elements = StringUtils.split(queryString, '&');
+
+        List<String[]> parameters = new ArrayList<>(elements.length);
+
+        for (String element : elements) {
+            parameters.add(StringUtils.split(element, '='));
+        }
+
+        return parameters;
+    }
+
+    private ResourceReference fixReference(String path, List<String[]> urlParameters, String urlAnchor)
+    {
+        return ObjectUtils.firstNonNull(
+            // Try /display
+            tryPattern(PATTERN_URL_DISPLAY, path, matcher -> simpleDocRef(matcher, urlParameters, urlAnchor)),
+
+            // Try /spaces
+            tryPattern(PATTERN_URL_SPACES, path, matcher -> simpleDocRef(matcher, urlParameters, urlAnchor)),
+
+            // Try viewpage.action
+            tryPattern(PATTERN_URL_VIEWPAGE, path, matcher -> {
+                long pageId = Long.parseLong(matcher.group(1));
+                return convertPageIdToResourceReference(urlParameters, urlAnchor, pageId);
+            }),
+
+            // Try short URL
+            tryPattern(PATTERN_TINY_LINK, path, matcher -> {
+                long pageId;
+                try {
+                    pageId = tinyPartToPageId(matcher.group(1));
+                } catch (IllegalArgumentException e) {
+                    logger.error("Failed to decode the short link [{}]", path, e);
+                    return null;
+                }
+
+                return convertPageIdToResourceReference(urlParameters, urlAnchor, pageId);
+            }),
+
+            // Try attachments
+            tryPattern(PATTERN_URL_ATTACHMENT, path, matcher -> {
+                long pageId = Long.parseLong(matcher.group(1));
+                EntityReference documentReference = getEntityReference(pageId);
+                if (documentReference == null) {
+                    return null;
+                }
+
+                EntityReference attachmentReference =
+                    new EntityReference(decode(matcher.group(2)), EntityType.ATTACHMENT, documentReference);
+
+                String pageTitle = getPageTitleForAnchor(pageId);
+                return createAttachmentResourceReference(attachmentReference, urlParameters, pageTitle, urlAnchor);
+            }),
+
+            // emoticons
+            tryPattern(PATTERN_URL_EMOTICON, path, m -> new ResourceReference(decode(m.group(1)), ResourceType.ICON))
+        );
+    }
+
+    private ResourceReference convertURL(String url, ResourceReference baseReference)
+    {
+        for (URL baseURL : context.getProperties().getBaseURLs()) {
+            String baseURLString = baseURL.toExternalForm();
+
+            if (url.startsWith(baseURLString)) {
+                // Fix the URL if the format is known
+
+                URL urlObj;
+                try {
+                    urlObj = new URL(url);
+                } catch (MalformedURLException e) {
+                    // Should never happen
+                    this.logger.error("Wrong URL [{}]", url, e);
+                    continue;
+                }
+
+                String path = enforceSlash(url.substring(baseURLString.length()));
+
+                List<String[]> urlParameters = parseURLParameters(urlObj.getQuery());
+                String urlAnchor = urlObj.getRef();
+
+                ResourceReference ref = fixReference(path, urlParameters, urlAnchor);
+
+                if (ref != null) {
+                    return ref;
+                }
+            }
+        }
+
+        if (baseReference == null) {
+            return new ResourceReference(url, ResourceType.URL);
+        }
+
+        return baseReference;
+    }
+
+    @Override
+    public ResourceReference convertURL(String url)
+    {
+        return convertURL(url, null);
+    }
+
+    ResourceReference convertURL(ResourceReference reference)
+    {
+        return convertURL(reference.getReference(), reference);
     }
 }

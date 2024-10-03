@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -398,7 +399,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
         + " Example: https://example.com,https://example.org/")
     public List<URL> getBaseURLs()
     {
-        return this.baseURLs;
+        return Objects.requireNonNullElse(this.baseURLs, Collections.emptyList());
     }
 
     /**
