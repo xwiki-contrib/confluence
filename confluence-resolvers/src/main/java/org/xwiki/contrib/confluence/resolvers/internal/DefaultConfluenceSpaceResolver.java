@@ -47,7 +47,6 @@ import javax.inject.Singleton;
 @Priority(900)
 public class DefaultConfluenceSpaceResolver extends AbstractConfluenceResolver implements ConfluenceSpaceKeyResolver
 {
-
     @Inject
     private ComponentManager componentManager;
 
