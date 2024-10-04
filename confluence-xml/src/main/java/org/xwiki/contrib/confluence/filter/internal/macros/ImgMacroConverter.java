@@ -34,7 +34,7 @@ import org.xwiki.rendering.listener.reference.ResourceReference;
  * Convert Confluence img macro to XWiki syntax.
  *
  * @version $Id$
- * @since 9.55.2
+ * @since 9.56.0
  */
 @Singleton
 @Component
