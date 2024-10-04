@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -27,6 +28,7 @@ import javax.inject.Singleton;
 
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
+import org.xwiki.rendering.listener.Listener;
 
 /**
  * Convert the alert macro.
@@ -49,18 +51,15 @@ public class AlertMacroConverter extends AbstractMacroConverter
     private Logger logger;
 
     @Override
-    protected String toXWikiContent(String confluenceId, Map<String, String> parameters, String confluenceContent)
+    public void toXWiki(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
+        boolean inline, Listener listener)
     {
-        if (parameters.get(TITLE) != null)
-        {
-            StringBuilder builder = new StringBuilder();
-            builder.append(parameters.get(TITLE));
-            builder.append("\n");
-            builder.append(confluenceContent);
-            parameters.remove(TITLE);
-            return builder.toString();
-        }
-        return confluenceContent;
+        // Changed the order of the calls to make sure that the type parameter is kept only in the case of an unknown
+        // macro.
+        String content = toXWikiContent(confluenceId, confluenceParameters, confluenceContent);
+        Map<String, String> parameters = toXWikiParameters(confluenceId, confluenceParameters, confluenceContent);
+        String macroID = toXWikiId(confluenceId, parameters, confluenceContent, inline);
+        listener.onMacro(macroID, parameters, content, inline);
     }
 
     @Override
@@ -84,5 +83,27 @@ public class AlertMacroConverter extends AbstractMacroConverter
                 confluenceParameters.put(TYPE, type);
                 return INFO;
         }
+    }
+
+    @Override
+    protected String toXWikiContent(String confluenceId, Map<String, String> parameters, String confluenceContent)
+    {
+        if (parameters.get(TITLE) != null) {
+            StringBuilder builder = new StringBuilder();
+            builder.append(parameters.get(TITLE));
+            builder.append("\n");
+            builder.append(confluenceContent);
+            return builder.toString();
+        }
+        return confluenceContent;
+    }
+
+    @Override
+    protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
+        String content)
+    {
+        Map<String, String> parameters = new HashMap<>(confluenceParameters);
+        parameters.remove(TITLE);
+        return parameters;
     }
 }
