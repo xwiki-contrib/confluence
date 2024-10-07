@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic datetime="2023-10-02 11:40:11">
+  <object class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+    <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    <property name="name"><![CDATA[Teo]]></property>
+    <property name="lowerName"><![CDATA[Smecherus]]></property>
+    <property name="email"><![CDATA[teo@email.com]]></property>
+  </object>
+  <object class="Page" package="com.atlassian.confluence.spaces">
+    <id name="id">45809845</id>
+    <property name="hibernateVersion">5</property>
+    <property name="title">My Space Home</property>
+    <property name="lowerTitle">my space home</property>
+    <collection name="bodyContents" class="java.util.Collection"><element class="BodyContent" package="com.atlassian.confluence.core"><id name="id">156868656</id>
+    </element>
+    </collection>
+    <property name="version">1</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="creationDate">2012-08-21 15:37:47.000</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="lastModificationDate">2016-10-11 14:47:37.000</property>
+    <property name="versionComment"><![CDATA[]]></property>
+    <property name="contentStatus"><![CDATA[current]]></property>
+    <collection name="labellings" class="java.util.Collection"></collection>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">46268417</id>
+    </property>
+    <collection name="attachments" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.attachments)"></collection>
+  </object>
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">46268417</id>
+    <property name="name"><![CDATA[My Space]]></property>
+    <property name="key"><![CDATA[MySpace]]></property>
+    <property name="lowerKey"><![CDATA[myspace]]></property>
+    <property name="homePage" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809845</id></property>
+    <collection name="permissions" class="java.util.Collection"></collection>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="creationDate">2012-08-21 15:37:47.000</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="lastModificationDate">2016-10-11 14:47:37.000</property>
+    <property name="spaceType">global</property>
+    <property name="spaceStatus" enum-class="SpaceStatus" package="com.atlassian.confluence.spaces">CURRENT</property>
+  </object>
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">156868656</id>
+    <property name="body"><![CDATA[<h2>alert</h2>
+<ac:structured-macro ac:name="alert" ac:schema-version="1"
+    ac:macro-id="1c4614d3-c9ff-46db-9d38-bca2cde61b6c">
+    <ac:parameter ac:name="title">Wohoo! u succeeded</ac:parameter>
+    <ac:parameter ac:name="type">Success</ac:parameter>
+    <ac:rich-text-body>
+        <p>THis is more text of success</p>
+        <p>
+            <strong>Strong </strong>
+            <em>italic</em>
+        </p>
+        <ac:structured-macro ac:name="info" ac:schema-version="1"
+            ac:macro-id="e8c57823-971a-45de-9800-fa50836e1a77">
+            <ac:parameter ac:name="title">Proof</ac:parameter>
+            <ac:rich-text-body>
+                <p>That this supports rich content</p>
+            </ac:rich-text-body>
+        </ac:structured-macro>
+        <p>
+            <br />
+        </p>
+    </ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="alert" ac:schema-version="1"
+    ac:macro-id="3df75566-4cb9-49db-ae91-bfe4239cc740">
+    <ac:parameter ac:name="title">Wohoo! u succeeded</ac:parameter>
+    <ac:parameter ac:name="type">Info</ac:parameter>
+    <ac:rich-text-body>
+        <p>THis is more text of success</p>
+    </ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="alert" ac:schema-version="1"
+    ac:macro-id="6e81e804-5f71-434e-9d6a-c40f0dc7e68b">
+    <ac:parameter ac:name="title">Wohoo! u succeeded</ac:parameter>
+    <ac:parameter ac:name="type">Warning</ac:parameter>
+    <ac:rich-text-body>
+        <p>THis is more text of success</p>
+    </ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="alert" ac:schema-version="1"
+    ac:macro-id="6e81e804-5f71-434e-9d6a-c40f0dc7e68b">
+    <ac:parameter ac:name="title">Wohoo! u succeeded</ac:parameter>
+    <ac:parameter ac:name="type">unknown</ac:parameter>
+    <ac:rich-text-body>
+        <p>THis is more text of success</p>
+    </ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="alert" ac:schema-version="1"
+    ac:macro-id="a6ee799e-1cbe-4e98-96cc-04e1392bf386">
+    <ac:parameter ac:name="title">Wohoo! u succeeded</ac:parameter>
+    <ac:parameter ac:name="type">Error</ac:parameter>
+    <ac:rich-text-body>
+        <p>THis is more text of success</p>
+    </ac:rich-text-body>
+</ac:structured-macro>]]></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809845</id></property>
+    <property name="bodyType">2</property>
+  </object>
+</hibernate-generic>

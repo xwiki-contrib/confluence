@@ -11,6 +11,7 @@ org.xwiki.contrib.confluence.filter.internal.input.DefaultConfluenceInputContext
 org.xwiki.contrib.confluence.filter.internal.input.DefaultLinkMapper
 org.xwiki.contrib.confluence.filter.internal.LinkMappingConverter
 org.xwiki.contrib.confluence.filter.internal.macros.AnchorMacroConverter
+org.xwiki.contrib.confluence.filter.internal.macros.AlertMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.AUIMessageConverter
 org.xwiki.contrib.confluence.filter.internal.macros.DefaultMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.IncludeMacroConverter
@@ -24,3 +25,4 @@ org.xwiki.contrib.confluence.filter.internal.macros.SpacesMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.IframeMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.StyleMacroConvertor
 org.xwiki.contrib.confluence.filter.internal.MappingConverter
+
