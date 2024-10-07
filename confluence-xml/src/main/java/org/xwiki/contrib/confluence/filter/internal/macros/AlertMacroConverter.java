@@ -79,8 +79,6 @@ public class AlertMacroConverter extends AbstractMacroConverter
                 return "warning";
             default:
                 logger.warn(String.format("The type of alert is not supported: %s", confluenceParameters.get(TYPE)));
-                // We add the type back to be able to identify this information in the future.
-                confluenceParameters.put(TYPE, type);
                 return INFO;
         }
     }
