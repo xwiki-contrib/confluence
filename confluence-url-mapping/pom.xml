@@ -25,7 +25,7 @@
   <parent>
     <groupId>org.xwiki.contrib.confluence</groupId>
     <artifactId>confluence</artifactId>
-    <version>9.55.1-SNAPSHOT</version>
+    <version>9.56.0</version>
   </parent>
   <artifactId>confluence-url-mapping</artifactId>
   <name>Confluence URL Mapping</name>
