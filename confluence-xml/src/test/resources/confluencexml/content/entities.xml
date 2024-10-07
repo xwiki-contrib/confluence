@@ -61,6 +61,8 @@
           </ac:structured-macro>
         </p>
         <p><ac:structured-macro ac:name="convertedtoblock"/><ac:structured-macro ac:name="convertedtoblock"/></p>
+        <p><ac:structured-macro ac:name="rw-pagetree"><ac:parameter ac:name="root">10</ac:parameter></ac:structured-macro></p>
+        <p><ac:structured-macro ac:name="rw-pagetree"></ac:structured-macro></p>
       ]]>
     </property>
     <property name="content" class="Page"
