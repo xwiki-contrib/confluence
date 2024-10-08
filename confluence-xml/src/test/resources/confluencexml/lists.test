@@ -65,7 +65,20 @@
 
 1. (% style="color: rgb(0,0,0);" %)Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
 )))
-)))</string>
+)))
+
+* {{mathjax}}\(1337=k\times 42\){{/mathjax}}
+
+* (((
+{{mathjax}}
+\begin{equation}
+\label{myanchor}
+1337=k\times 42
+\end{equation}
+{{/mathjax}}
+)))
+
+* {{mathjax}}\label{myanchor}{{/mathjax}}</string>
             </entry>
             <entry>
               <string>syntax</string>
