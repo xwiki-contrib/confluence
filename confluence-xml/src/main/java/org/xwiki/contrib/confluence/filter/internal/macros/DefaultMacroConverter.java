@@ -118,6 +118,12 @@ public class DefaultMacroConverter extends AbstractMacroConverter
             conv = this;
         }
         try {
+            if (conv != this) {
+                InlineSupport converterInlineSupport = conv.supportsInlineMode(id, parameters, content);
+                if (converterInlineSupport != null && !converterInlineSupport.equals(InlineSupport.MAYBE)) {
+                    return converterInlineSupport;
+                }
+            }
             Macro<?> macro = macroManager.getMacro(new MacroId(conv.toXWikiId(id, parameters, content, true)));
             if (macro != null) {
                 return macro.supportsInlineMode() ? InlineSupport.YES : InlineSupport.NO;

@@ -100,6 +100,8 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
 
     private int mustCallPopListener;
 
+    private int listItemDepth;
+
     /**
      * @param parser the parser to use to parse link labels
      * @param listener the XWiki listener to which to forward WikiModel events
@@ -347,6 +349,11 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         super.onMacroInline(macroName, params, content);
     }
 
+    private boolean isInListItem()
+    {
+        return listItemDepth > 0;
+    }
+
     @Override
     public void onMacroBlock(String macroName, WikiParameters params, String content)
     {
@@ -374,12 +381,14 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
             case "confluence_li_start":
                 // we begin the list item and then record the following events. This will allow us to do some cleanup
                 // that will avoid clunky syntax and broken rendering. See handleListItem().
+                listItemDepth++;
                 getListener().beginListItem();
                 maybePushListener();
                 return;
 
             case "confluence_li_end":
                 handleListItem();
+                listItemDepth--;
                 return;
 
             default:
@@ -499,11 +508,16 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
     {
         for (int i = 0; i < contentEvents.size(); i++) {
             QueueListener.Event e = contentEvents.get(i);
-            if (e.eventType.isInlineEnd()) {
+            if (e.eventType.isInlineEnd() || isBlockMacro(e)) {
                 return !wrappedInList(contentEvents.subList(i, contentEvents.size()));
             }
         }
         return false;
+    }
+
+    private static boolean isBlockMacro(QueueListener.Event e)
+    {
+        return e.eventType.equals(EventType.ON_MACRO) && !((boolean) e.eventParameters[3]);
     }
 
     private boolean wrappedInList(List<QueueListener.Event> contentEvents)
@@ -644,7 +658,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
 
         // Check if the second event is a macro event. Then this macro should actually be a block macro without
         // begin/end paragraph.
-        if (queueListener.size() == 3 && queueListener.get(1).eventType == EventType.ON_MACRO) {
+        if (!isInListItem() && queueListener.size() == 3 && queueListener.get(1).eventType == EventType.ON_MACRO) {
             QueueListener.Event macroEvent = queueListener.get(1);
             // Set the inline parameter to false in macros that are alone in paragraph. These macros can be block
             // macros. If they are inline, not having the inline attribute should not hurt when generating XWiki syntax.
