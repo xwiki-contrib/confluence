@@ -677,7 +677,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * this parameter is to provide the missing information.
      *
      * @param groupIdMapping a mapping between Confluence groups ID and group name.
-     * @since 9.55.0
+     * @since 9.57.0
      */
     public void setGroupIdMapping(Mapping groupIdMapping)
     {
@@ -703,12 +703,12 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
 
     /**
      * @return a mapping between Confluence groups ID and group name.
-     * @since 9.55.0
+     * @since 9.57.0
      */
     @PropertyName("Group id mapping")
-    @PropertyDescription("Define a mapping between the Confluence group ID and Confluence group name. When we do a "
-        + "Confluence space export this information is missing and so the macro parameter which depends on this "
-        + "mapping won't be converted correctly. So this parameter is to provide the missing information."
+    @PropertyDescription("Define a mapping between Confluence group IDs and Confluence group names. When using a "
+        + "Confluence space export, this information is missing and macro parameters which refer to group ids  won't "
+        + "be converted correctly. This parameter helps work around this issue by providing the missing information."
         + "For instance: a39e82d8-1c93-4395-9358-dc67f2ffa3ef=balsamiq-mockups-editors|"
         + "a39e82d8-1c93-4395-9358-dc67f2ffa3ef=administrators|a78122a5-a46d-497e-904c-3cffd763de31=site-admins")
     public Mapping getGroupIdMapping()

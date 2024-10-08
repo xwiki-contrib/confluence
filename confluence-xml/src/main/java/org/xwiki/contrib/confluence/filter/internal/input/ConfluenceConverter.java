@@ -123,8 +123,6 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     @Inject
     private ConfluenceInputContext context;
 
-    private final Mapping groupIdMappingCache = new Mapping();
-
     /**
      * @param name the name to validate
      * @return the validated name
@@ -407,24 +405,17 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     public String convertGroupId(String groupId)
     {
         try {
-            // search group ID from cache
-            if (groupIdMappingCache.containsKey(groupId)) {
-                return toGroupReference(groupIdMappingCache.get(groupId));
-            }
             // search group ID from input properties
             Mapping groupIdMappingFromContext = context.getProperties().getGroupIdMapping();
             if (groupIdMappingFromContext.containsKey(groupId)) {
                 String confluenceGroupName = groupIdMappingFromContext.get(groupId);
-                groupIdMappingCache.put(groupId, confluenceGroupName);
                 return toGroupReference(confluenceGroupName);
             }
             for (long i : context.getConfluencePackage().getGroups()) {
                 ConfluenceProperties properties = context.getConfluencePackage().getGroupProperties(i);
                 String externalId = properties.getString(KEY_GROUP_EXTERNAL_ID);
-
                 if (groupId.equals(externalId)) {
                     String confluenceGroupName = properties.getString(KEY_GROUP_NAME);
-                    groupIdMappingCache.put(groupId, confluenceGroupName);
                     return toGroupReference(confluenceGroupName);
                 }
             }
