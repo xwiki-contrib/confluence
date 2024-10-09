@@ -64,6 +64,9 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage.KEY_GROUP_EXTERNAL_ID;
+import static org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage.KEY_GROUP_NAME;
+
 /**
  * Default implementation of ConfluenceConverter.
  * @version $Id$
@@ -392,6 +395,36 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         String convertedSpace = toEntityName(ensureNonEmptySpaceKey(spaceKey));
         SpaceReference root = context.getProperties().getRootSpace();
         return new EntityReference(convertedSpace, EntityType.SPACE, root);
+    }
+
+    /**
+     * Convert an external group ID to a XWiki reference.
+     * @param groupId confluence external group ID
+     * @return serialized XWiki group reference
+     */
+    public String convertGroupId(String groupId)
+    {
+        try {
+            // search group ID from input properties
+            Mapping groupIdMapping = context.getProperties().getGroupIdMapping();
+            if (groupIdMapping.containsKey(groupId)) {
+                String confluenceGroupName = groupIdMapping.get(groupId);
+                return toGroupReference(confluenceGroupName);
+            }
+            for (long i : context.getConfluencePackage().getGroups()) {
+                ConfluenceProperties properties = context.getConfluencePackage().getGroupProperties(i);
+                String externalId = properties.getString(KEY_GROUP_EXTERNAL_ID);
+                if (groupId.equals(externalId)) {
+                    String confluenceGroupName = properties.getString(KEY_GROUP_NAME);
+                    return toGroupReference(confluenceGroupName);
+                }
+            }
+        } catch (ConfigurationException e) {
+            logger.error(e.getMessage(), e);
+            return null;
+        }
+        logger.error("Can't find matching group for ID [{}]", groupId);
+        return null;
     }
 
     /**

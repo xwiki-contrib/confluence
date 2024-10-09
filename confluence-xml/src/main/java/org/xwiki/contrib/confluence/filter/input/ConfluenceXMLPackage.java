@@ -478,6 +478,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String KEY_GROUP_DESCRIPTION = "description";
 
     /**
+     * The property key to access the group external ID.
+     */
+    public static final String KEY_GROUP_EXTERNAL_ID = "externalId";
+
+    /**
      * The property key to access the group members.
      */
     public static final String KEY_GROUP_MEMBERUSERS = "memberusers";
