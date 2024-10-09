@@ -2,5 +2,4 @@
 500:org.xwiki.contrib.confluence.filter.FakeBlockMacroConverter
 500:org.xwiki.contrib.confluence.filter.FakeShowIfMacroConverter
 500:org.xwiki.contrib.confluence.filter.LivesearchMacroConverter
-500:org.xwiki.contrib.confluence.filter.ShowIfMacro
 500:org.xwiki.contrib.confluence.filter.ViewFileMacro

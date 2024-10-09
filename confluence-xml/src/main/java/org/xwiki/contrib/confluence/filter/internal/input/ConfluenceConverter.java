@@ -406,9 +406,9 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     {
         try {
             // search group ID from input properties
-            Mapping groupIdMappingFromContext = context.getProperties().getGroupIdMapping();
-            if (groupIdMappingFromContext.containsKey(groupId)) {
-                String confluenceGroupName = groupIdMappingFromContext.get(groupId);
+            Mapping groupIdMapping = context.getProperties().getGroupIdMapping();
+            if (groupIdMapping.containsKey(groupId)) {
+                String confluenceGroupName = groupIdMapping.get(groupId);
                 return toGroupReference(confluenceGroupName);
             }
             for (long i : context.getConfluencePackage().getGroups()) {
