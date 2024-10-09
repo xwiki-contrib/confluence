@@ -24,10 +24,9 @@
 // @Library("XWiki@<branch, tag, sha1>") _
 // See https://github.com/jenkinsci/workflow-cps-global-lib-plugin for details.
 
-node {
-  // We need FF 32.0.1 since the tests are still on Selenium 2.x
-  def firefoxVersionSystemProperty = getFirefoxVersionSystemProperty()
+node() {
   xwikiBuild {
-    properties = firefoxVersionSystemProperty
+    xvnc = false
+    goals = 'clean deploy jacoco:report sonar:sonar'
   }
 }

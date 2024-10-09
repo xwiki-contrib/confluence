@@ -56,6 +56,32 @@
     </developer>
   </developers>
   <build>
+    <pluginManagement>
+      <plugins>
+        <!-- Use a more recent version of Spoon to avoid URL classloader issue with Java 17. We need to build with
+             Java 17 since SonarQube requires it now -->
+        <plugin>
+          <groupId>fr.inria.gforge.spoon</groupId>
+          <artifactId>spoon-maven-plugin</artifactId>
+          <version>3.8.0</version>
+          <dependencies>
+            <dependency>
+              <groupId>fr.inria.gforge.spoon</groupId>
+              <artifactId>spoon-core</artifactId>
+              <version>10.4.2</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+        <!-- Make sure we can build with Java 17 (needed for SonarCloud) -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <configuration>
+            <argLine>@{argLine} -Xmx1024m -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=${project.build.directory} --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.util.concurrent=ALL-UNNAMED</argLine>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.revapi</groupId>
@@ -120,7 +146,6 @@
       </plugin>
     </plugins>
   </build>
-
   <modules>
     <module>confluence-xml</module>
     <module>confluence-resolvers</module>
