@@ -19,66 +19,38 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import org.dom4j.Document;
-import org.dom4j.DocumentHelper;
-import org.dom4j.Element;
 import org.xwiki.component.annotation.Component;
 
 /**
- * Convert the style macro.
+ * Convert the spaces macro.
  *
  * @version $Id$
- * @since 9.52.0
+ * @since 1.51.1
  */
 @Component
 @Singleton
-@Named("style")
-public class StyleMacroConvertor extends AbstractMacroConverter
+@Named("spaces")
+public class SpacesMacroConverter extends AbstractMacroConverter
 {
-    private static final String IMPORT = "import";
-
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
-        return "html";
+        return "documentTree";
     }
 
     @Override
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {
-        return Collections.singletonMap("clean", "false");
-    }
-
-    @Override
-    protected String toXWikiContent(String confluenceId, Map<String, String> parameters, String confluenceContent)
-    {
-
-        Document document = DocumentHelper.createDocument();
-        Element root = document.addElement("root");
-        if (confluenceContent != null && !confluenceContent.isEmpty()) {
-            Element styleElement = root.addElement("style");
-            styleElement.addText(confluenceContent);
-        }
-
-        if (parameters.containsKey(IMPORT)) {
-            Element linkElement =
-                root.addElement("link").addAttribute("rel", "stylesheet").addAttribute("href", parameters.get(IMPORT));
-        }
-        StringBuilder builder = new StringBuilder();
-        for (Element element : document.getRootElement().elements()) {
-            builder.append(element.asXML());
-        }
-
-        return builder.toString();
+        Map<String, String> xwikiParameters = new HashMap<>();
+        xwikiParameters.put("finder", "true");
+        return xwikiParameters;
     }
 }
-
-
