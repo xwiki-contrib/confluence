@@ -57,7 +57,13 @@
 
 <ul><li><p>List entry 1</p><ol><li><p>Numbered list entry 1</p></li><li><p>Numbered list entry 2</p></li><li><p>Numbered list entry </p></li></ol></li></ul>
 
-<ol><li><h2><strong>Installation and setup</strong></h2><ol><li style="margin-left: 0.0px;"><h3><strong>Download the Setup:</strong></h3><ol><li style="margin-left: 0.0px;"><span style="color: rgb(51,51,51);"><span style="color: rgb(0,0,0);">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old</span>.</span></li></ol></li><li><h3><strong><span style="color: rgb(51,51,51);margin-left: 0.0px;">Installation:</span></strong></h3><ol><li style="margin-left: 0.0px;"><p style="text-align: left;"><span style="color: rgb(0,0,0);">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</span></p></li></ol></li></ol></li></ol>]]>
+<ol><li><h2><strong>Installation and setup</strong></h2><ol><li style="margin-left: 0.0px;"><h3><strong>Download the Setup:</strong></h3><ol><li style="margin-left: 0.0px;"><span style="color: rgb(51,51,51);"><span style="color: rgb(0,0,0);">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old</span>.</span></li></ol></li><li><h3><strong><span style="color: rgb(51,51,51);margin-left: 0.0px;">Installation:</span></strong></h3><ol><li style="margin-left: 0.0px;"><p style="text-align: left;"><span style="color: rgb(0,0,0);">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</span></p></li></ol></li></ol></li></ol>
+
+<ul style="list-style-type: square;"><li><ac:structured-macro ac:name="mathinline"><ac:parameter ac:name="body">1337=k\times 42</ac:parameter></ac:structured-macro></li></ul>
+
+<ul style="list-style-type: square;"><li><ac:structured-macro ac:name="mathblock"><ac:parameter ac:name="body">1337=k\times 42</ac:parameter><ac:parameter ac:name="anchor">myanchor</ac:parameter></ac:structured-macro></li></ul>
+
+<ul style="list-style-type: square;"><li><ac:structured-macro ac:name="mathblock-ref"><ac:parameter ac:name="anchor">myanchor</ac:parameter></ac:structured-macro></li></ul>]]>
     </property>
     <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809845</id></property>
     <property name="bodyType">2</property>

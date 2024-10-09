@@ -1,6 +1,5 @@
 .#------------------------------------------------------------------------------
 .expect|filter+xml
-.# Various links and reference related tests
 .#------------------------------------------------------------------------------
 <wikiSpace name="MySpace">
   <wikiDocument name="WebHome">
@@ -42,43 +41,7 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>1. Hello
-1. world
-11. Hello nested
-11. world nested
-
-* List entry 1
-*1. Numbered list entry 1
-*1. Numbered list entry 2
-*1. Numbered list entry
-
-1. (((
-== {{id name="MySpaceHome-Installationandsetup"/}}**Installation and setup** ==
-
-1. (((
-=== {{id name="MySpaceHome-DownloadtheSetup:"/}}**Download the Setup:** ===
-
-1. (% style="color: rgb(51, 51, 51); color: rgb(0, 0, 0)" %)Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old(% style="color: rgb(51,51,51);" %).
-)))
-1. (((
-=== {{id name="MySpaceHome-Installation:"/}}(% style="color: rgb(51,51,51);margin-left: 0.0px;" %)**Installation:**(%%) ===
-
-1. (% style="color: rgb(0,0,0);" %)Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.
-)))
-)))
-
-* {{mathjax}}\(1337=k\times 42\){{/mathjax}}
-
-* (((
-{{mathjax}}
-\begin{equation}
-\label{myanchor}
-1337=k\times 42
-\end{equation}
-{{/mathjax}}
-)))
-
-* {{mathjax}}\label{myanchor}{{/mathjax}}</string>
+              <string>[[image:url:https://cdn.pixabay.com/photo/2022/09/27/19/46/ai-generated-7483596_960_720.jpg||alt="some alt text" dir="ltr" title="A nice title" longdesc="A very beautiful image" width="69px" style="opacity: 0.5" id="someId" lang="ro" class="someClass" usemap="someid" height="420px"]][[image:attach:MySpace.IMG Macro attachment holder.WebHome@270378865_3175061552717005_4796137940594548712_n.jpg||queryString="api=v2" alt="some alt text" dir="ltr" title="A nice title" longdesc="A very beautiful image" width="69px" style="opacity: 0.5" id="someId" lang="ro" class="someClass" usemap="someid" height="420px"]]</string>
             </entry>
             <entry>
               <string>syntax</string>
@@ -99,5 +62,6 @@
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
-.configuration.source=lists
+.configuration.source=img
+.configuration.baseURLs=https://confluence.com
 .#------------------------------------------------------------------------------

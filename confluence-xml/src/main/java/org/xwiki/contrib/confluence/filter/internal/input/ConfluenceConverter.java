@@ -713,9 +713,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     {
         EntityReference ref = convertDocumentReference(pageId, false);
         if (ref == null) {
-            this.logger.warn(
-                "Could not find page id [{}]. "
-                    + BROKEN_LINK_EXPLANATION, pageId);
+            this.logger.warn("Could not find page id [{}]. " + BROKEN_LINK_EXPLANATION, pageId);
         }
         return ref;
     }

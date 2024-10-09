@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic datetime="2023-10-02 11:40:11">
+  <object class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+    <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    <property name="name"><![CDATA[Teo]]></property>
+    <property name="lowerName"><![CDATA[Smecherus]]></property>
+    <property name="email"><![CDATA[teo@email.com]]></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">863633417</id>
+    <property name="hibernateVersion">8</property>
+    <property name="title"><![CDATA[IMG Macro attachment holder]]></property>
+    <property name="lowerTitle"><![CDATA[img macro attachment holder]]></property>
+    <collection name="bodyContents"
+      class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.bodyContents)">
+      <element class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">863240210</id>
+      </element>
+    </collection>
+    <collection name="adfContentBodies"
+      class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.adfContentBodies)"></collection>
+    <collection name="contentProperties"
+      class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.contentProperties)">
+      <element class="ContentProperty" package="com.atlassian.confluence.content">
+        <id name="id">863010835</id>
+      </element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content">
+        <id name="id">864059393</id>
+      </element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content">
+        <id name="id">864059394</id>
+      </element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content">
+        <id name="id">863633418</id>
+      </element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content">
+        <id name="id">863633419</id>
+      </element>
+    </collection>
+    <property name="version">1</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[712020:0cbb2ffd-3795-4f0b-a832-9a7fefd47b8e]]></id>
+    </property>
+    <property name="creationDate">2024-10-04 07:26:42.309</property>
+    <property name="lastModifier" class="ConfluenceUserImpl"
+      package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[712020:0cbb2ffd-3795-4f0b-a832-9a7fefd47b8e]]></id>
+    </property>
+    <property name="lastModificationDate">2024-10-04 07:27:01.350</property>
+    <property name="versionComment"><![CDATA[]]></property>
+    <property name="contentStatus"><![CDATA[current]]></property>
+    <property name="navigationType">1</property>
+    <collection name="attachments"
+      class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.attachments)">
+      <element class="Attachment" package="com.atlassian.confluence.pages">
+        <id name="id">863273000</id>
+      </element>
+    </collection>
+    <collection name="customContent"
+      class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.customContent)">
+      <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+        <id name="id">863633420</id>
+      </element>
+      <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+        <id name="id">863502349</id>
+      </element>
+      <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+        <id name="id">864092161</id>
+      </element>
+      <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+        <id name="id">863076380</id>
+      </element>
+      <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+        <id name="id">864092169</id>
+      </element>
+      <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+        <id name="id">863731724</id>
+      </element>
+      <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+        <id name="id">863404051</id>
+      </element>
+      <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+        <id name="id">863731717</id>
+      </element>
+      <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+        <id name="id">863305756</id>
+      </element>
+      <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+        <id name="id">863338513</id>
+      </element>
+      <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+        <id name="id">863600653</id>
+      </element>
+      <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+        <id name="id">863043593</id>
+      </element>
+      <element class="CustomContentEntityObject" package="com.atlassian.confluence.content">
+        <id name="id">863010858</id>
+      </element>
+    </collection>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+      <id name="id">741277711</id>
+    </property>
+    <property name="position">372</property>
+    <property name="parent" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">863371265</id>
+    </property>
+  </object>
+  <object class="Page" package="com.atlassian.confluence.spaces">
+    <id name="id">45809845</id>
+    <property name="hibernateVersion">5</property>
+    <property name="title">My Space Home</property>
+    <property name="lowerTitle">my space home</property>
+    <collection name="bodyContents" class="java.util.Collection"><element class="BodyContent" package="com.atlassian.confluence.core"><id name="id">156868656</id>
+    </element>
+    </collection>
+    <property name="version">1</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="creationDate">2012-08-21 15:37:47.000</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="lastModificationDate">2016-10-11 14:47:37.000</property>
+    <property name="versionComment"><![CDATA[]]></property>
+    <property name="contentStatus"><![CDATA[current]]></property>
+    <collection name="labellings" class="java.util.Collection"></collection>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">46268417</id>
+    </property>
+    <collection name="attachments" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.attachments)"><element class="Attachment" package="com.atlassian.confluence.pages"><id name="id">134204920</id></element></collection>
+  </object>
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">46268417</id>
+    <property name="name"><![CDATA[My Space]]></property>
+    <property name="key"><![CDATA[MySpace]]></property>
+    <property name="lowerKey"><![CDATA[myspace]]></property>
+    <property name="homePage" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809845</id></property>
+    <collection name="permissions" class="java.util.Collection"></collection>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="creationDate">2012-08-21 15:37:47.000</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="lastModificationDate">2016-10-11 14:47:37.000</property>
+    <property name="spaceType">global</property>
+    <property name="spaceStatus" enum-class="SpaceStatus" package="com.atlassian.confluence.spaces">CURRENT</property>
+  </object>
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">156868656</id>
+    <property name="body"><![CDATA[<ac:structured-macro ac:name="img" ac:schema-version="1" ac:macro-id="ec2da8f6-6c67-4fc8-b50e-2272da9033ea"><ac:parameter ac:name="src"><ri:url ri:value="https://cdn.pixabay.com/photo/2022/09/27/19/46/ai-generated-7483596_960_720.jpg" /></ac:parameter><ac:parameter ac:name="alt">some alt text</ac:parameter><ac:parameter ac:name="width">69px</ac:parameter><ac:parameter ac:name="style">opacity: 0.5</ac:parameter><ac:parameter ac:name="id">someId</ac:parameter><ac:parameter ac:name="dir">ltr</ac:parameter><ac:parameter ac:name="lang">ro</ac:parameter><ac:parameter ac:name="title">A nice title</ac:parameter><ac:parameter ac:name="class">someClass</ac:parameter><ac:parameter ac:name="usemap">someid</ac:parameter><ac:parameter ac:name="height">420px</ac:parameter><ac:parameter ac:name="longdesc"><ri:url ri:value="A very beautiful image" /></ac:parameter></ac:structured-macro><ac:structured-macro ac:name="img" ac:schema-version="1" ac:macro-id="ec2da8f6-6c67-4fc8-b50e-2272da9033ea"><ac:parameter ac:name="src"><ri:url ri:value="https://confluence.com/download/attachments/863633417/270378865_3175061552717005_4796137940594548712_n.jpg?api=v2" /></ac:parameter><ac:parameter ac:name="alt">some alt text</ac:parameter><ac:parameter ac:name="width">69px</ac:parameter><ac:parameter ac:name="style">opacity: 0.5</ac:parameter><ac:parameter ac:name="id">someId</ac:parameter><ac:parameter ac:name="dir">ltr</ac:parameter><ac:parameter ac:name="lang">ro</ac:parameter><ac:parameter ac:name="title">A nice title</ac:parameter><ac:parameter ac:name="class">someClass</ac:parameter><ac:parameter ac:name="usemap">someid</ac:parameter><ac:parameter ac:name="height">420px</ac:parameter><ac:parameter ac:name="longdesc"><ri:url ri:value="A very beautiful image" /></ac:parameter></ac:structured-macro>]]></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809845</id></property>
+    <property name="bodyType">2</property>
+  </object>
+</hibernate-generic>

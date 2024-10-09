@@ -23,7 +23,11 @@ sub macro rich **text** content
 
 {{view-file/}}
 
-{{view-file/}}</string>
+{{view-file/}}
+
+{{documentTree root="TestSpace.TestContent.WebHome"/}}
+
+{{documentTree/}}</string>
               </entry>
               <entry>
                 <string>syntax</string>
