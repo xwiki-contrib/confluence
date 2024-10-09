@@ -1,0 +1,114 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Content conversions
+.#------------------------------------------------------------------------------
+<groupContainer name="XWikiAdminGroup">
+  <p>
+    <parameters>
+      <entry>
+        <string>revision_date</string>
+        <date>2024-08-27 10:12:25.521 UTC</date>
+      </entry>
+      <entry>
+        <string>creation_date</string>
+        <date>2024-08-27 10:12:25.521 UTC</date>
+      </entry>
+    </parameters>
+  </p>
+</groupContainer>
+<groupContainer name="confluence-mytest">
+  <p>
+    <parameters>
+      <entry>
+        <string>revision_date</string>
+        <date>2024-08-27 10:12:25.521 UTC</date>
+      </entry>
+      <entry>
+        <string>creation_date</string>
+        <date>2024-08-27 10:12:25.521 UTC</date>
+      </entry>
+    </parameters>
+  </p>
+</groupContainer>
+<wikiSpace name="MySpace">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.01f7c1cc638e0d8c0163d05ca6f60124</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2019-02-13 08:05:54.0 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>1</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.01f7c1cc638e0d8c0163d05ca6f60124</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-02-13 08:16:56.0 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>My Space</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>{{show-if groupIds="XWiki.XWikiAdminGroup" matchUsing="any"}}
+show if group = system-administrators
+{{/show-if}}
+
+{{show-if groupIds="XWiki.confluence-mytest" matchUsing="any"}}
+show if group = confluence-mytest
+{{/show-if}}
+
+{{show-if groupIds="XWiki.balsamiq-mockups-editors" matchUsing="any"}}
+show if group = balsamiq-mockups-editors
+{{/show-if}}
+
+{{show-if groupIds="XWiki.XWikiAdminGroup" matchUsing="any"}}
+show if group = administrators
+{{/show-if}}
+
+{{show-if groupIds="XWiki.XWikiAdminGroup" matchUsing="any"}}
+show if group = site-admins
+{{/show-if}}</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=groupIds
+.configuration.groupIdMapping=a39e82d8-1c93-4395-9358-dc67f2ffa3ef=balsamiq-mockups-editors|a40e82d8-1c93-4395-9358-dc67f2ffa3ef=administrators|a78122a5-a46d-497e-904c-3cffd763de31=site-admins
+.#------------------------------------------------------------------------------
