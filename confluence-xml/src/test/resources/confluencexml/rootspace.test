@@ -46,7 +46,11 @@
 
 [[link>>url:https://confluence.atlassian.com/x/NgszKw||shape="rect"]]
 
-[[link>>url:https://confluence.atlassian.com/x/SRwC||shape="rect"]]</string>
+[[link>>url:https://confluence.atlassian.com/x/SRwC||shape="rect"]]
+
+{{lozenge icon="https://icon-library.com/images/img_524932.png" link="https://www.bing.com/images/search?q=icon" width="auto"}}
+Some content
+{{/lozenge}}</string>
                 </entry>
                 <entry>
                   <string>syntax</string>

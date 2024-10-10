@@ -44,7 +44,11 @@
 
 [[link>>doc:xwiki:OK.NgszKw||shape="rect"]]
 
-[[link>>doc:xwiki:OK.SRwC||shape="rect"]]</string>
+[[link>>doc:xwiki:OK.SRwC||shape="rect"]]
+
+{{lozenge icon="https://icon-library.com/images/img_524932.png" link="https://www.bing.com/images/search?q=icon" width="auto"}}
+Some content
+{{/lozenge}}</string>
             </entry>
             <entry>
               <string>syntax</string>
