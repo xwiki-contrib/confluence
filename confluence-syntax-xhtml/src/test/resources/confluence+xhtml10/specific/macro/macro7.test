@@ -1,0 +1,20 @@
+.#-----------------------------------------------------
+.input|confluence+xhtml/1.0
+.# CONFLUENCE-105: URL macro parameter value is not imported in XWiki.
+.#-----------------------------------------------------
+<ac:structured-macro ac:name="macroName">
+    <ac:parameter ac:name="linkParam">
+        <a href="https://www.bing.com/images/search?q=icon">
+            https://www.bing.com/images/search?q=icon</a>
+    </ac:parameter>
+    <ac:parameter ac:name="otherParam">ParamValue</ac:parameter>
+    <ac:rich-text-body>
+        <p>Macro content <b>Helloo</b></p>
+    </ac:rich-text-body>
+</ac:structured-macro>
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+onMacroStandalone [macroName] [linkParam=https://www.bing.com/images/search?q=icon|otherParam=ParamValue] [Macro content Helloo]
+endDocument
