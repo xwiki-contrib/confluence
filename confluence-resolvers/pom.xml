@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.xwiki.contrib.confluence</groupId>
     <artifactId>confluence</artifactId>
-    <version>9.57.0</version>
+    <version>9.57.1-SNAPSHOT</version>
   </parent>
   <artifactId>confluence-resolvers</artifactId>
   <name>Confluence Resolvers</name>
