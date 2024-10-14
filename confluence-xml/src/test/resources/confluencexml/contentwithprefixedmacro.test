@@ -25,7 +25,7 @@ sub macro rich **text** content
 
 {{view-file/}}
 
-{{documentTree root="TestSpace.TestContent.WebHome"/}}
+{{documentTree root="document:TestSpace.TestContent.WebHome"/}}
 
 {{documentTree/}}</string>
               </entry>

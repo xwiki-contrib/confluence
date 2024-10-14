@@ -80,7 +80,7 @@ public class RwPagetreeMacroConverter extends AbstractMacroConverter
                 if (docRef == null) {
                     parameters.put("confluencerootpageid", serializer.serialize(docRef));
                 } else {
-                    parameters.put(ROOT, serializer.serialize(docRef));
+                    parameters.put(ROOT, "document:" + serializer.serialize(docRef));
                 }
             } catch (NumberFormatException e) {
                 logger.warn("Could not convert the root parameter of the rw-pagetree macro");
