@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic>
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">46268417</id>
+    <property name="name"><![CDATA[My Space]]></property>
+    <property name="key"><![CDATA[MySpace]]></property>
+    <property name="lowerKey"><![CDATA[myspace]]></property>
+    <property name="homePage" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">45809846</id>
+    </property>
+    <collection name="permissions" class="java.util.Collection"/>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="creationDate">2012-08-21 15:37:47.000</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="lastModificationDate">2016-10-11 14:47:37.000</property>
+    <property name="spaceType">global</property>
+    <property name="spaceStatus" enum-class="SpaceStatus" package="com.atlassian.confluence.spaces">CURRENT</property>
+  </object>
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">156868656</id>
+    <property name="body"><![CDATA[
+      <ac:structured-macro ac:name="widget" ac:schema-version="1" data-layout="default" ac:local-id="906df126-d9c7-47eb-9392-1e98f38b6394" ac:macro-id="68dae9453b313a054261f4420a77afdd709f4b1845dea800a5af021a10ce166b">
+        <ac:parameter ac:name="overlay">youtube</ac:parameter>
+        <ac:parameter ac:name="_template">com/atlassian/confluence/extra/widgetconnector/templates/youtube.vm</ac:parameter>
+        <ac:parameter ac:name="width">400px</ac:parameter>
+        <ac:parameter ac:name="url">
+          <ri:url ri:value="http://www.youtube.com/watch?v=Titn-yAh74A"/>
+        </ac:parameter>
+        <ac:parameter ac:name="height">300px</ac:parameter>
+      </ac:structured-macro><ac:structured-macro ac:name="widget" ac:schema-version="1" data-layout="default" ac:local-id="70fef557-1320-4205-b41a-f96978c9e9c4" ac:macro-id="b3897976cdf1531e9d676dcc8e7558e5d4b2acff1766f73cd1f6299e7860401b">
+        <ac:parameter ac:name="url">
+          <ri:url ri:value="http://vimeo.com/30980990"/>
+        </ac:parameter>
+      </ac:structured-macro><ac:structured-macro ac:name="widget" ac:schema-version="1" data-layout="default" ac:local-id="522d727f-09a3-4aa6-a0ab-5806ba559bb7" ac:macro-id="7b9b8d5e3000cf97171689d47491dddb56d453b1f4804cfa15032bae810d4996">
+        <ac:parameter ac:name="url">
+          <ri:url ri:value="https://twitter.com/XWiki/status/1808056434883502509"/>
+        </ac:parameter>
+        <ac:parameter ac:name="width">300</ac:parameter>
+        <ac:parameter ac:name="height">400</ac:parameter>
+      </ac:structured-macro><ac:structured-macro ac:name="widget" ac:schema-version="1" data-layout="default" ac:local-id="e9b128e3-923b-48bc-92ea-fd9e2c98baf3" ac:macro-id="d03554ad1a4960fe212fbcc1b586e2163808a66c0da5e2b63ab17ab4e7011e7f">
+        <ac:parameter ac:name="url">
+          <ri:url ri:value="https://twitter.com/XWiki/status/1808056434883502509"/>
+        </ac:parameter>
+      </ac:structured-macro><ac:structured-macro ac:name="widget" ac:schema-version="1" data-layout="default" ac:local-id="60eec169-6587-4878-be46-9c6c492b089a" ac:macro-id="f475a4952943aa6ba3c0d0d1be398bd829f8fcffcebfb34a4fee80c8b4b90906">
+        <ac:parameter ac:name="url">
+          <ri:url ri:value="https://docs.google.com/document/d/e/2PACX-1vRqgAxT07IjOqjSgWZk0ZkQWZfcar7EOsb6UWBwUm1iQLDEejoERTT_Foi_b-H899OqKUv0Bebt8LHi/pub"/>
+        </ac:parameter>
+      </ac:structured-macro><ac:structured-macro ac:name="widget" ac:schema-version="1" data-layout="default" ac:local-id="65c06c41-ecd4-499a-a44d-d576f7be0867" ac:macro-id="1562b24613c3750136684d4840f8323dceead3c87124e5c7b489de8d9930124a">
+        <ac:parameter ac:name="width">500</ac:parameter>
+        <ac:parameter ac:name="url">
+          <ri:url ri:value="https://docs.google.com/spreadsheets/d/e/2PACX-1vSoZPW8a9r9g6aTjHZe_9t82iaNrl1YLTh8JxBXiqBKigtLBTwmhfsSCsQ-hf2z8LjbmQ4ytayrdfeR/pubhtml"/>
+        </ac:parameter>
+        <ac:parameter ac:name="height">500</ac:parameter>
+      </ac:structured-macro><ac:structured-macro ac:name="widget" ac:schema-version="1" data-layout="default" ac:local-id="147c33e0-932b-4906-bd39-bea10150790d" ac:macro-id="5d0298f386ad992b8c8c5b6088a23f554d4db6a48fc115989a1f49f1c1e2a2e4">
+        <ac:parameter ac:name="url">
+          <ri:url ri:value="https://docs.google.com/presentation/d/e/2PACX-1vRRyfn5yCjQUTxw0Uwqf0FnshVL8lyq-zF96KmeKvwvg3q3sfYTclDvS2IXxwIJXAxHhxNbgm7B3WB6/pub?start=false&amp;loop=false&amp;delayms=3000"/>
+        </ac:parameter>
+      </ac:structured-macro><ac:structured-macro ac:name="widget" ac:schema-version="1" data-layout="default" ac:local-id="47eb65ec-e7c8-4458-b2ba-8b9b38f9e8b3" ac:macro-id="7d99518f60dcf3cd9833f6d25ce11b4e7715451e9960ae8a142b34b83394ad8b">
+        <ac:parameter ac:name="url">
+          <ri:url ri:value="https://calendar.google.com/calendar/embed?src=c_bd971ab39b5137f95ecaebcbedf921038a583409a975bf19cbb627a266708198%40group.calendar.google.com&amp;ctz=Europe%2FParis"/>
+        </ac:parameter>
+      </ac:structured-macro><ac:structured-macro ac:name="widget" ac:schema-version="1" data-layout="default" ac:local-id="77d59c18-57c4-4333-b82c-461d39cf07dc" ac:macro-id="79afde4ee6add815de1f9e1a1e0c1a0af016a3da9ba5d0e70c9cbb7fd8d10be3">
+        <ac:parameter ac:name="url">
+          <ri:url ri:value="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1312.1621032817725!2d2.3470581518166553!3d48.87109578026282!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e6704b350c3f25%3A0xd85ac245a150c9ab!2sXWiki%20SAS!5e0!3m2!1sen!2sch!4v1728035046545!5m2!1sen!2sch"/>
+        </ac:parameter>
+      </ac:structured-macro><ac:structured-macro ac:name="widget" ac:schema-version="1" data-layout="default" ac:local-id="0bc06b6d-740d-4fd0-b426-68870a94daa5" ac:macro-id="aa1686daafbd278f0ec08f7d8c43b77d18daab61f50186bf1da3238dea44dd4f">
+        <ac:parameter ac:name="url">
+          <ri:url ri:value="https://www.facebook.com/watch/?v=778496920973542"/>
+        </ac:parameter>
+      </ac:structured-macro><ac:structured-macro ac:name="widget" ac:schema-version="1" data-layout="default" ac:local-id="f0716693-e28c-446e-b2c0-ed012b8b52bd" ac:macro-id="02f1ad96f6fd485d890030447b1ac310cf4e44f50147ad3432edc1fdfe9557cc">
+        <ac:parameter ac:name="url">
+          <ri:url ri:value="https://www.linkedin.com/embed/feed/update/urn:li:share:7247891523147591680"/>
+        </ac:parameter>
+      </ac:structured-macro><ac:structured-macro ac:name="widget" ac:schema-version="1" data-layout="default" ac:local-id="b487fd03-ab88-42b9-a40b-00c57b0903b6" ac:macro-id="22ae90c5e3c0d65d8aebad040db7c2a4abb09a19ae8ec2a631aea04d565dc705">
+        <ac:parameter ac:name="url">
+          <ri:url ri:value="https://www.figma.com/design/ZutVsynFhk44OyJR2uvsUm/embedded-example-for-design?t=Wc0z8omIO1a0EK5R-0"/>
+        </ac:parameter>
+      </ac:structured-macro><ac:structured-macro ac:name="widget" ac:schema-version="1" data-layout="default" ac:local-id="bcea99f7-0b96-469c-8dc1-c6eafe2944cc" ac:macro-id="9c95f7084abda45f2c7235ab54802e72f5b24458cd0c86cc79c7909a5a526742">
+        <ac:parameter ac:name="url">
+          <ri:url ri:value="https://embed.figma.com/board/OqDbFcrgv0uqHWz4s0jrlL/testaher?node-id=0-1&amp;embed-host=share"/>
+        </ac:parameter>
+      </ac:structured-macro>]]></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">45809846</id>
+    </property>
+    <property name="bodyType">2</property>
+  </object>
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">45809846</id>
+    <property name="hibernateVersion">13</property>
+    <property name="title"><![CDATA[Links]]></property>
+    <property name="lowerTitle"><![CDATA[links]]></property>
+    <collection name="bodyContents" class="java.util.Collection">
+      <element class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">156868656</id>
+      </element>
+    </collection>
+    <property name="version">1</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="creationDate">2019-02-13 08:05:54.000</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="lastModificationDate">2019-02-13 08:16:56.000</property>
+    <property name="versionComment"><![CDATA[]]></property>
+    <property name="contentStatus"><![CDATA[current]]></property>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+      <id name="id">46268417</id>
+    </property>
+    <property name="position"/>
+  </object>
+</hibernate-generic>

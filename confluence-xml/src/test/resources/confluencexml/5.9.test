@@ -1371,11 +1371,11 @@ Flickr photo streams, Twitter streams, Google maps and many more.
 {{layout-section ac:type="two_equal"}}
 {{layout-cell}}
 ===   
-{{widget url="https://www.youtube.com/watch?v=zy5ycJO4alo"/}} ===
+{{embed url="https://www.youtube.com/watch?v=zy5ycJO4alo"/}} ===
 {{/layout-cell}}
 
 {{layout-cell}}
-(% style="color: rgb(0,0,0);" %){{widget url="https://maps.google.com/maps?q=Atlassian,+George+Street,+New+South+Wales,+Australia&amp;hl=en&amp;ll=-33.866572,151.207001&amp;spn=0.004321,0.008256&amp;sll=-33.870509,151.203707&amp;sspn=0.008641,0.016512&amp;oq=atlassian,&amp;hq=Atlassian,+George+Street,+New+South+Wales,+Australia&amp;radius=15000&amp;t=m&amp;z=18&amp;iwloc=A"/}}
+(% style="color: rgb(0,0,0);" %){{embed url="https://maps.google.com/maps?q=Atlassian,+George+Street,+New+South+Wales,+Australia&amp;hl=en&amp;ll=-33.866572,151.207001&amp;spn=0.004321,0.008256&amp;sll=-33.870509,151.203707&amp;sspn=0.008641,0.016512&amp;oq=atlassian,&amp;hq=Atlassian,+George+Street,+New+South+Wales,+Australia&amp;radius=15000&amp;t=m&amp;z=18&amp;iwloc=A"/}}
 {{/layout-cell}}
 {{/layout-section}}
 

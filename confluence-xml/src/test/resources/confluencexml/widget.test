@@ -1,0 +1,91 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Content conversions
+.#------------------------------------------------------------------------------
+<wikiSpace name="MySpace">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.01f7c1cc638e0d8c0163d05ca6f60124</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2019-02-13 08:05:54.0 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>1</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.01f7c1cc638e0d8c0163d05ca6f60124</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-02-13 08:16:56.0 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>My Space</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>{{embed overlay="youtube" _template="com/atlassian/confluence/extra/widgetconnector/templates/youtube.vm" width="400" url="http://www.youtube.com/watch?v=Titn-yAh74A" height="300"/}}
+
+{{embed url="http://vimeo.com/30980990"/}}
+
+{{embed url="https://twitter.com/XWiki/status/1808056434883502509" width="300" height="400"/}}
+
+{{embed url="https://twitter.com/XWiki/status/1808056434883502509"/}}
+
+{{embed url="https://docs.google.com/document/d/e/2PACX-1vRqgAxT07IjOqjSgWZk0ZkQWZfcar7EOsb6UWBwUm1iQLDEejoERTT_Foi_b-H899OqKUv0Bebt8LHi/pub"/}}
+
+{{embed width="500" url="https://docs.google.com/spreadsheets/d/e/2PACX-1vSoZPW8a9r9g6aTjHZe_9t82iaNrl1YLTh8JxBXiqBKigtLBTwmhfsSCsQ-hf2z8LjbmQ4ytayrdfeR/pubhtml" height="500"/}}
+
+{{embed url="https://docs.google.com/presentation/d/e/2PACX-1vRRyfn5yCjQUTxw0Uwqf0FnshVL8lyq-zF96KmeKvwvg3q3sfYTclDvS2IXxwIJXAxHhxNbgm7B3WB6/pub?start=false&amp;loop=false&amp;delayms=3000"/}}
+
+{{embed url="https://calendar.google.com/calendar/embed?src=c_bd971ab39b5137f95ecaebcbedf921038a583409a975bf19cbb627a266708198%40group.calendar.google.com&amp;ctz=Europe%2FParis"/}}
+
+{{embed url="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1312.1621032817725!2d2.3470581518166553!3d48.87109578026282!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e6704b350c3f25%3A0xd85ac245a150c9ab!2sXWiki%20SAS!5e0!3m2!1sen!2sch!4v1728035046545!5m2!1sen!2sch"/}}
+
+{{embed url="https://www.facebook.com/watch/?v=778496920973542"/}}
+
+{{embed url="https://www.linkedin.com/embed/feed/update/urn:li:share:7247891523147591680"/}}
+
+{{embed url="https://www.figma.com/design/ZutVsynFhk44OyJR2uvsUm/embedded-example-for-design?t=Wc0z8omIO1a0EK5R-0"/}}
+
+{{embed url="https://embed.figma.com/board/OqDbFcrgv0uqHWz4s0jrlL/testaher?node-id=0-1&amp;embed-host=share"/}}</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=widget
+.#------------------------------------------------------------------------------
