@@ -19,6 +19,26 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.input;
 
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Provider;
+import javax.inject.Singleton;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.ObjectUtils;
@@ -45,25 +65,6 @@ import org.xwiki.rendering.listener.reference.ResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceType;
 import org.xwiki.rendering.listener.reference.UserResourceReference;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Provider;
-import javax.inject.Singleton;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import static org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage.KEY_GROUP_EXTERNAL_ID;
 import static org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage.KEY_GROUP_NAME;
 
@@ -76,6 +77,7 @@ import static org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage.KEY
 @Singleton
 public class ConfluenceConverter implements ConfluenceReferenceConverter
 {
+
     private static final Pattern PATTERN_URL_DISPLAY = Pattern.compile("^/display/(.+)/([^?#]+)(\\?.*)?$");
 
     private static final Pattern PATTERN_URL_VIEWPAGE =
@@ -106,6 +108,9 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     private static final String BROKEN_LINK_EXPLANATION = "Links to this page may be broken. "
         + "This may happen when importing a space that links to another space which is not present "
         + "in this Confluence export, or the page is missing";
+
+    private static final String COULD_NOT_GET_THE_PROPERTIES_OF_A_PAGE_WITH_RESOLVING_PARENT =
+        "Could not get the properties of a page with resolving @parent.";
 
     @Inject
     private Provider<EntityNameValidationManager> entityNameValidationManagerProvider;
@@ -498,7 +503,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
                     }
                 }
             } catch (ConfigurationException e) {
-                logger.error("Could not get the properties of a page with resolving @parent.", e);
+                logger.error(COULD_NOT_GET_THE_PROPERTIES_OF_A_PAGE_WITH_RESOLVING_PARENT, e);
             }
 
             // Should not happen
@@ -540,9 +545,41 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
     private String ensureNonEmptySpaceKey(String spaceKey)
     {
-        return (spaceKey == null || spaceKey.equals("currentSpace()") || spaceKey.equals(AT_SELF))
-            ? context.getCurrentSpace()
-            : spaceKey;
+        if (spaceKey == null || spaceKey.equals("currentSpace()") || spaceKey.equals(AT_SELF)) {
+            return context.getCurrentSpace();
+        } else if (spaceKey.equals(AT_PARENT)) {
+            Long currentPageId = context.getCurrentPage();
+            ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
+
+            try {
+                if (currentPageId != null) {
+                    ConfluenceProperties pageProperties = confluencePackage.getPageProperties(currentPageId, false);
+                    Long parentId = pageProperties.getLong(ConfluenceXMLPackage.KEY_SPACE_KEY, null);
+                    if (parentId != null) {
+                        return convertDocumentReference(parentId, true).toString();
+                    }
+                }
+            } catch (ConfigurationException e) {
+                logger.error(COULD_NOT_GET_THE_PROPERTIES_OF_A_PAGE_WITH_RESOLVING_PARENT, e);
+            }
+        } else if (spaceKey.equals(AT_HOME)) {
+            Long currentPageId = context.getCurrentPage();
+            ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
+
+            try {
+                if (currentPageId != null) {
+                    ConfluenceProperties pageProperties = confluencePackage.getPageProperties(currentPageId, false);
+                    Long parentId = pageProperties.getLong(ConfluenceXMLPackage.KEY_SPACE_HOMEPAGE, null);
+                    if (parentId != null) {
+                        return convertDocumentReference(parentId, true).toString();
+                    }
+                }
+            } catch (ConfigurationException e) {
+                logger.error(COULD_NOT_GET_THE_PROPERTIES_OF_A_PAGE_WITH_RESOLVING_PARENT, e);
+            }
+        }
+
+        return spaceKey;
     }
 
     private void warnMissingPage(String spaceKey, String documentName)
