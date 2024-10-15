@@ -57,14 +57,22 @@ import static org.mockito.Mockito.when;
 })
 class ConfluenceResolversTest
 {
-    private static final EntityReference MY_FALLBACK_SPACE = new EntityReference("MyFallback", EntityType.SPACE);
-    private static final EntityReference MY_FALLBACK_HOME = new LocalDocumentReference("WebHome", MY_FALLBACK_SPACE);
-
     private static final String MY_SPACE = "MySpace";
+    private static final String MY_DOC = "My Doc";
+    private static final String XWIKI = "xwiki";
+    private static final String MIGRATION_ROOT = "MigrationRoot";
+    private static final String MY_FALLBACK = "MyFallback";
+    private static final String WEB_HOME = "WebHome";
+
+    private static final String VALUE = "value";
+
+    private static final EntityReference MY_FALLBACK_SPACE = new EntityReference(MY_FALLBACK, EntityType.SPACE);
+    private static final EntityReference MY_FALLBACK_HOME = new LocalDocumentReference(WEB_HOME, MY_FALLBACK_SPACE);
+
     private static final DocumentReference MY_DOC_REF = new DocumentReference(
-        "xwiki",
-        List.of("MigrationRoot", MY_SPACE, "MyDoc"),
-        "WebHome"
+        XWIKI,
+        List.of(MIGRATION_ROOT, MY_SPACE, "MyDoc"),
+        WEB_HOME
     );
 
     @InjectMockComponents (role = ConfluencePageIdResolver.class)
@@ -101,7 +109,7 @@ class ConfluenceResolversTest
             }
 
             if (docRef instanceof LocalDocumentReference) {
-                return new XWikiDocument((new DocumentReference(docRef.appendParent(new WikiReference("xwiki")))));
+                return new XWikiDocument((new DocumentReference(docRef.appendParent(new WikiReference(XWIKI)))));
             }
 
             return new XWikiDocument(new DocumentReference(docRef));
@@ -116,18 +124,18 @@ class ConfluenceResolversTest
         AtomicLong id = new AtomicLong(0);
         AtomicReference<String> space = new AtomicReference<>("");
         AtomicReference<String> title = new AtomicReference<>("");
-        when(query.bindValue(eq("id"), anyLong())).thenAnswer(invocationOnMock -> {
+        when(query.bindValue(eq(VALUE), anyLong())).thenAnswer(invocationOnMock -> {
             id.set(invocationOnMock.getArgument(1));
+            return query;
+        });
+
+        when(query.bindValue(eq(VALUE), anyString())).thenAnswer(invocationOnMock -> {
+            title.set(invocationOnMock.getArgument(1));
             return query;
         });
 
         when(query.bindValue(eq("space"), anyString())).then(invocationOnMock -> {
             space.set(invocationOnMock.getArgument(1));
-            return query;
-        });
-
-        when(query.bindValue(eq("title"), anyString())).then(invocationOnMock -> {
-            title.set(invocationOnMock.getArgument(1));
             return query;
         });
 
@@ -140,12 +148,12 @@ class ConfluenceResolversTest
 
             if ("MySpace".equals(space.get())) {
                 switch (title.get()) {
-                    case "My Doc":
+                    case MY_DOC:
                         return List.of(new XWikiDocument(MY_DOC_REF));
                     case "":
                         return List.of(
                             new XWikiDocument(new DocumentReference(
-                                "WebHome",
+                                WEB_HOME,
                                 new SpaceReference(MY_DOC_REF.getParent().getParent()))));
                     default:
                         // ignore
@@ -171,7 +179,7 @@ class ConfluenceResolversTest
     @Test
     void testGetDocumentByTitle() throws ConfluenceResolverException
     {
-        assertEquals(MY_DOC_REF, confluencePageResolver.getDocumentByTitle(MY_SPACE, "My Doc"));
+        assertEquals(MY_DOC_REF, confluencePageResolver.getDocumentByTitle(MY_SPACE, MY_DOC));
     }
 
     @Test
@@ -185,7 +193,7 @@ class ConfluenceResolversTest
     {
         assertEquals(
             new EntityReference(MY_SPACE, EntityType.SPACE,
-                new EntityReference("MigrationRoot", EntityType.SPACE, new WikiReference("xwiki"))),
+                new EntityReference(MIGRATION_ROOT, EntityType.SPACE, new WikiReference(XWIKI))),
             confluenceSpaceResolver.getSpaceByKey(MY_SPACE));
     }
 
@@ -194,7 +202,7 @@ class ConfluenceResolversTest
     {
         assertEquals(
             MY_FALLBACK_SPACE,
-            confluenceSpaceResolver.getSpaceByKey("MyFallback"));
+            confluenceSpaceResolver.getSpaceByKey(MY_FALLBACK));
     }
 
     @Test

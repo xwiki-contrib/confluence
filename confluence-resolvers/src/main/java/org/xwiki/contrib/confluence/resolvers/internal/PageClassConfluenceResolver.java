@@ -61,31 +61,30 @@ public class PageClassConfluenceResolver
     // This is because XWQL requires Confluence.Code.ConfluencePageClass to be present in the wiki
     // while the translated HQL does not. This makes the query a little bit more robust.
 
-    private static final String ID = "id";
-    private static final String TITLE = "title";
+    private static final String VALUE = "value";
     private static final String SPACE = "space";
 
     private static final String CONFLUENCEPAGECLASS_HQL_TEMPLATE = "select doc "
         + "from XWikiDocument doc, BaseObject o, "
         + "%1$s "
         + "where "
-        + "%2$sProp.value = :id and "
+        + "%2$sProp.value = :value and "
         + "doc.fullName = o.name and "
         + "o.className = 'Confluence.Code.ConfluencePageClass' and "
         + "%2$sProp.id.id = o.id and "
         + "%2$sProp.id.name = '%2$s'";
 
     private static final String ID_USING_CONFLUENCEPAGECLASS =
-        String.format(CONFLUENCEPAGECLASS_HQL_TEMPLATE, "LongProperty idProp", ID);
+        String.format(CONFLUENCEPAGECLASS_HQL_TEMPLATE, "LongProperty idProp", "id");
 
     private static final String TITLE_USING_CONFLUENCEPAGECLASS =
         String.format(CONFLUENCEPAGECLASS_HQL_TEMPLATE,
-            "LargeStringProperty titleProp, StringProperty spaceProp", TITLE)
-            + " and spaceProp.id.id = o.id and spaceProp.id.name = '" + SPACE + "'";
+            "LargeStringProperty titleProp, StringProperty spaceProp", "title")
+            + " and spaceProp.id.id = o.id and spaceProp.id.name = '" + SPACE + "' and spaceProp.value = :space";
 
     private static final String SPACE_USING_CONFLUENCEPAGECLASS =
         String.format(CONFLUENCEPAGECLASS_HQL_TEMPLATE, "StringProperty spaceProp", SPACE)
-            + " order by spaceProp.value";
+            + " order by length(doc.fullName) asc";
 
     @Inject
     private QueryManager queryManager;
@@ -98,7 +97,7 @@ public class PageClassConfluenceResolver
     {
         try {
             return getDocument(queryManager.createQuery(ID_USING_CONFLUENCEPAGECLASS, HQL)
-                .bindValue(ID, id));
+                .bindValue(VALUE, id));
         } catch (QueryException e) {
             throw new ConfluenceResolverException(e);
         }
@@ -110,7 +109,7 @@ public class PageClassConfluenceResolver
         try {
             return getDocument(queryManager.createQuery(TITLE_USING_CONFLUENCEPAGECLASS, HQL)
                 .bindValue(SPACE, spaceKey)
-                .bindValue(TITLE, title));
+                .bindValue(VALUE, title));
         } catch (QueryException e) {
             throw new ConfluenceResolverException(e);
         }
@@ -137,7 +136,7 @@ public class PageClassConfluenceResolver
     {
         try {
             EntityReference spaceHome = getDocument(queryManager.createQuery(SPACE_USING_CONFLUENCEPAGECLASS, HQL)
-                .bindValue(SPACE, spaceKey));
+                .bindValue(VALUE, spaceKey));
             if (spaceHome == null) {
                 return null;
             }
