@@ -395,6 +395,7 @@ This is an excerpt
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=nested
 .configuration.rightsEnabled=false
 .configuration.maxPageCount=4

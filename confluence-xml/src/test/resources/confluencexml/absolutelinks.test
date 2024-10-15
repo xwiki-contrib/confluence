@@ -84,6 +84,7 @@
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=absolutelinks
 .configuration.baseURLs=http://my.wiki.invalid/wiki
 .configuration.linkMapping={":ids": {"134979879": "xwiki:Test1.MyDoc.WebHome"}, "myspace:ids": {"11045169": "xwiki:MySpace.Test.WebHome"}}

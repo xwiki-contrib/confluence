@@ -506,5 +506,6 @@
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=confluence8.5.6
 .#------------------------------------------------------------------------------

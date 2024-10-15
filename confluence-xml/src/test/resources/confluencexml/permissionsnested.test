@@ -4309,6 +4309,7 @@
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=permissions
 .configuration.usersWiki=xwiki
 .configuration.nestedSpacesEnabled=true

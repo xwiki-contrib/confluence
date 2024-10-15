@@ -67,6 +67,7 @@ some [[line]]"
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=noformat
 .configuration.homeRedirectEnabled=false
 .#------------------------------------------------------------------------------

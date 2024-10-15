@@ -3009,6 +3009,7 @@ content
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=4.3.2.xml.zip
 .configuration.objectIdRanges=[753689],[753692,]
 .configuration.usersEnabled=false

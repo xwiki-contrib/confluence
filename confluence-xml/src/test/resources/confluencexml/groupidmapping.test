@@ -109,6 +109,7 @@ show if group = site-admins
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=groupIds
 .configuration.groupIdMapping=a39e82d8-1c93-4395-9358-dc67f2ffa3ef=balsamiq-mockups-editors|a40e82d8-1c93-4395-9358-dc67f2ffa3ef=administrators|a78122a5-a46d-497e-904c-3cffd763de31=site-admins
 .#------------------------------------------------------------------------------

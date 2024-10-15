@@ -63,6 +63,7 @@
 </user>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=5.9.zip
 .configuration.contentsEnabled=false
 .configuration.rightsEnabled=false

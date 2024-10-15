@@ -63,6 +63,7 @@
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=users
 .configuration.usersEnabled=false
 .#------------------------------------------------------------------------------

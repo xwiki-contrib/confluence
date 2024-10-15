@@ -22,6 +22,7 @@
 <wikiSpace name="SpaceB"/>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=pages
 .configuration.excludedPages=0,10
 .#------------------------------------------------------------------------------

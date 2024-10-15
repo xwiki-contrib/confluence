@@ -123,6 +123,7 @@ Some content
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=links
 .configuration.rootSpace=Composed.Root
 .configuration.confluenceInstanceType=cloud

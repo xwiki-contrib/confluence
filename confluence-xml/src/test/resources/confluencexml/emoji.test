@@ -59,6 +59,7 @@ Emoji tag with wrong id and a shortname 😮‍💨</string>
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=emoji
 .configuration.unprefixedMacros=code
 .#------------------------------------------------------------------------------

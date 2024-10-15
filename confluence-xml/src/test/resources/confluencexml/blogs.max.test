@@ -82,6 +82,7 @@
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=blogs
 .configuration.rightsEnabled=false
 .configuration.homeRedirectEnabled=false

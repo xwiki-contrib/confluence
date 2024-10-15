@@ -479,5 +479,6 @@
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=viewpropag
 .#------------------------------------------------------------------------------

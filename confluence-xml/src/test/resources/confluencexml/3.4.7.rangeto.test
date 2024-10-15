@@ -79,6 +79,7 @@ h6. Navigate space
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=3.4.7.zip
 .configuration.objectIdRanges=[,131076]
 .#------------------------------------------------------------------------------

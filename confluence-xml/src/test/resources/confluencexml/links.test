@@ -119,6 +119,7 @@ Some content
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=links
 .configuration.baseURLs=https://baseurl1.com,https://baseurl2.com,https://baseurl3.com,https://baseurl4.com,https://baseurl5.com,https://confluence.atlassian.com/
 .configuration.linkMapping={":ids": {"139414": "OK.liAC", "724765494": "OK.NgszKw", "138313": "OK.SRwC", "139483": "OK.2yAC", "956713432": "OK.2EkGOQ", "139521": "OK.ASEC"}}

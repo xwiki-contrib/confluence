@@ -106,6 +106,7 @@
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=spanishaccentsintitle
 .configuration.homeRedirectEnabled=false
 .configuration.spaceTitleFromHomePage=true

@@ -45,6 +45,7 @@
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=pageorder
 .configuration.contentsEnabled=false
 .configuration.rightsEnabled=false

@@ -179,6 +179,7 @@
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.NestedSpacesEnabled=true
 .configuration.source=missingparents
 .#------------------------------------------------------------------------------

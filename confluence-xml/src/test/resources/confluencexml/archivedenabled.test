@@ -36,6 +36,7 @@
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=archived
 .configuration.archivedSpacesEnabled=true
 .#------------------------------------------------------------------------------

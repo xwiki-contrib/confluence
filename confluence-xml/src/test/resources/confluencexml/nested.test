@@ -1434,6 +1434,7 @@ It includes Under Page A:
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=nested
 .configuration.confluenceInstanceType=cloud
 .configuration.pageOrderEnabled=false

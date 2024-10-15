@@ -138,6 +138,7 @@
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=pageswithdots
 .configuration.rootSpace=Root
 .configuration.baseURLs=http://localhost:8080/confluence

@@ -41,5 +41,6 @@ XWiki is a wiki software</string>
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=auto-cursor-target
 .#------------------------------------------------------------------------------

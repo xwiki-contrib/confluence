@@ -49,6 +49,7 @@
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.historyEnabled=false
 .configuration.source=history
 .#------------------------------------------------------------------------------

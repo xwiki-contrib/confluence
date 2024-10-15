@@ -37,6 +37,7 @@
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=pages
 .configuration.includedPages=0,10
 .#------------------------------------------------------------------------------

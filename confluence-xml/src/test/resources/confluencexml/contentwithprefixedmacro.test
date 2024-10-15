@@ -49,6 +49,7 @@ sub macro rich **text** content
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=content
 .configuration.prefixedMacros=macro,submacro
 .#------------------------------------------------------------------------------

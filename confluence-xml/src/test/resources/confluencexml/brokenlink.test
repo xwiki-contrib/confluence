@@ -58,6 +58,7 @@
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=brokenlink
 .configuration.homeRedirectEnabled=false
 .#------------------------------------------------------------------------------

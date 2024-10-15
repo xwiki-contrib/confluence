@@ -123,6 +123,7 @@
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=users
 .configuration.userIdMapping=UserName=OtherUser|C.ra ppy/User. /=CleanUser
 .#------------------------------------------------------------------------------

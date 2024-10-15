@@ -17,6 +17,7 @@
 </groupContainer>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=group
 .configuration.groupMapping=group 1=
 .configuration.groupFormat=${group._clean}Group

@@ -96,5 +96,6 @@ THis is more text of success
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=alert
 .#------------------------------------------------------------------------------

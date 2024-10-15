@@ -42,5 +42,4 @@
 .input|confluence+xml
 .configuration.source=pages
 .configuration.includedPages=0
-.configuration.storeConfluenceDetailsEnabled=true
 .#------------------------------------------------------------------------------
