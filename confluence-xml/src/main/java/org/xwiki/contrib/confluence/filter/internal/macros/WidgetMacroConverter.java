@@ -52,7 +52,7 @@ public class WidgetMacroConverter extends AbstractMacroConverter
         {
             // Remove everything which is not a number
             // By example: 100px -> 100 OR 200 -> 200
-            return confluenceParameterValue.replaceAll(".*?(\\d+).*", "$1");
+            return confluenceParameterValue.replaceAll("[\\D]", "");
         }
         return confluenceParameterValue;
     }
