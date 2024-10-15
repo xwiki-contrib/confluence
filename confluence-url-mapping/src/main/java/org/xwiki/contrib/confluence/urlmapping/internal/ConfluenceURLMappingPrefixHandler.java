@@ -45,7 +45,10 @@ public class ConfluenceURLMappingPrefixHandler extends AbstractURLMappingPrefixH
     private ConfluenceAttachmentURLMapper confluenceAttachmentURLMapper;
 
     @Inject
-    private ConfluenceDisplayURLMapper confluenceDisplayURLMapper;
+    private ConfluencePageDisplayURLMapper confluencePageDisplayURLMapper;
+
+    @Inject
+    private ConfluenceSpaceDisplayURLMapper confluenceSpaceDisplayURLMapper;
 
     @Inject
     private ConfluenceViewPageURLMapper confluenceViewPageURLMapper;
@@ -61,7 +64,8 @@ public class ConfluenceURLMappingPrefixHandler extends AbstractURLMappingPrefixH
     {
         return new URLMapper[] {
             confluenceAttachmentURLMapper,
-            confluenceDisplayURLMapper,
+            confluencePageDisplayURLMapper,
+            confluenceSpaceDisplayURLMapper,
             confluenceViewPageURLMapper,
             confluenceTinyLinkURLMapper
         };

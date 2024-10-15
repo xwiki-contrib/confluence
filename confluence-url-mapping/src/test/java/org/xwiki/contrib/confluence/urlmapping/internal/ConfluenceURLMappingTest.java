@@ -50,20 +50,35 @@ import static org.mockito.Mockito.when;
 @ComponentTest
 @ComponentList({
     ConfluenceAttachmentURLMapper.class,
-    ConfluenceDisplayURLMapper.class,
+    ConfluencePageDisplayURLMapper.class,
+    ConfluenceSpaceDisplayURLMapper.class,
     ConfluenceViewPageURLMapper.class,
     ConfluenceTinyLinkURLMapper.class
 })
 class ConfluenceURLMappingTest
 {
     private static final String MY_SPACE = "MySpace";
+    private static final String WEB_HOME = "WebHome";
+    private static final String XWIKI = "xwiki";
+    private static final String MIGRATION_ROOT = "MigrationRoot";
+
     private static final DocumentReference MY_DOC_REF = new DocumentReference(
-        "xwiki",
-        List.of("MigrationRoot", MY_SPACE, "MyDoc"),
-        "WebHome"
+        XWIKI,
+        List.of(MIGRATION_ROOT, MY_SPACE, "MyDoc"),
+        WEB_HOME
     );
+
     private static final EntityResourceReference DOC_RR = new EntityResourceReference(
         MY_DOC_REF, EntityResourceAction.VIEW);
+
+    private static final DocumentReference SPACE_HOME_REF = new DocumentReference(
+        XWIKI,
+            List.of(MIGRATION_ROOT, MY_SPACE),
+        WEB_HOME
+    );
+
+    private static final EntityResourceReference SPACE_HOME = new EntityResourceReference(SPACE_HOME_REF,
+        EntityResourceAction.VIEW);
 
     @MockComponent
     private ConfluencePageTitleResolver confluencePageTitleResolver;
@@ -77,16 +92,15 @@ class ConfluenceURLMappingTest
     @MockComponent
     private URLMappingSuggestionUtils suggestionUtils;
 
-
     @InjectMockComponents
-    ConfluenceURLMappingPrefixHandler handler;
+    private ConfluenceURLMappingPrefixHandler handler;
 
     @BeforeComponent
     void setup() throws ConfluenceResolverException
     {
         when(suggestionUtils.getSuggestionsFromDocumentReference(any())).thenReturn(new WordBlock("mysuggestion"));
         when(confluencePageIdResolver.getDocumentById(42)).thenReturn(MY_DOC_REF);
-        when(confluencePageTitleResolver.getDocumentByTitle("MySpace", "My Doc")).thenReturn(MY_DOC_REF);
+        when(confluencePageTitleResolver.getDocumentByTitle(ConfluenceURLMappingTest.MY_SPACE, "My Doc")).thenReturn(MY_DOC_REF);
 
         // For tiny link tests
         when(confluencePageIdResolver.getDocumentById(139414)).thenReturn(
@@ -101,6 +115,7 @@ class ConfluenceURLMappingTest
             new EntityReference("OK.2EkGOQ", EntityType.DOCUMENT));
         when(confluencePageIdResolver.getDocumentById(139521)).thenReturn(
             new EntityReference("OK.ASEC", EntityType.DOCUMENT));
+        when(confluenceSpaceKeyResolver.getSpaceByKey(ConfluenceURLMappingTest.MY_SPACE)).thenReturn(SPACE_HOME_REF);
     }
 
     @ParameterizedTest
@@ -108,10 +123,24 @@ class ConfluenceURLMappingTest
         "display/MySpace/My+Doc?param=thatwedontcareabout",
         "display/MySpace/My+Doc"
     })
-    void convertDisplayURL(String path)
+    void convertPageDisplayURL(String path)
     {
         URLMappingResult converted = handler.convert(path, "get", null);
         assertEquals(DOC_RR, converted.getResourceReference());
+        assertEquals("", converted.getURL());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "display/MySpace/?param=thatwedontcareabout",
+        "display/MySpace?param=thatwedontcareabout",
+        "display/MySpace/",
+        "display/MySpace"
+    })
+    void convertSpaceDisplayURL(String path)
+    {
+        URLMappingResult converted = handler.convert(path, "get", null);
+        assertEquals(SPACE_HOME, converted.getResourceReference());
         assertEquals("", converted.getURL());
     }
 
@@ -174,6 +203,7 @@ class ConfluenceURLMappingTest
 
     @ParameterizedTest
     @ValueSource(strings = {
+        "display/MyUnknownSpace",
         "display/MyUnknownSpace/My+Doc",
         "display/MySpace/My+Unknown+Doc"
     })
