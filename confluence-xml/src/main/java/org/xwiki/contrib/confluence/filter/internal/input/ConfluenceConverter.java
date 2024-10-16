@@ -113,6 +113,9 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         "Could not get the properties of a page with resolving @parent.";
 
     @Inject
+    private EntityReferenceSerializer<String> entityReferenceSerializer;
+
+    @Inject
     private Provider<EntityNameValidationManager> entityNameValidationManagerProvider;
 
     @Inject
@@ -547,31 +550,40 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     {
         if (spaceKey == null || spaceKey.equals("currentSpace()") || spaceKey.equals(AT_SELF)) {
             return context.getCurrentSpace();
-        } else if (spaceKey.equals(AT_PARENT)) {
-            Long currentPageId = context.getCurrentPage();
-            ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
+        }
 
+        switch (spaceKey)
+        {
+            case AT_PARENT:
+                return resolveParentSpaceKey(spaceKey);
+            case AT_HOME:
+                return resolveHomeSpaceKey(spaceKey);
+            default:
+                return spaceKey;
+        }
+    }
+    private String resolveHomeSpaceKey(String spaceKey)
+    {
+
+        Long currentPageId = context.getCurrentPage();
+        ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
+
+        if (currentPageId != null) {
             try {
-                if (currentPageId != null) {
-                    ConfluenceProperties pageProperties = confluencePackage.getPageProperties(currentPageId, false);
-                    Long parentId = pageProperties.getLong(ConfluenceXMLPackage.KEY_SPACE_KEY, null);
-                    if (parentId != null) {
-                        return convertDocumentReference(parentId, true).toString();
-                    }
+                ConfluenceProperties pageProperties = confluencePackage.getPageProperties(currentPageId, false);
+
+                // Check if the current page is the homepage
+                if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
+                    return entityReferenceSerializer.serialize(convertDocumentReference(currentPageId, true));
                 }
-            } catch (ConfigurationException e) {
-                logger.error(COULD_NOT_GET_THE_PROPERTIES_OF_A_PAGE_WITH_RESOLVING_PARENT, e);
-            }
-        } else if (spaceKey.equals(AT_HOME)) {
-            Long currentPageId = context.getCurrentPage();
-            ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
 
-            try {
-                if (currentPageId != null) {
-                    ConfluenceProperties pageProperties = confluencePackage.getPageProperties(currentPageId, false);
-                    Long parentId = pageProperties.getLong(ConfluenceXMLPackage.KEY_SPACE_HOMEPAGE, null);
-                    if (parentId != null) {
-                        return convertDocumentReference(parentId, true).toString();
+                // Recursively find the homepage by checking parent pages
+                while (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_PARENT)) {
+                    Long parentId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_PARENT, null);
+                    pageProperties = confluencePackage.getPageProperties(parentId, false);
+
+                    if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
+                        return entityReferenceSerializer.serialize(convertDocumentReference(parentId, true));
                     }
                 }
             } catch (ConfigurationException e) {
@@ -579,6 +591,25 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             }
         }
 
+        return spaceKey;
+    }
+
+    private String resolveParentSpaceKey(String spaceKey)
+    {
+        Long currentPageId = context.getCurrentPage();
+        ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
+        try {
+            if (currentPageId != null) {
+                ConfluenceProperties pageProperties = confluencePackage.getPageProperties(currentPageId, false);
+                Long parentId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_PARENT, null);
+                if (parentId != null) {
+                    return entityReferenceSerializer.serialize(convertDocumentReference(parentId, true));
+                }
+
+            }
+        } catch (ConfigurationException e) {
+            logger.error(COULD_NOT_GET_THE_PROPERTIES_OF_A_PAGE_WITH_RESOLVING_PARENT, e);
+        }
         return spaceKey;
     }
 
