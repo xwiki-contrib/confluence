@@ -65,6 +65,11 @@ class ConfluenceResolversTest
     private static final String WEB_HOME = "WebHome";
 
     private static final String VALUE = "value";
+    private static final String SPACE = "space";
+
+    private static final String NOT_FOUND_DOC = "Not Found Doc";
+
+    private static final String NOT_FOUND_SPACE = "NotFoundSpace";
 
     private static final EntityReference MY_FALLBACK_SPACE = new EntityReference(MY_FALLBACK, EntityType.SPACE);
     private static final EntityReference MY_FALLBACK_HOME = new LocalDocumentReference(WEB_HOME, MY_FALLBACK_SPACE);
@@ -72,6 +77,12 @@ class ConfluenceResolversTest
     private static final DocumentReference MY_DOC_REF = new DocumentReference(
         XWIKI,
         List.of(MIGRATION_ROOT, MY_SPACE, "MyDoc"),
+        WEB_HOME
+    );
+
+    private static final DocumentReference MY_SPACE_REF = new DocumentReference(
+        XWIKI,
+        List.of(MIGRATION_ROOT, MY_SPACE),
         WEB_HOME
     );
 
@@ -123,19 +134,19 @@ class ConfluenceResolversTest
         when(queryManager.createQuery(anyString(), anyString())).thenReturn(query);
         AtomicLong id = new AtomicLong(0);
         AtomicReference<String> space = new AtomicReference<>("");
-        AtomicReference<String> title = new AtomicReference<>("");
+        AtomicReference<String> value = new AtomicReference<>("");
         when(query.bindValue(eq(VALUE), anyLong())).thenAnswer(invocationOnMock -> {
             id.set(invocationOnMock.getArgument(1));
             return query;
         });
 
-        when(query.bindValue(eq(VALUE), anyString())).thenAnswer(invocationOnMock -> {
-            title.set(invocationOnMock.getArgument(1));
+        when(query.bindValue(eq(SPACE), anyString())).thenAnswer(invocationOnMock -> {
+            space.set(invocationOnMock.getArgument(1));
             return query;
         });
 
-        when(query.bindValue(eq("space"), anyString())).then(invocationOnMock -> {
-            space.set(invocationOnMock.getArgument(1));
+        when(query.bindValue(eq(VALUE), anyString())).thenAnswer(invocationOnMock -> {
+            value.set(invocationOnMock.getArgument(1));
             return query;
         });
 
@@ -146,19 +157,25 @@ class ConfluenceResolversTest
                 return List.of(new XWikiDocument(MY_DOC_REF));
             }
 
-            if ("MySpace".equals(space.get())) {
-                switch (title.get()) {
-                    case MY_DOC:
-                        return List.of(new XWikiDocument(MY_DOC_REF));
-                    case "":
-                        return List.of(
-                            new XWikiDocument(new DocumentReference(
-                                WEB_HOME,
-                                new SpaceReference(MY_DOC_REF.getParent().getParent()))));
-                    default:
-                        // ignore
-                }
+            if (space.get().isEmpty() && (value.get().equals("MySpace"))) {
+                return List.of(new XWikiDocument(MY_SPACE_REF));
             }
+
+            if (space.get().equals("MySpace")) {
+                if (value.get().equals(MY_DOC)) {
+                    return List.of(new XWikiDocument(MY_DOC_REF));
+                }
+
+                if (value.get().equals(NOT_FOUND_DOC)) {
+                    return List.of();
+                }
+
+                return List.of(
+                    new XWikiDocument(new DocumentReference(
+                        WEB_HOME,
+                        new SpaceReference(MY_DOC_REF.getParent().getParent()))));
+            }
+
             return List.of();
         });
     }
@@ -185,15 +202,14 @@ class ConfluenceResolversTest
     @Test
     void testGetDocumentByTitleNotFound() throws ConfluenceResolverException
     {
-        assertNull(confluencePageResolver.getDocumentByTitle(MY_SPACE, "Not Found Doc"));
+        assertNull(confluencePageResolver.getDocumentByTitle(MY_SPACE, NOT_FOUND_DOC));
     }
 
     @Test
     void testGetSpaceByKeyUsingConfluencePageClass() throws ConfluenceResolverException
     {
         assertEquals(
-            new EntityReference(MY_SPACE, EntityType.SPACE,
-                new EntityReference(MIGRATION_ROOT, EntityType.SPACE, new WikiReference(XWIKI))),
+            MY_SPACE_REF.getParent(),
             confluenceSpaceResolver.getSpaceByKey(MY_SPACE));
     }
 
@@ -208,6 +224,6 @@ class ConfluenceResolversTest
     @Test
     void testGetSpaceByKeyNotFound() throws Exception
     {
-        assertNull(confluenceSpaceResolver.getSpaceByKey("NotFoundSpace"));
+        assertNull(confluenceSpaceResolver.getSpaceByKey(NOT_FOUND_SPACE));
     }
 }
