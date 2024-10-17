@@ -56,7 +56,7 @@
     <dependency>
       <groupId>org.xwiki.contrib.urlmapping</groupId>
       <artifactId>url-mapping-default</artifactId>
-      <version>0.0.1</version>
+      <version>0.0.2</version>
       <optional>true</optional>
     </dependency>
     <dependency>
