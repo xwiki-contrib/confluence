@@ -293,6 +293,8 @@ TOKEN_MGR_DECLS: {
             | "contentformattingtest"
             | "toc-zone"
             | "excerpt"
+
+            | "multi-excerpt"
          )
          <MACRO_PARAMS>
         "}"
