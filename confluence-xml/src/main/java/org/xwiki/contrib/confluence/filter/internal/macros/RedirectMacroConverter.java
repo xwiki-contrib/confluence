@@ -30,6 +30,7 @@ import org.xwiki.component.annotation.Component;
  * Convert Confluence redirect macro to XWiki redirect macro.
  *
  * @version $Id$
+ * @since 9.59.0
  */
 @Component
 @Singleton
