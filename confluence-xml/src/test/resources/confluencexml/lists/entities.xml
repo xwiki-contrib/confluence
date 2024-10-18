@@ -63,7 +63,9 @@
 
 <ul style="list-style-type: square;"><li><ac:structured-macro ac:name="mathblock"><ac:parameter ac:name="body">1337=k\times 42</ac:parameter><ac:parameter ac:name="anchor">myanchor</ac:parameter></ac:structured-macro></li></ul>
 
-<ul style="list-style-type: square;"><li><ac:structured-macro ac:name="mathblock-ref"><ac:parameter ac:name="anchor">myanchor</ac:parameter></ac:structured-macro></li></ul>]]>
+<ul style="list-style-type: square;"><li><ac:structured-macro ac:name="mathblock-ref"><ac:parameter ac:name="anchor">myanchor</ac:parameter></ac:structured-macro></li></ul>
+
+<ac:structured-macro ac:name="mathblock" ac:schema-version="1" ac:macro-id="f2b55061-df1f-4e70-9dfb-f99a6d4b1ebc"><ac:plain-text-body><![CDATA[1337 = x \times 42\\]] ></ac:plain-text-body></ac:structured-macro>]]>
     </property>
     <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809845</id></property>
     <property name="bodyType">2</property>

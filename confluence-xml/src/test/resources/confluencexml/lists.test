@@ -78,7 +78,13 @@
 {{/mathjax}}
 )))
 
-* {{mathjax}}\label{myanchor}{{/mathjax}}</string>
+* {{mathjax}}\label{myanchor}{{/mathjax}}
+
+{{mathjax}}
+\begin{equation}
+1337 = x \times 42\\
+\end{equation}
+{{/mathjax}}</string>
             </entry>
             <entry>
               <string>syntax</string>

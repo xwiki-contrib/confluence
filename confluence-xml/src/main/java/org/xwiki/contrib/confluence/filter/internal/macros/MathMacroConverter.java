@@ -61,7 +61,12 @@ public class MathMacroConverter extends AbstractMacroConverter
     @Override
     protected String toXWikiContent(String confluenceId, Map<String, String> parameters, String confluenceContent)
     {
-        String content = parameters.get("body");
+
+        String content = confluenceContent;
+        if (StringUtils.isEmpty(content)) {
+            content = parameters.get("body");
+        }
+
         if (StringUtils.isEmpty(content)) {
             logger.warn("The body parameter of macro [{}] is missing", confluenceId);
             return "";
