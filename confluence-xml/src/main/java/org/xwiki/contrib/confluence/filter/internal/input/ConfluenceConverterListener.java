@@ -282,7 +282,7 @@ public class ConfluenceConverterListener extends WrappingListener
                     true);
             }
 
-            contentListener.consumeEvents(this);
+            contentListener.consumeEvents(wrappingListener.getWrappedListener());
         }
 
         if (hasAutoCursorTargetClass(parameters)) {

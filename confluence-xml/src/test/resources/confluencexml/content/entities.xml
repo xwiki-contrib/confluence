@@ -27,6 +27,7 @@
     <id name="id">0</id>
     <property name="body">
       <![CDATA[
+        <h2><ac:macro ac:name="anchor"><ac:default-parameter>anchorintitle</ac:default-parameter></ac:macro> Hello title</h2>
         <p>
           <ac:macro ac:name="anchor">
             <ac:default-parameter>value1</ac:default-parameter>

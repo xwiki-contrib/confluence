@@ -17,9 +17,9 @@
                 <string>content</string>
                 <string>== {{id name="TestContent-Hellotitle"/}}{{id name="TestContent-anchorintitle"/}} Hello title ==
 
-{{id name="TestContent-value1"/}}{{id name="TestContent-value2"/}}{{macro parameter="value"}}rich **text** here{{/macro}}{{macro}}simple content{{/macro}}{{macrowithdefaultparameter 0="value"/}}{{macro}}{{submacro parameter="value"}}
+{{id name="TestContent-value1"/}}{{id name="TestContent-value2"/}}{{confluence_macro parameter="value"}}rich **text** here{{/confluence_macro}}{{confluence_macro}}simple content{{/confluence_macro}}{{confluence_macrowithdefaultparameter 0="value"/}}{{confluence_macro}}{{confluence_submacro parameter="value"}}
 sub macro rich **text** content
-{{/submacro}}{{/macro}}
+{{/confluence_submacro}}{{/confluence_macro}}
 
 
 
@@ -53,4 +53,5 @@ sub macro rich **text** content
 .input|confluence+xml
 .configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=content
+.configuration.unprefixedMacros=info,toc,code,html,panel,excerpt,expand,contributors,content-report-table,recently-updated,excerpt-include,status,profile-picture,tasks-report-macro,date
 .#------------------------------------------------------------------------------
