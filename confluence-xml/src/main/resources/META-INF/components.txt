@@ -28,3 +28,4 @@ org.xwiki.contrib.confluence.filter.internal.macros.SpacesMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.TextParamToContentConverter
 org.xwiki.contrib.confluence.filter.internal.macros.WarningMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.WidgetMacroConverter
+org.xwiki.contrib.confluence.filter.internal.macros.RedirectMacroConverter
