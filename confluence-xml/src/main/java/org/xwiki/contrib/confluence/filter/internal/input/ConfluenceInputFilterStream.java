@@ -1910,7 +1910,7 @@ public class ConfluenceInputFilterStream
             StringBuilder pageURLBuilder = new StringBuilder();
             if (!this.properties.getBaseURLs().isEmpty()) {
                 pageURLBuilder.append(this.properties.getBaseURLs().get(0).toString());
-                pageURLBuilder.append("/wiki/spaces/").append(spaceKey);
+                pageURLBuilder.append("/spaces/").append(spaceKey);
                 if (!pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
                     String pageName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
                     pageURLBuilder.append("/pages/").append(pageId).append("/").append(pageName);

@@ -29,7 +29,7 @@
               </p>
             </wikiObjectProperty>
             <wikiObjectProperty name="title" value="Page0"/>
-            <wikiObjectProperty name="url" value=""/>
+            <wikiObjectProperty name="url" value="https://example.org/wiki/spaces/SpaceA/pages/0/Page0"/>
             <wikiObjectProperty name="space" value="SpaceA"/>
           </wikiObject>
         </wikiDocumentRevision>
@@ -42,4 +42,5 @@
 .input|confluence+xml
 .configuration.source=pages
 .configuration.includedPages=0
+.configuration.baseURLs=https://example.org/wiki/
 .#------------------------------------------------------------------------------

@@ -858,7 +858,6 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return null;
     }
 
-
     private String enforceSlash(String pattern)
     {
         if (pattern.isEmpty() || pattern.charAt(0) != '/') {
@@ -866,7 +865,6 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         }
         return pattern;
     }
-
 
     private List<String[]> parseURLParameters(String queryString)
     {

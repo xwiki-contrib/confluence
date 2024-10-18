@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.filter.input;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.List;
@@ -26,8 +27,12 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xwiki.contrib.confluence.filter.Mapping;
 import org.xwiki.contrib.confluence.filter.internal.idrange.ConfluenceIdRangeList;
 import org.xwiki.filter.DefaultFilterStreamProperties;
@@ -51,6 +56,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private static final String XWIKI_ADMIN_GROUP_NAME = "XWikiAdminGroup";
     private static final String XWIKI_ALL_GROUP_NAME = "XWikiAllGroup";
     private static final String CLEANUP_SYNC = "SYNC";
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ConfluenceInputProperties.class);
 
     /**
      * @see #getSource()
@@ -398,7 +405,9 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
         + " They are used to convert wrongly entered absolute URLs into wiki links."
         + " The first URL in the list will be used to compute page URLs used in the conversion report if"
         + " the 'Store Confluence details' property is used."
-        + " Example: https://example.com,https://example.org/")
+        + " URLs should contain the particle which leads to confluence, if any, ofter /wiki."
+        + " Ending slashes don't matter, URLs will be normalized."
+        + " Example: https://example.com/wiki,https://confluence.example.com")
     public List<URL> getBaseURLs()
     {
         return Objects.requireNonNullElse(this.baseURLs, Collections.emptyList());
@@ -410,7 +419,14 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      */
     public void setBaseURLs(List<URL> baseURLs)
     {
-        this.baseURLs = baseURLs;
+        this.baseURLs = baseURLs.stream().map(u -> {
+            try {
+                return new URL(StringUtils.stripEnd(u.toString(), "/"));
+            } catch (MalformedURLException e) {
+                LOGGER.warn("Could not normalize base URL [{}]", u, e);
+                return u;
+            }
+        }).collect(Collectors.toList());
     }
 
     /**
