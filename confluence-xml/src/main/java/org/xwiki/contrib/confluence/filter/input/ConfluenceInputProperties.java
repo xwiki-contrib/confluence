@@ -252,6 +252,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private boolean pageOrderEnabled = true;
 
     /**
+     * @see #isExtraneousSpacesEnabled()
+     */
+    private boolean extraneousSpacesEnabled;
+
+    /**
      * @return The source to load the wiki from
      */
     @PropertyName("The source")
@@ -1245,5 +1250,27 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setPageOrderEnabled(boolean pageOrderEnabled)
     {
         this.pageOrderEnabled = pageOrderEnabled;
+    }
+
+
+    /**
+     * @return whether to send extraneous spaces
+     * @since 9.60.0
+     */
+    @PropertyName("Import extraneous spaces from the space export")
+    @PropertyDescription("Under some conditions, when creating space exports, Confluence incorrectly exports additional"
+        + " spaces. This parameter allows importing them as well.")
+    public boolean isExtraneousSpacesEnabled()
+    {
+        return extraneousSpacesEnabled;
+    }
+
+    /**
+     * @param extraneousSpacesEnabled whether to send extraneous spaces
+     * @since 9.60.0
+     */
+    public void setExtraneousSpacesEnabled(boolean extraneousSpacesEnabled)
+    {
+        this.extraneousSpacesEnabled = extraneousSpacesEnabled;
     }
 }

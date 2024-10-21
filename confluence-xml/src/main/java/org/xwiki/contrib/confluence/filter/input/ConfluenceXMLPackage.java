@@ -53,6 +53,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 import javax.inject.Inject;
@@ -68,6 +69,7 @@ import org.apache.commons.io.FileSystem;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.CloseShieldInputStream;
 import org.apache.commons.io.input.CountingInputStream;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
@@ -729,11 +731,19 @@ public class ConfluenceXMLPackage implements AutoCloseable
     // maps a space id to its home page
     private final Map<Long, Long> homePages = new LinkedHashMap<>();
 
+    // maps a space id it to its orphan pages
     private final Map<Long, List<Long>> orphans = new LinkedHashMap<>();
 
+    // maps a space key to its id
     private final Map<String, Long> spacesByKey = new HashMap<>();
 
+    // maps a space id to a title to page id mapping
     private final Map<Long, Map<String, Long>> pagesBySpaceAndTitle = new HashMap<>();
+
+    private final Collection<Long> spaceIDsToIgnore = new HashSet<>();
+
+    private String spaceKeyToImport;
+    private long spaceIdToImport;
 
     /**
      * @return the content permission sets of the given page properties.
@@ -830,12 +840,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * @param source the source where to find the package to parse
-     * @param workingDirectory the directory to use to extract the conflence package for processing (can be null)
-     * @throws IOException when failing to access the package content
-     * @throws FilterException when any error happen during the reading of the package
-     * @since 9.37.0
      */
-    public void read(InputSource source, String workingDirectory) throws IOException, FilterException
+    public void setSource(InputSource source) throws FilterException
     {
         if (source instanceof FileInputSource) {
             fromFile(((FileInputSource) source).getFile());
@@ -856,19 +862,44 @@ public class ConfluenceXMLPackage implements AutoCloseable
                     throw new FilterException(
                         String.format("Unsupported input source of type [%s]", source.getClass().getName()));
                 }
+            } catch (IOException e) {
+                throw new FilterException(
+                    String.format("Failed to read input source of type [%s]", source.getClass().getName()), e);
             }
         }
 
         this.entities = new File(this.directory, FILE_ENTITIES);
         this.descriptor = new File(this.directory, FILE_DESCRIPTOR);
+    }
 
-        // Initialize
-
+    /**
+     * @param workingDirectory the directory to use to extract the conflence package for processing (can be null)
+     * @throws IOException when failing to access the package content
+     * @throws FilterException when any error happen during the reading of the package
+     * @since 9.60.0
+     */
+    public void read(String workingDirectory) throws IOException, FilterException
+    {
         try {
             createTree(workingDirectory);
+        } catch (FilterException e) {
+            throw e;
         } catch (Exception e) {
             throw new FilterException("Failed to analyze the package index", e);
         }
+    }
+
+    /**
+     * @param source the source where to find the package to parse
+     * @param workingDirectory the directory to use to extract the conflence package for processing (can be null)
+     * @throws IOException when failing to access the package content
+     * @throws FilterException when any error happen during the reading of the package
+     * @since 9.37.0
+     */
+    public void read(InputSource source, String workingDirectory) throws IOException, FilterException
+    {
+        this.setSource(source);
+        this.read(workingDirectory);
     }
 
     /**
@@ -1242,6 +1273,15 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return this.blogPages;
     }
 
+    /**
+     * Ignore extraneous spaces for Confluence space exports.
+     * Works around <a href="https://jira.atlassian.com/browse/CONFSERVER-16575">CONFSERVER-16575</a>>.
+     */
+    public void ignoreExtraneousSpaces()
+    {
+        spaceKeyToImport = getDescriptorField("spaceKey");
+    }
+
     private void createTree(String workingDirectory)
         throws XMLStreamException, FactoryConfigurationError, IOException, ConfigurationException, FilterException,
         ConfluenceCanceledException
@@ -1285,6 +1325,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
                     inStep = false;
                 }
             }
+            cleanUpUnwantedSpaces();
             if (inStep) {
                 progress.endStep(this);
             }
@@ -1516,25 +1557,61 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return pageId;
     }
 
+    private boolean shouldIgnoreSpace(long spaceId)
+    {
+        if (spaceIdToImport == spaceId) {
+            return false;
+        }
+
+        return spaceIdToImport != 0;
+    }
+
+    void cleanUpUnwantedSpaces() throws FilterException
+    {
+        if (StringUtils.isEmpty(spaceKeyToImport)) {
+            return;
+        }
+        if (spaceIdToImport == 0) {
+            throw new FilterException("The space with the key defined in the space export's exportDescriptor.properties"
+                + " file was not found. Your export is likely corrupted. You can also try importing this package with"
+                + " the 'Import extraneous spaces from the space export' parameter enabled.");
+
+        }
+        Predicate<Long> spaceIdNotToImport = spaceId -> spaceId != spaceIdToImport;
+        pages.keySet().removeIf(spaceIdNotToImport);
+        blogPages.keySet().removeIf(spaceIdNotToImport);
+        homePages.keySet().removeIf(spaceIdNotToImport);
+        orphans.keySet().removeIf(spaceIdNotToImport);
+        pagesBySpaceAndTitle.keySet().removeIf(spaceIdNotToImport);
+        spacesByKey.keySet().removeIf(spaceKey -> !spaceKey.equals(spaceKeyToImport));
+    }
+
     private void readSpaceObject(XMLStreamReader xmlReader)
         throws XMLStreamException, FilterException, ConfigurationException
     {
         ConfluenceProperties properties = new ConfluenceProperties();
 
         long spaceId = readObjectProperties(xmlReader, properties);
+        String spaceKey = properties.getString(KEY_SPACE_KEY);
+        if (spaceKeyToImport != null) {
+            if (spaceKeyToImport.equals(spaceKey)) {
+                spaceIdToImport = spaceId;
+                cleanUpUnwantedSpaces();
+            } else {
+                spaceIDsToIgnore.add(spaceId);
+                return;
+            }
+        }
+
+        if (spaceKey != null) {
+            this.spacesByKey.put(spaceKey, spaceId);
+        }
 
         saveSpaceProperties(properties, spaceId);
 
         maybeUpdateHomePage(properties, spaceId);
 
-        // Register space by id
         this.pages.computeIfAbsent(spaceId, k -> new LinkedList<>());
-
-        // Register space by key
-        String spaceKey = properties.getString(KEY_SPACE_KEY);
-        if (spaceKey != null) {
-            this.spacesByKey.put(spaceKey, spaceId);
-        }
     }
 
     private void maybeUpdateHomePage(ConfluenceProperties properties, long spaceId) throws ConfigurationException
@@ -1568,7 +1645,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
         long permissionId = readObjectProperties(xmlReader, properties);
 
         Long spaceId = properties.getLong(KEY_PAGE_SPACE, null);
-        if (spaceId != null) {
+        if (spaceId != null && !shouldIgnoreSpace(spaceId)) {
             saveSpacePermissionProperties(properties, spaceId, permissionId);
             saveInParent(properties, KEY_SPACE_PERMISSION_SPACE, OBJECT_TYPE_SPACE,
                 KEY_SPACE_PERMISSIONS, permissionId);
@@ -1678,9 +1755,18 @@ public class ConfluenceXMLPackage implements AutoCloseable
             return;
         }
 
+        Long spaceId = properties.getLong(KEY_PAGE_SPACE, null);
+        if (spaceId != null && shouldIgnoreSpace(spaceId)) {
+            return;
+        }
+
         if (properties.getLong(KEY_PAGE_ORIGINAL_VERSION, null) == null) {
             // Register only current pages (they will take care of handling their history)
-            registerPage(isBlog, properties, pageId);
+            if (spaceId == null) {
+                this.logger.error("Could not find space of page [{}]. Importing it may fail.", pageId);
+                return;
+            }
+            registerPage(isBlog, properties, pageId, spaceId);
         } else {
             saveInParent(properties, KEY_PAGE_ORIGINAL_VERSION, OBJECT_TYPE_PAGE, KEY_PAGE_REVISIONS, pageId);
         }
@@ -1688,14 +1774,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
         savePageProperties(properties, pageId);
     }
 
-    private void registerPage(boolean isBlog, ConfluenceProperties properties, long pageId)
+    private void registerPage(boolean isBlog, ConfluenceProperties properties, long pageId, long spaceId)
     {
-        Long spaceId = properties.getLong(KEY_PAGE_SPACE, null);
-        if (spaceId == null) {
-            this.logger.error("Could not find space of page [{}]. Importing it may fail.", pageId);
-            return;
-        }
-
         Set<Long> missingParentsForSpace = missingParents.get(spaceId);
         if (missingParentsForSpace != null) {
             missingParentsForSpace.remove(pageId);

@@ -361,6 +361,11 @@ public class ConfluenceInputFilterStream
 
     private ConfluenceFilteringEvent preparePackage() throws FilterException
     {
+        this.confluencePackage.setSource(this.properties.getSource());
+        if (!this.properties.isExtraneousSpacesEnabled()) {
+            this.confluencePackage.ignoreExtraneousSpaces();
+        }
+
         boolean restored = false;
         String wd = this.properties.getWorkingDirectory();
         if (StringUtils.isNotEmpty(wd)) {
@@ -370,7 +375,7 @@ public class ConfluenceInputFilterStream
         try {
             pushLevelProgress(restored ? 1 : 2);
             if (!restored) {
-                this.confluencePackage.read(this.properties.getSource(), wd);
+                this.confluencePackage.read(wd);
             }
         } catch (Exception e) {
             if (e.getCause() instanceof ConfluenceCanceledException) {
