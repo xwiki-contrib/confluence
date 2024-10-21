@@ -71,6 +71,9 @@
               <version>10.4.2</version>
             </dependency>
           </dependencies>
+          <configuration>
+            <compliance>11</compliance>
+          </configuration>
         </plugin>
         <!-- Make sure we can build with Java 17 (needed for SonarCloud) -->
         <plugin>

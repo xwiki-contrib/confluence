@@ -85,7 +85,6 @@ import org.xwiki.job.event.status.JobProgressManager;
 import org.xwiki.job.event.status.JobStatus;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
-import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.observation.ObservationManager;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.parser.ParseException;
@@ -135,6 +134,14 @@ public class ConfluenceInputFilterStream
     private static final String PINNED_CHILD_PAGES_CLASS = "XWiki.PinnedChildPagesClass";
 
     private static final String TITLE = "title";
+
+    private static final String CREATOR_NAME = "creatorName";
+
+    private static final String PARENT = "parent";
+
+    private static final String ID = "id";
+
+    private  static final String FAILED_TO_GET_GROUP_PROPERTIES = "Failed to get group properties";
 
     @Inject
     @Named(ConfluenceInputStreamParser.COMPONENT_NAME)
@@ -187,7 +194,7 @@ public class ConfluenceInputFilterStream
 
     private FilterEventParameters webPreferenceParameters;
 
-    private static class MaxPageCountReachedException extends ConfluenceInterruptedException
+    private static final class MaxPageCountReachedException extends ConfluenceInterruptedException
     {
         private static final long serialVersionUID = 1L;
     }
@@ -308,49 +315,9 @@ public class ConfluenceInputFilterStream
 
     private void readInternal(Object filter, ConfluenceFilter proxyFilter) throws FilterException
     {
-        // Prepare package
-        boolean restored = false;
-        String wd = this.properties.getWorkingDirectory();
-        if (StringUtils.isNotEmpty(wd)) {
-            restored = this.confluencePackage.restoreState(wd);
-        }
-
-        try {
-            pushLevelProgress(restored ? 1 : 2);
-            if (!restored) {
-                this.confluencePackage.read(this.properties.getSource(), wd);
-            }
-        } catch (Exception e) {
-            if (e.getCause() instanceof ConfluenceCanceledException) {
-                this.logger.warn("The job was canceled", e);
-                closeConfluencePackage();
-            } else {
-                this.logger.error(FAILED_TO_READ_PACKAGE, e);
-                closeConfluencePackage();
-                throw new FilterException(FAILED_TO_READ_PACKAGE, e);
-            }
+        ConfluenceFilteringEvent filteringEvent = preparePackage();
+        if (filteringEvent == null) {
             return;
-        }
-
-        if (StringUtils.isEmpty(this.properties.getConfluenceInstanceType())) {
-            // Attempt to auto-detect the source Confluence instance type (cloud or server)
-            this.properties.setConfluenceInstanceType(confluencePackage.getDescriptorField(DESCRIPTOR_SOURCE_FIELD));
-        }
-
-        getJobStatus();
-
-        maybeRemoveArchivedSpaces();
-
-        ConfluenceFilteringEvent filteringEvent = new ConfluenceFilteringEvent();
-        this.observationManager.notify(filteringEvent, this, this.confluencePackage);
-        if (filteringEvent.isCanceled()) {
-            closeConfluencePackage();
-            return;
-        }
-
-        this.objectIdRanges = this.properties.getObjectIdRanges();
-        if (this.objectIdRanges != null) {
-            prepareNextObjectRangeId();
         }
 
         Map<Long, List<Long>> pages = this.confluencePackage.getPages();
@@ -360,31 +327,16 @@ public class ConfluenceInputFilterStream
         boolean willSendPages = this.properties.isContentsEnabled() || this.properties.isRightsEnabled();
 
         Collection<Long> disabledSpaces = filteringEvent.getDisabledSpaces();
-        int pagesCount = willSendPages
-            ? (
-                (properties.isNonBlogContentEnabled() ? countPages(pages, disabledSpaces) : 0)
-                    + (properties.isBlogsEnabled() ? countPages(blogPages, disabledSpaces) : 0)
-            )
-            : 0;
 
-        this.remainingPages = this.properties.getMaxPageCount();
-        if (this.remainingPages != -1) {
-            pagesCount = Integer.min(this.remainingPages, pagesCount);
-        }
+        Collection<Long> users = this.properties.isUsersEnabled()
+            ? this.confluencePackage.getInternalUsers()
+            : Collections.emptyList();
 
-        int progressCount = pagesCount;
+        Collection<Long> groups = this.properties.isGroupsEnabled()
+            ? this.confluencePackage.getGroups()
+            : Collections.emptyList();
 
-        Collection<Long> users = null;
-        if (this.properties.isUsersEnabled()) {
-            users = this.confluencePackage.getInternalUsers();
-            progressCount += users.size();
-        }
-
-        Collection<Long> groups = null;
-        if (this.properties.isGroupsEnabled()) {
-            groups = this.confluencePackage.getGroups();
-            progressCount += groups.size();
-        }
+        int progressCount = countPagesToSend(willSendPages, pages, blogPages, disabledSpaces, users, groups);
 
         pushLevelProgress(progressCount);
         try {
@@ -407,6 +359,76 @@ public class ConfluenceInputFilterStream
         }
     }
 
+    private ConfluenceFilteringEvent preparePackage() throws FilterException
+    {
+        boolean restored = false;
+        String wd = this.properties.getWorkingDirectory();
+        if (StringUtils.isNotEmpty(wd)) {
+            restored = this.confluencePackage.restoreState(wd);
+        }
+
+        try {
+            pushLevelProgress(restored ? 1 : 2);
+            if (!restored) {
+                this.confluencePackage.read(this.properties.getSource(), wd);
+            }
+        } catch (Exception e) {
+            if (e.getCause() instanceof ConfluenceCanceledException) {
+                this.logger.warn("The job was canceled", e);
+                closeConfluencePackage();
+            } else {
+                this.logger.error(FAILED_TO_READ_PACKAGE, e);
+                closeConfluencePackage();
+                throw new FilterException(FAILED_TO_READ_PACKAGE, e);
+            }
+            return null;
+        }
+
+        if (StringUtils.isEmpty(this.properties.getConfluenceInstanceType())) {
+            // Attempt to auto-detect the source Confluence instance type (cloud or server)
+            this.properties.setConfluenceInstanceType(confluencePackage.getDescriptorField(DESCRIPTOR_SOURCE_FIELD));
+        }
+
+        getJobStatus();
+
+        maybeRemoveArchivedSpaces();
+
+        ConfluenceFilteringEvent filteringEvent = new ConfluenceFilteringEvent();
+        this.observationManager.notify(filteringEvent, this, this.confluencePackage);
+        if (filteringEvent.isCanceled()) {
+            closeConfluencePackage();
+            return null;
+        }
+
+        this.objectIdRanges = this.properties.getObjectIdRanges();
+        if (this.objectIdRanges != null) {
+            prepareNextObjectRangeId();
+        }
+        return filteringEvent;
+    }
+
+    private int countPagesToSend(boolean willSendPages, Map<Long, List<Long>> pages, Map<Long, List<Long>> blogPages,
+        Collection<Long> disabledSpaces, Collection<Long> users, Collection<Long> groups)
+    {
+        int pagesCount = 0;
+        if (willSendPages) {
+            if (properties.isNonBlogContentEnabled()) {
+                pagesCount += countPages(pages, disabledSpaces);
+            }
+
+            if (properties.isBlogsEnabled()) {
+                pagesCount += countPages(blogPages, disabledSpaces);
+            }
+        }
+
+        this.remainingPages = this.properties.getMaxPageCount();
+        if (this.remainingPages != -1) {
+            pagesCount = Integer.min(this.remainingPages, pagesCount);
+        }
+
+        return pagesCount + users.size() + groups.size();
+    }
+
     private void sendSpaces(Object filter, ConfluenceFilter proxyFilter, Map<Long, List<Long>> pages,
         Map<Long, List<Long>> blogPages, Collection<Long> disabledSpaces)
         throws FilterException, ConfluenceInterruptedException
@@ -421,9 +443,9 @@ public class ConfluenceInputFilterStream
             for (Long spaceId : rootSpaces) {
                 if (spaceId == null) {
                     this.logger.error("A null space has been found. This likely means that there is a bug. Skipping.");
-                    continue;
                 }
-                if (!shouldSendObject(spaceId)) {
+
+                if (spaceId == null || !shouldSendObject(spaceId)) {
                     continue;
                 }
 
@@ -481,20 +503,24 @@ public class ConfluenceInputFilterStream
         for (long page : pages) {
             try {
                 ConfluenceProperties pageProperties = confluencePackage.getPageProperties(page, false);
-                String positionStr = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_POSITION, "");
-                if (!positionStr.isEmpty()) {
-                    try {
-                        long position = Long.parseLong(positionStr);
-                        titleByPosition.put(position, pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE));
-                    } catch (NumberFormatException e) {
-                        logger.error("Could not understand position [{}], expected a long", positionStr, e);
-                    }
+                String pos = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_POSITION, "");
+                if (!pos.isEmpty()) {
+                    addDocumentPosition(pos, titleByPosition, pageProperties);
                 }
             } catch (ConfigurationException e) {
                 logger.warn("Could not get the page properties of page id [{}] to get its order", page, e);
             }
         }
         return titleByPosition.values();
+    }
+
+    private void addDocumentPosition(String pos, Map<Long, String> titleByPosition, ConfluenceProperties properties)
+    {
+        try {
+            titleByPosition.put(Long.parseLong(pos), properties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE));
+        } catch (NumberFormatException e) {
+            logger.error("Could not understand position [{}], expected a long", pos, e);
+        }
     }
 
     /**
@@ -521,7 +547,7 @@ public class ConfluenceInputFilterStream
                 confluenceConverter.toEntityName(title)
                     .replace("%", "%25")
                     .replace("/", "%2F")
-                    + "/"
+                    + '/'
             ).collect(Collectors.toList());
             proxyFilter.onWikiObjectProperty("pinnedChildPages", pages, FilterEventParameters.EMPTY);
         } finally {
@@ -529,7 +555,7 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void sendConfluenceRootSpace(Long spaceId, Object filter, ConfluenceFilter proxyFilter,
+    private void sendConfluenceRootSpace(long spaceId, Object filter, ConfluenceFilter proxyFilter,
         List<Long> blogPages) throws FilterException, ConfluenceInterruptedException
     {
         ConfluenceProperties spaceProperties;
@@ -556,7 +582,13 @@ public class ConfluenceInputFilterStream
             this.logger.info("Sending Confluence space [{}], id=[{}]", spaceKey, spaceId);
         }
 
-        // > WikiSpace
+        sendSpace(spaceId, filter, proxyFilter, blogPages, spaceKey, spaceParameters, spaceProperties);
+    }
+
+    private void sendSpace(long spaceId, Object filter, ConfluenceFilter proxyFilter, List<Long> blogPages,
+        String spaceKey, FilterEventParameters spaceParameters, ConfluenceProperties spaceProperties)
+        throws FilterException, ConfluenceInterruptedException
+    {
         proxyFilter.beginWikiSpace(spaceKey, spaceParameters);
         try {
             Collection<ConfluenceRight> inheritedRights = null;
@@ -688,116 +720,23 @@ public class ConfluenceInputFilterStream
         Set<String> addedRights = new HashSet<>();
 
         for (Object spacePermissionObject : spacePermissions) {
-            Long spacePermissionId = toLong(spacePermissionObject);
-            if (spacePermissionId == null) {
-                logger.warn("Space permission id is null for the space [{}]", spaceKey);
-                continue;
-            }
+            long spacePermissionId = toLong(spacePermissionObject);
 
             if (!shouldSendObject(spacePermissionId)) {
                 continue;
             }
 
-            ConfluenceProperties spacePermissionProperties;
+            ConfluenceProperties spacePermissionProperties = null;
             try {
                 spacePermissionProperties = this.confluencePackage.getSpacePermissionProperties(spaceId,
                     spacePermissionId);
             } catch (ConfigurationException e) {
                 logger.error("Failed to get space permission properties [{}] for the space [{}]",
                     spacePermissionId, spaceKey, e);
-                continue;
             }
 
-            ConfluenceRight confluenceRight = getConfluenceRightData(spacePermissionProperties);
-            if (confluenceRight == null) {
-                continue;
-            }
-
-            SpacePermissionType type;
-            try {
-                type = SpacePermissionType.valueOf(confluenceRight.type);
-            } catch (IllegalArgumentException e) {
-                logger.warn("Failed to understand space permission type [{}] for the space [{}], "
-                        + "permission id [{}].", confluenceRight.type, spaceKey, spacePermissionId);
-                continue;
-            }
-
-            Right right = null;
-            switch (type) {
-                case EXPORTSPACE:
-                case EXPORTPAGE:
-                case REMOVEMAIL:
-                case REMOVEOWNCONTENT:
-                case CREATEATTACHMENT:
-                case REMOVEATTACHMENT:
-                case REMOVECOMMENT:
-                case PROFILEATTACHMENTS:
-                case UPDATEUSERSTATUS:
-                case ARCHIVEPAGE:
-                case USECONFLUENCE:
-                    // These rights are irrelevant in XWiki or can't be represented as-is.
-                    // EDITBLOG and REMOVEBLOG can be implemented when migrating blogs is supported.
-                    continue;
-                case ADMINISTRATECONFLUENCE:
-                case SYSTEMADMINISTRATOR:
-                case SETPAGEPERMISSIONS:
-                case SETSPACEPERMISSIONS:
-                    right = Right.ADMIN;
-                    break;
-                case VIEWSPACE:
-                    right = Right.VIEW;
-                    break;
-                case EDITSPACE:
-                case EDITBLOG:
-                    right = Right.EDIT;
-                    break;
-                case CREATESPACE:
-                case PERSONALSPACE:
-                    break;
-                case REMOVEBLOG:
-                case REMOVEPAGE:
-                    right = Right.DELETE;
-                    break;
-                case COMMENT:
-                    right = Right.COMMENT;
-                    break;
-                default:
-                    // nothing
-            }
-
-            if (right == null) {
-                this.logger.warn("Unknown space permission right type [{}].", right);
-                continue;
-            }
-
-
-            String group = confluenceRight.group;
-            if (right != null && group != null && !group.isEmpty()) {
-                String groupRightString = "g:" + group + ":" + right;
-                if (addedRights.contains(groupRightString)) {
-                    group = "";
-                } else {
-                    addedRights.add(groupRightString);
-                }
-            } else {
-                group = "";
-            }
-
-            String users = confluenceRight.users;
-            if (right != null && users != null && !users.isEmpty()) {
-                String userRightString = "u:" + users + ":" + right;
-                if (addedRights.contains(userRightString)) {
-                    users = "";
-                } else {
-                    addedRights.add(userRightString);
-                }
-            } else {
-                users = "";
-            }
-
-            if (right != null && !(users.isEmpty() && group.isEmpty())) {
-                beginWebPreferences(proxyFilter);
-                sendRight(proxyFilter, group, right, users, true);
+            if (spacePermissionProperties != null) {
+                sendPageRight(proxyFilter, spaceKey, spacePermissionProperties, spacePermissionId, addedRights);
             }
         }
 
@@ -805,6 +744,63 @@ public class ConfluenceInputFilterStream
             for (ConfluenceRight confluenceRight : inheritedRights) {
                 sendInheritedPageRight(homePageProperties, proxyFilter, confluenceRight);
             }
+        }
+    }
+
+    private void sendPageRight(ConfluenceFilter proxyFilter, String spaceKey,
+        ConfluenceProperties spacePermissionProperties, long spacePermissionId, Set<String> addedRights)
+        throws FilterException
+    {
+        ConfluenceRight confluenceRight = getConfluenceRightData(spacePermissionProperties);
+
+        SpacePermissionType type = null;
+        try {
+            type = SpacePermissionType.valueOf(confluenceRight.type);
+        } catch (IllegalArgumentException e) {
+            logger.warn("Failed to understand space permission type [{}] for the space [{}], "
+                    + "permission id [{}].", confluenceRight.type, spaceKey, spacePermissionId);
+        }
+
+        if (type != null) {
+            Right right = type.toXWikiRight();
+            if (right == null) {
+                this.logger.warn("Unknown permission type for space permission id [{}].", spacePermissionId);
+            } else if (right != Right.ILLEGAL) {
+                sendSpaceRight(proxyFilter, right, confluenceRight, addedRights);
+            }
+        }
+    }
+
+    private void sendSpaceRight(ConfluenceFilter proxyFilter, Right right,
+        ConfluenceRight confluenceRight, Set<String> addedRights) throws FilterException
+    {
+        String group = confluenceRight.group;
+        if (group != null && !group.isEmpty()) {
+            String groupRightString = "g:" + group + ':' + right;
+            if (addedRights.contains(groupRightString)) {
+                group = "";
+            } else {
+                addedRights.add(groupRightString);
+            }
+        } else {
+            group = "";
+        }
+
+        String users = confluenceRight.users;
+        if (users != null && !users.isEmpty()) {
+            String userRightString = "u:" + users + ':' + right;
+            if (addedRights.contains(userRightString)) {
+                users = "";
+            } else {
+                addedRights.add(userRightString);
+            }
+        } else {
+            users = "";
+        }
+
+        if (!(users.isEmpty() && group.isEmpty())) {
+            beginWebPreferences(proxyFilter);
+            sendRight(proxyFilter, group, right, users, true);
         }
     }
 
@@ -845,14 +841,25 @@ public class ConfluenceInputFilterStream
         throws FilterException
     {
         String type = permProperties.getString(ConfluenceXMLPackage.KEY_PERMISSION_TYPE, "");
+        String group = getConfluenceGroupRightData(permProperties);
+        String users = getConfluenceUserRightData(permProperties);
+
+        return new ConfluenceRight(type, group, users);
+    }
+
+    private String getConfluenceGroupRightData(ConfluenceProperties permProperties)
+    {
         String groupStr = permProperties.getString(ConfluenceXMLPackage.KEY_SPACEPERMISSION_GROUP, null);
         if (groupStr == null || groupStr.isEmpty()) {
             groupStr = permProperties.getString(ConfluenceXMLPackage.KEY_CONTENTPERMISSION_GROUP, null);
         }
-        String group = (groupStr == null || groupStr.isEmpty())
+        return (groupStr == null || groupStr.isEmpty())
             ? ""
             : (confluenceConverter.toGroupReference(groupStr));
+    }
 
+    private String getConfluenceUserRightData(ConfluenceProperties permProperties) throws FilterException
+    {
         String users = "";
 
         String allUsersSubject = permProperties.getString(ConfluenceXMLPackage.KEY_PERMISSION_ALLUSERSSUBJECT, null);
@@ -860,27 +867,34 @@ public class ConfluenceInputFilterStream
             users = "XWiki.XWikiGuest";
         }
 
-        String userName = permProperties.getString(ConfluenceXMLPackage.KEY_SPACEPERMISSION_USERNAME, null);
-        if (userName == null || userName.isEmpty()) {
-            String userSubjectStr = permProperties.getString(ConfluenceXMLPackage.KEY_PERMISSION_USERSUBJECT, null);
-            if (userSubjectStr != null && !userSubjectStr.isEmpty()) {
-                ConfluenceProperties userProperties;
-                try {
-                    userProperties = confluencePackage.getUserImplProperties(userSubjectStr);
-                    if (userProperties != null) {
-                        userName = userProperties.getString(ConfluenceXMLPackage.KEY_USER_NAME, userSubjectStr);
-                    }
-                } catch (ConfigurationException e) {
-                    throw new FilterException(FAILED_TO_GET_USER_PROPERTIES, e);
-                }
-            }
-        }
+        String userName = maybeGetUserNameFromSubject(permProperties);
 
         if (userName != null && !userName.isEmpty()) {
             users = (users.isEmpty() ? "" : users + ",") + confluenceConverter.toUserReference(userName);
         }
+        return users;
+    }
 
-        return new ConfluenceRight(type, group, users);
+    private String maybeGetUserNameFromSubject(ConfluenceProperties permProperties) throws FilterException
+    {
+        String userName = permProperties.getString(ConfluenceXMLPackage.KEY_SPACEPERMISSION_USERNAME, null);
+        if (userName == null || userName.isEmpty()) {
+            String userSubjectStr = permProperties.getString(ConfluenceXMLPackage.KEY_PERMISSION_USERSUBJECT, null);
+            if (userSubjectStr != null && !userSubjectStr.isEmpty()) {
+                String result = null;
+                try {
+                    ConfluenceProperties userProperties = confluencePackage.getUserImplProperties(userSubjectStr);
+                    if (userProperties != null) {
+                        result = userProperties.getString(ConfluenceXMLPackage.KEY_USER_NAME, userSubjectStr);
+                    }
+                } catch (ConfigurationException e) {
+                    throw new FilterException(FAILED_TO_GET_USER_PROPERTIES, e);
+                }
+
+                userName = result;
+            }
+        }
+        return userName;
     }
 
     private static class ConfluenceRight
@@ -971,7 +985,7 @@ public class ConfluenceInputFilterStream
 
     private PageIdentifier createPageIdentifier(ConfluenceProperties pageProperties)
     {
-        Long pageId = pageProperties.getLong("id");
+        Long pageId = pageProperties.getLong(ID);
         Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
         if (spaceId == null) {
             return null;
@@ -1098,7 +1112,7 @@ public class ConfluenceInputFilterStream
                         alreadyAddedMembers.add(memberId);
                     }
                 } catch (Exception e) {
-                    this.logger.error("Failed to get group properties", e);
+                    this.logger.error(FAILED_TO_GET_GROUP_PROPERTIES, e);
                 }
             }
         }
@@ -1144,7 +1158,7 @@ public class ConfluenceInputFilterStream
             try {
                 groupProperties = this.confluencePackage.getGroupProperties(groupId);
             } catch (ConfigurationException e) {
-                throw new FilterException("Failed to get group properties", e);
+                throw new FilterException(FAILED_TO_GET_GROUP_PROPERTIES, e);
             }
 
             String groupName = confluenceConverter.toGroupReferenceName(
@@ -1235,22 +1249,35 @@ public class ConfluenceInputFilterStream
         return null;
     }
 
-    private Collection<ConfluenceRight> readPage(long pageId, String spaceKey, boolean blog, Object filter,
-        ConfluenceFilter proxyFilter) throws FilterException, ConfluenceInterruptedException
+    private ConfluenceProperties readPageGetPageProperties(long pageId, String spaceKey) throws FilterException
     {
         if (!shouldSendObject(pageId)) {
-            emptyStep();
             return null;
         }
-
-        Collection<ConfluenceRight> homePageInheritedRights = null;
 
         ConfluenceProperties pageProperties = getPageProperties(pageId);
 
         if (pageProperties == null) {
             this.logger.error("Can't find page with id [{}]", createPageIdentifier(pageId, spaceKey));
-            emptyStep();
             return null;
+        }
+
+        // Skip archived pages
+        String status = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS);
+        if ("archived".equals(status) && !this.properties.isArchivedDocumentsEnabled()) {
+            return null;
+        }
+
+        return pageProperties;
+    }
+
+    private Collection<ConfluenceRight> readPage(long pageId, String spaceKey, boolean blog, Object filter,
+        ConfluenceFilter proxyFilter) throws FilterException, ConfluenceInterruptedException
+    {
+        ConfluenceProperties pageProperties = readPageGetPageProperties(pageId, spaceKey);
+        if (pageProperties == null) {
+            emptyStep();
+            return Collections.emptyList();
         }
 
         String title = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
@@ -1264,14 +1291,7 @@ public class ConfluenceInputFilterStream
                 createPageIdentifier(pageId, spaceKey));
 
             emptyStep();
-            return null;
-        }
-
-        // Skip archived pages
-        String status = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS);
-        if ("archived".equals(status) && !this.properties.isArchivedDocumentsEnabled()) {
-            emptyStep();
-            return null;
+            return Collections.emptyList();
         }
 
         FilterEventParameters documentParameters = new FilterEventParameters();
@@ -1286,16 +1306,17 @@ public class ConfluenceInputFilterStream
         String spaceName = confluenceConverter.toEntityName(title);
 
         List<Long> children = blog ? Collections.emptyList() : confluencePackage.getPageChildren(pageId);
-        boolean nested = !blog;
-        if (nested) {
+        if (blog) {
+            // Apply the standard entity name validator
+            documentName = confluenceConverter.toEntityName(documentName);
+        } else {
             if (!isHomePage) {
                 proxyFilter.beginWikiSpace(spaceName, FilterEventParameters.EMPTY);
             }
             documentName = WEB_HOME;
-        } else {
-            // Apply the standard entity name validator
-            documentName = confluenceConverter.toEntityName(documentName);
         }
+
+        Collection<ConfluenceRight> homePageInheritedRights = null;
 
         try {
             Collection<ConfluenceRight> inheritedRights = sendTerminalDoc(blog, filter, proxyFilter, documentName,
@@ -1307,13 +1328,14 @@ public class ConfluenceInputFilterStream
             }
 
             if (!children.isEmpty()) {
-                sendPages(spaceKey, blog, children, filter, proxyFilter);
+                sendPages(spaceKey, false, children, filter, proxyFilter);
             }
         } finally {
-            if (nested && !isHomePage) {
+            if (!blog && !isHomePage) {
                 proxyFilter.endWikiSpace(spaceName, FilterEventParameters.EMPTY);
             }
         }
+
         return homePageInheritedRights;
     }
 
@@ -1341,22 +1363,7 @@ public class ConfluenceInputFilterStream
             proxyFilter.endWikiDocument(documentName, documentParameters);
 
             if (!isHomePage) {
-                try {
-                    if (inheritedRights != null && !inheritedRights.isEmpty()) {
-                        // inherited rights from the home page are put in the space WebPreferences page
-                        beginWebPreferences(proxyFilter);
-                        for (ConfluenceRight right : inheritedRights) {
-                            sendInheritedPageRight(pageProperties, proxyFilter, right);
-                        }
-                    }
-
-                    if (this.properties.isPageOrderEnabled()) {
-                        Collection<String> orderedTitles = getOrderedDocumentTitles(children);
-                        sendPinnedPages(proxyFilter, orderedTitles);
-                    }
-                } finally {
-                    endWebPreferences(proxyFilter);
-                }
+                sendWebPreference(proxyFilter, pageProperties, children, inheritedRights);
             }
 
             if (!macrosIds.isEmpty()) {
@@ -1375,42 +1382,38 @@ public class ConfluenceInputFilterStream
         return isHomePage ? inheritedRights : null;
     }
 
+    private void sendWebPreference(ConfluenceFilter proxyFilter, ConfluenceProperties pageProperties,
+        List<Long> children, Collection<ConfluenceRight> inheritedRights) throws FilterException
+    {
+        try {
+            if (inheritedRights != null && !inheritedRights.isEmpty()) {
+                // inherited rights from the home page are put in the space WebPreferences page
+                beginWebPreferences(proxyFilter);
+                for (ConfluenceRight right : inheritedRights) {
+                    sendInheritedPageRight(pageProperties, proxyFilter, right);
+                }
+            }
+
+            if (this.properties.isPageOrderEnabled()) {
+                Collection<String> orderedTitles = getOrderedDocumentTitles(children);
+                sendPinnedPages(proxyFilter, orderedTitles);
+            }
+        } finally {
+            endWebPreferences(proxyFilter);
+        }
+    }
+
     private Collection<ConfluenceRight> sendRevisions(boolean blog, Object filter, ConfluenceFilter proxyFilter,
         ConfluenceProperties pageProperties, String spaceKey) throws FilterException, ConfluenceCanceledException
     {
         Locale locale = Locale.ROOT;
 
-        FilterEventParameters documentLocaleParameters = new FilterEventParameters();
-        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_CREATION_AUTHOR)) {
-            documentLocaleParameters.put(WikiDocumentFilter.PARAMETER_CREATION_AUTHOR,
-                confluenceConverter.toUserReference(
-                    pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CREATION_AUTHOR)));
-        } else if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_CREATION_AUTHOR_KEY)) {
-            String authorKey = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CREATION_AUTHOR_KEY);
-            String authorName = confluenceConverter.toUserReference(
-                confluencePackage.resolveUserName(authorKey, authorKey));
-            documentLocaleParameters.put(WikiDocumentFilter.PARAMETER_CREATION_AUTHOR, authorName);
-        }
-
-        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_CREATION_DATE)) {
-            try {
-                documentLocaleParameters.put(WikiDocumentFilter.PARAMETER_CREATION_DATE,
-                    this.confluencePackage.getDate(pageProperties, ConfluenceXMLPackage.KEY_PAGE_CREATION_DATE));
-            } catch (Exception e) {
-                this.logger.error("Failed to parse creation date of the document with id [{}]",
-                    createPageIdentifier(pageProperties), e);
-            }
-        }
-
-        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISION)) {
-            documentLocaleParameters.put(WikiDocumentFilter.PARAMETER_LASTREVISION,
-                pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION));
-        }
+        FilterEventParameters documentLocaleParameters = getDocumentLocaleParameters(pageProperties);
 
         // > WikiDocumentLocale
         proxyFilter.beginWikiDocumentLocale(locale, documentLocaleParameters);
 
-        Collection<ConfluenceRight> inheritedRights = null;
+        Collection<ConfluenceRight> inheritedRights;
         try {
             // Revisions
             if (properties.isHistoryEnabled() && pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISIONS)) {
@@ -1448,95 +1451,157 @@ public class ConfluenceInputFilterStream
         return inheritedRights;
     }
 
+    private FilterEventParameters getDocumentLocaleParameters(ConfluenceProperties pageProperties)
+    {
+        FilterEventParameters documentLocaleParameters = new FilterEventParameters();
+        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_CREATION_AUTHOR)) {
+            documentLocaleParameters.put(WikiDocumentFilter.PARAMETER_CREATION_AUTHOR,
+                confluenceConverter.toUserReference(
+                    pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CREATION_AUTHOR)));
+        } else if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_CREATION_AUTHOR_KEY)) {
+            String authorKey = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CREATION_AUTHOR_KEY);
+            String authorName = confluenceConverter.toUserReference(
+                confluencePackage.resolveUserName(authorKey, authorKey));
+            documentLocaleParameters.put(WikiDocumentFilter.PARAMETER_CREATION_AUTHOR, authorName);
+        }
+
+        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_CREATION_DATE)) {
+            try {
+                documentLocaleParameters.put(WikiDocumentFilter.PARAMETER_CREATION_DATE,
+                    this.confluencePackage.getDate(pageProperties, ConfluenceXMLPackage.KEY_PAGE_CREATION_DATE));
+            } catch (Exception e) {
+                this.logger.error("Failed to parse creation date of the document with id [{}]",
+                    createPageIdentifier(pageProperties), e);
+            }
+        }
+
+        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISION)) {
+            documentLocaleParameters.put(WikiDocumentFilter.PARAMETER_LASTREVISION,
+                pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION));
+        }
+        return documentLocaleParameters;
+    }
+
+    private ConfluenceProperties getPermissionSetProperties(ConfluenceProperties pageProperties, long permissionSetId)
+        throws FilterException
+    {
+        ConfluenceProperties permissionSetProperties;
+
+        if (!shouldSendObject(permissionSetId)) {
+            return null;
+        }
+
+        try {
+            permissionSetProperties = confluencePackage.getContentPermissionSetProperties(permissionSetId);
+        } catch (ConfigurationException e) {
+            logger.error("Could not get permission set [{}] for page [{}]",
+                permissionSetId, createPageIdentifier(pageProperties), e);
+            return null;
+        }
+
+        if (permissionSetProperties == null) {
+            logger.error("Could not find permission set [{}] for page [{}].",
+                permissionSetId, createPageIdentifier(pageProperties));
+            return null;
+        }
+
+        return permissionSetProperties;
+
+    }
+
+    private ConfluenceProperties getPermProperties(long permissionSetId, long permissionId,
+        ConfluenceProperties pageProperties) throws FilterException
+    {
+        if (!shouldSendObject(permissionId)) {
+            return null;
+        }
+
+        ConfluenceProperties permProperties;
+        try {
+            permProperties = confluencePackage.getContentPermissionProperties(permissionSetId, permissionId);
+        } catch (ConfigurationException e) {
+            logger.error("Could not get permission [{}] for page [{}]",
+                permissionId, createPageIdentifier(pageProperties), e);
+            return null;
+        }
+
+        if (permProperties == null) {
+            logger.error("Could not find permission [{}] for page [{}].",
+                permissionId, createPageIdentifier(pageProperties));
+            return null;
+        }
+        return permProperties;
+
+    }
+
     private Collection<ConfluenceRight> sendPageRights(ConfluenceFilter proxyFilter,
         ConfluenceProperties pageProperties) throws FilterException
     {
         Collection<ConfluenceRight> inheritedRights = new ArrayList<>();
         for (Object permissionSetIdObject : ConfluenceXMLPackage.getContentPermissionSets(pageProperties)) {
-            Long permissionSetId = toLong(permissionSetIdObject);
-            if (permissionSetId == null) {
-                logger.error("Space permission set id is null for page [{}]", createPageIdentifier(pageProperties));
-                continue;
-            }
-
-            if (!shouldSendObject(permissionSetId)) {
-                continue;
-            }
-
-            ConfluenceProperties permissionSetProperties = null;
-            try {
-                permissionSetProperties = confluencePackage.getContentPermissionSetProperties(permissionSetId);
-            } catch (ConfigurationException e) {
-                logger.error("Could not get permission set [{}] for page [{}]",
-                    permissionSetId, createPageIdentifier(pageProperties), e);
-                continue;
-            }
-
+            long permissionSetId = toLong(permissionSetIdObject);
+            ConfluenceProperties permissionSetProperties = getPermissionSetProperties(pageProperties, permissionSetId);
             if (permissionSetProperties == null) {
-                logger.error("Could not find permission set [{}] for page [{}].",
-                    permissionSetId, createPageIdentifier(pageProperties));
                 continue;
             }
 
-            for (Object permissionIdObject : ConfluenceXMLPackage.getContentPermissions(permissionSetProperties)) {
-                Long permissionId = toLong(permissionIdObject);
-                if (permissionId == null) {
-                    logger.error("Permission id is null for page [{}]", createPageIdentifier(pageProperties));
-                    continue;
-                }
+            sendPageRight(proxyFilter, pageProperties, permissionSetProperties, permissionSetId, inheritedRights);
+        }
+        return inheritedRights;
+    }
 
-                if (!shouldSendObject(permissionId)) {
-                    continue;
-                }
+    private void sendPageRight(ConfluenceFilter proxyFilter, ConfluenceProperties pageProperties,
+        ConfluenceProperties permissionSetProperties, long permissionSetId, Collection<ConfluenceRight> inheritedRights)
+        throws FilterException
+    {
+        for (Object permissionIdObject : ConfluenceXMLPackage.getContentPermissions(permissionSetProperties)) {
+            long permissionId = toLong(permissionIdObject);
 
-                ConfluenceProperties permProperties = null;
-                try {
-                    permProperties = confluencePackage.getContentPermissionProperties(permissionSetId, permissionId);
-                } catch (ConfigurationException e) {
-                    logger.error("Could not get permission [{}] for page [{}]",
-                        permissionId, createPageIdentifier(pageProperties), e);
-                    continue;
-                }
+            ConfluenceProperties permProperties = getPermProperties(permissionSetId, permissionId, pageProperties);
+            ContentPermissionType type = null;
+            ConfluenceRight confluenceRight = null;
 
-                if (permProperties == null) {
-                    logger.error("Could not find permission [{}] for page [{}].",
-                        permissionId, createPageIdentifier(pageProperties));
-                    continue;
-                }
+            if (permProperties != null) {
+                confluenceRight = getConfluenceRightData(permProperties);
+                type = getContentPermissionType(pageProperties, confluenceRight, permissionId);
+            }
 
-                ConfluenceRight confluenceRight = getConfluenceRightData(permProperties);
+            if (type == null) {
+                continue;
+            }
 
-                ContentPermissionType type = getContentPermissionType(pageProperties, confluenceRight, permissionId);
-                if (type == null) {
-                    continue;
-                }
+            Right right = convertPageRight(type);
 
-                Right right = null;
-                switch (type) {
-                    case VIEW:
-                        right = Right.VIEW;
-                        break;
-                    case EDIT:
-                        right = Right.EDIT;
-                        break;
-                    case SHARE:
-                        // Sharing is not represented in XWiki rights
-                        continue;
-                    default:
-                        this.logger.warn("Unknown content permission right type [{}].", right);
-                        continue;
-                }
-
-                if (right != null && !(confluenceRight.users.isEmpty() && confluenceRight.group.isEmpty())) {
-                    if (Right.VIEW.equals(right)) {
-                        inheritedRights.add(confluenceRight);
-                    } else {
-                        sendRight(proxyFilter, confluenceRight.group, right, confluenceRight.users, false);
-                    }
+            if (right != null && !(confluenceRight.users.isEmpty() && confluenceRight.group.isEmpty())) {
+                if (Right.VIEW.equals(right)) {
+                    inheritedRights.add(confluenceRight);
+                } else {
+                    sendRight(proxyFilter, confluenceRight.group, right, confluenceRight.users, false);
                 }
             }
         }
-        return inheritedRights;
+    }
+
+    private Right convertPageRight(ContentPermissionType type)
+    {
+        Right right;
+        switch (type) {
+            case VIEW:
+                right = Right.VIEW;
+                break;
+            case EDIT:
+                right = Right.EDIT;
+                break;
+            case SHARE:
+                // Sharing is not represented in XWiki rights
+                right = null;
+                break;
+            default:
+                this.logger.warn("Unknown content permission right type [{}].", type);
+                right = null;
+                break;
+        }
+        return right;
     }
 
     private ContentPermissionType getContentPermissionType(ConfluenceProperties pageProperties,
@@ -1553,7 +1618,7 @@ public class ConfluenceInputFilterStream
         return type;
     }
 
-    private static Long toLong(Object permissionSetIdObject)
+    private static long toLong(Object permissionSetIdObject)
     {
         return permissionSetIdObject instanceof Long
             ? (Long) permissionSetIdObject
@@ -1575,7 +1640,7 @@ public class ConfluenceInputFilterStream
         // beware. Here, pageProperties might not have a space key. You need to use the one passed in parameters
         // FIXME we could ensure it though with some work
 
-        Long pageId = pageProperties.getLong("id", null);
+        Long pageId = pageProperties.getLong(ID, null);
         if (pageId == null) {
             throw new FilterException("Found a null revision id in space [" + spaceKey + "], this should not happen.");
         }
@@ -1653,6 +1718,12 @@ public class ConfluenceInputFilterStream
 
         // Generate page content when the page is a regular page or the value of the "content" property of the
         // "Blog.BlogPostClass" object if the page is a blog post.
+        maybeSendBlogObject(isBlog, pageProperties, proxyFilter, bodyContent);
+    }
+
+    private void maybeSendBlogObject(boolean isBlog, ConfluenceProperties pageProperties, ConfluenceFilter proxyFilter,
+        String bodyContent) throws FilterException
+    {
         if (isBlog) {
             // Add the Blog post object
             Date publishDate = null;
@@ -1721,21 +1792,29 @@ public class ConfluenceInputFilterStream
         }
     }
 
+    private ConfluenceProperties getCommentProperties(ConfluenceProperties pageProperties, long commentId)
+        throws FilterException
+    {
+        if (!shouldSendObject(commentId)) {
+            return null;
+        }
+        try {
+            return this.confluencePackage.getObjectProperties(commentId);
+        } catch (ConfigurationException e) {
+            logger.error("Failed to get the comment properties [{}] for the page with id [{}]",
+                commentId, createPageIdentifier(pageProperties), e);
+        }
+        return null;
+    }
+
     private void readComments(ConfluenceProperties pageProperties, ConfluenceFilter proxyFilter) throws FilterException
     {
         Map<Long, ConfluenceProperties> pageComments = new LinkedHashMap<>();
         Map<Long, Integer> commentIndices = new LinkedHashMap<>();
         int commentIndex = 0;
         for (Long commentId : confluencePackage.getPageComments(pageProperties)) {
-            if (!shouldSendObject(commentId)) {
-                continue;
-            }
-            ConfluenceProperties commentProperties;
-            try {
-                commentProperties = this.confluencePackage.getObjectProperties(commentId);
-            } catch (ConfigurationException e) {
-                logger.error("Failed to get the comment properties [{}] for the page with id [{}]",
-                    commentId, createPageIdentifier(pageProperties), e);
+            ConfluenceProperties commentProperties = getCommentProperties(pageProperties, commentId);
+            if (commentProperties == null) {
                 continue;
             }
 
@@ -1758,15 +1837,8 @@ public class ConfluenceInputFilterStream
         Map<String, ConfluenceProperties> pageTags = new LinkedHashMap<>();
         for (Object tagIdStringObject : pageProperties.getList(ConfluenceXMLPackage.KEY_PAGE_LABELLINGS)) {
             Long tagId = Long.parseLong((String) tagIdStringObject);
-            if (!shouldSendObject(tagId)) {
-                continue;
-            }
-            ConfluenceProperties tagProperties;
-            try {
-                tagProperties = this.confluencePackage.getObjectProperties(tagId);
-            } catch (ConfigurationException e) {
-                logger.error("Failed to get tag properties [{}] for the page with id [{}].", tagId,
-                    createPageIdentifier(pageProperties), e);
+            ConfluenceProperties tagProperties = getTagProperties(pageProperties, tagId);
+            if (tagProperties == null) {
                 continue;
             }
 
@@ -1784,6 +1856,41 @@ public class ConfluenceInputFilterStream
         }
     }
 
+    private ConfluenceProperties getTagProperties(ConfluenceProperties pageProperties, Long tagId)
+        throws FilterException
+    {
+        if (!shouldSendObject(tagId)) {
+            return null;
+        }
+
+        try {
+            return this.confluencePackage.getObjectProperties(tagId);
+        } catch (ConfigurationException e) {
+            logger.error("Failed to get tag properties [{}] for the page with id [{}].", tagId,
+                createPageIdentifier(pageProperties), e);
+        }
+
+        return null;
+    }
+
+    private ConfluenceProperties getAttachmentProperties(long pageId, long attachmentId,
+        ConfluenceProperties pageProperties) throws FilterException
+    {
+        if (!shouldSendObject(attachmentId)) {
+            return null;
+        }
+
+        try {
+            return this.confluencePackage.getAttachmentProperties(pageId, attachmentId);
+        } catch (ConfigurationException e) {
+            logger.error(
+                "Failed to get the properties of the attachments from the document identified by [{}]",
+                createPageIdentifier(pageProperties), e);
+        }
+
+        return null;
+    }
+
     private void readAttachments(Long pageId, ConfluenceProperties pageProperties, ConfluenceFilter proxyFilter)
         throws FilterException
     {
@@ -1793,17 +1900,8 @@ public class ConfluenceInputFilterStream
 
         Map<String, ConfluenceProperties> pageAttachments = new LinkedHashMap<>();
         for (Long attachmentId : this.confluencePackage.getAttachments(pageId)) {
-            if (!shouldSendObject(attachmentId)) {
-                continue;
-            }
-
-            ConfluenceProperties attachmentProperties;
-            try {
-                attachmentProperties = this.confluencePackage.getAttachmentProperties(pageId, attachmentId);
-            } catch (ConfigurationException e) {
-                logger.error(
-                    "Failed to get the properties of the attachments from the document identified by [{}]",
-                    createPageIdentifier(pageProperties), e);
+            ConfluenceProperties attachmentProperties = getAttachmentProperties(pageId, attachmentId, pageProperties);
+            if (attachmentProperties == null) {
                 continue;
             }
 
@@ -1836,61 +1934,6 @@ public class ConfluenceInputFilterStream
     }
 
     /**
-     * @param currentProperties the properties where to find the page identifier
-     * @param key the key to find the page identifier
-     * @return the reference of the page
-     * @throws ConfigurationException when failing to get page properties
-     * @throws FilterException when failing to create the reference
-     */
-    public EntityReference getReferenceFromId(ConfluenceProperties currentProperties, String key)
-        throws ConfigurationException, FilterException
-    {
-        Long pageId = currentProperties.getLong(key, null);
-        if (pageId == null) {
-            return null;
-        }
-
-        ConfluenceProperties pageProperties = this.confluencePackage.getPageProperties(pageId, false);
-        if (pageProperties == null) {
-            return null;
-        }
-
-        Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
-        String docName = pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)
-            ? WEB_HOME
-            : confluenceConverter.toEntityName(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE));
-
-        if (StringUtils.isEmpty(docName)) {
-            throw new FilterException("Cannot create a reference to the page with id [" + pageId
-                + "] because it does not have any title");
-        }
-
-        long currentSpaceId = currentProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
-
-        EntityReference spaceReference = null;
-        if (spaceId != null && !spaceId.equals(currentSpaceId)) {
-            String spaceName = this.confluencePackage.getSpaceKey(spaceId);
-            if (spaceName != null) {
-                spaceReference = new EntityReference(confluenceConverter.toEntityName(spaceName), EntityType.SPACE);
-            }
-        }
-
-        return new EntityReference(docName, EntityType.DOCUMENT, spaceReference);
-    }
-
-    private EntityReference getReferenceForDocument(String spaceKey, String docName)
-    {
-        // FIXME is this somewhat a duplicate of the end of getReferenceFromId?
-        SpaceReference rootSpace = this.properties.getRootSpace();
-        String convertedSpace = confluenceConverter.toEntityName(spaceKey);
-        EntityReference spaceReference = rootSpace == null
-            ? new EntityReference(convertedSpace, EntityType.SPACE)
-            : new SpaceReference(convertedSpace, rootSpace);
-
-        return new EntityReference(docName, EntityType.DOCUMENT, spaceReference);
-    }
-
-    /**
      * @since 9.13
      */
     private void storeConfluenceDetails(String spaceKey, Long pageId, ConfluenceProperties pageProperties,
@@ -1906,14 +1949,14 @@ public class ConfluenceInputFilterStream
         pageReportParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, CONFLUENCEPAGE_CLASSNAME);
         proxyFilter.beginWikiObject(CONFLUENCEPAGE_CLASSNAME, pageReportParameters);
         try {
-            proxyFilter.onWikiObjectProperty("id", pageId, FilterEventParameters.EMPTY);
+            proxyFilter.onWikiObjectProperty(ID, pageId, FilterEventParameters.EMPTY);
             StringBuilder pageURLBuilder = new StringBuilder();
             if (!this.properties.getBaseURLs().isEmpty()) {
                 pageURLBuilder.append(this.properties.getBaseURLs().get(0).toString());
                 pageURLBuilder.append("/spaces/").append(spaceKey);
                 if (!pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
                     String pageName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
-                    pageURLBuilder.append("/pages/").append(pageId).append("/").append(pageName);
+                    pageURLBuilder.append("/pages/").append(pageId).append('/').append(pageName);
                 }
             }
             String title = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE, null);
@@ -1996,33 +2039,30 @@ public class ConfluenceInputFilterStream
             return;
         }
 
-        Long attachmentId = attachmentProperties.getLong("id");
+        Long attachmentId = attachmentProperties.getLong(ID);
         // no need to check shouldSendObject(attachmentId), already done by the caller.
 
         String attachmentName = this.confluencePackage.getAttachmentName(attachmentProperties);
 
-        long attachmentSize;
-        String mediaType = null;
-        if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTPROPERTIES)) {
-            ConfluenceProperties attachmentContentProperties =
-                getContentProperties(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTPROPERTIES);
+        ConfluenceProperties attachmentContentProperties = attachmentProperties;
 
-            attachmentSize =
-                attachmentContentProperties.getLong(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENT_FILESIZE, -1);
-            if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTTYPE)) {
-                mediaType =
-                    attachmentContentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENT_MEDIA_TYPE);
-            }
-        } else {
-            attachmentSize = attachmentProperties.getLong(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENT_SIZE, -1);
-            if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTTYPE)) {
-                mediaType = attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTTYPE);
-            }
+        if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTPROPERTIES)) {
+            attachmentContentProperties =
+                getContentProperties(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTPROPERTIES);
+        }
+
+        long attachmentSize = attachmentContentProperties.getLong(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENT_FILESIZE,
+            -1);
+        String mediaType = null;
+        if (attachmentContentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENT_MEDIA_TYPE)) {
+            mediaType = attachmentContentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENT_MEDIA_TYPE);
+        } else if (attachmentContentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTTYPE)) {
+            mediaType = attachmentContentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTTYPE);
         }
 
         Long version = this.confluencePackage.getAttachementVersion(attachmentProperties);
 
-        Long originalRevisionId =
+        long originalRevisionId =
             this.confluencePackage.getAttachmentOriginalVersionId(attachmentProperties, attachmentId);
         File contentFile;
         try {
@@ -2033,6 +2073,24 @@ public class ConfluenceInputFilterStream
             return;
         }
 
+        FilterEventParameters attachmentParameters = getAttachmentParameters(pageProperties, attachmentProperties,
+            mediaType, attachmentName, attachmentId, version);
+
+        // WikiAttachment
+
+        try (FileInputStream fis = new FileInputStream(contentFile)) {
+            proxyFilter.onWikiAttachment(attachmentName, fis,
+                attachmentSize != -1 ? attachmentSize : contentFile.length(), attachmentParameters);
+        } catch (Exception e) {
+            this.logger.error("Failed to read attachment [{}] for the page [{}].", attachmentId,
+                createPageIdentifier(pageProperties), e);
+        }
+    }
+
+    private FilterEventParameters getAttachmentParameters(ConfluenceProperties pageProperties,
+        ConfluenceProperties attachmentProperties, String mediaType, String attachmentName,
+        Long attachmentId, Long version)
+    {
         FilterEventParameters attachmentParameters = new FilterEventParameters();
         if (mediaType != null) {
             attachmentParameters.put(WikiAttachmentFilter.PARAMETER_CONTENT_TYPE, mediaType);
@@ -2056,6 +2114,26 @@ public class ConfluenceInputFilterStream
         }
 
         attachmentParameters.put(WikiAttachmentFilter.PARAMETER_REVISION, String.valueOf(version));
+        fillAttachmentAuthor(attachmentProperties, attachmentName, attachmentParameters);
+        if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE)) {
+            try {
+                attachmentParameters.put(WikiAttachmentFilter.PARAMETER_REVISION_DATE, this.confluencePackage
+                    .getDate(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE));
+            } catch (Exception e) {
+                this.logger.error("Failed to parse the revision date of the attachment [{}] in page [{}]",
+                    attachmentId, createPageIdentifier(pageProperties), e);
+            }
+        }
+        if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_COMMENT)) {
+            attachmentParameters.put(WikiAttachmentFilter.PARAMETER_REVISION_COMMENT,
+                attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_COMMENT));
+        }
+        return attachmentParameters;
+    }
+
+    private void fillAttachmentAuthor(ConfluenceProperties attachmentProperties, String attachmentName,
+        FilterEventParameters attachmentParameters)
+    {
         if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_AUTHOR)) {
             addAttachmentCreator(attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_AUTHOR),
                 attachmentName, attachmentParameters, WikiAttachmentFilter.PARAMETER_REVISION_AUTHOR);
@@ -2072,29 +2150,6 @@ public class ConfluenceInputFilterStream
                 addAttachmentCreator(creatorProperties.getString(ConfluenceXMLPackage.KEY_USER_NAME, ""),
                     attachmentName, attachmentParameters, WikiAttachmentFilter.PARAMETER_REVISION_AUTHOR);
             }
-        }
-        if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE)) {
-            try {
-                attachmentParameters.put(WikiAttachmentFilter.PARAMETER_REVISION_DATE, this.confluencePackage
-                    .getDate(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE));
-            } catch (Exception e) {
-                this.logger.error("Failed to parse the revision date of the attachment [{}] in page [{}]",
-                    attachmentId, createPageIdentifier(pageProperties), e);
-            }
-        }
-        if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_COMMENT)) {
-            attachmentParameters.put(WikiAttachmentFilter.PARAMETER_REVISION_COMMENT,
-                attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_COMMENT));
-        }
-
-        // WikiAttachment
-
-        try (FileInputStream fis = new FileInputStream(contentFile)) {
-            proxyFilter.onWikiAttachment(attachmentName, fis,
-                attachmentSize != -1 ? attachmentSize : contentFile.length(), attachmentParameters);
-        } catch (Exception e) {
-            this.logger.error("Failed to read attachment [{}] for the page [{}].", attachmentId,
-                createPageIdentifier(pageProperties), e);
         }
     }
 
@@ -2149,9 +2204,9 @@ public class ConfluenceInputFilterStream
 
             // creator
             String commentCreator;
-            if (commentProperties.containsKey("creatorName")) {
+            if (commentProperties.containsKey(CREATOR_NAME)) {
                 // old creator reference by name
-                commentCreator = commentProperties.getString("creatorName");
+                commentCreator = commentProperties.getString(CREATOR_NAME);
             } else {
                 // new creator reference by key
                 commentCreator = commentProperties.getString("creator");
@@ -2182,8 +2237,8 @@ public class ConfluenceInputFilterStream
 
             // parent (replyto)
             Integer parentIndex = null;
-            if (commentProperties.containsKey("parent")) {
-                Long parentId = commentProperties.getLong("parent");
+            if (commentProperties.containsKey(PARENT)) {
+                Long parentId = commentProperties.getLong(PARENT);
                 parentIndex = commentIndices.get(parentId);
             }
 

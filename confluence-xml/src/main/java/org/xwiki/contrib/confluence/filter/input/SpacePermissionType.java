@@ -19,6 +19,8 @@
  */
 package org.xwiki.contrib.confluence.filter.input;
 
+import org.xwiki.security.authorization.Right;
+
 import java.util.EnumSet;
 
 /**
@@ -44,123 +46,140 @@ public enum SpacePermissionType
     /**
      * View pages in the space.
      */
-    VIEWSPACE,
+    VIEWSPACE(Right.VIEW),
 
     /**
      * Delete user's own content in the space.
      */
-    REMOVEOWNCONTENT,
+    REMOVEOWNCONTENT(Right.ILLEGAL),
 
     /**
      * Add and/or edit pages in the space.
      */
-    EDITSPACE,
+    EDITSPACE(Right.EDIT),
 
     /**
      * Create a space.
      */
-    CREATESPACE,
+    CREATESPACE(null),
 
     /**
      * To be confirmed.
      */
-    PERSONALSPACE,
+    PERSONALSPACE(null),
 
     /**
      * Remove pages in the space.
      */
-    REMOVEPAGE,
+    REMOVEPAGE(Right.DELETE),
 
     /**
      * Add and/or edit blogs in the space.
      */
-    EDITBLOG,
+    EDITBLOG(Right.EDIT),
 
     /**
      * Remove blogs in the space.
      */
-    REMOVEBLOG,
+    REMOVEBLOG(Right.DELETE),
 
     /**
      * Add attachments to pages in the space.
      */
-    CREATEATTACHMENT,
+    CREATEATTACHMENT(Right.ILLEGAL),
 
     /**
      * Delete attachments from pages in the Space.
      */
-    REMOVEATTACHMENT,
+    REMOVEATTACHMENT(Right.ILLEGAL),
 
     /**
      * Add comments to pages in the space.
      */
-    COMMENT,
+    COMMENT(Right.COMMENT),
 
     /**
      * Remove comments from pages in the space.
      */
-    REMOVECOMMENT,
+    REMOVECOMMENT(Right.ILLEGAL),
 
     /**
      * Add or delete restrictions in pages in the space.
      */
-    SETPAGEPERMISSIONS,
+    SETPAGEPERMISSIONS(Right.ADMIN),
 
     /**
      * Export the space.
      */
-    EXPORTSPACE,
+    EXPORTSPACE(Right.ILLEGAL),
 
     /**
      * Have administrate space permissions.
      */
-    SETSPACEPERMISSIONS,
+    SETSPACEPERMISSIONS(Right.ADMIN),
 
     /**
      * Export page.
      * NOTE(RJ): I haven't found any documentation on this right, but found it in a Confluence export.
      */
-    EXPORTPAGE,
+    EXPORTPAGE(Right.ILLEGAL),
 
     /**
      * Archive page.
      * Seen in a blog export.
      */
-    ARCHIVEPAGE,
+    ARCHIVEPAGE(Right.ILLEGAL),
 
     /**
      * To be confirmed.
      */
-    ADMINISTRATECONFLUENCE,
+    ADMINISTRATECONFLUENCE(Right.ADMIN),
 
     /**
      * To be confirmed.
      */
-    PROFILEATTACHMENTS,
+    PROFILEATTACHMENTS(Right.ILLEGAL),
 
     /**
      * To be confirmed.
      */
-    SYSTEMADMINISTRATOR,
+    SYSTEMADMINISTRATOR(Right.ADMIN),
 
     /**
      * To be confirmed.
      */
-    UPDATEUSERSTATUS,
+    UPDATEUSERSTATUS(Right.ILLEGAL),
 
     /**
      * To be confirmed.
      */
-    USECONFLUENCE,
+    USECONFLUENCE(Right.ILLEGAL),
 
     /**
      * Legacy permission.
      */
-    REMOVEMAIL;
+    REMOVEMAIL(Right.ILLEGAL);
 
     /**
      * Default rights.
      */
     public static final EnumSet<SpacePermissionType> DEFAULT = EnumSet.of(
             EDITSPACE, VIEWSPACE, REMOVEOWNCONTENT, CREATEATTACHMENT, COMMENT);
+
+    private final Right convertedTo;
+
+    SpacePermissionType(Right convertedTo)
+    {
+        this.convertedTo = convertedTo;
+    }
+
+    /**
+     * @return the corresponding XWiki right. Right.ILLEGAL means the permission should be converted to nothing.
+     *         null means the conversion should raise a warning.
+     * @since 9.60
+     */
+    public Right toXWikiRight()
+    {
+        return this.convertedTo;
+    }
 }
