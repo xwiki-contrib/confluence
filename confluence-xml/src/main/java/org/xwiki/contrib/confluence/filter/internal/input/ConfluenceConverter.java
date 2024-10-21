@@ -904,7 +904,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
                 try {
                     pageId = tinyPartToPageId(matcher.group(1));
                 } catch (IllegalArgumentException e) {
-                    logger.error("Failed to decode the short link [{}]", path, e);
+                    logger.warn("Failed to decode the short link [{}]", path, e);
                     return null;
                 }
 

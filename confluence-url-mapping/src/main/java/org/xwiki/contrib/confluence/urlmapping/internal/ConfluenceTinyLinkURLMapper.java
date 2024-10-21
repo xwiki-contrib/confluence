@@ -82,7 +82,7 @@ public class ConfluenceTinyLinkURLMapper extends AbstractURLMapper
                 return new EntityResourceReference(docRef, EntityResourceAction.VIEW);
             }
         } catch (ConfluenceResolverException e) {
-            logger.error("Could not convert tiny link", e);
+            logger.warn("Could not convert tiny link", e);
         }
         return null;
     }
