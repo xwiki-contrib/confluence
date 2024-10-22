@@ -840,6 +840,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * @param source the source where to find the package to parse
+     * @throws FilterException when any error happen during the reading of the package
      */
     public void setSource(InputSource source) throws FilterException
     {
@@ -1275,7 +1276,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * Ignore extraneous spaces for Confluence space exports.
-     * Works around <a href="https://jira.atlassian.com/browse/CONFSERVER-16575">CONFSERVER-16575</a>>.
+     * Works around <a href="https://jira.atlassian.com/browse/CONFSERVER-16575">CONFSERVER-16575</a>.
      */
     public void ignoreExtraneousSpaces()
     {
@@ -2289,6 +2290,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     /**
      * @param id the Confluence object id.
      * @return the list of ids of the object's ancestors, from the root to the object, excluded.
+     * @throws ConfigurationException when something bad happens
      * @since 9.35.0
      */
     public List<Long> getAncestors(Long id) throws ConfigurationException
@@ -2730,6 +2732,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
      * Free any temporary resource used by the package.
      * @param async whether this should be done asynchronously in a separate thread, so it doesn't block the current
      *              main operation.
+     * @throws IOException when something bad happens
      */
     public void close(boolean async) throws IOException
     {
