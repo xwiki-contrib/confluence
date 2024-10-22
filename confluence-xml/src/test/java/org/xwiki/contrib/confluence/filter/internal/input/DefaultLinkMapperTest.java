@@ -112,7 +112,7 @@ class DefaultLinkMapperTest
         contextField.setAccessible(true);
         DefaultConfluenceInputContext context = (DefaultConfluenceInputContext) contextField.get(linkMapper);
         ConfluenceInputProperties properties = new ConfluenceInputProperties();
-        properties.setRootSpace(new SpaceReference("xwiki", "Root"));
+        properties.setRoot(new SpaceReference("xwiki", "Root"));
         ConfluenceXMLPackage confluencePackage = componentManager.getInstance(ConfluenceXMLPackage.class);
         context.set(confluencePackage, properties);
 

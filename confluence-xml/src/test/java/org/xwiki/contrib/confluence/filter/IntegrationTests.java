@@ -41,10 +41,11 @@ import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+
 /**
  * Run all tests found in the classpath. These {@code *.test} files must follow the conventions described in
  * {@link org.xwiki.filter.test.integration.TestDataParser}.
- * 
+ *
  * @version $Id$
  */
 @RunWith(FilterTestSuite.class)

@@ -1,0 +1,130 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Make sure the root space parameter works correctly, including links
+.#------------------------------------------------------------------------------
+<wiki name="sub">
+  <wikiSpace name="TestSpace">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <wikiDocumentRevision revision="10">
+          <p>
+            <parameters>
+              <entry>
+                <string>title</string>
+                <string>TestSpace</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>[[(% param="value" %)link1>>doc:sub:Other Space.Other Page.WebHome||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link1>>doc:sub:Other Space.Other Page.WebHome||shape="rect"]]
+
+[[(% param="value" %)link2>>doc:sub:Other Space.Other Page.WebHome||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link2>>doc:sub:Other Space.Other Page.WebHome||shape="rect"]]
+
+[[(% param="value" %)link3>>attach:sub:Other Space.Other Page.WebHome@attachment.png||queryString="param=value" shape="rect"]](%%) [[(% param="value" %)link3>>attach:sub:Other Space.Other Page.WebHome@attachment.png||shape="rect"]]
+
+[[(% param="value" %)link4>>icon:icon||shape="rect"]](%%) [[(% param="value" %)link4>>icon:icon||shape="rect"]]
+
+[[(% param="value" %)link5>>doc:sub:Other Space.Other Page.WebHome||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link5>>doc:sub:Other Space.Other Page.WebHome||shape="rect"]]
+
+[[link6>>doc:sub:validatedspace.validatedpage.WebHome||shape="rect"]]
+
+[[pagetovalidate>>doc:sub:TestSpace.validatedpage.WebHome]]
+
+[[pagetovalidate>>doc:sub:validatedspace.validatedpage.WebHome||anchor="anchor"]]
+
+[[Highlights>>doc:||anchor="anchor"]]
+
+[[doc:sub:MYSPACE.WebHome]]
+
+[[link>>url:https://confluence.atlassian.com/x/2EkGOQ||shape="rect"]]
+
+[[link>>url:https://confluence.atlassian.com/x/2yAC||shape="rect"]]
+
+[[link>>url:https://confluence.atlassian.com/x/ASEC||shape="rect"]]
+
+[[link>>url:https://confluence.atlassian.com/x/liAC||shape="rect"]]
+
+[[link>>url:https://confluence.atlassian.com/x/NgszKw||shape="rect"]]
+
+[[link>>url:https://confluence.atlassian.com/x/SRwC||shape="rect"]]
+
+{{lozenge icon="https://icon-library.com/images/img_524932.png" link="https://www.bing.com/images/search?q=icon" width="auto"}}
+Some content
+{{/lozenge}}</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+  <wikiSpace name="Other Space">
+    <wikiSpace name="Other Page">
+      <wikiDocument name="WebHome">
+        <wikiDocumentLocale>
+          <wikiDocumentRevision revision="11">
+            <p>
+              <parameters>
+                <entry>
+                  <string>title</string>
+                  <string>Other Page</string>
+                </entry>
+              </parameters>
+            </p>
+          </wikiDocumentRevision>
+        </wikiDocumentLocale>
+      </wikiDocument>
+    </wikiSpace>
+  </wikiSpace>
+  <wikiSpace name="validatedspace">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <wikiDocumentRevision revision="13">
+          <p>
+            <parameters>
+              <entry>
+                <string>title</string>
+                <string>spacetovalidate</string>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+    <wikiSpace name="validatedpage">
+      <wikiDocument name="WebHome">
+        <wikiDocumentLocale>
+          <wikiDocumentRevision revision="12">
+            <p>
+              <parameters>
+                <entry>
+                  <string>title</string>
+                  <string>pagetovalidate</string>
+                </entry>
+              </parameters>
+            </p>
+          </wikiDocumentRevision>
+        </wikiDocumentLocale>
+      </wikiDocument>
+    </wikiSpace>
+  </wikiSpace>
+</wiki>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
+.configuration.source=links
+.configuration.root=wiki:sub
+.configuration.confluenceInstanceType=cloud
+.configuration.baseURLs=https://baseurl1.com,https://baseurl2.com,https://baseurl3.com,https://baseurl4.com,https://baseurl5.com,https://confluence.atlassian.com/
+# no link mapping for short URLs to test correct fallback when the doc id is not known
+.#------------------------------------------------------------------------------

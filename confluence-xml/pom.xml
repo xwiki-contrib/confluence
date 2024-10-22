@@ -191,15 +191,22 @@
                   <annotation>@org.xwiki.properties.annotation.PropertyHidden</annotation>
                   <justification>This parameter is now deprecated, it's better to hide it</justification>
                 </item>
-                <!-- I'm not sure why I needed to add this entry twice, but revapi was complaining without it -->
-                <item>
-                  <ignore>true</ignore>
-                  <code>java.annotation.added</code>
-                  <old>method boolean org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties::isNestedSpacesEnabled()</old>
-                  <new>method boolean org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties::isNestedSpacesEnabled()</new>
-                  <annotation>@org.xwiki.properties.annotation.PropertyHidden</annotation>
+		<item>
+		  <ignore>true</ignore>
+		  <code>java.annotation.added</code>
+		  <old>method org.xwiki.model.reference.SpaceReference org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties::getRootSpace()</old>
+		  <new>method org.xwiki.model.reference.SpaceReference org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties::getRootSpace()</new>
+		  <annotation>@org.xwiki.properties.annotation.PropertyHidden</annotation>
                   <justification>This parameter is now deprecated, it's better to hide it</justification>
-                </item>
+		</item>
+		<item>
+		  <ignore>true</ignore>
+		  <code>java.annotation.added</code>
+		  <old>method void org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties::setRootSpace(org.xwiki.model.reference.SpaceReference)</old>
+		  <new>method void org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties::setRootSpace(org.xwiki.model.reference.SpaceReference)</new>
+		  <annotation>@org.xwiki.properties.annotation.PropertyHidden</annotation>
+                  <justification>This parameter is now deprecated, it's better to hide it</justification>
+		</item>
                 <!-- I'm also not sure why I needed to add those entries with the @ "package" explicitly -->
                 <item>
                   <ignore>true</ignore>
@@ -222,6 +229,22 @@
                   <code>java.annotation.added</code>
                   <old>method boolean org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties::isNestedSpacesEnabled() @ org.xwiki.filter.confluence.input.ConfluenceInputProperties</old>
                   <new>method boolean org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties::isNestedSpacesEnabled() @ org.xwiki.filter.confluence.input.ConfluenceInputProperties</new>
+                  <annotation>@org.xwiki.properties.annotation.PropertyHidden</annotation>
+                  <justification>This parameter is now deprecated, it's better to hide it</justification>
+                </item>
+                <item>
+                  <ignore>true</ignore>
+                  <code>java.annotation.added</code>
+                  <old>method org.xwiki.model.reference.SpaceReference org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties::getRootSpace() @ org.xwiki.filter.confluence.input.ConfluenceInputProperties</old>
+                  <new>method org.xwiki.model.reference.SpaceReference org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties::getRootSpace() @ org.xwiki.filter.confluence.input.ConfluenceInputProperties</new>
+                  <annotation>@org.xwiki.properties.annotation.PropertyHidden</annotation>
+                  <justification>This parameter is now deprecated, it's better to hide it</justification>
+                </item>
+                <item>
+                  <ignore>true</ignore>
+                  <code>java.annotation.added</code>
+                  <old>method void org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties::setRootSpace(org.xwiki.model.reference.SpaceReference) @ org.xwiki.filter.confluence.input.ConfluenceInputProperties</old>
+                  <new>method void org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties::setRootSpace(org.xwiki.model.reference.SpaceReference) @ org.xwiki.filter.confluence.input.ConfluenceInputProperties</new>
                   <annotation>@org.xwiki.properties.annotation.PropertyHidden</annotation>
                   <justification>This parameter is now deprecated, it's better to hide it</justification>
                 </item>

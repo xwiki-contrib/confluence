@@ -64,15 +64,15 @@
                 </entry>
                 <entry>
                   <string>content</string>
-                  <string>[[space:xwiki:Root.testLinks]]
+                  <string>[[space:Root.testLinks]]
 
-[[doc:xwiki:Root.testLinks.1\. page with dot in title.WebHome]]
+[[doc:Root.testLinks.1\. page with dot in title.WebHome]]
 
-[[attach:xwiki:Root.testLinks.1\. page with dot in title.WebHome@filename.png]]
+[[attach:Root.testLinks.1\. page with dot in title.WebHome@filename.png]]
 
 [[attach:filename.png]]
 
-[[attach:xwiki:Root.testLinks.WebHome@filename.png]]</string>
+[[attach:Root.testLinks.WebHome@filename.png]]</string>
                 </entry>
                 <entry>
                   <string>syntax</string>
@@ -140,7 +140,7 @@
 .input|confluence+xml
 .configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=pageswithdots
-.configuration.rootSpace=Root
+.configuration.root=Root
 .configuration.baseURLs=http://localhost:8080/confluence
 .configuration.includedPages=200, 201, 202
 .#------------------------------------------------------------------------------

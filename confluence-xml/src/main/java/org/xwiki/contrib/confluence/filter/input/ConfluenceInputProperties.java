@@ -37,6 +37,7 @@ import org.xwiki.contrib.confluence.filter.Mapping;
 import org.xwiki.contrib.confluence.filter.internal.idrange.ConfluenceIdRangeList;
 import org.xwiki.filter.DefaultFilterStreamProperties;
 import org.xwiki.filter.input.InputSource;
+import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.properties.annotation.PropertyDescription;
@@ -56,6 +57,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private static final String XWIKI_ADMIN_GROUP_NAME = "XWikiAdminGroup";
     private static final String XWIKI_ALL_GROUP_NAME = "XWikiAllGroup";
     private static final String CLEANUP_SYNC = "SYNC";
+    private static final String WEB_HOME = "WebHome";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfluenceInputProperties.class);
 
@@ -202,9 +204,9 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private String blogSpaceName = "Blog";
 
     /**
-     * @see #getRootSpace()
+     * @see #getRoot()
      */
-    private SpaceReference rootSpace;
+    private EntityReference root;
 
     /**
      * @see #isAttachmentsEnabled()
@@ -363,7 +365,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     @PropertyHidden
     public String getSpacePageName()
     {
-        return "WebHome";
+        return WEB_HOME;
     }
 
     /**
@@ -920,21 +922,55 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     /**
      * @return The name to use for the root space
      * @since 9.32.0
+     * @deprecated since 9.60.0
      */
     @PropertyName("Root space name")
     @PropertyDescription("The name to use for the space in which pages will be imported")
+    @Deprecated (since = "9.60.0")
+    @PropertyHidden
     public SpaceReference getRootSpace()
     {
-        return this.rootSpace;
+        return this.root == null ? null : new SpaceReference(this.root);
     }
 
     /**
      * @param rootSpace The name to use for the root space
      * @since 9.32.0
+     * @deprecated since 9.60.0
      */
+    @Deprecated (since = "9.60.0")
+    @PropertyHidden
     public void setRootSpace(SpaceReference rootSpace)
     {
-        this.rootSpace = rootSpace;
+        this.root = rootSpace;
+    }
+
+    /**
+     * @return The name to use for the root wiki/space
+     * @since 9.60.0
+     */
+    @PropertyName("Root")
+    @PropertyDescription("The wiki or space in which pages will be imported. "
+        + "Examples: wiki:sub, space:sub:RootInSubWiki, MyRootInCurrentWiki, My.Migration, sub:My.MigrationInSubSpace")
+    public EntityReference getRoot()
+    {
+        return this.root;
+    }
+
+    /**
+     * @param root The name to use for the root wiki / space
+     * @since 9.60.0
+     */
+    public void setRoot(EntityReference root)
+    {
+        EntityReference r = root;
+        if (r != null && r.getType() == EntityType.DOCUMENT) {
+            String name = r.getName();
+            r = WEB_HOME.equals(name)
+                ? r.getParent()
+                : new EntityReference(name, EntityType.SPACE, r.getParent());
+        }
+        this.root = r;
     }
 
     /**

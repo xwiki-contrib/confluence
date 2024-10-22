@@ -37,7 +37,6 @@ import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceResolver;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.model.reference.LocalDocumentReference;
-import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.model.validation.EntityNameValidationManager;
 import org.xwiki.rendering.listener.reference.AttachmentResourceReference;
 import org.xwiki.rendering.listener.reference.DocumentResourceReference;
@@ -192,7 +191,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             return null;
         }
 
-        SpaceReference root = context.getProperties().getRootSpace();
+        EntityReference root = context.getProperties().getRoot();
         if (root != null) {
             EntityType rootType = newRef.getRoot().getType();
             if (EntityType.SPACE.equals(rootType) || EntityType.WIKI.equals(rootType)) {
@@ -393,7 +392,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     private EntityReference fromSpaceKey(String spaceKey)
     {
         String convertedSpace = toEntityName(ensureNonEmptySpaceKey(spaceKey));
-        SpaceReference root = context.getProperties().getRootSpace();
+        EntityReference root = context.getProperties().getRoot();
         return new EntityReference(convertedSpace, EntityType.SPACE, root);
     }
 

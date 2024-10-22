@@ -438,7 +438,17 @@ public class ConfluenceInputFilterStream
         Map<Long, List<Long>> blogPages, Collection<Long> disabledSpaces)
         throws FilterException, ConfluenceInterruptedException
     {
-        beginSpace(properties.getRootSpace(), proxyFilter);
+        EntityReference root = properties.getRoot();
+        String wiki = null;
+        FilterEventParameters wikiParameters = null;
+        if (root != null) {
+            wiki = root.getRoot().getType() == EntityType.WIKI ? root.getRoot().getName() : null;
+        }
+        if (wiki != null) {
+            wikiParameters = new FilterEventParameters();
+            proxyFilter.beginWiki(wiki, wikiParameters);
+        }
+        beginSpace(root, proxyFilter);
         try {
             Set<Long> rootSpaces = new LinkedHashSet<>();
             rootSpaces.addAll(pages.keySet());
@@ -461,7 +471,10 @@ public class ConfluenceInputFilterStream
                 }
             }
         } finally {
-            endSpace(properties.getRootSpace(), proxyFilter);
+            endSpace(root, proxyFilter);
+            if (wiki != null) {
+                proxyFilter.endWiki(wiki, wikiParameters);
+            }
         }
     }
 
