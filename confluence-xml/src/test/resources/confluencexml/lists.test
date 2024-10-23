@@ -80,6 +80,8 @@
 
 * {{mathjax}}\label{myanchor}{{/mathjax}}
 
+A urlencoded inline math with + signs: {{mathjax}}\(K_\text{S}\to\pi^-\pi^+\){{/mathjax}}
+
 {{mathjax}}
 \begin{equation}
 1337 = x \times 42\\

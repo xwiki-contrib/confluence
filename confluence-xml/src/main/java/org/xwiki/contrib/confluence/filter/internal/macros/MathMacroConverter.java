@@ -73,7 +73,8 @@ public class MathMacroConverter extends AbstractMacroConverter
         }
 
         if (content.startsWith("--uriencoded--")) {
-            content = URLDecoder.decode(content.substring(14), StandardCharsets.UTF_8);
+            String urlEncodedContent = content.substring(14).replace("+", "%2B");
+            content = URLDecoder.decode(urlEncodedContent, StandardCharsets.UTF_8);
         }
 
         content = escapeMathjax(content);
