@@ -55,6 +55,6 @@ public class IncludeMacroConverter extends AbstractMacroConverter
     @Override
     public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
     {
-        return InlineSupport.NO;
+        return InlineSupport.YES;
     }
 }

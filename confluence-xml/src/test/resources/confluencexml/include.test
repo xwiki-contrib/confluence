@@ -25,7 +25,9 @@
 
 {{display reference="TestSpace.validatedpage.WebHome"/}}
 
-{{excerpt-include 0="TestSpace.validatedpage.WebHome"/}}</string>
+{{excerpt-include 0="TestSpace.validatedpage.WebHome"/}}
+
+Include inline: {{display reference="TestSpace.validatedpage.WebHome"/}}</string>
               </entry>
               <entry>
                 <string>syntax</string>
