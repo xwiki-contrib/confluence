@@ -68,14 +68,6 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
     // TODO: Should probably introduce a component implemented on confluence-xml module side but based on actual model
     // API this time to be safe at least in this use case
 
-    private static final String[] REPLACE_DOCUMENT_PREVIOUS = new String[] {"\\", "."};
-
-    private static final String[] REPLACE_DOCUMENT_NEXT = new String[] {"\\\\", "\\."};
-
-    private static final String[] REPLACE_SPACE_PREVIOUS = new String[] {"\\", ".", ":"};
-
-    private static final String[] REPLACE_SPACE_NEXT = new String[] {"\\\\", "\\.", "\\:"};
-
     private static final List<EventType> PLAIN_TEXT_EVENTS = List.of(
         EventType.ON_SPACE,
         EventType.ON_RAW_TEXT,
@@ -85,6 +77,11 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         EventType.ON_VERBATIM,
         EventType.ON_WORD
     );
+
+    private static final String CLASS = "class";
+    private static final String STYLE = "style";
+    private static final String CODE = "code";
+    private static final String SOURCE = "source";
 
     private final Method pushListenerMethod;
 
@@ -278,7 +275,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
 
             if (resourceReference != null) {
                 if (confluenceReference.getCaption() != null) {
-                    Map<String, String> figureParameters = Collections.singletonMap("class", "image");
+                    Map<String, String> figureParameters = Collections.singletonMap(CLASS, "image");
                     this.getListener().beginFigure(figureParameters);
                     onImage(resourceReference, false, confluenceReference.getImageParameters());
                     this.getListener().beginFigureCaption(Listener.EMPTY_PARAMETERS);
@@ -357,26 +354,26 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
     @Override
     public void onMacroBlock(String macroName, WikiParameters params, String content)
     {
-        /**
+        /*
          * Wikimodel doesn't handle nested lists and lists with unique paragraphs  well.
          * We bypass it by manually handling list-related tags.
          */
         switch (macroName) {
             case "confluence_ul_start":
                 getListener().beginList(ListType.BULLETED, Collections.emptyMap());
-                return;
+                break;
 
             case "confluence_ol_start":
                 getListener().beginList(ListType.NUMBERED, Collections.emptyMap());
-                return;
+                break;
 
             case "confluence_ul_end":
                 super.endList(params, false);
-                return;
+                break;
 
             case "confluence_ol_end":
                 super.endList(params, true);
-                return;
+                break;
 
             case "confluence_li_start":
                 // we begin the list item and then record the following events. This will allow us to do some cleanup
@@ -384,18 +381,16 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
                 listItemDepth++;
                 getListener().beginListItem();
                 maybePushListener();
-                return;
+                break;
 
             case "confluence_li_end":
                 handleListItem();
                 listItemDepth--;
-                return;
+                break;
 
             default:
-                // ignore
+                super.onMacroBlock(macroName, params, content);
         }
-
-        super.onMacroBlock(macroName, params, content);
     }
 
     private void endFormat(Map<String, String> format)
@@ -407,16 +402,16 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
 
     private Map<String, String> beginFormat(WikiParameters params)
     {
-        WikiParameter classParam = params.getParameter("class");
-        WikiParameter styleParam = params.getParameter("style");
+        WikiParameter classParam = params.getParameter(CLASS);
+        WikiParameter styleParam = params.getParameter(STYLE);
         Map<String, String> format = new HashMap<>(2);
 
         if (styleParam != null && !StringUtils.isEmpty(styleParam.getValue())) {
-            format.put("style", styleParam.getValue());
+            format.put(STYLE, styleParam.getValue());
         }
 
         if (classParam != null && !StringUtils.isEmpty(classParam.getValue())) {
-            format.put("class", classParam.getValue());
+            format.put(CLASS, classParam.getValue());
         }
 
         if (format.isEmpty()) {
@@ -439,16 +434,23 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         }
         int s = queueListener.size();
 
-        if (queueListener.size() > 4
-            && queueListener.get(0).eventType.equals(EventType.BEGIN_DOCUMENT)
-            && queueListener.get(1).eventType.equals(EventType.BEGIN_PARAGRAPH)
-            && queueListener.get(s - 2).eventType.equals(EventType.END_PARAGRAPH)
-            && queueListener.get(s - 1).eventType.equals(EventType.END_DOCUMENT)
-        ) {
+        if (wrappedInParagraph(queueListener, s)) {
             // we skip BEGIN_DOCUMENT,  BEGIN_PARAGRAPH at the start and END_PARAGRAPH, END_DOCUMENT at the end
             return queueListener.subList(2, s - 2);
         }
         return null;
+    }
+
+    private static boolean wrappedInParagraph(QueueListener queueListener, int s)
+    {
+        if (queueListener.size() <= 4) {
+            return false;
+        }
+
+        return queueListener.get(0).eventType.equals(EventType.BEGIN_DOCUMENT)
+            && queueListener.get(1).eventType.equals(EventType.BEGIN_PARAGRAPH)
+            && queueListener.get(s - 2).eventType.equals(EventType.END_PARAGRAPH)
+            && queueListener.get(s - 1).eventType.equals(EventType.END_DOCUMENT);
     }
 
     private void handleListItem()
@@ -605,11 +607,11 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
     {
         WikiParameters params = new WikiParameters().addParameter("language", "none");
         if (content.contains("{{/code}}")) {
-            params = params.addParameter("source", "string:" + content);
-            super.onMacroInline("code", params, null);
+            params = params.addParameter(SOURCE, "string:" + content);
+            super.onMacroInline(CODE, params, null);
             return;
         }
-        super.onMacroInline("code", params, content);
+        super.onMacroInline(CODE, params, content);
     }
 
     private static boolean isClassPre(QueueListener.Event e)
@@ -636,7 +638,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
     {
         if (eventParameter instanceof Map) {
             Map<String, String> params = (Map<String, String>) eventParameter;
-            return params.size() == 1 && "pre".equals(params.get("class"));
+            return params.size() == 1 && "pre".equals(params.get(CLASS));
         }
         return false;
     }
