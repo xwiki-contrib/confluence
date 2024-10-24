@@ -235,7 +235,7 @@ public class ConfluenceConverterListener extends WrappingListener
                     || event.eventType == EventType.ON_SPACE);
             if (!isEmpty) {
                 // Relay the recorded events
-                contentListener.consumeEvents(this);
+                contentListener.consumeEvents(this.getWrappedListener());
                 super.endParagraph(removeClassParameter(parameters));
             }
         } else {

@@ -64,6 +64,14 @@
         <p><ac:structured-macro ac:name="convertedtoblock"/><ac:structured-macro ac:name="convertedtoblock"/></p>
         <p><ac:structured-macro ac:name="rw-pagetree"><ac:parameter ac:name="root">10</ac:parameter></ac:structured-macro></p>
         <p><ac:structured-macro ac:name="rw-pagetree"></ac:structured-macro></p>
+        <p class="auto-cursor-target">
+          <ac:structured-macro ac:name="include" ac:schema-version="1" ac:macro-id="73d3d81c-ad26-44b5-9390-e3b122efb6e9">
+            <ac:parameter ac:name="">
+              <ac:link><ri:page ri:content-title="pagetovalidate" /></ac:link>
+            </ac:parameter>
+          </ac:structured-macro>
+          <span>Hi.</span>
+        </p>
       ]]>
     </property>
     <property name="content" class="Page"

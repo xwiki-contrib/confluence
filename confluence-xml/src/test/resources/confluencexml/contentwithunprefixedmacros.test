@@ -29,7 +29,9 @@ sub macro rich **text** content
 
 {{documentTree root="document:TestSpace.TestContent.WebHome"/}}
 
-{{documentTree/}}</string>
+{{documentTree/}}
+
+{{display reference="TestSpace.validatedpage.WebHome "/}}Hi.</string>
               </entry>
               <entry>
                 <string>syntax</string>
