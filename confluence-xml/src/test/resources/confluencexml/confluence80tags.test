@@ -225,9 +225,9 @@ But with Confluence, you can bring all that information into one place.
 )))|(((
 Getting a project outlined and adding the right content are just the first steps. Now it's time for your team to weigh in. Confluence makes it easy to discuss your work - with your team, your boss, or your entire company - in the same place where you organized and created it.
 )))
-|(% colspan="1" %)(((
+|(((
 [[Confluence 101: create content with pages>>url:https://www.atlassian.com/collaboration/confluence-create-content-with-pages||shape="rect"]]
-)))|(% colspan="1" %)(((
+)))|(((
 Think of pages as a New Age "document." If Word docs were rotary phones, Confluence pages would be smart phones. A smart phone still makes calls (like their rotary counterparts), but it can do so much more than that
 )))
 

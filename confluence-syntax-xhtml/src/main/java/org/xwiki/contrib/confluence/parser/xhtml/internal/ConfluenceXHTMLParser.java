@@ -52,6 +52,7 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ADFNodeHandl
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.CaptionHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.CodeTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceAttributeXMLFilter;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceListItemTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceOrderedListTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceParagraphTagHandler;
@@ -276,10 +277,13 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         // parser may call it several times.
         AccumulationXMLFilter accumulationFilter = new AccumulationXMLFilter(dtdFilter);
 
+        // Add an XML Filter to clean up and convert some attributes to styles
+        ConfluenceAttributeXMLFilter attributeXMLFilter = new ConfluenceAttributeXMLFilter(accumulationFilter);
+
         // Add an XML Filter to remove non-semantic white spaces. We need to
         // do that since all WikiModel
         // events contain only semantic information.
-        return new ConfluenceXHTMLWhitespaceXMLFilter(accumulationFilter);
+        return new ConfluenceXHTMLWhitespaceXMLFilter(attributeXMLFilter);
     }
 
     @Override

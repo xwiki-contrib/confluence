@@ -36,27 +36,27 @@ onSpecialSymbol [)]
 endParagraph [[style]=[text-align: left;]]
 endGroup
 endTableCell [[style]=[text-align: center;]]
-beginTableCell [[class]=[highlight-green][data-highlight-colour]=[green]]
+beginTableCell [[class]=[highlight-green][style]=[background-color: green]]
 beginGroup
 beginParagraph
 onWord [Oui]
 endParagraph
 endGroup
-endTableCell [[class]=[highlight-green][data-highlight-colour]=[green]]
-beginTableCell [[class]=[highlight-red][data-highlight-colour]=[red]]
+endTableCell [[class]=[highlight-green][style]=[background-color: green]]
+beginTableCell [[class]=[highlight-red][style]=[background-color: red]]
 beginGroup
 beginParagraph
 onWord [Non]
 endParagraph
 endGroup
-endTableCell [[class]=[highlight-red][data-highlight-colour]=[red]]
-beginTableCell [[class]=[highlight-red][data-highlight-colour]=[red]]
+endTableCell [[class]=[highlight-red][style]=[background-color: red]]
+beginTableCell [[class]=[highlight-red][style]=[background-color: red]]
 beginGroup
 beginParagraph
 onWord [Non]
 endParagraph
 endGroup
-endTableCell [[class]=[highlight-red][data-highlight-colour]=[red]]
+endTableCell [[class]=[highlight-red][style]=[background-color: red]]
 endTableRow
 endTable
 endDocument

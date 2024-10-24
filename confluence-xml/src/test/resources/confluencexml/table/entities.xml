@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic>
+  <!-- Thanks DESY for the test case -->
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">100</id>
+    <property name="name"><![CDATA[TestSpace]]></property>
+    <property name="key"><![CDATA[TestSpace]]></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">10</id>
+    <property name="space" class="Space"
+      package="com.atlassian.confluence.spaces">
+      <id name="id">100</id>
+    </property>
+    <property name="title"><![CDATA[TestContent]]></property>
+    <collection name="bodyContents">
+      <element class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">0</id>
+      </element>
+    </collection>
+    <property name="parent" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">42</id>
+    </property>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">0</id>
+    <property name="body"><![CDATA[
+<table class="fixed-width wrapped" style="width: 1037.0px;">
+  <colgroup>
+    <col style="width: 297.0px;"/>
+    <col style="width: 503.0px;"/>
+    <col style="width: 236.0px;"/>
+  </colgroup>
+  <tbody>
+    <tr>
+      <th scope="col">Text left aligned in this column</th>
+      <th scope="col">Text centered in this column</th>
+      <th scope="col">Text right aligned in this column</th>
+    </tr>
+    <tr>
+      <td class="highlight-#79f2c0" style="text-align: left;" data-highlight-colour="#79f2c0">Lorem</td>
+      <td class="highlight-#79f2c0" style="text-align: center;" data-highlight-colour="#79f2c0">Ipsum</td>
+      <td class="highlight-#79f2c0" style="text-align: right;" data-highlight-colour="#79f2c0">Dolor - Erste Zeile ist in gr;ner Farbe</td>
+    </tr>
+    <tr>
+      <td style="text-align: left;">More tuff</td>
+      <td style="text-align: center;">centered text</td>
+      <td style="text-align: right;">Further text comes here</td>
+    </tr>
+    <tr>
+      <td style="text-align: left;">
+        <br/>
+      </td>
+      <td class="highlight-#de350b" style="text-align: center;" data-highlight-colour="#de350b">
+        <span style="color: rgb(255,255,255);">This cell is with red background and white color</span>
+      </td>
+      <td style="text-align: right;">and here</td>
+    </tr>
+    <tr>
+      <td style="text-align: left;">
+        <br/>
+      </td>
+      <td style="text-align: center;">
+        <ul>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+              <br/>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+        </ul>
+      </td>
+      <td style="text-align: right;">
+        <br/>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: left;">
+        <ul>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+        </ul>
+      </td>
+      <td style="text-align: center;">
+        <span style="color: rgb(255,255,255);">
+          <br/>
+        </span>
+      </td>
+      <td style="text-align: right;">
+        <ul>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p class="auto-cursor-target">
+  <br/>
+</p>
+<p>
+  <u><strong>Flexible </strong> table with colors and set widths:</u>
+</p>
+<table class="wrapped relative-table" style="width: 68.3351%;">
+  <colgroup>
+    <col style="width: 25.0965%;"/>
+    <col style="width: 45.8908%;"/>
+    <col style="width: 29.0127%;"/>
+  </colgroup>
+  <tbody>
+    <tr>
+      <th>Text left aligned in this column</th>
+      <th style="text-align: center;">Text centered in this column</th>
+      <th style="text-align: right;">Text right aligned in this column</th>
+    </tr>
+    <tr>
+      <td class="highlight-#79f2c0" style="text-align: left;" data-highlight-colour="#79f2c0">Lorem</td>
+      <td class="highlight-#79f2c0" style="text-align: center;" data-highlight-colour="#79f2c0">Ipsum</td>
+      <td class="highlight-#79f2c0" style="text-align: right;" data-highlight-colour="#79f2c0">Dolor - Erste Zeile ist in gr;ner Farbe</td>
+    </tr>
+    <tr>
+      <td style="text-align: left;">More stuff</td>
+      <td style="text-align: center;">This is a Table just for testing purposes, the text is centered</td>
+      <td style="text-align: right;">Further text comes here</td>
+    </tr>
+    <tr>
+      <td style="text-align: left;">
+        <br/>
+      </td>
+      <td class="highlight-#0065ff" style="text-align: center;" data-highlight-colour="#0065ff">
+        <span style="color: rgb(255,255,255);">This cell is with blue background and white color</span>
+      </td>
+      <td style="text-align: right;">and here</td>
+    </tr>
+    <tr>
+      <td style="text-align: left;">
+        <br/>
+      </td>
+      <td style="text-align: center;">
+        <ul>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+              <br/>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+        </ul>
+      </td>
+      <td style="text-align: right;">
+        <br/>
+      </td>
+    </tr>
+    <tr>
+      <td style="text-align: left;">
+        <ul>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+        </ul>
+      </td>
+      <td style="text-align: center;">
+        <span style="color: rgb(255,255,255);">
+          <br/>
+        </span>
+      </td>
+      <td style="text-align: right;">
+        <ul>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p>
+  <br/>
+</p>
+<p>
+  <u><strong>Flexible </strong> width and colors, but without change of columns / table width:</u>
+</p>
+<table>
+  <tbody class="">
+    <tr class="">
+      <th>Text left aligned in this column</th>
+      <th style="text-align: center;">Text centered in this column</th>
+      <th style="text-align: right;">Text right aligned in this column</th>
+    </tr>
+    <tr class="">
+      <td class="highlight-#8777d9" style="text-align: left;" data-highlight-colour="#8777d9">Noch mehr Stuff</td>
+      <td class="highlight-#8777d9" style="text-align: center;" data-highlight-colour="#8777d9">This is a Table just for testing purposes, the text is centered</td>
+      <td class="highlight-#8777d9" style="text-align: right;" data-highlight-colour="#8777d9">Further text comes here</td>
+    </tr>
+    <tr class="">
+      <td style="text-align: left;">
+        <br/>
+      </td>
+      <td class="highlight-#0065ff" style="text-align: center;" data-highlight-colour="#0065ff">
+        <p>
+          <span style="color: rgb(255,255,255);">This cell is with blue background and white font color</span>
+        </p>
+      </td>
+      <td class="highlight-#ff991f" style="text-align: right;" data-highlight-colour="#ff991f">and here</td>
+    </tr>
+    <tr class="">
+      <td style="text-align: left;">
+        <ul>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+        </ul>
+      </td>
+      <td style="text-align: center;">
+        <ul>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+              <br/>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+        </ul>
+      </td>
+      <td style="text-align: right;">
+        <ul>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+          <li>
+            <span style="color: rgb(255,255,255);">
+              <span style="color: rgb(0,0,0);">Test with bullet points</span>
+            </span>
+          </li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>]]></property>
+    <property name="content" class="Page"
+      package="com.atlassian.confluence.pages">
+      <id name="id">10</id>
+    </property>
+    <property name="bodyType">2</property>
+  </object>
+
+</hibernate-generic>
