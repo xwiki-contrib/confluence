@@ -67,8 +67,10 @@
 )))
 )))
 
+(% style="list-style-type: square;" %)
 * {{mathjax}}\(1337=k\times 42\){{/mathjax}}
 
+(% style="list-style-type: square;" %)
 * (((
 {{mathjax}}
 \begin{equation}
@@ -78,7 +80,14 @@
 {{/mathjax}}
 )))
 
+(% style="list-style-type: square;" %)
 * {{mathjax}}\label{myanchor}{{/mathjax}}
+
+* 
+** 
+*** 
+**** __Alt:__
+**** __Neu:__
 
 A urlencoded inline math with + signs: {{mathjax}}\(K_\text{S}\to\pi^-\pi^+\){{/mathjax}}
 

@@ -351,6 +351,15 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         return listItemDepth > 0;
     }
 
+    private Map<String, String> toMap(WikiParameters params)
+    {
+        Map<String, String> res = new HashMap<>(params.getSize());
+        for (WikiParameter param : params) {
+            res.put(param.getKey(), param.getValue());
+        }
+        return res;
+    }
+
     @Override
     public void onMacroBlock(String macroName, WikiParameters params, String content)
     {
@@ -360,11 +369,11 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
          */
         switch (macroName) {
             case "confluence_ul_start":
-                getListener().beginList(ListType.BULLETED, Collections.emptyMap());
+                getListener().beginList(ListType.BULLETED, toMap(params));
                 break;
 
             case "confluence_ol_start":
-                getListener().beginList(ListType.NUMBERED, Collections.emptyMap());
+                getListener().beginList(ListType.NUMBERED, toMap(params));
                 break;
 
             case "confluence_ul_end":
@@ -379,12 +388,12 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
                 // we begin the list item and then record the following events. This will allow us to do some cleanup
                 // that will avoid clunky syntax and broken rendering. See handleListItem().
                 listItemDepth++;
-                getListener().beginListItem();
+                getListener().beginListItem(toMap(params));
                 maybePushListener();
                 break;
 
             case "confluence_li_end":
-                handleListItem();
+                handleListItem(toMap(params));
                 listItemDepth--;
                 break;
 
@@ -453,7 +462,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
             && queueListener.get(s - 1).eventType.equals(EventType.END_DOCUMENT);
     }
 
-    private void handleListItem()
+    private void handleListItem(Map<String, String> params)
     {
         /*
          * We make sure the list item content is wrapped in a group if necessary.
@@ -485,7 +494,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
                 getListener().endGroup(Collections.emptyMap());
             }
         }
-        getListener().endListItem();
+        getListener().endListItem(params);
     }
 
     private void removeParagraphImmediatelyFollowedByList(QueueListener queueListener)

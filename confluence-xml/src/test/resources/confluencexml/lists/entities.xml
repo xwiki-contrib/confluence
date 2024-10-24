@@ -65,6 +65,24 @@
 
 <ul style="list-style-type: square;"><li><ac:structured-macro ac:name="mathblock-ref"><ac:parameter ac:name="anchor">myanchor</ac:parameter></ac:structured-macro></li></ul>
 
+<ul>
+    <li style="list-style-type: none;">
+        <ul>
+            <li style="list-style-type: none;">
+                <ul>
+                    <li style="list-style-type: none;">
+                        <ul>
+                            <li><u>Alt:</u></li>
+                            <li><u>Neu:</u></li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </li>
+</ul>
+
+
 <p>A urlencoded inline math with + signs: <ac:structured-macro ac:name="mathinline" ac:schema-version="1" ac:macro-id="35ea5ccd-fac7-4165-b523-f7ad0b51af20"><ac:parameter ac:name="body">--uriencoded--K_\text%7BS%7D\to\pi%5e-\pi%5e+</ac:parameter></ac:structured-macro></p>
 
 <ac:structured-macro ac:name="mathblock" ac:schema-version="1" ac:macro-id="f2b55061-df1f-4e70-9dfb-f99a6d4b1ebc"><ac:plain-text-body><![CDATA[1337 = x \times 42\\]] ></ac:plain-text-body></ac:structured-macro>]]>
