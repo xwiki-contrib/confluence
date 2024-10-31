@@ -26,6 +26,8 @@ package org.xwiki.contrib.confluence.resolvers;
  */
 public class ConfluenceResolverException extends Exception
 {
+    private static final long serialVersionUID = 1L;
+
     /**
      * @param message the exception message
      */
