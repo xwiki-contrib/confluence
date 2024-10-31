@@ -72,6 +72,10 @@
           </ac:structured-macro>
           <span>Hi.</span>
         </p>
+	<ac:structured-macro ac:name="markdown" ac:schema-version="1"><ac:plain-text-body><![CDATA[## Some {{{{markdown}}}} {{{escaped}}} {{notamacro}} {{/content}} [[[notalink]]] [[notalink]] [[[[notalink]]]] [shouldnotbeescaped] {shouldnotbeescaped}
+```bash
+$ ls -l
+```]] ></ac:plain-text-body></ac:structured-macro>
       ]]>
     </property>
     <property name="content" class="Page"

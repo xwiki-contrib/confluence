@@ -21,6 +21,7 @@ org.xwiki.contrib.confluence.filter.internal.macros.JiraMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.MacroToContentConverter
 org.xwiki.contrib.confluence.filter.internal.macros.MathblockRefMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.MathMacroConverter
+org.xwiki.contrib.confluence.filter.internal.macros.MarkdownMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.MentionMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.NoformatMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.RedirectMacroConverter
