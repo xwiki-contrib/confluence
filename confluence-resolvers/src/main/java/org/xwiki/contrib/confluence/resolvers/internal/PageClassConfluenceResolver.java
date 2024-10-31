@@ -189,7 +189,7 @@ public class PageClassConfluenceResolver
                     + " o.name = :fullname and p.id.name = 'space'",
                 HQL).bindValue("fullname", fullName).setLimit(1);
             if (reference.getRoot().getType() == EntityType.WIKI) {
-                q = q.setWiki(fullName);
+                q = q.setWiki(reference.getRoot().getName());
             }
             List<String> res = q.execute();
             if (!res.isEmpty()) {
