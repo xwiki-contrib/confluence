@@ -24,6 +24,7 @@ import com.xpn.xwiki.XWikiException;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentManager;
+import org.xwiki.contrib.confluence.resolvers.ConfluenceSpaceResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceSpaceKeyResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
 import org.xwiki.model.EntityType;
@@ -45,7 +46,8 @@ import javax.inject.Singleton;
 @Unstable
 @Singleton
 @Priority(900)
-public class DefaultConfluenceSpaceResolver extends AbstractConfluenceResolver implements ConfluenceSpaceKeyResolver
+public class DefaultConfluenceSpaceResolver extends AbstractConfluenceResolver implements ConfluenceSpaceKeyResolver,
+    ConfluenceSpaceResolver
 {
     @Inject
     private ComponentManager componentManager;
@@ -86,5 +88,55 @@ public class DefaultConfluenceSpaceResolver extends AbstractConfluenceResolver i
 
         logger.debug("Confluence space [{}] resolved to [{}] using fallback", spaceKey, spaceHomeRef);
         return spaceRef;
+    }
+
+    @Override
+    public EntityReference getSpace(EntityReference reference) throws ConfluenceResolverException
+    {
+        for (ConfluenceSpaceResolver r : getResolvers(componentManager, ConfluenceSpaceResolver.class)) {
+            if (r != this) {
+                EntityReference docRef = r.getSpace(reference);
+                if (docRef != null) {
+                    logger.debug("Current space resolved to [{}] using [{}]", docRef, r);
+                    return docRef;
+                }
+            }
+        }
+
+        // Fallback.
+        // FIXME this is a bit optimistic. We need to make this work with Confluence spaces migrated in a
+        //  (non-empty) root space
+        EntityReference spaceEntity = xcontextProvider.get().getDoc().getDocumentReference();
+        while (spaceEntity.getParent() != null && spaceEntity.getParent().getType().equals(EntityType.SPACE)) {
+            spaceEntity = spaceEntity.getParent();
+        }
+
+        logger.debug("Current space resolved to [{}] using fallback", spaceEntity);
+        return spaceEntity;
+    }
+
+    @Override
+    public String getSpaceKey(EntityReference reference) throws ConfluenceResolverException
+    {
+        for (ConfluenceSpaceResolver r : getResolvers(componentManager, ConfluenceSpaceResolver.class)) {
+            if (r != this) {
+                String spaceKey = r.getSpaceKey(reference);
+                if (spaceKey != null) {
+                    logger.debug("Current space key resolved to [{}] using [{}]", spaceKey, r);
+                    return spaceKey;
+                }
+            }
+        }
+
+        // Fallback.
+        // FIXME this is a bit optimistic. We need to make this work with Confluence spaces migrated in a
+        //  (non-empty) root space
+        EntityReference spaceEntity = xcontextProvider.get().getDoc().getDocumentReference();
+        while (spaceEntity.getParent() != null && spaceEntity.getParent().getType().equals(EntityType.SPACE)) {
+            spaceEntity = spaceEntity.getParent();
+        }
+
+        logger.debug("Current space key resolved to [{}] using fallback", spaceEntity.getName());
+        return spaceEntity.getName();
     }
 }

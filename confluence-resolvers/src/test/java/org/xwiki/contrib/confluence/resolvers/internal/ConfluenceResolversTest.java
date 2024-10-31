@@ -26,7 +26,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
+import org.xwiki.contrib.confluence.resolvers.ConfluenceSpaceKeyResolver;
 import org.xwiki.model.EntityType;
+import org.xwiki.model.internal.reference.LocalStringEntityReferenceSerializer;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.LocalDocumentReference;
@@ -40,6 +42,7 @@ import org.xwiki.test.annotation.ComponentList;
 import org.xwiki.test.junit5.mockito.ComponentTest;
 import org.xwiki.test.junit5.mockito.InjectMockComponents;
 import org.xwiki.test.junit5.mockito.MockComponent;
+import org.xwiki.test.page.PageComponentList;
 
 import javax.inject.Provider;
 import java.util.List;
@@ -53,8 +56,10 @@ import static org.mockito.Mockito.when;
 
 @ComponentTest
 @ComponentList({
-    PageClassConfluenceResolver.class
+    PageClassConfluenceResolver.class,
+    LocalStringEntityReferenceSerializer.class
 })
+@PageComponentList
 class ConfluenceResolversTest
 {
     private static final String MY_SPACE = "MySpace";
@@ -89,7 +94,7 @@ class ConfluenceResolversTest
     @InjectMockComponents (role = ConfluencePageIdResolver.class)
     private DefaultConfluencePageResolver confluencePageResolver;
 
-    @InjectMockComponents
+    @InjectMockComponents (role = ConfluenceSpaceKeyResolver.class)
     private DefaultConfluenceSpaceResolver confluenceSpaceResolver;
 
     @MockComponent
@@ -157,11 +162,11 @@ class ConfluenceResolversTest
                 return List.of(new XWikiDocument(MY_DOC_REF));
             }
 
-            if (space.get().isEmpty() && (value.get().equals("MySpace"))) {
+            if (space.get().isEmpty() && (value.get().equals(MY_SPACE))) {
                 return List.of(new XWikiDocument(MY_SPACE_REF));
             }
 
-            if (space.get().equals("MySpace")) {
+            if (space.get().equals(MY_SPACE)) {
                 if (value.get().equals(MY_DOC)) {
                     return List.of(new XWikiDocument(MY_DOC_REF));
                 }

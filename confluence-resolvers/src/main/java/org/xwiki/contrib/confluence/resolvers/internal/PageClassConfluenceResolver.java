@@ -26,13 +26,16 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import org.slf4j.Logger;
+import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.confluence.resolvers.ConfluenceSpaceResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageTitleResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceSpaceKeyResolver;
+import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
+import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.query.Query;
 import org.xwiki.query.QueryException;
 import org.xwiki.query.QueryManager;
@@ -52,7 +55,8 @@ import static org.xwiki.query.Query.HQL;
 @Singleton
 @Priority(900)
 public class PageClassConfluenceResolver
-    implements ConfluencePageIdResolver, ConfluencePageTitleResolver, ConfluenceSpaceKeyResolver
+    implements ConfluencePageIdResolver, ConfluencePageTitleResolver, ConfluenceSpaceKeyResolver,
+    ConfluenceSpaceResolver
 {
     // The following HQL statement was translated from the following XWQL statement:
     // ---
@@ -90,7 +94,8 @@ public class PageClassConfluenceResolver
     private QueryManager queryManager;
 
     @Inject
-    private Logger logger;
+    @Named("local")
+    private EntityReferenceSerializer<String> localReferenceSerializer;
 
     @Override
     public EntityReference getDocumentById(long id) throws ConfluenceResolverException
@@ -145,5 +150,54 @@ public class PageClassConfluenceResolver
         } catch (QueryException e) {
             throw new ConfluenceResolverException(e);
         }
+    }
+
+    @Override
+    public EntityReference getSpace(EntityReference reference) throws ConfluenceResolverException
+    {
+        String spaceKey = getSpaceKey(reference);
+        if (StringUtils.isNotEmpty(spaceKey)) {
+            try {
+                Query q = queryManager.createQuery(
+                    "select doc from XWikiDocument doc, BaseObject o, StringProperty prop where "
+                        + "o.className = 'Confluence.Code.ConfluencePageClass' and prop.id.id = o.id and "
+                        + "o.name = doc.fullName and prop.id.name = 'space' and prop.value = :space "
+                        + "order by length(doc.fullName)",
+                    HQL).bindValue(SPACE, spaceKey).setLimit(1);
+                List<XWikiDocument> res = q.execute();
+                if (!res.isEmpty()) {
+                    return res.get(0).getDocumentReference().getParent();
+                }
+            } catch (QueryException e) {
+                throw new ConfluenceResolverException(String.format("Failed to find the space of [%s]", reference), e);
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public String getSpaceKey(EntityReference reference) throws ConfluenceResolverException
+    {
+        String fullName = localReferenceSerializer.serialize(reference);
+        if (reference.getType() == EntityType.SPACE) {
+            fullName += ".WebHome";
+        }
+        try {
+            Query q = queryManager.createQuery(
+                "select p.value from BaseObject o, StringProperty p where "
+                    + "o.className = 'Confluence.Code.ConfluencePageClass' and p.id.id = o.id and "
+                    + " o.name = :fullname and p.id.name = 'space'",
+                HQL).bindValue("fullname", fullName).setLimit(1);
+            if (reference.getRoot().getType() == EntityType.WIKI) {
+                q = q.setWiki(fullName);
+            }
+            List<String> res = q.execute();
+            if (!res.isEmpty()) {
+                return res.get(0);
+            }
+        } catch (QueryException e) {
+            throw new ConfluenceResolverException(String.format("Failed to find the space key of [%s]", reference), e);
+        }
+        return null;
     }
 }
