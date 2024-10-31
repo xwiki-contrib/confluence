@@ -644,7 +644,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     @PropertyName("Users wiki")
     @PropertyDescription("The wiki in which users and groups are located. "
         + "If applicable, users will be imported in this wiki; any user "
-        + "reference, including ones in permissions, will include this wiki.")
+        + "reference, including ones in permissions, will include this wiki. "
+        + "If empty, local references will be used.")
     public String getUsersWiki()
     {
         return this.usersWiki;
@@ -950,8 +951,9 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @since 9.60.0
      */
     @PropertyName("Root")
-    @PropertyDescription("The wiki or space in which pages will be imported. "
-        + "Examples: wiki:sub, space:sub:RootInSubWiki, MyRootInCurrentWiki, My.Migration, sub:My.MigrationInSubSpace")
+    @PropertyDescription("The wiki or space in which pages will be imported. Examples: "
+        + "wiki:sub, space:sub:RootInSubWiki, MyRootInCurrentWiki, My.Migration, sub:My.MigrationInSubSpace. "
+        + "Note: Make sure your set 'Users wiki' accordingly.")
     public EntityReference getRoot()
     {
         return this.root;
