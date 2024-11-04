@@ -381,12 +381,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     {
         String convertedName = toEntityName(documentName);
         EntityReference space = spaceKey == null ? null : fromSpaceKey(spaceKey);
-        return getDocumentReference(
-            WEB_HOME.equals(documentName)
-                ? space
-                : new EntityReference(convertedName, EntityType.SPACE, space),
-            false
-        );
+        return getDocumentReference(new EntityReference(convertedName, EntityType.SPACE, space), false);
     }
 
     private EntityReference fromSpaceKey(String spaceKey)
@@ -507,12 +502,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         if (spaceKey != null) {
             ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
 
-            // FIXME: ConfluenceXWikiGeneratorListener used to hardcode a WebHome document name when encountering
-            //  absolute URLs to Confluence spaces.
-            // Check is this WEB_HOME.equals(documentName) test is still necessary
-            Long pageId = WEB_HOME.equals(documentName)
-                ? confluencePackage.getHomePage(confluencePackage.getSpacesByKey().get(spaceKey))
-                : confluencePackage.getPageId(spaceKey, documentName);
+            Long pageId = confluencePackage.getPageId(spaceKey, documentName);
             if (pageId == null) {
                 docRef = getDocRefFromLinkMapping(spaceKey, documentName, false);
                 if (docRef == null) {
@@ -619,10 +609,6 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         }
 
         String convertedName = toEntityName(documentName);
-
-        if (asSpace && WEB_HOME.equals(convertedName)) {
-            return parent;
-        }
 
         if (convertedName == null) {
             return getDocRefFromLinkMapping(spaceKey, documentName, asSpace);
