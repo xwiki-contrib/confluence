@@ -37,20 +37,20 @@ public interface ConfluenceReferenceConverter
 
     /**
      * @return the converted document reference
-     * @param parentSpaceReference the confluence space in which the document lives
-     * @param documentReference the document reference to convert
+     * @param spaceKey the confluence space in which the document lives
+     * @param pageTitle the document reference to convert
      */
-    String convertDocumentReference(String parentSpaceReference, String documentReference);
+    String convertDocumentReference(String spaceKey, String pageTitle);
 
     /**
      * @return the converted space reference, as SPACE
-     * @param spaceReference the space reference to convert
+     * @param spaceKey the space reference to convert
      */
-    String convertSpaceReference(String spaceReference);
+    String convertSpaceReference(String spaceKey);
 
     /**
      * @return the converted anchor
-     * @param spaceKey the space key to use if targetting the home page, empty/null for the current space or if the
+     * @param spaceKey the space key to use if targeting the home page, empty/null for the current space or if the
      *                 page title is provided
      * @param pageTitle the page title, or empty/null for the current page
      * @param anchor the anchor to convert
@@ -63,13 +63,13 @@ public interface ConfluenceReferenceConverter
 
     /**
      * @return the converted space reference
-     * @param spaceReference the space reference to convert
+     * @param spaceKey the space reference to convert
      * @param asDocument whether the space reference should be the WebHome of this space (type DOCUMENT)
      * @since 9.47.0
      */
-    default String convertSpaceReference(String spaceReference, boolean asDocument)
+    default String convertSpaceReference(String spaceKey, boolean asDocument)
     {
-        String ref = convertSpaceReference(spaceReference);
+        String ref = convertSpaceReference(spaceKey);
         if (asDocument && ref != null && !ref.isEmpty()) {
             return ref + ".WebHome";
         }
