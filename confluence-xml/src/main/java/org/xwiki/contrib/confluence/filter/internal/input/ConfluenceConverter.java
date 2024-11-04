@@ -441,14 +441,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             ConfluenceProperties pageProperties = confluencePackage.getPageProperties(pageId, false);
 
             if (pageProperties == null) {
-                EntityReference docRef = getDocRefFromLinkMapping(pageId);
-                if (docRef == null) {
-                    return null;
-                }
-                if (asSpace) {
-                    return new EntityReference(docRef.getName(), EntityType.SPACE, docRef.getParameters());
-                }
-                return docRef;
+                return getDocRefFromLinkMapping(pageId, asSpace);
             }
 
             Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
@@ -463,7 +456,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     }
 
     EntityReference convertDocumentReference(ConfluenceProperties pageProperties, String spaceKey,
-        boolean asSpace) throws ConfigurationException
+        boolean asSpace)
     {
         String documentName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
 
@@ -504,37 +497,43 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             return new EntityReference(AT_PARENT, EntityType.DOCUMENT);
         }
 
-        EntityReference docRef = null;
-        String spaceKey1 = ensureNonEmptySpaceKey(spaceKey);
+        return toDocumentReferenceNoSpecialSpaceKey(ensureNonEmptySpaceKey(spaceKey), documentName);
+    }
 
-        if (spaceKey1 != null) {
+    private EntityReference toDocumentReferenceNoSpecialSpaceKey(String spaceKey, String documentName)
+    {
+        EntityReference docRef = null;
+
+        if (spaceKey != null) {
             ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
 
+            // FIXME: ConfluenceXWikiGeneratorListener used to hardcode a WebHome document name when encountering
+            //  absolute URLs to Confluence spaces.
+            // Check is this WEB_HOME.equals(documentName) test is still necessary
             Long pageId = WEB_HOME.equals(documentName)
-                ? confluencePackage.getHomePage(confluencePackage.getSpacesByKey().get(spaceKey1))
-                : confluencePackage.getPageId(spaceKey1, documentName);
-            // FIXME: ConfluenceXWikiGeneratorListener hardcodes a WebHome document name when encountering absolute URLs
-            // to Confluence spaces. It would be better to avoid anything XWiki from the links we handle here.
+                ? confluencePackage.getHomePage(confluencePackage.getSpacesByKey().get(spaceKey))
+                : confluencePackage.getPageId(spaceKey, documentName);
             if (pageId == null) {
-                docRef = getDocRefFromLinkMapping(spaceKey1, documentName);
+                docRef = getDocRefFromLinkMapping(spaceKey, documentName, false);
                 if (docRef == null) {
-                    warnMissingPage(spaceKey1, documentName);
+                    warnMissingPage(spaceKey, documentName);
                 }
             } else {
                 try {
                     ConfluenceProperties pageProperties = confluencePackage.getPageProperties(pageId, false);
                     if (pageProperties != null) {
-                        return toNestedDocumentReference(spaceKey1, documentName, pageProperties, false);
+                        return toNestedDocumentReference(spaceKey, documentName, pageProperties, false);
                     }
                 } catch (ConfigurationException e) {
-                    docRef = getDocRefFromLinkMapping(spaceKey1, documentName);
+                    docRef = getDocRefFromLinkMapping(spaceKey, documentName, false);
                     if (docRef == null) {
                         this.logger.error("Could not convert link, falling back to non nested conversion", e);
                     }
                 }
             }
         }
-        return docRef == null ? toNonNestedDocumentReference(spaceKey1, documentName) : docRef;
+
+        return docRef == null ? toNonNestedDocumentReference(spaceKey, documentName) : docRef;
     }
 
     private String ensureNonEmptySpaceKey(String spaceKey)
@@ -549,13 +548,21 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         this.logger.warn("Could not find page [{}] in space [{}]. " + BROKEN_LINK_EXPLANATION, documentName, spaceKey);
     }
 
-    private EntityReference getDocRefFromLinkMapping(String spaceKey, String documentName)
+    private EntityReference getDocRefFromLinkMapping(String spaceKey, String documentName, boolean asSpace)
     {
-        return context.getProperties().getLinkMapping()
-            .getOrDefault(spaceKey, Collections.emptyMap()).get(documentName);
+        return maybeAsSpace(context.getProperties().getLinkMapping()
+            .getOrDefault(spaceKey, Collections.emptyMap()).get(documentName), asSpace);
     }
 
-    private EntityReference getDocRefFromLinkMapping(long pageId)
+    private EntityReference maybeAsSpace(EntityReference entityReference, boolean asSpace)
+    {
+        if (entityReference != null && entityReference.getType() == EntityType.DOCUMENT && asSpace) {
+            return entityReference.getParent();
+        }
+        return entityReference;
+    }
+
+    private EntityReference getDocRefFromLinkMapping(long pageId, boolean asSpace)
     {
         String pageIdString = Long.toString(pageId);
         Map<String, Map<String, EntityReference>> linkMapping = context.getProperties().getLinkMapping();
@@ -566,7 +573,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
                 if (spaceMapping != null) {
                     EntityReference docRef = spaceMapping.get(pageIdString);
                     if (docRef != null) {
-                        return docRef;
+                        return maybeAsSpace(docRef, asSpace);
                     }
                 }
             }
@@ -590,7 +597,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         if (parentId != null) {
             parent = convertDocumentReference(parentId, true);
             if (parent == null) {
-                EntityReference docRef = getDocRefFromLinkMapping(spaceKey, documentName);
+                EntityReference docRef = getDocRefFromLinkMapping(spaceKey, documentName, true);
                 if (docRef != null) {
                     return docRef;
                 }
@@ -599,8 +606,10 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         }
 
         if (parent == null) {
-            // missing parent, let's see if the provided link mapping has it
-            EntityReference docRef = getDocRefFromLinkMapping(spaceKey, documentName);
+            // Missing parent, let's see if the provided link mapping has this document.
+            // If parentId is null, this most likely means that this is a root page which parent is the space though.
+            // But even in this case, we allow the link mapping data to override this conclusion.
+            EntityReference docRef = getDocRefFromLinkMapping(spaceKey, documentName, asSpace);
             if (docRef != null) {
                 return docRef;
             }
@@ -616,7 +625,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         }
 
         if (convertedName == null) {
-            return getDocRefFromLinkMapping(spaceKey, documentName);
+            return getDocRefFromLinkMapping(spaceKey, documentName, asSpace);
         }
 
         return getDocumentReference(new EntityReference(convertedName, EntityType.SPACE, parent), asSpace);

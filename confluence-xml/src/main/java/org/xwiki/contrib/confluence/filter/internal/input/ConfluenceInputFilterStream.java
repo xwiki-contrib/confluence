@@ -1646,7 +1646,14 @@ public class ConfluenceInputFilterStream
     private ConfluenceProperties getPageProperties(Long pageId) throws FilterException
     {
         try {
-            return this.confluencePackage.getPageProperties(pageId, false);
+            ConfluenceProperties props = this.confluencePackage.getPageProperties(pageId, false);
+            if (props == null || props.getLong(ConfluenceXMLPackage.KEY_ID, null) == null) {
+                // Null ID can happen when the home page is missing. ConfluenceXMLPackage has set the homePage property
+                // when parsing the space, but the page id and any other property is missing. This means the page
+                // isn't actually there.
+                return null;
+            }
+            return props;
         } catch (ConfigurationException e) {
             throw new FilterException("Failed to get page properties", e);
         }
@@ -1862,7 +1869,7 @@ public class ConfluenceInputFilterStream
 
             String tagName = this.confluencePackage.getTagName(tagProperties);
             if (tagName == null) {
-                logger.warn("Failed to get the name of tag id [{}] for the page with id [{}].", tagId,
+                logger.warn("Failed to get the name of label id [{}] for the page with id [{}].", tagId,
                     createPageIdentifier(pageProperties));
             } else {
                 pageTags.put(tagName, tagProperties);
