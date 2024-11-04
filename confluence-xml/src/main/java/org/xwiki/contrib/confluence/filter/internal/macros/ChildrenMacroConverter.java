@@ -21,7 +21,9 @@ package org.xwiki.contrib.confluence.filter.internal.macros;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.Collections;
@@ -37,14 +39,17 @@ import java.util.Map;
 @Singleton
 public class ChildrenMacroConverter extends AbstractMacroConverter
 {
+    @Inject
+    private ConfluenceConverter confluenceConverter;
+
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
-        return StringUtils.isNotEmpty(getDocRef(confluenceParameters)) ? "documentTree" : "children";
+        return StringUtils.isNotEmpty(getPage(confluenceParameters)) ? "documentTree" : "children";
     }
 
-    private static String getDocRef(Map<String, String> confluenceParameters)
+    private static String getPage(Map<String, String> confluenceParameters)
     {
         return confluenceParameters.get("page");
     }
@@ -53,9 +58,18 @@ public class ChildrenMacroConverter extends AbstractMacroConverter
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {
-        String docRef = getDocRef(confluenceParameters);
-        if (StringUtils.isNotEmpty(docRef)) {
-            return Map.of("root", "document:" + docRef);
+        String pageTitle = getPage(confluenceParameters);
+        // Unfortunately, sometimes children have a link as parameter, sometimes it is bare. In the first case, the
+        // reference is already converted. In the second case, it needs to be converted
+        // FIXME: find some cleaner way to detect that the reference has already been converted.
+        if (StringUtils.isNotEmpty(pageTitle)) {
+            return Map.of(
+                "root", "document:" + (
+                    pageTitle.endsWith(".WebHome")
+                        ? pageTitle
+                        : confluenceConverter.convertDocumentReference("", pageTitle)
+                )
+            );
         }
 
         return Collections.emptyMap();

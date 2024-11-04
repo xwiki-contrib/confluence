@@ -549,7 +549,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
     private String ensureNonEmptySpaceKey(String spaceKey)
     {
-        return (spaceKey == null || spaceKey.equals("currentSpace()") || spaceKey.equals(AT_SELF))
+        return (StringUtils.isEmpty(spaceKey) || spaceKey.equals("currentSpace()") || spaceKey.equals(AT_SELF))
             ? context.getCurrentSpace()
             : spaceKey;
     }
