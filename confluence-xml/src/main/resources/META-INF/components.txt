@@ -14,6 +14,7 @@ org.xwiki.contrib.confluence.filter.internal.input.DefaultLinkMapper
 org.xwiki.contrib.confluence.filter.internal.macros.AlertMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.AnchorMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.AUIMessageConverter
+org.xwiki.contrib.confluence.filter.internal.macros.ChildrenMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.DefaultMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.IncludeMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.ImgMacroConverter

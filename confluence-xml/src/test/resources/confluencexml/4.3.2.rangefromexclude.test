@@ -1120,7 +1120,7 @@ info default macro
 
 {{gallery title="Gallerie default macro"/}}
 
-{{children page="space1 Home"/}}
+{{documentTree root="document:SPACE1.WebHome"/}}
 
 {{id name="Page1-anchor"/}}
 
@@ -1429,7 +1429,7 @@ info default macro
 
 {{gallery title="Gallerie default macro"/}}
 
-{{children page="space1 Home"/}}
+{{documentTree root="document:SPACE1.WebHome"/}}
 
 {{id name="Page1-anchor"/}}
 
@@ -1738,7 +1738,7 @@ info default macro
 
 {{gallery title="Gallerie default macro"/}}
 
-{{children page="space1 Home"/}}
+{{documentTree root="document:SPACE1.WebHome"/}}
 
 {{id name="Page1-anchor"/}}
 
@@ -2047,7 +2047,7 @@ info default macro
 
 {{gallery title="Gallerie default macro"/}}
 
-{{children page="space1 Home"/}}
+{{documentTree root="document:SPACE1.WebHome"/}}
 
 {{id name="Page1-anchor"/}}
 
@@ -2356,7 +2356,7 @@ info default macro
 
 {{gallery title="Gallerie default macro"/}}
 
-{{children page="space1 Home"/}}
+{{documentTree root="document:SPACE1.WebHome"/}}
 
 {{id name="Page1-anchor"/}}
 
@@ -2665,7 +2665,7 @@ info default macro
 
 {{gallery title="Gallerie default macro"/}}
 
-{{children page="space1 Home"/}}
+{{documentTree root="document:SPACE1.WebHome"/}}
 
 {{id name="Page1-anchor"/}}
 
