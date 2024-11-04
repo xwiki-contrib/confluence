@@ -168,6 +168,32 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             return toDocumentReference(parent.getName(), entityReference.getName());
         }
 
+        return maybeAppendRoot(convertRef(entityReference));
+    }
+
+    private EntityReference maybeAppendRoot(EntityReference ref)
+    {
+        if (ref == null) {
+            return null;
+        }
+
+        EntityReference root = context.getProperties().getRoot();
+        if (root == null) {
+            return ref;
+        }
+
+        EntityType rootType = ref.getRoot().getType();
+        if (EntityType.SPACE.equals(rootType) || EntityType.WIKI.equals(rootType)) {
+            // We don't want to add the root if the reference is a local document, otherwise we end up with a
+            // broken reference (Root.Document instead of Root.SpaceContainingDocument.Document)
+            return ref.appendParent(root);
+        }
+
+        return ref;
+    }
+
+    private EntityReference convertRef(EntityReference entityReference)
+    {
         EntityReference newRef = null;
 
         for (EntityReference entityElement : entityReference.getReversedReferenceChain()) {
@@ -184,20 +210,6 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
                 newRef = entityElement;
             } else {
                 newRef = new EntityReference(entityElement, newRef);
-            }
-        }
-
-        if (newRef == null) {
-            return null;
-        }
-
-        EntityReference root = context.getProperties().getRoot();
-        if (root != null) {
-            EntityType rootType = newRef.getRoot().getType();
-            if (EntityType.SPACE.equals(rootType) || EntityType.WIKI.equals(rootType)) {
-                // We don't want to add the root if the reference is a local document, otherwise we end up with a
-                // broken reference (Root.Document instead of Root.SpaceContainingDocument.Document)
-                newRef = newRef.appendParent(root);
             }
         }
         return newRef;
