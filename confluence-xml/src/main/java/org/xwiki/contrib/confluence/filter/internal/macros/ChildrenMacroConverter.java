@@ -21,9 +21,7 @@ package org.xwiki.contrib.confluence.filter.internal.macros;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.Collections;
@@ -39,17 +37,14 @@ import java.util.Map;
 @Singleton
 public class ChildrenMacroConverter extends AbstractMacroConverter
 {
-    @Inject
-    private ConfluenceConverter confluenceConverter;
-
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
-        return StringUtils.isNotEmpty(getPage(confluenceParameters)) ? "documentTree" : "children";
+        return StringUtils.isNotEmpty(getDocRef(confluenceParameters)) ? "documentTree" : "children";
     }
 
-    private static String getPage(Map<String, String> confluenceParameters)
+    private static String getDocRef(Map<String, String> confluenceParameters)
     {
         return confluenceParameters.get("page");
     }
@@ -58,13 +53,9 @@ public class ChildrenMacroConverter extends AbstractMacroConverter
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {
-        String pageTitle = getPage(confluenceParameters);
-        if (StringUtils.isNotEmpty(pageTitle)) {
-            // FIXME not sure the following parameter exists, maybe it doesn't, or maybe it does but has another name.
-            String spaceKey = confluenceParameters.get("space");
-            return Map.of(
-                "root", "document:" + confluenceConverter.convertDocumentReference(spaceKey, pageTitle)
-            );
+        String docRef = getDocRef(confluenceParameters);
+        if (StringUtils.isNotEmpty(docRef)) {
+            return Map.of("root", "document:" + docRef);
         }
 
         return Collections.emptyMap();
