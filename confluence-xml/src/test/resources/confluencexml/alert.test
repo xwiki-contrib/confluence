@@ -67,7 +67,7 @@ Wohoo! u succeeded
 THis is more text of success
 {{/warning}}
 
-{{info}}
+{{info type="unknown"}}
 Wohoo! u succeeded
 THis is more text of success
 {{/info}}

@@ -20,15 +20,16 @@
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.rendering.listener.Listener;
 
 /**
  * Convert the alert macro.
@@ -47,51 +48,30 @@ public class AlertMacroConverter extends AbstractMacroConverter
 
     private static final String TYPE = "type";
 
+    private static final List<String> KNOWN_TYPES = List.of("Success", "Info", "Error", "Warning");
     @Inject
     private Logger logger;
-
-    @Override
-    public void toXWiki(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
-        boolean inline, Listener listener)
-    {
-        // Changed the order of the calls to make sure that the type parameter is kept only in the case of an unknown
-        // macro.
-        String content = toXWikiContent(confluenceId, confluenceParameters, confluenceContent);
-        Map<String, String> parameters = toXWikiParameters(confluenceId, confluenceParameters, confluenceContent);
-        String macroID = toXWikiId(confluenceId, parameters, confluenceContent, inline);
-        listener.onMacro(macroID, parameters, content, inline);
-    }
 
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
-        switch (confluenceParameters.get(TYPE)) {
-            case "Success":
-                return "success";
-            case "Error":
-                return "error";
-            case "Info":
-                return INFO;
-            case "Warning":
-                return "warning";
-            default:
-                logger.warn(String.format("The type of alert is not supported: %s", confluenceParameters.get(TYPE)));
-                return INFO;
+        String type = confluenceParameters.getOrDefault(TYPE, "");
+        if (KNOWN_TYPES.contains(type)) {
+            return type.toLowerCase();
         }
+
+        logger.warn("Type [{}] of alert is not supported", type);
+        return INFO;
     }
 
     @Override
     protected String toXWikiContent(String confluenceId, Map<String, String> parameters, String confluenceContent)
     {
-        if (parameters.get(TITLE) != null) {
-            StringBuilder builder = new StringBuilder();
-            builder.append(parameters.get(TITLE));
-            builder.append("\n");
-            builder.append(confluenceContent);
-            return builder.toString();
+        if (StringUtils.isEmpty(parameters.get(TITLE))) {
+            return confluenceContent;
         }
-        return confluenceContent;
+        return parameters.get(TITLE) + "\n" + confluenceContent;
     }
 
     @Override
@@ -99,8 +79,13 @@ public class AlertMacroConverter extends AbstractMacroConverter
         String content)
     {
         Map<String, String> parameters = new HashMap<>(confluenceParameters);
+        String type = confluenceParameters.getOrDefault(TYPE, "");
+
         parameters.remove(TITLE);
-        parameters.remove(TYPE);
+        if (KNOWN_TYPES.contains(type)) {
+            parameters.remove(TYPE);
+        }
+
         return parameters;
     }
 }
