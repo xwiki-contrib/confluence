@@ -27,7 +27,7 @@ public interface SpaceContainer
 {
     /**
      * Set the space.
-     * @param space to set
+     * @param spaceKey to set
      */
-    void setSpace(String space);
+    void setSpaceKey(String spaceKey);
 }

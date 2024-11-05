@@ -53,12 +53,12 @@ public class PageTagHandler extends TagHandler implements ConfluenceTagHandler
 
         WikiParameter pageParameter = context.getParams().getParameter("ri:content-title");
         if (pageParameter != null && container instanceof PageContainer) {
-            ((PageContainer) container).setPage(pageParameter.getValue());
+            ((PageContainer) container).setPageTitle(pageParameter.getValue());
         }
 
         WikiParameter spaceParameter = context.getParams().getParameter("ri:space-key");
         if (spaceParameter != null && container instanceof SpaceContainer) {
-            ((SpaceContainer) container).setSpace(spaceParameter.getValue());
+            ((SpaceContainer) container).setSpaceKey(spaceParameter.getValue());
         }
     }
 }

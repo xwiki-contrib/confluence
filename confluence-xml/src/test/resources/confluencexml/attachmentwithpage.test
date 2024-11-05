@@ -1,0 +1,111 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.#------------------------------------------------------------------------------
+<wikiSpace name="MySpace">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.47826731</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2019-02-13 08:05:54.0 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>1</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.47826731</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-02-13 08:16:56.0 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>My Space</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>{{view-file att--filename="MySpace.My Page.WebHome@image.pdf" height="250"/}}</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+  <wikiSpace name="My Page">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.47826731</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2019-02-13 08:05:54.0 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>1</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="1">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.47826731</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2019-02-13 08:16:56.0 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>My Page</string>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
+.configuration.source=attachmentwithpage
+.#------------------------------------------------------------------------------

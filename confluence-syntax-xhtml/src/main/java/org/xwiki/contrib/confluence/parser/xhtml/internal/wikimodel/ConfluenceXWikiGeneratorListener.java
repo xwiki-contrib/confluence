@@ -225,12 +225,12 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
     private ResourceReference getAttachmentResourceReference(ConfluenceXHTMLAttachment attachment)
     {
         DocumentResourceReference documentResourceReference;
-        if (attachment.page != null) {
+        if (attachment.pageTitle != null) {
             documentResourceReference = new DocumentResourceReference(
-                convertDocumentReference(attachment.space, attachment.page));
-        } else if (attachment.space != null) {
+                convertDocumentReference(attachment.spaceKey, attachment.pageTitle));
+        } else if (attachment.spaceKey != null) {
             documentResourceReference = new DocumentResourceReference(
-                convertSpaceReference(attachment.space));
+                convertSpaceReference(attachment.spaceKey));
         } else {
             documentResourceReference = new DocumentResourceReference("");
         }

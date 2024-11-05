@@ -24,7 +24,7 @@ package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
  * @version $Id$
  * @since 9.54.0
  */
-public class ConfluenceXHTMLAttachment implements UserContainer, PageContainer
+public class ConfluenceXHTMLAttachment implements UserContainer, PageContainer, SpaceContainer
 {
     /**
      * The filename.
@@ -34,12 +34,12 @@ public class ConfluenceXHTMLAttachment implements UserContainer, PageContainer
     /**
      * The space.
      */
-    public String space;
+    public String spaceKey;
 
     /**
      * The page.
      */
-    public String page;
+    public String pageTitle;
 
     /**
      * The user.
@@ -53,14 +53,14 @@ public class ConfluenceXHTMLAttachment implements UserContainer, PageContainer
     }
 
     @Override
-    public void setPage(String page)
+    public void setPageTitle(String pageTitle)
     {
-        this.page = page;
+        this.pageTitle = pageTitle;
     }
 
     @Override
-    public void setSpace(String space)
+    public void setSpaceKey(String spaceKey)
     {
-        this.space = space;
+        this.spaceKey = spaceKey;
     }
 }

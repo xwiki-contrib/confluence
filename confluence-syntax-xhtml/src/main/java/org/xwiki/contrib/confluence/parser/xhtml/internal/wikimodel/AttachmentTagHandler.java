@@ -19,6 +19,8 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import org.apache.commons.lang3.StringUtils;
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroTagHandler.ConfluenceMacro;
 import org.xwiki.rendering.wikimodel.WikiParameter;
 import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
@@ -39,12 +41,16 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public class AttachmentTagHandler extends TagHandler implements ConfluenceTagHandler
 {
+    private final ConfluenceReferenceConverter referenceConverter;
+
     /**
      * Default constructor.
+     * @param referenceConverter the Confluence reference converter used to create attachment references, when needed
      */
-    public AttachmentTagHandler()
+    public AttachmentTagHandler(ConfluenceReferenceConverter referenceConverter)
     {
         super(false);
+        this.referenceConverter = referenceConverter;
     }
 
     @Override
@@ -56,14 +62,6 @@ public class AttachmentTagHandler extends TagHandler implements ConfluenceTagHan
 
         if (filenameParameter != null) {
             attachment.filename = filenameParameter.getValue();
-            
-            // set attachment filename as macro parameter if the attachment tag is part of a macro
-            Object macroObject = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
-            
-            if (macroObject instanceof ConfluenceMacro) {
-                ConfluenceMacro macro = (ConfluenceMacro) macroObject;
-                macro.parameters = macro.parameters.setParameter("att--filename", attachment.filename);
-            }
         }
 
         context.getTagStack().pushStackParameter(CONFLUENCE_CONTAINER, attachment);
@@ -79,6 +77,21 @@ public class AttachmentTagHandler extends TagHandler implements ConfluenceTagHan
 
         if (container instanceof AttachmentContainer) {
             ((AttachmentContainer) container).setAttachment(attachment);
+        }
+
+        // set attachment filename as macro parameter if the attachment tag is part of a macro
+        if (container instanceof ConfluenceMacro) {
+            ConfluenceMacro macro = (ConfluenceMacro) container;
+            macro.parameters = macro.parameters.setParameter(
+                "att--filename",
+                (referenceConverter == null || StringUtils.isEmpty(attachment.pageTitle))
+                    ? attachment.filename
+                    : referenceConverter.convertAttachmentReference(
+                        attachment.spaceKey,
+                        attachment.pageTitle,
+                        attachment.filename
+                    )
+            );
         }
     }
 }

@@ -652,6 +652,16 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return this.serializer.serialize(toDocumentReference(spaceKey, pageTitle));
     }
 
+    @Override
+    public String convertAttachmentReference(String spaceKey, String pageTitle, String filename)
+    {
+        EntityReference docRef = toDocumentReference(spaceKey, pageTitle);
+        if (docRef == null) {
+            return filename;
+        }
+        return this.serializer.serialize(new EntityReference(filename, EntityType.ATTACHMENT, docRef));
+    }
+
     static String spacesToDash(String name)
     {
         return clean(name, false).replaceAll("\\s+", "-");

@@ -74,7 +74,7 @@ public class SpaceTagHandler extends TagHandler implements ConfluenceTagHandler
 
         Object container = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
         if (container instanceof SpaceContainer) {
-            ((SpaceContainer) container).setSpace(space);
+            ((SpaceContainer) container).setSpaceKey(space);
         }
     }
 }

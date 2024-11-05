@@ -230,7 +230,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("ac:layout-section", new ElementMacroTagHandler(this));
         handlers.put("ac:layout-cell", new ElementMacroTagHandler(this));
 
-        handlers.put("ri:attachment", new AttachmentTagHandler());
+        handlers.put("ri:attachment", new AttachmentTagHandler(referenceConverter));
 
         handlers.put("th", new TableHeadTagHandler());
         handlers.put("td", new TableCellTagHandler());

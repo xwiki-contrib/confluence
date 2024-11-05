@@ -27,7 +27,7 @@ public interface PageContainer extends SpaceContainer
 {
     /**
      * Set the page.
-     * @param page the page to set.
+     * @param pageTitle the page to set.
      */
-    void setPage(String page);
+    void setPageTitle(String pageTitle);
 }

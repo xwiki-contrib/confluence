@@ -107,9 +107,9 @@ public class ConfluenceXHTMLWikiReference extends WikiReference
     }
 
     @Override
-    public void setSpace(String space)
+    public void setSpaceKey(String spaceKey)
     {
-        this.space = space;
+        this.space = spaceKey;
     }
 
     /**
@@ -121,9 +121,9 @@ public class ConfluenceXHTMLWikiReference extends WikiReference
     }
 
     @Override
-    public void setPage(String page)
+    public void setPageTitle(String pageTitle)
     {
-        this.page = page;
+        this.page = pageTitle;
     }
 
     /**

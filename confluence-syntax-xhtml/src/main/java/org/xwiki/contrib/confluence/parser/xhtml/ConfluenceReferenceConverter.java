@@ -43,10 +43,27 @@ public interface ConfluenceReferenceConverter
     String convertDocumentReference(String spaceKey, String pageTitle);
 
     /**
-     * @return the converted space reference, as SPACE
+     * @return the converted space reference, as SPACE (serialized)
      * @param spaceKey the space reference to convert
      */
     String convertSpaceReference(String spaceKey);
+
+    /**
+     * @return the converted attachment reference, as ATTACHMENT (serialized)
+     * @param spaceKey the confluence space in which the document lives
+     * @param pageTitle the document reference to convert
+     * @param filename the attachment filename
+     * @since 9.63.0
+     */
+    default String convertAttachmentReference(String spaceKey, String pageTitle, String filename)
+    {
+        String docRef = convertDocumentReference(spaceKey, pageTitle);
+        if (docRef == null) {
+            return filename;
+        }
+
+        return docRef + '@' + filename;
+    }
 
     /**
      * @return the converted anchor
