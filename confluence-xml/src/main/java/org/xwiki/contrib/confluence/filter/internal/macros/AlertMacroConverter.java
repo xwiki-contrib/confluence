@@ -66,9 +66,7 @@ public class AlertMacroConverter extends AbstractMacroConverter
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
-        String type = confluenceParameters.get(TYPE);
-        confluenceParameters.remove(TYPE);
-        switch (type) {
+        switch (confluenceParameters.get(TYPE)) {
             case "Success":
                 return "success";
             case "Error":
@@ -102,6 +100,7 @@ public class AlertMacroConverter extends AbstractMacroConverter
     {
         Map<String, String> parameters = new HashMap<>(confluenceParameters);
         parameters.remove(TITLE);
+        parameters.remove(TYPE);
         return parameters;
     }
 }
