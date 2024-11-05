@@ -972,10 +972,10 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private PageIdentifier createPageIdentifier(Long pageId, String spaceKey)
+    private Map<String, Object> createPageIdentifier(Long pageId, String spaceKey)
     {
         PageIdentifier page = new PageIdentifier(pageId);
-        page.setSpaceTitle(spaceKey);
+        page.setSpaceKey(spaceKey);
         try {
             ConfluenceProperties pageProperties = getPageProperties(pageId);
             if (pageProperties != null) {
@@ -989,19 +989,24 @@ public class ConfluenceInputFilterStream
                 page.setPageRevision(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION));
                 if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_PARENT)) {
                     Long parentId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_PARENT);
+                    page.setParentId(parentId);
                     ConfluenceProperties parentPageProperties = getPageProperties(parentId);
                     if (parentPageProperties != null) {
                         page.setParentTitle(parentPageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE));
                     }
                 }
+                Long originalVersion = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_ORIGINAL_VERSION, null);
+                if (originalVersion != null) {
+                    page.setOriginalVersion(originalVersion);
+                }
             }
         } catch (FilterException ignored) {
             // ignore
         }
-        return page;
+        return page.getMap();
     }
 
-    private PageIdentifier createPageIdentifier(ConfluenceProperties pageProperties)
+    private Map<String, Object> createPageIdentifier(ConfluenceProperties pageProperties)
     {
         Long pageId = pageProperties.getLong(ID);
         Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
@@ -1015,6 +1020,8 @@ public class ConfluenceInputFilterStream
             this.logger.error("Configuration error while creating page identifier for page [{}]", pageId, e);
             spaceKey = null;
         }
+
+        // FIXME reuse the page property object we already have. Make sure it's not empty-ish when doing so.
         return createPageIdentifier(pageId, spaceKey);
     }
 

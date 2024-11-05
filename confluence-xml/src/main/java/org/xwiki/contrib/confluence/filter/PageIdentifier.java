@@ -19,6 +19,9 @@
  */
 package org.xwiki.contrib.confluence.filter;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 /**
  * Stores different information about the filtering of a page.
  *
@@ -27,22 +30,20 @@ package org.xwiki.contrib.confluence.filter;
  */
 public class PageIdentifier
 {
-    private Long pageId;
+    private static final String PAGE_ID = "pageId";
+    private static final String PAGE_TITLE = "pageTitle";
+    private static final String PARENT_TITLE = "parentTitle";
+    private static final String SPACE_KEY = "spaceKey";
+    private static final String PAGE_REVISION = "pageRevision";
 
-    private String pageTitle;
-
-    private String parentTitle;
-
-    private String spaceTitle;
-
-    private String pageRevision;
+    private Map<String, Object> m = new TreeMap<>();
 
     /**
      * @param pageId see {@link #getPageId()}
      */
     public PageIdentifier(Long pageId)
     {
-        this.pageId = pageId;
+        setPageId(pageId);
     }
 
     /**
@@ -50,7 +51,7 @@ public class PageIdentifier
      */
     public Long getPageId()
     {
-        return pageId;
+        return (Long) m.get(PAGE_ID);
     }
 
     /**
@@ -58,7 +59,7 @@ public class PageIdentifier
      */
     public void setPageId(Long pageId)
     {
-        this.pageId = pageId;
+        m.put(PAGE_ID, pageId);
     }
 
     /**
@@ -66,7 +67,7 @@ public class PageIdentifier
      */
     public String getPageTitle()
     {
-        return pageTitle;
+        return (String) m.get(PAGE_TITLE);
     }
 
     /**
@@ -74,7 +75,7 @@ public class PageIdentifier
      */
     public void setPageTitle(String pageTitle)
     {
-        this.pageTitle = pageTitle;
+        m.put(PAGE_TITLE, pageTitle);
     }
 
     /**
@@ -82,7 +83,7 @@ public class PageIdentifier
      */
     public String getParentTitle()
     {
-        return parentTitle;
+        return (String) m.get(PARENT_TITLE);
     }
 
     /**
@@ -90,23 +91,46 @@ public class PageIdentifier
      */
     public void setParentTitle(String parentTitle)
     {
-        this.parentTitle = parentTitle;
+        m.put(PARENT_TITLE, parentTitle);
     }
 
     /**
      * @return the name of the space where the page belongs
+     * @deprecated since 9.63.0
+     * use #getSpaceKey()
      */
+    @Deprecated
     public String getSpaceTitle()
     {
-        return spaceTitle;
+        return getSpaceKey();
     }
 
     /**
-     * @param spaceTitle see {@link #getSpaceTitle()}
+     * @return the name of the space where the page belongs
+     * @since 9.63.0
      */
-    public void setSpaceTitle(String spaceTitle)
+    public String getSpaceKey()
     {
-        this.spaceTitle = spaceTitle;
+        return (String) m.get(SPACE_KEY);
+    }
+
+    /**
+     * @param spaceKey see {@link #getSpaceTitle()}
+     * @deprecated since 9.63.0
+     * use setSpaceKey()
+     */
+    public void setSpaceTitle(String spaceKey)
+    {
+        setSpaceKey(spaceKey);
+    }
+
+    /**
+     * @param spaceKey see {@link #getSpaceKey()}
+     * @since 9.63.0
+     */
+    public void setSpaceKey(String spaceKey)
+    {
+        m.put(SPACE_KEY, spaceKey);
     }
 
     /**
@@ -114,7 +138,7 @@ public class PageIdentifier
      */
     public String getPageRevision()
     {
-        return pageRevision;
+        return (String) m.get(PAGE_REVISION);
     }
 
     /**
@@ -122,13 +146,39 @@ public class PageIdentifier
      */
     public void setPageRevision(String pageRevision)
     {
-        this.pageRevision = pageRevision;
+        m.put(PAGE_REVISION, pageRevision);
+    }
+
+    /**
+     * @param parentId set the parent id
+     * @since 9.63.0
+     */
+    public void setParentId(Long parentId)
+    {
+        m.put("parentId", parentId);
+    }
+
+    /**
+     * @param originalVersion set the original version
+     * @since 9.63.0
+     */
+    public void setOriginalVersion(Long originalVersion)
+    {
+        m.put("originalVersion", originalVersion);
     }
 
     @Override
     public String toString()
     {
-        return '{' + "pageId=" + pageId + ", pageTitle='" + pageTitle + '\'' + ", parentTitle='" + parentTitle + '\''
-            + ", spaceTitle='" + spaceTitle + '\'' + ", pageRevision='" + pageRevision + '\'' + '}';
+        return m.toString();
+    }
+
+    /**
+     * @return a map representing this page identifier
+     * @since 9.63.0
+     */
+    public Map<String, Object> getMap()
+    {
+        return m;
     }
 }
