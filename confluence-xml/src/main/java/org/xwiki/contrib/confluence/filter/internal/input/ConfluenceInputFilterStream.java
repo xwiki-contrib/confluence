@@ -142,6 +142,8 @@ public class ConfluenceInputFilterStream
     private static final String ID = "id";
 
     private  static final String FAILED_TO_GET_GROUP_PROPERTIES = "Failed to get group properties";
+    private static final String PAGE_IDENTIFIER_ERROR =
+        "Configuration error while creating page identifier for page [{}]";
 
     @Inject
     @Named(ConfluenceInputStreamParser.COMPONENT_NAME)
@@ -975,54 +977,62 @@ public class ConfluenceInputFilterStream
     private Map<String, Object> createPageIdentifier(Long pageId, String spaceKey)
     {
         PageIdentifier page = new PageIdentifier(pageId);
+        page.setPageId(pageId);
         page.setSpaceKey(spaceKey);
         try {
-            ConfluenceProperties pageProperties = getPageProperties(pageId);
-            if (pageProperties != null) {
-                String documentName;
-                if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
-                    documentName = WEB_HOME;
-                } else {
-                    documentName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
-                }
-                page.setPageTitle(documentName);
-                page.setPageRevision(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION));
-                if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_PARENT)) {
-                    Long parentId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_PARENT);
-                    page.setParentId(parentId);
-                    ConfluenceProperties parentPageProperties = getPageProperties(parentId);
-                    if (parentPageProperties != null) {
-                        page.setParentTitle(parentPageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE));
-                    }
-                }
-                Long originalVersion = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_ORIGINAL_VERSION, null);
-                if (originalVersion != null) {
-                    page.setOriginalVersion(originalVersion);
-                }
-            }
-        } catch (FilterException ignored) {
-            // ignore
+            populatePageIdentifier(pageId, getPageProperties(pageId), page);
+        } catch (FilterException e) {
+            this.logger.error(PAGE_IDENTIFIER_ERROR, pageId, e);
         }
         return page.getMap();
     }
 
-    private Map<String, Object> createPageIdentifier(ConfluenceProperties pageProperties)
+    private void populatePageIdentifier(Long pageId, ConfluenceProperties pageProperties, PageIdentifier pageIdentifier)
     {
-        Long pageId = pageProperties.getLong(ID);
-        Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
-        if (spaceId == null) {
-            return null;
-        }
-        String spaceKey;
-        try {
-            spaceKey = confluencePackage.getSpaceKey(spaceId);
-        } catch (ConfigurationException e) {
-            this.logger.error("Configuration error while creating page identifier for page [{}]", pageId, e);
-            spaceKey = null;
+        if (pageProperties == null) {
+            return;
         }
 
-        // FIXME reuse the page property object we already have. Make sure it's not empty-ish when doing so.
-        return createPageIdentifier(pageId, spaceKey);
+        String documentName = pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)
+            ? WEB_HOME
+            : pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
+
+        pageIdentifier.setPageTitle(documentName);
+        pageIdentifier.setPageRevision(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION));
+        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_PARENT)) {
+            Long parentId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_PARENT);
+            pageIdentifier.setParentId(parentId);
+            try {
+                ConfluenceProperties parentPageProperties = getPageProperties(parentId);
+                if (parentPageProperties != null) {
+                    pageIdentifier.setParentTitle(parentPageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE));
+                }
+            } catch (FilterException e) {
+                this.logger.error("Failed to get the parent title when building the page identifier for page id [{}]",
+                    pageId, e);
+            }
+        }
+        Long originalVersion = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_ORIGINAL_VERSION, null);
+        if (originalVersion != null) {
+            pageIdentifier.setOriginalVersion(originalVersion);
+        }
+    }
+
+    private Map<String, Object> createPageIdentifier(ConfluenceProperties pageProperties)
+    {
+
+        Long pageId = pageProperties.getLong(ID);
+        PageIdentifier pageIdentifier = new PageIdentifier(pageId);
+        Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
+        if (spaceId != null) {
+            try {
+                pageIdentifier.setSpaceKey(confluencePackage.getSpaceKey(spaceId));
+            } catch (ConfigurationException e) {
+                this.logger.error(PAGE_IDENTIFIER_ERROR, pageId, e);
+            }
+        }
+        populatePageIdentifier(pageId, pageProperties, pageIdentifier);
+        return pageIdentifier.getMap();
     }
 
     private void closeConfluencePackage() throws FilterException
