@@ -29,6 +29,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
@@ -79,6 +80,9 @@ public class MacroToContentConverter extends AbstractMacroConverter
 
     protected void parseContent(String id, Listener listener, String syntaxId, String newContent)
     {
+        if (StringUtils.isEmpty(newContent)) {
+            return;
+        }
         try {
             Parser parser = componentManager.getInstance(Parser.class, syntaxId);
             XDOM contentXDOM = parser.parse(new StringReader(newContent));
