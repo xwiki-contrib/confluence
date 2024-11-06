@@ -39,7 +39,6 @@ import org.xwiki.model.reference.EntityReferenceResolver;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.model.reference.SpaceReference;
-import org.xwiki.model.reference.WikiReference;
 import org.xwiki.model.validation.EntityNameValidationManager;
 import org.xwiki.rendering.listener.reference.AttachmentResourceReference;
 import org.xwiki.rendering.listener.reference.DocumentResourceReference;
@@ -127,7 +126,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     private EntityReferenceSerializer<String> compactWikiSerializer;
 
     @Inject
-    Provider<XWikiContext> contextProvider;
+    private Provider<XWikiContext> contextProvider;
 
     @Inject
     private ConfluenceInputContext context;

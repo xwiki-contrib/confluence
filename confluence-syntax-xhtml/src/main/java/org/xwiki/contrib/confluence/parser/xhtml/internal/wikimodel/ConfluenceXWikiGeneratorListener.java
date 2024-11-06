@@ -222,10 +222,26 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         getListener().endLink(resourceReference, false, Collections.<String, String>emptyMap());
     }
 
-    private ResourceReference convertAttachmentReference(ConfluenceXHTMLAttachment attachment)
+    private ResourceReference convertAttachmentReference(ConfluenceXHTMLAttachment a)
     {
-        return new AttachmentResourceReference(confluenceConverter.convertAttachmentReference(
-            attachment.spaceKey, attachment.pageTitle, attachment.filename));
+        String reference = confluenceConverter == null
+            ? convertAttachmentFallback(a)
+            : confluenceConverter.convertAttachmentReference(a.spaceKey, a.pageTitle, a.filename);
+        return new AttachmentResourceReference(reference);
+    }
+
+    private static String convertAttachmentFallback(ConfluenceXHTMLAttachment a)
+    {
+        // useful for tests
+        String ref = StringUtils.defaultString(a.spaceKey);
+        if (StringUtils.isNotEmpty(a.pageTitle)) {
+            if (ref.isEmpty()) {
+                ref = a.pageTitle;
+            } else {
+                ref += '.' + a.pageTitle;
+            }
+        }
+        return (ref.isEmpty() ? "" : (ref + "@")) + a.filename;
     }
 
     /**
