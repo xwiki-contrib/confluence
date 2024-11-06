@@ -884,7 +884,7 @@ public class ConfluenceInputFilterStream
 
         String allUsersSubject = permProperties.getString(ConfluenceXMLPackage.KEY_PERMISSION_ALLUSERSSUBJECT, null);
         if ("anonymous-users".equals(allUsersSubject)) {
-            users = "XWiki.XWikiGuest";
+            users = confluenceConverter.getGuestUser();
         }
 
         String userName = maybeGetUserNameFromSubject(permProperties);

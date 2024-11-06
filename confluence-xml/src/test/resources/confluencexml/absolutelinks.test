@@ -59,11 +59,11 @@
 
  
 
-[[Data+Privacy+&amp;+Data+Protection - z_Sandbox Admin Testing - My Wiki>>doc:xwiki:Test1.MyDoc.WebHome||shape="rect"]]
+[[Data+Privacy+&amp;+Data+Protection - z_Sandbox Admin Testing - My Wiki>>doc:Test1.MyDoc.WebHome||shape="rect"]]
 
  
 
-[[http:~~/~~/my.wiki.invalid/wiki/download/attachments/11045169/MyFile.pdf?api=v2>>attach:xwiki:MySpace.Test.WebHome@MyFile.pdf||queryString="api=v2" shape="rect"]]</string>
+[[http:~~/~~/my.wiki.invalid/wiki/download/attachments/11045169/MyFile.pdf?api=v2>>attach:MySpace.Test.WebHome@MyFile.pdf||queryString="api=v2" shape="rect"]]</string>
             </entry>
             <entry>
               <string>syntax</string>

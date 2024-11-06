@@ -137,11 +137,11 @@
               </entry>
               <entry>
                 <string>content</string>
-                <string>It links to Under Page A: [[Under Page A>>doc:SmallNested.PageA.Under Page A.WebHome]]
+                <string>It links to Under Page A: [[Under Page A>>doc:sub:SmallNested.PageA.Under Page A.WebHome]]
 
 It includes Under Page A:
 
-{{excerpt-include 0="SmallNested.PageA.Under Page A.WebHome"/}}</string>
+{{excerpt-include 0="sub:SmallNested.PageA.Under Page A.WebHome"/}}</string>
               </entry>
               <entry>
                 <string>syntax</string>
@@ -165,5 +165,5 @@ It includes Under Page A:
 .input|confluence+xml
 .configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=missingpage
-.configuration.linkMapping={"SmallNested": {"Under Page A": "xwiki:SmallNested.PageA.Under Page A.WebHome"}}
+.configuration.linkMapping={"SmallNested": {"Under Page A": "sub:SmallNested.PageA.Under Page A.WebHome"}}
 .#------------------------------------------------------------------------------

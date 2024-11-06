@@ -179,7 +179,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
 
         ResourceReference resourceReference;
         if (confluenceReference.getAttachment() != null) {
-            resourceReference = getAttachmentResourceReference(confluenceReference.getAttachment());
+            resourceReference = convertAttachmentReference(confluenceReference.getAttachment());
         }  else {
             DocumentResourceReference documentResourceReference = null;
 
@@ -222,23 +222,10 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         getListener().endLink(resourceReference, false, Collections.<String, String>emptyMap());
     }
 
-    private ResourceReference getAttachmentResourceReference(ConfluenceXHTMLAttachment attachment)
+    private ResourceReference convertAttachmentReference(ConfluenceXHTMLAttachment attachment)
     {
-        DocumentResourceReference documentResourceReference;
-        if (attachment.pageTitle != null) {
-            documentResourceReference = new DocumentResourceReference(
-                convertDocumentReference(attachment.spaceKey, attachment.pageTitle));
-        } else if (attachment.spaceKey != null) {
-            documentResourceReference = new DocumentResourceReference(
-                convertSpaceReference(attachment.spaceKey));
-        } else {
-            documentResourceReference = new DocumentResourceReference("");
-        }
-        String ref = documentResourceReference.getReference();
-        if (!ref.isEmpty()) {
-            ref += '@';
-        }
-        return new AttachmentResourceReference(ref + attachment.filename);
+        return new AttachmentResourceReference(confluenceConverter.convertAttachmentReference(
+            attachment.spaceKey, attachment.pageTitle, attachment.filename));
     }
 
     /**
@@ -267,7 +254,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
             ResourceReference resourceReference = null;
 
             if (confluenceReference.getAttachment() != null) {
-                resourceReference = getAttachmentResourceReference(confluenceReference.getAttachment());
+                resourceReference = convertAttachmentReference(confluenceReference.getAttachment());
             } else if (confluenceReference.getURL() != null) {
                 resourceReference = new ResourceReference(confluenceReference.getURL(), ResourceType.URL);
             }

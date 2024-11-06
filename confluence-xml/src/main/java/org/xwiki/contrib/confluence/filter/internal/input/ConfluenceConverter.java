@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.input;
 
+import com.xpn.xwiki.XWikiContext;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.ObjectUtils;
@@ -37,6 +38,8 @@ import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceResolver;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.model.reference.LocalDocumentReference;
+import org.xwiki.model.reference.SpaceReference;
+import org.xwiki.model.reference.WikiReference;
 import org.xwiki.model.validation.EntityNameValidationManager;
 import org.xwiki.rendering.listener.reference.AttachmentResourceReference;
 import org.xwiki.rendering.listener.reference.DocumentResourceReference;
@@ -106,6 +109,9 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         + "This may happen when importing a space that links to another space which is not present "
         + "in this Confluence export, or the page is missing";
 
+    private static final EntityReference GUEST = new EntityReference(
+        "XWikiGuest", EntityType.DOCUMENT, new SpaceReference("xwiki", XWIKI));
+
     @Inject
     private Provider<EntityNameValidationManager> entityNameValidationManagerProvider;
 
@@ -117,7 +123,11 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     private EntityReferenceResolver<String> relativeResolver;
 
     @Inject
-    private EntityReferenceSerializer<String> serializer;
+    @Named("compactwiki")
+    private EntityReferenceSerializer<String> compactWikiSerializer;
+
+    @Inject
+    Provider<XWikiContext> contextProvider;
 
     @Inject
     private ConfluenceInputContext context;
@@ -181,7 +191,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             return null;
         }
 
-        EntityReference root = context.getProperties().getRoot();
+        EntityReference root = getRoot();
         if (root == null) {
             return ref;
         }
@@ -194,6 +204,19 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         }
 
         return ref;
+    }
+
+    private EntityReference getRoot()
+    {
+        EntityReference root = context.getProperties().getRoot();
+        if (root == null) {
+            XWikiContext xcontext = contextProvider.get();
+            if (xcontext == null) {
+                return null;
+            }
+            root = xcontext.getWikiReference();
+        }
+        return root;
     }
 
     private EntityReference convertRef(EntityReference entityReference)
@@ -234,7 +257,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             }
 
             // Serialize the fixed reference
-            return this.serializer.serialize(reference);
+            return serialize(reference);
         }
 
         return entityReference;
@@ -329,6 +352,11 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return getUserOrGroupReference(toGroupReferenceName(groupName));
     }
 
+    String getGuestUser()
+    {
+        return serialize(GUEST);
+    }
+
     private String getUserOrGroupReference(String userReferenceName)
     {
         // Transform user name according to configuration
@@ -342,7 +370,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             ? new LocalDocumentReference(XWIKI, userReferenceName)
             : new DocumentReference(context.getProperties().getUsersWiki(), XWIKI, userReferenceName);
 
-        return this.serializer.serialize(reference);
+        return serialize(reference);
     }
 
     /**
@@ -410,7 +438,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     private EntityReference fromSpaceKey(String spaceKey)
     {
         String convertedSpace = toEntityName(ensureNonEmptySpaceKey(spaceKey));
-        EntityReference root = context.getProperties().getRoot();
+        EntityReference root = getRoot();
         return newEntityReference(convertedSpace, EntityType.SPACE, root);
     }
 
@@ -660,7 +688,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     @Override
     public String convertDocumentReference(String spaceKey, String pageTitle)
     {
-        return this.serializer.serialize(toDocumentReference(spaceKey, pageTitle));
+        return serialize(toDocumentReference(spaceKey, pageTitle));
     }
 
     @Override
@@ -677,7 +705,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         if (docRef == null || docRef.getParent() == null && WEB_HOME.equals(docRef.getName())) {
             return filename;
         }
-        return this.serializer.serialize(new EntityReference(filename, EntityType.ATTACHMENT, docRef));
+        return serialize(new EntityReference(filename, EntityType.ATTACHMENT, docRef));
     }
 
     static String spacesToDash(String name)
@@ -758,7 +786,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         if (space == null) {
             return null;
         }
-        return this.serializer.serialize(space);
+        return serialize(space);
     }
 
     @Override
@@ -771,7 +799,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         if (ref == null) {
             return "";
         }
-        return this.serializer.serialize(ref);
+        return serialize(ref);
     }
 
     private String serializeURLParameters(List<String[]> parameters)
@@ -808,7 +836,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         }
 
         AttachmentResourceReference resourceReference =
-            new AttachmentResourceReference(this.serializer.serialize(reference));
+            new AttachmentResourceReference(serialize(reference));
 
         // Query string
         if (CollectionUtils.isNotEmpty(urlParameters)) {
@@ -831,7 +859,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         }
 
         DocumentResourceReference resourceReference =
-            new DocumentResourceReference(this.serializer.serialize(reference));
+            new DocumentResourceReference(serialize(reference));
 
         // Query string
         if (CollectionUtils.isNotEmpty(urlParameters)) {
@@ -1015,6 +1043,11 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         }
 
         return baseReference;
+    }
+
+    private String serialize(EntityReference reference)
+    {
+        return this.compactWikiSerializer.serialize(reference, getRoot());
     }
 
     @Override

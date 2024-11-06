@@ -1,6 +1,6 @@
 .#------------------------------------------------------------------------------
 .expect|filter+xml
-.# Make sure the root space parameter works correctly, including links
+.# Various images related tests
 .#------------------------------------------------------------------------------
 <wiki name="sub">
   <wikiSpace name="TestSpace">
@@ -15,41 +15,17 @@
               </entry>
               <entry>
                 <string>content</string>
-                <string>[[(% param="value" %)link1>>doc:Other Space.Other Page.WebHome||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link1>>doc:Other Space.Other Page.WebHome||shape="rect"]]
+                <string>[[image:attach:xwiki:Main.Hello@image.png]]
 
-[[(% param="value" %)link2>>doc:Other Space.Other Page.WebHome||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link2>>doc:Other Space.Other Page.WebHome||shape="rect"]]
+[[sos//asdas//ame ca**sasd**ion>>image:attach:rock.jpg||custom-width="true" original-height="1200" data-xwiki-image-style-alignment="start" alt="some alt text" width="50" align="left" original-width="1200" data-xwiki-image-style-border="true"]]
 
-[[(% param="value" %)link3>>attach:Other Space.Other Page.WebHome@attachment.png||queryString="param=value" shape="rect"]](%%) [[(% param="value" %)link3>>attach:Other Space.Other Page.WebHome@attachment.png||shape="rect"]]
+[[some caption1>>image:attach:rock.jpg||custom-width="true" original-height="1200" data-xwiki-image-style-alignment="center" alt="some alt text" width="50" align="center" original-width="1200"]]
 
-[[(% param="value" %)link4>>icon:icon||shape="rect"]](%%) [[(% param="value" %)link4>>icon:icon||shape="rect"]]
+[[some caption2>>image:attach:rock.jpg||custom-width="true" original-height="1200" data-xwiki-image-style-alignment="end" alt="some alt text" width="50" align="right" original-width="1200"]]
 
-[[(% param="value" %)link5>>doc:Other Space.Other Page.WebHome||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link5>>doc:Other Space.Other Page.WebHome||shape="rect"]]
+[[some caption3>>image:attach:rock.jpg||custom-width="true" original-height="1200" data-xwiki-image-style-alignment="start" alt="some alt text" width="50" data-xwiki-image-style-text-wrap="true" align="left" original-width="1200"]]
 
-[[link6>>doc:validatedspace.validatedpage.WebHome||shape="rect"]]
-
-[[pagetovalidate>>doc:TestSpace.validatedpage.WebHome]]
-
-[[pagetovalidate>>doc:validatedspace.validatedpage.WebHome||anchor="anchor"]]
-
-[[Highlights>>doc:||anchor="anchor"]]
-
-[[doc:MYSPACE.WebHome]]
-
-[[link>>url:https://confluence.atlassian.com/x/2EkGOQ||shape="rect"]]
-
-[[link>>url:https://confluence.atlassian.com/x/2yAC||shape="rect"]]
-
-[[link>>url:https://confluence.atlassian.com/x/ASEC||shape="rect"]]
-
-[[link>>url:https://confluence.atlassian.com/x/liAC||shape="rect"]]
-
-[[link>>url:https://confluence.atlassian.com/x/NgszKw||shape="rect"]]
-
-[[link>>url:https://confluence.atlassian.com/x/SRwC||shape="rect"]]
-
-{{lozenge icon="https://icon-library.com/images/img_524932.png" link="https://www.bing.com/images/search?q=icon" width="auto"}}
-Some content
-{{/lozenge}}</string>
+[[some caption4>>image:attach:rock.jpg||custom-width="true" original-height="1200" data-xwiki-image-style-alignment="end" alt="some alt text" width="50" data-xwiki-image-style-text-wrap="true" align="right" original-width="1200"]]</string>
               </entry>
               <entry>
                 <string>syntax</string>
@@ -122,9 +98,8 @@ Some content
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.storeConfluenceDetailsEnabled=false
-.configuration.source=links
 .configuration.root=wiki:sub
-.configuration.confluenceInstanceType=cloud
-.configuration.baseURLs=https://baseurl1.com,https://baseurl2.com,https://baseurl3.com,https://baseurl4.com,https://baseurl5.com,https://confluence.atlassian.com/
-# no link mapping for short URLs to test correct fallback when the doc id is not known
+.configuration.source=images
+.configuration.linkMapping={"spacetovalidate": {"pagetovalidate": "xwiki:Main.Hello"}}
+.configuration.baseURLs=https://baseurl1.com,https://baseurl2.com,https://baseurl3.com,https://baseurl4.com,https://baseurl5.com/
 .#------------------------------------------------------------------------------
