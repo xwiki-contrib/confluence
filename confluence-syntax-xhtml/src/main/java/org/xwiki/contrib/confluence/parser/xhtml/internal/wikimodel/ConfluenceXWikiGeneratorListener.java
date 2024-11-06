@@ -262,7 +262,6 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
     public void onImage(WikiReference reference)
     {
         if (reference instanceof ConfluenceImageWikiReference) {
-
             ConfluenceImageWikiReference confluenceReference = (ConfluenceImageWikiReference) reference;
 
             ResourceReference resourceReference = null;

@@ -64,9 +64,9 @@ public class ConfluenceResourceReferenceParserTest
     private void assertRef(String space, String page, String filename, ResourceType type, ResourceReference ref)
     {
         ConfluenceResourceReference cref = (ConfluenceResourceReference) ref;
-        assertEquals(space, cref.getSpace());
-        assertEquals(page, cref.getPage());
-        assertEquals(filename, cref.getAttachmentFilename());
+        assertEquals(space, cref.getSpaceKey());
+        assertEquals(page, cref.getPageTitle());
+        assertEquals(filename, cref.getFilename());
         assertEquals(type, ref.getType());
     }
 }

@@ -33,11 +33,11 @@ public class ConfluenceResourceReference extends ResourceReference
     // FIXME somewhat duplicate of ConfluenceXHTMLWikiReference
     private String anchor;
 
-    private String attachmentFilename;
+    private String filename;
 
-    private String page;
+    private String pageTitle;
 
-    private String space;
+    private String spaceKey;
 
     private String user;
 
@@ -70,17 +70,17 @@ public class ConfluenceResourceReference extends ResourceReference
     /**
      * @return the attachment.
      */
-    public String getAttachmentFilename()
+    public String getFilename()
     {
-        return this.attachmentFilename;
+        return this.filename;
     }
 
     /**
      * @param filename the attachment to set
      */
-    public void setAttachmentFilename(String filename)
+    public void setFilename(String filename)
     {
-        this.attachmentFilename = filename;
+        this.filename = filename;
     }
 
     /**
@@ -102,32 +102,32 @@ public class ConfluenceResourceReference extends ResourceReference
     /**
      * @return the space.
      */
-    public String getSpace()
+    public String getSpaceKey()
     {
-        return this.space;
+        return this.spaceKey;
     }
 
     /**
-     * @param space the space to set
+     * @param spaceKey the space to set
      */
-    public void setSpace(String space)
+    public void setSpaceKey(String spaceKey)
     {
-        this.space = space;
+        this.spaceKey = spaceKey;
     }
 
     /**
      * @return the page.
      */
-    public String getPage()
+    public String getPageTitle()
     {
-        return this.page;
+        return this.pageTitle;
     }
 
     /**
-     * @param page the page to set
+     * @param pageTitle the page to set
      */
-    public void setPage(String page)
+    public void setPageTitle(String pageTitle)
     {
-        this.page = page;
+        this.pageTitle = pageTitle;
     }
 }

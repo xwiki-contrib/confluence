@@ -73,7 +73,7 @@ public class ConfluenceResourceReferenceParser extends AbstractResourceReference
         if (m.matches()) {
             ConfluenceResourceReference ref = new ConfluenceResourceReference(rawRef, ResourceType.SPACE);
             ref.setTyped(true);
-            ref.setSpace(m.group(1));
+            ref.setSpaceKey(m.group(1));
             return ref;
         }
 
@@ -81,17 +81,17 @@ public class ConfluenceResourceReferenceParser extends AbstractResourceReference
         if (m.matches()) {
             ConfluenceResourceReference ref = new ConfluenceResourceReference(rawRef, ResourceType.DOCUMENT);
             ref.setTyped(true);
-            ref.setSpace(m.group(1));
-            ref.setPage(m.group(2));
+            ref.setSpaceKey(m.group(1));
+            ref.setPageTitle(m.group(2));
             return ref;
         }
 
         m = ATTACHMENT_ON_SPACE_PAGE_PATTERN.matcher(rawRef);
         if (m.matches()) {
             ConfluenceResourceReference ref = new ConfluenceResourceReference(rawRef, ResourceType.ATTACHMENT);
-            ref.setSpace(m.group(1));
-            ref.setPage(m.group(2));
-            ref.setAttachmentFilename(m.group(3));
+            ref.setSpaceKey(m.group(1));
+            ref.setPageTitle(m.group(2));
+            ref.setFilename(m.group(3));
             ref.setTyped(true);
             return ref;
         }
@@ -99,8 +99,8 @@ public class ConfluenceResourceReferenceParser extends AbstractResourceReference
         m = ATTACHMENT_ON_PAGE_PATTERN.matcher(rawRef);
         if (m.matches()) {
             ConfluenceResourceReference ref = new ConfluenceResourceReference(rawRef, ResourceType.ATTACHMENT);
-            ref.setPage(m.group(1));
-            ref.setAttachmentFilename(m.group(2));
+            ref.setPageTitle(m.group(1));
+            ref.setFilename(m.group(2));
             ref.setTyped(true);
             return ref;
         }
@@ -109,7 +109,7 @@ public class ConfluenceResourceReferenceParser extends AbstractResourceReference
         if (m.matches()) {
             ConfluenceResourceReference ref = new ConfluenceResourceReference(rawRef, ResourceType.ATTACHMENT);
             ref.setTyped(true);
-            ref.setAttachmentFilename(m.group(1));
+            ref.setFilename(m.group(1));
             return ref;
         }
 
@@ -123,7 +123,7 @@ public class ConfluenceResourceReferenceParser extends AbstractResourceReference
         if (m.matches()) {
             ConfluenceResourceReference ref = new ConfluenceResourceReference(rawRef, ResourceType.DOCUMENT);
             ref.setTyped(true);
-            ref.setPage(rawRef);
+            ref.setPageTitle(rawRef);
             return ref;
         }
 

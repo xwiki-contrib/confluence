@@ -27,7 +27,6 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
@@ -42,8 +41,6 @@ import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.listener.QueueListener;
 import org.xwiki.rendering.listener.WrappingListener;
 import org.xwiki.rendering.listener.chaining.EventType;
-import org.xwiki.rendering.listener.reference.AttachmentResourceReference;
-import org.xwiki.rendering.listener.reference.DocumentResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceType;
 import org.xwiki.rendering.listener.reference.UserResourceReference;
@@ -325,43 +322,26 @@ public class ConfluenceConverterListener extends WrappingListener
         return fixedReference;
     }
 
-    private ResourceReference convertAttachmentReference(String space, String page, String filename)
-    {
-        // FIXME somewhat duplicate of getAttachmentResourceReference in ConfluenceXWikiGeneratorListener
-        DocumentResourceReference documentResourceReference;
-        if (!StringUtils.isEmpty(page)) {
-            documentResourceReference = new DocumentResourceReference(
-                confluenceConverter.convertDocumentReference(space, page));
-        } else if (!StringUtils.isEmpty(space)) {
-            documentResourceReference = new DocumentResourceReference(
-                confluenceConverter.convertSpaceReference(space));
-        } else {
-            documentResourceReference = new DocumentResourceReference("");
-        }
-
-        String ref = documentResourceReference.getReference();
-        if (!ref.isEmpty()) {
-            ref += '@';
-        }
-        return new AttachmentResourceReference(ref + filename);
-    }
-
     private ResourceReference convertConfluenceResourceReference(ConfluenceResourceReference ref)
     {
         if (ref.getType() == ResourceType.SPACE) {
             return new ResourceReference(
-                confluenceConverter.convertSpaceReference(ref.getSpace()),
+                confluenceConverter.convertSpaceReference(ref.getSpaceKey()),
                 ResourceType.SPACE);
         }
 
         if (ref.getType() == ResourceType.DOCUMENT) {
             return new ResourceReference(
-                confluenceConverter.convertDocumentReference(ref.getSpace(), ref.getPage()),
+                confluenceConverter.convertDocumentReference(ref.getSpaceKey(), ref.getPageTitle()),
                 ResourceType.DOCUMENT);
         }
 
         if (ref.getType() == ResourceType.ATTACHMENT) {
-            return convertAttachmentReference(ref.getSpace(), ref.getPage(), ref.getAttachmentFilename());
+            return new ResourceReference(
+                confluenceConverter.convertAttachmentReference(ref.getSpaceKey(), ref.getPageTitle(),
+                    ref.getFilename()),
+                ResourceType.ATTACHMENT
+            );
         }
 
         logger.error("Unexpected Confluence resource reference type for [{}]", ref);

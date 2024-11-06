@@ -138,7 +138,11 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
     private String applyNamingStrategy(String entityName)
     {
-        return entityNameValidationManagerProvider.get().getEntityReferenceNameStrategy().transform(entityName);
+        String r = entityNameValidationManagerProvider.get().getEntityReferenceNameStrategy().transform(entityName);
+        if (StringUtils.isEmpty(r)) {
+            logger.warn("The naming strategy transformed [{}] to an empty name", r);
+        }
+        return r;
     }
 
     /**
@@ -155,7 +159,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         EntityReference parent = entityReference.getParent();
         if (EntityType.ATTACHMENT.equals(entityReference.getType())) {
             EntityReference convertedParent = parent == null ? null : convert(parent);
-            return new EntityReference(entityReference.getName(), EntityType.ATTACHMENT, convertedParent);
+            return newEntityReference(entityReference.getName(), EntityType.ATTACHMENT, convertedParent);
         }
 
         if (parent == null && EntityType.DOCUMENT.equals(entityReference.getType())) {
@@ -200,12 +204,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             if (entityElement.getType() == EntityType.DOCUMENT || entityElement.getType() == EntityType.SPACE) {
                 String name = entityElement.getName();
                 String convertedName = applyNamingStrategy(name);
-                if (convertedName == null || convertedName.isEmpty()) {
-                    logger.warn("Could not convert entity part [{}] in [{}]. This is a bug, please report it", name,
-                        entityReference);
-                    return null;
-                }
-                newRef = new EntityReference(convertedName, entityElement.getType(), newRef);
+                newRef = newEntityReference(convertedName, entityElement.getType(), newRef);
             } else if (newRef == null || entityElement.getParent() == newRef) {
                 newRef = entityElement;
             } else {
@@ -230,6 +229,9 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
             // Fix the reference according to entity conversion rules
             reference = convert(reference);
+            if (reference == null) {
+                return "";
+            }
 
             // Serialize the fixed reference
             return this.serializer.serialize(reference);
@@ -389,18 +391,27 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return resolveUserReference(new UserResourceReference(userId)).getReference();
     }
 
+    private EntityReference newEntityReference(String name, EntityType type, EntityReference parent)
+    {
+        if (StringUtils.isEmpty(name)) {
+            this.logger.warn("Tried to create an entity reference with an empty name");
+            return null;
+        }
+        return new EntityReference(name, type, parent);
+    }
+
     private EntityReference toNonNestedDocumentReference(String spaceKey, String pageTitle)
     {
         String convertedName = toEntityName(pageTitle);
         EntityReference space = spaceKey == null ? null : fromSpaceKey(spaceKey);
-        return getDocumentReference(new EntityReference(convertedName, EntityType.SPACE, space), false);
+        return getDocumentReference(newEntityReference(convertedName, EntityType.SPACE, space), false);
     }
 
     private EntityReference fromSpaceKey(String spaceKey)
     {
         String convertedSpace = toEntityName(ensureNonEmptySpaceKey(spaceKey));
         EntityReference root = context.getProperties().getRoot();
-        return new EntityReference(convertedSpace, EntityType.SPACE, root);
+        return newEntityReference(convertedSpace, EntityType.SPACE, root);
     }
 
     /**
@@ -634,7 +645,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         }
 
         String convertedName = toEntityName(pageTitle);
-        return getDocumentReference(new EntityReference(convertedName, EntityType.SPACE, parent), asSpace);
+        return getDocumentReference(newEntityReference(convertedName, EntityType.SPACE, parent), asSpace);
     }
 
     private static EntityReference getDocumentReference(EntityReference space, boolean asSpace)
@@ -655,8 +666,15 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     @Override
     public String convertAttachmentReference(String spaceKey, String pageTitle, String filename)
     {
+        if (StringUtils.isEmpty(filename)) {
+            return "";
+        }
+        if (pageTitle == null && spaceKey == null) {
+            return filename;
+        }
+
         EntityReference docRef = toDocumentReference(spaceKey, pageTitle);
-        if (docRef == null) {
+        if (docRef == null || docRef.getParent() == null && WEB_HOME.equals(docRef.getName())) {
             return filename;
         }
         return this.serializer.serialize(new EntityReference(filename, EntityType.ATTACHMENT, docRef));
@@ -736,7 +754,11 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     @Override
     public String convertSpaceReference(String spaceKey)
     {
-        return this.serializer.serialize(fromSpaceKey(spaceKey));
+        EntityReference space = fromSpaceKey(spaceKey);
+        if (space == null) {
+            return null;
+        }
+        return this.serializer.serialize(space);
     }
 
     @Override
@@ -744,7 +766,10 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     {
         EntityReference ref = fromSpaceKey(spaceKey);
         if (asDocument) {
-            ref = new EntityReference(WEB_HOME, EntityType.DOCUMENT, ref);
+            ref = newEntityReference(WEB_HOME, EntityType.DOCUMENT, ref);
+        }
+        if (ref == null) {
+            return "";
         }
         return this.serializer.serialize(ref);
     }
@@ -944,7 +969,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
                 }
 
                 EntityReference attachmentReference =
-                    new EntityReference(decode(matcher.group(2)), EntityType.ATTACHMENT, documentReference);
+                    newEntityReference(decode(matcher.group(2)), EntityType.ATTACHMENT, documentReference);
 
                 String pageTitle = getPageTitleForAnchor(pageId);
                 return createAttachmentResourceReference(attachmentReference, urlParameters, pageTitle, urlAnchor);
