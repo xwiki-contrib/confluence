@@ -401,6 +401,8 @@ It links to Page A: [[Page A>>doc:SmallNested.Page A.WebHome]]
 
 It links to Under Page A: [[Under Page A>>doc:SmallNested.Page A.Under Page A.WebHome]]
 
+Image in Under Page A: [[image:attach:SmallNested.Page A.Under Page A.WebHome@image.png]]
+
 Default Page Tree:
 
 {{pagetree/}}

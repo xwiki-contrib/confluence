@@ -4118,7 +4118,16 @@
 </object>
 <object class="BodyContent" package="com.atlassian.confluence.core">
 <id name="id">655098541</id>
-<property name="body"><![CDATA[<p>This page is under page B.</p><p>It links to Page B: <ac:link ac:card-appearance="inline"><ri:page ri:content-title="Page B" ri:version-at-save="1" /><ac:link-body>Page B</ac:link-body></ac:link> </p><p>It links to Page A: <ac:link ac:card-appearance="inline"><ri:page ri:content-title="Page A" ri:version-at-save="1" /><ac:link-body>Page A</ac:link-body></ac:link> </p><p>It links to Under Page A: <ac:link ac:card-appearance="inline"><ri:page ri:content-title="Under Page A" ri:version-at-save="2" /><ac:link-body>Under Page A</ac:link-body></ac:link> </p><p>Default Page Tree:</p><p><ac:structured-macro ac:name="pagetree" ac:schema-version="1" ac:local-id="a3801bbb-325b-4af2-8233-947fbfcd5a87" ac:macro-id="298ef122-d60e-426e-885c-75ba0a7b4236" /></p><p>It shows Page A:</p><p> <ac:structured-macro ac:name="pagetree" ac:schema-version="1" ac:local-id="9a2f756c-238e-4e9b-9a28-151601af76d5" ac:macro-id="d8cbff7ff87460f3fe423bac52adb74d"><ac:parameter ac:name="root"><ac:link><ri:page ri:content-title="Page A" ri:version-at-save="1" /></ac:link></ac:parameter><ac:parameter ac:name="startDepth">1</ac:parameter></ac:structured-macro></p><p>It includes Under Page A:</p><ac:structured-macro ac:name="excerpt-include" ac:schema-version="1" data-layout="default" ac:local-id="6a15dfa6-2865-4b8e-a1fe-b73ef7bcbcd0" ac:macro-id="74fa4f34-1de5-4a91-a2fa-f1e1fb202d5d"><ac:parameter ac:name=""><ac:link><ri:page ri:content-title="Under Page A" ri:version-at-save="2" /></ac:link></ac:parameter></ac:structured-macro>]]></property>
+<property name="body"><![CDATA[
+<p>This page is under page B.</p>
+<p>It links to Page B: <ac:link ac:card-appearance="inline"><ri:page ri:content-title="Page B" ri:version-at-save="1" /><ac:link-body>Page B</ac:link-body></ac:link> </p>
+<p>It links to Page A: <ac:link ac:card-appearance="inline"><ri:page ri:content-title="Page A" ri:version-at-save="1" /><ac:link-body>Page A</ac:link-body></ac:link> </p>
+<p>It links to Under Page A: <ac:link ac:card-appearance="inline"><ri:page ri:content-title="Under Page A" ri:version-at-save="2" /><ac:link-body>Under Page A</ac:link-body></ac:link> </p>
+<p>Image in Under Page A: <ac:image><ri:attachment ri:filename="image.png"><ri:page ri:content-title="Under Page A"/></ri:attachment></ac:image></p>
+<p>Default Page Tree:</p><p><ac:structured-macro ac:name="pagetree" ac:schema-version="1" ac:local-id="a3801bbb-325b-4af2-8233-947fbfcd5a87" ac:macro-id="298ef122-d60e-426e-885c-75ba0a7b4236" /></p>
+<p>It shows Page A:</p><p> <ac:structured-macro ac:name="pagetree" ac:schema-version="1" ac:local-id="9a2f756c-238e-4e9b-9a28-151601af76d5" ac:macro-id="d8cbff7ff87460f3fe423bac52adb74d"><ac:parameter ac:name="root"><ac:link><ri:page ri:content-title="Page A" ri:version-at-save="1" /></ac:link></ac:parameter><ac:parameter ac:name="startDepth">1</ac:parameter></ac:structured-macro></p>
+<p>It includes Under Page A:</p><ac:structured-macro ac:name="excerpt-include" ac:schema-version="1" data-layout="default" ac:local-id="6a15dfa6-2865-4b8e-a1fe-b73ef7bcbcd0" ac:macro-id="74fa4f34-1de5-4a91-a2fa-f1e1fb202d5d"><ac:parameter ac:name=""><ac:link><ri:page ri:content-title="Under Page A" ri:version-at-save="2" /></ac:link></ac:parameter></ac:structured-macro>
+]]></property>
 <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">655491073</id>
 </property>
 <property name="bodyType">2</property>
