@@ -43,7 +43,9 @@ import org.xwiki.test.junit5.mockito.MockComponent;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -80,6 +82,8 @@ class ConfluenceURLMappingTest
     private static final EntityResourceReference SPACE_HOME = new EntityResourceReference(SPACE_HOME_REF,
         EntityResourceAction.VIEW);
 
+    private static final String GET = "get";
+
     @MockComponent
     private ConfluencePageTitleResolver confluencePageTitleResolver;
 
@@ -100,7 +104,8 @@ class ConfluenceURLMappingTest
     {
         when(suggestionUtils.getSuggestionsFromDocumentReference(any())).thenReturn(new WordBlock("mysuggestion"));
         when(confluencePageIdResolver.getDocumentById(42)).thenReturn(MY_DOC_REF);
-        when(confluencePageTitleResolver.getDocumentByTitle(ConfluenceURLMappingTest.MY_SPACE, "My Doc")).thenReturn(MY_DOC_REF);
+        when(confluencePageTitleResolver.getDocumentByTitle(ConfluenceURLMappingTest.MY_SPACE, "My Doc"))
+            .thenReturn(MY_DOC_REF);
 
         // For tiny link tests
         when(confluencePageIdResolver.getDocumentById(139414)).thenReturn(
@@ -125,7 +130,7 @@ class ConfluenceURLMappingTest
     })
     void convertPageDisplayURL(String path)
     {
-        URLMappingResult converted = handler.convert(path, "get", null);
+        URLMappingResult converted = handler.convert(path, GET, null);
         assertEquals(DOC_RR, converted.getResourceReference());
         assertEquals("", converted.getURL());
     }
@@ -139,7 +144,7 @@ class ConfluenceURLMappingTest
     })
     void convertSpaceDisplayURL(String path)
     {
-        URLMappingResult converted = handler.convert(path, "get", null);
+        URLMappingResult converted = handler.convert(path, GET, null);
         assertEquals(SPACE_HOME, converted.getResourceReference());
         assertEquals("", converted.getURL());
     }
@@ -151,7 +156,7 @@ class ConfluenceURLMappingTest
     })
     void convertViewPageActionURL(String path)
     {
-        URLMappingResult converted = handler.convert(path, "get", null);
+        URLMappingResult converted = handler.convert(path, GET, null);
         assertEquals(DOC_RR, converted.getResourceReference());
         assertEquals("", converted.getURL());
     }
@@ -166,7 +171,7 @@ class ConfluenceURLMappingTest
     })
     void convertAttachmentURL(String path)
     {
-        URLMappingResult converted = handler.convert(path, "get", null);
+        URLMappingResult converted = handler.convert(path, GET, null);
         assertEquals(
             new EntityResourceReference(
                 new AttachmentReference("hello world.txt", MY_DOC_REF),
@@ -189,7 +194,7 @@ class ConfluenceURLMappingTest
     })
     void dontConvertWrongURL(String path)
     {
-        URLMappingResult converted = handler.convert(path, "get", null);
+        URLMappingResult converted = handler.convert(path, GET, null);
         assertFailedConversion(converted);
     }
 
@@ -201,7 +206,7 @@ class ConfluenceURLMappingTest
     })
     void handleNotFoundCorrectURLs(String path)
     {
-        URLMappingResult converted = handler.convert(path, "get", null);
+        URLMappingResult converted = handler.convert(path, GET, null);
         assertFailedConversion(converted);
     }
 
@@ -213,7 +218,7 @@ class ConfluenceURLMappingTest
     })
     void notFoundCorrectDisplayURLsHaveSuggestions(String path)
     {
-        URLMappingResult converted = handler.convert(path, "get", null);
+        URLMappingResult converted = handler.convert(path, GET, null);
         assertInstanceOf(Block.class, converted.getSuggestions());
     }
 
@@ -228,7 +233,7 @@ class ConfluenceURLMappingTest
     })
     void handleTinyLinks(String path) throws ConfluenceResolverException
     {
-        URLMappingResult converted = handler.convert(path, "get", null);
+        URLMappingResult converted = handler.convert(path, GET, null);
         assertEquals(
             new EntityResourceReference(
                 new EntityReference("OK." + path.substring(2), EntityType.DOCUMENT),
@@ -243,7 +248,7 @@ class ConfluenceURLMappingTest
     })
     void tinyLinksBrokenOrDocIdNotFound()
     {
-        URLMappingResult converted = handler.convert("/x/abab", "get", null);
+        URLMappingResult converted = handler.convert("/x/abab", GET, null);
         assertFailedConversion(converted);
     }
 
