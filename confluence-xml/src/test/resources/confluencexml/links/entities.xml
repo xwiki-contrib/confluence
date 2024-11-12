@@ -36,6 +36,10 @@
           <a href="https://baseurl3.com/download/attachments/11/attachment.png"><span param="value">link3</span></a>
         </p>
         <p>
+          <a href="https://baseurl3.com/download/thumbnails/11/attachment.png?version=1&amp;modificationDate=1551265055986&amp;api=v2#anchor"><span param="value">link3 bis</span></a>
+          <a href="https://baseurl3.com/download/thumbnails/11/attachment.png"><span param="value">link3 bis</span></a>
+        </p>
+        <p>
           <a href="https://baseurl4.com/images/icons/emoticons/icon.png?param=value#anchor"><span param="value">link4</span></a>
           <a href="https://baseurl4.com/images/icons/emoticons/icon.png"><span param="value">link4</span></a>
         </p>

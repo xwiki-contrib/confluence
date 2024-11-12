@@ -159,6 +159,8 @@ class ConfluenceURLMappingTest
 
     @ParameterizedTest
     @ValueSource(strings = {
+        "download/thumbnails/42/hello+world.txt",
+        "download/thumbnails/42/hello+world.txt?version=1&modificationDate=1551265055986&api=v2",
         "download/attachments/42/hello+world.txt?param=thatwedontcareabout",
         "download/attachments/42/hello+world.txt"
     })
@@ -177,6 +179,7 @@ class ConfluenceURLMappingTest
     @ValueSource(strings = {
         "hello/pages/viewpage.action?pageId=42",
         "hello/download/attachments/42/hello+world.txt",
+        "hello/download/thumbnails/42/hello+world.txt",
         "hello/display/MySpace/My+Doc?param=thatwedontcareabout",
         "pages/viewpages.action?pageId=42",
         "pages/pages/viewpages.action?pageId=42",
@@ -193,6 +196,7 @@ class ConfluenceURLMappingTest
     @ParameterizedTest
     @ValueSource(strings = {
         "pages/viewpage.action?pageId=1337",
+        "download/thumbnails/43/hello+world.txt",
         "download/attachments/43/hello+world.txt"
     })
     void handleNotFoundCorrectURLs(String path)

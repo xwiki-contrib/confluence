@@ -86,7 +86,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     private static final Pattern PATTERN_URL_SPACES = Pattern.compile("^/spaces/(.+)/pages/\\d+/([^?#]+)(\\?.*)?$");
 
     private static final Pattern PATTERN_URL_ATTACHMENT =
-        Pattern.compile("^/download/attachments/(\\d+)/([^?#]+)(\\?.*)?$");
+        Pattern.compile("^/download/(?:attachments|thumbnails)/(\\d+)/([^?#]+)(\\?.*)?$");
 
     private static final Pattern PATTERN_URL_EMOTICON =
         Pattern.compile("^/images/icons/emoticons/([^?#]+)(\\....)(\\?.*)?$");

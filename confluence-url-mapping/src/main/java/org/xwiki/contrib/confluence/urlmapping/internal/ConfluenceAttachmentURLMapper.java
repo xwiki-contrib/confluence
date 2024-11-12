@@ -60,7 +60,7 @@ public class ConfluenceAttachmentURLMapper extends AbstractURLMapper
      */
     public ConfluenceAttachmentURLMapper()
     {
-        super("download/attachments/(?<pageId>\\d+)/(?<filename>[^?#]+)(?<params>\\?.*)?");
+        super("download/(?:attachments|thumbnails)/(?<pageId>\\d+)/(?<filename>[^?#]+)(?<params>\\?.*)?");
     }
 
     @Override
