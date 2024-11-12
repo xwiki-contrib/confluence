@@ -35,7 +35,7 @@ import java.util.Map;
  * @since 9.57.0
  * @version $Id$
  */
-@Component (hints = {"mathinline", "mathblock"})
+@Component (hints = {"mathinline", "mathblock", "unit"})
 @Singleton
 public class MathMacroConverter extends AbstractMacroConverter
 {
@@ -79,7 +79,7 @@ public class MathMacroConverter extends AbstractMacroConverter
 
         content = escapeMathjax(content);
 
-        if (confluenceId.contains(INLINE)) {
+        if (isInline(confluenceId)) {
             content = "\\(" + content + "\\)";
         } else {
             String anchor = parameters.get("anchor");
@@ -92,6 +92,11 @@ public class MathMacroConverter extends AbstractMacroConverter
         return content;
     }
 
+    private static boolean isInline(String confluenceId)
+    {
+        return confluenceId.equals("unit") || confluenceId.contains(INLINE);
+    }
+
     private static String escapeMathjax(String content)
     {
         return content.replace("{{/", "{{ /");
@@ -100,6 +105,6 @@ public class MathMacroConverter extends AbstractMacroConverter
     @Override
     public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
     {
-        return id.contains(INLINE) ? InlineSupport.YES : InlineSupport.NO;
+        return isInline(id) ? InlineSupport.YES : InlineSupport.NO;
     }
 }
