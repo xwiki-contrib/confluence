@@ -91,6 +91,20 @@
 **** __Alt:__
 **** __Neu:__
 
+{{task-list}}
+{{task id="230" status="incomplete"}}
+Task containing an inline status and then a task list {{status colour="Red" title="prio 1"/}}
+
+{{task-list}}
+ 
+
+{{task id="231" status="incomplete"}}
+task inside a task
+{{/task}}
+{{/task-list}}
+{{/task}}
+{{/task-list}}
+
 A urlencoded inline math with + signs: {{mathjax}}\(K_\text{S}\to\pi^-\pi^+\){{/mathjax}}
 
 {{mathjax}}

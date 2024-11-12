@@ -86,6 +86,19 @@
     </li>
 </ul>
 
+<ac:task-list>
+<ac:task>
+<ac:task-id>230</ac:task-id>
+<ac:task-status>incomplete</ac:task-status>
+<ac:task-body>Task containing an inline status and then a task list <ac:structured-macro ac:name="status" ac:schema-version="1" ac:macro-id="a4d12e9d-67f0-4225-8cd6-e6b254fa7072"><ac:parameter ac:name="colour">Red</ac:parameter><ac:parameter ac:name="title">prio 1</ac:parameter></ac:structured-macro><ac:task-list>
+<ac:task>
+<ac:task-id>231</ac:task-id>
+<ac:task-status>incomplete</ac:task-status>
+<ac:task-body>task inside a task</ac:task-body>
+</ac:task>
+</ac:task-list></ac:task-body>
+</ac:task>
+</ac:task-list>
 
 <p>A urlencoded inline math with + signs: <ac:structured-macro ac:name="mathinline" ac:schema-version="1" ac:macro-id="35ea5ccd-fac7-4165-b523-f7ad0b51af20"><ac:parameter ac:name="body">--uriencoded--K_\text%7BS%7D\to\pi%5e-\pi%5e+</ac:parameter></ac:structured-macro></p>
 

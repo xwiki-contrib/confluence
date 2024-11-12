@@ -112,9 +112,15 @@ public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
                 || isInListItem(context)
                 || isInParagraph(context)
                 || isInSpan(context)
+                || isInTaskBody(context)
         );
 
         s.onMacro(macro.name, macro.parameters, macro.content, isInline);
+    }
+
+    private static boolean isInTaskBody(TagContext context)
+    {
+        return context.getParent() != null && "ac:task-body".equals(context.getParent().getName());
     }
 
     private static boolean isInSpan(TagContext context)
