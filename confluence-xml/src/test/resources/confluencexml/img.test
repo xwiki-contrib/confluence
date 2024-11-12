@@ -41,7 +41,7 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>[[image:url:https://cdn.pixabay.com/photo/2022/09/27/19/46/ai-generated-7483596_960_720.jpg||alt="some alt text" dir="ltr" title="A nice title" longdesc="A very beautiful image" width="69px" style="opacity: 0.5" id="someId" lang="ro" class="someClass" usemap="someid" height="420px"]][[image:attach:MySpace.IMG Macro attachment holder.WebHome@270378865_3175061552717005_4796137940594548712_n.jpg||queryString="api=v2" alt="some alt text" dir="ltr" title="A nice title" longdesc="A very beautiful image" width="69px" style="opacity: 0.5" id="someId" lang="ro" class="someClass" usemap="someid" height="420px"]]</string>
+              <string>[[image:url:https://cdn.pixabay.com/photo/2022/09/27/19/46/ai-generated-7483596_960_720.jpg||alt="some alt text" dir="ltr" title="A nice title" longdesc="A very beautiful image" width="69px" style="opacity: 0.5" id="someId" lang="ro" class="someClass" usemap="someid" height="420px"]][[image:attach:MySpace.IMG Macro attachment holder.WebHome@270378865_3175061552717005_4796137940594548712_n.jpg||alt="some alt text" dir="ltr" title="A nice title" longdesc="A very beautiful image" width="69px" style="opacity: 0.5" id="someId" lang="ro" class="someClass" usemap="someid" height="420px"]]</string>
             </entry>
             <entry>
               <string>syntax</string>

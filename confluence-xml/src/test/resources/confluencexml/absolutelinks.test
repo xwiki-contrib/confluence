@@ -63,7 +63,7 @@
 
  
 
-[[http:~~/~~/my.wiki.invalid/wiki/download/attachments/11045169/MyFile.pdf?api=v2>>attach:MySpace.Test.WebHome@MyFile.pdf||queryString="api=v2" shape="rect"]]</string>
+[[http:~~/~~/my.wiki.invalid/wiki/download/attachments/11045169/MyFile.pdf?api=v2>>attach:MySpace.Test.WebHome@MyFile.pdf||shape="rect"]]</string>
             </entry>
             <entry>
               <string>syntax</string>

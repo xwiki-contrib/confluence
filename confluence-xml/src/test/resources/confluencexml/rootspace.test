@@ -17,15 +17,15 @@
                   </entry>
                   <entry>
                     <string>content</string>
-                    <string>[[(% param="value" %)link1>>doc:Composed.Root.Other Space.Other Page.WebHome||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link1>>doc:Composed.Root.Other Space.Other Page.WebHome||shape="rect"]]
+                    <string>[[(% param="value" %)link1>>doc:Composed.Root.Other Space.Other Page.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link1>>doc:Composed.Root.Other Space.Other Page.WebHome||shape="rect"]]
 
-[[(% param="value" %)link2>>doc:Composed.Root.Other Space.Other Page.WebHome||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link2>>doc:Composed.Root.Other Space.Other Page.WebHome||shape="rect"]]
+[[(% param="value" %)link2>>doc:Composed.Root.Other Space.Other Page.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link2>>doc:Composed.Root.Other Space.Other Page.WebHome||shape="rect"]]
 
-[[(% param="value" %)link3>>attach:Composed.Root.Other Space.Other Page.WebHome@attachment.png||queryString="param=value" shape="rect"]](%%) [[(% param="value" %)link3>>attach:Composed.Root.Other Space.Other Page.WebHome@attachment.png||shape="rect"]]
+[[(% param="value" %)link3>>attach:Composed.Root.Other Space.Other Page.WebHome@attachment.png||shape="rect"]](%%) [[(% param="value" %)link3>>attach:Composed.Root.Other Space.Other Page.WebHome@attachment.png||shape="rect"]]
 
 [[(% param="value" %)link4>>icon:icon||shape="rect"]](%%) [[(% param="value" %)link4>>icon:icon||shape="rect"]]
 
-[[(% param="value" %)link5>>doc:Composed.Root.Other Space.Other Page.WebHome||queryString="param=value" anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link5>>doc:Composed.Root.Other Space.Other Page.WebHome||shape="rect"]]
+[[(% param="value" %)link5>>doc:Composed.Root.Other Space.Other Page.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link5>>doc:Composed.Root.Other Space.Other Page.WebHome||shape="rect"]]
 
 [[link6>>doc:Composed.Root.validatedspace.validatedpage.WebHome||shape="rect"]]
 

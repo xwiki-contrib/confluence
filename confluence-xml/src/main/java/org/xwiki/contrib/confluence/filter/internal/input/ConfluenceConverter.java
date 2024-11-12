@@ -828,7 +828,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     }
 
     private AttachmentResourceReference createAttachmentResourceReference(EntityReference reference,
-        List<String[]> urlParameters, String pageTitle, String urlAnchor)
+        String pageTitle, String urlAnchor)
     {
         if (reference == null) {
             return null;
@@ -836,11 +836,6 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
         AttachmentResourceReference resourceReference =
             new AttachmentResourceReference(serialize(reference));
-
-        // Query string
-        if (CollectionUtils.isNotEmpty(urlParameters)) {
-            resourceReference.setQueryString(serializeURLParameters(urlParameters));
-        }
 
         // Anchor
         if (StringUtils.isNotBlank(urlAnchor)) {
@@ -851,7 +846,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     }
 
     private DocumentResourceReference createDocumentResourceReference(EntityReference reference,
-        List<String[]> urlParameters, String pageTitle, String urlAnchor)
+        String pageTitle, String urlAnchor)
     {
         if (reference == null) {
             return null;
@@ -859,11 +854,6 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
         DocumentResourceReference resourceReference =
             new DocumentResourceReference(serialize(reference));
-
-        // Query string
-        if (CollectionUtils.isNotEmpty(urlParameters)) {
-            resourceReference.setQueryString(serializeURLParameters(urlParameters));
-        }
 
         // Anchor
         if (StringUtils.isNotBlank(urlAnchor)) {
@@ -888,13 +878,13 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return null;
     }
 
-    private DocumentResourceReference simpleDocRef(Matcher m, List<String[]> urlParameters, String urlAnchor)
+    private DocumentResourceReference simpleDocRef(Matcher m, String urlAnchor)
     {
         String spaceKey = decode(m.group(1));
         String pageTitle = decode(m.group(2));
         EntityReference documentReference = toDocumentReference(spaceKey, pageTitle);
 
-        return createDocumentResourceReference(documentReference, urlParameters, pageTitle, urlAnchor);
+        return createDocumentResourceReference(documentReference, pageTitle, urlAnchor);
     }
 
     private long tinyPartToPageId(String part)
@@ -921,7 +911,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         urlParameters.removeIf(parameter -> parameter[0].equals("pageId"));
 
         String pageTitle = getPageTitleForAnchor(pageId);
-        return createDocumentResourceReference(documentReference, urlParameters, pageTitle, urlAnchor);
+        return createDocumentResourceReference(documentReference, pageTitle, urlAnchor);
     }
 
     private EntityReference getEntityReference(long pageId)
@@ -963,10 +953,10 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     {
         return ObjectUtils.firstNonNull(
             // Try /display
-            tryPattern(PATTERN_URL_DISPLAY, path, matcher -> simpleDocRef(matcher, urlParameters, urlAnchor)),
+            tryPattern(PATTERN_URL_DISPLAY, path, matcher -> simpleDocRef(matcher, urlAnchor)),
 
             // Try /spaces
-            tryPattern(PATTERN_URL_SPACES, path, matcher -> simpleDocRef(matcher, urlParameters, urlAnchor)),
+            tryPattern(PATTERN_URL_SPACES, path, matcher -> simpleDocRef(matcher, urlAnchor)),
 
             // Try viewpage.action
             tryPattern(PATTERN_URL_VIEWPAGE, path, matcher -> {
@@ -999,7 +989,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
                     newEntityReference(decode(matcher.group(2)), EntityType.ATTACHMENT, documentReference);
 
                 String pageTitle = getPageTitleForAnchor(pageId);
-                return createAttachmentResourceReference(attachmentReference, urlParameters, pageTitle, urlAnchor);
+                return createAttachmentResourceReference(attachmentReference, pageTitle, urlAnchor);
             }),
 
             // emoticons
