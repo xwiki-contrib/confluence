@@ -25,6 +25,8 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.AttributesImpl;
 import org.xwiki.rendering.wikimodel.xhtml.filter.DefaultXMLFilter;
 
+import java.util.Map;
+
 /**
  * Convert some parameters.
  * @since 9.60.0
@@ -36,6 +38,18 @@ public class ConfluenceAttributeXMLFilter extends DefaultXMLFilter
     private static final String STYLE = "style";
     private static final String BACKGROUND_COLOR = "background-color";
     private static final String CDATA = "CDATA";
+
+    private static final Map<String, String> CONVERTED_COLORS = Map.of(
+        // observed
+        "blue", "#deebff",
+        "green", "#e3fcef",
+        "yellow", "#fffae6",
+        // guessed
+        "white", "#ffffff",
+        "teal", "#e6fcff",
+        "red", "#ffebe6",
+        "purple", "#eae6ff"
+    );
 
     /**
      * Constructor.
@@ -61,6 +75,7 @@ public class ConfluenceAttributeXMLFilter extends DefaultXMLFilter
     {
         String highlightColor = atts.getValue(DATA_HIGHLIGHT_COLOUR);
         if (highlightColor != null && !highlightColor.isEmpty()) {
+            highlightColor = CONVERTED_COLORS.getOrDefault(highlightColor, highlightColor);
             AttributesImpl convertedAtts = new AttributesImpl(atts);
 
             convertedAtts.removeAttribute(convertedAtts.getIndex(DATA_HIGHLIGHT_COLOUR));

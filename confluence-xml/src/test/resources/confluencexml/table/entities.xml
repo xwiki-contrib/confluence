@@ -6,11 +6,9 @@
     <property name="name"><![CDATA[TestSpace]]></property>
     <property name="key"><![CDATA[TestSpace]]></property>
   </object>
-
   <object class="Page" package="com.atlassian.confluence.pages">
     <id name="id">10</id>
-    <property name="space" class="Space"
-      package="com.atlassian.confluence.spaces">
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
       <id name="id">100</id>
     </property>
     <property name="title"><![CDATA[TestContent]]></property>
@@ -23,7 +21,6 @@
       <id name="id">42</id>
     </property>
   </object>
-
   <object class="BodyContent" package="com.atlassian.confluence.core">
     <id name="id">0</id>
     <property name="body"><![CDATA[
@@ -350,12 +347,30 @@
       </td>
     </tr>
   </tbody>
-</table>]]></property>
-    <property name="content" class="Page"
-      package="com.atlassian.confluence.pages">
+</table>
+
+<p class="auto-cursor-target"><br /></p><table class="wrapped">
+  <colgroup>
+    <col style="width: 385.0px;" />
+    <col style="width: 97.0px;" />
+    <col style="width: 256.0px;" />
+  </colgroup>
+  <tbody>
+    <tr>
+      <th class="highlight-blue" data-highlight-colour="blue">Name</th>
+      <th class="highlight-blue" data-highlight-colour="blue">Description</th>
+      <th class="highlight-blue" data-highlight-colour="blue">Link</th>
+    </tr>
+    <tr>
+      <td class="highlight-yellow" colspan="3" data-highlight-colour="yellow">
+        <h2><span style="color: rgb(0,0,255);">Administrative Spaces</span></h2>
+      </td>
+    </tr>
+  </tbody>
+</table><p class="auto-cursor-target"><br /></p>]]></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages">
       <id name="id">10</id>
     </property>
     <property name="bodyType">2</property>
   </object>
-
 </hibernate-generic>
