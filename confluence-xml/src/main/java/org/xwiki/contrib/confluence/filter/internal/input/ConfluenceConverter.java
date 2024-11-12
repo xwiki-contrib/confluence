@@ -20,7 +20,6 @@
 package org.xwiki.contrib.confluence.filter.internal.input;
 
 import com.xpn.xwiki.XWikiContext;
-import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
