@@ -358,7 +358,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     private String getUserOrGroupReference(String userReferenceName)
     {
         // Transform user name according to configuration
-        if (userReferenceName == null || userReferenceName.isEmpty()) {
+        if (StringUtils.isEmpty(userReferenceName)) {
             return null;
         }
 
@@ -379,13 +379,12 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     public ResourceReference resolveUserReference(UserResourceReference reference)
     {
         String userReference = reference.getReference();
-        ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
 
         if (context.getProperties().isUserReferences()) {
             // Keep the UserResourceReference
 
             // Clean the user id
-            String userName = toUserReferenceName(confluencePackage.resolveUserName(userReference, userReference));
+            String userName = toUserReferenceName(resolveUserName(userReference));
             if (userName == null || userName.isEmpty()) {
                 return null;
             }
@@ -399,8 +398,8 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         // FIXME: would not really been needed if the XWiki Instance output filter was taking care of that when
         // receiving a user reference
 
-        String userName = toUserReference(confluencePackage.resolveUserName(userReference, userReference));
-        if (userName == null || userName.isEmpty()) {
+        String userName = getReferenceFromUserKey(userReference);
+        if (StringUtils.isEmpty(userName)) {
             return null;
         }
 
@@ -409,6 +408,23 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         documentReference.setParameters(reference.getParameters());
 
         return documentReference;
+    }
+
+    String resolveUserName(String userKey)
+    {
+        if (StringUtils.isEmpty(userKey)) {
+            return null;
+        }
+        String userName = context.getConfluencePackage().resolveUserName(userKey, userKey);
+        if (StringUtils.isEmpty(userName)) {
+            logger.error("Could not resolve user key [{}]", userKey);
+        }
+        return userName;
+    }
+
+    String getReferenceFromUserKey(String userKey)
+    {
+        return toUserReference(resolveUserName(userKey));
     }
 
     @Override

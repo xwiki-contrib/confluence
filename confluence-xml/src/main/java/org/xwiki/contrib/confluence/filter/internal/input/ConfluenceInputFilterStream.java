@@ -878,7 +878,7 @@ public class ConfluenceInputFilterStream
             : (confluenceConverter.toGroupReference(groupStr));
     }
 
-    private String getConfluenceUserRightData(ConfluenceProperties permProperties) throws FilterException
+    private String getConfluenceUserRightData(ConfluenceProperties permProperties)
     {
         String users = "";
 
@@ -887,34 +887,16 @@ public class ConfluenceInputFilterStream
             users = confluenceConverter.getGuestUser();
         }
 
-        String userName = maybeGetUserNameFromSubject(permProperties);
+        String userName = permProperties.getString(ConfluenceXMLPackage.KEY_SPACEPERMISSION_USERNAME, null);
+        if (StringUtils.isEmpty(userName)) {
+            String userKey = permProperties.getString(ConfluenceXMLPackage.KEY_PERMISSION_USERSUBJECT, null);
+            userName = confluenceConverter.resolveUserName(userKey);
+        }
 
-        if (userName != null && !userName.isEmpty()) {
+        if (!StringUtils.isEmpty(userName)) {
             users = (users.isEmpty() ? "" : users + ",") + confluenceConverter.toUserReference(userName);
         }
         return users;
-    }
-
-    private String maybeGetUserNameFromSubject(ConfluenceProperties permProperties) throws FilterException
-    {
-        String userName = permProperties.getString(ConfluenceXMLPackage.KEY_SPACEPERMISSION_USERNAME, null);
-        if (userName == null || userName.isEmpty()) {
-            String userSubjectStr = permProperties.getString(ConfluenceXMLPackage.KEY_PERMISSION_USERSUBJECT, null);
-            if (userSubjectStr != null && !userSubjectStr.isEmpty()) {
-                String result = null;
-                try {
-                    ConfluenceProperties userProperties = confluencePackage.getUserImplProperties(userSubjectStr);
-                    if (userProperties != null) {
-                        result = userProperties.getString(ConfluenceXMLPackage.KEY_USER_NAME, userSubjectStr);
-                    }
-                } catch (ConfigurationException e) {
-                    throw new FilterException(FAILED_TO_GET_USER_PROPERTIES, e);
-                }
-
-                userName = result;
-            }
-        }
-        return userName;
     }
 
     private static class ConfluenceRight
@@ -1164,13 +1146,13 @@ public class ConfluenceInputFilterStream
                 FilterEventParameters memberParameters = new FilterEventParameters();
 
                 try {
-                    String memberId = confluenceConverter.toUserReferenceName(
+                    String userName = confluenceConverter.toUserReferenceName(
                         this.confluencePackage.getInternalUserProperties(memberInt)
                             .getString(ConfluenceXMLPackage.KEY_USER_NAME, String.valueOf(memberInt)));
 
-                    if (!alreadyAddedMembers.contains(memberId)) {
-                        proxyFilter.onGroupMemberGroup(memberId, memberParameters);
-                        alreadyAddedMembers.add(memberId);
+                    if (!alreadyAddedMembers.contains(userName)) {
+                        proxyFilter.onGroupMemberGroup(userName, memberParameters);
+                        alreadyAddedMembers.add(userName);
                     }
                 } catch (Exception e) {
                     this.logger.error(FAILED_TO_GET_USER_PROPERTIES, e);
@@ -1495,8 +1477,7 @@ public class ConfluenceInputFilterStream
                     pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CREATION_AUTHOR)));
         } else if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_CREATION_AUTHOR_KEY)) {
             String authorKey = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CREATION_AUTHOR_KEY);
-            String authorName = confluenceConverter.toUserReference(
-                confluencePackage.resolveUserName(authorKey, authorKey));
+            String authorName = confluenceConverter.getReferenceFromUserKey(authorKey);
             documentLocaleParameters.put(WikiDocumentFilter.PARAMETER_CREATION_AUTHOR, authorName);
         }
 
@@ -1806,8 +1787,7 @@ public class ConfluenceInputFilterStream
                     pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION_AUTHOR)));
         } else if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISION_AUTHOR_KEY)) {
             String authorKey = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION_AUTHOR_KEY);
-            String authorName = confluenceConverter.toUserReference(
-                confluencePackage.resolveUserName(authorKey, authorKey));
+            String authorName = confluenceConverter.getReferenceFromUserKey(authorKey);
             documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_REVISION_EFFECTIVEMETADATA_AUTHOR, authorName);
         }
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISION_DATE)) {
@@ -2116,7 +2096,7 @@ public class ConfluenceInputFilterStream
         }
 
         FilterEventParameters attachmentParameters = getAttachmentParameters(pageProperties, attachmentProperties,
-            mediaType, attachmentName, attachmentId, version);
+            mediaType, attachmentId, version);
 
         // WikiAttachment
 
@@ -2130,7 +2110,7 @@ public class ConfluenceInputFilterStream
     }
 
     private FilterEventParameters getAttachmentParameters(ConfluenceProperties pageProperties,
-        ConfluenceProperties attachmentProperties, String mediaType, String attachmentName,
+        ConfluenceProperties attachmentProperties, String mediaType,
         Long attachmentId, Long version)
     {
         FilterEventParameters attachmentParameters = new FilterEventParameters();
@@ -2138,12 +2118,9 @@ public class ConfluenceInputFilterStream
             attachmentParameters.put(WikiAttachmentFilter.PARAMETER_CONTENT_TYPE, mediaType);
         }
         if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CREATION_AUTHOR)) {
-            addAttachmentCreator(
-                attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_CREATION_AUTHOR),
-                attachmentName,
-                attachmentParameters,
-                WikiAttachmentFilter.PARAMETER_CREATION_AUTHOR
-            );
+            String userName = attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_CREATION_AUTHOR);
+            String userReference = confluenceConverter.toUserReference(userName);
+            attachmentParameters.put(WikiAttachmentFilter.PARAMETER_CREATION_AUTHOR, userReference);
         }
         if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CREATION_DATE)) {
             try {
@@ -2156,7 +2133,7 @@ public class ConfluenceInputFilterStream
         }
 
         attachmentParameters.put(WikiAttachmentFilter.PARAMETER_REVISION, String.valueOf(version));
-        fillAttachmentAuthor(attachmentProperties, attachmentName, attachmentParameters);
+        fillAttachmentAuthor(attachmentProperties, attachmentParameters);
         if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE)) {
             try {
                 attachmentParameters.put(WikiAttachmentFilter.PARAMETER_REVISION_DATE, this.confluencePackage
@@ -2173,37 +2150,21 @@ public class ConfluenceInputFilterStream
         return attachmentParameters;
     }
 
-    private void fillAttachmentAuthor(ConfluenceProperties attachmentProperties, String attachmentName,
+    private void fillAttachmentAuthor(ConfluenceProperties attachmentProperties,
         FilterEventParameters attachmentParameters)
     {
-        if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_AUTHOR)) {
-            addAttachmentCreator(attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_AUTHOR),
-                attachmentName, attachmentParameters, WikiAttachmentFilter.PARAMETER_REVISION_AUTHOR);
-        }
+        String creatorName = null;
         if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CREATION_AUTHOR_KEY)) {
             String creatorKey = attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_CREATION_AUTHOR_KEY);
-            ConfluenceProperties creatorProperties = null;
-            try {
-                creatorProperties = confluencePackage.getUserImplProperties(creatorKey);
-            } catch (ConfigurationException e) {
-                logger.error("Could not resolve the creator of attachment [{}]", attachmentName, e);
-            }
-            if (creatorProperties != null) {
-                addAttachmentCreator(creatorProperties.getString(ConfluenceXMLPackage.KEY_USER_NAME, ""),
-                    attachmentName, attachmentParameters, WikiAttachmentFilter.PARAMETER_REVISION_AUTHOR);
-            }
+            creatorName = confluenceConverter.resolveUserName(creatorKey);
+        } else if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_AUTHOR)) {
+            creatorName = attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_AUTHOR);
         }
-    }
 
-    private void addAttachmentCreator(String creatorName, String attachmentName,
-        FilterEventParameters attachmentParameters, String authorParameter)
-    {
-        if (StringUtils.isEmpty(creatorName)) {
-            logger.error("the creator name of attachment [{}] is empty", attachmentName);
-            return;
+        if (creatorName != null) {
+            attachmentParameters.put(WikiAttachmentFilter.PARAMETER_REVISION_AUTHOR,
+                confluenceConverter.toUserReference(creatorName));
         }
-        String xwikiUserName = confluenceConverter.toUserReference(creatorName);
-        attachmentParameters.put(authorParameter, xwikiUserName);
     }
 
     private void readPageTags(ConfluenceFilter proxyFilter, Map<String, ConfluenceProperties> pageTags)
@@ -2244,17 +2205,10 @@ public class ConfluenceInputFilterStream
             // object properties
             ConfluenceProperties commentProperties = pageComments.get(commentId);
 
-            // creator
-            String commentCreator;
-            if (commentProperties.containsKey(CREATOR_NAME)) {
-                // old creator reference by name
-                commentCreator = commentProperties.getString(CREATOR_NAME);
-            } else {
-                // new creator reference by key
-                commentCreator = commentProperties.getString("creator");
-                commentCreator = confluencePackage.resolveUserName(commentCreator, commentCreator);
-            }
-            String commentCreatorReference = confluenceConverter.toUserReference(commentCreator);
+            // creator -
+            String commentCreatorReference = commentProperties.containsKey(CREATOR_NAME)
+                ? confluenceConverter.toUserReference(commentProperties.getString(CREATOR_NAME))
+                : confluenceConverter.getReferenceFromUserKey(commentProperties.getString("creator"));
 
             String commentBodyContent = this.confluencePackage.getCommentText(commentProperties);
             String commentText = commentBodyContent;
