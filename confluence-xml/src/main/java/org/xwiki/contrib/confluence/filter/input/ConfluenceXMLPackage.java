@@ -2417,21 +2417,21 @@ public class ConfluenceXMLPackage implements AutoCloseable
     {
         File folder = getInternalUserFolder();
 
-        Collection<Long> users;
         if (folder.exists()) {
             String[] userFolders = folder.list();
 
-            users = new TreeSet<>();
-            for (String userIdString : userFolders) {
-                if (NumberUtils.isCreatable(userIdString)) {
-                    users.add(Long.valueOf(userIdString));
+            if (userFolders != null) {
+                Collection<Long> users = new TreeSet<>();
+                for (String userIdString : userFolders) {
+                    if (NumberUtils.isCreatable(userIdString)) {
+                        users.add(Long.valueOf(userIdString));
+                    }
                 }
+                return users;
             }
-        } else {
-            users = Collections.emptyList();
         }
 
-        return users;
+        return Collections.emptyList();
     }
 
     /**
@@ -2441,15 +2441,14 @@ public class ConfluenceXMLPackage implements AutoCloseable
     {
         File folder = getUserImplFolder();
 
-        Collection<String> users;
         if (folder.exists()) {
-            users = new TreeSet<>();
-            users.addAll(Arrays.asList(folder.list()));
-        } else {
-            users = Collections.emptyList();
+            String[] list = folder.list();
+            if (list != null) {
+                return new TreeSet<>(Arrays.asList(list));
+            }
         }
 
-        return users;
+        return Collections.emptyList();
     }
 
     /**
@@ -2459,21 +2458,20 @@ public class ConfluenceXMLPackage implements AutoCloseable
     {
         File folder = getGroupsFolder();
 
-        Collection<Long> groups;
         if (folder.exists()) {
             String[] groupFolders = folder.list();
-
-            groups = new TreeSet<>();
-            for (String groupIdString : groupFolders) {
-                if (NumberUtils.isCreatable(groupIdString)) {
-                    groups.add(Long.valueOf(groupIdString));
+            if (groupFolders != null) {
+                Collection<Long> groups = new TreeSet<>();
+                for (String groupIdString : groupFolders) {
+                    if (NumberUtils.isCreatable(groupIdString)) {
+                        groups.add(Long.valueOf(groupIdString));
+                    }
                 }
+                return groups;
             }
-        } else {
-            groups = Collections.emptyList();
         }
 
-        return groups;
+        return Collections.emptyList();
     }
 
     /**

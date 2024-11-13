@@ -48,7 +48,7 @@ import java.util.Map;
  */
 public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
 {
-    private ConfluenceMacroSupport macroSupport;
+    private final ConfluenceMacroSupport macroSupport;
 
     /**
      * A Confluence Macro.
