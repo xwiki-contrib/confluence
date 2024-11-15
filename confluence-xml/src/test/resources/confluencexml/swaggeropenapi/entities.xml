@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic>
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">46268417</id>
+    <property name="name"><![CDATA[My Space]]></property>
+    <property name="key"><![CDATA[MySpace]]></property>
+    <property name="lowerKey"><![CDATA[myspace]]></property>
+    <property name="homePage" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">45809846</id>
+    </property>
+    <collection name="permissions" class="java.util.Collection"/>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="creationDate">2012-08-21 15:37:47.000</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="lastModificationDate">2016-10-11 14:47:37.000</property>
+    <property name="spaceType">global</property>
+    <property name="spaceStatus" enum-class="SpaceStatus" package="com.atlassian.confluence.spaces">CURRENT</property>
+  </object>
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">156868656</id>
+    <property name="body"><![CDATA[
+      <ac:structured-macro ac:name="swagger-integration" ac:schema-version="1" data-layout="default" ac:local-id="0275386b-552c-4b9f-8d1f-ab76bc3946b0" ac:macro-id="0c9ac294-79a7-4985-8771-8f21101f7965">
+  <ac:parameter ac:name="displayOperationId">true</ac:parameter>
+  <ac:parameter ac:name="operationsSorter">alpha</ac:parameter>
+  <ac:parameter ac:name="supportedSubmitMethods">get,post</ac:parameter>
+  <ac:parameter ac:name="tagsSorter">alpha</ac:parameter>
+  <ac:parameter ac:name="userName">myusername</ac:parameter>
+  <ac:parameter ac:name="url">https://swaggertest.xwiki.com/abcd</ac:parameter>
+  <ac:parameter ac:name="token">accesstokenxx</ac:parameter>
+  <ac:parameter ac:name="docExpansion">list</ac:parameter>
+  <ac:parameter ac:name="defaultModelRendering">model</ac:parameter>
+  <ac:parameter ac:name="filter">abcd</ac:parameter>
+  <ac:parameter ac:name="proxy">true</ac:parameter>
+  <ac:parameter ac:name="validatorUrl">https://online.swagger.io/validatoredited</ac:parameter>
+  <ac:parameter ac:name="password">mypwd</ac:parameter>
+  <ac:parameter ac:name="showCommonExtensions">true</ac:parameter>
+  <ac:parameter ac:name="maxDisplayedTags">12</ac:parameter>
+  <ac:parameter ac:name="displayRequestDuration">true</ac:parameter>
+  <ac:parameter ac:name="showExtensions">true</ac:parameter>
+  <ac:plain-text-body><![CDATA[{}]]]]><![CDATA[></ac:plain-text-body>
+  </ac:structured-macro>
+<ac:structured-macro ac:name="swagger-open-api" ac:schema-version="1" ac:macro-id="46898a92-ea81-46d3-9791-a1e9a4ce0a87"><ac:parameter ac:name="supportedSubmitMethods">none</ac:parameter><ac:plain-text-body><![CDATA[{
+    "openapi": "3.0.1",
+    "tags": [
+        {
+            "name": "credentials",
+            "description": "Manage credentials. Index is used to order credentials, lower to higher."
+        },
+    }
+}]]]]><![CDATA[></ac:plain-text-body></ac:structured-macro>]]></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">45809846</id>
+    </property>
+    <property name="bodyType">2</property>
+  </object>
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">45809846</id>
+    <property name="hibernateVersion">13</property>
+    <property name="title"><![CDATA[Links]]></property>
+    <property name="lowerTitle"><![CDATA[links]]></property>
+    <collection name="bodyContents" class="java.util.Collection">
+      <element class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">156868656</id>
+      </element>
+    </collection>
+    <property name="version">1</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="creationDate">2019-02-13 08:05:54.000</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="lastModificationDate">2019-02-13 08:16:56.000</property>
+    <property name="versionComment"><![CDATA[]]></property>
+    <property name="contentStatus"><![CDATA[current]]></property>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+      <id name="id">46268417</id>
+    </property>
+    <property name="position"/>
+  </object>
+</hibernate-generic>
