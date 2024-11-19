@@ -38,6 +38,7 @@
       <p>Thought balloon <ac:emoticon ac:name="thought balloon" ac:emoji-id="1f4ad" /></p>
       <p>Check mark button <ac:emoticon ac:name="check mark button" ac:emoji-id="2705"/></p>
       <p>Emoji tag with wrong id and a shortname <ac:emoticon ac:emoji-id="27g52" ac:emoji-shortname=":face_exhaling:" /></p>
+      <p>Legacy image emoticon:<img class="emoticon emoticon-warning" title="(warning)" src="http://confluence.atlatian.net/s/en_US/7901/4635873c8e185dc5df37b4e2487dfbef570b5e2c/_/images/icons/emoticons/warning.svg" alt="(warning)" border="0" />.</p>
     ]]></property>
     <property name="content" class="Page"
       package="com.atlassian.confluence.pages">

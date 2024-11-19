@@ -37,6 +37,8 @@ import java.util.Map;
  */
 public class EmoticonTagHandler extends AbstractConfluenceTagHandler implements ConfluenceTagHandler
 {
+    static final Map<String, String> NAME_MAP = new HashMap<>();
+
     /**
      * The map of Confluence emojis.
      * To build it:
@@ -113,8 +115,6 @@ public class EmoticonTagHandler extends AbstractConfluenceTagHandler implements 
         EMOJI_MAP.put(":grinning:", "😀️");
         EMOJI_MAP.put(":slight_smile:", "🙂️");
     }
-
-    private static final Map<String, String> NAME_MAP = new HashMap<>();
 
     static {
         NAME_MAP.put("smile", "🙂️");

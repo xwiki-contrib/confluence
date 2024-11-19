@@ -64,6 +64,7 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ElementMacro
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.EmoticonTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.IgnoredTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ImageTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceImgTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.LinkBodyTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.LinkTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroParameterTagHandler;
@@ -239,6 +240,8 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("code", new CodeTagHandler(this));
 
         handlers.put("time", new TimeTagHandler(this.macroSupport));
+
+        handlers.put("img", new ConfluenceImgTagHandler());
 
         handlers.put("ac:task-list", new ElementMacroTagHandler(this));
         handlers.put("ac:task", new TaskTagHandler(this.macroSupport));
