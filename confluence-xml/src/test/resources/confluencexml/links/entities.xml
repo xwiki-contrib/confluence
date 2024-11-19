@@ -24,8 +24,8 @@
     <property name="body">
       <![CDATA[
         <p>
-          <a href="https://baseurl1.com/display/Other+Space/Other+Page?param=value#anchor"><span param="value">link1</span></a>
-          <a href="https://baseurl1.com/display/Other+Space/Other+Page"><span param="value">link1</span></a>
+          <a href="https://baseurl1.com/display/OtherSpace/Other+Page?param=value#anchor"><span param="value">link1</span></a>
+          <a href="https://baseurl1.com/display/OtherSpace/Other+Page"><span param="value">link1</span></a>
         </p>
         <p>
           <a href="https://baseurl2.com/pages/viewpage.action?pageId=11&amp;param=value#anchor"><span param="value">link2</span></a>
@@ -44,8 +44,8 @@
           <a href="https://baseurl4.com/images/icons/emoticons/icon.png"><span param="value">link4</span></a>
         </p>
         <p>
-          <a href="https://baseurl5.com/spaces/Other+Space/pages/11/Other+Page?param=value#anchor"><span param="value">link5</span></a>
-          <a href="https://baseurl5.com/spaces/Other+Space/pages/11/Other+Page"><span param="value">link5</span></a>
+          <a href="https://baseurl5.com/spaces/OtherSpace/pages/11/Other+Page?param=value#anchor"><span param="value">link5</span></a>
+          <a href="https://baseurl5.com/spaces/OtherSpace/pages/11/Other+Page"><span param="value">link5</span></a>
         </p>
         <p>
           <a href="https://baseurl1.com/spaces/spacetovalidate/pages/12/pagetovalidate">link6</a>
@@ -98,8 +98,8 @@
 
   <object class="Space" package="com.atlassian.confluence.spaces">
     <id name="id">101</id>
-    <property name="name"><![CDATA[Other Space]]></property>
-    <property name="key"><![CDATA[Other Space]]></property>
+    <property name="name"><![CDATA[OtherSpace]]></property>
+    <property name="key"><![CDATA[OtherSpace]]></property>
   </object>
 
   <object class="Page" package="com.atlassian.confluence.pages">

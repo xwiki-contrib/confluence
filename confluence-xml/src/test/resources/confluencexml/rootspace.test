@@ -17,17 +17,17 @@
                   </entry>
                   <entry>
                     <string>content</string>
-                    <string>[[(% param="value" %)link1>>doc:Composed.Root.Other Space.Other Page.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link1>>doc:Composed.Root.Other Space.Other Page.WebHome||shape="rect"]]
+                    <string>[[(% param="value" %)link1>>doc:OtherSpace.SubSpace.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link1>>doc:OtherSpace.SubSpace.WebHome||shape="rect"]]
 
-[[(% param="value" %)link2>>doc:Composed.Root.Other Space.Other Page.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link2>>doc:Composed.Root.Other Space.Other Page.WebHome||shape="rect"]]
+[[(% param="value" %)link2>>doc:OtherSpace.SubSpace.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link2>>doc:OtherSpace.SubSpace.WebHome||shape="rect"]]
 
-[[(% param="value" %)link3>>attach:Composed.Root.Other Space.Other Page.WebHome@attachment.png||shape="rect"]](%%) [[(% param="value" %)link3>>attach:Composed.Root.Other Space.Other Page.WebHome@attachment.png||shape="rect"]]
+[[(% param="value" %)link3>>attach:OtherSpace.SubSpace.WebHome@attachment.png||shape="rect"]](%%) [[(% param="value" %)link3>>attach:OtherSpace.SubSpace.WebHome@attachment.png||shape="rect"]]
 
-[[(% param="value" %)link3 bis>>attach:Composed.Root.Other Space.Other Page.WebHome@attachment.png||shape="rect"]](%%) [[(% param="value" %)link3 bis>>attach:Composed.Root.Other Space.Other Page.WebHome@attachment.png||shape="rect"]]
+[[(% param="value" %)link3 bis>>attach:OtherSpace.SubSpace.WebHome@attachment.png||shape="rect"]](%%) [[(% param="value" %)link3 bis>>attach:OtherSpace.SubSpace.WebHome@attachment.png||shape="rect"]]
 
 [[(% param="value" %)link4>>icon:icon||shape="rect"]](%%) [[(% param="value" %)link4>>icon:icon||shape="rect"]]
 
-[[(% param="value" %)link5>>doc:Composed.Root.Other Space.Other Page.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link5>>doc:Composed.Root.Other Space.Other Page.WebHome||shape="rect"]]
+[[(% param="value" %)link5>>doc:OtherSpace.SubSpace.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link5>>doc:OtherSpace.SubSpace.WebHome||shape="rect"]]
 
 [[link6>>doc:Composed.Root.validatedspace.validatedpage.WebHome||shape="rect"]]
 
@@ -95,7 +95,7 @@ Some content
           </wikiDocumentLocale>
         </wikiDocument>
       </wikiSpace>
-      <wikiSpace name="Other Space">
+      <wikiSpace name="OtherSpace">
         <wikiSpace name="Other Page">
           <wikiDocument name="WebHome">
             <wikiDocumentLocale>
@@ -128,8 +128,8 @@ Some content
                     </p>
                   </wikiObjectProperty>
                   <wikiObjectProperty name="title" value="Other Page"/>
-                  <wikiObjectProperty name="url" value="https://baseurl1.com/spaces/Other Space/pages/11/Other Page"/>
-                  <wikiObjectProperty name="space" value="Other Space"/>
+                  <wikiObjectProperty name="url" value="https://baseurl1.com/spaces/OtherSpace/pages/11/Other Page"/>
+                  <wikiObjectProperty name="space" value="OtherSpace"/>
                 </wikiObject>
               </wikiDocumentRevision>
             </wikiDocumentLocale>

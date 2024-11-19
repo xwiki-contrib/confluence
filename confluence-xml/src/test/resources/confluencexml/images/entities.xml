@@ -75,8 +75,8 @@
 
   <object class="Space" package="com.atlassian.confluence.spaces">
     <id name="id">101</id>
-    <property name="name"><![CDATA[Other Space]]></property>
-    <property name="key"><![CDATA[Other Space]]></property>
+    <property name="name"><![CDATA[OtherSpace]]></property>
+    <property name="key"><![CDATA[OtherSpace]]></property>
   </object>
 
   <object class="Page" package="com.atlassian.confluence.pages">

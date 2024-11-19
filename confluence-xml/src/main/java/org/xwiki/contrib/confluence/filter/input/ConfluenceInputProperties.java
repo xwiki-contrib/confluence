@@ -143,6 +143,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
 
     private boolean spaceTitleFromHomePage;
 
+    private boolean useConfluenceResolvers = true;
+
     private Mapping groupMapping = new Mapping(Map.of(
         "confluence-administrators", XWIKI_ADMIN_GROUP_NAME,
         "administrators", XWIKI_ADMIN_GROUP_NAME,
@@ -1265,6 +1267,26 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setLinkMapping(Map<String, Map<String, EntityReference>> linkMapping)
     {
         this.linkMapping = linkMapping;
+    }
+
+    /**
+     * @return whether Confluence resolvers should be used to resolve links outside the imported package
+     * @since 9.64.0
+     */
+    @PropertyName("Use Confluence Resolvers")
+    @PropertyDescription("When there is a link to a page not present in the imported package, use Confluence resolvers "
+        + "present in the wiki. ")
+    public boolean isUseConfluenceResolvers()
+    {
+        return this.useConfluenceResolvers;
+    }
+
+    /**
+     * @param useConfluenceResolvers whether to use Confluence resolvers to resolve links outside the imported package
+     */
+    public void setUseConfluenceResolvers(boolean useConfluenceResolvers)
+    {
+        this.useConfluenceResolvers = useConfluenceResolvers;
     }
 
     /**

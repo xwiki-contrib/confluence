@@ -27,6 +27,8 @@ import org.mockito.stubbing.Answer;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
+import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
+import org.xwiki.contrib.confluence.resolvers.ConfluencePageTitleResolver;
 import org.xwiki.environment.Environment;
 import org.xwiki.filter.FilterException;
 import org.xwiki.filter.input.DefaultFileInputSource;
@@ -88,6 +90,12 @@ class DefaultLinkMapperTest
 
     @InjectMockComponents
     private DefaultStringEntityReferenceResolver resolver;
+
+    @MockComponent
+    private ConfluencePageTitleResolver pageTitleResolver;
+
+    @MockComponent
+    private ConfluencePageIdResolver pageIdResolver;
 
     private MockitoComponentManager componentManager;
 

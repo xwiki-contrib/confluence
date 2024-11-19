@@ -27,9 +27,13 @@ import org.mockito.stubbing.Answer;
 import org.slf4j.LoggerFactory;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceInputFilterStream;
+import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
+import org.xwiki.contrib.confluence.resolvers.ConfluencePageTitleResolver;
 import org.xwiki.environment.Environment;
 import org.xwiki.filter.input.InputFilterStreamFactory;
 import org.xwiki.filter.test.integration.FilterTestSuite;
+import org.xwiki.model.EntityType;
+import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.validation.EntityNameValidation;
 import org.xwiki.model.validation.EntityNameValidationManager;
 import org.xwiki.observation.ObservationManager;
@@ -53,6 +57,9 @@ import static org.mockito.Mockito.when;
 @FilterTestSuite.Scope(value = "confluencexml"/*, pattern = "images.test"*/)
 public class IntegrationTests
 {
+
+    private static final String OTHER_SPACE = "OtherSpace";
+
     @FilterTestSuite.Initialized
     public void initialized(MockitoComponentManager componentManager) throws Exception
     {
@@ -73,6 +80,24 @@ public class IntegrationTests
         });
         when(validation.transform("spacetovalidate")).thenReturn("validatedspace");
         when(validation.transform("pagetovalidate")).thenReturn("validatedpage");
+
+        ConfluencePageIdResolver idResolver = componentManager.registerMockComponent(ConfluencePageIdResolver.class);
+        ConfluencePageTitleResolver titleResolver =
+            componentManager.registerMockComponent(ConfluencePageTitleResolver.class);
+
+        when(titleResolver.getDocumentByTitle(OTHER_SPACE, "Other Page")).thenReturn(
+            new EntityReference(
+                "WebHome",
+                EntityType.DOCUMENT,
+                new EntityReference("SubSpace", EntityType.SPACE,
+                    new EntityReference(OTHER_SPACE, EntityType.SPACE))));
+
+        when(idResolver.getDocumentById(4242)).thenReturn(
+            new EntityReference(
+                "WebHome",
+                EntityType.DOCUMENT,
+                new EntityReference("Page 4242", EntityType.SPACE,
+                    new EntityReference(OTHER_SPACE, EntityType.SPACE))));
 
         // Unregister all listeners since they are not needed for testing
         componentManager.registerMockComponent(ObservationManager.class);

@@ -33,6 +33,9 @@ import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
+import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
+import org.xwiki.contrib.confluence.resolvers.ConfluencePageTitleResolver;
+import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.EntityReference;
@@ -127,6 +130,12 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
     @Inject
     private ConfluenceInputContext context;
+
+    @Inject
+    private ConfluencePageIdResolver pageIdResolver;
+
+    @Inject
+    private ConfluencePageTitleResolver pageTitleResolver;
 
     /**
      * @param name the name to validate
@@ -494,6 +503,14 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         EntityReference ref = maybeAsSpace(context.getProperties().getLinkMapping()
             .getOrDefault(spaceKey, Collections.emptyMap()).get(pageTitle), asSpace);
 
+        if (ref == null && pageTitleResolver != null && this.context.getProperties().isUseConfluenceResolvers()) {
+            try {
+                ref = maybeAsSpace(pageTitleResolver.getDocumentByTitle(spaceKey, pageTitle), asSpace);
+            } catch (ConfluenceResolverException e) {
+                logger.error("Failed to resolve page with space=[{}], pageTitle=[{}]", spaceKey, pageTitle, e);
+            }
+        }
+
         if (warn && ref == null) {
             warnMissingPage(spaceKey, pageTitle);
         }
@@ -525,6 +542,15 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
                 }
             }
         }
+
+        if (pageIdResolver != null && this.context.getProperties().isUseConfluenceResolvers()) {
+            try {
+                return maybeAsSpace(pageIdResolver.getDocumentById(pageId), asSpace);
+            } catch (ConfluenceResolverException e) {
+                logger.error("Failed to resolve page with id=[{}]", pageId, e);
+            }
+        }
+
         return null;
     }
 
