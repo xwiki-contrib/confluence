@@ -87,7 +87,7 @@ class DefaultLinkMapperTest
     private JobContext jobContext;
 
     @InjectMockComponents
-    DefaultStringEntityReferenceResolver resolver;
+    private DefaultStringEntityReferenceResolver resolver;
 
     private MockitoComponentManager componentManager;
 
@@ -103,7 +103,7 @@ class DefaultLinkMapperTest
         when(validationManager.getEntityReferenceNameStrategy()).thenReturn(validation);
         when(validation.transform(anyString())).thenAnswer((Answer<String>) invocation -> invocation.getArgument(0));
         when(validation.transform("spacetovalidate")).thenReturn("validatedspace");
-        when(validation.transform("pagetovalidate")).thenReturn("validatedpage");;
+        when(validation.transform("pagetovalidate")).thenReturn("validatedpage");
     }
 
     private void prepareTest(String testPackage) throws NoSuchFieldException, IllegalAccessException, ComponentLookupException, IOException, FilterException
@@ -117,6 +117,7 @@ class DefaultLinkMapperTest
         context.set(confluencePackage, properties);
 
         URL p = getClass().getClassLoader().getResource("confluencexml/" + testPackage);
+        assert p != null;
         confluencePackage.read(new DefaultFileInputSource(new File(p.getFile())));
     }
 
@@ -227,5 +228,4 @@ class DefaultLinkMapperTest
 
         Assertions.assertEquals(expected, actual);
     }
-
 }
