@@ -68,6 +68,24 @@ Some content
                   </entry>
                 </parameters>
               </p>
+              <wikiObject name="Confluence.Code.ConfluencePageClass">
+                <p>
+                  <parameters>
+                    <entry>
+                      <string>class_reference</string>
+                      <string>Confluence.Code.ConfluencePageClass</string>
+                    </entry>
+                  </parameters>
+                </p>
+                <wikiObjectProperty name="id">
+                  <p>
+                    <value t="java.lang.Long">10</value>
+                  </p>
+                </wikiObjectProperty>
+                <wikiObjectProperty name="title" value="TestContent"/>
+                <wikiObjectProperty name="url" value="https://baseurl1.com/spaces/TestSpace"/>
+                <wikiObjectProperty name="space" value="TestSpace"/>
+              </wikiObject>
             </wikiDocumentRevision>
           </wikiDocumentLocale>
         </wikiDocument>
@@ -85,6 +103,24 @@ Some content
                     </entry>
                   </parameters>
                 </p>
+                <wikiObject name="Confluence.Code.ConfluencePageClass">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>Confluence.Code.ConfluencePageClass</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="id">
+                    <p>
+                      <value t="java.lang.Long">11</value>
+                    </p>
+                  </wikiObjectProperty>
+                  <wikiObjectProperty name="title" value="Other Page"/>
+                  <wikiObjectProperty name="url" value="https://baseurl1.com/spaces/Other Space/pages/11/Other Page"/>
+                  <wikiObjectProperty name="space" value="Other Space"/>
+                </wikiObject>
               </wikiDocumentRevision>
             </wikiDocumentLocale>
           </wikiDocument>
@@ -102,6 +138,24 @@ Some content
                   </entry>
                 </parameters>
               </p>
+              <wikiObject name="Confluence.Code.ConfluencePageClass">
+                <p>
+                  <parameters>
+                    <entry>
+                      <string>class_reference</string>
+                      <string>Confluence.Code.ConfluencePageClass</string>
+                    </entry>
+                  </parameters>
+                </p>
+                <wikiObjectProperty name="id">
+                  <p>
+                    <value t="java.lang.Long">13</value>
+                  </p>
+                </wikiObjectProperty>
+                <wikiObjectProperty name="title" value="Home"/>
+                <wikiObjectProperty name="url" value="https://baseurl1.com/spaces/spacetovalidate"/>
+                <wikiObjectProperty name="space" value="spacetovalidate"/>
+              </wikiObject>
             </wikiDocumentRevision>
           </wikiDocumentLocale>
         </wikiDocument>
@@ -117,6 +171,24 @@ Some content
                     </entry>
                   </parameters>
                 </p>
+                <wikiObject name="Confluence.Code.ConfluencePageClass">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>Confluence.Code.ConfluencePageClass</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="id">
+                    <p>
+                      <value t="java.lang.Long">12</value>
+                    </p>
+                  </wikiObjectProperty>
+                  <wikiObjectProperty name="title" value="pagetovalidate"/>
+                  <wikiObjectProperty name="url" value="https://baseurl1.com/spaces/spacetovalidate/pages/12/pagetovalidate"/>
+                  <wikiObjectProperty name="space" value="spacetovalidate"/>
+                </wikiObject>
               </wikiDocumentRevision>
             </wikiDocumentLocale>
           </wikiDocument>
@@ -127,7 +199,7 @@ Some content
 </wiki>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
-.configuration.storeConfluenceDetailsEnabled=false
+.configuration.storeConfluenceDetailsEnabled=true
 .configuration.source=links
 .configuration.root=sub:Composed.Root
 .configuration.confluenceInstanceType=cloud

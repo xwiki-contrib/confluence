@@ -589,7 +589,7 @@ public class ConfluenceInputFilterStream
             this.logger.error("Could not get the properties of space id=[{}]. Skipping.", spaceId);
             return;
         }
-        String spaceKey = confluenceConverter.toEntityName(ConfluenceXMLPackage.getSpaceKey(spaceProperties));
+        String spaceKey = ConfluenceXMLPackage.getSpaceKey(spaceProperties);
         if (StringUtils.isEmpty(spaceKey)) {
             this.logger.error("Could not determine the key of space id=[{}]. Skipping.", spaceId);
             return;
@@ -609,7 +609,8 @@ public class ConfluenceInputFilterStream
         String spaceKey, FilterEventParameters spaceParameters, ConfluenceProperties spaceProperties)
         throws FilterException, ConfluenceInterruptedException
     {
-        proxyFilter.beginWikiSpace(spaceKey, spaceParameters);
+        String spaceEntityName = confluenceConverter.toEntityName(spaceKey);
+        proxyFilter.beginWikiSpace(spaceEntityName, spaceParameters);
         try {
             Collection<ConfluenceRight> inheritedRights = null;
             ConfluenceProperties homePageProperties = null;
@@ -647,7 +648,7 @@ public class ConfluenceInputFilterStream
         } finally {
             endWebPreferences(proxyFilter);
             // < WikiSpace
-            proxyFilter.endWikiSpace(spaceKey, spaceParameters);
+            proxyFilter.endWikiSpace(spaceEntityName, spaceParameters);
             if (this.properties.isVerbose()) {
                 this.logger.info("Finished sending Confluence space [{}], id=[{}]", spaceKey, spaceId);
             }
