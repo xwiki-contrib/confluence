@@ -20,6 +20,7 @@
 package org.xwiki.contrib.confluence.filter.input;
 
 import org.xwiki.component.annotation.Role;
+import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceLinkMappingReceiver;
 import org.xwiki.model.reference.EntityReference;
 
 import java.util.Map;
@@ -38,4 +39,27 @@ public interface LinkMapper
      * document references.
      */
     Map<String, Map<String, EntityReference>> getLinkMapping();
+
+    /**
+     * Fill the given object with the link mapping.
+     * @param mapper the object to fill
+     */
+    default void getLinkMapping(ConfluenceLinkMappingReceiver mapper)
+    {
+        for (Map.Entry<String, Map<String, EntityReference>> entry : getLinkMapping().entrySet()) {
+            String spaceKey = entry.getKey();
+            boolean isPageIds = spaceKey.endsWith(":ids");
+            if (isPageIds) {
+                spaceKey = spaceKey.substring(0, spaceKey.length() - 4);
+            }
+
+            for (Map.Entry<String, EntityReference> mapping: entry.getValue().entrySet()) {
+                if (isPageIds) {
+                    mapper.addPage(spaceKey, Long.parseLong(mapping.getKey()), mapping.getValue());
+                } else {
+                    mapper.addPage(spaceKey, mapping.getKey(), mapping.getValue());
+                }
+            }
+        }
+    }
 }

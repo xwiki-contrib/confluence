@@ -56,9 +56,32 @@ public class DefaultLinkMapper implements LinkMapper
     @Override
     public Map<String, Map<String, EntityReference>> getLinkMapping()
     {
+        Map<String, Map<String, EntityReference>> mapping = new LinkedHashMap<>();
+
+        getLinkMapping(new ConfluenceLinkMappingReceiver()
+        {
+            @Override
+            public void addPage(String spaceKey, long pageId, EntityReference reference)
+            {
+                Map<String, EntityReference> pageIdMapping = mapping.computeIfAbsent(spaceKey + ":ids",
+                    k -> new LinkedHashMap<>());
+                pageIdMapping.put(Long.toString(pageId), reference);
+            }
+
+            @Override
+            public void addPage(String spaceKey, String pageTitle, EntityReference reference)
+            {
+                mapping.computeIfAbsent(spaceKey, k -> new LinkedHashMap<>()).put(pageTitle, reference);
+            }
+        });
+        return mapping;
+    }
+
+    @Override
+    public void getLinkMapping(ConfluenceLinkMappingReceiver mapper)
+    {
         ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
         Map<String, Long> spacesByKey = confluencePackage.getSpacesByKey();
-        Map<String, Map<String, EntityReference>> mapping = new LinkedHashMap<>(spacesByKey.size());
         Map<Long, List<Long>> pages = confluencePackage.getPages();
         Map<Long, List<Long>> blogPages = confluencePackage.getBlogPages();
 
@@ -67,34 +90,28 @@ public class DefaultLinkMapper implements LinkMapper
             Long spaceId = spaceEntry.getValue();
             List<Long> spacePages = pages.getOrDefault(spaceId, Collections.emptyList());
             List<Long> spaceBlogPages = blogPages.getOrDefault(spaceId, Collections.emptyList());
-            int capacity = spacePages.size() + blogPages.size();
-            Map<String, EntityReference> spaceMapping = new LinkedHashMap<>(capacity);
-            Map<String, EntityReference> pageIdMapping = new LinkedHashMap<>(capacity);
-            addMapping(confluencePackage, spacePages, spaceMapping, pageIdMapping, spaceKey);
-            addMapping(confluencePackage, spaceBlogPages, spaceMapping, pageIdMapping, spaceKey);
-            mapping.put(spaceKey, spaceMapping);
-            mapping.put(spaceKey + ":ids", pageIdMapping);
+            addMapping(confluencePackage, spacePages, mapper, spaceKey);
+            addMapping(confluencePackage, spaceBlogPages, mapper, spaceKey);
         }
-
-        return mapping;
     }
 
     private void addMapping(ConfluenceXMLPackage confluencePackage, List<Long> pages,
-        Map<String, EntityReference> spaceMapping, Map<String, EntityReference> pageIdMapping, String spaceKey)
+        ConfluenceLinkMappingReceiver mapper, String spaceKey)
     {
         for (Long pageId : pages) {
             try {
                 ConfluenceProperties pageProperties = confluencePackage.getPageProperties(pageId, false);
                 String pageTitle = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE, null);
-                if (pageTitle != null) {
-                    EntityReference docRef = converter.convertDocumentReference(pageProperties, spaceKey, false);
-                    if (docRef == null) {
-                        logger.warn("Could not produce document reference for page id [{}], title [{}] in space [{}]: "
-                                + "the computed reference is null", pageId, pageTitle, spaceKey);
-                    } else {
-                        spaceMapping.put(pageTitle, docRef);
-                        pageIdMapping.put(pageId.toString(), docRef);
-                    }
+                if (pageTitle == null) {
+                    continue;
+                }
+                EntityReference docRef = converter.convertDocumentReference(pageProperties, spaceKey, false);
+                if (docRef == null) {
+                    logger.warn("Could not produce document reference for page id [{}], title [{}] in space [{}]: "
+                            + "the computed reference is null", pageId, pageTitle, spaceKey);
+                } else {
+                    mapper.addPage(spaceKey, pageTitle, docRef);
+                    mapper.addPage(spaceKey, pageId, docRef);
                 }
             } catch (Exception e) {
                 logger.warn("Could not produce document reference for page id [{}] in space [{}]", pageId, spaceKey, e);
