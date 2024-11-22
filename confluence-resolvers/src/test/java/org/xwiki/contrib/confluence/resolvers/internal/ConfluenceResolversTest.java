@@ -22,6 +22,9 @@ package org.xwiki.contrib.confluence.resolvers.internal;
 import com.xpn.xwiki.XWiki;
 import com.xpn.xwiki.XWikiContext;
 import com.xpn.xwiki.doc.XWikiDocument;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
+import org.apache.solr.client.solrj.response.QueryResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
@@ -30,6 +33,7 @@ import org.xwiki.contrib.confluence.resolvers.ConfluenceSpaceKeyResolver;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.internal.reference.LocalStringEntityReferenceSerializer;
 import org.xwiki.model.reference.DocumentReference;
+import org.xwiki.model.reference.DocumentReferenceResolver;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.model.reference.SpaceReference;
@@ -45,9 +49,13 @@ import org.xwiki.test.junit5.mockito.MockComponent;
 import org.xwiki.test.page.PageComponentList;
 
 import javax.inject.Provider;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
@@ -69,9 +77,6 @@ class ConfluenceResolversTest
     private static final String MY_FALLBACK = "MyFallback";
     private static final String WEB_HOME = "WebHome";
 
-    private static final String VALUE = "value";
-    private static final String SPACE = "space";
-
     private static final String NOT_FOUND_DOC = "Not Found Doc";
 
     private static final String NOT_FOUND_SPACE = "NotFoundSpace";
@@ -81,7 +86,7 @@ class ConfluenceResolversTest
 
     private static final DocumentReference MY_DOC_REF = new DocumentReference(
         XWIKI,
-        List.of(MIGRATION_ROOT, MY_SPACE, "MyDoc"),
+        List.of(MIGRATION_ROOT, MY_SPACE, MY_DOC),
         WEB_HOME
     );
 
@@ -90,6 +95,7 @@ class ConfluenceResolversTest
         List.of(MIGRATION_ROOT, MY_SPACE),
         WEB_HOME
     );
+    private static final String FAKE_SOLR_DOC_KEY = "_fakeDoc";
 
     @InjectMockComponents (role = ConfluencePageIdResolver.class)
     private DefaultConfluencePageResolver confluencePageResolver;
@@ -98,14 +104,19 @@ class ConfluenceResolversTest
     private DefaultConfluenceSpaceResolver confluenceSpaceResolver;
 
     @MockComponent
-    Provider<XWikiContext> xcontextProvider;
+    private Provider<XWikiContext> xcontextProvider;
 
     @MockComponent
-    QueryManager queryManager;
+    private QueryManager queryManager;
+
+    @MockComponent
+    private DocumentReferenceResolver<SolrDocument> solrDocumentDocumentReferenceResolver;
 
     @BeforeComponent
     void setup() throws Exception
     {
+        when(solrDocumentDocumentReferenceResolver.resolve(any())).thenAnswer(i ->
+            new DocumentReference(((Map<String, DocumentReference>) i.getArgument(0)).get(FAKE_SOLR_DOC_KEY)));
         XWikiContext xcontext = mock(XWikiContext.class);
         when(xcontextProvider.get()).thenReturn(xcontext);
         XWiki wiki = mock(XWiki.class);
@@ -132,56 +143,96 @@ class ConfluenceResolversTest
         });
     }
 
+    private SolrDocument fakeSolrDocument(DocumentReference ref, String spaceKey, String title)
+    {
+        return new SolrDocument(Map.of(
+            FAKE_SOLR_DOC_KEY, ref,
+            "fullname", ref.toString().replace("Document ", ""),
+            "property.Confluence.Code.ConfluencePageClass.title_string", title,
+            "property.Confluence.Code.ConfluencePageClass.space_string", spaceKey
+        ));
+    }
+
     @BeforeEach
     void beforeEach() throws QueryException
     {
         Query query = mock(Query.class);
-        when(queryManager.createQuery(anyString(), anyString())).thenReturn(query);
         AtomicLong id = new AtomicLong(0);
         AtomicReference<String> space = new AtomicReference<>("");
-        AtomicReference<String> value = new AtomicReference<>("");
-        when(query.bindValue(eq(VALUE), anyLong())).thenAnswer(invocationOnMock -> {
-            id.set(invocationOnMock.getArgument(1));
+        AtomicReference<String> title = new AtomicReference<>("");
+        AtomicReference<String> queryType = new AtomicReference<>("");
+        AtomicReference<String> hqlResult = new AtomicReference<>("");
+        when(queryManager.createQuery(anyString(), anyString())).thenAnswer(invocationOnMock -> {
+            String queryString = invocationOnMock.getArgument(0);
+            Pattern idPattern = Pattern.compile(".*property.Confluence.Code.ConfluencePageClass.id:(\\d+).*");
+            Matcher matcher = idPattern.matcher(queryString);
+            if (matcher.matches()) {
+                id.set(Long.parseLong(matcher.group(1)));
+            } else {
+                id.set(-1);
+            }
+
+            Pattern spacePattern = Pattern.compile(".*property.Confluence.Code.ConfluencePageClass.space:\"([^\"]+)\".*");
+            matcher = spacePattern.matcher(queryString);
+            if (matcher.matches()) {
+                space.set(matcher.group(1));
+            } else {
+                space.set("");
+            }
+
+            Pattern titlePattern = Pattern.compile(".*property.Confluence.Code.ConfluencePageClass.title:\"([^\"]+)\".*");
+            matcher = titlePattern.matcher(queryString);
+            if (matcher.matches()) {
+                title.set(matcher.group(1));
+            } else {
+                title.set("");
+            }
+
+            queryType.set(invocationOnMock.getArgument(1));
             return query;
         });
 
-        when(query.bindValue(eq(SPACE), anyString())).thenAnswer(invocationOnMock -> {
-            space.set(invocationOnMock.getArgument(1));
+        when(query.bindValue(anyString(), anyString())).thenAnswer(i -> {
+            if (i.getArgument(0).equals("fullname")
+                && i.getArgument(1).equals(MY_DOC_REF.toString().replace("xwiki:", ""))) {
+                // This is the getSpace query
+                hqlResult.set(MY_SPACE);
+            }
             return query;
         });
-
-        when(query.bindValue(eq(VALUE), anyString())).thenAnswer(invocationOnMock -> {
-            value.set(invocationOnMock.getArgument(1));
-            return query;
-        });
-
         when(query.setLimit(anyInt())).thenReturn(query);
+        when(query.setWiki(anyString())).thenReturn(query);
 
         when(query.execute()).thenAnswer(invocationOnMock -> {
+            if (queryType.get().equals(Query.HQL)) {
+                return Collections.singletonList(hqlResult.get());
+            }
+            SolrDocumentList res = new SolrDocumentList();
             if (id.get() == 42) {
-                return List.of(new XWikiDocument(MY_DOC_REF));
-            }
-
-            if (space.get().isEmpty() && (value.get().equals(MY_SPACE))) {
-                return List.of(new XWikiDocument(MY_SPACE_REF));
-            }
-
-            if (space.get().equals(MY_SPACE)) {
-                if (value.get().equals(MY_DOC)) {
-                    return List.of(new XWikiDocument(MY_DOC_REF));
+                res.add(fakeSolrDocument(MY_DOC_REF, MY_SPACE, MY_DOC));
+            } else if (space.get().equals(MY_SPACE)) {
+                if (title.get().isEmpty()) {
+                    res.add(fakeSolrDocument(MY_DOC_REF, MY_SPACE, MY_DOC));
+                    res.add(fakeSolrDocument(
+                        MY_SPACE_REF,
+                        MY_SPACE,
+                        "Space home"));
+                } else if (title.get().equals(MY_DOC)) {
+                    res.add(fakeSolrDocument(MY_DOC_REF, MY_SPACE, MY_DOC));
+                } else if (!title.get().equals(NOT_FOUND_DOC)) {
+                    res.add(fakeSolrDocument(
+                        new DocumentReference(
+                            WEB_HOME,
+                            new SpaceReference(MY_DOC_REF.getParent().getParent())
+                        ),
+                        MY_SPACE,
+                        title.get()));
                 }
-
-                if (value.get().equals(NOT_FOUND_DOC)) {
-                    return List.of();
-                }
-
-                return List.of(
-                    new XWikiDocument(new DocumentReference(
-                        WEB_HOME,
-                        new SpaceReference(MY_DOC_REF.getParent().getParent()))));
             }
 
-            return List.of();
+            QueryResponse r = mock(QueryResponse.class);
+            when(r.getResults()).thenReturn(res);
+            return Collections.singletonList(r);
         });
     }
 
@@ -216,6 +267,14 @@ class ConfluenceResolversTest
         assertEquals(
             MY_SPACE_REF.getParent(),
             confluenceSpaceResolver.getSpaceByKey(MY_SPACE));
+    }
+
+    @Test
+    void testGetSpace() throws ConfluenceResolverException
+    {
+        assertEquals(
+            MY_SPACE_REF.getParent(),
+            confluenceSpaceResolver.getSpace(MY_DOC_REF));
     }
 
     @Test

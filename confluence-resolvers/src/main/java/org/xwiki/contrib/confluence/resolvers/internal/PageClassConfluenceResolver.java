@@ -19,7 +19,11 @@
  */
 package org.xwiki.contrib.confluence.resolvers.internal;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.Priority;
 import javax.inject.Inject;
@@ -27,6 +31,8 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceSpaceResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
@@ -34,13 +40,13 @@ import org.xwiki.contrib.confluence.resolvers.ConfluencePageTitleResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceSpaceKeyResolver;
 import org.xwiki.model.EntityType;
+import org.xwiki.model.reference.DocumentReferenceResolver;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.query.Query;
 import org.xwiki.query.QueryException;
 import org.xwiki.query.QueryManager;
-
-import com.xpn.xwiki.doc.XWikiDocument;
+import org.apache.solr.client.solrj.response.QueryResponse;
 
 import static org.xwiki.query.Query.HQL;
 
@@ -58,37 +64,13 @@ public class PageClassConfluenceResolver
     implements ConfluencePageIdResolver, ConfluencePageTitleResolver, ConfluenceSpaceKeyResolver,
     ConfluenceSpaceResolver
 {
-    // The following HQL statement was translated from the following XWQL statement:
-    // ---
-    // select doc from Document doc, doc.object(Confluence.Code.ConfluencePageClass) o where o.id = :id
-    // ---
-    // This is because XWQL requires Confluence.Code.ConfluencePageClass to be present in the wiki
-    // while the translated HQL does not. This makes the query a little bit more robust.
+    private static final String SOLR = "solr";
+    private static final String FULLNAME = "fullname";
 
-    private static final String VALUE = "value";
+    private static final String CONFLUENCE_PROP = "property.Confluence.Code.ConfluencePageClass.";
     private static final String SPACE = "space";
-
-    private static final String CONFLUENCEPAGECLASS_HQL_TEMPLATE = "select doc "
-        + "from XWikiDocument doc, BaseObject o, "
-        + "%1$s "
-        + "where "
-        + "%2$sProp.value = :value and "
-        + "doc.fullName = o.name and "
-        + "o.className = 'Confluence.Code.ConfluencePageClass' and "
-        + "%2$sProp.id.id = o.id and "
-        + "%2$sProp.id.name = '%2$s'";
-
-    private static final String ID_USING_CONFLUENCEPAGECLASS =
-        String.format(CONFLUENCEPAGECLASS_HQL_TEMPLATE, "LongProperty idProp", "id");
-
-    private static final String TITLE_USING_CONFLUENCEPAGECLASS =
-        String.format(CONFLUENCEPAGECLASS_HQL_TEMPLATE,
-            "LargeStringProperty titleProp, StringProperty spaceProp", "title")
-            + " and spaceProp.id.id = o.id and spaceProp.id.name = '" + SPACE + "' and spaceProp.value = :space";
-
-    private static final String SPACE_USING_CONFLUENCEPAGECLASS =
-        String.format(CONFLUENCEPAGECLASS_HQL_TEMPLATE, "StringProperty spaceProp", SPACE)
-            + " order by length(doc.fullName) asc";
+    private static final String TITLE = "title";
+    private static final String ID = "id";
 
     @Inject
     private QueryManager queryManager;
@@ -97,59 +79,121 @@ public class PageClassConfluenceResolver
     @Named("local")
     private EntityReferenceSerializer<String> localReferenceSerializer;
 
+    @Inject
+    private DocumentReferenceResolver<SolrDocument> solrDocumentReferenceResolver;
+
     @Override
     public EntityReference getDocumentById(long id) throws ConfluenceResolverException
     {
-        try {
-            return getDocument(queryManager.createQuery(ID_USING_CONFLUENCEPAGECLASS, HQL)
-                .bindValue(VALUE, id));
-        } catch (QueryException e) {
-            throw new ConfluenceResolverException(e);
-        }
+        return getDocument(Map.of(ID, id), false);
     }
 
     @Override
     public EntityReference getDocumentByTitle(String spaceKey, String title) throws ConfluenceResolverException
     {
-        try {
-            return getDocument(queryManager.createQuery(TITLE_USING_CONFLUENCEPAGECLASS, HQL)
-                .bindValue(SPACE, spaceKey)
-                .bindValue(VALUE, title));
-        } catch (QueryException e) {
-            throw new ConfluenceResolverException(e);
-        }
+        return getDocument(Map.of(SPACE, spaceKey, TITLE, title), false);
     }
 
-    private EntityReference getDocument(Query query) throws ConfluenceResolverException
+    private String solrQuotes(Object v)
     {
-        List<Object> results;
+        if (v instanceof Number) {
+            return v.toString();
+        }
+
+        return '"' + v.toString().replace("\"", "") + '"';
+    }
+
+    private EntityReference getDocument(Map<String, Object> values, boolean smallest) throws ConfluenceResolverException
+    {
+        // we use Solr search because it searches in all wikis. It is less comfortable than HQL because matches are not
+        // exact so some extra work is needed to handle this fact of life.
+        SolrDocumentList results;
+        String queryString = values.entrySet().stream()
+            .map(entry -> CONFLUENCE_PROP + entry.getKey() + ':' + solrQuotes(entry.getValue()))
+            .collect(Collectors.joining(" AND "));
         try {
-            results = query.setLimit(1).execute();
+            Query query = queryManager.createQuery(queryString, SOLR)
+                .bindValue("fq", "type:DOCUMENT")
+                .setLimit(Integer.MAX_VALUE);
+            results = ((QueryResponse) query.execute().get(0)).getResults();
         } catch (QueryException e) {
             throw new ConfluenceResolverException(e);
         }
 
-        if (results.isEmpty()) {
-            return null;
+        if (smallest) {
+            // When looking for a space, it is the document with the given space key with the smallest full name
+            return smallestMatching(results, values);
         }
 
-        return ((XWikiDocument) results.get(0)).getDocumentReference();
+        // We need to check for exact match because Solr can return documents whose title contains the title we are
+        // looking for, and doesn't generally do an exact match, because properties are not indexed with exact values.
+        return getFirstExactMatch(results, values);
+    }
+
+    private EntityReference smallestMatching(SolrDocumentList results, Map<String, Object> values)
+    {
+        SolrDocument shortest = null;
+        int length = 0;
+        for (SolrDocument result: results) {
+            if (resultExactlyMatches(result, values)) {
+                String fullname = (String) result.get(FULLNAME);
+                int len = fullname.length();
+                if (StringUtils.isNotEmpty(fullname) && (shortest == null || len < length)) {
+                    length = len;
+                    shortest = result;
+                }
+            }
+        }
+
+        return shortest == null ? null : solrDocumentReferenceResolver.resolve(shortest);
+    }
+
+    EntityReference getFirstExactMatch(SolrDocumentList results, Map<String, Object> values)
+    {
+        for (SolrDocument result : results) {
+            if (resultExactlyMatches(result, values)) {
+                return solrDocumentReferenceResolver.resolve(result);
+            }
+        }
+
+        return null;
+    }
+
+    private boolean resultExactlyMatches(SolrDocument result, Map<String, Object> values)
+    {
+        for (Map.Entry<String, Object> value : values.entrySet()) {
+            if (value.getValue() instanceof String) {
+                String v = (String) value.getValue();
+                String valueKeyInSolr = CONFLUENCE_PROP + value.getKey() + "_string";
+                if (!eq(v, result.get(valueKeyInSolr))) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean eq(String v, Object valueFromSolr)
+    {
+        if (valueFromSolr instanceof Collection) {
+            return ((Collection<?>) valueFromSolr).contains(v);
+        }
+        if (valueFromSolr instanceof String) {
+            return valueFromSolr.equals(v);
+        }
+
+        return false;
     }
 
     @Override
     public EntityReference getSpaceByKey(String spaceKey) throws ConfluenceResolverException
     {
-        try {
-            EntityReference spaceHome = getDocument(queryManager.createQuery(SPACE_USING_CONFLUENCEPAGECLASS, HQL)
-                .bindValue(VALUE, spaceKey));
-            if (spaceHome == null) {
-                return null;
-            }
-
-            return spaceHome.getParent();
-        } catch (QueryException e) {
-            throw new ConfluenceResolverException(e);
+        EntityReference spaceHome = getDocument(Collections.singletonMap(SPACE, spaceKey), true);
+        if (spaceHome == null) {
+            return null;
         }
+
+        return spaceHome.getParent();
     }
 
     @Override
@@ -157,20 +201,7 @@ public class PageClassConfluenceResolver
     {
         String spaceKey = getSpaceKey(reference);
         if (StringUtils.isNotEmpty(spaceKey)) {
-            try {
-                Query q = queryManager.createQuery(
-                    "select doc from XWikiDocument doc, BaseObject o, StringProperty prop where "
-                        + "o.className = 'Confluence.Code.ConfluencePageClass' and prop.id.id = o.id and "
-                        + "o.name = doc.fullName and prop.id.name = 'space' and prop.value = :space "
-                        + "order by length(doc.fullName)",
-                    HQL).bindValue(SPACE, spaceKey).setLimit(1);
-                List<XWikiDocument> res = q.execute();
-                if (!res.isEmpty()) {
-                    return res.get(0).getDocumentReference().getParent();
-                }
-            } catch (QueryException e) {
-                throw new ConfluenceResolverException(String.format("Failed to find the space of [%s]", reference), e);
-            }
+            return getSpaceByKey(spaceKey);
         }
         return null;
     }
@@ -187,7 +218,7 @@ public class PageClassConfluenceResolver
                 "select p.value from BaseObject o, StringProperty p where "
                     + "o.className = 'Confluence.Code.ConfluencePageClass' and p.id.id = o.id and "
                     + " o.name = :fullname and p.id.name = 'space'",
-                HQL).bindValue("fullname", fullName).setLimit(1);
+                HQL).bindValue(FULLNAME, fullName).setLimit(1);
             if (reference.getRoot().getType() == EntityType.WIKI) {
                 q = q.setWiki(reference.getRoot().getName());
             }

@@ -24,7 +24,6 @@ import java.util.Arrays;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import com.xpn.xwiki.objects.classes.TextAreaClass;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.model.reference.LocalDocumentReference;
 
@@ -62,6 +61,6 @@ public class ConfluencePageClassDocumentInitializer extends AbstractMandatoryCla
         xclass.addNumberField("id", "Id", 30, "long");
         xclass.addTextField("url", "URL", 30);
         xclass.addTextField("space", "Space", 30);
-        xclass.addTextAreaField("title", "Title", 30, 15, TextAreaClass.ContentType.PURE_TEXT);
+        xclass.addTextField("title", "Title", 30);
     }
 }
