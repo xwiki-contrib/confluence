@@ -124,6 +124,7 @@
     <module>confluence-xml</module>
     <module>confluence-resolvers</module>
     <module>confluence-url-mapping</module>
+    <module>confluence-url-mapping-scroll-viewport</module>
     <module>confluence-syntax-xhtml</module>
     <module>confluence-syntax-confluence</module>
     <module>confluence-syntax-confluence10override</module>
