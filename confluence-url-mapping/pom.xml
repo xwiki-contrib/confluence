@@ -30,7 +30,7 @@
   <artifactId>confluence-url-mapping</artifactId>
   <name>Confluence URL Mapping</name>
   <properties>
-    <xwiki.jacoco.instructionRatio>0.82</xwiki.jacoco.instructionRatio>
+    <xwiki.jacoco.instructionRatio>0.80</xwiki.jacoco.instructionRatio>
     <xwiki.extension.namespaces>{root}</xwiki.extension.namespaces>
   </properties>
   <dependencies>

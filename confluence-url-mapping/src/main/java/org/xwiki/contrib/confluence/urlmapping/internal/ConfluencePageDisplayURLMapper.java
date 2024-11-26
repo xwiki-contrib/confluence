@@ -24,6 +24,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.slf4j.Logger;
@@ -46,9 +47,10 @@ import org.xwiki.contrib.confluence.resolvers.ConfluencePageTitleResolver;
  * @since 9.54.0
  * @version $Id$
  */
-@Component (roles = ConfluencePageDisplayURLMapper.class)
+@Component
 @Singleton
-public class ConfluencePageDisplayURLMapper extends AbstractURLMapper
+@Named("pageDisplay")
+public class ConfluencePageDisplayURLMapper extends AbstractURLMapper implements ConfluenceURLMapper
 {
     private static final String SPACE_KEY = "spaceKey";
 

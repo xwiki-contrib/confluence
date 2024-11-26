@@ -25,6 +25,7 @@ import java.util.Base64;
 import java.util.regex.Matcher;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.apache.commons.lang3.StringUtils;
@@ -45,10 +46,11 @@ import org.xwiki.stability.Unstable;
  * @since 9.55.0
  * @version $Id$
  */
-@Component (roles = ConfluenceTinyLinkURLMapper.class)
+@Component
 @Unstable
 @Singleton
-public class ConfluenceTinyLinkURLMapper extends AbstractURLMapper
+@Named("tinyLink")
+public class ConfluenceTinyLinkURLMapper extends AbstractURLMapper implements ConfluenceURLMapper
 {
     @Inject
     private ConfluencePageIdResolver confluenceIdResolver;
