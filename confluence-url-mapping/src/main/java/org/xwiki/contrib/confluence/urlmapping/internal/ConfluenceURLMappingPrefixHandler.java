@@ -19,22 +19,28 @@
  */
 package org.xwiki.contrib.confluence.urlmapping.internal;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
+import org.xwiki.component.manager.ComponentLookupException;
+import org.xwiki.component.manager.ComponentManager;
+import org.xwiki.contrib.urlmapping.AbstractURLMappingPrefixHandler;
 import org.xwiki.contrib.urlmapping.DefaultURLMappingConfiguration;
 import org.xwiki.contrib.urlmapping.URLMapper;
-import org.xwiki.contrib.urlmapping.AbstractURLMappingPrefixHandler;
 import org.xwiki.localization.ContextualLocalizationManager;
 
 import static org.xwiki.contrib.urlmapping.DefaultURLMappingConfiguration.Key;
 
 /**
  * Confluence URL prefix handler.
- * @since 9.53.0
+ *
  * @version $Id$
+ * @since 9.53.0
  */
 @Component
 @Singleton
@@ -42,19 +48,13 @@ import static org.xwiki.contrib.urlmapping.DefaultURLMappingConfiguration.Key;
 public class ConfluenceURLMappingPrefixHandler extends AbstractURLMappingPrefixHandler
 {
     @Inject
-    private ConfluenceAttachmentURLMapper confluenceAttachmentURLMapper;
+    private ComponentManager componentManager;
 
+    /**
+     * The logger to log.
+     */
     @Inject
-    private ConfluencePageDisplayURLMapper confluencePageDisplayURLMapper;
-
-    @Inject
-    private ConfluenceSpaceDisplayURLMapper confluenceSpaceDisplayURLMapper;
-
-    @Inject
-    private ConfluenceViewPageURLMapper confluenceViewPageURLMapper;
-
-    @Inject
-    private ConfluenceTinyLinkURLMapper confluenceTinyLinkURLMapper;
+    private Logger logger;
 
     @Inject
     private ContextualLocalizationManager localizationManager;
@@ -62,13 +62,13 @@ public class ConfluenceURLMappingPrefixHandler extends AbstractURLMappingPrefixH
     @Override
     protected URLMapper[] getMappers()
     {
-        return new URLMapper[] {
-            confluenceAttachmentURLMapper,
-            confluencePageDisplayURLMapper,
-            confluenceSpaceDisplayURLMapper,
-            confluenceViewPageURLMapper,
-            confluenceTinyLinkURLMapper
-        };
+        try {
+            List<URLMapper> urlMappers = componentManager.getInstanceList(ConfluenceURLMapper.class);
+            return urlMappers.toArray(URLMapper[]::new);
+        } catch (ComponentLookupException e) {
+            this.logger.error(e.getMessage(), e);
+        }
+        return new URLMapper[] {};
     }
 
     @Override

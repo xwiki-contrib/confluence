@@ -34,17 +34,18 @@ import org.xwiki.resource.entity.EntityResourceAction;
 import org.xwiki.resource.entity.EntityResourceReference;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.regex.Matcher;
-
 /**
  * URL Mapper for Confluence display (regular) page links.
  * @since 9.54.0
  * @version $Id$
  */
-@Component(roles = ConfluenceSpaceDisplayURLMapper.class)
+@Component
 @Singleton
-public class ConfluenceSpaceDisplayURLMapper extends AbstractURLMapper
+@Named("spaceDisplay")
+public class ConfluenceSpaceDisplayURLMapper extends AbstractURLMapper implements ConfluenceURLMapper
 {
     private static final String SPACE_KEY = "spaceKey";
 

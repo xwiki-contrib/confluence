@@ -22,6 +22,7 @@ package org.xwiki.contrib.confluence.urlmapping.internal;
 import java.util.regex.Matcher;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.slf4j.Logger;
@@ -41,10 +42,11 @@ import org.xwiki.stability.Unstable;
  * @since 9.54.0
  * @version $Id$
  */
-@Component (roles = ConfluenceViewPageURLMapper.class)
+@Component
 @Unstable
 @Singleton
-public class ConfluenceViewPageURLMapper extends AbstractURLMapper
+@Named("viewPage")
+public class ConfluenceViewPageURLMapper extends AbstractURLMapper implements ConfluenceURLMapper
 {
     @Inject
     private ConfluencePageIdResolver confluenceIdResolver;

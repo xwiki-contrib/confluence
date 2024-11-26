@@ -24,10 +24,12 @@ import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
 import org.xwiki.contrib.urlmapping.AbstractURLMapper;
 import org.xwiki.contrib.urlmapping.DefaultURLMappingMatch;
@@ -38,16 +40,15 @@ import org.xwiki.resource.ResourceReference;
 import org.xwiki.resource.entity.EntityResourceAction;
 import org.xwiki.resource.entity.EntityResourceReference;
 
-import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
-
 /**
  * URL Mapper for Confluence attachments.
  * @since 9.54.0
  * @version $Id$
  */
-@Component (roles = ConfluenceAttachmentURLMapper.class)
+@Component
 @Singleton
-public class ConfluenceAttachmentURLMapper extends AbstractURLMapper
+@Named("attachment")
+public class ConfluenceAttachmentURLMapper extends AbstractURLMapper implements ConfluenceURLMapper
 {
     @Inject
     private ConfluencePageIdResolver confluenceIdResolver;
