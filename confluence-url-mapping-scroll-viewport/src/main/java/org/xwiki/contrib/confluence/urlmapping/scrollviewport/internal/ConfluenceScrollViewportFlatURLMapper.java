@@ -44,7 +44,7 @@ import org.xwiki.stability.Unstable;
  * <a href="https://help.k15t.com/scroll-viewport-data-center/2.22.0/configure-scroll-viewport">here</a>
  *
  * @version $Id$
- * @since 9.64.0
+ * @since 9.65.0
  */
 @Component
 @Unstable
