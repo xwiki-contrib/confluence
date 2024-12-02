@@ -21,7 +21,6 @@ package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.rendering.wikimodel.WikiParameter;
-import org.xwiki.rendering.wikimodel.WikiParameters;
 import org.xwiki.rendering.wikimodel.impl.WikiScannerContext;
 import org.xwiki.rendering.wikimodel.xhtml.handler.ImgTagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
@@ -34,6 +33,8 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public class ConfluenceImgTagHandler extends ImgTagHandler
 {
+    private static final String CLASS = "class";
+
     /**
      * Default constructor.
      */
@@ -45,7 +46,7 @@ public class ConfluenceImgTagHandler extends ImgTagHandler
     @Override
     protected void begin(TagContext context)
     {
-        if (sendEmoticon(context.getParams(), context.getScannerContext(), false)) {
+        if (sendEmoticon(context, CLASS, false)) {
             return;
         }
         super.begin(context);
@@ -54,16 +55,16 @@ public class ConfluenceImgTagHandler extends ImgTagHandler
     @Override
     protected void end(TagContext context)
     {
-        if (sendEmoticon(context.getParams(), context.getScannerContext(), true)) {
+        if (sendEmoticon(context, CLASS, true)) {
             return;
         }
 
         super.end(context);
     }
 
-    private static boolean sendEmoticon(WikiParameters params, WikiScannerContext scannerContext, boolean dryRun)
+    static boolean sendEmoticon(TagContext context, String classParameterName, boolean dryRun)
     {
-        WikiParameter classParam = params.getParameter("class");
+        WikiParameter classParam = context.getParams().getParameter(classParameterName);
         if (classParam == null) {
             return false;
         }
@@ -74,21 +75,13 @@ public class ConfluenceImgTagHandler extends ImgTagHandler
         }
         String[] classes = classNames.split("\\s+");
         for (String className : classes) {
-            if ("emoticon".equals(className)) {
-                WikiParameter altParam = params.getParameter("alt");
-                String emoticonNameParens = altParam.getValue();
-                if (StringUtils.isNotEmpty(emoticonNameParens)
-                    && emoticonNameParens.startsWith("(")
-                    && emoticonNameParens.endsWith(")")
-                ) {
-                    String emoticonName = emoticonNameParens.substring(1, emoticonNameParens.length() - 1);
-                    String emoticon = EmoticonTagHandler.NAME_MAP.get(emoticonName);
-                    if (StringUtils.isNotEmpty(emoticon)) {
-                        onWord(scannerContext, dryRun, emoticon);
-                        return true;
-                    }
+            if (className.startsWith("emoticon-")) {
+                String emoticonName = className.substring(9);
+                String emoticon = EmoticonTagHandler.NAME_MAP.get(emoticonName);
+                if (StringUtils.isNotEmpty(emoticon)) {
+                    onWord(context.getScannerContext(), dryRun, emoticon);
+                    return true;
                 }
-                return false;
             }
         }
         return false;

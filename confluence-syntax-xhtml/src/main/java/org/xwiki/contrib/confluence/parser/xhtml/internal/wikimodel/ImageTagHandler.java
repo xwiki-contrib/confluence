@@ -61,6 +61,8 @@ public class ImageTagHandler extends TagHandler implements ConfluenceTagHandler
         "wrap-right", END
     );
 
+    private static final String AC_CLASS = "ac:class";
+
     /**
      * Default constructor.
      */
@@ -72,6 +74,10 @@ public class ImageTagHandler extends TagHandler implements ConfluenceTagHandler
     @Override
     protected void begin(TagContext context)
     {
+        if (ConfluenceImgTagHandler.sendEmoticon(context, AC_CLASS, false)) {
+            return;
+        }
+
         ConfluenceImageWikiReference image = new ConfluenceImageWikiReference();
 
         for (WikiParameter param : context.getParams()) {
@@ -92,6 +98,10 @@ public class ImageTagHandler extends TagHandler implements ConfluenceTagHandler
     @Override
     protected void end(TagContext context)
     {
+        if (ConfluenceImgTagHandler.sendEmoticon(context, AC_CLASS, true)) {
+            return;
+        }
+
         ConfluenceImageWikiReference image =
             (ConfluenceImageWikiReference) context.getTagStack().popStackParameter(CONFLUENCE_CONTAINER);
 
