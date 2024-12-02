@@ -62,6 +62,16 @@ public class ConfluenceViewPageURLMapper extends AbstractURLMapper implements Co
         super("pages/viewpage.action\\?pageId=(?<pageId>\\d+)(?<params>&.*)?");
     }
 
+    /**
+     * Used to when this class is used by subclass to convert URL with pageId.
+     *
+     * @param regex to match the URL. This should contain a named 'pageId' group matcher.
+     */
+    public ConfluenceViewPageURLMapper(String... regex)
+    {
+        super(regex);
+    }
+
     @Override
     public ResourceReference convert(DefaultURLMappingMatch match)
     {

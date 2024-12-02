@@ -19,8 +19,6 @@
  */
 package org.xwiki.contrib.confluence.urlmapping.scrollviewport.internal;
 
-import java.util.regex.Matcher;
-
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -28,14 +26,8 @@ import javax.inject.Singleton;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
-import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
 import org.xwiki.contrib.confluence.urlmapping.internal.ConfluenceURLMapper;
-import org.xwiki.contrib.urlmapping.AbstractURLMapper;
-import org.xwiki.contrib.urlmapping.DefaultURLMappingMatch;
-import org.xwiki.model.reference.EntityReference;
-import org.xwiki.resource.ResourceReference;
-import org.xwiki.resource.entity.EntityResourceAction;
-import org.xwiki.resource.entity.EntityResourceReference;
+import org.xwiki.contrib.confluence.urlmapping.internal.ConfluenceViewPageURLMapper;
 import org.xwiki.stability.Unstable;
 
 /**
@@ -50,7 +42,7 @@ import org.xwiki.stability.Unstable;
 @Unstable
 @Singleton
 @Named("scrollViewportFlat")
-public class ConfluenceScrollViewportFlatURLMapper extends AbstractURLMapper implements ConfluenceURLMapper
+public class ConfluenceScrollViewportFlatURLMapper extends ConfluenceViewPageURLMapper implements ConfluenceURLMapper
 {
     // List taken from https://help.k15t.com/scroll-viewport-data-center/2.22.0/configure-global-url-redirects
     private static final String[] EXCLUDED_PREFIX_LIST =
@@ -71,24 +63,5 @@ public class ConfluenceScrollViewportFlatURLMapper extends AbstractURLMapper imp
     {
         super("^(?!(" + String.join("|", EXCLUDED_PREFIX_LIST) + ")/)"
             + "(.*/)*[\\w\\-]+-(?<pageId>\\d+)\\.html\\??(?<params>&.*)?$");
-    }
-
-    @Override
-    public ResourceReference convert(DefaultURLMappingMatch match)
-    {
-        Matcher matcher = match.getMatcher();
-        String pageIdStr = matcher.group("pageId");
-        try {
-            long pageId = Long.parseLong(pageIdStr);
-            EntityReference docRef = confluenceIdResolver.getDocumentById(pageId);
-            if (docRef == null) {
-                return null;
-            }
-
-            return new EntityResourceReference(docRef, EntityResourceAction.VIEW);
-        } catch (NumberFormatException | ConfluenceResolverException e) {
-            logger.error("Could not convert URL", e);
-            return null;
-        }
     }
 }

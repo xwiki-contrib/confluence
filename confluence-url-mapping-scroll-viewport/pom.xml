@@ -31,7 +31,6 @@
   <name>Confluence URL Mapping for scroll viewport URL</name>
   <properties>
     <xwiki.extension.namespaces>{root}</xwiki.extension.namespaces>
-    <sonar.cpd.exclusions>**/ConfluenceScrollViewportFlatURLMapper.java</sonar.cpd.exclusions>
   </properties>
   <dependencies>
     <dependency>
