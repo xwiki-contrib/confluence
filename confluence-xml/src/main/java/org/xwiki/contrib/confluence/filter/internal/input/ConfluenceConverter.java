@@ -153,57 +153,6 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return r;
     }
 
-    /**
-     * @param entityReference the reference to convert
-     * @return the converted reference
-     * @since 9.26.0
-     */
-    public EntityReference convert(EntityReference entityReference)
-    {
-        if (!(context.getProperties().isConvertToXWiki() && context.getProperties().isEntityNameValidation())) {
-            return entityReference;
-        }
-
-        EntityReference parent = entityReference.getParent();
-        if (EntityType.ATTACHMENT.equals(entityReference.getType())) {
-            EntityReference convertedParent = parent == null ? null : convert(parent);
-            return newEntityReference(entityReference.getName(), EntityType.ATTACHMENT, convertedParent);
-        }
-
-        if (parent == null && EntityType.DOCUMENT.equals(entityReference.getType())) {
-            return toDocumentReference(context.getCurrentSpace(), entityReference.getName());
-        }
-
-        if (parent != null && parent.getParent() == null) {
-            // The reference is of shape "Space.Doc title", it needs to go through the normal Confluence
-            // document reference conversion.
-            return toDocumentReference(parent.getName(), entityReference.getName());
-        }
-
-        return maybeAppendRoot(convertRef(entityReference));
-    }
-
-    private EntityReference maybeAppendRoot(EntityReference ref)
-    {
-        if (ref == null) {
-            return null;
-        }
-
-        EntityReference root = getRoot();
-        if (root == null) {
-            return ref;
-        }
-
-        EntityType rootType = ref.getRoot().getType();
-        if (EntityType.SPACE.equals(rootType) || EntityType.WIKI.equals(rootType)) {
-            // We don't want to add the root if the reference is a local document, otherwise we end up with a
-            // broken reference (Root.Document instead of Root.SpaceContainingDocument.Document)
-            return ref.appendParent(root);
-        }
-
-        return ref;
-    }
-
     private EntityReference getRoot()
     {
         EntityReference root = context.getProperties().getRoot();
@@ -215,50 +164,6 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             root = xcontext.getWikiReference();
         }
         return root;
-    }
-
-    private EntityReference convertRef(EntityReference entityReference)
-    {
-        EntityReference newRef = null;
-
-        for (EntityReference entityElement : entityReference.getReversedReferenceChain()) {
-            if (entityElement.getType() == EntityType.DOCUMENT || entityElement.getType() == EntityType.SPACE) {
-                String name = entityElement.getName();
-                String convertedName = applyNamingStrategy(name);
-                newRef = newEntityReference(convertedName, entityElement.getType(), newRef);
-            } else if (newRef == null || entityElement.getParent() == newRef) {
-                newRef = entityElement;
-            } else {
-                newRef = new EntityReference(entityElement, newRef);
-            }
-        }
-        return newRef;
-    }
-
-    /**
-     * @param entityReference the reference to convert
-     * @param entityType the type of the reference
-     * @return the converted reference
-     * @since 9.26.0
-     */
-    public String convert(String entityReference, EntityType entityType)
-    {
-        if (StringUtils.isNotEmpty(entityReference) && context.getProperties().isConvertToXWiki()
-            && context.getProperties().isEntityNameValidation()) {
-            // Parse the reference
-            EntityReference reference = this.relativeResolver.resolve(entityReference, entityType);
-
-            // Fix the reference according to entity conversion rules
-            reference = convert(reference);
-            if (reference == null) {
-                return "";
-            }
-
-            // Serialize the fixed reference
-            return serialize(reference);
-        }
-
-        return entityReference;
     }
 
     /**
@@ -806,23 +711,6 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             return "";
         }
         return serialize(ref);
-    }
-
-    private String serializeURLParameters(List<String[]> parameters)
-    {
-        StringBuilder builder = new StringBuilder();
-
-        for (String[] parameter : parameters) {
-            if (builder.length() > 0) {
-                builder.append('&');
-            }
-
-            builder.append(parameter[0]);
-            builder.append('=');
-            builder.append(parameter[1]);
-        }
-
-        return builder.toString();
     }
 
     private EntityReference fromPageId(long pageId) throws NumberFormatException
