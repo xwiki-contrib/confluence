@@ -51,11 +51,14 @@ import java.util.Map;
  */
 public class ImageTagHandler extends TagHandler implements ConfluenceTagHandler
 {
+    private static final String START = "start";
+    private static final String END = "end";
+
     private static final Map<String, String> CONFLUENCE_TO_WIKI_PARAMS = Map.of(
-        "align-start", "start",
-        "align-end", "end",
-        "wrap-left", "start",
-        "wrap-right", "end"
+        "align-start", START,
+        "align-end", END,
+        "wrap-left", START,
+        "wrap-right", END
     );
 
     /**
