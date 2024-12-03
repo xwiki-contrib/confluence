@@ -864,6 +864,9 @@ public class ConfluenceInputFilterStream
         String type = permProperties.getString(ConfluenceXMLPackage.KEY_PERMISSION_TYPE, "");
         String group = getConfluenceGroupRightData(permProperties);
         String users = getConfluenceUserRightData(permProperties);
+        if (StringUtils.isEmpty(group) && StringUtils.isEmpty(users)) {
+            users = confluenceConverter.getGuestUser();
+        }
 
         return new ConfluenceRight(type, group, users);
     }
