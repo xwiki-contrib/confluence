@@ -151,6 +151,8 @@ class ConfluenceURLMappingTest
 
     @ParameterizedTest
     @ValueSource(strings = {
+        "spaces/MySpace/pages/42/my-page-title&param=thatwedontcareabout",
+        "spaces/MySpace/pages/42/my-page-title",
         "pages/viewpage.action?pageId=42&param=thatwedontcareabout",
         "pages/viewpage.action?pageId=42"
     })
@@ -212,11 +214,12 @@ class ConfluenceURLMappingTest
 
     @ParameterizedTest
     @ValueSource(strings = {
+        "spaces/MyUnknownSpace/pages/1337/my-not-found-page-title",
         "display/MyUnknownSpace",
         "display/MyUnknownSpace/My+Doc",
         "display/MySpace/My+Unknown+Doc"
     })
-    void notFoundCorrectDisplayURLsHaveSuggestions(String path)
+    void notFoundCorrectWithSuggestions(String path)
     {
         URLMappingResult converted = handler.convert(path, GET, null);
         assertInstanceOf(Block.class, converted.getSuggestions());
