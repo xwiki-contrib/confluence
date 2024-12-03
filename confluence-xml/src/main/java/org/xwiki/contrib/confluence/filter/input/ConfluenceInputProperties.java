@@ -61,6 +61,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfluenceInputProperties.class);
 
+    private static final String DEFAULT_GROUP_FORMAT = "${group._clean}";
+
     /**
      * @see #getSource()
      */
@@ -226,8 +228,12 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     /**
      * @see #getGroupFormat()
      */
-    private String groupFormat;
+    private String groupFormat = DEFAULT_GROUP_FORMAT;
 
+    /**
+     * @see #getUserFormat()
+     */
+    private String userFormat;
     /*
      * @see #getWorkingDirectory()
      */
@@ -1146,9 +1152,15 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @since 9.37.0
      */
     @PropertyName("Group format")
-    @PropertyDescription("The group format to use to transform a Confluence group names to XWiki group names. "
-        + "String ${group} will be replaced with the group Confluence name; "
-        + "String ${group._clean} same with the special characters removed.")
+    @PropertyDescription("The format to use to transform a Confluence group name to a XWiki group name for groups"
+        + "that are not in the group mapping."
+        + "String ${group} will be replaced with the Confluence group name; "
+        + "String ${group._clean} same with the special characters removed."
+        + "String ${group._lowerCase} will be replaced with the lowercased Confluence group name; "
+        + "String ${group._upperCase} will be replaced with the uppercased Confluence group name; "
+        + "String ${group._clean._lowerCase} will be replaced with the cleaned, lowercased Confluence group name; "
+        + "String ${group._clean._upperCase} will be replaced with the uppercased Confluence group name. "
+        + "Default format: " + DEFAULT_GROUP_FORMAT)
     public String getGroupFormat()
     {
         return groupFormat;
@@ -1161,6 +1173,36 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setGroupFormat(String groupFormat)
     {
         this.groupFormat = groupFormat;
+    }
+
+
+    /**
+     * @return whether to send extraneous spaces
+     * @since 9.65.0
+     */
+    @PropertyName("User format")
+    @PropertyDescription("The format to use to transform a Confluence user name to a XWiki user name for users"
+        + "that are not in the user id mapping."
+        + "String ${username} will be replaced with the Confluence user name; "
+        + "String ${username._clean} same with the special characters removed (recommended)."
+        + "String ${username._lowerCase} will be replaced with the lowercased Confluence user name; "
+        + "String ${username._upperCase} will be replaced with the uppercased Confluence user name; "
+        + "String ${username._clean._lowerCase} will be replaced with the cleaned, lowercased Confluence user name; "
+        + "String ${username._clean._upperCase} will be replaced with the uppercased Confluence user name. "
+        + "By default, for backward compatibility reasons, special characters are replaced with underscores and spaces "
+        + "are kept.")
+    public String getUserFormat()
+    {
+        return userFormat;
+    }
+
+    /**
+     * @param userFormat the format to user
+     * @since 9.60.0
+     */
+    public void setUserFormat(String userFormat)
+    {
+        this.userFormat = userFormat;
     }
 
     /**

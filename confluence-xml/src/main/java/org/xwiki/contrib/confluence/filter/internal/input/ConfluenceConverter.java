@@ -261,25 +261,6 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return entityReference;
     }
 
-    private String toMappedUser(String confluenceUser)
-    {
-        Mapping userIdMapping = context.getProperties().getUserIdMapping();
-        if (userIdMapping != null) {
-            String mappedName = userIdMapping.getOrDefault(confluenceUser, "").trim();
-            if (!mappedName.isEmpty()) {
-                return mappedName;
-            }
-        }
-
-        return confluenceUser;
-    }
-
-    // taken from ldap-authenticator (DefaultLDAPDocumentHelper.java)
-    private String clean(String str)
-    {
-        return StringUtils.removePattern(str, "[\\.\\:\\s,@\\^\\/]");
-    }
-
     /**
      * @param groupName the Confluence username
      * @return the corresponding XWiki username, without forbidden characters
@@ -305,7 +286,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             return groupName;
         }
 
-        return format.replace("${group}", groupName).replace("${group._clean}", clean(groupName));
+        return UsernameCleaner.format(format, Map.of("group", groupName));
     }
 
     /**
@@ -314,9 +295,17 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
      */
     public String toUserReferenceName(String userName)
     {
-        if (userName == null || !context.getProperties().isConvertToXWiki()) {
-            // Apply the configured mapping
-            return toMappedUser(userName);
+        if (StringUtils.isEmpty(userName) || !context.getProperties().isConvertToXWiki()) {
+            return userName;
+        }
+
+        // Apply the configured mapping
+        Mapping userIdMapping = context.getProperties().getUserIdMapping();
+        if (userIdMapping != null) {
+            String mappedName = userIdMapping.getOrDefault(userName, "").trim();
+            if (!mappedName.isEmpty()) {
+                return mappedName;
+            }
         }
 
         // Translate the usual default admin user in Confluence to it's XWiki counterpart
@@ -324,9 +313,14 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             return "Admin";
         }
 
-        // Apply the configured mapping and protect from characters not well-supported in user page name depending on
-        // the version of XWiki
-        return FORBIDDEN_USER_CHARACTERS.matcher(toMappedUser(userName)).replaceAll("_");
+        // Apply the user format
+        String userFormat = context.getProperties().getUserFormat();
+        if (StringUtils.isEmpty(userFormat)) {
+            // Do some minimal cleanup which is backward compatible with older versions of the filter.
+            return FORBIDDEN_USER_CHARACTERS.matcher(userName).replaceAll("_");
+        }
+
+        return UsernameCleaner.format(userFormat, Map.of("username", userName));
     }
 
     /**
