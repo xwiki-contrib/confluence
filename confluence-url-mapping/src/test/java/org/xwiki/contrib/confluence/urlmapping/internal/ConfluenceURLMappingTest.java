@@ -48,6 +48,7 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.xwiki.contrib.confluence.urlmapping.internal.UrlMappingTestTools.assertFailedConversion;
 
 @ComponentTest
 @ComponentList({
@@ -255,11 +256,5 @@ class ConfluenceURLMappingTest
         assertFailedConversion(converted);
     }
 
-    private void assertFailedConversion(URLMappingResult conversion)
-    {
-        assertEquals(404, conversion.getHTTPStatus());
-        assertEquals("", conversion.getURL());
-        assertNull(conversion.getResourceReference());
-        assertNull(conversion.getSuggestions());
-    }
+
 }

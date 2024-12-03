@@ -19,13 +19,10 @@
  */
 package org.xwiki.contrib.confluence.urlmapping.scrollviewport.internal;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
 import org.xwiki.contrib.confluence.urlmapping.internal.ConfluenceURLMapper;
 import org.xwiki.contrib.confluence.urlmapping.internal.ConfluenceViewPageURLMapper;
 import org.xwiki.stability.Unstable;
@@ -50,18 +47,12 @@ public class ConfluenceScrollViewportFlatURLMapper extends ConfluenceViewPageURL
             "label", "login.action", "noop.jsp", "pages", "plugins", "rest", "rpc", "s", "spaces", "status", "styles",
             "synchrony", "synchrony-proxy", "x" };
 
-    @Inject
-    private ConfluencePageIdResolver confluenceIdResolver;
-
-    @Inject
-    private Logger logger;
-
     /**
      * Constructor.
      */
     public ConfluenceScrollViewportFlatURLMapper()
     {
         super("^(?!(" + String.join("|", EXCLUDED_PREFIX_LIST) + ")/)"
-            + "(.*/)*[\\w\\-]+-(?<pageId>\\d+)\\.html\\??(?<params>&.*)?$");
+            + "(.*/)*[\\w\\-]+-(?<pageId>\\d+)\\.html\\??(?<params>.*)?$");
     }
 }
