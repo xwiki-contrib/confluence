@@ -246,7 +246,7 @@
                   </parameters>
                 </p>
                 <wikiObjectProperty name="allow" value="1"/>
-                <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Web"/>
+                <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatWeb"/>
                 <wikiObjectProperty name="levels" value="view"/>
                 <wikiObjectProperty name="users" value=""/>
               </wikiObject>
@@ -260,7 +260,7 @@
                   </parameters>
                 </p>
                 <wikiObjectProperty name="allow" value="1"/>
-                <wikiObjectProperty name="groups" value="xwiki:XWiki.Great ALL"/>
+                <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatALL"/>
                 <wikiObjectProperty name="levels" value="view"/>
                 <wikiObjectProperty name="users" value=""/>
               </wikiObject>
@@ -274,7 +274,7 @@
                   </parameters>
                 </p>
                 <wikiObjectProperty name="allow" value="1"/>
-                <wikiObjectProperty name="groups" value="xwiki:XWiki.Super Team"/>
+                <wikiObjectProperty name="groups" value="xwiki:XWiki.SuperTeam"/>
                 <wikiObjectProperty name="levels" value="view"/>
                 <wikiObjectProperty name="users" value=""/>
               </wikiObject>
@@ -564,7 +564,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great APPLICATIONS"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatAPPLICATIONS"/>
         <wikiObjectProperty name="levels" value="view"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -578,7 +578,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great APPLICATIONS"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatAPPLICATIONS"/>
         <wikiObjectProperty name="levels" value="admin"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -592,7 +592,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great APPLICATIONS"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatAPPLICATIONS"/>
         <wikiObjectProperty name="levels" value="comment"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -606,7 +606,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great APPLICATIONS"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatAPPLICATIONS"/>
         <wikiObjectProperty name="levels" value="edit"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -620,7 +620,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great APPLICATIONS"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatAPPLICATIONS"/>
         <wikiObjectProperty name="levels" value="delete"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -704,7 +704,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great ACADEMIC"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatACADEMIC"/>
         <wikiObjectProperty name="levels" value="view"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -718,7 +718,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great ACADEMIC"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatACADEMIC"/>
         <wikiObjectProperty name="levels" value="edit"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -732,7 +732,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great ACADEMIC"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatACADEMIC"/>
         <wikiObjectProperty name="levels" value="comment"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -746,7 +746,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great ACADEMIC"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatACADEMIC"/>
         <wikiObjectProperty name="levels" value="admin"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -760,7 +760,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great ACADEMIC"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatACADEMIC"/>
         <wikiObjectProperty name="levels" value="delete"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -774,7 +774,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Admin"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatAdmin"/>
         <wikiObjectProperty name="levels" value="view"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -788,7 +788,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Support Services"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatSupportServices"/>
         <wikiObjectProperty name="levels" value="view"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -802,7 +802,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great ALL"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatALL"/>
         <wikiObjectProperty name="levels" value="view"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -816,7 +816,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great ALL"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatALL"/>
         <wikiObjectProperty name="levels" value="comment"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -830,7 +830,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Admin"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatAdmin"/>
         <wikiObjectProperty name="levels" value="comment"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -844,7 +844,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Support Services"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatSupportServices"/>
         <wikiObjectProperty name="levels" value="delete"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -858,7 +858,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Admin"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatAdmin"/>
         <wikiObjectProperty name="levels" value="delete"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -872,7 +872,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Support Services"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatSupportServices"/>
         <wikiObjectProperty name="levels" value="admin"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -886,7 +886,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Admin"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatAdmin"/>
         <wikiObjectProperty name="levels" value="admin"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -900,7 +900,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great ALL"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatALL"/>
         <wikiObjectProperty name="levels" value="admin"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -914,7 +914,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Admin"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatAdmin"/>
         <wikiObjectProperty name="levels" value="edit"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -928,7 +928,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Support Services"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatSupportServices"/>
         <wikiObjectProperty name="levels" value="edit"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -942,7 +942,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Support Services"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatSupportServices"/>
         <wikiObjectProperty name="levels" value="comment"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -956,7 +956,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great ALL"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatALL"/>
         <wikiObjectProperty name="levels" value="delete"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -970,7 +970,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great ALL"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatALL"/>
         <wikiObjectProperty name="levels" value="edit"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -1054,7 +1054,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Academic"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatAcademic"/>
         <wikiObjectProperty name="levels" value="view"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -1068,7 +1068,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Academic"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatAcademic"/>
         <wikiObjectProperty name="levels" value="comment"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -1082,7 +1082,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Academic"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatAcademic"/>
         <wikiObjectProperty name="levels" value="edit"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -1096,7 +1096,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Academic"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatAcademic"/>
         <wikiObjectProperty name="levels" value="delete"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -1110,7 +1110,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Academic"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatAcademic"/>
         <wikiObjectProperty name="levels" value="admin"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -1124,7 +1124,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Applications"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatApplications"/>
         <wikiObjectProperty name="levels" value="view"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -1138,7 +1138,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Applications"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatApplications"/>
         <wikiObjectProperty name="levels" value="admin"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -1152,7 +1152,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Applications"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatApplications"/>
         <wikiObjectProperty name="levels" value="edit"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -1166,7 +1166,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Applications"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatApplications"/>
         <wikiObjectProperty name="levels" value="delete"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -1180,7 +1180,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Applications"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatApplications"/>
         <wikiObjectProperty name="levels" value="comment"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -2944,7 +2944,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Nice DBA"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.NiceDBA"/>
         <wikiObjectProperty name="levels" value="view"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -2958,7 +2958,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Nice DBA"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.NiceDBA"/>
         <wikiObjectProperty name="levels" value="admin"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -2972,7 +2972,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Nice DBA"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.NiceDBA"/>
         <wikiObjectProperty name="levels" value="delete"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -2986,7 +2986,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Nice DBA"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.NiceDBA"/>
         <wikiObjectProperty name="levels" value="edit"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -3000,7 +3000,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Nice DBA"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.NiceDBA"/>
         <wikiObjectProperty name="levels" value="comment"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -3042,7 +3042,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Customer Service"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatCustomerService"/>
         <wikiObjectProperty name="levels" value="view"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -3056,7 +3056,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Customer Service"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatCustomerService"/>
         <wikiObjectProperty name="levels" value="delete"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -3070,7 +3070,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Customer Service"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatCustomerService"/>
         <wikiObjectProperty name="levels" value="comment"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -3084,7 +3084,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Customer Service"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatCustomerService"/>
         <wikiObjectProperty name="levels" value="admin"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -3098,7 +3098,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Customer Service"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatCustomerService"/>
         <wikiObjectProperty name="levels" value="edit"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -3210,7 +3210,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great DBA"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatDBA"/>
         <wikiObjectProperty name="levels" value="view"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -3224,7 +3224,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great DBA"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatDBA"/>
         <wikiObjectProperty name="levels" value="edit"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -3238,7 +3238,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great DBA"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatDBA"/>
         <wikiObjectProperty name="levels" value="admin"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -3252,7 +3252,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great DBA"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatDBA"/>
         <wikiObjectProperty name="levels" value="delete"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -3266,7 +3266,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great DBA"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatDBA"/>
         <wikiObjectProperty name="levels" value="comment"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -3434,7 +3434,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great DI"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatDI"/>
         <wikiObjectProperty name="levels" value="view"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>
@@ -4134,7 +4134,7 @@
           </parameters>
         </p>
         <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="xwiki:XWiki.Great Application Security Info"/>
+        <wikiObjectProperty name="groups" value="xwiki:XWiki.GreatApplicationSecurityInfo"/>
         <wikiObjectProperty name="levels" value="view"/>
         <wikiObjectProperty name="users" value=""/>
       </wikiObject>

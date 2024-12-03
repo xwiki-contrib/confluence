@@ -287,19 +287,17 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
      */
     public String toGroupReferenceName(String groupName)
     {
-        if (groupName == null) {
-            return null;
-        }
-
         ConfluenceInputProperties properties = context.getProperties();
-
-        if (!properties.isConvertToXWiki() || properties.getGroupMapping() == null) {
+        if (StringUtils.isEmpty(groupName) || !properties.isConvertToXWiki()) {
             return groupName;
         }
 
-        String group = properties.getGroupMapping().get(groupName);
-        if (group != null) {
-            return group;
+        Mapping groupMapping = properties.getGroupMapping();
+        if (groupMapping != null) {
+            String group = groupMapping.get(groupName);
+            if (group != null) {
+                return group;
+            }
         }
 
         String format = properties.getGroupFormat();
