@@ -17,4 +17,6 @@
             files="src/main/java/org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/EmoticonTagHandler\.java$"/>
   <suppress checks="BooleanExpressionComplexity"
             files="src/main/java/org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/MacroTagHandler\.java$"/>
+  <suppress checks="CyclomaticComplexity|BooleanExpressionComplexity|LineLength"
+            files="src/main/java/org/xwiki/contrib/confluence/parser/xhtml/internal/wikimodel/UserTagHandler\.java$"/>
 </suppressions>

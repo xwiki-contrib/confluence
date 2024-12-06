@@ -100,8 +100,26 @@ public class UserTagHandler extends TagHandler implements ConfluenceTagHandler
                 ? currentMacroParam.getValue() + ","
                 : "";
             if (usernameParameter != null) {
-                macro.parameters = macro.parameters.setParameter(paramKey,
-                    currentParamValue + convert(usernameParameter.getValue()));
+                String usernameParameterValue = usernameParameter.getValue();
+                // Manage a really specific use case for show-if/hide-if macro, related to:
+                // https://github.com/xwikisas/application-confluence-migrator-pro/blob/a3e57c93ae47b85ce81cd279857b6177937031e7/application-confluence-migrator-pro-converters/src/main/java/com/xwiki/confluencepro/converters/internal/ShowIfHideIfMacroConverter.java#L82
+                // In the old release of the confluence macro instead of having a specific parameter for the special
+                // value of the user, they used the user parameter to match by example all users with the value
+                // @authenticated. We need to avoid any transformation of this value, so we are able to map correctly
+                // the parameter in the macro converter.
+                // Note, if at some point another macro need some customization like this, it would be good to provide
+                // in the converter a way to access to the raw parameter, and so we can manage this in a clean way.
+                if (("show-if".equals(macro.name) || "hide-if".equals(macro.name))
+                    && "user".equals(paramKey)
+                    && ("@authenticated".equalsIgnoreCase(usernameParameterValue)
+                        || "@anonymous".equalsIgnoreCase(usernameParameterValue)
+                        || "@self".equalsIgnoreCase(usernameParameterValue))) {
+                    macro.parameters = macro.parameters.setParameter(paramKey,
+                        currentParamValue + usernameParameterValue);
+                } else {
+                    macro.parameters = macro.parameters.setParameter(paramKey,
+                        currentParamValue + convert(usernameParameterValue));
+                }
             } else if (userkeyParameter != null) {
                 macro.parameters = macro.parameters.setParameter(paramKey,
                     currentParamValue + convert(userkeyParameter.getValue()));
