@@ -25,6 +25,7 @@ org.xwiki.contrib.confluence.filter.internal.macros.MathMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.MarkdownMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.MentionMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.NoformatMacroConverter
+org.xwiki.contrib.confluence.filter.internal.macros.PlantumlRenderMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.RedirectMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.RwPagetreeMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.SpacesMacroConverter
