@@ -47,6 +47,8 @@ public class ConfluencePageClassDocumentInitializer extends AbstractMandatoryCla
     public static final LocalDocumentReference CONFLUENCE_PAGE_CLASS_DOCUMENT_REFERENCE =
         new LocalDocumentReference(Arrays.asList("Confluence", "Code"), "ConfluencePageClass");
 
+    private static final String LONG = "long";
+
     /**
      * Default constructor.
      */
@@ -58,7 +60,8 @@ public class ConfluencePageClassDocumentInitializer extends AbstractMandatoryCla
     @Override
     protected void createClass(BaseClass xclass)
     {
-        xclass.addNumberField("id", "Id", 30, "long");
+        xclass.addNumberField("id", "Id", 30, LONG);
+        xclass.addNumberField("stableId", "Stable id", 30, LONG);
         xclass.addTextField("url", "URL", 30);
         xclass.addTextField("space", "Space", 30);
         xclass.addTextField("title", "Title", 30);

@@ -85,13 +85,13 @@ public class PageClassConfluenceResolver
     @Override
     public EntityReference getDocumentById(long id) throws ConfluenceResolverException
     {
-        return getDocument(Map.of(ID, id), false);
+        return getDocument(Map.of(ID, id, "stableId", id), false, false);
     }
 
     @Override
     public EntityReference getDocumentByTitle(String spaceKey, String title) throws ConfluenceResolverException
     {
-        return getDocument(Map.of(SPACE, spaceKey, TITLE, title), false);
+        return getDocument(Map.of(SPACE, spaceKey, TITLE, title), false, true);
     }
 
     private String solrQuotes(Object v)
@@ -103,14 +103,15 @@ public class PageClassConfluenceResolver
         return '"' + v.toString().replace("\"", "") + '"';
     }
 
-    private EntityReference getDocument(Map<String, Object> values, boolean smallest) throws ConfluenceResolverException
+    private EntityReference getDocument(Map<String, Object> values, boolean smallest, boolean andOp)
+        throws ConfluenceResolverException
     {
         // we use Solr search because it searches in all wikis. It is less comfortable than HQL because matches are not
         // exact so some extra work is needed to handle this fact of life.
         SolrDocumentList results;
         String queryString = values.entrySet().stream()
             .map(entry -> CONFLUENCE_PROP + entry.getKey() + ':' + solrQuotes(entry.getValue()))
-            .collect(Collectors.joining(" AND "));
+            .collect(Collectors.joining(andOp ? " AND " : " OR "));
         try {
             Query query = queryManager.createQuery(queryString, SOLR)
                 .bindValue("fq", "type:DOCUMENT")
@@ -122,20 +123,20 @@ public class PageClassConfluenceResolver
 
         if (smallest) {
             // When looking for a space, it is the document with the given space key with the smallest full name
-            return smallestMatching(results, values);
+            return smallestMatching(results, values, andOp);
         }
 
         // We need to check for exact match because Solr can return documents whose title contains the title we are
         // looking for, and doesn't generally do an exact match, because properties are not indexed with exact values.
-        return getFirstExactMatch(results, values);
+        return getFirstExactMatch(results, values, andOp);
     }
 
-    private EntityReference smallestMatching(SolrDocumentList results, Map<String, Object> values)
+    private EntityReference smallestMatching(SolrDocumentList results, Map<String, Object> values, boolean andOp)
     {
         SolrDocument shortest = null;
         int length = 0;
         for (SolrDocument result: results) {
-            if (resultExactlyMatches(result, values)) {
+            if (resultExactlyMatches(result, values, andOp)) {
                 String fullname = (String) result.get(FULLNAME);
                 int len = fullname.length();
                 if (StringUtils.isNotEmpty(fullname) && (shortest == null || len < length)) {
@@ -148,10 +149,10 @@ public class PageClassConfluenceResolver
         return shortest == null ? null : solrDocumentReferenceResolver.resolve(shortest);
     }
 
-    EntityReference getFirstExactMatch(SolrDocumentList results, Map<String, Object> values)
+    EntityReference getFirstExactMatch(SolrDocumentList results, Map<String, Object> values, boolean andOp)
     {
         for (SolrDocument result : results) {
-            if (resultExactlyMatches(result, values)) {
+            if (resultExactlyMatches(result, values, andOp)) {
                 return solrDocumentReferenceResolver.resolve(result);
             }
         }
@@ -159,7 +160,7 @@ public class PageClassConfluenceResolver
         return null;
     }
 
-    private boolean resultExactlyMatches(SolrDocument result, Map<String, Object> values)
+    private boolean resultExactlyMatches(SolrDocument result, Map<String, Object> values, boolean andOp)
     {
         for (Map.Entry<String, Object> value : values.entrySet()) {
             if (value.getValue() instanceof String) {
@@ -167,6 +168,10 @@ public class PageClassConfluenceResolver
                 String valueKeyInSolr = CONFLUENCE_PROP + value.getKey() + "_string";
                 if (!eq(v, result.get(valueKeyInSolr))) {
                     return false;
+                }
+                if (!andOp) {
+                    // only one value needs to match
+                    return true;
                 }
             }
         }
@@ -188,7 +193,7 @@ public class PageClassConfluenceResolver
     @Override
     public EntityReference getSpaceByKey(String spaceKey) throws ConfluenceResolverException
     {
-        EntityReference spaceHome = getDocument(Collections.singletonMap(SPACE, spaceKey), true);
+        EntityReference spaceHome = getDocument(Collections.singletonMap(SPACE, spaceKey), true, true);
         if (spaceHome == null) {
             return null;
         }

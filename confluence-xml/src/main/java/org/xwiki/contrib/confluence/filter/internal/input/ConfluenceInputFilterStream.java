@@ -1976,6 +1976,8 @@ public class ConfluenceInputFilterStream
         proxyFilter.beginWikiObject(CONFLUENCEPAGE_CLASSNAME, pageReportParameters);
         try {
             proxyFilter.onWikiObjectProperty(ID, pageId, FilterEventParameters.EMPTY);
+            long stableId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_ORIGINAL_VERSION, pageId);
+            proxyFilter.onWikiObjectProperty("stableId", stableId, FilterEventParameters.EMPTY);
             StringBuilder pageURLBuilder = new StringBuilder();
             if (!this.properties.getBaseURLs().isEmpty()) {
                 pageURLBuilder.append(this.properties.getBaseURLs().get(0).toString());

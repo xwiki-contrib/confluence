@@ -57,6 +57,29 @@
             </entry>
           </parameters>
         </p>
+        <wikiObject name="Confluence.Code.ConfluencePageClass">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>Confluence.Code.ConfluencePageClass</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="id">
+            <p>
+              <value t="java.lang.Long">73469028</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="stableId">
+            <p>
+              <value t="java.lang.Long">73469022</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="title" value="My Page"/>
+          <wikiObjectProperty name="url" value=""/>
+          <wikiObjectProperty name="space" value="SPACE"/>
+        </wikiObject>
       </wikiDocumentRevision>
       <wikiDocumentRevision revision="2">
         <p>
@@ -94,6 +117,29 @@
             </entry>
           </parameters>
         </p>
+        <wikiObject name="Confluence.Code.ConfluencePageClass">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>Confluence.Code.ConfluencePageClass</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="id">
+            <p>
+              <value t="java.lang.Long">73469030</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="stableId">
+            <p>
+              <value t="java.lang.Long">73469022</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="title" value="My Page"/>
+          <wikiObjectProperty name="url" value=""/>
+          <wikiObjectProperty name="space" value="SPACE"/>
+        </wikiObject>
       </wikiDocumentRevision>
       <wikiDocumentRevision revision="3">
         <p>
@@ -131,6 +177,29 @@
             </entry>
           </parameters>
         </p>
+        <wikiObject name="Confluence.Code.ConfluencePageClass">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>Confluence.Code.ConfluencePageClass</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="id">
+            <p>
+              <value t="java.lang.Long">73469368</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="stableId">
+            <p>
+              <value t="java.lang.Long">73469022</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="title" value="My Page"/>
+          <wikiObjectProperty name="url" value=""/>
+          <wikiObjectProperty name="space" value="SPACE"/>
+        </wikiObject>
       </wikiDocumentRevision>
       <wikiDocumentRevision revision="4">
         <p>
@@ -168,6 +237,29 @@
             </entry>
           </parameters>
         </p>
+        <wikiObject name="Confluence.Code.ConfluencePageClass">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>Confluence.Code.ConfluencePageClass</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="id">
+            <p>
+              <value t="java.lang.Long">73469369</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="stableId">
+            <p>
+              <value t="java.lang.Long">73469022</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="title" value="My Page"/>
+          <wikiObjectProperty name="url" value=""/>
+          <wikiObjectProperty name="space" value="SPACE"/>
+        </wikiObject>
       </wikiDocumentRevision>
       <wikiDocumentRevision revision="6">
         <p>
@@ -205,12 +297,34 @@
             </entry>
           </parameters>
         </p>
+        <wikiObject name="Confluence.Code.ConfluencePageClass">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>Confluence.Code.ConfluencePageClass</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="id">
+            <p>
+              <value t="java.lang.Long">73469022</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="stableId">
+            <p>
+              <value t="java.lang.Long">73469022</value>
+            </p>
+          </wikiObjectProperty>
+          <wikiObjectProperty name="title" value="Hello"/>
+          <wikiObjectProperty name="url" value=""/>
+          <wikiObjectProperty name="space" value="SPACE"/>
+        </wikiObject>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
 </wikiSpace>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
-.configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=historyorder
 .#------------------------------------------------------------------------------

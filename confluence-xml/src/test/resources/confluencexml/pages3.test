@@ -28,6 +28,11 @@
                 <value t="java.lang.Long">0</value>
               </p>
             </wikiObjectProperty>
+            <wikiObjectProperty name="stableId">
+              <p>
+                <value t="java.lang.Long">0</value>
+              </p>
+            </wikiObjectProperty>
             <wikiObjectProperty name="title" value="Page0"/>
             <wikiObjectProperty name="url" value="https://example.org/wiki/spaces/SpaceA/pages/0/Page0"/>
             <wikiObjectProperty name="space" value="SpaceA"/>

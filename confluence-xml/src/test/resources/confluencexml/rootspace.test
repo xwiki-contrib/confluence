@@ -82,6 +82,11 @@ Some content
                     <value t="java.lang.Long">10</value>
                   </p>
                 </wikiObjectProperty>
+                <wikiObjectProperty name="stableId">
+                  <p>
+                    <value t="java.lang.Long">10</value>
+                  </p>
+                </wikiObjectProperty>
                 <wikiObjectProperty name="title" value="TestContent"/>
                 <wikiObjectProperty name="url" value="https://baseurl1.com/spaces/TestSpace"/>
                 <wikiObjectProperty name="space" value="TestSpace"/>
@@ -113,6 +118,11 @@ Some content
                     </parameters>
                   </p>
                   <wikiObjectProperty name="id">
+                    <p>
+                      <value t="java.lang.Long">11</value>
+                    </p>
+                  </wikiObjectProperty>
+                  <wikiObjectProperty name="stableId">
                     <p>
                       <value t="java.lang.Long">11</value>
                     </p>
@@ -152,6 +162,11 @@ Some content
                     <value t="java.lang.Long">13</value>
                   </p>
                 </wikiObjectProperty>
+                <wikiObjectProperty name="stableId">
+                  <p>
+                    <value t="java.lang.Long">13</value>
+                  </p>
+                </wikiObjectProperty>
                 <wikiObjectProperty name="title" value="Home"/>
                 <wikiObjectProperty name="url" value="https://baseurl1.com/spaces/spacetovalidate"/>
                 <wikiObjectProperty name="space" value="spacetovalidate"/>
@@ -181,6 +196,11 @@ Some content
                     </parameters>
                   </p>
                   <wikiObjectProperty name="id">
+                    <p>
+                      <value t="java.lang.Long">12</value>
+                    </p>
+                  </wikiObjectProperty>
+                  <wikiObjectProperty name="stableId">
                     <p>
                       <value t="java.lang.Long">12</value>
                     </p>
