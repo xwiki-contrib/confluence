@@ -19,6 +19,9 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml;
 
+import org.apache.commons.lang3.StringUtils;
+import org.xwiki.rendering.listener.reference.AttachmentResourceReference;
+import org.xwiki.rendering.listener.reference.DocumentResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceType;
 
@@ -38,9 +41,18 @@ public interface ConfluenceReferenceConverter
     /**
      * @return the converted document reference
      * @param spaceKey the confluence space in which the document lives
-     * @param pageTitle the document reference to convert
+     * @param pageTitle the page title to convert
      */
     String convertDocumentReference(String spaceKey, String pageTitle);
+
+    /**
+     * @return the converted document reference
+     * @param pageId the page id to convert
+     */
+    default String convertDocumentReference(long pageId)
+    {
+        return "confluencePage:id:" + pageId;
+    }
 
     /**
      * @return the converted space reference, as SPACE (serialized)
@@ -102,5 +114,95 @@ public interface ConfluenceReferenceConverter
     default ResourceReference convertURL(String url)
     {
         return new ResourceReference(url, ResourceType.URL);
+    }
+
+    /**
+     * @return the resource reference of the given element.
+     * @param pageId the page id of or in which to return the reference
+     * @param filename the optional attachment filename in the specified page (can be null or empty)
+     * @param anchor the optional anchor (can be null or empty)
+     * @since 9.66.0
+     */
+    default ResourceReference getResourceReference(long pageId, String filename, String anchor)
+    {
+        String base = "id:" + pageId;
+        String attachmentPart = StringUtils.isEmpty(filename) ? "" : '@' + escapeDash(filename);
+        String anchorPart = StringUtils.isEmpty(anchor) ? "" : '#' + anchor;
+        ResourceType resourceType = StringUtils.isEmpty(filename)
+            ? getConfluencePageResourceType()
+            : getConfluenceAttachResourceType();
+        return new ResourceReference(base + attachmentPart + anchorPart, resourceType);
+    }
+
+    /**
+     * @return the resource reference of the given element.
+     * @param spaceKey the optional key of the wanted Confluence space
+     * @param pageTitle the optional title of the wanted page
+     * @param filename the optional attachment filename in the specified page (can be null or empty)
+     * @param anchor the optional anchor (can be null or empty)
+     * @since 9.66.0
+     */
+    default ResourceReference getResourceReference(String spaceKey, String pageTitle, String filename, String anchor)
+    {
+        String attachmentPart = StringUtils.isEmpty(filename) ? "" : '@' + escapeDash(filename);
+        String anchorPart = StringUtils.isEmpty(anchor) ? "" : '#' + anchor;
+
+        ResourceType resourceType;
+        String base;
+        if (StringUtils.isEmpty(pageTitle)) {
+            if (StringUtils.isEmpty(spaceKey)) {
+                return getResourceReference(filename, anchor);
+            }
+            if (StringUtils.isEmpty(filename)) {
+                resourceType = new ResourceType("confluenceSpace");
+                base = spaceKey;
+            } else {
+                resourceType = getConfluenceAttachResourceType();
+                base = "spaceHome:" + spaceKey;
+            }
+        } else {
+            resourceType = StringUtils.isEmpty(filename)
+                ? getConfluencePageResourceType()
+                : getConfluenceAttachResourceType();
+            base = "page:" + spaceKey + '.' + escapeAtAndDash(pageTitle);
+        }
+        return new ResourceReference(base + attachmentPart + anchorPart, resourceType);
+    }
+
+    private static ResourceType getConfluenceAttachResourceType()
+    {
+        return new ResourceType("confluenceAttach");
+    }
+
+    private static ResourceType getConfluencePageResourceType()
+    {
+        return new ResourceType("confluencePage");
+    }
+
+    private static ResourceReference getResourceReference(String filename, String anchor)
+    {
+        if (StringUtils.isEmpty(filename)) {
+            if (StringUtils.isEmpty(anchor)) {
+                return null;
+            }
+            DocumentResourceReference docRef = new DocumentResourceReference("");
+            docRef.setAnchor(anchor);
+            return docRef;
+        }
+        AttachmentResourceReference attachmentResourceReference = new AttachmentResourceReference(filename);
+        if (StringUtils.isNotEmpty(anchor)) {
+            attachmentResourceReference.setAnchor(anchor);
+        }
+        return attachmentResourceReference;
+    }
+
+    private static String escapeAtAndDash(String s)
+    {
+        return escapeDash(s).replace("@", "\\@");
+    }
+
+    private static String escapeDash(String s)
+    {
+        return s.replace("\\", "\\\\").replace("#", "\\#");
     }
 }

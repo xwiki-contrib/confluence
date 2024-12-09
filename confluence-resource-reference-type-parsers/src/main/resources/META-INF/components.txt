@@ -1,0 +1,3 @@
+org.xwiki.contrib.confluence.internal.parser.reference.type.ConfluenceAttachResourceReferenceTypeParser
+org.xwiki.contrib.confluence.internal.parser.reference.type.ConfluencePageResourceReferenceTypeParser
+org.xwiki.contrib.confluence.internal.parser.reference.type.ConfluenceSpaceResourceReferenceTypeParser

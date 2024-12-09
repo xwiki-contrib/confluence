@@ -41,21 +41,21 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>[[Deal Portal - Test - My Wiki>>doc:TEST.Deal Portal.WebHome||shape="rect"]]
+              <string>[[Deal Portal - Test - My Wiki>>confluencePage:page:TEST.Deal Portal||shape="rect"]]
 
  
 
-[[Maintenance Window (Post Checks) - Test - My Wiki>>url:http://my.wiki.invalid/wiki/pages/viewpage.action?pageId=18384226||shape="rect"]]
+[[Maintenance Window (Post Checks) - Test - My Wiki>>confluencePage:id:18384226||shape="rect"]]
 
  
 
-[[Archivist - Installation manual - Test - My Wiki>>doc:TEST.Archivist - Installation manual.WebHome||shape="rect"]]
+[[Archivist - Installation manual - Test - My Wiki>>confluencePage:page:TEST.Archivist - Installation manual||shape="rect"]]
 
  
 
  
 
-[[Maciej_test - z_Sandbox Admin Testing - My Wiki>>doc:ABDoc.Maciej_test.WebHome||shape="rect"]]
+[[Maciej_test - z_Sandbox Admin Testing - My Wiki>>confluencePage:page:ABDoc.Maciej_test||shape="rect"]]
 
  
 

@@ -28,7 +28,7 @@
 
 [[link6>>doc:validatedspace.validatedpage.WebHome||shape="rect"]]
 
-[[pagetovalidate>>doc:TestSpace.validatedpage.WebHome]]
+[[pagetovalidate>>confluencePage:page:TestSpace.pagetovalidate]]
 
 [[pagetovalidate>>doc:validatedspace.validatedpage.WebHome||anchor="pagetovalidate-anchor"]]
 
@@ -44,7 +44,7 @@
 
 [[link>>doc:OK.liAC||shape="rect"]]
 
-[[link&gt;&gt;doc:OK.NgszKw||shape="rect"]]
+[[link>>doc:OK.NgszKw||shape="rect"]]
 
 [[link>>doc:OK.SRwC||shape="rect"]]
 

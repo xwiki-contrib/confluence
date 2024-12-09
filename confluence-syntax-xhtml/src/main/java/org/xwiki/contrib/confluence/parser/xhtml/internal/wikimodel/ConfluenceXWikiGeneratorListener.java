@@ -40,8 +40,6 @@ import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.listener.QueueListener;
 import org.xwiki.rendering.listener.WrappingListener;
 import org.xwiki.rendering.listener.chaining.EventType;
-import org.xwiki.rendering.listener.reference.AttachmentResourceReference;
-import org.xwiki.rendering.listener.reference.DocumentResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceType;
 import org.xwiki.rendering.parser.ParseException;
@@ -141,30 +139,28 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         this.popListenerMethod = pop;
     }
 
-    private String convertDocumentReference(String spaceKey, String pageTitle)
+    private static ResourceReference getFallbackReference(String space, String pageTitle, String file, String anchor)
     {
-        if (this.confluenceConverter == null) {
-            return spaceKey + '.' + pageTitle;
-        }
+        // useful for tests, not adequat for production
+        return (new ConfluenceReferenceConverter() {
+            @Override
+            public String convertUserReference(String userId)
+            {
+                return "";
+            }
 
-        return this.confluenceConverter.convertDocumentReference(spaceKey, pageTitle);
-    }
+            @Override
+            public String convertDocumentReference(String spaceKey, String pageTitle)
+            {
+                return "";
+            }
 
-    private String convertSpaceReference(String spaceKey)
-    {
-        if (this.confluenceConverter == null) {
-            return spaceKey;
-        }
-
-        return this.confluenceConverter.convertSpaceReference(spaceKey, true);
-    }
-
-    private String convertAnchor(String spaceKey, String pageTitle, String anchor)
-    {
-        if (this.confluenceConverter == null) {
-            return anchor;
-        }
-        return this.confluenceConverter.convertAnchor(spaceKey, pageTitle, anchor);
+            @Override
+            public String convertSpaceReference(String spaceKey)
+            {
+                return "";
+            }
+        }).getResourceReference(space, pageTitle, file, anchor);
     }
 
     @Override
@@ -176,40 +172,25 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         }
 
         ConfluenceXHTMLWikiReference confluenceReference = (ConfluenceXHTMLWikiReference) reference;
-
-        ResourceReference resourceReference;
-        if (confluenceReference.getAttachment() != null) {
-            resourceReference = convertAttachmentReference(confluenceReference.getAttachment());
-        }  else {
-            DocumentResourceReference documentResourceReference = null;
-
-            if (confluenceReference.getPage() != null) {
-                documentResourceReference = new DocumentResourceReference(
-                    convertDocumentReference(
-                        confluenceReference.getSpace(),
-                        confluenceReference.getPage()
-                    )
-                );
-            } else if (confluenceReference.getSpace() != null) {
-                documentResourceReference = new DocumentResourceReference(
-                    convertSpaceReference(confluenceReference.getSpace()));
-            } else {
-                documentResourceReference = new DocumentResourceReference("");
+        ConfluenceXHTMLAttachment attachment = confluenceReference.getAttachment();
+        String filename = null;
+        String space = confluenceReference.getSpace();
+        String page = confluenceReference.getPage();
+        String anchor = confluenceReference.getAnchor();
+        if (attachment != null) {
+            // Sometimes, the data is in the attachment object
+            filename = attachment.filename;
+            if (StringUtils.isEmpty(space)) {
+                space = attachment.spaceKey;
             }
-
-            String anchor = confluenceReference.getAnchor();
-            if (anchor != null) {
-                documentResourceReference.setAnchor(convertAnchor(
-                    confluenceReference.getSpace(),
-                    confluenceReference.getPage(),
-                    confluenceReference.getAnchor()
-                ));
+            if (StringUtils.isEmpty(page)) {
+                page = attachment.pageTitle;
             }
-
-            resourceReference = documentResourceReference;
         }
-
-        getListener().beginLink(resourceReference, false, Collections.<String, String>emptyMap());
+        ResourceReference resourceReference = confluenceConverter == null
+            ? getFallbackReference(space, page, filename, anchor)
+            : confluenceConverter.getResourceReference(space, page, filename, anchor);
+        getListener().beginLink(resourceReference, false, Collections.emptyMap());
         XDOM labelXDOM = confluenceReference.getLabelXDOM();
         String label = confluenceReference.getLabel();
         if (labelXDOM != null) {
@@ -219,29 +200,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         } else if (label != null) {
             parsePlainInline(label, getListener());
         }
-        getListener().endLink(resourceReference, false, Collections.<String, String>emptyMap());
-    }
-
-    private ResourceReference convertAttachmentReference(ConfluenceXHTMLAttachment a)
-    {
-        String reference = confluenceConverter == null
-            ? convertAttachmentFallback(a)
-            : confluenceConverter.convertAttachmentReference(a.spaceKey, a.pageTitle, a.filename);
-        return new AttachmentResourceReference(reference);
-    }
-
-    private static String convertAttachmentFallback(ConfluenceXHTMLAttachment a)
-    {
-        // useful for tests
-        String ref = StringUtils.defaultString(a.spaceKey);
-        if (StringUtils.isNotEmpty(a.pageTitle)) {
-            if (ref.isEmpty()) {
-                ref = a.pageTitle;
-            } else {
-                ref += '.' + a.pageTitle;
-            }
-        }
-        return (ref.isEmpty() ? "" : (ref + "@")) + a.filename;
+        getListener().endLink(resourceReference, false, Collections.emptyMap());
     }
 
     /**
@@ -270,7 +229,10 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
             ResourceReference resourceReference = null;
 
             if (confluenceReference.getAttachment() != null) {
-                resourceReference = convertAttachmentReference(confluenceReference.getAttachment());
+                ConfluenceXHTMLAttachment a = confluenceReference.getAttachment();
+                resourceReference = confluenceConverter == null
+                    ? getFallbackReference(a.spaceKey, a.pageTitle, a.filename, null)
+                    : confluenceConverter.getResourceReference(a.spaceKey, a.pageTitle, a.filename, null);
             } else if (confluenceReference.getURL() != null) {
                 resourceReference = new ResourceReference(confluenceReference.getURL(), ResourceType.URL);
             }

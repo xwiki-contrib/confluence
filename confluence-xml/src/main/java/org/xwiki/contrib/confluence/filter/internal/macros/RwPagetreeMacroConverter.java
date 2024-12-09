@@ -23,7 +23,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
-import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 
 import javax.inject.Inject;
@@ -76,11 +75,11 @@ public class RwPagetreeMacroConverter extends AbstractMacroConverter
         } else {
             try {
                 long rootId = Long.parseLong(root);
-                EntityReference docRef = confluenceConverter.convertDocumentReference(rootId, false);
-                if (docRef == null) {
-                    parameters.put("confluencerootpageid", serializer.serialize(docRef));
+                String ref = confluenceConverter.convertDocumentReference(rootId);
+                if (ref == null) {
+                    parameters.put("confluencerootpageid", Long.toString(rootId));
                 } else {
-                    parameters.put(ROOT, "document:" + serializer.serialize(docRef));
+                    parameters.put(ROOT, "document:" + ref);
                 }
             } catch (NumberFormatException e) {
                 logger.warn("Could not convert the root parameter of the rw-pagetree macro");

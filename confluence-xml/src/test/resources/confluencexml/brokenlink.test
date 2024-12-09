@@ -37,7 +37,7 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>[[(% class="confluence-link" %)link tex(%%)t>>doc:MySpace.linktarget.WebHome]]</string>
+              <string>[[(% class="confluence-link" %)link tex(%%)t>>confluencePage:page:MySpace.linktarget]]</string>
             </entry>
             <entry>
               <string>syntax</string>

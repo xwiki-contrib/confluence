@@ -15,19 +15,19 @@
               </entry>
               <entry>
                 <string>content</string>
-                <string>{{display reference="validatedspace.Includee.WebHome"/}}
+                <string>{{display reference="confluencePage:page:spacetovalidate.Includee"/}}
 
-{{display reference="TestSpace.recently-updated.WebHome"/}}
+{{display reference="confluencePage:page:TestSpace.recently-updated"/}}
 
-{{display reference="TestSpace.Attachments.WebHome"/}}
+{{display reference="confluencePage:page:TestSpace.Attachments"/}}
 
-{{display reference="TestSpace.note, tip, info, success, warning, error.WebHome"/}}
+{{display reference="confluencePage:page:TestSpace.note, tip, info, success, warning, error"/}}
 
-{{display reference="TestSpace.validatedpage.WebHome"/}}
+{{display reference="confluencePage:page:TestSpace.pagetovalidate"/}}
 
-{{excerpt-include 0="TestSpace.validatedpage.WebHome"/}}
+{{excerpt-include 0="confluencePage:page:TestSpace.pagetovalidate"/}}
 
-Include inline: {{display reference="TestSpace.validatedpage.WebHome"/}}</string>
+Include inline: {{display reference="confluencePage:page:TestSpace.pagetovalidate"/}}</string>
               </entry>
               <entry>
                 <string>syntax</string>

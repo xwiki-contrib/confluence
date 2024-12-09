@@ -29,7 +29,7 @@
 
 [[link6>>doc:validatedspace.validatedpage.WebHome||shape="rect"]]
 
-[[pagetovalidate>>doc:TestSpace.validatedpage.WebHome]]
+[[pagetovalidate>>confluencePage:page:TestSpace.pagetovalidate]]
 
 [[pagetovalidate>>doc:validatedspace.validatedpage.WebHome||anchor="anchor"]]
 
@@ -37,17 +37,17 @@
 
 [[doc:MYSPACE.WebHome]]
 
-[[link>>url:https://confluence.atlassian.com/x/2EkGOQ||shape="rect"]]
+[[link>>confluencePage:id:956713432||shape="rect"]]
 
-[[link>>url:https://confluence.atlassian.com/x/2yAC||shape="rect"]]
+[[link>>confluencePage:id:139483||shape="rect"]]
 
-[[link>>url:https://confluence.atlassian.com/x/ASEC||shape="rect"]]
+[[link>>confluencePage:id:139521||shape="rect"]]
 
-[[link>>url:https://confluence.atlassian.com/x/liAC||shape="rect"]]
+[[link>>confluencePage:id:139414||shape="rect"]]
 
-[[link>>url:https://confluence.atlassian.com/x/NgszKw||shape="rect"]]
+[[link>>confluencePage:id:724765494||shape="rect"]]
 
-[[link>>url:https://confluence.atlassian.com/x/SRwC||shape="rect"]]
+[[link>>confluencePage:id:138313||shape="rect"]]
 
 {{lozenge icon="https://icon-library.com/images/img_524932.png" link="https://www.bing.com/images/search?q=icon" width="auto"}}
 Some content

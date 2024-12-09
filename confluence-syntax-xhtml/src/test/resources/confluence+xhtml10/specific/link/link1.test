@@ -2,18 +2,28 @@
 .input|confluence+xhtml/1.0
 .#-----------------------------------------------------
 <ac:link ac:anchor="anchor"><ri:page ri:content-title="Page" ri:space-key="SPACE" /><ac:plain-text-link-body><![CDATA[label]]></ac:plain-text-link-body></ac:link>
-
 <ac:link><ri:page ri:content-title="Page" ri:space-key="SPACE" /></ac:link>
+<ac:link><ri:attachment ri:filename="file.png"/></ac:link>
+<ac:link><ri:attachment ri:filename="fil\e#page.png"><ri:page ri:content-title="page title with \@# characters" ri:space-key="SPACE" /></ri:attachment></ac:link>
+<ac:link><ri:attachment ri:filename="fil\e#page.png"><ri:space ri:space-key="SPACE" /></ri:attachment></ac:link>
 .#-----------------------------------------------------
 .expect|event/1.0
 .#-----------------------------------------------------
 beginDocument
 beginParagraph
-beginLink [Typed = [true] Type = [doc] Reference = [SPACE.Page] Parameters = [[anchor] = [anchor]]] [false]
+beginLink [Typed = [true] Type = [confluencePage] Reference = [page:SPACE.Page#anchor]] [false]
 onWord [label]
-endLink [Typed = [true] Type = [doc] Reference = [SPACE.Page] Parameters = [[anchor] = [anchor]]] [false]
+endLink [Typed = [true] Type = [confluencePage] Reference = [page:SPACE.Page#anchor]] [false]
 onSpace
-beginLink [Typed = [true] Type = [doc] Reference = [SPACE.Page]] [false]
-endLink [Typed = [true] Type = [doc] Reference = [SPACE.Page]] [false]
+beginLink [Typed = [true] Type = [confluencePage] Reference = [page:SPACE.Page]] [false]
+endLink [Typed = [true] Type = [confluencePage] Reference = [page:SPACE.Page]] [false]
+onSpace
+beginLink [Typed = [true] Type = [attach] Reference = [file.png]] [false]
+endLink [Typed = [true] Type = [attach] Reference = [file.png]] [false]
+beginLink [Typed = [true] Type = [confluenceAttach] Reference = [page:SPACE.page title with \\\@\# characters@fil\\e\#page.png]] [false]
+endLink [Typed = [true] Type = [confluenceAttach] Reference = [page:SPACE.page title with \\\@\# characters@fil\\e\#page.png]] [false]
+onSpace
+beginLink [Typed = [true] Type = [confluenceAttach] Reference = [spaceHome:SPACE@fil\\e\#page.png]] [false]
+endLink [Typed = [true] Type = [confluenceAttach] Reference = [spaceHome:SPACE@fil\\e\#page.png]] [false]
 endParagraph
 endDocument

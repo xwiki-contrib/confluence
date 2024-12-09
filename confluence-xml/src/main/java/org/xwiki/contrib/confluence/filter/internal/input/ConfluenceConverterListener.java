@@ -35,7 +35,6 @@ import org.xwiki.contrib.confluence.filter.MacroConverter;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.parser.confluence.internal.wikimodel.ConfluenceResourceReference;
 import org.xwiki.model.reference.EntityReferenceResolver;
-import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.rendering.listener.HeaderLevel;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.listener.QueueListener;
@@ -73,9 +72,6 @@ public class ConfluenceConverterListener extends WrappingListener
 
     @Inject
     private MacroConverter macroConverter;
-
-    @Inject
-    private EntityReferenceSerializer<String> serializer;
 
     @Inject
     private Logger logger;
