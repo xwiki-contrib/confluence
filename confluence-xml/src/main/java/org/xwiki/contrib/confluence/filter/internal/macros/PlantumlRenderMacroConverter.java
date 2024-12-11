@@ -30,7 +30,7 @@ import org.xwiki.component.annotation.Component;
  * Convert Confluence plantumlrender macros.
  *
  * @version $Id$
- * @since 9.65
+ * @since 9.65.0
  */
 @Component
 @Singleton

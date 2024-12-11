@@ -36,7 +36,7 @@ public class PageIdentifier
     private static final String SPACE_KEY = "spaceKey";
     private static final String PAGE_REVISION = "pageRevision";
 
-    private Map<String, Object> m = new TreeMap<>();
+    private final Map<String, Object> m = new TreeMap<>();
 
     /**
      * @param pageId see {@link #getPageId()}
@@ -119,6 +119,7 @@ public class PageIdentifier
      * @deprecated since 9.63.0
      * use setSpaceKey()
      */
+    @Deprecated
     public void setSpaceTitle(String spaceKey)
     {
         setSpaceKey(spaceKey);
