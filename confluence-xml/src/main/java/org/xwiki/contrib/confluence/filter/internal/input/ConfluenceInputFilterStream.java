@@ -48,6 +48,8 @@ import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
@@ -144,6 +146,8 @@ public class ConfluenceInputFilterStream
     private  static final String FAILED_TO_GET_GROUP_PROPERTIES = "Failed to get group properties";
     private static final String PAGE_IDENTIFIER_ERROR =
         "Configuration error while creating page identifier for page [{}]";
+
+    private static final Marker SEND_PAGE_MARKER = MarkerFactory.getMarker("ConfluenceSendingPage");
 
     @Inject
     @Named(ConfluenceInputStreamParser.COMPONENT_NAME)
@@ -1006,17 +1010,23 @@ public class ConfluenceInputFilterStream
 
     private Map<String, Object> createPageIdentifier(ConfluenceProperties pageProperties)
     {
-
-        Long pageId = pageProperties.getLong(ID);
-        PageIdentifier pageIdentifier = new PageIdentifier(pageId);
+        String spaceKey = null;
         Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
         if (spaceId != null) {
             try {
-                pageIdentifier.setSpaceKey(confluencePackage.getSpaceKey(spaceId));
+                spaceKey = confluencePackage.getSpaceKey(spaceId);
             } catch (ConfigurationException e) {
-                this.logger.error(PAGE_IDENTIFIER_ERROR, pageId, e);
+                this.logger.error(PAGE_IDENTIFIER_ERROR, pageProperties.getLong(ID), e);
             }
         }
+        return createPageIdentifier(pageProperties, spaceKey);
+    }
+
+    private Map<String, Object> createPageIdentifier(ConfluenceProperties pageProperties, String spaceKey)
+    {
+        Long pageId = pageProperties.getLong(ID);
+        PageIdentifier pageIdentifier = new PageIdentifier(pageId);
+        pageIdentifier.setSpaceKey(spaceKey);
         populatePageIdentifier(pageId, pageProperties, pageIdentifier);
         return pageIdentifier.getMap();
     }
@@ -1318,10 +1328,6 @@ public class ConfluenceInputFilterStream
         FilterEventParameters documentParameters = new FilterEventParameters();
         if (this.properties.getDefaultLocale() != null) {
             documentParameters.put(WikiDocumentFilter.PARAMETER_LOCALE, this.properties.getDefaultLocale());
-        }
-
-        if (this.properties.isVerbose()) {
-            this.logger.info("Sending page [{}], Confluence id=[{}]", createPageIdentifier(pageId, spaceKey), pageId);
         }
 
         String spaceName = confluenceConverter.toEntityName(title);
@@ -1670,6 +1676,10 @@ public class ConfluenceInputFilterStream
         Long pageId = pageProperties.getLong(ID, null);
         if (pageId == null) {
             throw new FilterException("Found a null revision id in space [" + spaceKey + "], this should not happen.");
+        }
+
+        if (this.properties.isVerbose()) {
+            this.logger.info(SEND_PAGE_MARKER, "Sending page [{}]", createPageIdentifier(pageProperties, spaceKey));
         }
 
         // pageId is used as a fallback, an empty revision would prevent the revision from going through.
