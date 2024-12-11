@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.input;
 
+import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceMacroSupport;
@@ -37,11 +38,20 @@ import java.util.Map;
 public class ConfluenceXMLMacroSupport implements ConfluenceMacroSupport
 {
     @Inject
+    private Logger logger;
+
+    @Inject
     private MacroConverter macroConverter;
 
     @Override
     public boolean supportsInlineMode(String macroId, Map<String, String> parameters, String content)
     {
-        return !MacroConverter.InlineSupport.NO.equals(macroConverter.supportsInlineMode(macroId, parameters, content));
+        try {
+            MacroConverter.InlineSupport support = macroConverter.supportsInlineMode(macroId, parameters, content);
+            return !MacroConverter.InlineSupport.NO.equals(support);
+        } catch (Exception e) {
+            this.logger.error("Failed to determine whether the macro supports inline, defaulting to true", e);
+            return true;
+        }
     }
 }

@@ -80,7 +80,12 @@ public class DefaultMacroConverter extends AbstractMacroConverter
         }
 
         if (converter != null) {
-            converter.toXWiki(id, parameters, content, inline, listener);
+            try {
+                converter.toXWiki(id, parameters, content, inline, listener);
+            } catch (Exception e) {
+                this.logger.error("Failed to convert macro [{}] using converter [{}]", id, converter, e);
+                super.toXWiki(id, parameters, content, inline, listener);
+            }
         }
 
         // If we haven't found a specific macro converter matching this id, we use the default behavior

@@ -1,0 +1,47 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Content conversions
+.#------------------------------------------------------------------------------
+<wikiSpace name="TestSpace">
+  <wikiSpace name="TestContent">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <wikiDocumentRevision revision="10">
+          <p>
+            <parameters>
+              <entry>
+                <string>title</string>
+                <string>TestContent</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Hello
+
+{{confluence_convertedtoblock pleasecrash="true"/}}
+
+Bye</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
+.configuration.source=macroconvertercrash
+.configuration.unprefixedMacros=code
+.#------------------------------------------------------------------------------

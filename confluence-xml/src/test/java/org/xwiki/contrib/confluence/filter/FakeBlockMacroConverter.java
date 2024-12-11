@@ -40,6 +40,9 @@ public class FakeBlockMacroConverter extends AbstractMacroConverter
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
+        if (confluenceParameters.containsKey("pleasecrash")) {
+            throw new RuntimeException("Crash requested, happy to oblige");
+        }
         return "view-file";
     }
 }
