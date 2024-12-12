@@ -1,4 +1,3 @@
-package org.xwiki.contrib.confluence.resolvers;
 /*
  * See the NOTICE file distributed with this work for additional
  * information regarding copyright ownership.
@@ -18,21 +17,26 @@ package org.xwiki.contrib.confluence.resolvers;
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
+package org.xwiki.contrib.confluence.resolvers;
+
+import java.util.Map;
 
 import org.xwiki.component.annotation.Role;
 
 /**
- * Find a path prefix from its Confluence space key.
+ * Scroll viewport space prefix resolver.
  *
  * @version $Id$
- * @since 9.68.0
+ * @since 9.67.0
  */
 @Role
-public interface ConfluenceScrollViewportResolver
+public interface ConfluenceScrollViewportSpacePrefixResolver
 {
     /**
-     * @return the path prefix corresponding to the given space key.
-     * @param spaceKey the Confluence space key
+     * Return a map entry with the space viewport prefix and the space name.
+     *
+     * @param fullUrl the full url from which to find the matching space.
+     * @return a map entry which contains the viewport space prefix as key and the value which contains the space name.
      */
-    String getPathPrefix(String spaceKey) throws ConfluenceResolverException;
+    Map.Entry<String, String> getSpaceAndPrefixForUrl(String fullUrl) throws ConfluenceResolverException;
 }

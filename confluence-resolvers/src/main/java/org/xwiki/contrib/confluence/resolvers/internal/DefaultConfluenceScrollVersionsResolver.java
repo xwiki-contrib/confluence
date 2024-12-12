@@ -19,6 +19,8 @@
  */
 package org.xwiki.contrib.confluence.resolvers.internal;
 
+import java.util.Map;
+
 import javax.annotation.Priority;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -26,11 +28,8 @@ import javax.inject.Singleton;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentManager;
-import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollViewportResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollPageIdResolver;
-import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollVariantResolver;
-import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.stability.Unstable;
 
@@ -45,7 +44,7 @@ import org.xwiki.stability.Unstable;
 @Singleton
 @Priority(900)
 public class DefaultConfluenceScrollVersionsResolver extends AbstractConfluenceResolver
-    implements ConfluenceScrollPageIdResolver, ConfluenceScrollViewportResolver, ConfluenceScrollVariantResolver
+    implements ConfluenceScrollPageIdResolver, ConfluenceScrollViewportSpacePrefixResolver, ConfluenceScrollVariantResolver
 {
     @Inject
     private ComponentManager componentManager;
@@ -71,20 +70,20 @@ public class DefaultConfluenceScrollVersionsResolver extends AbstractConfluenceR
     }
 
     @Override
-    public String getPathPrefix(String spaceKey) throws ConfluenceResolverException
+    public Map.Entry<String, String> getSpaceAndPrefixForUrl(String fullUrl) throws ConfluenceResolverException
     {
-        for (ConfluenceScrollViewportResolver resolver : getResolvers(componentManager,
-            ConfluenceScrollViewportResolver.class)) {
+        for (ConfluenceScrollViewportSpacePrefixResolver resolver : getResolvers(componentManager,
+            ConfluenceScrollViewportSpacePrefixResolver.class)) {
             if (resolver != this) {
-                String pathPrefix = resolver.getPathPrefix(spaceKey);
-                if (pathPrefix != null) {
-                    logger.debug("Confluence space key [{}] resolved to path prefix [{}] using [{}]", spaceKey,
-                        pathPrefix, resolver);
-                    return pathPrefix;
+                var entry = resolver.getSpaceAndPrefixForUrl(fullUrl);
+                if (entry != null) {
+                    logger.debug(
+                        "Confluence space for url [{}] resolved to space prefix [{}] and space name [{}] using [{}]",
+                        fullUrl, entry.getKey(), entry.getValue(), resolver);
+                    return entry;
                 }
             }
         }
-
         return null;
     }
 

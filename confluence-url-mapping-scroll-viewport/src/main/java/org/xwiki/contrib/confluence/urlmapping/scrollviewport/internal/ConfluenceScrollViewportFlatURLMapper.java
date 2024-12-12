@@ -29,7 +29,7 @@ import org.xwiki.stability.Unstable;
 
 /**
  * URL Mapper for Scroll viewport confluence extension URLs. This implementation do only the mapping for the flat
- * structure. The tree URL are not supported for now. The description of the URL is described
+ * structure. The description of the URL is described
  * <a href="https://help.k15t.com/scroll-viewport-data-center/2.22.0/configure-scroll-viewport">here</a>
  *
  * @version $Id$
@@ -41,18 +41,12 @@ import org.xwiki.stability.Unstable;
 @Named("scrollViewportFlat")
 public class ConfluenceScrollViewportFlatURLMapper extends ConfluenceViewPageURLMapper implements ConfluenceURLMapper
 {
-    // List taken from https://help.k15t.com/scroll-viewport-data-center/2.22.0/configure-global-url-redirects
-    private static final String[] EXCLUDED_PREFIX_LIST =
-        new String[] { "admin", "ajax", "display", "download", "favicon.ico", "images", "includes", "jcaptcha", "json",
-            "label", "login.action", "noop.jsp", "pages", "plugins", "rest", "rpc", "s", "spaces", "status", "styles",
-            "synchrony", "synchrony-proxy", "x" };
-
     /**
      * Constructor.
      */
     public ConfluenceScrollViewportFlatURLMapper()
     {
-        super("^(?!(" + String.join("|", EXCLUDED_PREFIX_LIST) + ")/)"
-            + "(.*/)*[\\w\\-]+-(?<pageId>\\d+)\\.html\\??(?<params>.*)?$");
+        super("^(?!(" + String.join("|", ConfluenceScrollViewportUtils.EXCLUDED_PREFIX_LIST) + ")/)"
+            + "(.*/)*[\\w\\-]+-(?<pageId>\\d+)\\.html(\\?(?<params>.*))?$");
     }
 }
