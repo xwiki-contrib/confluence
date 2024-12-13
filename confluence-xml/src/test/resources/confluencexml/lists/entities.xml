@@ -86,6 +86,15 @@
     </li>
 </ul>
 
+<ac:structured-macro ac:name="toc" ac:schema-version="1" data-layout="default">
+  <ac:parameter ac:name="minLevel">3</ac:parameter>
+  <ac:parameter ac:name="maxLevel">4</ac:parameter>
+  <ac:parameter ac:name="outline">false</ac:parameter>
+  <ac:parameter ac:name="style">decimal</ac:parameter>
+  <ac:parameter ac:name="type">list</ac:parameter>
+  <ac:parameter ac:name="printable">true</ac:parameter>
+</ac:structured-macro>
+
 <ac:task-list>
 <ac:task>
 <ac:task-id>230</ac:task-id>

@@ -91,6 +91,8 @@
 **** __Alt:__
 **** __Neu:__
 
+{{toc depth="4" numbered="true" start="3"/}}
+
 {{task-list}}
 {{task id="230" status="incomplete"}}
 Task containing an inline status and then a task list {{status colour="Red" title="prio 1"/}}
