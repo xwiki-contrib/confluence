@@ -23,7 +23,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.confluence.urlmapping.internal.ConfluenceURLMapper;
+import org.xwiki.contrib.confluence.urlmapping.ConfluenceURLMapper;
 import org.xwiki.contrib.confluence.urlmapping.internal.ConfluenceViewPageURLMapper;
 import org.xwiki.stability.Unstable;
 

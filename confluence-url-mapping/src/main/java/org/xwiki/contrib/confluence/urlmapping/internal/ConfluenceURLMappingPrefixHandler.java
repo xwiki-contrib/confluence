@@ -29,6 +29,7 @@ import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
+import org.xwiki.contrib.confluence.urlmapping.ConfluenceURLMapper;
 import org.xwiki.contrib.urlmapping.AbstractURLMappingPrefixHandler;
 import org.xwiki.contrib.urlmapping.DefaultURLMappingConfiguration;
 import org.xwiki.contrib.urlmapping.URLMapper;

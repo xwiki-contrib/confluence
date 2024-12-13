@@ -30,6 +30,7 @@ import javax.inject.Singleton;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
+import org.xwiki.contrib.confluence.urlmapping.ConfluenceURLMapper;
 import org.xwiki.contrib.urlmapping.AbstractURLMapper;
 import org.xwiki.contrib.urlmapping.DefaultURLMappingMatch;
 import org.xwiki.contrib.urlmapping.suggestions.URLMappingSuggestionUtils;
