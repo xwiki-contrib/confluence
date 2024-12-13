@@ -23,7 +23,7 @@ import org.xwiki.model.reference.EntityReference;
 
 /**
  * Fill a link mapping.
- * @since 9.64.0
+ * @since 9.66.0
  * @version $Id$
  */
 public interface ConfluenceLinkMappingReceiver

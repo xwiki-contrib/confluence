@@ -31,7 +31,7 @@ import java.util.Map;
  * Converts a macro call into a group, using the value of the "text" parameter as its content.
  *
  * @version $Id$
- * @since 9.51.1
+ * @since 9.67.0
  */
 @Component
 @Singleton

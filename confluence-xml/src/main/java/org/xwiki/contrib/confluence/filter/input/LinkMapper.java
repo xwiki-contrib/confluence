@@ -43,6 +43,7 @@ public interface LinkMapper
     /**
      * Fill the given object with the link mapping.
      * @param mapper the object to fill
+     * @since 6.67.0
      */
     default void getLinkMapping(ConfluenceLinkMappingReceiver mapper)
     {
