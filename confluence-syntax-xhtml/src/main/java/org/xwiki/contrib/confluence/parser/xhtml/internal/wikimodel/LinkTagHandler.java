@@ -116,7 +116,12 @@ public class LinkTagHandler extends TagHandler implements ConfluenceTagHandler
             } else {
                 ref = referenceConverter.convertDocumentReference(link.getSpace(), link.getPage());
             }
-            context.getParentContext().appendContent(ref);
+            TagContext parentContext = context.getParentContext();
+            if (StringUtils.isNotEmpty(parentContext.getContent())) {
+                // ensure links are well separated
+                parentContext.appendContent("\n");
+            }
+            parentContext.appendContent(ref);
         } else {
             context.getScannerContext().onReference(link);
         }
