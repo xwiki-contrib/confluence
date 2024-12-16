@@ -91,6 +91,11 @@
     </dependency>
     <dependency>
       <groupId>org.xwiki.contrib.confluence</groupId>
+      <artifactId>confluence-resolvers</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.contrib.confluence</groupId>
       <artifactId>confluence-resource-reference-type-parsers</artifactId>
       <version>${project.version}</version>
       <optional>true</optional>
@@ -148,12 +153,6 @@
       <version>${platform.version}</version>
       <scope>test</scope>
       <type>pom</type>
-    </dependency>
-    <dependency>
-      <groupId>org.xwiki.contrib.confluence</groupId>
-      <artifactId>confluence-resolvers</artifactId>
-      <version>${project.version}</version>
-      <scope>compile</scope>
     </dependency>
   </dependencies>
   <build>
