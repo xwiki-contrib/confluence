@@ -29,7 +29,7 @@ import javax.inject.Singleton;
 
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
+import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollPageIdResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
 import org.xwiki.model.reference.DocumentReferenceResolver;
 import org.xwiki.model.reference.EntityReference;
@@ -60,8 +60,7 @@ public class IncludePlusMacroConverter extends AbstractMacroConverter
     private DocumentReferenceResolver<String> documentReferenceResolver;
 
     @Inject
-    @Named("scrollversions")
-    private ConfluencePageIdResolver conflulencePageIdResolver;
+    private ConfluenceScrollPageIdResolver confluenceScrollPageIdResolver;
 
     /**
      * Default serializer.
@@ -93,7 +92,7 @@ public class IncludePlusMacroConverter extends AbstractMacroConverter
 
         try {
             EntityReference entityReference =
-                conflulencePageIdResolver.getDocumentById(getScrollPageId(confluenceParameters));
+                confluenceScrollPageIdResolver.getDocumentById(getScrollPageId(confluenceParameters));
             parameters.put(MACRO_PARAMETER_REFERENCE,
                 entityReference != null ? defaultSerializerProvider.get().serialize(entityReference) : "");
         } catch (ConfluenceResolverException e) {

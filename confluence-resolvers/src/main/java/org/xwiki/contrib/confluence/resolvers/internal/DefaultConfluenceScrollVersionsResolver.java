@@ -21,27 +21,29 @@ package org.xwiki.contrib.confluence.resolvers.internal;
 
 import javax.annotation.Priority;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentManager;
-import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
+import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollViewportResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
+import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollPageIdResolver;
 import org.xwiki.model.reference.EntityReference;
+import org.xwiki.stability.Unstable;
 
 /**
- * Default ConfluenceIdResolver, using the available implementations.
+ * Default ConfluenceScrollVersionsResolver, using the available implementations.
+ *
  * @version $Id$
  * @since 9.67.1
  */
 @Component
-@Named("scrollversions")
+@Unstable
 @Singleton
 @Priority(900)
 public class DefaultConfluenceScrollVersionsResolver extends AbstractConfluenceResolver
-    implements ConfluencePageIdResolver
+    implements ConfluenceScrollPageIdResolver, ConfluenceScrollViewportResolver
 {
     @Inject
     private ComponentManager componentManager;
@@ -52,12 +54,31 @@ public class DefaultConfluenceScrollVersionsResolver extends AbstractConfluenceR
     @Override
     public EntityReference getDocumentById(long id) throws ConfluenceResolverException
     {
-        for (ConfluencePageIdResolver resolver : getResolvers(componentManager, ConfluencePageIdResolver.class)) {
+        for (ConfluenceScrollPageIdResolver resolver : getResolvers(componentManager,
+            ConfluenceScrollPageIdResolver.class)) {
             if (resolver != this) {
                 EntityReference docRef = resolver.getDocumentById(id);
                 if (docRef != null) {
                     logger.debug("Confluence document id [{}] resolved to [{}] using [{}]", id, docRef, resolver);
                     return docRef;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public String getPathPrefix(String spaceKey) throws ConfluenceResolverException
+    {
+        for (ConfluenceScrollViewportResolver resolver : getResolvers(componentManager,
+            ConfluenceScrollViewportResolver.class)) {
+            if (resolver != this) {
+                String pathPrefix = resolver.getPathPrefix(spaceKey);
+                if (pathPrefix != null) {
+                    logger.debug("Confluence space key [{}] resolved to path prefix [{}] using [{}]", spaceKey,
+                        pathPrefix, resolver);
+                    return pathPrefix;
                 }
             }
         }
