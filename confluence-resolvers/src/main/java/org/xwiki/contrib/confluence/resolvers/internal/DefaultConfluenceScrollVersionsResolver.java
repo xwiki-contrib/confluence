@@ -76,7 +76,7 @@ public class DefaultConfluenceScrollVersionsResolver extends AbstractConfluenceR
         for (ConfluenceScrollViewportSpacePrefixResolver resolver : getResolvers(componentManager,
             ConfluenceScrollViewportSpacePrefixResolver.class)) {
             if (resolver != this) {
-                var entry = resolver.getSpaceAndPrefixForUrl(fullUrl);
+                Map.Entry<String, String> entry = resolver.getSpaceAndPrefixForUrl(fullUrl);
                 if (entry != null) {
                     logger.debug(
                         "Confluence space for url [{}] resolved to space prefix [{}] and space name [{}] using [{}]",
