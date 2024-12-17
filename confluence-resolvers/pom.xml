@@ -76,6 +76,12 @@
                     <parameterIndex>0</parameterIndex>
                     <justification>The api was broken from the start and likely unused since it was released very recently.</justification>
                 </item>
+                <item>
+                  <ignore>true</ignore>
+                  <code>java.class.removed</code>
+                  <old>interface org.xwiki.contrib.confluence.resolvers.ConfluenceScrollViewportResolver</old>
+                  <justification>The api was broken from the start and likely unused since it was released very recently.</justification>
+                </item>
               </differences>
             </revapi.differences>
           </analysisConfiguration>

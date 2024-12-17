@@ -27,7 +27,7 @@ import org.xwiki.component.annotation.Role;
  * Scroll viewport space prefix resolver.
  *
  * @version $Id$
- * @since 9.67.0
+ * @since 9.72.0
  */
 @Role
 public interface ConfluenceScrollViewportSpacePrefixResolver
