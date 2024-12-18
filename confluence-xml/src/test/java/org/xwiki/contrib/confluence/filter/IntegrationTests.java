@@ -41,7 +41,11 @@ import org.xwiki.test.XWikiTempDirUtil;
 import org.xwiki.test.annotation.AllComponents;
 import org.xwiki.test.mockito.MockitoComponentManager;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -59,6 +63,7 @@ public class IntegrationTests
 {
 
     private static final String OTHER_SPACE = "OtherSpace";
+    private static final String WEB_HOME = "WebHome";
 
     @FilterTestSuite.Initialized
     public void initialized(MockitoComponentManager componentManager) throws Exception
@@ -85,16 +90,47 @@ public class IntegrationTests
         ConfluencePageTitleResolver titleResolver =
             componentManager.registerMockComponent(ConfluencePageTitleResolver.class);
 
+        // Those cache related mocks test if resolvers are not called several times for the same page
+        AtomicInteger foundTitleCache = new AtomicInteger();
+        when(titleResolver.getDocumentByTitle(anyString(), eq("testcachefound"))).thenAnswer(i ->
+            new EntityReference("call-" + (foundTitleCache.getAndIncrement()), EntityType.DOCUMENT)
+        );
+
+        AtomicBoolean notFoundTitleCacheCalled = new AtomicBoolean(false);
+        when(titleResolver.getDocumentByTitle(anyString(), eq("testcachenotfound"))).thenAnswer(i -> {
+            if (!notFoundTitleCacheCalled.get()) {
+                notFoundTitleCacheCalled.set(true);
+                return null;
+            }
+
+            return new EntityReference("cachefail", EntityType.DOCUMENT);
+        });
+
+        AtomicInteger foundIdCache = new AtomicInteger();
+        when(idResolver.getDocumentById(54321)).thenAnswer(i ->
+            new EntityReference("call-" + (foundIdCache.getAndIncrement()), EntityType.DOCUMENT)
+        );
+
+        AtomicBoolean notFoundIdCacheCalled = new AtomicBoolean(false);
+        when(idResolver.getDocumentById(54320)).thenAnswer(i -> {
+            if (!notFoundIdCacheCalled.get()) {
+                notFoundIdCacheCalled.set(true);
+                return null;
+            }
+
+            return new EntityReference("cachefail", EntityType.DOCUMENT);
+        });
+
         when(titleResolver.getDocumentByTitle(OTHER_SPACE, "Other Page")).thenReturn(
             new EntityReference(
-                "WebHome",
+                WEB_HOME,
                 EntityType.DOCUMENT,
                 new EntityReference("SubSpace", EntityType.SPACE,
                     new EntityReference(OTHER_SPACE, EntityType.SPACE))));
 
         when(idResolver.getDocumentById(4242)).thenReturn(
             new EntityReference(
-                "WebHome",
+                WEB_HOME,
                 EntityType.DOCUMENT,
                 new EntityReference("Page 4242", EntityType.SPACE,
                     new EntityReference(OTHER_SPACE, EntityType.SPACE))));

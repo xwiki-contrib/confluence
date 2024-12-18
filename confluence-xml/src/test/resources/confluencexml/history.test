@@ -42,7 +42,7 @@
               </entry>
               <entry>
                 <string>content</string>
-                <string>content 1</string>
+                <string>[[content 1>>doc:call-0]][[content 1>>confluencePage:page:TestSpace.testcachenotfound]][[content 1>>doc:call-0||shape="rect"]] [[content 1>>confluencePage:id:54320||shape="rect"]]</string>
               </entry>
               <entry>
                 <string>syntax</string>
@@ -77,7 +77,7 @@
               </p>
             </wikiObjectProperty>
             <wikiObjectProperty name="title" value="Pricing Reports"/>
-            <wikiObjectProperty name="url" value=""/>
+            <wikiObjectProperty name="url" value="http://my.wiki.invalid/wiki/spaces/TestSpace/pages/123241619/Pricing Reports"/>
             <wikiObjectProperty name="space" value="TestSpace"/>
           </wikiObject>
         </wikiDocumentRevision>
@@ -102,7 +102,7 @@
               </entry>
               <entry>
                 <string>content</string>
-                <string>content 2</string>
+                <string>[[content 2>>doc:call-0]][[content 2>>confluencePage:page:TestSpace.testcachenotfound]][[content 2>>doc:call-0||shape="rect"]] [[content 2>>confluencePage:id:54320||shape="rect"]]</string>
               </entry>
               <entry>
                 <string>syntax</string>
@@ -137,7 +137,7 @@
               </p>
             </wikiObjectProperty>
             <wikiObjectProperty name="title" value="Pricing Reports"/>
-            <wikiObjectProperty name="url" value=""/>
+            <wikiObjectProperty name="url" value="http://my.wiki.invalid/wiki/spaces/TestSpace/pages/123797568/Pricing Reports"/>
             <wikiObjectProperty name="space" value="TestSpace"/>
           </wikiObject>
         </wikiDocumentRevision>
@@ -182,7 +182,7 @@
               </p>
             </wikiObjectProperty>
             <wikiObjectProperty name="title" value="Pricing Reports"/>
-            <wikiObjectProperty name="url" value=""/>
+            <wikiObjectProperty name="url" value="http://my.wiki.invalid/wiki/spaces/TestSpace/pages/95917606/Pricing Reports"/>
             <wikiObjectProperty name="space" value="TestSpace"/>
           </wikiObject>
         </wikiDocumentRevision>
@@ -193,4 +193,5 @@
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=history
+.configuration.baseURLs=http://my.wiki.invalid/wiki
 .#------------------------------------------------------------------------------

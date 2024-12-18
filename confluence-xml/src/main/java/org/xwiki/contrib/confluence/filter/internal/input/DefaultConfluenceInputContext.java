@@ -25,6 +25,11 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
+import org.xwiki.model.reference.EntityReference;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
 
 /**
  * Default implementation of {@link ConfluenceInputContext}.
@@ -44,6 +49,10 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
 
     private final ThreadLocal<Long> currentPage = new ThreadLocal<>();
 
+    private final ThreadLocal<Map<String, Map<String, EntityReference>>> titleReferenceCache = new ThreadLocal<>();
+
+    private final ThreadLocal<Map<Long, EntityReference>> idReferenceCache = new ThreadLocal<>();
+
     /**
      * @param confluencePackage the Confluence input package
      * @param properties the Confluence input properties
@@ -52,6 +61,8 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
     {
         this.confluencePackage.set(confluencePackage);
         this.properties.set(properties);
+        this.titleReferenceCache.set(new HashMap<>());
+        this.idReferenceCache.set(new HashMap<>());
     }
 
     /**
@@ -79,6 +90,8 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
         this.properties.remove();
         this.currentPage.remove();
         this.currentSpace.remove();
+        this.titleReferenceCache.remove();
+        this.idReferenceCache.remove();
     }
 
     @Override
@@ -103,5 +116,32 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
     public Long getCurrentPage()
     {
         return currentPage.get();
+    }
+
+    @Override
+    public EntityReference getCachedReference(long pageId, Supplier<EntityReference> supplier)
+    {
+        Map<Long, EntityReference> m = idReferenceCache.get();
+        EntityReference ref = m.get(pageId);
+        if (ref == null && !m.containsKey(pageId)) {
+            // don't replace with compute if absent because null is a valid value
+            ref = supplier.get();
+            m.put(pageId, ref);
+        }
+        return ref;
+    }
+
+    @Override
+    public EntityReference getCachedReference(String spaceKey, String pageTitle, Supplier<EntityReference> supplier)
+    {
+        Map<String, Map<String, EntityReference>> m = titleReferenceCache.get();
+        Map<String, EntityReference> space = m.computeIfAbsent(spaceKey, k -> new HashMap<>());
+        EntityReference ref = space.get(pageTitle);
+        if (ref == null && !space.containsKey(pageTitle)) {
+            // don't replace with compute if absent because null is a valid value
+            ref = supplier.get();
+            space.put(pageTitle, ref);
+        }
+        return ref;
     }
 }

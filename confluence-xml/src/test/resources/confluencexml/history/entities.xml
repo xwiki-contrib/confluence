@@ -56,7 +56,18 @@
   </object>
   <object class="BodyContent" package="com.atlassian.confluence.core">
     <id name="id">123306980</id>
-    <property name="body"><![CDATA[content 1]]></property>
+    <property name="body"><![CDATA[
+      <ac:link ac:card-appearance="inline">
+        <ri:page ri:content-title="testcachefound" />
+        <ac:link-body>content 1</ac:link-body>
+      </ac:link>
+      <ac:link ac:card-appearance="inline">
+        <ri:page ri:content-title="testcachenotfound" />
+        <ac:link-body>content 1</ac:link-body>
+      </ac:link>
+      <a href="http://my.wiki.invalid/wiki/pages/viewpage.action?pageId=54321">content 1</a>
+      <a href="http://my.wiki.invalid/wiki/pages/viewpage.action?pageId=54320">content 1</a>
+    ]]></property>
     <property name="content" class="Page"
       package="com.atlassian.confluence.pages">
       <id name="id">123241619</id>
@@ -88,7 +99,18 @@
   </object>
   <object class="BodyContent" package="com.atlassian.confluence.core">
     <id name="id">123928635</id>
-    <property name="body"><![CDATA[content 2]]></property>
+    <property name="body"><![CDATA[
+      <ac:link ac:card-appearance="inline">
+        <ri:page ri:content-title="testcachefound" />
+        <ac:link-body>content 2</ac:link-body>
+      </ac:link>
+      <ac:link ac:card-appearance="inline">
+        <ri:page ri:content-title="testcachenotfound" />
+        <ac:link-body>content 2</ac:link-body>
+      </ac:link>
+      <a href="http://my.wiki.invalid/wiki/pages/viewpage.action?pageId=54321">content 2</a>
+      <a href="http://my.wiki.invalid/wiki/pages/viewpage.action?pageId=54320">content 2</a>
+]]></property>
     <property name="content" class="Page"
       package="com.atlassian.confluence.pages">
       <id name="id">123797568</id>

@@ -20,6 +20,9 @@
 package org.xwiki.contrib.confluence.filter.input;
 
 import org.xwiki.component.annotation.Role;
+import org.xwiki.model.reference.EntityReference;
+
+import java.util.function.Supplier;
 
 /**
  * Provide various info about the current context.
@@ -65,5 +68,28 @@ public interface ConfluenceInputContext
     default boolean isConfluenceCloud()
     {
         return "cloud".equals(getProperties().getConfluenceInstanceType());
+    }
+
+    /**
+     * @return the cached reference
+     * @param pageId the page id corresponding to the cached reference to find
+     * @param valueGetter the function to call to get the value if not found (the result will be added to the cache)
+     * @since 6.68.0
+     */
+    default EntityReference getCachedReference(long pageId, Supplier<EntityReference> valueGetter)
+    {
+        return null;
+    }
+
+    /**
+     * @return the cached reference
+     * @param spaceKey the spaceKey corresponding to the cached reference to find
+     * @param pageTitle the spaceKey corresponding to the cached reference to find
+     * @param valueGetter the function to call to get the value if not found (the result will be added to the cache)
+     * @since 6.68.0
+     */
+    default EntityReference getCachedReference(String spaceKey, String pageTitle, Supplier<EntityReference> valueGetter)
+    {
+        return null;
     }
 }

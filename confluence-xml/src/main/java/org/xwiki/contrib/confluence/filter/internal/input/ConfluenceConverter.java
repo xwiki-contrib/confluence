@@ -504,11 +504,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             .getOrDefault(spaceKey, Collections.emptyMap()).get(pageTitle), asSpace);
 
         if (ref == null && pageTitleResolver != null && this.context.getProperties().isUseConfluenceResolvers()) {
-            try {
-                ref = maybeAsSpace(pageTitleResolver.getDocumentByTitle(spaceKey, pageTitle), asSpace);
-            } catch (ConfluenceResolverException e) {
-                logger.error("Failed to resolve page with space=[{}], pageTitle=[{}]", spaceKey, pageTitle, e);
-            }
+            ref = maybeAsSpace(getDocumentByTitleUsingResolver(spaceKey, pageTitle), asSpace);
         }
 
         if (warn && ref == null) {
@@ -516,6 +512,18 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         }
 
         return ref;
+    }
+
+    private EntityReference getDocumentByTitleUsingResolver(String spaceKey, String pageTitle)
+    {
+        return context.getCachedReference(spaceKey, pageTitle, () -> {
+            try {
+                return pageTitleResolver.getDocumentByTitle(spaceKey, pageTitle);
+            } catch (ConfluenceResolverException e) {
+                logger.error("Failed to resolve page with space=[{}], pageTitle=[{}]", spaceKey, pageTitle, e);
+            }
+            return null;
+        });
     }
 
     private EntityReference maybeAsSpace(EntityReference entityReference, boolean asSpace)
@@ -544,14 +552,22 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         }
 
         if (pageIdResolver != null && this.context.getProperties().isUseConfluenceResolvers()) {
-            try {
-                return maybeAsSpace(pageIdResolver.getDocumentById(pageId), asSpace);
-            } catch (ConfluenceResolverException e) {
-                logger.error("Failed to resolve page with id=[{}]", pageId, e);
-            }
+            return maybeAsSpace(getDocumentByIdUsingResolver(pageId), asSpace);
         }
 
         return null;
+    }
+
+    private EntityReference getDocumentByIdUsingResolver(long pageId)
+    {
+        return context.getCachedReference(pageId, () -> {
+            try {
+                return pageIdResolver.getDocumentById(pageId);
+            } catch (ConfluenceResolverException e) {
+                logger.error("Failed to resolve page with id=[{}]", pageId, e);
+            }
+            return null;
+        });
     }
 
     private EntityReference toNestedDocumentReference(String spaceKey, String pageTitle,
