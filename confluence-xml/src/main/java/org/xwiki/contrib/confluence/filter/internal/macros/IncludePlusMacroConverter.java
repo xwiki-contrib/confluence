@@ -39,7 +39,7 @@ import org.xwiki.model.reference.EntityReferenceSerializer;
  * Convert the alert macro.
  *
  * @version $Id$
- * @since 9.53.0
+ * @since 9.68.0
  */
 @Singleton
 @Component

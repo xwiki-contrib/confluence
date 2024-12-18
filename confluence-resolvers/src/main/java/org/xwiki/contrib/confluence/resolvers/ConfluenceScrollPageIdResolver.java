@@ -24,9 +24,9 @@ import org.xwiki.model.reference.EntityReference;
 
 /**
  * Find a document from its Confluence Scroll ID.
- * 
+ *
  * @version $Id$
- * @since 9.54.0
+ * @since 9.68.0
  */
 @Role
 public interface ConfluenceScrollPageIdResolver

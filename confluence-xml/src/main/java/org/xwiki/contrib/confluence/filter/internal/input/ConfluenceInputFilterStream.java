@@ -863,7 +863,6 @@ public class ConfluenceInputFilterStream
     }
 
     private ConfluenceRight getConfluenceRightData(ConfluenceProperties permProperties)
-        throws FilterException
     {
         String type = permProperties.getString(ConfluenceXMLPackage.KEY_PERMISSION_TYPE, "");
         String group = getConfluenceGroupRightData(permProperties);

@@ -36,7 +36,7 @@ import org.xwiki.stability.Unstable;
  * Default ConfluenceScrollVersionsResolver, using the available implementations.
  *
  * @version $Id$
- * @since 9.67.1
+ * @since 9.68.0
  */
 @Component
 @Unstable

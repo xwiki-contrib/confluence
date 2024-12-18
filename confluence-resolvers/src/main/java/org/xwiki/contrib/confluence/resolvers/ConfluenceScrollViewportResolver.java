@@ -23,9 +23,9 @@ import org.xwiki.component.annotation.Role;
 
 /**
  * Find a path prefix from its Confluence space key.
- * 
+ *
  * @version $Id$
- * @since 9.54.0
+ * @since 9.68.0
  */
 @Role
 public interface ConfluenceScrollViewportResolver
