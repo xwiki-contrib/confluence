@@ -4,7 +4,7 @@
 <id name="id">1098954229</id>
 <property name="body"><![CDATA[
 <p><ac:structured-macro ac:name="include" ac:schema-version="1"><ac:parameter ac:name=""><ac:link><ri:page ri:content-title="long 1" /></ac:link></ac:parameter></ac:structured-macro></p>
-<p><ac:structured-macro ac:name="children" ac:schema-version="2"><ac:parameter ac:name="page"><ac:link><ri:page ri:content-title="short 1" /></ac:link></ac:parameter></ac:structured-macro>&nbsp;</p>
+<p><ac:structured-macro ac:name="children" ac:schema-version="2"><ac:parameter ac:name="page"><ac:link><ri:page ri:content-title="short 1" /></ac:link></ac:parameter><ac:parameter ac:name="first">2</ac:parameter></ac:structured-macro>&nbsp;</p>
 ]]></property>
 <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">1098924831</id>
 </property>

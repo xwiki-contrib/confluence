@@ -26,7 +26,7 @@ import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -58,12 +58,13 @@ public class ChildrenMacroConverter extends AbstractMacroConverter
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {
+        Map<String, String> parameters = new HashMap<>();
         String pageTitle = getPage(confluenceParameters);
         // Unfortunately, sometimes children have a link as parameter, sometimes it is bare. In the first case, the
         // reference is already converted. In the second case, it needs to be converted
         // FIXME: find some cleaner way to detect that the reference has already been converted.
         if (StringUtils.isNotEmpty(pageTitle)) {
-            return Map.of(
+            parameters.put(
                 "root", "document:" + (
                     pageTitle.endsWith(".WebHome")
                         ? pageTitle
@@ -72,6 +73,10 @@ public class ChildrenMacroConverter extends AbstractMacroConverter
             );
         }
 
-        return Collections.emptyMap();
+        String first = confluenceParameters.get("first");
+        if (StringUtils.isNotEmpty(first)) {
+            parameters.put("limit", first);
+        }
+        return parameters;
     }
 }
