@@ -27,7 +27,9 @@
 
 {{excerpt-include 0="confluencePage:page:TestSpace.pagetovalidate"/}}
 
-Include inline: {{display reference="confluencePage:page:TestSpace.pagetovalidate"/}}</string>
+Include inline: {{display reference="confluencePage:page:TestSpace.pagetovalidate"/}}
+
+{{includeLibrary reference="xwiki:Scroll42.WebHome"/}}{{includeplus scrollPageId="43"/}}</string>
               </entry>
               <entry>
                 <string>syntax</string>

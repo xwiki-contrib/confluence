@@ -19,7 +19,6 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -27,11 +26,9 @@ import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
-import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollPageIdResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
-import org.xwiki.model.reference.DocumentReferenceResolver;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 
@@ -52,13 +49,6 @@ public class IncludePlusMacroConverter extends AbstractMacroConverter
 
     private static final String MACRO_PARAMETER_REFERENCE = "reference";
 
-    /**
-     * Resolver for document references.
-     */
-    @Inject
-    @Named("currentmixed")
-    private DocumentReferenceResolver<String> documentReferenceResolver;
-
     @Inject
     private ConfluenceScrollPageIdResolver confluenceScrollPageIdResolver;
 
@@ -66,10 +56,7 @@ public class IncludePlusMacroConverter extends AbstractMacroConverter
      * Default serializer.
      */
     @Inject
-    private Provider<EntityReferenceSerializer<String>> defaultSerializerProvider;
-
-    @Inject
-    private Logger logger;
+    private Provider<EntityReferenceSerializer<String>> serializer;
 
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
@@ -88,31 +75,35 @@ public class IncludePlusMacroConverter extends AbstractMacroConverter
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {
-        Map<String, String> parameters = new HashMap<>();
+        Throwable cause = null;
 
-        try {
-            EntityReference entityReference =
-                confluenceScrollPageIdResolver.getDocumentById(getScrollPageId(confluenceParameters));
-            parameters.put(MACRO_PARAMETER_REFERENCE,
-                entityReference != null ? defaultSerializerProvider.get().serialize(entityReference) : "");
-        } catch (ConfluenceResolverException e) {
-            logger.error("Could not get the referenced page.");
+        EntityReference entityReference = null;
+        Long scrollPageId = getScrollPageId(confluenceParameters);
+        if (scrollPageId != null) {
+            try {
+                entityReference = confluenceScrollPageIdResolver.getDocumentById(scrollPageId);
+            } catch (ConfluenceResolverException e) {
+                cause = e;
+            }
         }
 
-        // Fallback on the confluence parameters, so that in case the conversion goes
-        // wrong, a post-migration script could identify all missing data and it could
-        // eventually fix the situation.
-        parameters = super.toXWikiParameters(confluenceId, confluenceParameters, content);
-        parameters.put(MACRO_PARAMETER_REFERENCE, parameters.remove("0"));
-        return parameters;
+        if (entityReference == null) {
+            // we throw a runtime exception so the macro is prevented from being converted, as it doesn't make sense
+            // to convert it if we can't resolve the reference. A post migration fix will then be possible using
+            // something like the "Replace macros using Macro Converters from XDOM" snippet
+            throw new RuntimeException("Could not get the referenced page.", cause);
+        }
+
+        return Map.of(MACRO_PARAMETER_REFERENCE, serializer.get().serialize(entityReference));
     }
 
     private Long getScrollPageId(Map<String, String> confluenceParameters)
     {
-        if (confluenceParameters.containsKey(MACRO_PARAMETER_SCROLLPAGEID)) {
-            return Long.valueOf(MACRO_PARAMETER_SCROLLPAGEID);
+        String scrollPageId = confluenceParameters.get(MACRO_PARAMETER_SCROLLPAGEID);
+        if (scrollPageId == null) {
+            return null;
         }
 
-        return Long.MIN_VALUE;
+        return Long.valueOf(scrollPageId);
     }
 }

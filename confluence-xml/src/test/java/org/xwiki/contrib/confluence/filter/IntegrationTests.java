@@ -29,11 +29,13 @@ import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceInputFilterStream;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageTitleResolver;
+import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollPageIdResolver;
 import org.xwiki.environment.Environment;
 import org.xwiki.filter.input.InputFilterStreamFactory;
 import org.xwiki.filter.test.integration.FilterTestSuite;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
+import org.xwiki.model.reference.WikiReference;
 import org.xwiki.model.validation.EntityNameValidation;
 import org.xwiki.model.validation.EntityNameValidationManager;
 import org.xwiki.observation.ObservationManager;
@@ -85,6 +87,12 @@ public class IntegrationTests
         });
         when(validation.transform("spacetovalidate")).thenReturn("validatedspace");
         when(validation.transform("pagetovalidate")).thenReturn("validatedpage");
+
+        ConfluenceScrollPageIdResolver scrollIdResolver =
+            componentManager.registerMockComponent(ConfluenceScrollPageIdResolver.class);
+
+        when(scrollIdResolver.getDocumentById(42)).thenReturn(new EntityReference("WebHome", EntityType.DOCUMENT,
+            new EntityReference("Scroll42", EntityType.SPACE, new WikiReference("xwiki"))));
 
         ConfluencePageIdResolver idResolver = componentManager.registerMockComponent(ConfluencePageIdResolver.class);
         ConfluencePageTitleResolver titleResolver =
