@@ -42,7 +42,7 @@
               </entry>
               <entry>
                 <string>content</string>
-                <string>[[content 1>>doc:call-0]][[content 1>>confluencePage:page:TestSpace.testcachenotfound]][[content 1>>doc:call-0||shape="rect"]] [[content 1>>confluencePage:id:54320||shape="rect"]]</string>
+                <string>[[content 1>>doc:call-0]][[content 1>>confluencePage:page:AnotherSpace.testcachenotfound]][[content 1>>doc:call-0||shape="rect"]] [[content 1>>confluencePage:id:54320||shape="rect"]]</string>
               </entry>
               <entry>
                 <string>syntax</string>
@@ -102,7 +102,7 @@
               </entry>
               <entry>
                 <string>content</string>
-                <string>[[content 2>>doc:call-0]][[content 2>>confluencePage:page:TestSpace.testcachenotfound]][[content 2>>doc:call-0||shape="rect"]] [[content 2>>confluencePage:id:54320||shape="rect"]]</string>
+                <string>[[content 2>>doc:call-0]][[content 2>>confluencePage:page:AnotherSpace.testcachenotfound]][[content 2>>doc:call-0||shape="rect"]] [[content 2>>confluencePage:id:54320||shape="rect"]]</string>
               </entry>
               <entry>
                 <string>syntax</string>

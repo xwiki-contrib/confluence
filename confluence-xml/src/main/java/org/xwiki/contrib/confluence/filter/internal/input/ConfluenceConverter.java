@@ -516,6 +516,11 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
     private EntityReference getDocumentByTitleUsingResolver(String spaceKey, String pageTitle)
     {
+        if (context.getConfluencePackage().getSpacesByKey().containsKey(spaceKey)) {
+            // We are not going to resolve something that's supposed to be in the package being imported
+            return null;
+        }
+
         return context.getCachedReference(spaceKey, pageTitle, () -> {
             try {
                 return pageTitleResolver.getDocumentByTitle(spaceKey, pageTitle);

@@ -58,11 +58,11 @@
     <id name="id">123306980</id>
     <property name="body"><![CDATA[
       <ac:link ac:card-appearance="inline">
-        <ri:page ri:content-title="testcachefound" />
+        <ri:page ri:space-key="AnotherSpace" ri:content-title="testcachefound" />
         <ac:link-body>content 1</ac:link-body>
       </ac:link>
       <ac:link ac:card-appearance="inline">
-        <ri:page ri:content-title="testcachenotfound" />
+        <ri:page ri:space-key="AnotherSpace" ri:content-title="testcachenotfound" />
         <ac:link-body>content 1</ac:link-body>
       </ac:link>
       <a href="http://my.wiki.invalid/wiki/pages/viewpage.action?pageId=54321">content 1</a>
@@ -101,11 +101,11 @@
     <id name="id">123928635</id>
     <property name="body"><![CDATA[
       <ac:link ac:card-appearance="inline">
-        <ri:page ri:content-title="testcachefound" />
+        <ri:page ri:space-key="AnotherSpace" ri:content-title="testcachefound" />
         <ac:link-body>content 2</ac:link-body>
       </ac:link>
       <ac:link ac:card-appearance="inline">
-        <ri:page ri:content-title="testcachenotfound" />
+        <ri:page ri:space-key="AnotherSpace" ri:content-title="testcachenotfound" />
         <ac:link-body>content 2</ac:link-body>
       </ac:link>
       <a href="http://my.wiki.invalid/wiki/pages/viewpage.action?pageId=54321">content 2</a>

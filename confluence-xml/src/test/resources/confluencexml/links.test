@@ -14,17 +14,17 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>[[(% param="value" %)link1>>doc:OtherSpace.SubSpace.WebHome||anchor="OtherPage-anchor" shape="rect"]](%%) [[(% param="value" %)link1>>doc:OtherSpace.SubSpace.WebHome||shape="rect"]]
+              <string>[[(% param="value" %)link1>>doc:OtherSpace.Other Page.WebHome||anchor="OtherPage-anchor" shape="rect"]](%%) [[(% param="value" %)link1>>doc:OtherSpace.Other Page.WebHome||shape="rect"]]
 
-[[(% param="value" %)link2>>doc:OtherSpace.SubSpace.WebHome||anchor="OtherPage-anchor" shape="rect"]](%%) [[(% param="value" %)link2>>doc:OtherSpace.SubSpace.WebHome||shape="rect"]]
+[[(% param="value" %)link2>>doc:OtherSpace.Other Page.WebHome||anchor="OtherPage-anchor" shape="rect"]](%%) [[(% param="value" %)link2>>doc:OtherSpace.Other Page.WebHome||shape="rect"]]
 
-[[(% param="value" %)link3>>attach:OtherSpace.SubSpace.WebHome@attachment.png||shape="rect"]](%%) [[(% param="value" %)link3>>attach:OtherSpace.SubSpace.WebHome@attachment.png||shape="rect"]]
+[[(% param="value" %)link3>>attach:OtherSpace.Other Page.WebHome@attachment.png||shape="rect"]](%%) [[(% param="value" %)link3>>attach:OtherSpace.Other Page.WebHome@attachment.png||shape="rect"]]
 
-[[(% param="value" %)link3 bis>>attach:OtherSpace.SubSpace.WebHome@attachment.png||shape="rect"]](%%) [[(% param="value" %)link3 bis>>attach:OtherSpace.SubSpace.WebHome@attachment.png||shape="rect"]]
+[[(% param="value" %)link3 bis>>attach:OtherSpace.Other Page.WebHome@attachment.png||shape="rect"]](%%) [[(% param="value" %)link3 bis>>attach:OtherSpace.Other Page.WebHome@attachment.png||shape="rect"]]
 
 [[(% param="value" %)link4>>icon:icon||shape="rect"]](%%) [[(% param="value" %)link4>>icon:icon||shape="rect"]]
 
-[[(% param="value" %)link5>>doc:OtherSpace.SubSpace.WebHome||anchor="OtherPage-anchor" shape="rect"]](%%) [[(% param="value" %)link5>>doc:OtherSpace.SubSpace.WebHome||shape="rect"]]
+[[(% param="value" %)link5>>doc:OtherSpace.Other Page.WebHome||anchor="OtherPage-anchor" shape="rect"]](%%) [[(% param="value" %)link5>&gt;doc:OtherSpace.Other Page.WebHome||shape="rect"]]
 
 [[link6>>doc:validatedspace.validatedpage.WebHome||shape="rect"]]
 
@@ -44,7 +44,7 @@
 
 [[link>>doc:OK.liAC||shape="rect"]]
 
-[[link>>doc:OK.NgszKw||shape="rect"]]
+[[link>&gt;doc:OK.NgszKw||shape="rect"]]
 
 [[link>>doc:OK.SRwC||shape="rect"]]
 
