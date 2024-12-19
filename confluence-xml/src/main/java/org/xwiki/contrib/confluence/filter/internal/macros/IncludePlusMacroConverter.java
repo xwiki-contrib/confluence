@@ -26,6 +26,7 @@ import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
+import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollPageIdResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
@@ -78,8 +79,8 @@ public class IncludePlusMacroConverter extends AbstractMacroConverter
         Throwable cause = null;
 
         EntityReference entityReference = null;
-        Long scrollPageId = getScrollPageId(confluenceParameters);
-        if (scrollPageId != null) {
+        String scrollPageId = confluenceParameters.get(MACRO_PARAMETER_SCROLLPAGEID);
+        if (StringUtils.isNotEmpty(scrollPageId)) {
             try {
                 entityReference = confluenceScrollPageIdResolver.getDocumentById(scrollPageId);
             } catch (ConfluenceResolverException e) {
@@ -97,13 +98,4 @@ public class IncludePlusMacroConverter extends AbstractMacroConverter
         return Map.of(MACRO_PARAMETER_REFERENCE, serializer.get().serialize(entityReference));
     }
 
-    private Long getScrollPageId(Map<String, String> confluenceParameters)
-    {
-        String scrollPageId = confluenceParameters.get(MACRO_PARAMETER_SCROLLPAGEID);
-        if (scrollPageId == null) {
-            return null;
-        }
-
-        return Long.valueOf(scrollPageId);
-    }
 }

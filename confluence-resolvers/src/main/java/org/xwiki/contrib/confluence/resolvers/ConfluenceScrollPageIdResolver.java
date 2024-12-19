@@ -35,5 +35,5 @@ public interface ConfluenceScrollPageIdResolver
      * @return the document in XWiki, or null if the document is not found.
      * @param id the Confluence ID of the document
      */
-    EntityReference getDocumentById(long id) throws ConfluenceResolverException;
+    EntityReference getDocumentById(String id) throws ConfluenceResolverException;
 }

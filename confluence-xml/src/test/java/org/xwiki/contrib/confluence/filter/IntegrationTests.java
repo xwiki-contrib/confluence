@@ -91,7 +91,7 @@ public class IntegrationTests
         ConfluenceScrollPageIdResolver scrollIdResolver =
             componentManager.registerMockComponent(ConfluenceScrollPageIdResolver.class);
 
-        when(scrollIdResolver.getDocumentById(42)).thenReturn(new EntityReference("WebHome", EntityType.DOCUMENT,
+        when(scrollIdResolver.getDocumentById("422B")).thenReturn(new EntityReference(WEB_HOME, EntityType.DOCUMENT,
             new EntityReference("Scroll42", EntityType.SPACE, new WikiReference("xwiki"))));
 
         ConfluencePageIdResolver idResolver = componentManager.registerMockComponent(ConfluencePageIdResolver.class);

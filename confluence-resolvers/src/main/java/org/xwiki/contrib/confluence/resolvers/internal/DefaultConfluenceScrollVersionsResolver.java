@@ -52,7 +52,7 @@ public class DefaultConfluenceScrollVersionsResolver extends AbstractConfluenceR
     private Logger logger;
 
     @Override
-    public EntityReference getDocumentById(long id) throws ConfluenceResolverException
+    public EntityReference getDocumentById(String id) throws ConfluenceResolverException
     {
         for (ConfluenceScrollPageIdResolver resolver : getResolvers(componentManager,
             ConfluenceScrollPageIdResolver.class)) {
