@@ -34,10 +34,10 @@ import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 
 /**
- * Convert the alert macro.
+ * Convert the includeplus macro.
  *
  * @version $Id$
- * @since 9.68.0
+ * @since 9.68.2
  */
 @Singleton
 @Component
@@ -92,7 +92,8 @@ public class IncludePlusMacroConverter extends AbstractMacroConverter
             // we throw a runtime exception so the macro is prevented from being converted, as it doesn't make sense
             // to convert it if we can't resolve the reference. A post migration fix will then be possible using
             // something like the "Replace macros using Macro Converters from XDOM" snippet
-            throw new RuntimeException("Could not get the referenced page.", cause);
+            throw new RuntimeException(String.format("Could not get the referenced page for id [{}]", confluenceId),
+                cause);
         }
 
         return Map.of(MACRO_PARAMETER_REFERENCE, serializer.get().serialize(entityReference));
