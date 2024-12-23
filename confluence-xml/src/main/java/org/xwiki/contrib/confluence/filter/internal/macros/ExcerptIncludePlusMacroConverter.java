@@ -38,7 +38,7 @@ import org.xwiki.model.reference.EntityReferenceSerializer;
  * Convert the excerpt-includeplus macro.
  *
  * @version $Id$
- * @since 9.68.2
+ * @since 9.68.0
  */
 @Singleton
 @Component
