@@ -125,6 +125,8 @@
 
 <p><ac:link ac:anchor="myanchor"><ac:plain-text-link-body><![CDATA[correctly migrated label]] ></ac:plain-text-link-body></ac:link></p>
 
+<p><ac:link ac:tooltip="an empty link"><ac:plain-text-link-body><![CDATA[this page]] ></ac:plain-text-link-body></ac:link></p>
+
 <ac:structured-macro ac:name="mathblock" ac:schema-version="1" ac:macro-id="f2b55061-df1f-4e70-9dfb-f99a6d4b1ebc"><ac:plain-text-body><![CDATA[1337 = x \times 42\\]] ></ac:plain-text-body></ac:structured-macro>]]>
     </property>
     <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809845</id></property>

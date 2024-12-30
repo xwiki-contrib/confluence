@@ -645,13 +645,12 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
                 return attachmentResourceReference;
             }
 
+            DocumentResourceReference docRef = new DocumentResourceReference("");
             if (StringUtils.isNotEmpty(convertedAnchor)) {
-                DocumentResourceReference docRef = new DocumentResourceReference("");
                 docRef.setAnchor(convertedAnchor);
-                return docRef;
             }
 
-            return null;
+            return docRef;
         }
         EntityReference documentReference = toDocumentReference(spaceKey, pageTitle);
         if (documentReference == null) {
