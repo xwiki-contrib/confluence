@@ -68,7 +68,8 @@ public class SpaceTagHandler extends TagHandler implements ConfluenceTagHandler
             if (parameterContent != null && !parameterContent.isEmpty()) {
                 parentContext.appendContent(",");
             }
-            parentContext.appendContent(referenceConverter.convertSpaceReference(space));
+            String xwikiSpace = referenceConverter == null ? space : referenceConverter.convertSpaceReference(space);
+            parentContext.appendContent(xwikiSpace);
             return;
         }
 
