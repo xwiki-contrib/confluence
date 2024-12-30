@@ -55,6 +55,7 @@ public class ImageTagHandler extends TagHandler implements ConfluenceTagHandler
     private static final String END = "end";
 
     private static final Map<String, String> CONFLUENCE_TO_WIKI_PARAMS = Map.of(
+        "border", "data-xwiki-image-style-border",
         "align-start", START,
         "align-end", END,
         "wrap-left", START,
@@ -88,7 +89,9 @@ public class ImageTagHandler extends TagHandler implements ConfluenceTagHandler
                     image.getImageParameters().put("data-xwiki-image-style-text-wrap", "true");
                 }
             } else {
-                image.getImageParameters().put(param.getKey().replace("ac:", ""), param.getValue());
+                String confluenceParam = param.getKey().replace("ac:", "");
+                String p = CONFLUENCE_TO_WIKI_PARAMS.getOrDefault(confluenceParam, confluenceParam);
+                image.getImageParameters().put(p, param.getValue());
             }
         }
 

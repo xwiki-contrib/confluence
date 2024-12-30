@@ -24,7 +24,7 @@
     <property name="body">
       <![CDATA[
         <p>
-          <ac:image>
+          <ac:image ac:border="true" ac:height="217" ac:width="524">
             <ri:attachment ri:filename="image.png">
               <ri:page ri:content-title="pagetovalidate" ri:space-key="spacetovalidate"/>
             </ri:attachment>
