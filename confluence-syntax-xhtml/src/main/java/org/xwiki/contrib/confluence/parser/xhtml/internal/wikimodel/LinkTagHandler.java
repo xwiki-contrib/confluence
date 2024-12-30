@@ -95,7 +95,7 @@ public class LinkTagHandler extends TagHandler implements ConfluenceTagHandler
         }
 
         // Make sure to have a label for local anchors
-        if (link.getLabelXDOM() == null && link.getPage() == null
+        if (link.getLabelXDOM() == null && link.getLabel() == null &&  link.getPage() == null
             && link.getSpace() == null && link.getUser() == null && link.getAttachment() == null) {
             if (StringUtils.isEmpty(link.getAnchor())) {
                 // Skip empty links.

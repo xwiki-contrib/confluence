@@ -112,6 +112,8 @@ task inside a task
 
 A urlencoded inline math with + signs: {{mathjax}}\(K_\text{S}\to\pi^-\pi^+\){{/mathjax}}
 
+[[correctly migrated label>>doc:||anchor="MySpaceHome-myanchor"]]
+
 {{mathjax}}
 \begin{equation}
 1337 = x \times 42\\
