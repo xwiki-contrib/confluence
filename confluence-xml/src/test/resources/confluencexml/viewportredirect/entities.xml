@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic>
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">46268417</id>
+    <property name="name"><![CDATA[My Space]]></property>
+    <property name="key"><![CDATA[MySpace]]></property>
+    <property name="lowerKey"><![CDATA[myspace]]></property>
+    <property name="homePage" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">45809846</id>
+    </property>
+    <collection name="permissions" class="java.util.Collection"/>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="creationDate">2012-08-21 15:37:47.000</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="lastModificationDate">2016-10-11 14:47:37.000</property>
+    <property name="spaceType">global</property>
+    <property name="spaceStatus" enum-class="SpaceStatus" package="com.atlassian.confluence.spaces">CURRENT</property>
+  </object>
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">156868656</id>
+    <property name="body"><![CDATA[
+<ac:structured-macro ac:name="viewport-redirect" ac:schema-version="1" ac:macro-id="e5d8dd09-0333-466a-9ad9-1ef25f643860">
+  <ac:parameter ac:name="redirectTo">
+    <ac:link>
+      <ri:page ri:content-title="test export show-hide if"/>
+    </ac:link>
+  </ac:parameter>
+  <ac:parameter ac:name="redirectMessage">redirect message</ac:parameter>
+</ac:structured-macro>
+<ac:structured-macro ac:name="viewport-url-redirect" ac:schema-version="1" ac:macro-id="d67fbd88-11d9-4e16-a501-8722b07c60ec">
+  <ac:parameter ac:name="redirectTo">https://xwiki.com</ac:parameter>
+  <ac:parameter ac:name="redirectMessage">you are redirected</ac:parameter>
+</ac:structured-macro>
+    ]]></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">45809846</id>
+    </property>
+    <property name="bodyType">2</property>
+  </object>
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">45809846</id>
+    <property name="hibernateVersion">13</property>
+    <property name="title"><![CDATA[Links]]></property>
+    <property name="lowerTitle"><![CDATA[links]]></property>
+    <collection name="bodyContents" class="java.util.Collection">
+      <element class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">156868656</id>
+      </element>
+    </collection>
+    <property name="version">1</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="creationDate">2019-02-13 08:05:54.000</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="lastModificationDate">2019-02-13 08:16:56.000</property>
+    <property name="versionComment"><![CDATA[]]></property>
+    <property name="contentStatus"><![CDATA[current]]></property>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+      <id name="id">46268417</id>
+    </property>
+    <property name="position"/>
+  </object>
+</hibernate-generic>
