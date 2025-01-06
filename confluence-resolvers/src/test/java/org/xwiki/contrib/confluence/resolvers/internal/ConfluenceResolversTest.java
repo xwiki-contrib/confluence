@@ -83,6 +83,8 @@ class ConfluenceResolversTest
 
     private static final EntityReference MY_FALLBACK_SPACE = new EntityReference(MY_FALLBACK, EntityType.SPACE);
     private static final EntityReference MY_FALLBACK_HOME = new LocalDocumentReference(WEB_HOME, MY_FALLBACK_SPACE);
+    private static final EntityReference MY_FALLBACK_REF = new EntityReference(WEB_HOME, EntityType.DOCUMENT,
+        new EntityReference("RandomDoc", EntityType.SPACE, MY_FALLBACK_SPACE));
 
     private static final DocumentReference MY_DOC_REF = new DocumentReference(
         XWIKI,
@@ -270,6 +272,12 @@ class ConfluenceResolversTest
     }
 
     @Test
+    void testGetSpaceKeyUsingConfluencePageClass() throws ConfluenceResolverException
+    {
+        assertEquals(MY_SPACE, confluenceSpaceResolver.getSpaceKey(MY_DOC_REF));
+    }
+
+    @Test
     void testGetSpace() throws ConfluenceResolverException
     {
         assertEquals(
@@ -283,6 +291,22 @@ class ConfluenceResolversTest
         assertEquals(
             MY_FALLBACK_SPACE,
             confluenceSpaceResolver.getSpaceByKey(MY_FALLBACK));
+    }
+
+    @Test
+    void testGetSpaceKeyUsingFallback() throws ConfluenceResolverException
+    {
+        assertEquals(
+            MY_FALLBACK,
+            confluenceSpaceResolver.getSpaceKey(MY_FALLBACK_REF));
+    }
+
+    @Test
+    void testGetSpaceUsingFallback() throws ConfluenceResolverException
+    {
+        assertEquals(
+            MY_FALLBACK_SPACE,
+            confluenceSpaceResolver.getSpace(MY_FALLBACK_REF));
     }
 
     @Test

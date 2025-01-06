@@ -21,6 +21,8 @@ package org.xwiki.contrib.confluence.resolvers.internal;
 
 import com.xpn.xwiki.XWikiContext;
 import com.xpn.xwiki.XWikiException;
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentManager;
@@ -103,13 +105,7 @@ public class DefaultConfluenceSpaceResolver extends AbstractConfluenceResolver i
             }
         }
 
-        // Fallback.
-        // FIXME this is a bit optimistic. We need to make this work with Confluence spaces migrated in a
-        //  (non-empty) root space
-        EntityReference spaceEntity = xcontextProvider.get().getDoc().getDocumentReference();
-        while (spaceEntity.getParent() != null && spaceEntity.getParent().getType().equals(EntityType.SPACE)) {
-            spaceEntity = spaceEntity.getParent();
-        }
+        EntityReference spaceEntity = getFallbackRootSpace(reference);
 
         logger.debug("Current space resolved to [{}] using fallback", spaceEntity);
         return spaceEntity;
@@ -121,22 +117,27 @@ public class DefaultConfluenceSpaceResolver extends AbstractConfluenceResolver i
         for (ConfluenceSpaceResolver r : getResolvers(componentManager, ConfluenceSpaceResolver.class)) {
             if (r != this) {
                 String spaceKey = r.getSpaceKey(reference);
-                if (spaceKey != null) {
+                if (StringUtils.isNotEmpty(spaceKey)) {
                     logger.debug("Current space key resolved to [{}] using [{}]", spaceKey, r);
                     return spaceKey;
                 }
             }
         }
 
-        // Fallback.
-        // FIXME this is a bit optimistic. We need to make this work with Confluence spaces migrated in a
-        //  (non-empty) root space
-        EntityReference spaceEntity = xcontextProvider.get().getDoc().getDocumentReference();
-        while (spaceEntity.getParent() != null && spaceEntity.getParent().getType().equals(EntityType.SPACE)) {
-            spaceEntity = spaceEntity.getParent();
-        }
+        EntityReference spaceEntity = getFallbackRootSpace(reference);
 
         logger.debug("Current space key resolved to [{}] using fallback", spaceEntity.getName());
         return spaceEntity.getName();
+    }
+
+    private static EntityReference getFallbackRootSpace(EntityReference reference)
+    {
+        // FIXME this is a bit optimistic. We need to make this work with Confluence spaces migrated in a
+        //  (non-empty) root space
+        EntityReference spaceEntity = reference;
+        while (spaceEntity.getParent() != null && spaceEntity.getParent().getType().equals(EntityType.SPACE)) {
+            spaceEntity = spaceEntity.getParent();
+        }
+        return spaceEntity;
     }
 }

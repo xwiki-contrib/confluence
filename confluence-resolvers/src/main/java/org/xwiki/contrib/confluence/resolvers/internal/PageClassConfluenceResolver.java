@@ -68,8 +68,8 @@ public class PageClassConfluenceResolver
     private static final String FULLNAME = "fullname";
 
     private static final String CONFLUENCE_PROP = "property.Confluence.Code.ConfluencePageClass.";
-    private static final String SPACE = "space";
-    private static final String TITLE = "title";
+    private static final String SPACE = "space_string";
+    private static final String TITLE = "title_string";
     private static final String ID = "id";
 
     @Inject
@@ -113,8 +113,8 @@ public class PageClassConfluenceResolver
             .map(entry -> CONFLUENCE_PROP + entry.getKey() + ':' + solrQuotes(entry.getValue()))
             .collect(Collectors.joining(andOp ? " AND " : " OR "));
         try {
-            Query query = queryManager.createQuery(queryString, SOLR)
-                .bindValue("fq", "type:DOCUMENT")
+            Query query = queryManager.createQuery("", SOLR)
+                .bindValue("fq", "type:DOCUMENT AND (" + queryString + ")")
                 .setLimit(Integer.MAX_VALUE);
             results = ((QueryResponse) query.execute().get(0)).getResults();
         } catch (QueryException e) {
@@ -165,7 +165,7 @@ public class PageClassConfluenceResolver
         for (Map.Entry<String, Object> value : values.entrySet()) {
             if (value.getValue() instanceof String) {
                 String v = (String) value.getValue();
-                String valueKeyInSolr = CONFLUENCE_PROP + value.getKey() + "_string";
+                String valueKeyInSolr = CONFLUENCE_PROP + value.getKey();
                 if (!eq(v, result.get(valueKeyInSolr))) {
                     return false;
                 }
@@ -207,6 +207,8 @@ public class PageClassConfluenceResolver
         String spaceKey = getSpaceKey(reference);
         if (StringUtils.isNotEmpty(spaceKey)) {
             return getSpaceByKey(spaceKey);
+            // FIXME: We could probably take advantage of having an entity reference to find the space from the
+            // parents, at least run an HQL query with the right wiki set from the entity reference.
         }
         return null;
     }
