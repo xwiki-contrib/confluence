@@ -51,6 +51,7 @@ import org.xwiki.test.page.PageComponentList;
 
 import javax.inject.Provider;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
@@ -93,12 +94,17 @@ class ConfluenceResolversTest
         WEB_HOME
     );
 
+    private static final DocumentReference MY_COPY_DOC_REF = new DocumentReference(XWIKI, List.of("S"), WEB_HOME);
+
     private static final DocumentReference MY_SPACE_REF = new DocumentReference(
         XWIKI,
         List.of(MIGRATION_ROOT, MY_SPACE),
         WEB_HOME
     );
     private static final String FAKE_SOLR_DOC_KEY = "_fakeDoc";
+
+    private static final Date DEFAULT_DATE = new Date(1736170616925L);
+    private static final String FULLNAME = "fullname";
 
     @InjectMockComponents (role = ConfluencePageIdResolver.class)
     private DefaultConfluencePageResolver confluencePageResolver;
@@ -152,13 +158,20 @@ class ConfluenceResolversTest
             : i.getArgument(0).toString());
     }
 
-    private SolrDocument fakeSolrDocument(DocumentReference ref, String spaceKey, String title)
+    private SolrDocument fakeSolrDocument(DocumentReference ref, long id, String spaceKey, String title)
+    {
+        return fakeSolrDocument(ref, id, spaceKey, title, DEFAULT_DATE);
+    }
+
+    private SolrDocument fakeSolrDocument(DocumentReference ref, long id, String spaceKey, String title, Date created)
     {
         return new SolrDocument(Map.of(
             FAKE_SOLR_DOC_KEY, ref,
-            "fullname", ref.toString().replace("Document ", ""),
-            "property.Confluence.Code.ConfluencePageClass.title_string", title,
-            "property.Confluence.Code.ConfluencePageClass.space_string", spaceKey
+            FULLNAME, ref.toString().replace("Document ", ""),
+            "creationdate", created,
+            "property.Confluence.Code.ConfluencePageClass.id_long", Collections.singletonList(id),
+            "property.Confluence.Code.ConfluencePageClass.title_string", Collections.singletonList(title),
+            "property.Confluence.Code.ConfluencePageClass.space_string", Collections.singletonList(spaceKey)
         ));
     }
 
@@ -173,7 +186,7 @@ class ConfluenceResolversTest
         AtomicReference<String> hqlResult = new AtomicReference<>("");
         when(queryManager.createQuery(anyString(), anyString())).thenReturn(query);
         when(query.bindValue(anyString(), anyString())).thenAnswer(i -> {
-            if (i.getArgument(0).equals("fullname")
+            if (i.getArgument(0).equals(FULLNAME)
                 && i.getArgument(1).equals(MY_DOC_REF.toString().replace("xwiki:", ""))) {
                 // This is the getSpace query
                 hqlResult.set(MY_SPACE);
@@ -223,22 +236,29 @@ class ConfluenceResolversTest
             }
             SolrDocumentList res = new SolrDocumentList();
             if (id.get() == 42) {
-                res.add(fakeSolrDocument(MY_DOC_REF, MY_SPACE, MY_DOC));
+                res.add(fakeSolrDocument(MY_COPY_DOC_REF, 42, MY_SPACE, MY_DOC,
+                    new Date(DEFAULT_DATE.getTime() + 10)));
+                res.add(fakeSolrDocument(MY_DOC_REF, 42, MY_SPACE, MY_DOC));
             } else if (space.get().equals(MY_SPACE)) {
                 if (title.get().isEmpty()) {
-                    res.add(fakeSolrDocument(MY_DOC_REF, MY_SPACE, MY_DOC));
-                    res.add(fakeSolrDocument(
-                        MY_SPACE_REF,
-                        MY_SPACE,
-                        "Space home"));
+                    res.add(fakeSolrDocument(MY_DOC_REF, 42, MY_SPACE, MY_DOC));
+                    // This is to test that we get the correct space even if the space (home, or with its children)
+                    // has been copied
+                    // FIXME: check the sorting. This basically requires having an actual Solr running for this test.
+                    res.add(fakeSolrDocument(MY_COPY_DOC_REF, 42, MY_SPACE, MY_DOC,
+                        new Date(DEFAULT_DATE.getTime() + 10)));
+                    res.add(fakeSolrDocument(MY_SPACE_REF, 40, MY_SPACE, "Space home"));
                 } else if (title.get().equals(MY_DOC)) {
-                    res.add(fakeSolrDocument(MY_DOC_REF, MY_SPACE, MY_DOC));
+                    res.add(fakeSolrDocument(MY_DOC_REF, 42, MY_SPACE, MY_DOC));
+                    res.add(fakeSolrDocument(MY_COPY_DOC_REF, 42, MY_SPACE, MY_DOC,
+                        new Date(DEFAULT_DATE.getTime() + 10)));
                 } else if (!title.get().equals(NOT_FOUND_DOC)) {
                     res.add(fakeSolrDocument(
                         new DocumentReference(
                             WEB_HOME,
                             new SpaceReference(MY_DOC_REF.getParent().getParent())
                         ),
+                        42,
                         MY_SPACE,
                         title.get()));
                 }

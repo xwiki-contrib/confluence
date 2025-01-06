@@ -21,6 +21,8 @@ package org.xwiki.contrib.confluence.resolvers.internal;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -30,9 +32,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.solr.common.SolrDocument;
-import org.apache.solr.common.SolrDocumentList;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceSpaceResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
@@ -72,6 +74,8 @@ public class PageClassConfluenceResolver
     private static final String SPACE = "space_string";
     private static final String TITLE = "title_string";
     private static final String ID = "id";
+    private static final String PROP_ID = CONFLUENCE_PROP + "id_long";
+    private static final String CREATIONDATE = "creationdate";
 
     @Inject
     private QueryManager queryManager;
@@ -103,7 +107,7 @@ public class PageClassConfluenceResolver
     {
         // we use Solr search because it searches in all wikis. It is less comfortable than HQL because matches are not
         // exact so some extra work is needed to handle this fact of life.
-        SolrDocumentList results;
+        Collection<SolrDocument> results;
         String queryString = values.entrySet().stream()
             .map(entry -> CONFLUENCE_PROP + entry.getKey() + ':' + solrUtils.toFilterQueryString(entry.getValue()))
             .collect(Collectors.joining(andOp ? " AND " : " OR "));
@@ -111,7 +115,7 @@ public class PageClassConfluenceResolver
             Query query = queryManager.createQuery("*", SOLR)
                 .bindValue("fq", "type:DOCUMENT AND (" + queryString + ")")
                 .setLimit(Integer.MAX_VALUE);
-            results = ((QueryResponse) query.execute().get(0)).getResults();
+            results = removeCopies(((QueryResponse) query.execute().get(0)).getResults());
         } catch (QueryException e) {
             throw new ConfluenceResolverException(e);
         }
@@ -126,11 +130,31 @@ public class PageClassConfluenceResolver
         return getFirstExactMatch(results, values, andOp);
     }
 
-    private EntityReference smallestMatching(SolrDocumentList results, Map<String, Object> values, boolean andOp)
+    private Collection<SolrDocument> removeCopies(List<SolrDocument> results)
+    {
+        Map<Long, SolrDocument> r = new HashMap<>();
+        for (SolrDocument result : results) {
+            List<Long> id = (List<Long>) result.get(PROP_ID);
+            SolrDocument candidateForReplacement = CollectionUtils.isEmpty(id) ? null : r.get(id.get(0));
+            if (candidateForReplacement == null || isOlder(result, candidateForReplacement)) {
+                r.put(id.get(0), result);
+            }
+        }
+        return r.values();
+    }
+
+    private static boolean isOlder(SolrDocument result, SolrDocument candidateForReplacement)
+    {
+        Date resultCreation = (Date) result.get(CREATIONDATE);
+        Date replacementCreation = (Date) candidateForReplacement.get(CREATIONDATE);
+        return resultCreation != null && replacementCreation != null && resultCreation.before(replacementCreation);
+    }
+
+    private EntityReference smallestMatching(Collection<SolrDocument> r, Map<String, Object> values, boolean andOp)
     {
         SolrDocument shortest = null;
         int length = 0;
-        for (SolrDocument result: results) {
+        for (SolrDocument result: r) {
             if (resultExactlyMatches(result, values, andOp)) {
                 String fullname = (String) result.get(FULLNAME);
                 int len = fullname.length();
@@ -144,7 +168,7 @@ public class PageClassConfluenceResolver
         return shortest == null ? null : solrDocumentReferenceResolver.resolve(shortest);
     }
 
-    EntityReference getFirstExactMatch(SolrDocumentList results, Map<String, Object> values, boolean andOp)
+    EntityReference getFirstExactMatch(Collection<SolrDocument> results, Map<String, Object> values, boolean andOp)
     {
         for (SolrDocument result : results) {
             if (resultExactlyMatches(result, values, andOp)) {
