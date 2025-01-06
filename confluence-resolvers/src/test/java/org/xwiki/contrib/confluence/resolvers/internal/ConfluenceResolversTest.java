@@ -171,8 +171,21 @@ class ConfluenceResolversTest
         AtomicReference<String> title = new AtomicReference<>("");
         AtomicReference<String> queryType = new AtomicReference<>("");
         AtomicReference<String> hqlResult = new AtomicReference<>("");
-        when(queryManager.createQuery(anyString(), anyString())).thenAnswer(invocationOnMock -> {
-            String queryString = invocationOnMock.getArgument(0);
+        when(queryManager.createQuery(anyString(), anyString())).thenReturn(query);
+        when(query.bindValue(anyString(), anyString())).thenAnswer(i -> {
+            if (i.getArgument(0).equals("fullname")
+                && i.getArgument(1).equals(MY_DOC_REF.toString().replace("xwiki:", ""))) {
+                // This is the getSpace query
+                hqlResult.set(MY_SPACE);
+            }
+            return query;
+        });
+        when(queryManager.createQuery(anyString(), anyString())).thenAnswer(i -> {
+            queryType.set(i.getArgument(1));
+            return query;
+        });
+        when(query.bindValue(eq("fq"), anyString())).thenAnswer(invocationOnMock -> {
+            String queryString = invocationOnMock.getArgument(1);
             Pattern idPattern = Pattern.compile(".*property.Confluence.Code.ConfluencePageClass.id:(\\d+).*");
             Matcher matcher = idPattern.matcher(queryString);
             if (matcher.matches()) {
@@ -181,7 +194,8 @@ class ConfluenceResolversTest
                 id.set(-1);
             }
 
-            Pattern spacePattern = Pattern.compile(".*property.Confluence.Code.ConfluencePageClass.space:\"([^\"]+)\".*");
+            Pattern spacePattern = Pattern.compile(".*property.Confluence.Code.ConfluencePageClass.space_string:"
+                + "\"([^\"]+)\".*");
             matcher = spacePattern.matcher(queryString);
             if (matcher.matches()) {
                 space.set(matcher.group(1));
@@ -189,7 +203,8 @@ class ConfluenceResolversTest
                 space.set("");
             }
 
-            Pattern titlePattern = Pattern.compile(".*property.Confluence.Code.ConfluencePageClass.title:\"([^\"]+)\".*");
+            Pattern titlePattern = Pattern.compile(".*property.Confluence.Code.ConfluencePageClass.title_string:"
+                + "\"([^\"]+)\".*");
             matcher = titlePattern.matcher(queryString);
             if (matcher.matches()) {
                 title.set(matcher.group(1));
@@ -197,16 +212,6 @@ class ConfluenceResolversTest
                 title.set("");
             }
 
-            queryType.set(invocationOnMock.getArgument(1));
-            return query;
-        });
-
-        when(query.bindValue(anyString(), anyString())).thenAnswer(i -> {
-            if (i.getArgument(0).equals("fullname")
-                && i.getArgument(1).equals(MY_DOC_REF.toString().replace("xwiki:", ""))) {
-                // This is the getSpace query
-                hqlResult.set(MY_SPACE);
-            }
             return query;
         });
         when(query.setLimit(anyInt())).thenReturn(query);

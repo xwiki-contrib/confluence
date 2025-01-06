@@ -108,7 +108,7 @@ public class PageClassConfluenceResolver
             .map(entry -> CONFLUENCE_PROP + entry.getKey() + ':' + solrUtils.toFilterQueryString(entry.getValue()))
             .collect(Collectors.joining(andOp ? " AND " : " OR "));
         try {
-            Query query = queryManager.createQuery("", SOLR)
+            Query query = queryManager.createQuery("*", SOLR)
                 .bindValue("fq", "type:DOCUMENT AND (" + queryString + ")")
                 .setLimit(Integer.MAX_VALUE);
             results = ((QueryResponse) query.execute().get(0)).getResults();
