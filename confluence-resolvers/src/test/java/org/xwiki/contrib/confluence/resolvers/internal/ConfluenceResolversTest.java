@@ -41,6 +41,7 @@ import org.xwiki.model.reference.WikiReference;
 import org.xwiki.query.Query;
 import org.xwiki.query.QueryException;
 import org.xwiki.query.QueryManager;
+import org.xwiki.search.solr.SolrUtils;
 import org.xwiki.test.annotation.BeforeComponent;
 import org.xwiki.test.annotation.ComponentList;
 import org.xwiki.test.junit5.mockito.ComponentTest;
@@ -114,6 +115,9 @@ class ConfluenceResolversTest
     @MockComponent
     private DocumentReferenceResolver<SolrDocument> solrDocumentDocumentReferenceResolver;
 
+    @MockComponent
+    private SolrUtils solrUtils;
+
     @BeforeComponent
     void setup() throws Exception
     {
@@ -143,6 +147,9 @@ class ConfluenceResolversTest
 
             return new XWikiDocument(new DocumentReference(docRef));
         });
+        when(solrUtils.toFilterQueryString(any())).thenAnswer(i -> i.getArgument(0) instanceof String
+            ? '"' + ((String) i.getArgument(0)) + '"'
+            : i.getArgument(0).toString());
     }
 
     private SolrDocument fakeSolrDocument(DocumentReference ref, String spaceKey, String title)

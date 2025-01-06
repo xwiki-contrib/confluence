@@ -47,6 +47,7 @@ import org.xwiki.query.Query;
 import org.xwiki.query.QueryException;
 import org.xwiki.query.QueryManager;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.xwiki.search.solr.SolrUtils;
 
 import static org.xwiki.query.Query.HQL;
 
@@ -76,6 +77,9 @@ public class PageClassConfluenceResolver
     private QueryManager queryManager;
 
     @Inject
+    private SolrUtils solrUtils;
+
+    @Inject
     @Named("local")
     private EntityReferenceSerializer<String> localReferenceSerializer;
 
@@ -94,15 +98,6 @@ public class PageClassConfluenceResolver
         return getDocument(Map.of(SPACE, spaceKey, TITLE, title), false, true);
     }
 
-    private String solrQuotes(Object v)
-    {
-        if (v instanceof Number) {
-            return v.toString();
-        }
-
-        return '"' + v.toString().replace("\"", "") + '"';
-    }
-
     private EntityReference getDocument(Map<String, Object> values, boolean smallest, boolean andOp)
         throws ConfluenceResolverException
     {
@@ -110,7 +105,7 @@ public class PageClassConfluenceResolver
         // exact so some extra work is needed to handle this fact of life.
         SolrDocumentList results;
         String queryString = values.entrySet().stream()
-            .map(entry -> CONFLUENCE_PROP + entry.getKey() + ':' + solrQuotes(entry.getValue()))
+            .map(entry -> CONFLUENCE_PROP + entry.getKey() + ':' + solrUtils.toFilterQueryString(entry.getValue()))
             .collect(Collectors.joining(andOp ? " AND " : " OR "));
         try {
             Query query = queryManager.createQuery("", SOLR)
