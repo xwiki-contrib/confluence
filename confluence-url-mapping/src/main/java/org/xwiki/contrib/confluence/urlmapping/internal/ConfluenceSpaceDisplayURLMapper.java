@@ -37,6 +37,9 @@ import org.xwiki.resource.entity.EntityResourceReference;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
+
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.regex.Matcher;
 /**
  * URL Mapper for Confluence display (regular) page links.
@@ -71,7 +74,7 @@ public class ConfluenceSpaceDisplayURLMapper extends AbstractURLMapper implement
     public ResourceReference convert(DefaultURLMappingMatch match)
     {
         Matcher matcher = match.getMatcher();
-        String spaceKey = matcher.group(SPACE_KEY);
+        String spaceKey = URLDecoder.decode(matcher.group(SPACE_KEY), StandardCharsets.UTF_8);
         EntityReference docRef = null;
         try {
             docRef = confluenceSpaceKeyResolver.getSpaceByKey(spaceKey);

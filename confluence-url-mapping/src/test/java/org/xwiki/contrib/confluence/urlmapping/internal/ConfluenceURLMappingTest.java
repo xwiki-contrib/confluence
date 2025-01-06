@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.urlmapping.internal;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
@@ -60,10 +61,12 @@ import static org.xwiki.contrib.confluence.urlmapping.internal.UrlMappingTestToo
 })
 class ConfluenceURLMappingTest
 {
+
     private static final String MY_SPACE = "MySpace";
     private static final String WEB_HOME = "WebHome";
     private static final String XWIKI = "xwiki";
     private static final String MIGRATION_ROOT = "MigrationRoot";
+    private static final String PERSONAL_SPACE_KEY = "~712020e1bd3d553ddc454fb4b02dde7bea2b85";
 
     private static final DocumentReference MY_DOC_REF = new DocumentReference(
         XWIKI,
@@ -79,6 +82,15 @@ class ConfluenceURLMappingTest
             List.of(MIGRATION_ROOT, MY_SPACE),
         WEB_HOME
     );
+
+    private static final DocumentReference PERSONAL_SPACE_REF = new DocumentReference(
+        XWIKI,
+        List.of(MIGRATION_ROOT, PERSONAL_SPACE_KEY),
+        WEB_HOME
+    );
+
+    private static final EntityResourceReference PERSONAL_SPACE = new EntityResourceReference(PERSONAL_SPACE_REF,
+        EntityResourceAction.VIEW);
 
     private static final EntityResourceReference SPACE_HOME = new EntityResourceReference(SPACE_HOME_REF,
         EntityResourceAction.VIEW);
@@ -122,6 +134,7 @@ class ConfluenceURLMappingTest
         when(confluencePageIdResolver.getDocumentById(139521)).thenReturn(
             new EntityReference("OK.ASEC", EntityType.DOCUMENT));
         when(confluenceSpaceKeyResolver.getSpaceByKey(ConfluenceURLMappingTest.MY_SPACE)).thenReturn(SPACE_HOME_REF);
+        when(confluenceSpaceKeyResolver.getSpaceByKey(PERSONAL_SPACE_KEY)).thenReturn(PERSONAL_SPACE_REF);
     }
 
     @ParameterizedTest
@@ -147,6 +160,14 @@ class ConfluenceURLMappingTest
     {
         URLMappingResult converted = handler.convert(path, GET, null);
         assertEquals(SPACE_HOME, converted.getResourceReference());
+        assertEquals("", converted.getURL());
+    }
+
+    @Test
+    void convertPersonalSpaceDisplayURL()
+    {
+        URLMappingResult converted = handler.convert("display/%7E712020e1bd3d553ddc454fb4b02dde7bea2b85", GET, null);
+        assertEquals(PERSONAL_SPACE, converted.getResourceReference());
         assertEquals("", converted.getURL());
     }
 
