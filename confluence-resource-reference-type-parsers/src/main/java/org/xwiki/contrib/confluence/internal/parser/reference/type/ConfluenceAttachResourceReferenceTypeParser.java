@@ -20,15 +20,11 @@
 package org.xwiki.contrib.confluence.internal.parser.reference.type;
 
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
-import org.xwiki.rendering.listener.reference.ResourceReference;
+import org.xwiki.contrib.confluence.resolvers.resource.ConfluenceResourceReferenceType;
 import org.xwiki.rendering.listener.reference.ResourceType;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
-
-import static org.xwiki.contrib.confluence.internal.parser.reference.type.Utils.indexOf;
-import static org.xwiki.contrib.confluence.internal.parser.reference.type.Utils.unescape;
 
 /**
  * Confluence Page Resource Reference Type parser.
@@ -40,7 +36,7 @@ import static org.xwiki.contrib.confluence.internal.parser.reference.type.Utils.
 @Component
 @Named("confluenceAttach")
 @Singleton
-public class ConfluenceAttachResourceReferenceTypeParser extends ConfluencePageResourceReferenceTypeParser
+public class ConfluenceAttachResourceReferenceTypeParser extends AbstractConfluenceResourceReferenceTypeParser
 {
     @Override
     public ResourceType getType()
@@ -49,25 +45,8 @@ public class ConfluenceAttachResourceReferenceTypeParser extends ConfluencePageR
     }
 
     @Override
-    public ResourceReference parse(String reference)
+    ConfluenceResourceReferenceType getConfluenceResourceReferenceType()
     {
-        int at = indexOf(reference, '@', 0);
-        if (at == reference.length()) {
-            return null;
-        }
-
-        int hash = indexOf(reference, '#', at);
-        String r = reference.substring(0, at);
-        if (hash < reference.length()) {
-            r += reference.substring(hash);
-        }
-
-        try {
-            String filename = unescape(reference.substring(at + 1, hash));
-            return parseInternal(r, filename);
-        } catch (ConfluenceResolverException ignored) {
-            // let's not spam the logs with errors
-        }
-        return null;
+        return ConfluenceResourceReferenceType.CONFLUENCE_ATTACH;
     }
 }

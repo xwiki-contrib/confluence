@@ -26,6 +26,7 @@ import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageTitleResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceSpaceKeyResolver;
+import org.xwiki.contrib.confluence.resolvers.resource.internal.DefaultConfluenceResourceReferenceResolver;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
@@ -36,6 +37,7 @@ import org.xwiki.rendering.listener.reference.ResourceType;
 import org.xwiki.rendering.listener.reference.SpaceResourceReference;
 import org.xwiki.test.annotation.AfterComponent;
 import org.xwiki.test.annotation.BeforeComponent;
+import org.xwiki.test.annotation.ComponentList;
 import org.xwiki.test.junit5.mockito.ComponentTest;
 import org.xwiki.test.junit5.mockito.InjectComponentManager;
 import org.xwiki.test.junit5.mockito.InjectMockComponents;
@@ -47,6 +49,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.Mockito.when;
 
+@ComponentList(
+    DefaultConfluenceResourceReferenceResolver.class
+)
 @ComponentTest
 @ReferenceComponentList
 class ConfluenceResourceReferenceTypeParserTest
@@ -107,66 +112,11 @@ class ConfluenceResourceReferenceTypeParserTest
     }
 
     @Test
-    void spaceAnchor()
-    {
-        SpaceResourceReference expected = new SpaceResourceReference(XWIKI_DEMO);
-        expected.setAnchor(MYSECTION);
-        assertEquals(expected, spaceReferenceTypeParser.parse("DEMO#mysection"));
-    }
-
-    @Test
-    void spaceHome()
-    {
-        assertEquals(DEMO_WEBHOME_REF, pageReferenceTypeParser.parse("spaceHome:DEMO"));
-        assertEquals(DEMO_WEBHOME_REF, pageReferenceTypeParser.parse("spaceHome:DEMO#"));
-    }
-
-    @Test
-    void spaceHomeAnchor()
-    {
-        DocumentResourceReference expected = DEMO_WEBHOME_REF;
-        expected.setAnchor(MYSECTION);
-        assertEquals(expected, pageReferenceTypeParser.parse("spaceHome:DEMO#mysection"));
-    }
-
-    @Test
-    void spaceHomeFile()
-    {
-        AttachmentResourceReference expected = new AttachmentResourceReference("xwiki:DEMO.WebHome@file.csv");
-        assertEquals(expected, attachReferenceTypeParser.parse("spaceHome:DEMO@file.csv"));
-        assertEquals(expected, attachReferenceTypeParser.parse("spaceHome:DEMO@file.csv#"));
-    }
-
-    @Test
     void spaceHomeFileAnchor()
     {
         AttachmentResourceReference expected = new AttachmentResourceReference("xwiki:DEMO.WebHome@file.txt");
         expected.setAnchor(MYSECTION);
         assertEquals(expected, attachReferenceTypeParser.parse("spaceHome:DEMO@file.txt#mysection"));
-    }
-
-    @Test
-    void pageId()
-    {
-        DocumentResourceReference expected = new DocumentResourceReference(FORTYTWOREF);
-        assertEquals(expected, pageReferenceTypeParser.parse("id:42"));
-        assertEquals(expected, pageReferenceTypeParser.parse("id:42#"));
-    }
-
-    @Test
-    void pageIdAnchor()
-    {
-        DocumentResourceReference expected = new DocumentResourceReference(FORTYTWOREF);
-        expected.setAnchor(MYSECTION);
-        assertEquals(expected, pageReferenceTypeParser.parse("id:42#mysection"));
-    }
-
-    @Test
-    void pageIdFile()
-    {
-        AttachmentResourceReference expected = new AttachmentResourceReference("xwiki:DEMO.Test.WebHome@file.txt");
-        assertEquals(expected, attachReferenceTypeParser.parse("id:42@file.txt"));
-        assertEquals(expected, attachReferenceTypeParser.parse("id:42@file.txt#"));
     }
 
     @Test
@@ -179,66 +129,16 @@ class ConfluenceResourceReferenceTypeParserTest
     }
 
     @Test
-    void pageTitle()
-    {
-        DocumentResourceReference expected = new DocumentResourceReference(FORTYTWOREF);
-        assertEquals(expected, pageReferenceTypeParser.parse("page:DEMO.Hello \\@ \\\\World"));
-        assertEquals(expected, pageReferenceTypeParser.parse("page:DEMO.Hello \\@ \\\\World#"));
-    }
-
-    @Test
-    void pageTitleAnchor()
-    {
-        DocumentResourceReference expected = new DocumentResourceReference(FORTYTWOREF);
-        expected.setAnchor(MYSECTION);
-        assertEquals(expected, pageReferenceTypeParser.parse("page:DEMO.Hello \\@ \\\\World#mysection"));
-    }
-
-    @Test
-    void pageTitleFile()
-    {
-        AttachmentResourceReference expected = new AttachmentResourceReference("xwiki:DEMO.Test.WebHome@fi#le.txt");
-        assertEquals(expected, attachReferenceTypeParser.parse("page:DEMO.Hello \\@ \\\\World@fi\\#le.txt#"));
-    }
-
-    @Test
-    void pageTitleFileAnchor()
-    {
-        AttachmentResourceReference expected = new AttachmentResourceReference(
-            referenceSerializer.serialize(new EntityReference("fi\\le.txt", EntityType.ATTACHMENT, FORTYTWODOCREF)));
-        expected.setAnchor(MYSECTION);
-        assertEquals(expected, attachReferenceTypeParser.parse("page:DEMO.Hello \\@ \\\\World@fi\\\\le.txt#mysection"));
-    }
-
-    @Test
     void notFound()
     {
-        assertNull(pageReferenceTypeParser.parse("page:NOTFOUND.Not Found"));
-        assertNull(pageReferenceTypeParser.parse("page:NOTFOUND.Not Found#anchor"));
-        assertNull(attachReferenceTypeParser.parse("page:NOTFOUND.Not Found@file"));
         assertNull(attachReferenceTypeParser.parse("page:NOTFOUND.Not Found@file#anchor"));
-        assertNull(pageReferenceTypeParser.parse("spaceHome:NOTFOUND"));
-        assertNull(pageReferenceTypeParser.parse("spaceHome:NOTFOUND#anchor"));
-        assertNull(attachReferenceTypeParser.parse("spaceHome:NOTFOUND@file"));
         assertNull(attachReferenceTypeParser.parse("spaceHome:NOTFOUND@file#anchor"));
-        assertNull(pageReferenceTypeParser.parse("id:4242"));
-        assertNull(pageReferenceTypeParser.parse("id:4242#anchor"));
-        assertNull(attachReferenceTypeParser.parse("id:4242@file"));
-        assertNull(attachReferenceTypeParser.parse("id:4242@file#anchor"));
-        assertNull(spaceReferenceTypeParser.parse("space:NOTFOUND"));
         assertNull(spaceReferenceTypeParser.parse("space:NOTFOUND#anchor"));
     }
 
     @Test
     void notCorrect()
     {
-        // unexpected prefix
-        assertNull(pageReferenceTypeParser.parse("unexpectedprefix:blablabla"));
-
-        // missing attachment
-        assertNull(attachReferenceTypeParser.parse("pageid:42"));
-        assertNull(attachReferenceTypeParser.parse("pageid:42@"));
-
         // dangling escaping slash
         assertNull(pageReferenceTypeParser.parse("page:DEMO.Hello\\"));
         assertNull(attachReferenceTypeParser.parse("pageid:42@file.csv\\"));

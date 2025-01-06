@@ -19,34 +19,34 @@
  */
 package org.xwiki.contrib.confluence.internal.parser.reference.type;
 
-import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
+import org.xwiki.contrib.confluence.resolvers.resource.ConfluenceResourceReferenceResolver;
 import org.xwiki.contrib.confluence.resolvers.resource.ConfluenceResourceReferenceType;
-import org.xwiki.rendering.listener.reference.ResourceType;
+import org.xwiki.rendering.listener.reference.ResourceReference;
+import org.xwiki.rendering.parser.ResourceReferenceTypeParser;
 
-import javax.inject.Named;
-import javax.inject.Singleton;
+import javax.inject.Inject;
 
 /**
- * Confluence Page Resource Reference Type parser.
- * This allows Confluence-XML to output references for Confluence pages that couldn't be located during an
- * import, and that will work anyway when the pages are (later made) available on the XWiki instance.
- * @since 9.66.0
+ * Abstract Confluence Page Resource Reference Type parser.
+ * @since 9.70.0
  * @version $Id$
  */
-@Component
-@Named("confluenceSpace")
-@Singleton
-public class ConfluenceSpaceResourceReferenceTypeParser extends AbstractConfluenceResourceReferenceTypeParser
+abstract class AbstractConfluenceResourceReferenceTypeParser implements ResourceReferenceTypeParser
 {
-    @Override
-    public ResourceType getType()
-    {
-        return ResourceType.SPACE;
-    }
+    @Inject
+    private ConfluenceResourceReferenceResolver resolver;
 
     @Override
-    ConfluenceResourceReferenceType getConfluenceResourceReferenceType()
+    public ResourceReference parse(String reference)
     {
-        return ConfluenceResourceReferenceType.CONFLUENCE_SPACE;
+        try {
+            return resolver.resolve(getConfluenceResourceReferenceType(), reference);
+        } catch (ConfluenceResolverException ignored) {
+            // let's not spam the logs with errors
+        }
+        return null;
     }
+
+    abstract ConfluenceResourceReferenceType getConfluenceResourceReferenceType();
 }
