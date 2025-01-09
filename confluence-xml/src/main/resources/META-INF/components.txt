@@ -15,6 +15,7 @@ org.xwiki.contrib.confluence.filter.internal.macros.AlertMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.AnchorMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.AUIMessageConverter
 org.xwiki.contrib.confluence.filter.internal.macros.ChildrenMacroConverter
+org.xwiki.contrib.confluence.filter.internal.macros.ConditionalContentMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.DefaultMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.ExcerptIncludePlusMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.IncludeMacroConverter

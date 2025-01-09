@@ -29,6 +29,8 @@ import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollViewportResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollPageIdResolver;
+import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollVariantResolver;
+import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.stability.Unstable;
 
@@ -43,7 +45,7 @@ import org.xwiki.stability.Unstable;
 @Singleton
 @Priority(900)
 public class DefaultConfluenceScrollVersionsResolver extends AbstractConfluenceResolver
-    implements ConfluenceScrollPageIdResolver, ConfluenceScrollViewportResolver
+    implements ConfluenceScrollPageIdResolver, ConfluenceScrollViewportResolver, ConfluenceScrollVariantResolver
 {
     @Inject
     private ComponentManager componentManager;
@@ -79,6 +81,27 @@ public class DefaultConfluenceScrollVersionsResolver extends AbstractConfluenceR
                     logger.debug("Confluence space key [{}] resolved to path prefix [{}] using [{}]", spaceKey,
                         pathPrefix, resolver);
                     return pathPrefix;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    @Override
+    public DocumentReference getEquivalentVariantReference(String attributeId, String attributeValueId)
+        throws ConfluenceResolverException
+    {
+        for (ConfluenceScrollVariantResolver resolver : getResolvers(componentManager,
+            ConfluenceScrollVariantResolver.class)) {
+            if (resolver != this) {
+                DocumentReference variantReference =
+                    resolver.getEquivalentVariantReference(attributeId, attributeValueId);
+                if (variantReference != null) {
+                    logger.debug(
+                        "Confluence attribute ID [{}] with atrtibute value ID [{}] resolved to variantReference [{}]"
+                        + " using [{}]", attributeId, attributeValueId, resolver);
+                    return variantReference;
                 }
             }
         }
