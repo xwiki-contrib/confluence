@@ -540,12 +540,10 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String KEY_USER_PASSWORD = "credential";
 
     /**
-     * The property key that was formerly used to mark blog pages.
+     * The property key used to mark blog pages.
      *
      * @since 9.24.0
-     * @deprecated since 9.35.0
      */
-    @Deprecated(since = "9.35.0")
     public static final String KEY_PAGE_BLOGPOST = "blogpost";
 
     /**
@@ -1772,6 +1770,9 @@ public class ConfluenceXMLPackage implements AutoCloseable
             saveInParent(properties, KEY_PAGE_ORIGINAL_VERSION, OBJECT_TYPE_PAGE, KEY_PAGE_REVISIONS, pageId);
         }
 
+        if (isBlog) {
+            properties.setProperty(KEY_PAGE_BLOGPOST, true);
+        }
         savePageProperties(properties, pageId);
     }
 

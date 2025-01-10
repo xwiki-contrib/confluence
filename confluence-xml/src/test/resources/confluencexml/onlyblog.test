@@ -44,7 +44,7 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>Hello !</string>
+              <string>Hello! [[Link to blog post>>doc:SpaceA.Blog post]]</string>
             </entry>
             <entry>
               <string>syntax</string>

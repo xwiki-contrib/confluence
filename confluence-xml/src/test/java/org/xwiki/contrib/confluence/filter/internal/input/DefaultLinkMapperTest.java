@@ -176,11 +176,11 @@ class DefaultLinkMapperTest
         Map<String, EntityReference> blogs = new LinkedHashMap<>(2);
         expected.put("SpaceA", blogs);
         blogs.put("SpaceA Home", docRef("xwiki:Root.SpaceA.WebHome"));
-        blogs.put("Blog post", docRef("xwiki:Root.SpaceA.Blog post.WebHome"));
+        blogs.put("Blog post", docRef("xwiki:Root.SpaceA.Blog post"));
         Map<String, EntityReference> blogsIds = new LinkedHashMap<>(2);
         expected.put("SpaceA:ids", blogsIds);
         blogsIds.put("2616328494", docRef("xwiki:Root.SpaceA.WebHome"));
-        blogsIds.put("2616164357", docRef("xwiki:Root.SpaceA.Blog post.WebHome"));
+        blogsIds.put("2616164357", docRef("xwiki:Root.SpaceA.Blog post"));
 
         Assertions.assertEquals(expected, actual);
     }

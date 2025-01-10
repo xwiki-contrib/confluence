@@ -430,7 +430,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         }
 
         if (AT_HOME.equals(pageTitle) || StringUtils.isEmpty(pageTitle)) {
-            return getDocumentReference(fromSpaceKey(spaceKey), false);
+            return getDocumentReference(fromSpaceKey(spaceKey), false, false);
         }
 
         if (AT_PARENT.equals(pageTitle)) {
@@ -583,7 +583,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         }
 
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
-            return getDocumentReference(fromSpaceKey(spaceKey), asSpace);
+            return getDocumentReference(fromSpaceKey(spaceKey), asSpace, false);
         }
 
         EntityReference parent = null;
@@ -611,13 +611,18 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         }
 
         String convertedName = toEntityName(pageTitle);
-        return getDocumentReference(newEntityReference(convertedName, EntityType.SPACE, parent), asSpace);
+        boolean isBlogPost = pageProperties.getBoolean(ConfluenceXMLPackage.KEY_PAGE_BLOGPOST, false);
+        return getDocumentReference(newEntityReference(convertedName, EntityType.SPACE, parent), asSpace, isBlogPost);
     }
 
-    private static EntityReference getDocumentReference(EntityReference space, boolean asSpace)
+    private static EntityReference getDocumentReference(EntityReference space, boolean asSpace, boolean isBlogPost)
     {
         if (asSpace) {
             return space;
+        }
+
+        if (isBlogPost) {
+            return new EntityReference(space.getName(), EntityType.DOCUMENT, space.getParent());
         }
 
         return new EntityReference(WEB_HOME, EntityType.DOCUMENT, space);
