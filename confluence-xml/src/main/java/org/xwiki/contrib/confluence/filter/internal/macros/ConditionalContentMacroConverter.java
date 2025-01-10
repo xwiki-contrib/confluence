@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -49,7 +50,7 @@ public class ConditionalContentMacroConverter extends AbstractMacroConverter
 {
     private static final String MACRO_ID = "variant";
 
-    private static final String MACRO_PARAMETER_REFERENCE = "reference";
+    private static final String MACRO_PARAMETER_NAME = "name";
 
     private static final String CONFLUENCE_PARAMETER_PREFIX = "sv-attr:";
 
@@ -115,8 +116,8 @@ public class ConditionalContentMacroConverter extends AbstractMacroConverter
                 cause);
         }
 
-        return Map.of(MACRO_PARAMETER_REFERENCE,
-            variantReferences.stream().map(reference -> reference.toString()).collect(Collectors.joining(",")));
+        return Map.of(MACRO_PARAMETER_NAME, variantReferences.stream()
+            .filter(reference -> Objects.nonNull(reference)).collect(Collectors.joining(",")));
     }
 
 }
