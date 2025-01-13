@@ -59,34 +59,4 @@
           <scope>test</scope>
       </dependency>
   </dependencies>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.revapi</groupId>
-        <artifactId>revapi-maven-plugin</artifactId>
-        <configuration>
-          <analysisConfiguration>
-            <revapi.differences>
-              <differences>
-                <item>
-                    <ignore>true</ignore>
-                    <code>java.method.parameterTypeChanged</code>
-                    <old>parameter org.xwiki.model.reference.EntityReference org.xwiki.contrib.confluence.resolvers.ConfluenceScrollPageIdResolver::getDocumentById(===long===) throws org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException</old>
-                    <new>parameter org.xwiki.model.reference.EntityReference org.xwiki.contrib.confluence.resolvers.ConfluenceScrollPageIdResolver::getDocumentById(===java.lang.String===) throws org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException</new>
-                    <parameterIndex>0</parameterIndex>
-                    <justification>The api was broken from the start and likely unused since it was released very recently.</justification>
-                </item>
-                <item>
-                  <ignore>true</ignore>
-                  <code>java.class.removed</code>
-                  <old>interface org.xwiki.contrib.confluence.resolvers.ConfluenceScrollViewportResolver</old>
-                  <justification>The api was broken from the start and likely unused since it was released very recently.</justification>
-                </item>
-              </differences>
-            </revapi.differences>
-          </analysisConfiguration>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
 </project>
