@@ -1858,8 +1858,9 @@ public class ConfluenceInputFilterStream
             commentIndex++;
         }
 
+        Set<String> resolvedComments = new HashSet<>();
         for (Long commentId : pageComments.keySet()) {
-            readPageComment(pageProperties, proxyFilter, commentId, pageComments, commentIndices);
+            readPageComment(pageProperties, proxyFilter, commentId, pageComments, commentIndices, resolvedComments);
         }
     }
 
@@ -2208,18 +2209,23 @@ public class ConfluenceInputFilterStream
     }
 
     private void readPageComment(ConfluenceProperties pageProperties, ConfluenceFilter proxyFilter, Long commentId,
-        Map<Long, ConfluenceProperties> pageComments, Map<Long, Integer> commentIndices) throws FilterException
+        Map<Long, ConfluenceProperties> pageComments, Map<Long, Integer> commentIndices, Set<String> resolvedComments)
+        throws FilterException
     {
         FilterEventParameters commentParameters = new FilterEventParameters();
+        // object properties
+        ConfluenceProperties commentProperties = pageComments.get(commentId);
+
+        if (shouldSkipComment(commentProperties, resolvedComments)) {
+            resolvedComments.add(commentId.toString());
+            return;
+        }
 
         // Comment object
         commentParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, COMMENTS_CLASSNAME);
         proxyFilter.beginWikiObject(COMMENTS_CLASSNAME, commentParameters);
 
         try {
-            // object properties
-            ConfluenceProperties commentProperties = pageComments.get(commentId);
-
             // creator -
             String commentCreatorReference = commentProperties.containsKey(CREATOR_NAME)
                 ? confluenceConverter.toUserReference(commentProperties.getString(CREATOR_NAME))
@@ -2260,6 +2266,32 @@ public class ConfluenceInputFilterStream
         } finally {
             proxyFilter.endWikiObject(COMMENTS_CLASSNAME, commentParameters);
         }
+    }
+
+    private boolean shouldSkipComment(ConfluenceProperties commentProperties, Set<String> resolvedComments)
+        throws FilterException
+    {
+        if (!properties.isSkipResolvedInlineComments()) {
+            return false;
+        }
+
+        if (resolvedComments.contains(commentProperties.getString(ConfluenceXMLPackage.KEY_PAGE_PARENT, ""))) {
+            return true;
+        }
+
+        if (!commentProperties.containsKey(ConfluenceXMLPackage.KEY_COMMENT_CONTENTPROPERTIES)) {
+            return false;
+        }
+
+        ConfluenceProperties contentProps =
+            getContentProperties(commentProperties, ConfluenceXMLPackage.KEY_COMMENT_CONTENTPROPERTIES);
+
+        if (contentProps == null || (!contentProps.containsKey("inline-comment")
+            && !contentProps.getString("actualCommentType", "").equals("inline")))
+        {
+            return false;
+        }
+        return contentProps.getString("status", "").equals("resolved");
     }
 
     private void addBlogDescriptorPage(ConfluenceFilter proxyFilter) throws FilterException

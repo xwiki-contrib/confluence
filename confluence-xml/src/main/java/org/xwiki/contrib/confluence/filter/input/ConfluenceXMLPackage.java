@@ -350,6 +350,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String KEY_ATTACHMENT_CONTENTPROPERTIES = "contentProperties";
 
     /**
+     * The property key to access the comment content key.
+     * @since 9.72.0
+     */
+    public static final String KEY_COMMENT_CONTENTPROPERTIES = KEY_ATTACHMENT_CONTENTPROPERTIES;
+
+    /**
      * The property key to access the attachment content status.
      */
     public static final String KEY_ATTACHMENT_CONTENTSTATUS = KEY_PAGE_CONTENT_STATUS;

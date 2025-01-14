@@ -266,6 +266,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      */
     private boolean extraneousSpacesEnabled;
 
+    private boolean skipResolvedInlineComments;
+
     /**
      * @return The source to load the wiki from
      */
@@ -1374,5 +1376,26 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setExtraneousSpacesEnabled(boolean extraneousSpacesEnabled)
     {
         this.extraneousSpacesEnabled = extraneousSpacesEnabled;
+    }
+
+    /**
+     * @return whether the inline comments that are marked as resolved should be imported as xwiki comments or skipped.
+     * @since 9.72.0
+     */
+    @PropertyName("Skip the inline comments that are marked as resolved")
+    @PropertyDescription("All the inline confluence comments are imported by default as xwiki comments. This property"
+        + " offers the possibility to not import the inline comments marked as resolved.")
+    public boolean isSkipResolvedInlineComments()
+    {
+        return skipResolvedInlineComments;
+    }
+
+    /**
+     * @param skipResolvedInlineComments see {@link #isSkipResolvedInlineComments()}.
+     * @since 9.72.0
+     */
+    public void setSkipResolvedInlineComments(boolean skipResolvedInlineComments)
+    {
+        this.skipResolvedInlineComments = skipResolvedInlineComments;
     }
 }
