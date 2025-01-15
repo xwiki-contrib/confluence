@@ -35,7 +35,14 @@
                 <li><a class="reference download internal"><code class="xref download docutils literal"><span class="pre">some_script.sh</span></code></a></li>
               </ul>
             </li>
-            <li><p class="first">in the bash shell: run <code class="docutils literal"><span class="pre">source</span> <span class="pre">some_script.sh</span> <span class="pre">&lt;tar.gz</span> <span class="pre">file&gt;</span> <span class="pre">&lt;ip-address&gt;</span> <span class="pre">22</span></code></p></li>
+            <li>
+                <p class="first">Some code after a paragraph</p>
+                <ac:structured-macro ac:name="code"><ac:plain-text-body><![CDATA[int main() {
+    return EXIT_SUCCESS;
+}]] ></ac:plain-text-body></ac:structured-macro>
+                <p>paragraph after</p>
+            </li>
+    <li><p class="first">in the bash shell: run <code class="docutils literal"><span class="pre">source</span> <span class="pre">some_script.sh</span> <span class="pre">&lt;tar.gz</span> <span class="pre">file&gt;</span> <span class="pre">&lt;ip-address&gt;</span> <span class="pre">22</span></code></p></li>
           </ul>
           <p><code># ------- START</code><br /><code>/^name.surname@<a href="http://perdu.com">perdu.com</a>$/ REJECT intra sender_access</code><br /><code>/^hamed.<a href="mailto:mail@perdu.com">mail@perdu.com</a>$/ REJECT intra sender_access</code><br /><code>/^anothermail@<a href="http://perdu.com">perdu.com</a>$/ REJECT intra sender_access</code><br /><code># ------- END</code></p><p><br /></p><p><code># postfix -c /etc/postfix-incoming reload</code></p><p><br /></p>
           <p><code>{{/code}}</code></p>]]></property>

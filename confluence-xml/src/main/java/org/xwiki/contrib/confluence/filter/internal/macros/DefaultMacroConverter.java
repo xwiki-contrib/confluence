@@ -136,6 +136,10 @@ public class DefaultMacroConverter extends AbstractMacroConverter
         } catch (MacroLookupException e) {
             // Ignore
         }
+
+        if (parameters != null && "INLINE".equals(parameters.get("atlassian-macro-output-type"))) {
+            return InlineSupport.YES;
+        }
         return InlineSupport.MAYBE;
     }
 }

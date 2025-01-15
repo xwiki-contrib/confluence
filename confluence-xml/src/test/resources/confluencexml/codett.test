@@ -53,6 +53,18 @@
 ** ex.g. (% class="xref download docutils literal" %){{code language="none"}}CodeCodeCodac Software 0.2.10{{/code}}
 ** (% class="xref download docutils literal" %){{code language="none"}}update script{{/code}}
 ** (% class="xref download docutils literal" %){{code language="none"}}some_script.sh{{/code}}
+* (((
+(% class="first" %)
+Some code after a paragraph
+
+{{code}}
+int main() {
+    return EXIT_SUCCESS;
+}
+{{/code}}
+
+paragraph after
+)))
 * in the bash shell: run (% class="docutils literal" %){{code language="none"}}source some_script.sh &lt;tar.gz file> &lt;ip-address> 22{{/code}}
 
 {{code language="none"}}# ------- START{{/code}}
