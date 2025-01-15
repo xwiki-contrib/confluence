@@ -143,6 +143,12 @@
                   <old>interface org.xwiki.contrib.confluence.resolvers.ConfluenceScrollViewportResolver</old>
                   <justification>The api was broken from the start and likely unused since it was released very recently.</justification>
                 </item>
+                <item>
+                  <ignore>true</ignore>
+                  <code>java.method.addedToInterface</code>
+                  <new>method java.lang.Long org.xwiki.contrib.confluence.resolvers.ConfluenceScrollPageIdResolver::getConfluencePageId(java.lang.String) throws org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException</new>
+                  <justification>Added the new method in order to better handle the mapping between the Scroll page id and the Confluence page id.</justification>
+                </item>
               </differences>
             </revapi.differences>
           </analysisConfiguration>

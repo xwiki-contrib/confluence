@@ -36,4 +36,13 @@ public interface ConfluenceScrollPageIdResolver
      * @param id the Confluence ID of the document
      */
     EntityReference getDocumentById(String id) throws ConfluenceResolverException;
+
+    /**
+     * Get the matching confluence page ID based on the given Scroll Page ID.
+     * 
+     * @param scrollPageId The Scroll Page ID
+     * @return the Confluence Page ID
+     * @throws ConfluenceResolverException in case something wrong happens
+     */
+    Long getConfluencePageId(String scrollPageId) throws ConfluenceResolverException;
 }

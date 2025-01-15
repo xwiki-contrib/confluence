@@ -91,8 +91,7 @@ public class IntegrationTests
         ConfluenceScrollPageIdResolver scrollIdResolver =
             componentManager.registerMockComponent(ConfluenceScrollPageIdResolver.class);
 
-        when(scrollIdResolver.getDocumentById("422B")).thenReturn(new EntityReference(WEB_HOME, EntityType.DOCUMENT,
-            new EntityReference("Scroll42", EntityType.SPACE, new WikiReference("xwiki"))));
+        when(scrollIdResolver.getConfluencePageId("422B")).thenReturn(4228L);
 
         ConfluencePageIdResolver idResolver = componentManager.registerMockComponent(ConfluencePageIdResolver.class);
         ConfluencePageTitleResolver titleResolver =
@@ -128,6 +127,9 @@ public class IntegrationTests
 
             return new EntityReference("cachefail", EntityType.DOCUMENT);
         });
+
+        when(idResolver.getDocumentById(4228)).thenReturn(new EntityReference(WEB_HOME, EntityType.DOCUMENT,
+            new EntityReference("Scroll42", EntityType.SPACE, new WikiReference("xwiki"))));
 
         when(titleResolver.getDocumentByTitle(OTHER_SPACE, "Other Page")).thenReturn(
             new EntityReference(

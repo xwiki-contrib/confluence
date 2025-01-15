@@ -74,6 +74,24 @@ public class DefaultConfluenceScrollVersionsResolver extends AbstractConfluenceR
     }
 
     @Override
+    public Long getConfluencePageId(String scrollPageId) throws ConfluenceResolverException
+    {
+        for (ConfluenceScrollPageIdResolver resolver : getResolvers(componentManager,
+            ConfluenceScrollPageIdResolver.class)) {
+            if (resolver != this) {
+                Long confluencePageId = resolver.getConfluencePageId(scrollPageId);
+                if (confluencePageId != null) {
+                    logger.debug("Scroll page id [{}] resolved to [{}] using [{}]", scrollPageId, confluencePageId,
+                        resolver);
+                    return confluencePageId;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    @Override
     public Map.Entry<String, String> getSpaceAndPrefixForUrl(String fullUrl) throws ConfluenceResolverException
     {
         for (ConfluenceScrollViewportSpacePrefixResolver resolver : getResolvers(componentManager,
