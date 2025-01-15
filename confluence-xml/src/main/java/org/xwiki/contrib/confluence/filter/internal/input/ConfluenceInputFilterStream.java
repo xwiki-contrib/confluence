@@ -2291,7 +2291,8 @@ public class ConfluenceInputFilterStream
         {
             return false;
         }
-        return contentProps.getString("status", "").equals("resolved");
+        String commentStatus = contentProps.getString("status", "");
+        return commentStatus.equals("resolved") || commentStatus.equals("dangling");
     }
 
     private void addBlogDescriptorPage(ConfluenceFilter proxyFilter) throws FilterException
