@@ -40,3 +40,4 @@ nbproject
 .sonar-ide.properties
 .clover
 .DS_Store
+*.versionsBackup
