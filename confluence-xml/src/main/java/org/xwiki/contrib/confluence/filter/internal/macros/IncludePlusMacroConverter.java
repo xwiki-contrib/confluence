@@ -84,10 +84,9 @@ public class IncludePlusMacroConverter extends AbstractMacroConverter
 
         EntityReference entityReference = null;
         String scrollPageId = confluenceParameters.get(MACRO_PARAMETER_SCROLLPAGEID);
-        Long confluencePageId = null;
         if (StringUtils.isNotEmpty(scrollPageId)) {
             try {
-                confluencePageId = confluenceScrollPageIdResolver.getConfluencePageId(scrollPageId);
+                Long confluencePageId = confluenceScrollPageIdResolver.getConfluencePageId(scrollPageId);
                 if (confluencePageId != null) {
                     entityReference = confluenceConverter.convertDocumentReference(confluencePageId, false);
                 }

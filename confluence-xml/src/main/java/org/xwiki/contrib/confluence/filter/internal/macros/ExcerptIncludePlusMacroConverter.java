@@ -30,6 +30,7 @@ import javax.inject.Singleton;
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollPageIdResolver;
+import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
@@ -55,6 +56,9 @@ public class ExcerptIncludePlusMacroConverter extends AbstractMacroConverter
 
     @Inject
     private ConfluenceScrollPageIdResolver confluenceScrollPageIdResolver;
+
+    @Inject
+    private ConfluenceConverter confluenceConverter;
 
     /**
      * Default serializer.
@@ -86,7 +90,10 @@ public class ExcerptIncludePlusMacroConverter extends AbstractMacroConverter
         String scrollPageId = confluenceParameters.get(MACRO_PARAMETER_SCROLLPAGEID);
         if (StringUtils.isNotEmpty(scrollPageId)) {
             try {
-                entityReference = confluenceScrollPageIdResolver.getDocumentById(scrollPageId);
+                Long confluencePageId = confluenceScrollPageIdResolver.getConfluencePageId(scrollPageId);
+                if (confluencePageId != null) {
+                    entityReference = confluenceConverter.convertDocumentReference(confluencePageId, false);
+                }
             } catch (ConfluenceResolverException e) {
                 cause = e;
             }
