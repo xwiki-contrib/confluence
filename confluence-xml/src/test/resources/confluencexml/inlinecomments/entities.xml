@@ -11999,7 +11999,7 @@
   <object class="ContentProperty" package="com.atlassian.confluence.content">
     <id name="id">917602320</id>
     <property name="name"><![CDATA[status]]></property>
-    <property name="stringValue"><![CDATA[resolved]]></property>
+    <property name="stringValue"><![CDATA[dangling]]></property>
     <property name="longValue"/><property name="dateValue"/></object>
   <object class="ContentProperty" package="com.atlassian.confluence.content">
     <id name="id">917602321</id>
