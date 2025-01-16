@@ -73,9 +73,10 @@ public class PageClassConfluenceResolver
     private static final String CONFLUENCE_PROP = "property.Confluence.Code.ConfluencePageClass.";
     private static final String SPACE = "space_string";
     private static final String TITLE = "title_string";
-    private static final String ID = "id";
-    private static final String PROP_ID = CONFLUENCE_PROP + "id_long";
+    private static final String ID = "id_long";
+    private static final String PROP_ID = CONFLUENCE_PROP + ID;
     private static final String CREATIONDATE = "creationdate";
+    private static final String STABLE_ID = "stableId_long";
 
     @Inject
     private QueryManager queryManager;
@@ -93,7 +94,7 @@ public class PageClassConfluenceResolver
     @Override
     public EntityReference getDocumentById(long id) throws ConfluenceResolverException
     {
-        return getDocument(Map.of(ID, id, "stableId", id), false, false);
+        return getDocument(Map.of(ID, id, STABLE_ID, id), false, false);
     }
 
     @Override

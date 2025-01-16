@@ -199,7 +199,7 @@ class ConfluenceResolversTest
         });
         when(query.bindValue(eq("fq"), anyString())).thenAnswer(invocationOnMock -> {
             String queryString = invocationOnMock.getArgument(1);
-            Pattern idPattern = Pattern.compile(".*property.Confluence.Code.ConfluencePageClass.id:(\\d+).*");
+            Pattern idPattern = Pattern.compile(".*property.Confluence.Code.ConfluencePageClass.id_long:(\\d+).*");
             Matcher matcher = idPattern.matcher(queryString);
             if (matcher.matches()) {
                 id.set(Long.parseLong(matcher.group(1)));
