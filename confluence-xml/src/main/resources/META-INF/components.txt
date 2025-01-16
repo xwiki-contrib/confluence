@@ -36,6 +36,7 @@ org.xwiki.contrib.confluence.filter.internal.macros.SpacesMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.SwaggerOpenApiMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.TextParamToContentConverter
 org.xwiki.contrib.confluence.filter.internal.macros.TocMacroConverter
+org.xwiki.contrib.confluence.filter.internal.macros.TranslationMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.ViewportRedirectMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.WarningMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.WidgetMacroConverter
