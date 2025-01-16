@@ -20,6 +20,7 @@
 package org.xwiki.contrib.confluence.resolvers.internal;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.annotation.Priority;
 import javax.inject.Inject;
@@ -30,6 +31,7 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollPageIdResolver;
+import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollTranslationResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollVariantResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollViewportSpacePrefixResolver;
 import org.xwiki.model.reference.DocumentReference;
@@ -48,7 +50,7 @@ import org.xwiki.stability.Unstable;
 @Priority(900)
 public class DefaultConfluenceScrollVersionsResolver extends AbstractConfluenceResolver
     implements ConfluenceScrollPageIdResolver, ConfluenceScrollViewportSpacePrefixResolver,
-    ConfluenceScrollVariantResolver
+    ConfluenceScrollVariantResolver, ConfluenceScrollTranslationResolver
 {
     @Inject
     private ComponentManager componentManager;
@@ -128,5 +130,23 @@ public class DefaultConfluenceScrollVersionsResolver extends AbstractConfluenceR
         }
 
         return null;
+    }
+
+    @Override
+    public Map<String, String> getMacroParameters(Long confluenceId, String language) throws ConfluenceResolverException
+    {
+        for (ConfluenceScrollTranslationResolver resolver : getResolvers(componentManager,
+            ConfluenceScrollTranslationResolver.class)) {
+            if (resolver != this) {
+                Map<String, String> parameters = resolver.getMacroParameters(confluenceId, language);
+                if (parameters != null) {
+                    logger.debug("Scroll parameters for language [{}] in page with id [{}] resolved to [{}] using [{}]",
+                        confluenceId, language, parameters, resolver);
+                    return parameters;
+                }
+            }
+        }
+
+        return new TreeMap<String, String>();
     }
 }

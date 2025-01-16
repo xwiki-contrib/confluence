@@ -20,11 +20,16 @@
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
 import java.util.Map;
+import java.util.TreeMap;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
+import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
+import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollTranslationResolver;
 
 /**
  * Convert the translation macro.
@@ -38,8 +43,14 @@ import org.xwiki.component.annotation.Component;
 public class TranslationMacroConverter extends AbstractMacroConverter
 {
     private static final String MACRO_ID = "contentTranslation";
-    
+
     private static final String MACRO_PARAMETER_LANGUAGE = "language";
+
+    @Inject
+    private ConfluenceInputContext confluenceInputContext;
+
+    @Inject
+    private ConfluenceScrollTranslationResolver confluenceScrollTranslationResolver;
 
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
@@ -58,18 +69,24 @@ public class TranslationMacroConverter extends AbstractMacroConverter
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {
-        Throwable cause = null;
+        Map<String, String> parameters = new TreeMap<String, String>();
+        Long currentPageId = confluenceInputContext.getCurrentPage();
 
         String language = confluenceParameters.get(MACRO_PARAMETER_LANGUAGE);
         if (confluenceParameters == null || language == null) {
-            // we throw a runtime exception so the macro is prevented from being converted, as it doesn't make sense
-            // to convert it if we can't resolve the language. A post migration fix will then be possible using
-            // something like the "Replace macros using Macro Converters from XDOM" snippet
-            throw new RuntimeException(String.format("Could not get the language from id [{}]", confluenceId),
-                cause);
+            throw new RuntimeException(String.format("Could not get the language from id [{}]", confluenceId), null);
         }
 
-        return Map.of(MACRO_PARAMETER_LANGUAGE, language);
+        try {
+            parameters = confluenceScrollTranslationResolver.getMacroParameters(currentPageId, language);
+        } catch (ConfluenceResolverException e) {
+            throw new RuntimeException(String.format(
+                "Could not get the language parameters from id [{}] with language [{{}]", confluenceId, language), e);
+        }
+
+        parameters.put(MACRO_PARAMETER_LANGUAGE, language);
+
+        return parameters;
     }
 
 }
