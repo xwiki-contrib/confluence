@@ -80,7 +80,7 @@ import static org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage.KEY
 @Singleton
 public class ConfluenceConverter implements ConfluenceReferenceConverter
 {
-    private static final Pattern PATTERN_URL_DISPLAY = Pattern.compile("^/display/(.+)/([^?#]+)(\\?.*)?$");
+    private static final Pattern PATTERN_URL_DISPLAY = Pattern.compile("^/display/([^/?]+)/([^?/#]+)(\\?.*)?$");
 
     private static final Pattern PATTERN_URL_VIEWPAGE =
         Pattern.compile("^/pages/viewpage.action\\?pageId=(\\d+)(&.*)?$");

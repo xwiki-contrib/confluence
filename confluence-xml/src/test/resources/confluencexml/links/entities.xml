@@ -88,6 +88,9 @@
           </ac:rich-text-body>
           </ac:structured-macro>
         </p>
+        <p>
+          <a href="https://baseurl1.com/display/public/OtherSpace/Other+Page?param=value#anchor"><span param="value">unhandled link</span></a>
+        </p>
       ]]>
     </property>
     <property name="content" class="Page" package="com.atlassian.confluence.pages">

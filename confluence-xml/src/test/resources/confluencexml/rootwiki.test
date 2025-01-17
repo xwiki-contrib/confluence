@@ -51,7 +51,9 @@
 
 {{lozenge icon="https://icon-library.com/images/img_524932.png" link="https://www.bing.com/images/search?q=icon" width="auto"}}
 Some content
-{{/lozenge}}</string>
+{{/lozenge}}
+
+[[(% param="value" %)unhandled link>>url:https://baseurl1.com/display/public/OtherSpace/Other+Page?param=value#anchor||shape="rect"]]</string>
               </entry>
               <entry>
                 <string>syntax</string>
