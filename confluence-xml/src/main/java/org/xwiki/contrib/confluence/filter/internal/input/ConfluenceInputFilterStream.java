@@ -36,6 +36,7 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -725,7 +726,13 @@ public class ConfluenceInputFilterStream
     private void sendPages(String spaceKey, boolean blog, List<Long> pages, Object filter, ConfluenceFilter proxyFilter)
         throws ConfluenceInterruptedException
     {
+        Long homePageId = confluencePackage.getHomePage(confluencePackage.getSpacesByKey().get(spaceKey));
         for (Long pageId : pages) {
+            if (Objects.equals(pageId, homePageId)) {
+                logger.warn("The home page (id: [{}]) of space [{}] is a child of another page, "
+                        + "not sending it a second time", pageId, spaceKey);
+                continue;
+            }
             sendPage(pageId, spaceKey, blog, filter, proxyFilter);
         }
     }
