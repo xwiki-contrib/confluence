@@ -989,11 +989,7 @@ public class ConfluenceInputFilterStream
             return;
         }
 
-        String documentName = pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)
-            ? WEB_HOME
-            : pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
-
-        pageIdentifier.setPageTitle(documentName);
+        pageIdentifier.setPageTitle(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE));
         pageIdentifier.setPageRevision(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION));
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_PARENT)) {
             Long parentId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_PARENT);
