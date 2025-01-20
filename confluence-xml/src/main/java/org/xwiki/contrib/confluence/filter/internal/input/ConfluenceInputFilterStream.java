@@ -1942,8 +1942,11 @@ public class ConfluenceInputFilterStream
         Map<String, ConfluenceProperties> pageAttachments = new LinkedHashMap<>();
         for (Long attachmentId : this.confluencePackage.getAttachments(pageId)) {
             ConfluenceProperties attachmentProperties = getAttachmentProperties(pageId, attachmentId, pageProperties);
-            if (attachmentProperties == null || "deleted".equalsIgnoreCase(attachmentProperties.getString(
-                    ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS))
+            if (attachmentProperties == null
+                || "deleted".equalsIgnoreCase(
+                    attachmentProperties.getString(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS))
+                || StringUtils.isNotEmpty(
+                    attachmentProperties.getString(ConfluenceXMLPackage.KEY_PAGE_ORIGINAL_VERSION))
             ) {
                 continue;
             }
