@@ -80,8 +80,6 @@ public class IncludePlusMacroConverter extends AbstractMacroConverter
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {
-        Throwable cause = null;
-
         EntityReference entityReference = null;
         String scrollPageId = confluenceParameters.get(MACRO_PARAMETER_SCROLLPAGEID);
         if (StringUtils.isNotEmpty(scrollPageId)) {
@@ -91,19 +89,13 @@ public class IncludePlusMacroConverter extends AbstractMacroConverter
                     entityReference = confluenceConverter.convertDocumentReference(confluencePageId, false);
                 }
             } catch (ConfluenceResolverException e) {
-                cause = e;
+                // Nothing to do
             }
         }
 
-        if (entityReference == null) {
-            // we throw a runtime exception so the macro is prevented from being converted, as it doesn't make sense
-            // to convert it if we can't resolve the reference. A post migration fix will then be possible using
-            // something like the "Replace macros using Macro Converters from XDOM" snippet
-            throw new RuntimeException(String.format("Could not get the referenced page for id [{}]", confluenceId),
-                cause);
-        }
-
-        return Map.of(MACRO_PARAMETER_REFERENCE, serializer.get().serialize(entityReference));
+        // Keep the scroll page id in case the reference couldn't be built.
+        return entityReference != null ? Map.of(MACRO_PARAMETER_REFERENCE, serializer.get().serialize(entityReference))
+            : Map.of(MACRO_PARAMETER_SCROLLPAGEID, scrollPageId);
     }
 
 }

@@ -83,7 +83,6 @@ public class ExcerptIncludePlusMacroConverter extends AbstractMacroConverter
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {
-        Throwable cause = null;
         Map<String, String> parameters = new TreeMap<>();
 
         EntityReference entityReference = null;
@@ -95,18 +94,15 @@ public class ExcerptIncludePlusMacroConverter extends AbstractMacroConverter
                     entityReference = confluenceConverter.convertDocumentReference(confluencePageId, false);
                 }
             } catch (ConfluenceResolverException e) {
-                cause = e;
             }
         }
 
         if (entityReference == null) {
-            // We throw a runtime exception so the macro is prevented from being converted, as it doesn't make sense
-            // to convert it if we can't resolve the reference. A post migration fix will then be possible using
-            // something like the "Replace macros using Macro Converters from XDOM" snippet.
-            throw new RuntimeException(String.format("Could not get the referenced page for id [{}]", confluenceId),
-                cause);
+            // Keep the scroll page id in case the reference couldn't be built.
+            parameters.put(MACRO_PARAMETER_SCROLLPAGEID, scrollPageId);
+        } else {
+            parameters.put(MACRO_PARAMETER_REFERENCE, serializer.get().serialize(entityReference));
         }
-        parameters.put(MACRO_PARAMETER_REFERENCE, serializer.get().serialize(entityReference));
 
         String name = confluenceParameters.get(MACRO_PARAMETER_NAME);
         if (name == null) {
