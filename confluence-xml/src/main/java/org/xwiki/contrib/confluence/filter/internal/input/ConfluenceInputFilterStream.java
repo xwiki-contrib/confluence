@@ -149,6 +149,8 @@ public class ConfluenceInputFilterStream
         "Configuration error while creating page identifier for page [{}]";
 
     private static final Marker SEND_PAGE_MARKER = MarkerFactory.getMarker("ConfluenceSendingPage");
+    private static final String FAILED_TO_PARSE_ATTACHMENT_REV = "For attachment [{}] in page [{}], failed to parse "
+        + "the revision of attachment id [{}], will keep attachment id [{}]";
 
     @Inject
     @Named(ConfluenceInputStreamParser.COMPONENT_NAME)
@@ -1940,36 +1942,139 @@ public class ConfluenceInputFilterStream
         Map<String, ConfluenceProperties> pageAttachments = new LinkedHashMap<>();
         for (Long attachmentId : this.confluencePackage.getAttachments(pageId)) {
             ConfluenceProperties attachmentProperties = getAttachmentProperties(pageId, attachmentId, pageProperties);
-            if (attachmentProperties == null) {
+            if (attachmentProperties == null || "deleted".equalsIgnoreCase(attachmentProperties.getString(
+                    ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS))
+            ) {
                 continue;
             }
 
             String attachmentName = this.confluencePackage.getAttachmentName(attachmentProperties);
 
             ConfluenceProperties currentAttachmentProperties = pageAttachments.get(attachmentName);
-            if (currentAttachmentProperties != null) {
-                try {
-                    Date date = this.confluencePackage.getDate(attachmentProperties,
-                        ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE);
-                    Date currentDate = this.confluencePackage.getDate(currentAttachmentProperties,
-                        ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE);
-
-                    if (date.after(currentDate)) {
-                        pageAttachments.put(attachmentName, attachmentProperties);
-                    }
-                } catch (Exception e) {
-                    this.logger.error(
-                        "Failed to parse the date of attachment [{}] from the page with id [{}], skipping it",
-                        pageProperties, attachmentId, e);
-                }
-            } else {
+            if (currentAttachmentProperties == null) {
                 pageAttachments.put(attachmentName, attachmentProperties);
+            } else {
+                keepMostRecentAttachment(pageId, pageProperties, attachmentId, currentAttachmentProperties,
+                    attachmentProperties, attachmentName, pageAttachments);
             }
         }
 
         for (ConfluenceProperties attachmentProperties : pageAttachments.values()) {
             readAttachment(pageId, pageProperties, attachmentProperties, proxyFilter);
         }
+    }
+
+    private void keepMostRecentAttachment(Long pageId, ConfluenceProperties pageProperties, Long attachmentId,
+        ConfluenceProperties currentAttachmentProperties, ConfluenceProperties attachmentProperties,
+        String attachmentName, Map<String, ConfluenceProperties> pageAttachments)
+    {
+        if (keepOriginalVersion(currentAttachmentProperties, attachmentProperties, attachmentName, pageAttachments)) {
+            return;
+        }
+
+        Long currentAttachmentId = currentAttachmentProperties
+            .getLong(ConfluenceXMLPackage.KEY_ID, null);
+
+        if (keepAttachmentWithHighestRevision(pageId, currentAttachmentProperties, attachmentProperties,
+            attachmentName, pageAttachments, currentAttachmentId, attachmentId)
+        ) {
+            return;
+        }
+
+        Date date = getDate(pageProperties, attachmentId, attachmentProperties);
+        Date currentDate = getDate(pageProperties, currentAttachmentId, currentAttachmentProperties);
+
+        if (date == null) {
+            if (currentDate == null) {
+                logger.warn(
+                    "For attachment [{}] in page [{}], failed to get the date of both attachment id [{}] "
+                        + " and [{}] to determine which one is more recent, will try using the revision string",
+                    attachmentName, pageId, attachmentId, currentAttachmentId);
+
+            } else {
+                logger.warn(
+                    "For attachment [{}] in page [{}], failed to get the date of attachment id [{}] "
+                        + " to determine if it is more recent than [{}], will keep the latter.",
+                    attachmentName, pageId, attachmentId, currentAttachmentId);
+                return;
+            }
+            if (currentAttachmentId == null || attachmentId > currentAttachmentId) {
+                pageAttachments.put(attachmentName, attachmentProperties);
+            }
+        } else if (date.after(currentDate)) {
+            pageAttachments.put(attachmentName, attachmentProperties);
+        }
+    }
+
+    private static boolean keepOriginalVersion(ConfluenceProperties currentAttachmentProperties,
+        ConfluenceProperties attachmentProperties, String attachmentName,
+        Map<String, ConfluenceProperties> pageAttachments)
+    {
+        if (currentAttachmentProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISIONS)
+            || attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_ORIGINAL_VERSION)) {
+            return true;
+        }
+
+        if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISIONS)
+            || currentAttachmentProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_ORIGINAL_VERSION)
+        ) {
+            pageAttachments.put(attachmentName, attachmentProperties);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean keepAttachmentWithHighestRevision(Long pageId, ConfluenceProperties currentAttachmentProperties,
+        ConfluenceProperties attachmentProperties, String attachmentName,
+        Map<String, ConfluenceProperties> pageAttachments, Long currentAttachmentId, Long attachmentId)
+    {
+        String revision = attachmentProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION);
+        String currentRevision = currentAttachmentProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION);
+        if (!StringUtils.equals(revision, currentRevision)) {
+            if (StringUtils.isEmpty(revision)) {
+                if (StringUtils.isEmpty(currentRevision)) {
+                    logger.warn(
+                        "For attachment [{}] in page [{}], could not parse the revision of both attachment id [{}] and "
+                        + "[{}], will try comparing dates", attachmentName, pageId, attachmentId, currentAttachmentId);
+                    return false;
+                }
+
+                logger.warn(FAILED_TO_PARSE_ATTACHMENT_REV, attachmentName, pageId, attachmentId, currentAttachmentId);
+                return true;
+            }
+
+            if (StringUtils.isEmpty(currentRevision)) {
+                logger.warn(FAILED_TO_PARSE_ATTACHMENT_REV, attachmentName, pageId, currentAttachmentId, attachmentId);
+                pageAttachments.put(attachmentName, attachmentProperties);
+                return true;
+            }
+
+            try {
+                float revisionNumber = Float.parseFloat(revision);
+                float currentRevisionNumber = Float.parseFloat(currentRevision);
+                if (revisionNumber > currentRevisionNumber) {
+                    pageAttachments.put(attachmentName, attachmentProperties);
+                }
+                return true;
+            } catch (NumberFormatException ignore) {
+                logger.warn("Could not parse the revision of one of the attachments as float, "
+                    + "will keep the highest id");
+            }
+        }
+        return false;
+    }
+
+    private Date getDate(ConfluenceProperties pageProperties, Long attachmentId,
+        ConfluenceProperties attachmentProperties)
+    {
+        try {
+            return this.confluencePackage.getDate(attachmentProperties,
+                ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE);
+        } catch (Exception e) {
+            this.logger.error("Failed to parse the date of attachment [{}] from page [{}]",
+                attachmentId, createPageIdentifier(pageProperties), e);
+        }
+        return null;
     }
 
     /**
@@ -2074,12 +2179,6 @@ public class ConfluenceInputFilterStream
     private void readAttachment(Long pageId, ConfluenceProperties pageProperties,
         ConfluenceProperties attachmentProperties, ConfluenceFilter proxyFilter) throws FilterException
     {
-        String contentStatus = attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTSTATUS, null);
-        if (StringUtils.equals(contentStatus, "deleted")) {
-            // The actual deleted attachment is not in the exported package, so we can't really do anything with it
-            return;
-        }
-
         Long attachmentId = attachmentProperties.getLong(ID);
         // no need to check shouldSendObject(attachmentId), already done by the caller.
 
