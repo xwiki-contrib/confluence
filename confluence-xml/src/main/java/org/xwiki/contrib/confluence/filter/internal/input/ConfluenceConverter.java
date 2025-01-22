@@ -643,7 +643,8 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
         if (StringUtils.isEmpty(pageTitle) && StringUtils.isEmpty(spaceKey)) {
             if (StringUtils.isNotEmpty(filename)) {
-                AttachmentResourceReference attachmentResourceReference = new AttachmentResourceReference(filename);
+                AttachmentResourceReference attachmentResourceReference =
+                    new AttachmentResourceReference(escapeAtAndHash(filename));
                 if (StringUtils.isNotEmpty(convertedAnchor)) {
                     attachmentResourceReference.setAnchor(convertedAnchor);
                 }
@@ -663,6 +664,16 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
                 ensureNonEmptySpaceKey(spaceKey), pageTitle, filename, convertedAnchor, false);
         }
         return toResolvedResourceReference(documentReference, filename, convertedAnchor);
+    }
+
+    private static String escapeAtAndHash(String s)
+    {
+        return escapeHash(s).replace("@", "\\@");
+    }
+
+    private static String escapeHash(String s)
+    {
+        return s.replace("\\", "\\\\").replace("#", "\\#");
     }
 
     @Override

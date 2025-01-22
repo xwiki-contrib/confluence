@@ -19,7 +19,6 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
-import org.apache.commons.lang3.StringUtils;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroTagHandler.ConfluenceMacro;
 import org.xwiki.rendering.wikimodel.WikiParameter;
@@ -83,15 +82,40 @@ public class AttachmentTagHandler extends TagHandler implements ConfluenceTagHan
         if (container instanceof ConfluenceMacro) {
             ConfluenceMacro macro = (ConfluenceMacro) container;
             macro.parameters = macro.parameters.setParameter(
-                "att--filename",
-                (referenceConverter == null || StringUtils.isEmpty(attachment.pageTitle))
-                    ? attachment.filename
-                    : referenceConverter.convertAttachmentReference(
-                        attachment.spaceKey,
-                        attachment.pageTitle,
-                        attachment.filename
-                    )
+                "att--filename", getReferenceConverter().convertAttachmentReference(
+                    attachment.spaceKey,
+                    attachment.pageTitle,
+                    attachment.filename
+                )
             );
         }
+    }
+
+    private ConfluenceReferenceConverter getReferenceConverter()
+    {
+        if (referenceConverter == null) {
+            // fallback for tests
+            return new ConfluenceReferenceConverter()
+            {
+                @Override
+                public String convertUserReference(String userId)
+                {
+                    return "";
+                }
+
+                @Override
+                public String convertDocumentReference(String spaceKey, String pageTitle)
+                {
+                    return "";
+                }
+
+                @Override
+                public String convertSpaceReference(String spaceKey)
+                {
+                    return "";
+                }
+            };
+        }
+        return referenceConverter;
     }
 }

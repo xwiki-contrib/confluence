@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic datetime="2025-01-22 13:10:21.523">
+    <object class="Space" package="com.atlassian.confluence.spaces">
+        <id name="id">928448539</id>
+        <property name="name"><![CDATA[attachat]]></property>
+        <property name="key"><![CDATA[attachat]]></property>
+        <property name="lowerKey"><![CDATA[attachat]]></property>
+        <property name="homePage" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">928448749</id>
+        </property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+        </property>
+        <property name="creationDate">2025-01-22 13:09:26.536</property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+        </property>
+        <property name="lastModificationDate">2025-01-22 13:09:26.852</property>
+        <property name="spaceType">global</property>
+        <property name="spaceStatus" enum-class="SpaceStatus" package="com.atlassian.confluence.spaces">CURRENT</property>
+    </object>
+    <object class="Page" package="com.atlassian.confluence.pages">
+        <id name="id">928448749</id>
+        <property name="hibernateVersion">6</property>
+        <property name="title"><![CDATA[attachat Home]]></property>
+        <property name="lowerTitle"><![CDATA[attachat home]]></property>
+        <collection name="bodyContents" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.bodyContents)">
+            <element class="BodyContent" package="com.atlassian.confluence.core">
+                <id name="id">928448750</id>
+            </element>
+        </collection>
+        <property name="version">2</property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+        </property>
+        <property name="creationDate">2025-01-22 13:09:27.011</property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+        </property>
+        <property name="lastModificationDate">2025-01-22 13:10:03.597</property>
+        <property name="versionComment"><![CDATA[]]></property>
+        <property name="contentStatus"><![CDATA[current]]></property>
+        <property name="navigationType">1</property>
+        <collection name="attachments" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.attachments)">
+            <element class="Attachment" package="com.atlassian.confluence.pages">
+                <id name="id">928415752</id>
+            </element>
+        </collection>
+        <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+            <id name="id">928448539</id>
+        </property>
+        <property name="position">256</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">928448750</id>
+        <property name="body"><![CDATA[
+            <p class="media-group">
+                <ac:structured-macro ac:name="view-file" ac:schema-version="1">
+                    <ac:parameter ac:name="name">
+                        <ri:attachment ri:filename="test@withat.txt" ri:version-at-save="1" />
+                    </ac:parameter>
+                </ac:structured-macro>
+            </p>
+            <p>
+                <ac:image ac:align="center" ac:layout="center" ac:original-height="1" ac:original-width="1" ac:custom-width="true" ac:width="24">
+                    <ri:attachment ri:filename="test@withat.txt" ri:version-at-save="1" />
+                </ac:image>
+            </p>]]></property>
+        <property name="content" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">928448749</id>
+        </property>
+        <property name="bodyType">2</property>
+    </object>
+    <object class="Attachment" package="com.atlassian.confluence.pages">
+        <id name="id">928415752</id>
+        <property name="hibernateVersion">1</property>
+        <property name="title"><![CDATA[test@withat.txt]]></property>
+        <property name="lowerTitle"><![CDATA[test@withat.txt]]></property>
+        <property name="version">1</property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+        </property>
+        <property name="creationDate">2025-01-22 13:09:57.673</property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+        </property>
+        <property name="lastModificationDate">2025-01-22 13:09:57.673</property>
+        <property name="versionComment"><![CDATA[]]></property>
+        <property name="originalVersionId"/>
+        <property name="contentStatus"><![CDATA[current]]></property>
+        <property name="navigationType">0</property>
+        <property name="containerContent" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">928448749</id>
+        </property>
+        <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+            <id name="id">928448539</id>
+        </property>
+    </object>
+</hibernate-generic>

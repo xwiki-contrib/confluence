@@ -70,11 +70,11 @@ public interface ConfluenceReferenceConverter
     default String convertAttachmentReference(String spaceKey, String pageTitle, String filename)
     {
         String docRef = convertDocumentReference(spaceKey, pageTitle);
-        if (docRef == null) {
-            return filename;
+        if (StringUtils.isEmpty(docRef)) {
+            return escapeAtAndHash(filename);
         }
 
-        return docRef + '@' + filename;
+        return docRef + '@' + escapeAtAndHash(filename);
     }
 
     /**
@@ -126,7 +126,7 @@ public interface ConfluenceReferenceConverter
     default ResourceReference getResourceReference(long pageId, String filename, String anchor)
     {
         String base = "id:" + pageId;
-        String attachmentPart = StringUtils.isEmpty(filename) ? "" : '@' + escapeDash(filename);
+        String attachmentPart = StringUtils.isEmpty(filename) ? "" : '@' + escapeHash(filename);
         String anchorPart = StringUtils.isEmpty(anchor) ? "" : '#' + anchor;
         ResourceType resourceType = StringUtils.isEmpty(filename)
             ? getConfluencePageResourceType()
@@ -144,7 +144,7 @@ public interface ConfluenceReferenceConverter
      */
     default ResourceReference getResourceReference(String spaceKey, String pageTitle, String filename, String anchor)
     {
-        String attachmentPart = StringUtils.isEmpty(filename) ? "" : '@' + escapeDash(filename);
+        String attachmentPart = StringUtils.isEmpty(filename) ? "" : '@' + escapeAtAndHash(filename);
         String anchorPart = StringUtils.isEmpty(anchor) ? "" : '#' + anchor;
 
         ResourceType resourceType;
@@ -164,7 +164,7 @@ public interface ConfluenceReferenceConverter
             resourceType = StringUtils.isEmpty(filename)
                 ? getConfluencePageResourceType()
                 : getConfluenceAttachResourceType();
-            base = "page:" + spaceKey + '.' + escapeAtAndDash(pageTitle);
+            base = "page:" + spaceKey + '.' + escapeAtAndHash(pageTitle);
         }
         return new ResourceReference(base + attachmentPart + anchorPart, resourceType);
     }
@@ -189,19 +189,20 @@ public interface ConfluenceReferenceConverter
             docRef.setAnchor(anchor);
             return docRef;
         }
-        AttachmentResourceReference attachmentResourceReference = new AttachmentResourceReference(filename);
+        AttachmentResourceReference attachmentResourceReference = new AttachmentResourceReference(
+            escapeAtAndHash(filename));
         if (StringUtils.isNotEmpty(anchor)) {
             attachmentResourceReference.setAnchor(anchor);
         }
         return attachmentResourceReference;
     }
 
-    private static String escapeAtAndDash(String s)
+    private static String escapeAtAndHash(String s)
     {
-        return escapeDash(s).replace("@", "\\@");
+        return escapeHash(s).replace("@", "\\@");
     }
 
-    private static String escapeDash(String s)
+    private static String escapeHash(String s)
     {
         return s.replace("\\", "\\\\").replace("#", "\\#");
     }

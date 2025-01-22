@@ -1,0 +1,96 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Content conversions
+.#------------------------------------------------------------------------------
+<wikiSpace name="attachat">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.8a7f80897523097801753189db971e45</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2025-01-22 13:09:27.11 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>2</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="2">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a7f80897523097801753189db971e45</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2025-01-22 13:10:03.597 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>attachat</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>(% class="media-group" %)
+
+
+{{view-file att--filename="test\@withat.txt"/}}
+
+[[image:attach:test\@withat.txt||custom-width="true" original-height="1" data-xwiki-image-style-alignment="center" width="24" align="center" original-width="1"]]</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+        <wikiAttachment name="test@withat.txt" size="6">
+          <p>
+            <content>aGVsbG8K</content>
+            <parameters>
+              <entry>
+                <string>creation_date</string>
+                <date>2025-01-22 13:09:57.673 UTC</date>
+              </entry>
+              <entry>
+                <string>revision</string>
+                <string>1</string>
+              </entry>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.8a7f80897523097801753189db971e45</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2025-01-22 13:09:57.673 UTC</date>
+              </entry>
+            </parameters>
+          </p>
+        </wikiAttachment>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
+.configuration.source=attachat
+.#------------------------------------------------------------------------------
