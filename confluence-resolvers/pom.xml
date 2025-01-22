@@ -28,7 +28,7 @@
   <artifactId>confluence-resolvers</artifactId>
   <name>Confluence Resolvers</name>
   <properties>
-    <xwiki.jacoco.instructionRatio>0.77</xwiki.jacoco.instructionRatio>
+    <xwiki.jacoco.instructionRatio>0.93</xwiki.jacoco.instructionRatio>
   </properties>
   <dependencies>
       <dependency>
