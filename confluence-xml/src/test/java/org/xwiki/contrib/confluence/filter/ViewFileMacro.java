@@ -22,7 +22,6 @@ package org.xwiki.contrib.confluence.filter;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.macro.Macro;
-import org.xwiki.rendering.macro.MacroExecutionException;
 import org.xwiki.rendering.macro.descriptor.MacroDescriptor;
 import org.xwiki.rendering.transformation.MacroTransformationContext;
 
@@ -54,7 +53,7 @@ public class ViewFileMacro implements Macro
     }
 
     @Override
-    public List<Block> execute(Object parameters, String content, MacroTransformationContext context) throws MacroExecutionException
+    public List<Block> execute(Object parameters, String content, MacroTransformationContext context)
     {
         return null;
     }
