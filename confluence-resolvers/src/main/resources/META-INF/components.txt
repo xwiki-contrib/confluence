@@ -1,5 +1,4 @@
 org.xwiki.contrib.confluence.resolvers.internal.DefaultConfluencePageResolver
 org.xwiki.contrib.confluence.resolvers.internal.DefaultConfluenceSpaceResolver
-org.xwiki.contrib.confluence.resolvers.internal.DefaultConfluenceScrollVersionsResolver
 org.xwiki.contrib.confluence.resolvers.internal.PageClassConfluenceResolver
 org.xwiki.contrib.confluence.resolvers.resource.internal.DefaultConfluenceResourceReferenceResolver

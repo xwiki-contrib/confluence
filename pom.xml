@@ -130,14 +130,6 @@
             <revapi.differences>
               <differences>
                 <item>
-                    <ignore>true</ignore>
-                    <code>java.method.parameterTypeChanged</code>
-                    <old>parameter org.xwiki.model.reference.EntityReference org.xwiki.contrib.confluence.resolvers.ConfluenceScrollPageIdResolver::getDocumentById(===long===) throws org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException</old>
-                    <new>parameter org.xwiki.model.reference.EntityReference org.xwiki.contrib.confluence.resolvers.ConfluenceScrollPageIdResolver::getDocumentById(===java.lang.String===) throws org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException</new>
-                    <parameterIndex>0</parameterIndex>
-                    <justification>The api was broken from the start and likely unused since it was released very recently.</justification>
-                </item>
-                <item>
                   <ignore>true</ignore>
                   <code>java.class.removed</code>
                   <old>interface org.xwiki.contrib.confluence.resolvers.ConfluenceScrollViewportResolver</old>
@@ -145,9 +137,9 @@
                 </item>
                 <item>
                   <ignore>true</ignore>
-                  <code>java.method.addedToInterface</code>
-                  <new>method java.lang.Long org.xwiki.contrib.confluence.resolvers.ConfluenceScrollPageIdResolver::getConfluencePageId(java.lang.String) throws org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException</new>
-                  <justification>Added the new method in order to better handle the mapping between the Scroll page id and the Confluence page id.</justification>
+                  <code>java.class.removed</code>
+                  <old>interface org.xwiki.contrib.confluence.resolvers.ConfluenceScrollPageIdResolver</old>
+                  <justification>Removed because the converters using it, Include+ and Excerpt Include+ were also removed (see BVERSION-107) .</justification>
                 </item>
               </differences>
             </revapi.differences>

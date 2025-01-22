@@ -29,7 +29,6 @@ import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceInputFilterStream;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageTitleResolver;
-import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollPageIdResolver;
 import org.xwiki.environment.Environment;
 import org.xwiki.filter.input.InputFilterStreamFactory;
 import org.xwiki.filter.test.integration.FilterTestSuite;
@@ -87,11 +86,6 @@ public class IntegrationTests
         });
         when(validation.transform("spacetovalidate")).thenReturn("validatedspace");
         when(validation.transform("pagetovalidate")).thenReturn("validatedpage");
-
-        ConfluenceScrollPageIdResolver scrollIdResolver =
-            componentManager.registerMockComponent(ConfluenceScrollPageIdResolver.class);
-
-        when(scrollIdResolver.getConfluencePageId("422B")).thenReturn(4228L);
 
         ConfluencePageIdResolver idResolver = componentManager.registerMockComponent(ConfluencePageIdResolver.class);
         ConfluencePageTitleResolver titleResolver =
