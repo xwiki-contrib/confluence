@@ -39,6 +39,8 @@ import java.util.Map;
 @Singleton
 public class ChildrenMacroConverter extends AbstractMacroConverter
 {
+    private static final String SORT = "sort";
+
     @Inject
     private ConfluenceConverter confluenceConverter;
 
@@ -46,7 +48,23 @@ public class ChildrenMacroConverter extends AbstractMacroConverter
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
-        return StringUtils.isNotEmpty(getPage(confluenceParameters)) ? "documentTree" : "children";
+        return shouldConvertToDocumentTree(confluenceParameters) ? "documentTree" : "children";
+    }
+
+    private static boolean shouldConvertToDocumentTree(Map<String, String> confluenceParameters)
+    {
+        String first = getFirst(confluenceParameters);
+        return StringUtils.isNotEmpty(getPage(confluenceParameters))
+            || StringUtils.isNotEmpty(first);
+    }
+
+    private static String getFirst(Map<String, String> confluenceParameters)
+    {
+        String first = confluenceParameters.get("first");
+        if ("0".equals(first)) {
+            return null;
+        }
+        return first;
     }
 
     private static String getPage(Map<String, String> confluenceParameters)
@@ -73,10 +91,66 @@ public class ChildrenMacroConverter extends AbstractMacroConverter
             );
         }
 
-        String first = confluenceParameters.get("first");
+        String first = getFirst(confluenceParameters);
         if (StringUtils.isNotEmpty(first)) {
             parameters.put("limit", first);
         }
+
+        handleSortParameter(confluenceParameters, parameters);
         return parameters;
+    }
+
+    private void handleSortParameter(Map<String, String> confluenceParameters, Map<String, String> parameters)
+    {
+        String sortAndReverse = convertSort(confluenceParameters.get("sortAndReverse"));
+        String[] sortReverse = StringUtils.isEmpty(sortAndReverse) ? null : sortAndReverse.split("\\.");
+
+        String sort = getSortParameter(confluenceParameters, sortReverse);
+        String reverse = getReverseParameter(confluenceParameters, sort, sortReverse);
+
+        if (StringUtils.isNotEmpty(sort)) {
+            String convertedSort = convertSort(sort);
+            if (convertedSort != null) {
+                if ("true".equals(reverse)) {
+                    convertedSort += ":desc";
+                }
+                parameters.put(SORT, convertedSort);
+            }
+        }
+    }
+
+    private static String getReverseParameter(Map<String, String> parameters, String sort, String[] sortReverse)
+    {
+        String reverse = parameters.get("reverse");
+        if (StringUtils.isEmpty(sort) && sortReverse != null && sortReverse.length > 1) {
+            reverse = sortReverse[1];
+        }
+        return reverse;
+    }
+
+    private static String getSortParameter(Map<String, String> confluenceParameters, String[] sortReverse)
+    {
+        String sort = confluenceParameters.get(SORT);
+        if (StringUtils.isEmpty(sort) && sortReverse != null && sortReverse.length > 0) {
+            sort = sortReverse[0];
+        }
+        return sort;
+    }
+
+    private String convertSort(String sort)
+    {
+        if (StringUtils.isEmpty(sort)) {
+            return null;
+        }
+        switch (sort) {
+            case "creation":
+                return "creationDate";
+            case "title":
+                return sort;
+            case "modified":
+                return "date";
+            default:
+                return null;
+        }
     }
 }
