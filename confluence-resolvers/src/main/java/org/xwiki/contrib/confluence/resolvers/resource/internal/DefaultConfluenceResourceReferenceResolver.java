@@ -171,6 +171,10 @@ public class DefaultConfluenceResourceReferenceResolver implements ConfluenceRes
         int hash = indexOf(reference, '#', dot + 1);
         String spaceKey = reference.substring(5, dot);
         String pageTitle = unescape(reference.substring(dot + 1, hash));
+        if ("@self".equals(spaceKey)) {
+            // FIXME we don't handle @self references yet
+            return null;
+        }
         EntityReference docRef = pageTitleResolver.getDocumentByTitle(spaceKey, pageTitle);
         return toDocumentResourceReference(docRef, hash, reference, filename);
     }

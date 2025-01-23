@@ -164,7 +164,7 @@ public interface ConfluenceReferenceConverter
             resourceType = StringUtils.isEmpty(filename)
                 ? getConfluencePageResourceType()
                 : getConfluenceAttachResourceType();
-            base = "page:" + spaceKey + '.' + escapeAtAndHash(pageTitle);
+            base = "page:" + (StringUtils.isEmpty(spaceKey) ? "@self" : spaceKey) + '.' + escapeAtAndHash(pageTitle);
         }
         return new ResourceReference(base + attachmentPart + anchorPart, resourceType);
     }
