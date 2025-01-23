@@ -82,40 +82,12 @@ public class AttachmentTagHandler extends TagHandler implements ConfluenceTagHan
         if (container instanceof ConfluenceMacro) {
             ConfluenceMacro macro = (ConfluenceMacro) container;
             macro.parameters = macro.parameters.setParameter(
-                "att--filename", getReferenceConverter().convertAttachmentReference(
+                "att--filename", referenceConverter.convertAttachmentReference(
                     attachment.spaceKey,
                     attachment.pageTitle,
                     attachment.filename
                 )
             );
         }
-    }
-
-    private ConfluenceReferenceConverter getReferenceConverter()
-    {
-        if (referenceConverter == null) {
-            // fallback for tests
-            return new ConfluenceReferenceConverter()
-            {
-                @Override
-                public String convertUserReference(String userId)
-                {
-                    return "";
-                }
-
-                @Override
-                public String convertDocumentReference(String spaceKey, String pageTitle)
-                {
-                    return "";
-                }
-
-                @Override
-                public String convertSpaceReference(String spaceKey)
-                {
-                    return "";
-                }
-            };
-        }
-        return referenceConverter;
     }
 }

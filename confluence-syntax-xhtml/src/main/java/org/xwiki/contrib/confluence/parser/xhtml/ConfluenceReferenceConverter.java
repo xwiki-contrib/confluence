@@ -183,7 +183,8 @@ public interface ConfluenceReferenceConverter
     {
         if (StringUtils.isEmpty(filename)) {
             if (StringUtils.isEmpty(anchor)) {
-                return null;
+                // This is a link to the current document.
+                return new DocumentResourceReference("");
             }
             DocumentResourceReference docRef = new DocumentResourceReference("");
             docRef.setAnchor(anchor);

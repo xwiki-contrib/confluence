@@ -62,6 +62,7 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXW
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.DefaultMacroParameterTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ElementMacroTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.EmoticonTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.FallbackConfluenceReferenceConverter;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.IgnoredTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ImageTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceImgTagHandler;
@@ -184,6 +185,10 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
     @Override
     public IWikiParser createWikiModelParser() throws ParseException
     {
+        ConfluenceReferenceConverter refConverter = referenceConverter == null
+            ? new FallbackConfluenceReferenceConverter()
+            : referenceConverter;
+
         XhtmlParser parser = new XhtmlParser();
 
         parser.setNamespacesEnabled(false);
@@ -219,10 +224,10 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("ac:caption", new CaptionHandler(this));
         handlers.put("ri:url", new URLTagHandler());
 
-        handlers.put("ac:link", new LinkTagHandler(referenceConverter));
+        handlers.put("ac:link", new LinkTagHandler(refConverter));
         handlers.put("ri:page", new PageTagHandler());
-        handlers.put("ri:space", new SpaceTagHandler(referenceConverter));
-        handlers.put("ri:user", new UserTagHandler(referenceConverter));
+        handlers.put("ri:space", new SpaceTagHandler(refConverter));
+        handlers.put("ri:user", new UserTagHandler(refConverter));
         handlers.put("ac:plain-text-link-body", new PlainTextLinkBodyTagHandler());
         handlers.put("ac:link-body", new LinkBodyTagHandler(this));
 
@@ -231,7 +236,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("ac:layout-section", new ElementMacroTagHandler(this));
         handlers.put("ac:layout-cell", new ElementMacroTagHandler(this));
 
-        handlers.put("ri:attachment", new AttachmentTagHandler(referenceConverter));
+        handlers.put("ri:attachment", new AttachmentTagHandler(refConverter));
 
         handlers.put("th", new TableHeadTagHandler());
         handlers.put("td", new TableCellTagHandler());
@@ -332,7 +337,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         }
         return new ConfluenceXWikiGeneratorListener(getLinkLabelParser(), listener, getLinkReferenceParser(),
             getImageReferenceParser(), this.plainRendererFactory, idGenerator, getSyntax(), this.plainParser,
-            xwikiParser, referenceConverter);
+            xwikiParser, referenceConverter == null ? new FallbackConfluenceReferenceConverter() : referenceConverter);
     }
 
     /**

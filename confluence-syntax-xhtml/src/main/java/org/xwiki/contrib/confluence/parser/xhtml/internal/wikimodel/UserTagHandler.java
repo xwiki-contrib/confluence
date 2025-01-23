@@ -54,15 +54,6 @@ public class UserTagHandler extends TagHandler implements ConfluenceTagHandler
         this.referenceConverter = referenceConverter;
     }
 
-    private String convert(String user)
-    {
-        if (referenceConverter == null) {
-            return user;
-        }
-
-        return referenceConverter.convertUserReference(user);
-    }
-
     @Override
     protected void begin(TagContext context)
     {
@@ -118,11 +109,12 @@ public class UserTagHandler extends TagHandler implements ConfluenceTagHandler
                         currentParamValue + usernameParameterValue);
                 } else {
                     macro.parameters = macro.parameters.setParameter(paramKey,
-                        currentParamValue + convert(usernameParameterValue));
+                        currentParamValue + referenceConverter.convertUserReference(usernameParameterValue));
                 }
             } else if (userkeyParameter != null) {
+                String user = userkeyParameter.getValue();
                 macro.parameters = macro.parameters.setParameter(paramKey,
-                    currentParamValue + convert(userkeyParameter.getValue()));
+                    currentParamValue + referenceConverter.convertUserReference(user));
             }
         }
     }

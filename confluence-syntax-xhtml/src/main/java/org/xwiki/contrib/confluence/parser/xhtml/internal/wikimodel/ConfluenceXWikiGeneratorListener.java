@@ -143,26 +143,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
 
     private static ResourceReference getFallbackReference(String space, String pageTitle, String file, String anchor)
     {
-        // useful for tests, not adequat for production
-        return (new ConfluenceReferenceConverter() {
-            @Override
-            public String convertUserReference(String userId)
-            {
-                return "";
-            }
-
-            @Override
-            public String convertDocumentReference(String spaceKey, String pageTitle)
-            {
-                return "";
-            }
-
-            @Override
-            public String convertSpaceReference(String spaceKey)
-            {
-                return "";
-            }
-        }).getResourceReference(space, pageTitle, file, anchor);
+        return new FallbackConfluenceReferenceConverter().getResourceReference(space, pageTitle, file, anchor);
     }
 
     @Override
