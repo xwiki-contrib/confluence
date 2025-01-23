@@ -97,6 +97,8 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
 
     private int listItemDepth;
 
+    private int ignoreEndSections;
+
     /**
      * @param parser the parser to use to parse link labels
      * @param listener the XWiki listener to which to forward WikiModel events
@@ -315,55 +317,56 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         return listItemDepth > 0;
     }
 
-    private Map<String, String> toMap(WikiParameters params)
-    {
-        Map<String, String> res = new HashMap<>(params.getSize());
-        for (WikiParameter param : params) {
-            res.put(param.getKey(), param.getValue());
-        }
-        return res;
-    }
-
     @Override
     public void onMacroBlock(String macroName, WikiParameters params, String content)
     {
         /*
-         * Wikimodel doesn't handle nested lists and lists with unique paragraphs  well.
+         * Wikimodel doesn't handle nested lists and lists with unique paragraphs well.
          * We bypass it by manually handling list-related tags.
          */
         switch (macroName) {
             case "confluence_ul_start":
-                getListener().beginList(ListType.BULLETED, toMap(params));
+                getListener().beginList(ListType.BULLETED, this.convertParameters(params));
                 break;
 
             case "confluence_ol_start":
-                getListener().beginList(ListType.NUMBERED, toMap(params));
+                getListener().beginList(ListType.NUMBERED, this.convertParameters(params));
                 break;
 
             case "confluence_ul_end":
-                super.endList(params, false);
+                getListener().endList(ListType.BULLETED, this.convertParameters(params));
                 break;
 
             case "confluence_ol_end":
-                super.endList(params, true);
+                getListener().endList(ListType.NUMBERED, this.convertParameters(params));
                 break;
 
             case "confluence_li_start":
                 // we begin the list item and then record the following events. This will allow us to do some cleanup
                 // that will avoid clunky syntax and broken rendering. See handleListItem().
                 listItemDepth++;
-                getListener().beginListItem(toMap(params));
+                getListener().beginListItem(this.convertParameters(params));
                 maybePushListener();
                 break;
 
             case "confluence_li_end":
-                handleListItem(toMap(params));
+                handleListItem(this.convertParameters(params));
                 listItemDepth--;
                 break;
 
             default:
                 super.onMacroBlock(macroName, params, content);
         }
+    }
+
+    @Override
+    public void endSection(int docLevel, int headerLevel, WikiParameters params)
+    {
+        if (ignoreEndSections > 0) {
+            ignoreEndSections--;
+            return;
+        }
+        super.endSection(docLevel, headerLevel, params);
     }
 
     private void endFormat(Map<String, String> format)
@@ -559,8 +562,24 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
 
     private void fireEvents(Iterable<QueueListener.Event> contentEvents, Listener listener)
     {
+        int sections = 0;
         for (QueueListener.Event e : contentEvents) {
+            if (e.eventType.equals(EventType.BEGIN_SECTION)) {
+                sections++;
+            } else if (e.eventType.equals(EventType.END_SECTION)) {
+                sections--;
+            }
             e.eventType.fireEvent(listener, e.eventParameters);
+        }
+
+        // If BEGIN_SECTION and END_SECTION are unbalanced, we balance them. We must ignore the corresponding
+        // number of end sections later, because they are coming outside this block.
+        // This can happen when a header is in a list item: this is not correctly handled, BEGIN_SECTION are
+        // sent before the title and END_SECTIONS might come at the end of the document.
+        ignoreEndSections += sections;
+        while (sections > 0) {
+            EventType.END_SECTION.fireEvent(listener, Collections.emptyMap());
+            sections--;
         }
     }
 

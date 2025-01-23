@@ -1,0 +1,35 @@
+.#-----------------------------------------------------
+.input|confluence+xhtml/1.0
+.#-----------------------------------------------------
+<ul>
+<li>one</li>
+<li>two
+<h3>title</h3>
+</li>
+</ul>
+.#-----------------------------------------------------
+.expect|event/1.0
+beginDocument
+beginList [BULLETED]
+beginListItem
+onWord [one]
+endListItem
+beginListItem
+beginGroup
+beginParagraph
+onWord [two]
+endParagraph
+beginSection
+beginSection
+beginSection
+beginHeader [3, Htitle]
+onWord [title]
+endHeader [3, Htitle]
+endSection
+endSection
+endSection
+endGroup
+endListItem
+endList [BULLETED]
+endDocument
+.#-----------------------------------------------------
