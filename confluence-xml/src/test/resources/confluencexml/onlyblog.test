@@ -155,6 +155,34 @@
               </p>
             </wikiObjectProperty>
           </wikiObject>
+          <wikiObject name="XWiki.XWikiRights">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.XWikiRights</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="allow" value="1"/>
+            <wikiObjectProperty name="groups" value=""/>
+            <wikiObjectProperty name="levels" value="view"/>
+            <wikiObjectProperty name="users" value="XWiki.032984bc44b6c6890144baa3d7620003"/>
+          </wikiObject>
+          <wikiObject name="XWiki.XWikiRights">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.XWikiRights</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="allow" value="1"/>
+            <wikiObjectProperty name="groups" value=""/>
+            <wikiObjectProperty name="levels" value="edit"/>
+            <wikiObjectProperty name="users" value="XWiki.032984bc44b6c6890144baa3d7620003"/>
+          </wikiObject>
         </wikiDocumentRevision>
       </wikiDocumentLocale>
     </wikiDocument>

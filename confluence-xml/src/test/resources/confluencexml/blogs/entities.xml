@@ -8,6 +8,11 @@
 <collection name="bodyContents" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.bodyContents)"><element class="BodyContent" package="com.atlassian.confluence.core"><id name="id">2616393729</id>
 </element>
 </collection>
+<collection name="contentPermissionSets" class="java.util.Collection"><element class="ContentPermissionSet" package="com.atlassian.confluence.security"><id name="id">118948173</id>
+</element>
+<element class="ContentPermissionSet" package="com.atlassian.confluence.security"><id name="id">118948174</id>
+</element>
+</collection>
 <collection name="adfContentBodies" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.adfContentBodies)"></collection>
 <collection name="contentProperties" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.contentProperties)"><element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">2616164358</id>
 </element>
@@ -1934,4 +1939,58 @@
 <property name="name"><![CDATA[COLLECTION_NAME_TYPE]]></property>
 <property name="stringValue"><![CDATA[CONTENT_TYPE_BASED]]></property>
 <property name="longValue"/><property name="dateValue"/></object>
+<object class="ContentPermissionSet" package="com.atlassian.confluence.security">
+<id name="id">118948173</id>
+<property name="type"><![CDATA[View]]></property>
+<collection name="contentPermissions" class="java.util.SortedSet"><element class="ContentPermission" package="com.atlassian.confluence.security"><id name="id">118850470</id>
+</element>
+<element class="ContentPermission" package="com.atlassian.confluence.security"><id name="id">118850471</id>
+</element>
+</collection>
+<property name="owningContent" class="BlogPost" package="com.atlassian.confluence.pages"><id name="id">2616164357</id>
+</property>
+<property name="creationDate">2019-02-05 10:51:16.383</property>
+<property name="lastModificationDate">2019-02-05 10:51:16.383</property>
+</object>
+<object class="ContentPermissionSet" package="com.atlassian.confluence.security">
+<id name="id">118948174</id>
+<property name="type"><![CDATA[Edit]]></property>
+<collection name="contentPermissions" class="java.util.SortedSet"><element class="ContentPermission" package="com.atlassian.confluence.security"><id name="id">118850472</id>
+</element>
+<element class="ContentPermission" package="com.atlassian.confluence.security"><id name="id">118850473</id>
+</element>
+</collection>
+<property name="owningContent" class="BlogPost" package="com.atlassian.confluence.pages"><id name="id">2616164357</id>
+</property>
+<property name="creationDate">2019-02-05 10:51:16.383</property>
+<property name="lastModificationDate">2019-02-05 10:51:16.383</property>
+</object>
+<object class="ContentPermission" package="com.atlassian.confluence.security">
+<id name="id">118850470</id>
+<property name="type"><![CDATA[View]]></property>
+<property name="userSubject" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[032984bc44b6c6890144baa3d7620003]]></id>
+</property>
+<property name="groupName"/><property name="owningSet" class="ContentPermissionSet" package="com.atlassian.confluence.security"><id name="id">118948173</id>
+</property>
+<property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[032984bc44b6c6890144baa3d7620003]]></id>
+</property>
+<property name="creationDate">2019-02-05 10:51:16.383</property>
+<property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[032984bc44b6c6890144baa3d7620003]]></id>
+</property>
+<property name="lastModificationDate">2019-02-05 10:51:16.383</property>
+</object>
+<object class="ContentPermission" package="com.atlassian.confluence.security">
+<id name="id">118850472</id>
+<property name="type"><![CDATA[Edit]]></property>
+<property name="userSubject" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[032984bc44b6c6890144baa3d7620003]]></id>
+</property>
+<property name="groupName"/><property name="owningSet" class="ContentPermissionSet" package="com.atlassian.confluence.security"><id name="id">118948174</id>
+</property>
+<property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[032984bc44b6c6890144baa3d7620003]]></id>
+</property>
+<property name="creationDate">2019-02-05 10:51:16.383</property>
+<property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[032984bc44b6c6890144baa3d7620003]]></id>
+</property>
+<property name="lastModificationDate">2019-02-05 10:51:16.383</property>
+</object>
 </hibernate-generic>
