@@ -26,9 +26,10 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceURLConverter;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.listener.reference.ResourceReference;
+import org.xwiki.rendering.listener.reference.ResourceType;
 
 /**
  * Convert Confluence img macro to XWiki syntax.
@@ -44,17 +45,19 @@ public class ImgMacroConverter extends AbstractMacroConverter
     private static final String SRC = "src";
 
     @Inject
-    private ConfluenceConverter converter;
+    private ConfluenceURLConverter urlConverter;
 
     @Override
     public void toXWiki(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline, Listener listener)
     {
         String url = confluenceParameters.get(SRC);
-        ResourceReference reference = converter.convertURL(url);
+        ResourceReference reference = urlConverter.convertURL(url);
+        if (reference == null) {
+            reference = new ResourceReference(url, ResourceType.URL);
+        }
         Map<String, String> parameters = new HashMap<>(confluenceParameters);
         parameters.remove(SRC);
         listener.onImage(reference, false, parameters);
     }
 }
-

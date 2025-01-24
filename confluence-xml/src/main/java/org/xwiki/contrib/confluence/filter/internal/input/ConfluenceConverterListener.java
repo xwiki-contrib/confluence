@@ -31,10 +31,10 @@ import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceURLConverter;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.parser.confluence.internal.wikimodel.ConfluenceResourceReference;
-import org.xwiki.model.reference.EntityReferenceResolver;
 import org.xwiki.rendering.listener.HeaderLevel;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.listener.QueueListener;
@@ -87,8 +87,7 @@ public class ConfluenceConverterListener extends WrappingListener
     private PrintRenderer plainTextRenderer;
 
     @Inject
-    @Named("relative")
-    private EntityReferenceResolver<String> relativeResolver;
+    private ConfluenceURLConverter urlConverter;
 
     /**
      * A stack of queues that are used to record the content of a paragraph with the auto-cursor-target class. For
@@ -312,7 +311,13 @@ public class ConfluenceConverterListener extends WrappingListener
 
         ResourceReference fixedReference = reference.clone();
         if (reference.getType() == ResourceType.URL) {
-            return confluenceConverter.convertURL(reference);
+            String url = reference.getReference();
+            ResourceReference res = urlConverter.convertURL(url);
+            if (res != null) {
+                return res;
+            }
+
+            return reference;
         }
 
         return fixedReference;

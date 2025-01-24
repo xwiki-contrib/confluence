@@ -17,42 +17,30 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
+package org.xwiki.contrib.confluence.filter.url.internal;
 
-import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
+import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.confluence.filter.url.AbstractConfluenceURLConverter;
 import org.xwiki.rendering.listener.reference.ResourceReference;
+import org.xwiki.rendering.listener.reference.ResourceType;
 
 import javax.inject.Named;
 
 /**
- * Fallback Confluence Reference Converter.
- * Used when parsing Confluence syntax outside the confluence-xml filter.
- * @version $Id$
+ * Test the modularity of URL conversion.
  * @since 9.76.0
+ * @version $Id$
  */
-@Named("fallback")
-public class FallbackConfluenceReferenceConverter implements ConfluenceReferenceConverter
+@Component
+@Named("fake")
+public class FakeConfluenceURLConverter extends AbstractConfluenceURLConverter
 {
     @Override
-    public String convertUserReference(String userId)
+    protected ResourceReference convertPath(String path)
     {
-        return userId == null ? "" : userId;
-    }
-
-    @Override
-    public String convertDocumentReference(String spaceKey, String pageTitle)
-    {
-        return refToString(getResourceReference(spaceKey, pageTitle, null, null));
-    }
-
-    @Override
-    public String convertSpaceReference(String spaceKey)
-    {
-        return refToString(getResourceReference(spaceKey, null, null, null));
-    }
-
-    private String refToString(ResourceReference resourceReference)
-    {
-        return resourceReference == null ? "" : resourceReference.getReference();
+        if ("fake/path".equals(path)) {
+            return new ResourceReference("http://perdu.con", ResourceType.URL);
+        }
+        return null;
     }
 }

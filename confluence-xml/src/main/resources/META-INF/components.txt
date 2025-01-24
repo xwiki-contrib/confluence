@@ -38,3 +38,5 @@ org.xwiki.contrib.confluence.filter.internal.macros.TranslationMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.ViewportRedirectMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.WarningMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.WidgetMacroConverter
+org.xwiki.contrib.confluence.filter.url.internal.BaseConfluenceURLConverter
+org.xwiki.contrib.confluence.filter.url.internal.DefaultConfluenceURLConverter

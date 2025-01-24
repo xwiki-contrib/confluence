@@ -21,12 +21,14 @@ package org.xwiki.contrib.confluence.filter.internal.input;
 
 import com.xpn.xwiki.XWikiContext;
 import org.apache.commons.configuration2.ex.ConfigurationException;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 import org.xwiki.component.annotation.Component;
+import org.xwiki.component.manager.ComponentLookupException;
+import org.xwiki.component.manager.ComponentManager;
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceURLConverter;
 import org.xwiki.contrib.confluence.filter.Mapping;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
@@ -53,19 +55,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLDecoder;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage.KEY_GROUP_EXTERNAL_ID;
@@ -80,21 +71,6 @@ import static org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage.KEY
 @Singleton
 public class ConfluenceConverter implements ConfluenceReferenceConverter
 {
-    private static final Pattern PATTERN_URL_DISPLAY = Pattern.compile("^/display/([^/?]+)/([^?/#]+)(\\?.*)?$");
-
-    private static final Pattern PATTERN_URL_VIEWPAGE =
-        Pattern.compile("^/pages/viewpage.action\\?pageId=(\\d+)(&.*)?$");
-
-    private static final Pattern PATTERN_TINY_LINK = Pattern.compile("^/x/([^?#]+)(\\?.*)?$");
-
-    private static final Pattern PATTERN_URL_SPACES = Pattern.compile("^/spaces/(.+)/pages/\\d+/([^?#]+)(\\?.*)?$");
-
-    private static final Pattern PATTERN_URL_ATTACHMENT =
-        Pattern.compile("^/download/(?:attachments|thumbnails)/(\\d+)/([^?#]+)(\\?.*)?$");
-
-    private static final Pattern PATTERN_URL_EMOTICON =
-        Pattern.compile("^/images/icons/emoticons/([^?#]+)(\\....)(\\?.*)?$");
-
     private static final Pattern FORBIDDEN_USER_CHARACTERS = Pattern.compile("[. /]");
 
     private static final String XWIKI = "XWiki";
@@ -136,6 +112,9 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
     @Inject
     private ConfluencePageTitleResolver pageTitleResolver;
+
+    @Inject
+    private Provider<ComponentManager> componentManagerProvider;
 
     /**
      * @param name the name to validate
@@ -814,150 +793,6 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return serialize(ref);
     }
 
-    private String decode(String encoded)
-    {
-        return URLDecoder.decode(encoded, StandardCharsets.UTF_8);
-    }
-
-    private ResourceReference tryPattern(Pattern pattern, String p, Function<Matcher, ResourceReference> f)
-    {
-        Matcher matcher = pattern.matcher(p);
-        if (matcher.matches()) {
-            return f.apply(matcher);
-        }
-
-        return null;
-    }
-
-    private ResourceReference simpleDocRef(Matcher m, String urlAnchor)
-    {
-        String spaceKey = decode(m.group(1));
-        String pageTitle = decode(m.group(2));
-        return getResourceReference(spaceKey, pageTitle, "", urlAnchor);
-    }
-
-    private long tinyPartToPageId(String part)
-    {
-        // FIXME copy-pasted from ConfluenceShortURLMapper
-        // Reverse-engineered and inspired by https://confluence.atlassian.com/x/2EkGOQ
-        // not sure the replaceChars part is necessary, but it shouldn't hurt
-        String base64WithoutPadding = StringUtils.replaceChars(part, "-_/", "/+\n");
-
-        byte[] decoded = new byte[8];
-        Base64.getUrlDecoder().decode(base64WithoutPadding.getBytes(), decoded);
-        return ByteBuffer.wrap(decoded).order(ByteOrder.LITTLE_ENDIAN).getLong();
-    }
-
-    private ResourceReference convertPageIdToResourceReference(List<String[]> urlParameters, String urlAnchor,
-        long pageId)
-    {
-        // Clean id parameter
-        urlParameters.removeIf(parameter -> parameter[0].equals("pageId"));
-        return getResourceReference(pageId, "", urlAnchor);
-    }
-
-    private String enforceSlash(String pattern)
-    {
-        if (pattern.isEmpty() || pattern.charAt(0) != '/') {
-            return "/" + pattern;
-        }
-        return pattern;
-    }
-
-    private List<String[]> parseURLParameters(String queryString)
-    {
-        if (queryString == null) {
-            return Collections.emptyList();
-        }
-
-        String[] elements = StringUtils.split(queryString, '&');
-
-        List<String[]> parameters = new ArrayList<>(elements.length);
-
-        for (String element : elements) {
-            parameters.add(StringUtils.split(element, '='));
-        }
-
-        return parameters;
-    }
-
-    private ResourceReference fixReference(String path, List<String[]> urlParameters, String urlAnchor)
-    {
-        return ObjectUtils.firstNonNull(
-            // Try /display
-            tryPattern(PATTERN_URL_DISPLAY, path, matcher -> simpleDocRef(matcher, urlAnchor)),
-
-            // Try /spaces
-            tryPattern(PATTERN_URL_SPACES, path, matcher -> simpleDocRef(matcher, urlAnchor)),
-
-            // Try viewpage.action
-            tryPattern(PATTERN_URL_VIEWPAGE, path, matcher -> {
-                long pageId = Long.parseLong(matcher.group(1));
-                return convertPageIdToResourceReference(urlParameters, urlAnchor, pageId);
-            }),
-
-            // Try short URL
-            tryPattern(PATTERN_TINY_LINK, path, matcher -> {
-                long pageId;
-                try {
-                    pageId = tinyPartToPageId(matcher.group(1));
-                } catch (IllegalArgumentException e) {
-                    logger.warn("Failed to decode the short link [{}]", path, e);
-                    return null;
-                }
-
-                return convertPageIdToResourceReference(urlParameters, urlAnchor, pageId);
-            }),
-
-            // Try attachments
-            tryPattern(PATTERN_URL_ATTACHMENT, path, matcher -> {
-                long pageId = Long.parseLong(matcher.group(1));
-                String filename = decode(matcher.group(2));
-                return getResourceReference(pageId, filename, urlAnchor);
-            }),
-
-            // emoticons
-            tryPattern(PATTERN_URL_EMOTICON, path, m -> new ResourceReference(decode(m.group(1)), ResourceType.ICON))
-        );
-    }
-
-    private ResourceReference convertURL(String url, ResourceReference baseReference)
-    {
-        for (URL baseURL : context.getProperties().getBaseURLs()) {
-            String baseURLString = baseURL.toExternalForm();
-
-            if (url.startsWith(baseURLString)) {
-                // Fix the URL if the format is known
-
-                URL urlObj;
-                try {
-                    urlObj = new URL(url);
-                } catch (MalformedURLException e) {
-                    // Should never happen
-                    this.logger.error("Wrong URL [{}]", url, e);
-                    continue;
-                }
-
-                String path = enforceSlash(url.substring(baseURLString.length()));
-
-                List<String[]> urlParameters = parseURLParameters(urlObj.getQuery());
-                String urlAnchor = urlObj.getRef();
-
-                ResourceReference ref = fixReference(path, urlParameters, urlAnchor);
-
-                if (ref != null) {
-                    return ref;
-                }
-            }
-        }
-
-        if (baseReference == null) {
-            return new ResourceReference(url, ResourceType.URL);
-        }
-
-        return baseReference;
-    }
-
     private String serialize(EntityReference reference)
     {
         return this.compactWikiSerializer.serialize(reference, getRoot());
@@ -971,14 +806,27 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return reference.getReference();
     }
 
+    /**
+     * @deprecated since 9.76.0
+     * Use ConfluenceURLConverter#convertURL(String)
+     */
     @Override
+    @Deprecated(since = "9.76.0")
     public ResourceReference convertURL(String url)
     {
-        return convertURL(url, null);
-    }
+        ConfluenceURLConverter urlConverter = null;
+        try {
+            urlConverter = componentManagerProvider.get().getInstance(ConfluenceURLConverter.class);
+        } catch (ComponentLookupException e) {
+            logger.error("Failed to get the Confluence URL converter component, the url will not be converted", e);
+        }
 
-    ResourceReference convertURL(ResourceReference reference)
-    {
-        return convertURL(reference.getReference(), reference);
+        if (urlConverter != null) {
+            ResourceReference resourceReference = urlConverter.convertURL(url);
+            if (resourceReference != null) {
+                return resourceReference;
+            }
+        }
+        return new ResourceReference(url, ResourceType.URL);
     }
 }

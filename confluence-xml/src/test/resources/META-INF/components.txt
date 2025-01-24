@@ -3,3 +3,4 @@
 500:org.xwiki.contrib.confluence.filter.FakeShowIfMacroConverter
 500:org.xwiki.contrib.confluence.filter.LivesearchMacroConverter
 500:org.xwiki.contrib.confluence.filter.ViewFileMacro
+500:org.xwiki.contrib.confluence.filter.url.internal.FakeConfluenceURLConverter

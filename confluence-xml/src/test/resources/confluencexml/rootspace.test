@@ -55,7 +55,9 @@
 Some content
 {{/lozenge}}
 
-[[(% param="value" %)unhandled link>>url:https://baseurl1.com/display/public/OtherSpace/Other+Page?param=value#anchor||shape="rect"]]</string>
+[[(% param="value" %)unhandled link>>url:https://baseurl1.com/display/public/OtherSpace/Other+Page?param=value#anchor||shape="rect"]]
+
+[[url:http://perdu.con||shape="rect"]] [[url:https://perdu.com/fake/path||shape="rect"]]</string>
                   </entry>
                   <entry>
                     <string>syntax</string>

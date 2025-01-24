@@ -63,6 +63,11 @@ public class ConfluenceXHTMLInputProperties extends DefaultFilterStreamPropertie
     private ConfluenceReferenceConverter referenceConverter;
 
     /**
+     * @see #getURLConverter()
+     */
+    private ConfluenceURLConverter urlConverter;
+
+    /**
      * @see #getMacroSupport()
      */
     private ConfluenceMacroSupport macroSupport;
@@ -122,6 +127,26 @@ public class ConfluenceXHTMLInputProperties extends DefaultFilterStreamPropertie
     public void setReferenceConverter(ConfluenceReferenceConverter referenceConverter)
     {
         this.referenceConverter = referenceConverter;
+    }
+
+    /**
+     * @return the URL converter to use to convert URLs
+     * @since 9.76.0
+     */
+    @PropertyName("URL converter")
+    @PropertyDescription("The URL converter to use to convert URLs.")
+    public ConfluenceURLConverter getURLConverter()
+    {
+        return this.urlConverter;
+    }
+
+    /**
+     * @param urlConverter the converter to use to convert references
+     * @since 9.76.0
+     */
+    public void setURLConverter(ConfluenceURLConverter urlConverter)
+    {
+        this.urlConverter = urlConverter;
     }
 
     /**

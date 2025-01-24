@@ -110,7 +110,10 @@ public interface ConfluenceReferenceConverter
      * @return the URL converted to a resource reference (that can link to a document, attachment or the URL itself if
      *         it doesn't need conversion or cannot be converted
      * @since 9.56.0
+     * @deprecated since 9.76.0
+     * use #getSpaceKey()
      */
+    @Deprecated(since = "9.76.0")
     default ResourceReference convertURL(String url)
     {
         return new ResourceReference(url, ResourceType.URL);

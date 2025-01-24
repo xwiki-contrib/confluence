@@ -30,9 +30,11 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceURLConverter;
 import org.xwiki.rendering.block.XDOM;
 import org.xwiki.rendering.internal.parser.wikimodel.DefaultXWikiGeneratorListener;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XHTMLXWikiGeneratorListener;
+import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XWikiWikiReference;
 import org.xwiki.rendering.listener.Format;
 import org.xwiki.rendering.listener.InlineFilterListener;
 import org.xwiki.rendering.listener.ListType;
@@ -93,6 +95,8 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
 
     private final ConfluenceReferenceConverter confluenceConverter;
 
+    private final ConfluenceURLConverter urlConverter;
+
     private int mustCallPopListener;
 
     private int listItemDepth;
@@ -110,18 +114,20 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
      * @param plainParser the parser to use to parse link labels
      * @param xwikiParser the parser to use to parse XWiki syntax
      * @param confluenceConverter the confluence reference converter
+     * @param urlConverter the confluence URL converter
      * @since 3.0M3
      */
     public ConfluenceXWikiGeneratorListener(StreamParser parser, Listener listener,
         ResourceReferenceParser linkReferenceParser, ResourceReferenceParser imageReferenceParser,
         PrintRendererFactory plainRendererFactory, IdGenerator idGenerator, Syntax syntax, StreamParser plainParser,
-        StreamParser xwikiParser, ConfluenceReferenceConverter confluenceConverter)
+        StreamParser xwikiParser, ConfluenceReferenceConverter confluenceConverter, ConfluenceURLConverter urlConverter)
     {
         super(parser, listener, linkReferenceParser, imageReferenceParser, plainRendererFactory, idGenerator, syntax);
         this.plainParser = plainParser;
         this.xwikiParser = xwikiParser;
         this.plainRendererFactory = plainRendererFactory;
         this.confluenceConverter = confluenceConverter;
+        this.urlConverter = urlConverter;
 
         // We need pushListener and popListener but they are private. For a lack of better solution, we use reflection
         // to access them. When we stop supporting 14.10, we should remove these reflection tricks as these methods are
@@ -149,6 +155,11 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
     @Override
     public void onReference(WikiReference reference)
     {
+        if (reference instanceof XWikiWikiReference) {
+            convertXWikiReference(reference);
+            return;
+        }
+
         if (!(reference instanceof ConfluenceXHTMLWikiReference)) {
             super.onReference(reference);
             return;
@@ -184,6 +195,26 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
             parsePlainInline(label, getListener());
         }
         getListener().endLink(resourceReference, false, Collections.emptyMap());
+    }
+
+    private void convertXWikiReference(WikiReference reference)
+    {
+        XWikiWikiReference xwikiReference = (XWikiWikiReference) reference;
+        ResourceReference ref = xwikiReference.getReference();
+        ResourceReference resourceReference = null;
+        if (ResourceType.URL.equals(ref.getType())) {
+            resourceReference = urlConverter.convertURL(ref.getReference());
+        }
+
+        super.onReference(
+            resourceReference == null
+                ? reference
+                :  new XWikiWikiReference(
+                    resourceReference,
+                    xwikiReference.getLabelXDOM(),
+                    xwikiReference.getParameters(),
+                    xwikiReference.isFreeStanding())
+        );
     }
 
     /**

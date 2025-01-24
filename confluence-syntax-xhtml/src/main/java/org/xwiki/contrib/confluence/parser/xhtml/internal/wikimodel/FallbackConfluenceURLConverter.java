@@ -19,40 +19,24 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
-import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceURLConverter;
 import org.xwiki.rendering.listener.reference.ResourceReference;
+import org.xwiki.rendering.listener.reference.ResourceType;
 
 import javax.inject.Named;
 
 /**
- * Fallback Confluence Reference Converter.
+ * Fallback Confluence URL Converter.
  * Used when parsing Confluence syntax outside the confluence-xml filter.
  * @version $Id$
  * @since 9.76.0
  */
 @Named("fallback")
-public class FallbackConfluenceReferenceConverter implements ConfluenceReferenceConverter
+public class FallbackConfluenceURLConverter implements ConfluenceURLConverter
 {
     @Override
-    public String convertUserReference(String userId)
+    public ResourceReference convertURL(String url)
     {
-        return userId == null ? "" : userId;
-    }
-
-    @Override
-    public String convertDocumentReference(String spaceKey, String pageTitle)
-    {
-        return refToString(getResourceReference(spaceKey, pageTitle, null, null));
-    }
-
-    @Override
-    public String convertSpaceReference(String spaceKey)
-    {
-        return refToString(getResourceReference(spaceKey, null, null, null));
-    }
-
-    private String refToString(ResourceReference resourceReference)
-    {
-        return resourceReference == null ? "" : resourceReference.getReference();
+        return new ResourceReference(url, ResourceType.URL);
     }
 }

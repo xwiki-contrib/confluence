@@ -44,6 +44,7 @@ import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceMacroSupport;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceURLConverter;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceXHTMLInputProperties;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ADFAttributeHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ADFContentHandler;
@@ -63,6 +64,7 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.DefaultMacro
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ElementMacroTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.EmoticonTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.FallbackConfluenceReferenceConverter;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.FallbackConfluenceURLConverter;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.IgnoredTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ImageTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceImgTagHandler;
@@ -148,6 +150,8 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
     private WrappingListener converter;
 
     private ConfluenceReferenceConverter referenceConverter;
+
+    private ConfluenceURLConverter urlConverter;
 
     private ConfluenceMacroSupport macroSupport;
 
@@ -337,7 +341,8 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         }
         return new ConfluenceXWikiGeneratorListener(getLinkLabelParser(), listener, getLinkReferenceParser(),
             getImageReferenceParser(), this.plainRendererFactory, idGenerator, getSyntax(), this.plainParser,
-            xwikiParser, referenceConverter == null ? new FallbackConfluenceReferenceConverter() : referenceConverter);
+            xwikiParser, referenceConverter == null ? new FallbackConfluenceReferenceConverter() : referenceConverter,
+            urlConverter == null ? new FallbackConfluenceURLConverter() : urlConverter);
     }
 
     /**
@@ -362,6 +367,15 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
     public void setReferenceConverter(ConfluenceReferenceConverter referenceConverter)
     {
         this.referenceConverter = referenceConverter;
+    }
+
+    /**
+     * @param urlConverter the converter to use to convert URLs
+     * @since 9.76.0
+     */
+    public void setURLConverter(ConfluenceURLConverter urlConverter)
+    {
+        this.urlConverter = urlConverter;
     }
 
     /**
