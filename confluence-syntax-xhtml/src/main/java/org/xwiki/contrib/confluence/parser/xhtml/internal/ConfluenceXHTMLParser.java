@@ -339,10 +339,20 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         } catch (ComponentLookupException e) {
             xwikiParser = null;
         }
-        return new ConfluenceXWikiGeneratorListener(getLinkLabelParser(), listener, getLinkReferenceParser(),
-            getImageReferenceParser(), this.plainRendererFactory, idGenerator, getSyntax(), this.plainParser,
-            xwikiParser, referenceConverter == null ? new FallbackConfluenceReferenceConverter() : referenceConverter,
-            urlConverter == null ? new FallbackConfluenceURLConverter() : urlConverter);
+
+        return new ConfluenceXWikiGeneratorListener(
+            getLinkLabelParser(),
+            listener,
+            getLinkReferenceParser(),
+            getImageReferenceParser(),
+            this.plainRendererFactory,
+            idGenerator,
+            getSyntax(),
+            this.plainParser,
+            xwikiParser,
+            referenceConverter == null ? new FallbackConfluenceReferenceConverter() : referenceConverter,
+            urlConverter == null ? new FallbackConfluenceURLConverter() : urlConverter
+        );
     }
 
     /**
