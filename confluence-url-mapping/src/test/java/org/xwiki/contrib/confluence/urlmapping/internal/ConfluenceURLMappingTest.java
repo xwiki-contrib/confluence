@@ -61,7 +61,6 @@ import static org.xwiki.contrib.confluence.urlmapping.internal.UrlMappingTestToo
 })
 class ConfluenceURLMappingTest
 {
-
     private static final String MY_SPACE = "MySpace";
     private static final String WEB_HOME = "WebHome";
     private static final String XWIKI = "xwiki";
@@ -278,6 +277,4 @@ class ConfluenceURLMappingTest
         URLMappingResult converted = handler.convert("/x/abab", GET, null);
         assertFailedConversion(converted);
     }
-
-
 }

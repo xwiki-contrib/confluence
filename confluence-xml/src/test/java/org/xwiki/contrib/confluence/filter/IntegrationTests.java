@@ -63,10 +63,9 @@ import static org.mockito.Mockito.when;
 @FilterTestSuite.Scope(value = "confluencexml"/*, pattern = "images.test"*/)
 public class IntegrationTests
 {
-
     private static final String OTHER_SPACE = "OtherSpace";
     private static final String WEB_HOME = "WebHome";
-    public static final WikiReference WIKI_REFERENCE = new WikiReference("xwiki");
+    private static final WikiReference WIKI_REFERENCE = new WikiReference("xwiki");
 
     @FilterTestSuite.Initialized
     public void initialized(MockitoComponentManager componentManager) throws Exception
