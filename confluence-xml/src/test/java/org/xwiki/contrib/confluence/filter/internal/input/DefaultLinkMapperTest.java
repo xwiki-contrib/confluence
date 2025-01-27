@@ -29,6 +29,7 @@ import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageTitleResolver;
+import org.xwiki.contrib.confluence.resolvers.ConfluenceSpaceKeyResolver;
 import org.xwiki.environment.Environment;
 import org.xwiki.filter.FilterException;
 import org.xwiki.filter.input.DefaultFileInputSource;
@@ -97,6 +98,9 @@ class DefaultLinkMapperTest
     @MockComponent
     private ConfluencePageIdResolver pageIdResolver;
 
+    @MockComponent
+    private ConfluenceSpaceKeyResolver spaceKeyResolver;
+
     private MockitoComponentManager componentManager;
 
     @BeforeComponent
@@ -105,7 +109,7 @@ class DefaultLinkMapperTest
         this.componentManager = componentManager;
     }
     @BeforeEach
-    void setup() throws Exception
+    void setup()
     {
         when(environment.getTemporaryDirectory()).thenReturn(XWikiTempDirUtil.createTemporaryDirectory());
         when(validationManager.getEntityReferenceNameStrategy()).thenReturn(validation);

@@ -29,6 +29,7 @@ import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceInputFilterStream;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageTitleResolver;
+import org.xwiki.contrib.confluence.resolvers.ConfluenceSpaceKeyResolver;
 import org.xwiki.environment.Environment;
 import org.xwiki.filter.input.InputFilterStreamFactory;
 import org.xwiki.filter.test.integration.FilterTestSuite;
@@ -65,6 +66,7 @@ public class IntegrationTests
 
     private static final String OTHER_SPACE = "OtherSpace";
     private static final String WEB_HOME = "WebHome";
+    public static final WikiReference WIKI_REFERENCE = new WikiReference("xwiki");
 
     @FilterTestSuite.Initialized
     public void initialized(MockitoComponentManager componentManager) throws Exception
@@ -90,11 +92,21 @@ public class IntegrationTests
         ConfluencePageIdResolver idResolver = componentManager.registerMockComponent(ConfluencePageIdResolver.class);
         ConfluencePageTitleResolver titleResolver =
             componentManager.registerMockComponent(ConfluencePageTitleResolver.class);
+        ConfluenceSpaceKeyResolver spaceKeyResolver =
+            componentManager.registerMockComponent(ConfluenceSpaceKeyResolver.class);
 
         // Those cache related mocks test if resolvers are not called several times for the same page
         AtomicInteger foundTitleCache = new AtomicInteger();
         when(titleResolver.getDocumentByTitle(anyString(), eq("testcachefound"))).thenAnswer(i ->
             new EntityReference("call-" + (foundTitleCache.getAndIncrement()), EntityType.DOCUMENT)
+        );
+
+        when(spaceKeyResolver.getSpaceByKey(anyString())).thenAnswer(i ->
+            new EntityReference(
+                i.getArgument(0),
+                EntityType.SPACE,
+                new EntityReference("OutsideSpace", EntityType.SPACE, WIKI_REFERENCE)
+            )
         );
 
         AtomicBoolean notFoundTitleCacheCalled = new AtomicBoolean(false);
@@ -123,7 +135,7 @@ public class IntegrationTests
         });
 
         when(idResolver.getDocumentById(4228)).thenReturn(new EntityReference(WEB_HOME, EntityType.DOCUMENT,
-            new EntityReference("Scroll42", EntityType.SPACE, new WikiReference("xwiki"))));
+            new EntityReference("Scroll42", EntityType.SPACE, WIKI_REFERENCE)));
 
         when(titleResolver.getDocumentByTitle(OTHER_SPACE, "Other Page")).thenReturn(
             new EntityReference(

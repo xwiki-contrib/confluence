@@ -38,6 +38,7 @@ import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageTitleResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
+import org.xwiki.contrib.confluence.resolvers.ConfluenceSpaceKeyResolver;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.EntityReference;
@@ -109,6 +110,9 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
     @Inject
     private ConfluencePageIdResolver pageIdResolver;
+
+    @Inject
+    private ConfluenceSpaceKeyResolver spaceKeyResolver;
 
     @Inject
     private ConfluencePageTitleResolver pageTitleResolver;
@@ -327,9 +331,14 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
     private EntityReference fromSpaceKey(String spaceKey)
     {
-        String convertedSpace = toEntityName(ensureNonEmptySpaceKey(spaceKey));
-        EntityReference root = getRoot();
-        return newEntityReference(convertedSpace, EntityType.SPACE, root);
+        String space = ensureNonEmptySpaceKey(spaceKey);
+        if (context.getConfluencePackage().getSpacesByKey().containsKey(space)) {
+            String convertedSpace = toEntityName(space);
+            EntityReference root = getRoot();
+            return newEntityReference(convertedSpace, EntityType.SPACE, root);
+        }
+
+        return getSpaceUsingResolver(spaceKey);
     }
 
     /**
@@ -402,7 +411,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return toNestedDocumentReference(spaceKey, pageTitle, pageProperties, asSpace, true);
     }
 
-    EntityReference toDocumentReference(String spaceKey, String pageTitle)
+    private EntityReference toDocumentReference(String spaceKey, String pageTitle)
     {
         if (AT_SELF.equals(pageTitle)) {
             return new EntityReference(WEB_HOME, EntityType.DOCUMENT);
@@ -510,6 +519,20 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         });
     }
 
+    private EntityReference getSpaceUsingResolver(String spaceKey)
+    {
+        return context.getCachedReference(spaceKey, "", () -> {
+            try {
+                return spaceKeyResolver.getSpaceByKey(spaceKey);
+            } catch (ConfluenceResolverException e) {
+                logger.error("Failed to resolve space=[{}]", spaceKey, e);
+            }
+            return null;
+        });
+    }
+
+
+
     private EntityReference maybeAsSpace(EntityReference entityReference, boolean asSpace)
     {
         if (entityReference != null && entityReference.getType() == EntityType.DOCUMENT && asSpace) {
@@ -596,7 +619,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
     private static EntityReference getDocumentReference(EntityReference space, boolean asSpace, boolean isBlogPost)
     {
-        if (asSpace) {
+        if (asSpace || space == null) {
             return space;
         }
 
