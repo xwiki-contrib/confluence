@@ -338,7 +338,11 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             return newEntityReference(convertedSpace, EntityType.SPACE, root);
         }
 
-        return getSpaceUsingResolver(spaceKey);
+        if (this.context.getProperties().isUseConfluenceResolvers()) {
+            return getSpaceUsingResolver(spaceKey);
+        }
+
+        return null;
     }
 
     /**
