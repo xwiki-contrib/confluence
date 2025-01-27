@@ -212,8 +212,8 @@ class ConfluenceURLMappingTest
         "pages/viewpages.action?pageId=42",
         "pages/pages/viewpages.action?pageId=42",
         "download/attachment/42/hello+world.txt",
-        "public/display/MySpace/My+Doc?param=thatwedontcareabout",
-        "public/display/MySpace/My+Doc",
+        "display/public/MySpace/My+Doc?param=thatwedontcareabout",
+        "display/public/MySpace/My+Doc",
         "display/display/MySpace/My+Doc?param=thatwedontcareabout",
         "displays/MySpace/My+Doc?param=thatwedontcareabout"
     })

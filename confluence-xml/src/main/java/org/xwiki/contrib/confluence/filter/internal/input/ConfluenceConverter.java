@@ -666,8 +666,9 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         }
         EntityReference documentReference = toDocumentReference(spaceKey, pageTitle);
         if (documentReference == null) {
+            boolean isHomePage = AT_HOME.equals(pageTitle);
             return new ConfluenceResourceReference(
-                ensureNonEmptySpaceKey(spaceKey), pageTitle, filename, convertedAnchor, false);
+                ensureNonEmptySpaceKey(spaceKey), isHomePage ? null : pageTitle, filename, convertedAnchor, isHomePage);
         }
         return toResolvedResourceReference(documentReference, filename, convertedAnchor);
     }

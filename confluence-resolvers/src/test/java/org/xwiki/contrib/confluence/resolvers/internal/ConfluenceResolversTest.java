@@ -184,7 +184,12 @@ class ConfluenceResolversTest
         AtomicReference<String> title = new AtomicReference<>("");
         AtomicReference<String> queryType = new AtomicReference<>("");
         AtomicReference<String> hqlResult = new AtomicReference<>("");
-        when(queryManager.createQuery(anyString(), anyString())).thenReturn(query);
+        when(queryManager.createQuery(anyString(), anyString())).thenAnswer(invocationOnMock -> {
+            id.set(0);
+            title.set("");
+            space.set("");
+            return query;
+        });
         when(query.bindValue(anyString(), anyString())).thenAnswer(i -> {
             if (i.getArgument(0).equals(FULLNAME)
                 && i.getArgument(1).equals(MY_DOC_REF.toString().replace("xwiki:", ""))) {
