@@ -25,7 +25,7 @@
   <parent>
     <groupId>org.xwiki.contrib.confluence</groupId>
     <artifactId>confluence</artifactId>
-    <version>9.76.2-SNAPSHOT</version>
+    <version>9.76.2</version>
   </parent>
   <artifactId>confluence-syntax-confluence10override</artifactId>
   <name>Confluence - Syntax - Confluence 1.0 Override</name>
