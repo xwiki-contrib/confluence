@@ -17,7 +17,9 @@
                 <string>content</string>
                 <string>{{content-report-table spaces="validatedspace"/}}
 
-{{outgoing-links spaces="OutsideSpace.DEMO,OutsideSpace.TEST"/}}</string>
+{{outgoing-links spaces="OutsideSpace.DEMO,OutsideSpace.TEST"/}}
+
+{{listlabels spaceKey="confluenceSpace:FOS"/}}</string>
               </entry>
               <entry>
                 <string>syntax</string>

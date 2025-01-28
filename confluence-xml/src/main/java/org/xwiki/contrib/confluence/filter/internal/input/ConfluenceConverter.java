@@ -812,7 +812,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         if (ref == null) {
             String spaceKey1 = ensureNonEmptySpaceKey(spaceKey);
             ConfluenceResourceReference r = new ConfluenceResourceReference(
-                ensureNonEmptySpaceKey(spaceKey1), null, null, null, true);
+                ensureNonEmptySpaceKey(spaceKey1), null, null, null, asDocument);
             return serialize(r);
         }
         if (asDocument) {

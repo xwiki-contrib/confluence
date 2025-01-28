@@ -100,13 +100,17 @@ public class IntegrationTests
             new EntityReference("call-" + (foundTitleCache.getAndIncrement()), EntityType.DOCUMENT)
         );
 
-        when(spaceKeyResolver.getSpaceByKey(anyString())).thenAnswer(i ->
-            new EntityReference(
+        when(spaceKeyResolver.getSpaceByKey(anyString())).thenAnswer(i -> {
+            if ("FOS".equals(i.getArgument(0))) {
+                return null;
+            }
+
+            return new EntityReference(
                 i.getArgument(0),
                 EntityType.SPACE,
                 new EntityReference("OutsideSpace", EntityType.SPACE, WIKI_REFERENCE)
-            )
-        );
+            );
+        });
 
         AtomicBoolean notFoundTitleCacheCalled = new AtomicBoolean(false);
         when(titleResolver.getDocumentByTitle(anyString(), eq("testcachenotfound"))).thenAnswer(i -> {

@@ -32,6 +32,12 @@
         <ac:structured-macro ac:name="outgoing-links">
           <ac:parameter ac:name="spaces"><ri:space ri:space-key="DEMO" /><ri:space ri:space-key="TEST" /></ac:parameter>
         </ac:structured-macro>
+        <ac:structured-macro ac:name="listlabels" ac:schema-version="1" data-layout="default">
+          <ac:parameter ac:name="spaceKey">
+            <ri:space ri:space-key="FOS" />
+          </ac:parameter>
+          <ac:parameter ac:name="excludedLabels" />
+        </ac:structured-macro>
       ]]>
     </property>
     <property name="content" class="Page" package="com.atlassian.confluence.pages">
