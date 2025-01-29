@@ -207,10 +207,7 @@ public class EmoticonTagHandler extends AbstractConfluenceTagHandler implements 
         WikiParameter fallbackParam = params.getParameter("ac:emoji-fallback");
         if (fallbackParam != null) {
             String emoji = fallbackParam.getValue();
-            if (emoji != null && !emoji.isEmpty()) {
-                // NOTE: this parameter can also contain a code instead of an emoji. On the other hand, everything else
-                // failed, so we are still better off sending the code as is.
-                // see https://jira.xwiki.org/browse/CONFLUENCE-388
+            if (emoji != null && !emoji.isEmpty() && !emoji.startsWith(":")) {
                 context.getScannerContext().onWord(emoji);
                 return true;
             }
@@ -223,7 +220,7 @@ public class EmoticonTagHandler extends AbstractConfluenceTagHandler implements 
         WikiParameter emojiIdParam = params.getParameter("ac:emoji-id");
         if (emojiIdParam != null) {
             String emojiId = emojiIdParam.getValue();
-            if (emojiId != null && !emojiId.isEmpty()) {
+            if (emojiId != null && emojiId.matches("[a-fA-F0-9]+")) {
                 try {
                     int emojiCodePoint = Integer.parseInt(emojiId, 16);
                     if (Character.isValidCodePoint(emojiCodePoint)) {
