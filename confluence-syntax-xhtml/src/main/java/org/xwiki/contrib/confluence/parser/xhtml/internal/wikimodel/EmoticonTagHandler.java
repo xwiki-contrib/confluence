@@ -156,8 +156,8 @@ public class EmoticonTagHandler extends AbstractConfluenceTagHandler implements 
     {
         WikiParameters params = context.getParams();
 
-        if (!sendFallback(context, params) && !sendEmojiId(context, params) && !sendShortName(context, params)
-            && !sendName(context, params))
+        if (!sendName(context, params) && !sendShortName(context, params) && !sendEmojiId(context, params)
+            && !sendFallback(context, params))
         {
             context.getScannerContext().onMacro("confluence_emoticon", params, null, true);
         }
@@ -208,6 +208,9 @@ public class EmoticonTagHandler extends AbstractConfluenceTagHandler implements 
         if (fallbackParam != null) {
             String emoji = fallbackParam.getValue();
             if (emoji != null && !emoji.isEmpty()) {
+                // NOTE: this parameter can also contain a code instead of an emoji. On the other hand, everything else
+                // failed, so we are still better off sending the code as is.
+                // see https://jira.xwiki.org/browse/CONFLUENCE-388
                 context.getScannerContext().onWord(emoji);
                 return true;
             }
