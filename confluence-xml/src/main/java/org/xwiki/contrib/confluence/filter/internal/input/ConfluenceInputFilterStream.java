@@ -630,11 +630,15 @@ public class ConfluenceInputFilterStream
                 Long homePageId = confluencePackage.getHomePage(spaceId);
                 if (this.properties.isContentsEnabled() || this.properties.isRightsEnabled()) {
                     if (homePageId != null) {
-                        inheritedRights = sendPage(homePageId, spaceKey, false, filter, proxyFilter);
+                        inheritedRights = sendPage(homePageId, spaceKey, false, filter, proxyFilter, false);
                         homePageProperties = getPageProperties(homePageId);
                     }
 
-                    sendPages(spaceKey, false, orphans, filter, proxyFilter);
+                    String orphanMode = properties.getOrphanMode();
+                    if (!"discard".equalsIgnoreCase(orphanMode)) {
+                        boolean hide = "hide".equalsIgnoreCase(orphanMode);
+                        sendPages(spaceKey, false, orphans, filter, proxyFilter, hide);
+                    }
                     sendBlogs(spaceKey, blogPages, filter, proxyFilter);
                 }
 
@@ -674,7 +678,7 @@ public class ConfluenceInputFilterStream
     }
 
     private Collection<ConfluenceRight> sendPage(long pageId, String spaceKey, boolean blog, Object filter,
-        ConfluenceFilter proxyFilter) throws ConfluenceInterruptedException
+        ConfluenceFilter proxyFilter, boolean hide) throws ConfluenceInterruptedException
     {
         if (this.remainingPages == 0) {
             throw new MaxPageCountReachedException();
@@ -687,7 +691,7 @@ public class ConfluenceInputFilterStream
         if (this.properties.isIncluded(pageId)) {
             ((DefaultConfluenceInputContext) this.context).setCurrentPage(pageId);
             try {
-                inheritedRights = readPage(pageId, spaceKey, blog, filter, proxyFilter);
+                inheritedRights = readPage(pageId, spaceKey, blog, filter, proxyFilter, hide);
             } catch (MaxPageCountReachedException e) {
                 // ignore
             } catch (ConfluenceCanceledException e) {
@@ -722,15 +726,15 @@ public class ConfluenceInputFilterStream
             addBlogDescriptorPage(proxyFilter);
 
             // Blog post pages
-            sendPages(spaceKey, true, blogPages, filter, proxyFilter);
+            sendPages(spaceKey, true, blogPages, filter, proxyFilter, false);
         } finally {
             // < WikiSpace
             proxyFilter.endWikiSpace(blogSpaceKey, FilterEventParameters.EMPTY);
         }
     }
 
-    private void sendPages(String spaceKey, boolean blog, List<Long> pages, Object filter, ConfluenceFilter proxyFilter)
-        throws ConfluenceInterruptedException
+    private void sendPages(String spaceKey, boolean blog, List<Long> pages, Object filter, ConfluenceFilter proxyFilter,
+        boolean hide) throws ConfluenceInterruptedException
     {
         Long homePageId = confluencePackage.getHomePage(confluencePackage.getSpacesByKey().get(spaceKey));
         for (Long pageId : pages) {
@@ -739,7 +743,7 @@ public class ConfluenceInputFilterStream
                         + "not sending it a second time", pageId, spaceKey);
                 continue;
             }
-            sendPage(pageId, spaceKey, blog, filter, proxyFilter);
+            sendPage(pageId, spaceKey, blog, filter, proxyFilter, hide);
         }
     }
 
@@ -1311,7 +1315,7 @@ public class ConfluenceInputFilterStream
     }
 
     private Collection<ConfluenceRight> readPage(long pageId, String spaceKey, boolean blog, Object filter,
-        ConfluenceFilter proxyFilter) throws FilterException, ConfluenceInterruptedException
+        ConfluenceFilter proxyFilter, boolean hide) throws FilterException, ConfluenceInterruptedException
     {
         ConfluenceProperties pageProperties = readPageGetPageProperties(pageId, spaceKey);
         if (pageProperties == null) {
@@ -1336,6 +1340,10 @@ public class ConfluenceInputFilterStream
         FilterEventParameters documentParameters = new FilterEventParameters();
         if (this.properties.getDefaultLocale() != null) {
             documentParameters.put(WikiDocumentFilter.PARAMETER_LOCALE, this.properties.getDefaultLocale());
+        }
+
+        if (hide) {
+            documentParameters.put(WikiDocumentFilter.PARAMETER_HIDDEN, true);
         }
 
         String spaceName = confluenceConverter.toEntityName(title);
@@ -1363,7 +1371,7 @@ public class ConfluenceInputFilterStream
             }
 
             if (!children.isEmpty()) {
-                sendPages(spaceKey, false, children, filter, proxyFilter);
+                sendPages(spaceKey, false, children, filter, proxyFilter, hide);
             }
         } finally {
             if (!blog && !isHomePage) {

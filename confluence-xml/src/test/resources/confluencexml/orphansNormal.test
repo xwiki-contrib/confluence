@@ -1,0 +1,527 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Content conversions
+.#------------------------------------------------------------------------------
+<wikiSpace name="Orphans">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.8a7f80897523097801753189db971e45</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2025-01-29 15:18:18.791 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>1</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a7f80897523097801753189db971e45</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2025-01-29 15:18:26.277 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>Orphans</string>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+  <wikiSpace name="Under Home">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.8a7f80897523097801753189db971e45</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2025-01-29 15:18:59.729 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>1</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="1">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.8a7f80897523097801753189db971e45</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2025-01-29 15:19:10.571 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Under Home</string>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+  <wikiSpace name="Old home">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.8a7f80897523097801753189db971e45</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2025-01-29 15:13:55.49 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>2</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="2">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.8a7f80897523097801753189db971e45</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2025-01-29 15:14:28.734 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Old home</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+    <wikiDocument name="WebPreferences">
+      <p>
+        <parameters>
+          <entry>
+            <string>hidden</string>
+            <boolean>true</boolean>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObject name="XWiki.XWikiPreferences">
+        <p>
+          <parameters>
+            <entry>
+              <string>class_reference</string>
+              <string>XWiki.XWikiPreferences</string>
+            </entry>
+          </parameters>
+        </p>
+      </wikiObject>
+      <wikiObject name="XWiki.PinnedChildPagesClass">
+        <p>
+          <parameters>
+            <entry>
+              <string>class_reference</string>
+              <string>XWiki.PinnedChildPagesClass</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObjectProperty name="pinnedChildPages">
+          <p>
+            <value t="java.util.ArrayList">
+              <string>Orphan/</string>
+              <string>Parent of new home/</string>
+            </value>
+          </p>
+        </wikiObjectProperty>
+      </wikiObject>
+    </wikiDocument>
+    <wikiSpace name="Orphan">
+      <wikiDocument name="WebHome">
+        <wikiDocumentLocale>
+          <p>
+            <parameters>
+              <entry>
+                <string>creation_author</string>
+                <string>XWiki.8a7f80897523097801753189db971e45</string>
+              </entry>
+              <entry>
+                <string>creation_date</string>
+                <date>2025-01-29 15:16:51.268 UTC</date>
+              </entry>
+              <entry>
+                <string>lastrevision</string>
+                <string>1</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiDocumentRevision revision="1">
+            <p>
+              <parameters>
+                <entry>
+                  <string>revision_author</string>
+                  <string>XWiki.8a7f80897523097801753189db971e45</string>
+                </entry>
+                <entry>
+                  <string>revision_date</string>
+                  <date>2025-01-29 15:17:22.212 UTC</date>
+                </entry>
+                <entry>
+                  <string>revision_comment</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>title</string>
+                  <string>Orphan</string>
+                </entry>
+                <entry>
+                  <string>content</string>
+                  <string>orphan</string>
+                </entry>
+                <entry>
+                  <string>syntax</string>
+                  <org.xwiki.rendering.syntax.Syntax>
+                    <type>
+                      <name>XWiki</name>
+                      <id>xwiki</id>
+                      <variants class="empty-list"/>
+                    </type>
+                    <version>2.1</version>
+                  </org.xwiki.rendering.syntax.Syntax>
+                </entry>
+              </parameters>
+            </p>
+          </wikiDocumentRevision>
+        </wikiDocumentLocale>
+      </wikiDocument>
+      <wikiSpace name="Sub orphan">
+        <wikiDocument name="WebHome">
+          <wikiDocumentLocale>
+            <p>
+              <parameters>
+                <entry>
+                  <string>creation_author</string>
+                  <string>XWiki.8a7f80897523097801753189db971e45</string>
+                </entry>
+                <entry>
+                  <string>creation_date</string>
+                  <date>2025-01-29 15:17:26.591 UTC</date>
+                </entry>
+                <entry>
+                  <string>lastrevision</string>
+                  <string>1</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiDocumentRevision revision="1">
+              <p>
+                <parameters>
+                  <entry>
+                    <string>revision_author</string>
+                    <string>XWiki.8a7f80897523097801753189db971e45</string>
+                  </entry>
+                  <entry>
+                    <string>revision_date</string>
+                    <date>2025-01-29 15:17:41.254 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision_comment</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>title</string>
+                    <string>Sub orphan</string>
+                  </entry>
+                  <entry>
+                    <string>content</string>
+                    <string>sub orphan</string>
+                  </entry>
+                  <entry>
+                    <string>syntax</string>
+                    <org.xwiki.rendering.syntax.Syntax>
+                      <type>
+                        <name>XWiki</name>
+                        <id>xwiki</id>
+                        <variants class="empty-list"/>
+                      </type>
+                      <version>2.1</version>
+                    </org.xwiki.rendering.syntax.Syntax>
+                  </entry>
+                </parameters>
+              </p>
+            </wikiDocumentRevision>
+          </wikiDocumentLocale>
+        </wikiDocument>
+      </wikiSpace>
+    </wikiSpace>
+    <wikiSpace name="Parent of new home">
+      <wikiDocument name="WebHome">
+        <wikiDocumentLocale>
+          <p>
+            <parameters>
+              <entry>
+                <string>creation_author</string>
+                <string>XWiki.8a7f80897523097801753189db971e45</string>
+              </entry>
+              <entry>
+                <string>creation_date</string>
+                <date>2025-01-29 15:17:50.150 UTC</date>
+              </entry>
+              <entry>
+                <string>lastrevision</string>
+                <string>1</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiDocumentRevision revision="1">
+            <p>
+              <parameters>
+                <entry>
+                  <string>revision_author</string>
+                  <string>XWiki.8a7f80897523097801753189db971e45</string>
+                </entry>
+                <entry>
+                  <string>revision_date</string>
+                  <date>2025-01-29 15:18:12.893 UTC</date>
+                </entry>
+                <entry>
+                  <string>revision_comment</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>title</string>
+                  <string>Parent of new home</string>
+                </entry>
+                <entry>
+                  <string>content</string>
+                  <string>Parent of new home</string>
+                </entry>
+                <entry>
+                  <string>syntax</string>
+                  <org.xwiki.rendering.syntax.Syntax>
+                    <type>
+                      <name>XWiki</name>
+                      <id>xwiki</id>
+                      <variants class="empty-list"/>
+                    </type>
+                    <version>2.1</version>
+                  </org.xwiki.rendering.syntax.Syntax>
+                </entry>
+              </parameters>
+            </p>
+          </wikiDocumentRevision>
+        </wikiDocumentLocale>
+      </wikiDocument>
+    </wikiSpace>
+  </wikiSpace>
+  <wikiSpace name="Blog">
+    <wikiDocument name="WebHome">
+      <wikiObject name="Blog.BlogClass">
+        <p>
+          <parameters>
+            <entry>
+              <string>class_reference</string>
+              <string>Blog.BlogClass</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObjectProperty name="title" value="Blog"/>
+        <wikiObjectProperty name="postsLayout" value="image"/>
+        <wikiObjectProperty name="displayType" value="paginated"/>
+      </wikiObject>
+    </wikiDocument>
+    <wikiDocument name="Post 1">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.8a7f80897523097801753189db971e45</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2025-01-29 15:34:19.478 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>1</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="1">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.8a7f80897523097801753189db971e45</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2025-01-29 15:34:19.599 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Post 1</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="Blog.BlogPostClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>Blog.BlogPostClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="title" value="Post 1"/>
+            <wikiObjectProperty name="content"/>
+            <wikiObjectProperty name="publishDate">
+              <p>
+                <value t="java.util.Date">2025-01-29 15:34:19.599 UTC</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="published">
+              <p>
+                <value t="java.lang.Integer">1</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="hidden">
+              <p>
+                <value t="java.lang.Integer">0</value>
+              </p>
+            </wikiObjectProperty>
+          </wikiObject>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+    <wikiDocument name="Post 2">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.8a7f80897523097801753189db971e45</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2025-01-29 15:34:31.455 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>1</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="1">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.8a7f80897523097801753189db971e45</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2025-01-29 15:34:31.580 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Post 2</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="Blog.BlogPostClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>Blog.BlogPostClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="title" value="Post 2"/>
+            <wikiObjectProperty name="content"/>
+            <wikiObjectProperty name="publishDate">
+              <p>
+                <value t="java.util.Date">2025-01-29 15:34:31.580 UTC</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="published">
+              <p>
+                <value t="java.lang.Integer">1</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="hidden">
+              <p>
+                <value t="java.lang.Integer">0</value>
+              </p>
+            </wikiObjectProperty>
+          </wikiObject>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
+.configuration.orphanMode=NORMAL
+.configuration.source=orphans
+.#------------------------------------------------------------------------------

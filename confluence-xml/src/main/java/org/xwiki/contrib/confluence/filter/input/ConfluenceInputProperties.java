@@ -268,6 +268,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
 
     private boolean skipResolvedInlineComments;
 
+    private String orphanMode = "NORMAL";
+
     /**
      * @return The source to load the wiki from
      */
@@ -1356,6 +1358,29 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
         this.pageOrderEnabled = pageOrderEnabled;
     }
 
+    /**
+     * @return how to handle orphans
+     * @since 9.77.0
+     */
+    @PropertyName("Orphan mode")
+    @PropertyDescription("The mode to use for importing orphans. "
+        + "NORMAL: import like normal pages (default). "
+        + "HIDE: same, but hide them. "
+        + "DISCARD: don't import them at all."
+    )
+    public String getOrphanMode()
+    {
+        return orphanMode;
+    }
+
+    /**
+     * @param orphanMode how to handle orphans
+     * @since 9.77.0
+     */
+    public void setOrphanMode(String orphanMode)
+    {
+        this.orphanMode = orphanMode;
+    }
 
     /**
      * @return whether to send extraneous spaces
