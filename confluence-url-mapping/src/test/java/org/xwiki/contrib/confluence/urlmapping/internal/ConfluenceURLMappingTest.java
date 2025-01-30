@@ -32,6 +32,7 @@ import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.AttachmentReference;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.EntityReference;
+import org.xwiki.model.reference.LocalDocumentReference;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.block.WordBlock;
 import org.xwiki.resource.entity.EntityResourceAction;
@@ -46,7 +47,6 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.xwiki.contrib.confluence.urlmapping.internal.UrlMappingTestTools.assertFailedConversion;
@@ -54,6 +54,7 @@ import static org.xwiki.contrib.confluence.urlmapping.internal.UrlMappingTestToo
 @ComponentTest
 @ComponentList({
     ConfluenceAttachmentURLMapper.class,
+    ConfluenceHTMLURLMapper.class,
     ConfluencePageDisplayURLMapper.class,
     ConfluenceSpaceDisplayURLMapper.class,
     ConfluenceViewPageURLMapper.class,
@@ -114,7 +115,12 @@ class ConfluenceURLMappingTest
     @BeforeComponent
     void setup() throws ConfluenceResolverException
     {
-        when(suggestionUtils.getSuggestionsFromDocumentReference(any())).thenReturn(new WordBlock("mysuggestion"));
+        when(suggestionUtils.getSuggestionsFromDocumentReference(any())).thenAnswer(i -> {
+            if (((LocalDocumentReference) (i.getArgument(0))).getRoot().getName().equals("WithoutSuggestionSpace")) {
+                return null;
+            }
+            return new WordBlock("mysuggestion");
+        });
         when(confluencePageIdResolver.getDocumentById(42)).thenReturn(MY_DOC_REF);
         when(confluencePageTitleResolver.getDocumentByTitle(ConfluenceURLMappingTest.MY_SPACE, "My Doc"))
             .thenReturn(MY_DOC_REF);
@@ -174,6 +180,8 @@ class ConfluenceURLMappingTest
     @ValueSource(strings = {
         "spaces/MySpace/pages/42/my-page-title&param=thatwedontcareabout",
         "spaces/MySpace/pages/42/my-page-title",
+        "MySpace/my-page-title-42.html",
+        "pages/viewpage.action?spaceKey=MySpace&title=My+Doc",
         "pages/viewpage.action?pageId=42&param=thatwedontcareabout",
         "pages/viewpage.action?pageId=42"
     })
@@ -184,6 +192,19 @@ class ConfluenceURLMappingTest
         assertEquals("", converted.getURL());
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "pages/editpage.action?spaceKey=MySpace&title=My+Doc",
+        "pages/editpage.action?pageId=42&param=thatwedontcareabout",
+        "pages/editpage.action?pageId=42"
+    })
+    void convertEditPageActionURL(String path)
+    {
+        URLMappingResult converted = handler.convert(path, GET, null);
+        EntityResourceReference edit = new EntityResourceReference(MY_DOC_REF, new EntityResourceAction("edit"));
+        assertEquals(edit, converted.getResourceReference());
+        assertEquals("", converted.getURL());
+    }
 
     @ParameterizedTest
     @ValueSource(strings = {
@@ -226,6 +247,10 @@ class ConfluenceURLMappingTest
     @ParameterizedTest
     @ValueSource(strings = {
         "pages/viewpage.action?pageId=1337",
+        "pages/viewpage.action?spaceKey=WithoutSuggestionSpace&title=unknowntitle",
+        "WithoutSuggestionSpace/my-not-found-page-title-1337.html",
+        "display/WithoutSuggestionSpace",
+        "display/WithoutSuggestionSpace/My+Doc",
         "download/thumbnails/43/hello+world.txt",
         "download/attachments/43/hello+world.txt"
     })
@@ -238,6 +263,8 @@ class ConfluenceURLMappingTest
     @ParameterizedTest
     @ValueSource(strings = {
         "spaces/MyUnknownSpace/pages/1337/my-not-found-page-title",
+        "pages/viewpage.action?spaceKey=MyUnknownSpace&title=my-not-found-page-title",
+        "MyUnknownSpace/my-not-found-page-title-1337.html",
         "display/MyUnknownSpace",
         "display/MyUnknownSpace/My+Doc",
         "display/MySpace/My+Unknown+Doc"

@@ -17,35 +17,51 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.confluence.urlmapping.scrollviewport.internal;
+package org.xwiki.contrib.confluence.urlmapping.internal;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.confluence.urlmapping.internal.AbstractIDConfluenceURLMapper;
+import org.xwiki.contrib.urlmapping.DefaultURLMappingMatch;
+import org.xwiki.contrib.urlmapping.suggestions.URLMappingSuggestionUtils;
+import org.xwiki.model.reference.LocalDocumentReference;
+import org.xwiki.rendering.block.Block;
 import org.xwiki.stability.Unstable;
 
 /**
- * URL Mapper for Scroll viewport confluence extension URLs. This implementation do only the mapping for the flat
- * structure. The description of the URL is described
- * <a href="https://help.k15t.com/scroll-viewport-data-center/2.22.0/configure-scroll-viewport">here</a>
- *
+ * URL Mapper for Confluence pages with the .html extension ending with the page id.
+ * @since 9.77.0
  * @version $Id$
- * @since 9.65.0
  */
 @Component
 @Unstable
 @Singleton
-@Named("scrollViewportFlat")
-public class ConfluenceScrollViewportFlatURLMapper extends AbstractIDConfluenceURLMapper
+@Named("html")
+public class ConfluenceHTMLURLMapper extends AbstractIDConfluenceURLMapper
 {
+    @Inject
+    private URLMappingSuggestionUtils suggestionUtils;
+
     /**
      * Constructor.
      */
-    public ConfluenceScrollViewportFlatURLMapper()
+    public ConfluenceHTMLURLMapper()
     {
-        super("^(?!(" + String.join("|", ConfluenceScrollViewportUtils.EXCLUDED_PREFIX_LIST) + ")/)"
-            + "(.*/)*[\\w\\-]+-(?<pageId>\\d+)\\.html(\\?(?<params>.*))?$");
+        super("(?<prefix>.*)-(?<pageId>\\d+).html");
+    }
+
+    @Override
+    protected Block getSuggestions(DefaultURLMappingMatch match)
+    {
+        String prefix = match.getMatcher().group("prefix");
+        String[] parts = StringUtils.split(prefix, '/');
+        if (parts.length == 2) {
+            return suggestionUtils.getSuggestionsFromDocumentReference(new LocalDocumentReference(parts[0], parts[1]));
+        }
+
+        return null;
     }
 }

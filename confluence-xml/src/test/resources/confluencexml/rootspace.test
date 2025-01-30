@@ -21,6 +21,14 @@
 
 [[(% param="value" %)link2>>doc:Composed.Root.OtherSpace.Other Page.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link2>>doc:Composed.Root.OtherSpace.Other Page.WebHome||shape="rect"]]
 
+[[(% param="value" %)link>>doc:Composed.Root.OtherSpace.Other Page.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link>>doc:Composed.Root.OtherSpace.Other Page.WebHome||shape="rect"]]
+
+[[(% param="value" %)link>>confluencePage:page:NotFound.Other Page#anchor||shape="rect"]]
+
+[[(% param="value" %)link>>doc:Composed.Root.OtherSpace.Other Page.WebHome||shape="rect"]]
+
+[[(% param="value" %)link>>doc:Composed.Root.validatedspace.validatedpage.WebHome||shape="rect"]]
+
 [[(% param="value" %)link3>>attach:Composed.Root.OtherSpace.Other Page.WebHome@attachment.png||shape="rect"]](%%) [[(% param="value" %)link3>>attach:Composed.Root.OtherSpace.Other Page.WebHome@attachment.png||shape="rect"]]
 
 [[(% param="value" %)link3 bis>>attach:Composed.Root.OtherSpace.Other Page.WebHome@attachment.png||shape="rect"]](%%) [[(% param="value" %)link3 bis>>attach:Composed.Root.OtherSpace.Other Page.WebHome@attachment.png||shape="rect"]]

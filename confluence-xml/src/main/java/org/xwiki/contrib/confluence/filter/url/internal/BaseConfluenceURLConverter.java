@@ -37,10 +37,10 @@ import java.net.URLDecoder;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -59,8 +59,9 @@ public class BaseConfluenceURLConverter extends AbstractConfluenceURLConverter
 {
     private static final Pattern PATTERN_URL_DISPLAY = Pattern.compile("^display/([^/?]+)/([^?/#]+)(\\?.*)?$");
 
-    private static final Pattern PATTERN_URL_VIEWPAGE =
-        Pattern.compile("^pages/viewpage.action\\?pageId=(\\d+)(&.*)?$");
+    private static final Pattern PATTERN_URL_VIEWPAGE = Pattern.compile("^pages/viewpage.action\\?.*$");
+
+    private static final Pattern PATTERN_URL_HTML = Pattern.compile("^.*-(\\d+).html$");
 
     private static final Pattern PATTERN_TINY_LINK = Pattern.compile("^x/([^?#]+)(\\?.*)?$");
 
@@ -112,32 +113,27 @@ public class BaseConfluenceURLConverter extends AbstractConfluenceURLConverter
         return ByteBuffer.wrap(decoded).order(ByteOrder.LITTLE_ENDIAN).getLong();
     }
 
-    private ResourceReference convertPageIdToResourceReference(List<String[]> urlParameters, String urlAnchor,
-        long pageId)
-    {
-        // Clean id parameter
-        urlParameters.removeIf(parameter -> parameter[0].equals("pageId"));
-        return converter.getResourceReference(pageId, "", urlAnchor);
-    }
-
-    private List<String[]> parseURLParameters(String queryString)
+    private Map<String, String> parseURLParameters(String queryString)
     {
         if (queryString == null) {
-            return Collections.emptyList();
+            return Collections.emptyMap();
         }
 
         String[] elements = StringUtils.split(queryString, '&');
 
-        List<String[]> parameters = new ArrayList<>(elements.length);
+        Map<String, String> parameters = new HashMap<>(elements.length);
 
         for (String element : elements) {
-            parameters.add(StringUtils.split(element, '='));
+            String[] p = StringUtils.split(element, "=", 2);
+            if (p.length == 2) {
+                parameters.put(p[0], p[1].replace('+', ' '));
+            }
         }
 
         return parameters;
     }
 
-    private ResourceReference fixReference(String path, List<String[]> urlParameters, String urlAnchor)
+    private ResourceReference fixReference(String path, Map<String, String> urlParameters, String urlAnchor)
     {
         return ObjectUtils.firstNonNull(
             // Try /display
@@ -148,8 +144,24 @@ public class BaseConfluenceURLConverter extends AbstractConfluenceURLConverter
 
             // Try viewpage.action
             tryPattern(PATTERN_URL_VIEWPAGE, path, matcher -> {
+                String pageId = urlParameters.get("pageId");
+                if (StringUtils.isNotEmpty(pageId)) {
+                    return converter.getResourceReference(Long.parseLong(pageId), "", urlAnchor);
+                }
+
+                String spaceKey = urlParameters.get("spaceKey");
+                String pageTitle = urlParameters.get("title");
+                if (StringUtils.isNotEmpty(pageTitle) && StringUtils.isNotEmpty(spaceKey)) {
+                    return converter.getResourceReference(spaceKey, pageTitle, "", urlAnchor);
+                }
+
+                return null;
+            }),
+
+            // Try cute html page
+            tryPattern(PATTERN_URL_HTML, path, matcher -> {
                 long pageId = Long.parseLong(matcher.group(1));
-                return convertPageIdToResourceReference(urlParameters, urlAnchor, pageId);
+                return converter.getResourceReference(pageId, "", urlAnchor);
             }),
 
             // Try short URL
@@ -162,7 +174,7 @@ public class BaseConfluenceURLConverter extends AbstractConfluenceURLConverter
                     return null;
                 }
 
-                return convertPageIdToResourceReference(urlParameters, urlAnchor, pageId);
+                return converter.getResourceReference(pageId, "", urlAnchor);
             }),
 
             // Try attachments
@@ -189,7 +201,7 @@ public class BaseConfluenceURLConverter extends AbstractConfluenceURLConverter
             return null;
         }
 
-        List<String[]> urlParameters = parseURLParameters(uri.getQuery());
+        Map<String, String> urlParameters = parseURLParameters(uri.getQuery());
         String urlAnchor = uri.getFragment();
 
         return fixReference(path, urlParameters, urlAnchor);
