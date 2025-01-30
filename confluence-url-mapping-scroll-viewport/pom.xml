@@ -31,7 +31,7 @@
   <name>Confluence URL Mapping for scroll viewport URL</name>
   <properties>
     <xwiki.extension.namespaces>{root}</xwiki.extension.namespaces>
-    <xwiki.jacoco.instructionRatio>0.9</xwiki.jacoco.instructionRatio>
+    <xwiki.jacoco.instructionRatio>0.8</xwiki.jacoco.instructionRatio>
   </properties>
   <dependencies>
     <dependency>

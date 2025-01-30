@@ -27,6 +27,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
@@ -82,7 +83,7 @@ public class ConfluenceScrollViewportHierarchicalURLMapper extends AbstractURLMa
     public ConfluenceScrollViewportHierarchicalURLMapper()
     {
         super("^(?!(" + String.join("|", ConfluenceScrollViewportUtils.EXCLUDED_PREFIX_LIST) + ")/)"
-            + "(?<fullPath>([\\w-]+/)+([\\w-]+))(\\?(?<params>.*))?$");
+            + "(?<fullPath>([\\w-]+/)+([\\w-]+))/?(\\?(?<params>.*))?$");
     }
 
     @Override
@@ -99,6 +100,11 @@ public class ConfluenceScrollViewportHierarchicalURLMapper extends AbstractURLMa
             String pathPrefixValue = entry.getKey();
             String spaceName = entry.getValue();
             String pathWithoutPrefix = fullPath.substring(pathPrefixValue.length());
+            if (StringUtils.isEmpty(pathWithoutPrefix)) {
+                // We are in space root case, for this URL we should use the
+                // ConfluenceScrollViewportSpaceRootURLMapper
+                return null;
+            }
             String documentReferenceSuffix = pathWithoutPrefix.replace('/', '.') + ".webhome";
             String hql = "SELECT doc.fullName "
                 + "FROM XWikiDocument as doc, BaseObject as obj, StringProperty as prop "

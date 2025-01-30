@@ -1,2 +1,3 @@
 org.xwiki.contrib.confluence.urlmapping.scrollviewport.internal.ConfluenceScrollViewportFlatURLMapper
 org.xwiki.contrib.confluence.urlmapping.scrollviewport.internal.ConfluenceScrollViewportHierarchicalURLMapper
+org.xwiki.contrib.confluence.urlmapping.scrollviewport.internal.ConfluenceScrollViewportSpaceRootURLMapper

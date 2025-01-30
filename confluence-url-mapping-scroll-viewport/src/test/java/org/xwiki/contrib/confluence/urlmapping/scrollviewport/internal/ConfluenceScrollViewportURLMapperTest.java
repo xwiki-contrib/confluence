@@ -29,12 +29,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollViewportSpacePrefixResolver;
+import org.xwiki.contrib.confluence.resolvers.ConfluenceSpaceKeyResolver;
 import org.xwiki.contrib.confluence.urlmapping.internal.ConfluenceURLMappingPrefixHandler;
 import org.xwiki.contrib.urlmapping.URLMappingResult;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.DocumentReferenceResolver;
 import org.xwiki.model.reference.WikiReference;
 import org.xwiki.query.Query;
+import org.xwiki.query.QueryException;
 import org.xwiki.query.QueryManager;
 import org.xwiki.query.QueryParameter;
 import org.xwiki.resource.entity.EntityResourceAction;
@@ -57,6 +59,7 @@ import static org.xwiki.contrib.confluence.urlmapping.internal.UrlMappingTestToo
 @ComponentList({
     ConfluenceScrollViewportFlatURLMapper.class,
     ConfluenceScrollViewportHierarchicalURLMapper.class,
+    ConfluenceScrollViewportSpaceRootURLMapper.class
 })
 public class ConfluenceScrollViewportURLMapperTest
 {
@@ -76,8 +79,17 @@ public class ConfluenceScrollViewportURLMapperTest
         WEB_HOME
     );
 
+    private static final DocumentReference MY_DOC_REF_ROOT = new DocumentReference(
+        XWIKI,
+        List.of(MIGRATION_ROOT, MY_SPACE),
+        WEB_HOME
+    );
+
     private static final EntityResourceReference DOC_RR = new EntityResourceReference(
         MY_DOC_REF, EntityResourceAction.VIEW);
+
+    private static final EntityResourceReference DOC_RR_ROOT = new EntityResourceReference(
+        MY_DOC_REF_ROOT, EntityResourceAction.VIEW);
 
     @InjectMockComponents
     private ConfluenceURLMappingPrefixHandler handler;
@@ -93,6 +105,9 @@ public class ConfluenceScrollViewportURLMapperTest
 
     @MockComponent
     private ConfluenceScrollViewportSpacePrefixResolver spacePrefixResolver;
+
+    @MockComponent
+    private ConfluenceSpaceKeyResolver confluenceSpaceKeyResolver;
 
     @MockComponent
     private DocumentReferenceResolver<String> resolver;
@@ -113,20 +128,25 @@ public class ConfluenceScrollViewportURLMapperTest
         when(queryParameter.anyChars()).thenReturn(queryParameter);
         when(queryParameter.query()).thenReturn(mockQuery);
         when(queryParameter.literal(anyString())).thenReturn(queryParameter);
-        when(spacePrefixResolver.getSpaceAndPrefixForUrl("prefix/a/myspace/mydoc/webhome")).thenReturn(
-            new AbstractMap.SimpleImmutableEntry<>("prefix/a", "mySpace"));
+        when(spacePrefixResolver.getSpaceAndPrefixForUrl("my/spaceprefix/basedoc/mydoc/child-doc")).thenReturn(
+            new AbstractMap.SimpleImmutableEntry<>("my/spaceprefix", "mySpace"));
+        when(spacePrefixResolver.getSpaceAndPrefixForUrl("my/spaceprefix")).thenReturn(
+            new AbstractMap.SimpleImmutableEntry<>("my/spaceprefix", "mySpace"));
+        when(spacePrefixResolver.getSpaceAndPrefixForUrl("otherspaceprefix")).thenReturn(
+            new AbstractMap.SimpleImmutableEntry<>("otherspaceprefix", "mySpace"));
         when(wikiDescriptorManager.getAllIds()).thenReturn(Arrays.asList("xwiki", "sub"));
         when(resolver.resolve(anyString(), any())).thenAnswer(i -> {
             List<String> spaceList = new ArrayList<String>(Arrays.asList(((String) i.getArgument(0)).split("\\.")));
             String pageName = spaceList.remove(spaceList.size() - 1);
             return new DocumentReference(((WikiReference) i.getArgument(1)).getName(), spaceList, pageName);
         });
+        when(confluenceSpaceKeyResolver.getSpaceByKey("mySpace")).thenReturn(MY_DOC_REF_ROOT);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {
         "prefix/a/1/page-ho-42.html?param=thatwedontcareabout",
-        "prefix/a/1/page-ho-42.html"
+        "prefix/a/1/page-ho-42.html",
     })
     void convertViewportFlatURL(String path)
     {
@@ -137,14 +157,30 @@ public class ConfluenceScrollViewportURLMapperTest
 
     @ParameterizedTest
     @ValueSource(strings = {
-        "prefix/a/myspace/mydoc/webhome?param=thatwedontcareabout",
-        "prefix/a/myspace/mydoc/webhome"
+        "my/spaceprefix/basedoc/mydoc/child-doc?param=thatwedontcareabout",
+        "my/spaceprefix/basedoc/mydoc/child-doc",
+        "my/spaceprefix/basedoc/mydoc/child-doc/",
     })
     void convertViewportHierarchicalURL(String path) throws Exception
     {
         when(mockQuery.<String>execute()).thenReturn(Collections.singletonList("MigrationRoot.MySpace.MyDoc.WebHome"));
         URLMappingResult converted = handler.convert(path, GET, null);
         assertEquals(DOC_RR, converted.getResourceReference());
+        assertEquals("", converted.getURL());
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {
+        "my/spaceprefix",
+        "my/spaceprefix/",
+        "otherspaceprefix",
+        "otherspaceprefix/",
+    })
+    void convertViewportRootURL(String path) throws QueryException
+    {
+        when(mockQuery.<String>execute()).thenReturn(Collections.singletonList("MigrationRoot.MySpace.WebHome"));
+        URLMappingResult converted = handler.convert(path, GET, null);
+        assertEquals(DOC_RR_ROOT, converted.getResourceReference());
         assertEquals("", converted.getURL());
     }
 
