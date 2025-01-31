@@ -1342,10 +1342,6 @@ public class ConfluenceInputFilterStream
             documentParameters.put(WikiDocumentFilter.PARAMETER_LOCALE, this.properties.getDefaultLocale());
         }
 
-        if (hide) {
-            documentParameters.put(WikiDocumentFilter.PARAMETER_HIDDEN, true);
-        }
-
         String spaceName = confluenceConverter.toEntityName(title);
 
         List<Long> children = blog ? Collections.emptyList() : confluencePackage.getPageChildren(pageId);
@@ -1363,7 +1359,7 @@ public class ConfluenceInputFilterStream
 
         try {
             Collection<ConfluenceRight> inheritedRights = sendTerminalDoc(blog, filter, proxyFilter, documentName,
-                documentParameters, pageProperties, spaceKey, isHomePage, children);
+                documentParameters, pageProperties, spaceKey, isHomePage, children, hide);
 
             if (isHomePage) {
                 // We only send inherited rights of the home page so they are added to the space's WebPreference page
@@ -1390,7 +1386,8 @@ public class ConfluenceInputFilterStream
 
     private Collection<ConfluenceRight> sendTerminalDoc(boolean blog, Object filter, ConfluenceFilter proxyFilter,
         String documentName, FilterEventParameters documentParameters, ConfluenceProperties pageProperties,
-        String spaceKey, boolean isHomePage, List<Long> children) throws FilterException, ConfluenceCanceledException
+        String spaceKey, boolean isHomePage, List<Long> children, boolean hide)
+            throws FilterException, ConfluenceCanceledException
     {
         this.progress.startStep(this);
         // > WikiDocument
@@ -1399,7 +1396,7 @@ public class ConfluenceInputFilterStream
         Collection<ConfluenceRight> inheritedRights = blog ? null : new ArrayList<>();
         try {
             if (this.properties.isContentsEnabled() || this.properties.isRightsEnabled()) {
-                sendRevisions(blog, filter, proxyFilter, pageProperties, spaceKey, inheritedRights);
+                sendRevisions(blog, filter, proxyFilter, pageProperties, spaceKey, inheritedRights, hide);
             }
         } finally {
             // < WikiDocument
@@ -1447,7 +1444,7 @@ public class ConfluenceInputFilterStream
     }
 
     private void sendRevisions(boolean blog, Object filter, ConfluenceFilter proxyFilter,
-        ConfluenceProperties pageProperties, String spaceKey, Collection<ConfluenceRight> inheritedRights)
+        ConfluenceProperties pageProperties, String spaceKey, Collection<ConfluenceRight> inheritedRights, boolean hide)
         throws FilterException, ConfluenceCanceledException
     {
         Locale locale = Locale.ROOT;
@@ -1472,7 +1469,8 @@ public class ConfluenceInputFilterStream
                         }
 
                         try {
-                            readPageRevision(revisionProperties, blog, filter, proxyFilter, spaceKey, inheritedRights);
+                            readPageRevision(revisionProperties, blog, filter, proxyFilter, spaceKey, inheritedRights,
+                                hide);
                         } catch (Exception e) {
                             logger.error("Failed to filter the page revision with id [{}]",
                                 createPageIdentifier(revisionId, spaceKey), e);
@@ -1485,7 +1483,7 @@ public class ConfluenceInputFilterStream
             // Current version
             // Note: no need to check whether the object should be sent. Indeed, this is already checked by an upper
             // function
-            readPageRevision(pageProperties, blog, filter, proxyFilter, spaceKey, inheritedRights);
+            readPageRevision(pageProperties, blog, filter, proxyFilter, spaceKey, inheritedRights, hide);
         } finally {
             // < WikiDocumentLocale
             proxyFilter.endWikiDocumentLocale(locale, documentLocaleParameters);
@@ -1680,8 +1678,8 @@ public class ConfluenceInputFilterStream
     }
 
     private void readPageRevision(ConfluenceProperties pageProperties, boolean blog, Object filter,
-        ConfluenceFilter proxyFilter, String spaceKey, Collection<ConfluenceRight> inheritedRights)
-        throws FilterException
+        ConfluenceFilter proxyFilter, String spaceKey, Collection<ConfluenceRight> inheritedRights,
+        boolean hide) throws FilterException
     {
         // beware. Here, pageProperties might not have a space key. You need to use the one passed in parameters
         // FIXME we could ensure it though with some work
@@ -1699,6 +1697,9 @@ public class ConfluenceInputFilterStream
         String revision = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION, pageId.toString());
 
         FilterEventParameters docRevisionParameters = new FilterEventParameters();
+        if (hide) {
+            docRevisionParameters.put(WikiDocumentFilter.PARAMETER_HIDDEN, true);
+        }
 
         prepareRevisionMetadata(pageProperties, docRevisionParameters);
 
