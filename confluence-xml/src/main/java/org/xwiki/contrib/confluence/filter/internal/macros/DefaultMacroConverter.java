@@ -63,7 +63,7 @@ public class DefaultMacroConverter extends AbstractMacroConverter
             try {
                 return this.componentManager.getInstance(MacroConverter.class, macroId);
             } catch (ComponentLookupException e) {
-                this.logger.error("Failed to lookup converter for macro [{}] ", macroId);
+                this.logger.error("Failed to lookup converter for macro [{}] ", macroId, e);
             }
             return null;
         }
