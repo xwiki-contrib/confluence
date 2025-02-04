@@ -229,7 +229,9 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("ri:url", new URLTagHandler());
 
         handlers.put("ac:link", new LinkTagHandler(refConverter));
-        handlers.put("ri:page", new PageTagHandler());
+        PageTagHandler pageTagHandler = new PageTagHandler();
+        handlers.put("ri:page", pageTagHandler);
+        handlers.put("ri:blog-post", pageTagHandler);
         handlers.put("ri:space", new SpaceTagHandler(refConverter));
         handlers.put("ri:user", new UserTagHandler(refConverter));
         handlers.put("ac:plain-text-link-body", new PlainTextLinkBodyTagHandler());

@@ -1,7 +1,7 @@
 .#------------------------------------------------------------------------------
 .expect|filter+xml
 .# Test that Blog space is created under the imported space
-.# Test that Blog descritor page is created
+.# Test that Blog descriptor page is created
 .# Test that Blog post is created
 .#------------------------------------------------------------------------------
 <wikiSpace name="SpaceA">
@@ -44,7 +44,9 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>Hello! [[Link to blog post>>doc:SpaceA.Blog post]]</string>
+              <string>Hello! [[Link to blog post>>doc:SpaceA.Blog.Blog post]]
+
+[[doc:SpaceA.Blog.Blog post]]</string>
             </entry>
             <entry>
               <string>syntax</string>

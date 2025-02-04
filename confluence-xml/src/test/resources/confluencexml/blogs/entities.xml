@@ -1102,7 +1102,10 @@
 </object>
 <object class="BodyContent" package="com.atlassian.confluence.core">
 <id name="id">2616328495</id>
-<property name="body"><![CDATA[<p>Hello! <ac:link ac:card-appearance="inline"><ri:page ri:content-title="Blog post" ri:version-at-save="1" /><ac:link-body>Link to blog post</ac:link-body></ac:link></p>]]></property>
+<property name="body"><![CDATA[<p>Hello!
+  <ac:link ac:card-appearance="inline"><ri:page ri:content-title="Blog post" ri:version-at-save="1" /><ac:link-body>Link to blog post</ac:link-body></ac:link></p>
+  <ac:link><ri:blog-post ri:content-title="Blog post" ri:posting-day="2023/09/27" /></ac:link>
+]]></property>
 <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">2616328494</id>
 </property>
 <property name="bodyType">2</property>

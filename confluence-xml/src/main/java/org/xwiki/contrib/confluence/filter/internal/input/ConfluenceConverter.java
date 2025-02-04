@@ -618,6 +618,9 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
         String convertedName = toEntityName(pageTitle);
         boolean isBlogPost = pageProperties.getBoolean(ConfluenceXMLPackage.KEY_PAGE_BLOGPOST, false);
+        if (isBlogPost) {
+            parent = new EntityReference(context.getProperties().getBlogSpaceName(), EntityType.SPACE, parent);
+        }
         return getDocumentReference(newEntityReference(convertedName, EntityType.SPACE, parent), asSpace, isBlogPost);
     }
 
