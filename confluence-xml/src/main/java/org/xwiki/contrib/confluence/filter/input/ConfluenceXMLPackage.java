@@ -114,6 +114,20 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String FILE_DESCRIPTOR = "exportDescriptor.properties";
 
     /**
+     * The property key to access the object class.
+     * 
+     * @since 9.78.0
+     */
+    public static final String KEY_CLASS = "class";
+
+    /**
+     * The property key to access the content.
+     * 
+     * @since 9.78.0
+     */
+    public static final String KEY_CONTENT = "content";
+
+    /**
      * The property key to access the space name.
      */
     public static final String KEY_SPACE_NAME = "name";
@@ -174,6 +188,28 @@ public class ConfluenceXMLPackage implements AutoCloseable
      * @since 9.24.0
      */
     public static final String KEY_PERMISSION_USERSUBJECT = "userSubject";
+
+    /**
+     * The property key to access the label name.
+     */
+    public static final String KEY_LABEL_NAME = KEY_SPACE_NAME;
+
+    /**
+     * The property key to access the page labellings.
+     * 
+     * @since 9.78.0
+     */
+    public static final String KEY_LABELLINGS = "labellings";
+
+    /**
+     * The property key to access the label id.
+     */
+    public static final String KEY_LABELLING_LABEL = "label";
+
+    /**
+     * The property key to access the page id to which the label is attached.
+     */
+    public static final String KEY_LABELLING_CONTENT = KEY_CONTENT;
 
     /**
      * The property key to access the space permission username.
@@ -273,9 +309,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String KEY_PAGE_BODY_TYPE = "bodyType";
 
     /**
-     * The property key to access the page lebellings.
+     * The property key to access the page labellings.
+     * @deprecated use {@value #KEY_LABELLINGS} instead
      */
-    public static final String KEY_PAGE_LABELLINGS = "labellings";
+    @Deprecated(since = "9.78.0")
+    public static final String KEY_PAGE_LABELLINGS = KEY_LABELLINGS;
 
     /**
      * Old property key to access the page comments.
@@ -309,7 +347,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
      *
      * @see #KEY_ATTACHMENT_CONTAINERCONTENT
      */
-    public static final String KEY_ATTACHMENT_CONTENT = "content";
+    public static final String KEY_ATTACHMENT_CONTENT = KEY_CONTENT;
 
     /**
      * Field containing content property page id or attachment id or comment id.
@@ -439,21 +477,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
      * Note that we don't keep it in our internal representation currently.
      */
     public static final String KEY_BODY_CONTENT_CONTENT = KEY_ATTACHMENT_CONTENT;
-
-    /**
-     * The property key to access the label name.
-     */
-    public static final String KEY_LABEL_NAME = KEY_SPACE_NAME;
-
-    /**
-     * The property key to access the label id.
-     */
-    public static final String KEY_LABELLING_LABEL = "label";
-
-    /**
-     * The property key to access the page id to which the label is attached.
-     */
-    public static final String KEY_LABELLING_CONTENT = KEY_ATTACHMENT_CONTENT;
 
     /**
      * The property key to access the group name.
@@ -619,6 +642,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private static final String OBJECT_TYPE_SPACE = "Space";
 
+    private static final String OBJECT_TYPE_SPACE_DESCRIPTION = "SpaceDescription";
+
     private static final String OBJECT_TYPE_PAGE = "Page";
 
     private static final String OBJECT_TYPE_BLOG_POST = "BlogPost";
@@ -663,6 +688,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
         OBJECT_TYPE_LABELLING,
         OBJECT_TYPE_PAGE,
         OBJECT_TYPE_SPACE,
+        OBJECT_TYPE_SPACE_DESCRIPTION,
         OBJECT_TYPE_SPACE_PERMISSION
     ));
 
@@ -682,7 +708,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private static final String PROPERTY_CLASS_SUFFIX = "--class";
 
-    private static final String ATTRIBUTE_CLASS = "class";
+    private static final String ATTRIBUTE_CLASS = KEY_CLASS;
     private static final String COLLECTION = "collection";
     private static final String PROPERTY = "property";
     private static final String KEY = KEY_SPACE_KEY;
@@ -1361,6 +1387,41 @@ public class ConfluenceXMLPackage implements AutoCloseable
         }
     }
 
+    private void setClass(String className, ConfluenceProperties properties)
+    {
+        properties.setProperty(KEY_CLASS, className);
+    }
+
+    /**
+     * @param properties the objet properties
+     * @return the name of the object class represented by the passed properties
+     * @since 9.78.0
+     */
+    public String getClass(ConfluenceProperties properties)
+    {
+        return (String) properties.getProperty(KEY_CLASS);
+    }
+
+    /**
+     * @param properties the object properties
+     * @return true of the passed properties are those of a space
+     * @since 9.78.0
+     */
+    public boolean isSpace(ConfluenceProperties properties)
+    {
+        return OBJECT_TYPE_SPACE.equals(getClass(properties));
+    }
+
+    /**
+     * @param pageProperties the properties of a page
+     * @return true of the passed properties are those of the home page of a space
+     * @since 9.78.0
+     */
+    public boolean isHomePage(ConfluenceProperties pageProperties)
+    {
+        return pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE);
+    }
+
     private void readObject(XMLStreamReader xmlReader)
         throws XMLStreamException, ConfigurationException, FilterException, ConfluenceCanceledException
     {
@@ -1368,55 +1429,56 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         String type = xmlReader.getAttributeValue(null, ATTRIBUTE_CLASS);
 
-        if (type == null) {
-            return;
-        }
-
-        switch (type) {
-            case OBJECT_TYPE_PAGE:
-                readPageObject(xmlReader);
-                break;
-            case OBJECT_TYPE_SPACE:
-                readSpaceObject(xmlReader);
-                break;
-            case OBJECT_TYPE_INTERNAL_USER:
-                readInternalUserObject(xmlReader);
-                break;
-            case OBJECT_TYPE_CONFLUENCE_USER_IMPL:
-                readUserImplObject(xmlReader);
-                break;
-            case OBJECT_TYPE_INTERNAL_GROUP:
-                readGroupObject(xmlReader);
-                break;
-            case OBJECT_TYPE_HIBERNATE_MEMBERSHIP:
-                readMembershipObject(xmlReader);
-                break;
-            case OBJECT_TYPE_BODY_CONTENT:
-                readBodyContentObject(xmlReader);
-                break;
-            case OBJECT_TYPE_SPACE_PERMISSION:
-                readSpacePermissionObject(xmlReader);
-                break;
-            case OBJECT_TYPE_CONTENT_PERMISSION:
-                readContentPermissionObject(xmlReader);
-                break;
-            case OBJECT_TYPE_CONTENT_PERMISSION_SET:
-                readContentPermissionSetObject(xmlReader);
-                break;
-            case OBJECT_TYPE_ATTACHMENT:
-                readAttachmentObject(xmlReader);
-                break;
-            case OBJECT_TYPE_COMMENT:
-                readCommentObject(xmlReader);
-                break;
-            case OBJECT_TYPE_BLOG_POST:
-                readBlogPostObject(xmlReader);
-                break;
-            case OBJECT_TYPE_LABELLING:
-                readLabellingObject(xmlReader);
-                break;
-            default:
-                readGenericObject(xmlReader);
+        if (type != null) {
+            switch (type) {
+                case OBJECT_TYPE_PAGE:
+                    readPageObject(xmlReader);
+                    break;
+                case OBJECT_TYPE_SPACE:
+                    readSpaceObject(xmlReader);
+                    break;
+                case OBJECT_TYPE_SPACE_DESCRIPTION:
+                    readSpaceDescriptorObject(xmlReader);
+                    break;
+                case OBJECT_TYPE_INTERNAL_USER:
+                    readInternalUserObject(xmlReader);
+                    break;
+                case OBJECT_TYPE_CONFLUENCE_USER_IMPL:
+                    readUserImplObject(xmlReader);
+                    break;
+                case OBJECT_TYPE_INTERNAL_GROUP:
+                    readGroupObject(xmlReader);
+                    break;
+                case OBJECT_TYPE_HIBERNATE_MEMBERSHIP:
+                    readMembershipObject(xmlReader);
+                    break;
+                case OBJECT_TYPE_BODY_CONTENT:
+                    readBodyContentObject(xmlReader);
+                    break;
+                case OBJECT_TYPE_SPACE_PERMISSION:
+                    readSpacePermissionObject(xmlReader);
+                    break;
+                case OBJECT_TYPE_CONTENT_PERMISSION:
+                    readContentPermissionObject(xmlReader);
+                    break;
+                case OBJECT_TYPE_CONTENT_PERMISSION_SET:
+                    readContentPermissionSetObject(xmlReader);
+                    break;
+                case OBJECT_TYPE_ATTACHMENT:
+                    readAttachmentObject(xmlReader);
+                    break;
+                case OBJECT_TYPE_COMMENT:
+                    readCommentObject(xmlReader);
+                    break;
+                case OBJECT_TYPE_BLOG_POST:
+                    readBlogPostObject(xmlReader);
+                    break;
+                case OBJECT_TYPE_LABELLING:
+                    readLabellingObject(xmlReader);
+                    break;
+                default:
+                    readGenericObject(xmlReader);
+            }
         }
     }
 
@@ -1533,22 +1595,32 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private ConfluenceProperties getParentObjectByType(String type, Long id) throws ConfigurationException
     {
+        ConfluenceProperties properties = null;
+
         switch (type) {
             case OBJECT_TYPE_SPACE:
-                return getSpaceProperties(id);
+                properties = getSpaceProperties(id);
+                break;
+            case OBJECT_TYPE_SPACE_DESCRIPTION:
+                properties = getSpaceDescriptorProperties(id, true);
+                break;
             case OBJECT_TYPE_PAGE:
             case OBJECT_TYPE_BLOG_POST:
-                return getPageProperties(id, true);
+                properties = getPageProperties(id, true);
+                break;
             case OBJECT_TYPE_CONTENT_PERMISSION_SET:
-                return getContentPermissionSetProperties(id);
+                properties = getContentPermissionSetProperties(id);
+                break;
             case OBJECT_TYPE_COMMENT:
-                return getObjectProperties(FOLDER_OBJECTS, id.toString(), true);
+                properties = getObjectProperties(FOLDER_OBJECTS, id.toString(), true);
+                break;
             default:
                 logger.error(
                     "Unexpected type [{}] for parent object id [{}]. This is a bug in confluence-xml, please report.",
                     type, id);
         }
-        return null;
+
+        return properties;
     }
 
     private Long getAttachmentPageId(ConfluenceProperties properties)
@@ -1595,6 +1667,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
         throws XMLStreamException, FilterException, ConfigurationException
     {
         ConfluenceProperties properties = new ConfluenceProperties();
+
+        setClass(OBJECT_TYPE_SPACE, properties);
 
         long spaceId = readObjectProperties(xmlReader, properties);
         String spaceKey = properties.getString(KEY_SPACE_KEY);
@@ -1699,7 +1773,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
         // We save properties of the body content object in the corresponding page object.
         Long parentId = properties.getLong(KEY_BODY_CONTENT_CONTENT, null);
         if (parentId != null) {
-            String className = getPropertyClass(properties);
+            String className = getBodyPropertyClass(properties);
             if (className == null) {
                 // Nothing to lose at this point... should not happen.
                 className = OBJECT_TYPE_PAGE;
@@ -1724,7 +1798,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
         }
     }
 
-    private static String getPropertyClass(ConfluenceProperties properties)
+    private static String getBodyPropertyClass(ConfluenceProperties properties)
     {
         return properties.getString(KEY_BODY_CONTENT_CONTENT + PROPERTY_CLASS_SUFFIX, null);
     }
@@ -1732,6 +1806,23 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private static void setPropertyClass(ConfluenceProperties properties, String attributeName, String className)
     {
         properties.setProperty(attributeName + PROPERTY_CLASS_SUFFIX, className);
+    }
+
+    private void readSpaceDescriptorObject(XMLStreamReader xmlReader)
+        throws XMLStreamException, ConfigurationException, FilterException
+    {
+        ConfluenceProperties properties = new ConfluenceProperties();
+
+        setClass(OBJECT_TYPE_SPACE_DESCRIPTION, properties);
+
+        long sdId = readObjectProperties(xmlReader, properties);
+
+        Long spaceId = properties.getLong(KEY_PAGE_SPACE, null);
+        if (spaceId != null && shouldIgnoreSpace(spaceId)) {
+            return;
+        }
+
+        saveSpaceDescriptorProperties(properties, sdId);
     }
 
     private void readPageObject(XMLStreamReader xmlReader)
@@ -1750,6 +1841,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
         throws XMLStreamException, ConfigurationException, FilterException
     {
         ConfluenceProperties properties = new ConfluenceProperties();
+
+        setClass(OBJECT_TYPE_PAGE, properties);
 
         long pageId = readObjectProperties(xmlReader, properties);
 
@@ -1836,15 +1929,21 @@ public class ConfluenceXMLPackage implements AutoCloseable
         long labellingId = readObjectProperties(xmlReader, properties);
         saveObjectProperties(properties, labellingId);
 
-        // Since confluence 8.0, the labellings are not part of the Page Object anymore.
-        Long pageId = properties.getLong(KEY_LABELLING_CONTENT, null);
+        // Since Confluence 8.0, the labellings are not part of the Page Object anymore (most probably because it can be
+        // associated to a space object too).
+        Long parentId = properties.getLong(KEY_LABELLING_CONTENT, null);
 
-        if (pageId != null) {
-            ConfluenceProperties pageProperties = getPageProperties(pageId, true);
+        if (parentId != null) {
+            String parentClass = getBodyPropertyClass(properties);
+            if (parentClass == null) {
+                // Assume it's a page by default
+                parentClass = OBJECT_TYPE_PAGE;
+            }
+            ConfluenceProperties parent = getParentObjectByType(parentClass, parentId);
 
-            if (!pageProperties.getList(KEY_PAGE_LABELLINGS).contains(labellingId)) {
-                pageProperties.addProperty(KEY_PAGE_LABELLINGS, labellingId);
-                pageProperties.save();
+            if (parent != null && !parent.getList(KEY_LABELLINGS).contains(labellingId)) {
+                parent.addProperty(KEY_LABELLINGS, labellingId);
+                parent.save();
             }
         }
     }
@@ -2034,6 +2133,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return new File(getSpacesFolder(), String.valueOf(spaceId));
     }
 
+    private File getSpaceDescriptorFolder()
+    {
+        return new File(this.tree, "spacedescriptors");
+    }
+
     private File getPagesFolder()
     {
         return new File(this.tree, "pages");
@@ -2059,6 +2163,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return getObjectsFolder(FOLDER_GROUP);
     }
 
+    private File getSpaceDescriptorFolder(long spaceDescriptorId)
+    {
+        return new File(getSpaceDescriptorFolder(), String.valueOf(spaceDescriptorId));
+    }
+
     private File getPageFolder(long pageId)
     {
         return new File(getPagesFolder(), String.valueOf(pageId));
@@ -2072,6 +2181,13 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private File getObjectFolder(File folder, String objectId)
     {
         return new File(folder, escapeWindowsFolderName(objectId));
+    }
+
+    private File getSpaceDescriptorPropertiesFile(long spaceDescriptorId)
+    {
+        File folder = getSpaceDescriptorFolder(spaceDescriptorId);
+
+        return new File(folder, PROPERTIES_FILENAME);
     }
 
     private File getPagePropertiesFile(long pageId)
@@ -2186,6 +2302,20 @@ public class ConfluenceXMLPackage implements AutoCloseable
         File folder = getSpaceFolder(spaceId);
 
         return new File(folder, PROPERTIES_FILENAME);
+    }
+
+    /**
+     * @param spaceDescriptorId the identifier of the space descriptor
+     * @param create true of the properties should be created when they don't exist
+     * @return the properties containing information about the page
+     * @throws ConfigurationException when failing to create the properties
+     */
+    public ConfluenceProperties getSpaceDescriptorProperties(long spaceDescriptorId, boolean create)
+        throws ConfigurationException
+    {
+        File file = getSpaceDescriptorPropertiesFile(spaceDescriptorId);
+
+        return create || file.exists() ? ConfluenceProperties.create(file) : null;
     }
 
     /**
@@ -2557,6 +2687,16 @@ public class ConfluenceXMLPackage implements AutoCloseable
         File file = getSpacePropertiesFile(spaceId);
 
         return ConfluenceProperties.create(file);
+    }
+
+    private void saveSpaceDescriptorProperties(ConfluenceProperties properties, long spaceDescriptorId)
+        throws ConfigurationException
+    {
+        ConfluenceProperties fileProperties = getSpaceDescriptorProperties(spaceDescriptorId, true);
+
+        fileProperties.copy(properties);
+
+        fileProperties.save();
     }
 
     private void savePageProperties(ConfluenceProperties properties, long pageId) throws ConfigurationException

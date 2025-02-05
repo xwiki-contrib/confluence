@@ -36,9 +36,102 @@
     <property name="lastModificationDate">2023-12-18 15:02:21.984</property>
     <property name="versionComment"></property>
     <property name="contentStatus">current</property>
-    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d0531de0001</id></property>
-    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">4028e49e8c7d0359018c7d048c6c0000</id></property>
-    <property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">589825</id></property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key">4028e49e8c7d0359018c7d0531de0001</id>
+    </property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key">4028e49e8c7d0359018c7d048c6c0000</id>
+    </property>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+      <id name="id">589825</id>
+    </property>
+    <collection name="labellings"
+      class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.labellings)">
+      <element class="Labelling" package="com.atlassian.confluence.labels">
+        <id name="id">945718616</id>
+      </element>
+      <element class="Labelling" package="com.atlassian.confluence.labels">
+        <id name="id">946012168</id>
+      </element>
+      <element class="Labelling" package="com.atlassian.confluence.labels">
+        <id name="id">946012170</id>
+      </element>
+    </collection>
+  </object>
+
+  <object class="Labelling" package="com.atlassian.confluence.labels">
+    <id name="id">945718616</id>
+    <property name="label" class="Label" package="com.atlassian.confluence.labels">
+      <id name="id">548438520</id>
+    </property>
+    <property name="content" class="SpaceDescription" package="com.atlassian.confluence.spaces">
+      <id name="id">360452</id>
+    </property>
+    <property name="owningUser" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[4028e49e8c7d0359018c7d048c6c0000]]></id>
+    </property>
+    <property name="creationDate">2025-02-05 14:50:00.547</property>
+    <property name="lastModificationDate">2025-02-05 14:50:00.547</property>
+    <property name="labelableId">360452</property>
+    <property name="labelableType"><![CDATA[CONTENT]]></property>
+  </object>
+
+  <object class="Label" package="com.atlassian.confluence.labels">
+    <id name="id">548438520</id>
+    <property name="name"><![CDATA[knowledge-bases]]></property>
+    <property name="namespace"><![CDATA[team]]></property>
+    <property name="creationDate">2022-11-08 23:00:42.762</property>
+    <property name="lastModificationDate">2022-11-08 23:00:42.762</property>
+  </object>
+
+  <object class="Labelling" package="com.atlassian.confluence.labels">
+    <id name="id">946012168</id>
+    <property name="label" class="Label" package="com.atlassian.confluence.labels">
+      <id name="id">946012167</id>
+    </property>
+    <property name="content" class="SpaceDescription" package="com.atlassian.confluence.spaces">
+      <id name="id">360452</id>
+    </property>
+    <property name="owningUser" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[4028e49e8c7d0359018c7d048c6c0000]]></id>
+    </property>
+    <property name="creationDate">2025-02-05 14:51:04.456</property>
+    <property name="lastModificationDate">2025-02-05 14:51:04.456</property>
+    <property name="labelableId">360452</property>
+    <property name="labelableType"><![CDATA[CONTENT]]></property>
+  </object>
+
+  <object class="Label" package="com.atlassian.confluence.labels">
+    <id name="id">946012167</id>
+    <property name="name"><![CDATA[category2]]></property>
+    <property name="namespace"><![CDATA[team]]></property>
+    <property name="creationDate">2025-02-05 14:51:04.454</property>
+    <property name="lastModificationDate">2025-02-05 14:51:04.454</property>
+  </object>
+
+  <object class="Labelling" package="com.atlassian.confluence.labels">
+    <id name="id">946012170</id>
+    <property name="label" class="Label" package="com.atlassian.confluence.labels">
+      <id name="id">946012169</id>
+    </property>
+    <property name="content" class="SpaceDescription" package="com.atlassian.confluence.spaces">
+      <id name="id">360452</id>
+    </property>
+    <property name="owningUser" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+      <id name="key"><![CDATA[4028e49e8c7d0359018c7d048c6c0000]]></id>
+    </property>
+    <property name="creationDate">2025-02-05 14:51:04.468</property>
+    <property name="lastModificationDate">2025-02-05 14:51:04.468</property>
+    <property name="labelableId">360452</property>
+    <property name="labelableType"><![CDATA[CONTENT]]></property>
+  </object>
+
+  <object class="Label" package="com.atlassian.confluence.labels">
+    <id name="id">946012169</id>
+    <property name="name"><![CDATA[category1]]></property>
+    <property name="namespace"><![CDATA[team]]></property>
+    <property name="creationDate">2025-02-05 14:51:04.467</property>
+    <property name="lastModificationDate">2025-02-05 14:51:04.467</property>
   </object>
 
   <object class="Page" package="com.atlassian.confluence.pages">

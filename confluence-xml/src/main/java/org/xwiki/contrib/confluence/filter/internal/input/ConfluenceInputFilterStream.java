@@ -1020,17 +1020,34 @@ public class ConfluenceInputFilterStream
         }
     }
 
+    private Map<String, Object> createParentIdentifier(ConfluenceProperties parentProperties)
+    {
+        // Check if the parent is a space
+        if (this.confluencePackage.isSpace(parentProperties)) {
+            return createSpaceIdentifier(parentProperties);            
+        }
+
+        // Consider the parent as a page by default
+        return createPageIdentifier(parentProperties);
+    }
+
+    private Map<String, Object> createSpaceIdentifier(ConfluenceProperties spaceProperties)
+    {
+        return Map.of("spaceKey", spaceProperties.getLong(ID));
+    }
+
     private Map<String, Object> createPageIdentifier(ConfluenceProperties pageProperties)
     {
         String spaceKey = null;
         Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
         if (spaceId != null) {
             try {
-                spaceKey = confluencePackage.getSpaceKey(spaceId);
+                spaceKey = this.confluencePackage.getSpaceKey(spaceId);
             } catch (ConfigurationException e) {
                 this.logger.error(PAGE_IDENTIFIER_ERROR, pageProperties.getLong(ID), e);
             }
         }
+
         return createPageIdentifier(pageProperties, spaceKey);
     }
 
@@ -1711,13 +1728,57 @@ public class ConfluenceInputFilterStream
 
         try {
             readAttachments(pageId, pageProperties, proxyFilter);
-            readTags(pageProperties, proxyFilter);
+            readPageTags(pageProperties, proxyFilter);
             readComments(pageProperties, proxyFilter);
             storeConfluenceDetails(spaceKey, pageId, pageProperties, proxyFilter);
         } finally {
             // < WikiDocumentRevision
             proxyFilter.endWikiDocumentRevision(revision, docRevisionParameters);
         }
+    }
+
+    private ConfluenceProperties getSpacePropertiesFromPage(ConfluenceProperties pageProperties) throws FilterException
+    {
+        Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
+
+        if (spaceId != null) {
+            try {
+                return this.confluencePackage.getSpaceProperties(spaceId);
+            } catch (ConfigurationException e) {
+                throw new FilterException("Failed to get the space properties", e);
+            }
+        }
+
+        return null;
+    }
+
+
+    private ConfluenceProperties getSpaceDescriptorPropertiesFromSpace(ConfluenceProperties spaceProperties)
+        throws FilterException
+    {
+        Long spaceDescriptorId = spaceProperties.getLong(ConfluenceXMLPackage.KEY_SPACE_DESCRIPTION, null);
+
+        if (spaceDescriptorId != null) {
+            try {
+                return this.confluencePackage.getSpaceDescriptorProperties(spaceDescriptorId, false);
+            } catch (ConfigurationException e) {
+                throw new FilterException("Failed to get the space description properties", e);
+            }
+        }
+
+        return null;
+    }
+
+    private ConfluenceProperties getSpaceDescriptorPropertiesFromPage(ConfluenceProperties pageProperties)
+        throws FilterException
+    {
+        ConfluenceProperties spaceProperties = getSpacePropertiesFromPage(pageProperties);
+
+        if (spaceProperties != null) {
+            return getSpaceDescriptorPropertiesFromSpace(spaceProperties);
+        }
+
+        return null;
     }
 
     private void beginPageRevision(boolean isBlog, ConfluenceProperties pageProperties,
@@ -1876,35 +1937,55 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void readTags(ConfluenceProperties pageProperties, ConfluenceFilter proxyFilter) throws FilterException
+    private void readPageTags(ConfluenceProperties pageProperties, ConfluenceFilter proxyFilter) throws FilterException
     {
         if (!this.properties.isTagsEnabled()) {
             return;
         }
 
-        Map<String, ConfluenceProperties> pageTags = new LinkedHashMap<>();
-        for (Object tagIdStringObject : pageProperties.getList(ConfluenceXMLPackage.KEY_PAGE_LABELLINGS)) {
+        Map<String, ConfluenceProperties> tags = new LinkedHashMap<>();
+
+        // If it's the home page, also include space tags
+        if (this.confluencePackage.isHomePage(pageProperties)) {
+            ConfluenceProperties spaceDescriptorProperties = getSpaceDescriptorPropertiesFromPage(pageProperties);
+
+            if (spaceDescriptorProperties != null) {
+                getTags(spaceDescriptorProperties, tags);
+            }
+        }
+
+        // Gather page tags
+        getTags(pageProperties, tags);
+
+        // Send tags
+        if (!tags.isEmpty()) {
+            sendPageTags(proxyFilter, tags);
+        }
+    }
+
+    private void getTags(ConfluenceProperties parentProperties, Map<String, ConfluenceProperties> tags)
+        throws FilterException
+    {
+        List<Object> labels = parentProperties.getList(ConfluenceXMLPackage.KEY_LABELLINGS);
+
+        for (Object tagIdStringObject : labels) {
             Long tagId = Long.parseLong((String) tagIdStringObject);
-            ConfluenceProperties tagProperties = getTagProperties(pageProperties, tagId);
+            ConfluenceProperties tagProperties = getTagProperties(parentProperties, tagId);
             if (tagProperties == null) {
                 continue;
             }
 
             String tagName = this.confluencePackage.getTagName(tagProperties);
             if (tagName == null) {
-                logger.warn("Failed to get the name of label id [{}] for the page with id [{}].", tagId,
-                    createPageIdentifier(pageProperties));
+                logger.warn("Failed to get the name of label id [{}] for the object {}.", tagId,
+                    createParentIdentifier(parentProperties));
             } else {
-                pageTags.put(tagName, tagProperties);
+                tags.put(tagName, tagProperties);
             }
-        }
-
-        if (!pageTags.isEmpty()) {
-            readPageTags(proxyFilter, pageTags);
         }
     }
 
-    private ConfluenceProperties getTagProperties(ConfluenceProperties pageProperties, Long tagId)
+    private ConfluenceProperties getTagProperties(ConfluenceProperties parentProperties, Long tagId)
         throws FilterException
     {
         if (!shouldSendObject(tagId)) {
@@ -1915,7 +1996,7 @@ public class ConfluenceInputFilterStream
             return this.confluencePackage.getObjectProperties(tagId);
         } catch (ConfigurationException e) {
             logger.error("Failed to get tag properties [{}] for the page with id [{}].", tagId,
-                createPageIdentifier(pageProperties), e);
+                createPageIdentifier(parentProperties), e);
         }
 
         return null;
@@ -2296,7 +2377,7 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void readPageTags(ConfluenceFilter proxyFilter, Map<String, ConfluenceProperties> pageTags)
+    private void sendPageTags(ConfluenceFilter proxyFilter, Map<String, ConfluenceProperties> pageTags)
         throws FilterException
     {
         FilterEventParameters pageTagsParameters = new FilterEventParameters();

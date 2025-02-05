@@ -5,7 +5,7 @@
         "http://www.puppycrawl.com/dtds/suppressions_1_0.dtd">
 
 <suppressions>
-  <suppress checks="ClassFanOutComplexity|CyclomaticComplexity|FileLength"
+  <suppress checks="ClassFanOutComplexity|CyclomaticComplexity|FileLength|JavaNCSS"
             files="src/main/java/org/xwiki/contrib/confluence/filter/input/ConfluenceXMLPackage\.java$"/>
   <suppress checks="ClassFanOutComplexity|NPathComplexity|CyclomaticComplexity|FileLength|ParameterNumber"
             files="src/main/java/org/xwiki/contrib/confluence/filter/internal/input/ConfluenceInputFilterStream\.java$"/>

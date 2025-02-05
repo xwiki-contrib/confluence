@@ -922,6 +922,17 @@ To help you on your way, we've inserted some of our favourite macros on this hom
             </entry>
           </parameters>
         </p>
+        <wikiObject name="XWiki.TagClass">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.TagClass</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="tags" value="favourite"/>
+        </wikiObject>
         <wikiObject name="XWiki.XWikiComments">
           <p>
             <parameters>

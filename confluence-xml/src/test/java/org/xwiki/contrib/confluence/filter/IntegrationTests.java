@@ -60,7 +60,7 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(FilterTestSuite.class)
 @AllComponents
-@FilterTestSuite.Scope(value = "confluencexml"/*, pattern = "images.test"*/)
+@FilterTestSuite.Scope(value = "confluencexml"/*, pattern = "confluence80tags.test"*/)
 public class IntegrationTests
 {
     private static final String OTHER_SPACE = "OtherSpace";

@@ -284,7 +284,7 @@ Learn more about [[inviting your team to Confluence>>url:https://confluence.atla
               </entry>
             </parameters>
           </p>
-          <wikiObjectProperty name="tags" value="homepagelabel|generic"/>
+          <wikiObjectProperty name="tags" value="knowledge-bases|category2|category1|favourite|homepagelabel|generic"/>
         </wikiObject>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
