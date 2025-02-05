@@ -127,22 +127,6 @@
               </differences>
             </revapi.differences>
             -->
-            <revapi.differences>
-              <differences>
-                <item>
-                  <ignore>true</ignore>
-                  <code>java.class.removed</code>
-                  <old>interface org.xwiki.contrib.confluence.resolvers.ConfluenceScrollViewportResolver</old>
-                  <justification>The api was broken from the start and likely unused since it was released very recently.</justification>
-                </item>
-                <item>
-                  <ignore>true</ignore>
-                  <code>java.class.removed</code>
-                  <old>interface org.xwiki.contrib.confluence.resolvers.ConfluenceScrollPageIdResolver</old>
-                  <justification>Removed because the converters using it, Include+ and Excerpt Include+ were also removed (see BVERSION-107) .</justification>
-                </item>
-              </differences>
-            </revapi.differences>
           </analysisConfiguration>
         </configuration>
       </plugin>
