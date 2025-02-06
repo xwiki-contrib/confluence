@@ -1404,12 +1404,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * @param properties the object properties
-     * @return true of the passed properties are those of a space
+     * @return true if the passed properties are those of a page
      * @since 9.78.0
      */
-    public boolean isSpace(ConfluenceProperties properties)
+    public boolean isPage(ConfluenceProperties properties)
     {
-        return OBJECT_TYPE_SPACE.equals(getClass(properties));
+        return OBJECT_TYPE_PAGE.equals(getClass(properties));
     }
 
     /**

@@ -143,9 +143,11 @@ public class ConfluenceInputFilterStream
 
     private static final String PARENT = "parent";
 
-    private static final String ID = "id";
-
     private  static final String FAILED_TO_GET_GROUP_PROPERTIES = "Failed to get group properties";
+
+    private static final String ERROR_SPACE_KEY_RESOLUTION =
+        "Failed to resolve space key for id [{}] referenced from object with id [{}]";
+
     private static final String PAGE_IDENTIFIER_ERROR =
         "Configuration error while creating page identifier for page [{}]";
 
@@ -1020,20 +1022,37 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private Map<String, Object> createParentIdentifier(ConfluenceProperties parentProperties)
+    private Map<String, Object> createObjectIdentifier(ConfluenceProperties parentProperties)
     {
-        // Check if the parent is a space
-        if (this.confluencePackage.isSpace(parentProperties)) {
-            return createSpaceIdentifier(parentProperties);            
+        Map<String, Object> identifier;
+
+        // Check if the parent is a page
+        if (this.confluencePackage.isPage(parentProperties)) {
+            // The object is a page
+            identifier = createPageIdentifier(parentProperties);
+        } else {
+            identifier = new TreeMap<>();
+
+            long id = parentProperties.getLong(ConfluenceXMLPackage.KEY_ID);
+            identifier.put(ConfluenceXMLPackage.KEY_ID, id);
+            String className = this.confluencePackage.getClass(parentProperties);
+            if (className != null) {
+                identifier.put(ConfluenceXMLPackage.KEY_CLASS, className);
+            }
+
+            Long spaceId = parentProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
+            if (spaceId != null) {
+                try {
+                    identifier.put("spaceKey", this.confluencePackage.getSpaceKey(spaceId));
+                } catch (ConfigurationException e) {
+                    this.logger.error(ERROR_SPACE_KEY_RESOLUTION, spaceId, id, e);
+                }
+            }
+
+            return identifier;
         }
 
-        // Consider the parent as a page by default
-        return createPageIdentifier(parentProperties);
-    }
-
-    private Map<String, Object> createSpaceIdentifier(ConfluenceProperties spaceProperties)
-    {
-        return Map.of("spaceKey", spaceProperties.getLong(ID));
+        return identifier;
     }
 
     private Map<String, Object> createPageIdentifier(ConfluenceProperties pageProperties)
@@ -1044,7 +1063,7 @@ public class ConfluenceInputFilterStream
             try {
                 spaceKey = this.confluencePackage.getSpaceKey(spaceId);
             } catch (ConfigurationException e) {
-                this.logger.error(PAGE_IDENTIFIER_ERROR, pageProperties.getLong(ID), e);
+                this.logger.error(PAGE_IDENTIFIER_ERROR, pageProperties.getLong(ConfluenceXMLPackage.KEY_ID), e);
             }
         }
 
@@ -1053,7 +1072,7 @@ public class ConfluenceInputFilterStream
 
     private Map<String, Object> createPageIdentifier(ConfluenceProperties pageProperties, String spaceKey)
     {
-        Long pageId = pageProperties.getLong(ID);
+        Long pageId = pageProperties.getLong(ConfluenceXMLPackage.KEY_ID);
         PageIdentifier pageIdentifier = new PageIdentifier(pageId);
         pageIdentifier.setSpaceKey(spaceKey);
         populatePageIdentifier(pageId, pageProperties, pageIdentifier);
@@ -1701,7 +1720,7 @@ public class ConfluenceInputFilterStream
         // beware. Here, pageProperties might not have a space key. You need to use the one passed in parameters
         // FIXME we could ensure it though with some work
 
-        Long pageId = pageProperties.getLong(ID, null);
+        Long pageId = pageProperties.getLong(ConfluenceXMLPackage.KEY_ID, null);
         if (pageId == null) {
             throw new FilterException("Found a null revision id in space [" + spaceKey + "], this should not happen.");
         }
@@ -1977,8 +1996,8 @@ public class ConfluenceInputFilterStream
 
             String tagName = this.confluencePackage.getTagName(tagProperties);
             if (tagName == null) {
-                logger.warn("Failed to get the name of label id [{}] for the object {}.", tagId,
-                    createParentIdentifier(parentProperties));
+                this.logger.warn("Failed to get the name of label with id [{}] referenced from object {}.", tagId,
+                    createObjectIdentifier(parentProperties));
             } else {
                 tags.put(tagName, tagProperties);
             }
@@ -1995,8 +2014,8 @@ public class ConfluenceInputFilterStream
         try {
             return this.confluencePackage.getObjectProperties(tagId);
         } catch (ConfigurationException e) {
-            logger.error("Failed to get tag properties [{}] for the page with id [{}].", tagId,
-                createPageIdentifier(parentProperties), e);
+            this.logger.error("Failed to get tag properties [{}] for the object {}.", tagId,
+                createObjectIdentifier(parentProperties), e);
         }
 
         return null;
@@ -2184,7 +2203,7 @@ public class ConfluenceInputFilterStream
         pageReportParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, CONFLUENCEPAGE_CLASSNAME);
         proxyFilter.beginWikiObject(CONFLUENCEPAGE_CLASSNAME, pageReportParameters);
         try {
-            proxyFilter.onWikiObjectProperty(ID, pageId, FilterEventParameters.EMPTY);
+            proxyFilter.onWikiObjectProperty(ConfluenceXMLPackage.KEY_ID, pageId, FilterEventParameters.EMPTY);
             long stableId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_ORIGINAL_VERSION, pageId);
             proxyFilter.onWikiObjectProperty("stableId", stableId, FilterEventParameters.EMPTY);
             StringBuilder pageURLBuilder = new StringBuilder();
@@ -2271,7 +2290,7 @@ public class ConfluenceInputFilterStream
     private void readAttachment(Long pageId, ConfluenceProperties pageProperties,
         ConfluenceProperties attachmentProperties, ConfluenceFilter proxyFilter) throws FilterException
     {
-        Long attachmentId = attachmentProperties.getLong(ID);
+        Long attachmentId = attachmentProperties.getLong(ConfluenceXMLPackage.KEY_ID);
         // no need to check shouldSendObject(attachmentId), already done by the caller.
 
         String attachmentName = this.confluencePackage.getAttachmentName(attachmentProperties);
