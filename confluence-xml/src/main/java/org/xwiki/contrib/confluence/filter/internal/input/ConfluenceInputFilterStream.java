@@ -1508,9 +1508,6 @@ public class ConfluenceInputFilterStream
 
         FilterEventParameters documentLocaleParameters = getDocumentLocaleParameters(pageProperties);
 
-        Long stableId = pageProperties.getLong(ConfluenceXMLPackage.KEY_ID);
-        checkNonNullPageId(spaceKey, stableId);
-
         // > WikiDocumentLocale
         proxyFilter.beginWikiDocumentLocale(locale, documentLocaleParameters);
 
