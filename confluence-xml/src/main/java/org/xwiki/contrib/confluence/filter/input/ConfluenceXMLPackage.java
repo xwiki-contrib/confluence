@@ -34,7 +34,6 @@ import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -1126,9 +1125,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
     {
         String str = properties.getString(key);
 
-        DateFormat format = new SimpleDateFormat(DATE_FORMAT);
+        if (str == null || str.isEmpty()) {
+            return null;
+        }
 
-        return (str == null || str.isEmpty()) ? null : format.parse(str);
+        return new SimpleDateFormat(DATE_FORMAT).parse(str);
     }
 
     /**
@@ -2839,13 +2840,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         // In old version the file name is the version
         File file = new File(attachmentFolder, String.valueOf(version));
-
-        if (file.exists()) {
-            return file;
-        }
-
-        // In recent version the name is always 1
-        file = new File(attachmentFolder, "1");
 
         if (file.exists()) {
             return file;

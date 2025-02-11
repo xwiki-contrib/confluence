@@ -1,0 +1,295 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Various links and reference related tests
+.#------------------------------------------------------------------------------
+<wikiSpace name="attachhist">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.8a7f80897523097801753189db971e45</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2025-02-10 10:17:18.442 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>1</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a7f80897523097801753189db971e45</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2025-02-10 10:17:18.442 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>attachhist</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>home</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+  <wikiSpace name="Page with attachment">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.8a7f80897523097801753189db971e45</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2025-02-10 10:17:29.180 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>3</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="1">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.8a7f80897523097801753189db971e45</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2025-02-10 10:18:00.714 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Page with attachment</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>No attachment for this first revision.</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+        <wikiDocumentRevision revision="2">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.8a7f80897523097801753189db971e45</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2025-02-10 10:20:54.196 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Page with attachment</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Two attachments have been added in the meantime. The first attachment has 2 revisions.</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+        <wikiDocumentRevision revision="3">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.8a7f80897523097801753189db971e45</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2025-02-10 10:22:14.560 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Page with attachment</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>First attachment was updated with a third revision, second attachment was removed</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+          <wikiAttachment name="attachment2.txt" size="29">
+            <p>
+              <content>c2Vjb25kIGF0dGFjaG1lbnQsIGZpcnN0IHJldgo=</content>
+              <parameters>
+                <entry>
+                  <string>creation_date</string>
+                  <date>2025-02-10 10:22:30.143 UTC</date>
+                </entry>
+                <entry>
+                  <string>revision_date</string>
+                  <date>2025-02-10 10:22:30.143 UTC</date>
+                </entry>
+                <entry>
+                  <string>revision</string>
+                  <string>1</string>
+                </entry>
+                <entry>
+                  <string>revision_author</string>
+                  <string>XWiki.8a7f80897523097801753189db971e45</string>
+                </entry>
+              </parameters>
+            </p>
+          </wikiAttachment>
+          <wikiDocumentAttachment name="attachment.txt" size="21">
+            <p>
+              <content>dGhpcmQgYXR0YWNobWVudCByZXYK</content>
+              <parameters>
+                <entry>
+                  <string>creation_date</string>
+                  <date>2025-02-10 10:21:35.2 UTC</date>
+                </entry>
+                <entry>
+                  <string>revision_date</string>
+                  <date>2025-02-10 10:21:35.2 UTC</date>
+                </entry>
+                <entry>
+                  <string>revision</string>
+                  <string>3</string>
+                </entry>
+                <entry>
+                  <string>revision_author</string>
+                  <string>XWiki.8a7f80897523097801753189db971e45</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiAttachmentRevisions>
+              <wikiAttachmentRevision version="1" size="21">
+                <p>
+                  <content>Zmlyc3QgYXR0YWNobWVudCByZXYK</content>
+                  <parameters>
+                    <entry>
+                      <string>creation_date</string>
+                      <date>2025-02-10 10:18:54.876 UTC</date>
+                    </entry>
+                    <entry>
+                      <string>revision_date</string>
+                      <date>2025-02-10 10:18:54.876 UTC</date>
+                    </entry>
+                    <entry>
+                      <string>revision</string>
+                      <string>1</string>
+                    </entry>
+                    <entry>
+                      <string>revision_author</string>
+                      <string>XWiki.8a7f80897523097801753189db971e45</string>
+                    </entry>
+                  </parameters>
+                </p>
+              </wikiAttachmentRevision>
+              <wikiAttachmentRevision version="2" size="22">
+                <p>
+                  <content>c2Vjb25kIGF0dGFjaG1lbnQgcmV2Cg==</content>
+                  <parameters>
+                    <entry>
+                      <string>creation_date</string>
+                      <date>2025-02-10 10:20:06.973 UTC</date>
+                    </entry>
+                    <entry>
+                      <string>revision_date</string>
+                      <date>2025-02-10 10:20:06.973 UTC</date>
+                    </entry>
+                    <entry>
+                      <string>revision</string>
+                      <string>2</string>
+                    </entry>
+                    <entry>
+                      <string>revision_author</string>
+                      <string>XWiki.8a7f80897523097801753189db971e45</string>
+                    </entry>
+                  </parameters>
+                </p>
+              </wikiAttachmentRevision>
+            </wikiAttachmentRevisions>
+          </wikiDocumentAttachment>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
+.configuration.source=attachhist
+.#------------------------------------------------------------------------------

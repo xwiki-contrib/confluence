@@ -1,0 +1,286 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Various links and reference related tests
+.#------------------------------------------------------------------------------
+<wikiSpace name="TestSpace">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.Admin</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2024-07-24 13:56:00.327 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>2</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2024-07-24 13:56:07.193 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>Copy of MyPage</string>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="2">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.Admin</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2024-07-24 14:00:42.812 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>Test space</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentAttachment name="XWiki_Issues.xlsx" size="24">
+          <p>
+            <content>Li8zNjk0ODMyOTgvMzY5NDgzMjk5LzYK</content>
+            <parameters>
+              <entry>
+                <string>creation_date</string>
+                <date>2024-07-24 14:11:12.136 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2024-07-24 14:11:12.136 UTC</date>
+              </entry>
+              <entry>
+                <string>revision</string>
+                <string>6</string>
+              </entry>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.Admin</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiAttachmentRevisions>
+            <wikiAttachmentRevision version="1" size="24">
+              <p>
+                <content>Li8zNjk0ODMyOTgvMzY5NDgzMjk5LzEK</content>
+                <parameters>
+                  <entry>
+                    <string>creation_date</string>
+                    <date>2024-07-24 13:56:00.417 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision_date</string>
+                    <date>2024-07-24 13:56:00.417 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision</string>
+                    <string>1</string>
+                  </entry>
+                  <entry>
+                    <string>revision_author</string>
+                    <string>XWiki.Admin</string>
+                  </entry>
+                </parameters>
+              </p>
+            </wikiAttachmentRevision>
+            <wikiAttachmentRevision version="2" size="24">
+              <p>
+                <content>Li8zNjk0ODMyOTgvMzY5NDgzMjk5LzIK</content>
+                <parameters>
+                  <entry>
+                    <string>creation_date</string>
+                    <date>2024-07-24 14:07:17.13 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision_date</string>
+                    <date>2024-07-24 14:07:17.13 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision</string>
+                    <string>2</string>
+                  </entry>
+                  <entry>
+                    <string>revision_author</string>
+                    <string>XWiki.Admin</string>
+                  </entry>
+                </parameters>
+              </p>
+            </wikiAttachmentRevision>
+            <wikiAttachmentRevision version="3" size="24">
+              <p>
+                <content>Li8zNjk0ODMyOTgvMzY5NDgzMjk5LzMK</content>
+                <parameters>
+                  <entry>
+                    <string>creation_date</string>
+                    <date>2024-07-24 14:07:38.825 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision_date</string>
+                    <date>2024-07-24 14:07:38.825 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision</string>
+                    <string>3</string>
+                  </entry>
+                  <entry>
+                    <string>revision_author</string>
+                    <string>XWiki.Admin</string>
+                  </entry>
+                </parameters>
+              </p>
+            </wikiAttachmentRevision>
+            <wikiAttachmentRevision version="4" size="24">
+              <p>
+                <content>Li8zNjk0ODMyOTgvMzY5NDgzMjk5LzQK</content>
+                <parameters>
+                  <entry>
+                    <string>creation_date</string>
+                    <date>2024-07-24 14:08:40.296 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision_date</string>
+                    <date>2024-07-24 14:08:40.296 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision</string>
+                    <string>4</string>
+                  </entry>
+                  <entry>
+                    <string>revision_author</string>
+                    <string>XWiki.Admin</string>
+                  </entry>
+                </parameters>
+              </p>
+            </wikiAttachmentRevision>
+            <wikiAttachmentRevision version="5" size="24">
+              <p>
+                <content>Li8zNjk0ODMyOTgvMzY5NDgzMjk5LzUK</content>
+                <parameters>
+                  <entry>
+                    <string>creation_date</string>
+                    <date>2024-07-24 14:10:56.135 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision_date</string>
+                    <date>2024-07-24 14:10:56.135 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision</string>
+                    <string>5</string>
+                  </entry>
+                  <entry>
+                    <string>revision_author</string>
+                    <string>XWiki.Admin</string>
+                  </entry>
+                </parameters>
+              </p>
+            </wikiAttachmentRevision>
+          </wikiAttachmentRevisions>
+        </wikiDocumentAttachment>
+        <wikiDocumentAttachment name="API.pdf" size="24">
+          <p>
+            <content>Li8zNjk0ODMyOTgvMzY5NDgzMzAwLzMK</content>
+            <parameters>
+              <entry>
+                <string>creation_date</string>
+                <date>2024-07-24 14:11:35.880 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2024-07-24 14:11:35.880 UTC</date>
+              </entry>
+              <entry>
+                <string>revision</string>
+                <string>3</string>
+              </entry>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.Admin</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiAttachmentRevisions>
+            <wikiAttachmentRevision version="1" size="24">
+              <p>
+                <content>Li8zNjk0ODMyOTgvMzY5NDgzMzAwLzEK</content>
+                <parameters>
+                  <entry>
+                    <string>creation_date</string>
+                    <date>2024-07-24 13:56:00.432 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision_date</string>
+                    <date>2024-07-24 13:56:00.432 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision</string>
+                    <string>1</string>
+                  </entry>
+                  <entry>
+                    <string>revision_author</string>
+                    <string>XWiki.Admin</string>
+                  </entry>
+                </parameters>
+              </p>
+            </wikiAttachmentRevision>
+            <wikiAttachmentRevision version="2" size="24">
+              <p>
+                <content>Li8zNjk0ODMyOTgvMzY5NDgzMzAwLzIK</content>
+                <parameters>
+                  <entry>
+                    <string>creation_date</string>
+                    <date>2024-07-24 14:09:32.415 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision_date</string>
+                    <date>2024-07-24 14:09:32.415 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision</string>
+                    <string>2</string>
+                  </entry>
+                  <entry>
+                    <string>revision_author</string>
+                    <string>XWiki.Admin</string>
+                  </entry>
+                </parameters>
+              </p>
+            </wikiAttachmentRevision>
+          </wikiAttachmentRevisions>
+        </wikiDocumentAttachment>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
+.configuration.source=attachmenthistory
+.#------------------------------------------------------------------------------
