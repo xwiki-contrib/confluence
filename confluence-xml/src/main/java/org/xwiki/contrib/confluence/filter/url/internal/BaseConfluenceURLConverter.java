@@ -59,7 +59,11 @@ public class BaseConfluenceURLConverter extends AbstractConfluenceURLConverter
 {
     private static final Pattern PATTERN_URL_DISPLAY = Pattern.compile("^display/([^/?]+)/([^?/#]+)(\\?.*)?$");
 
-    private static final Pattern PATTERN_URL_VIEWPAGE = Pattern.compile("^pages/viewpage.action\\?.*$");
+    private static final Pattern PATTERN_URL_SPACE_DISPLAY = Pattern.compile("^display/([^/?]+)/?(\\?.*)?$");
+
+    private static final Pattern PATTERN_URL_VIEWPAGE = Pattern.compile("^pages/viewpage\\.action\\?.*$");
+
+    private static final Pattern PATTERN_URL_VIEWSPACE = Pattern.compile("^spaces/viewspace\\.action\\?.*$");
 
     private static final Pattern PATTERN_URL_HTML = Pattern.compile("^.*-(\\d+).html$");
 
@@ -136,8 +140,12 @@ public class BaseConfluenceURLConverter extends AbstractConfluenceURLConverter
     private ResourceReference fixReference(String path, Map<String, String> urlParameters, String urlAnchor)
     {
         return ObjectUtils.firstNonNull(
-            // Try /display
+            // Try page /display
             tryPattern(PATTERN_URL_DISPLAY, path, matcher -> simpleDocRef(matcher, urlAnchor)),
+
+            // Try space /display
+            tryPattern(PATTERN_URL_SPACE_DISPLAY, path,
+                matcher -> converter.getResourceReference(decode(matcher.group(1)), "", "", urlAnchor)),
 
             // Try /spaces
             tryPattern(PATTERN_URL_SPACES, path, matcher -> simpleDocRef(matcher, urlAnchor)),
@@ -153,6 +161,16 @@ public class BaseConfluenceURLConverter extends AbstractConfluenceURLConverter
                 String pageTitle = urlParameters.get("title");
                 if (StringUtils.isNotEmpty(pageTitle) && StringUtils.isNotEmpty(spaceKey)) {
                     return converter.getResourceReference(spaceKey, pageTitle, "", urlAnchor);
+                }
+
+                return null;
+            }),
+
+            // Try viewspace.action
+            tryPattern(PATTERN_URL_VIEWSPACE, path, matcher -> {
+                String spaceKey = urlParameters.get("key");
+                if (StringUtils.isNotEmpty(spaceKey)) {
+                    return converter.getResourceReference(spaceKey, "", "", urlAnchor);
                 }
 
                 return null;

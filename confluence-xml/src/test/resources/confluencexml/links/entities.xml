@@ -36,6 +36,18 @@
           <a href="https://baseurl2.com/pages/viewpage.action?spaceKey=OtherSpace&amp;title=Other+Page"><span param="value">link</span></a>
         </p>
         <p>
+          <a href="https://baseurl2.com/spaces/viewspace.action?key=OtherSpace&amp;param=value#anchor"><span param="value">link</span></a>
+          <a href="https://baseurl2.com/spaces/viewspace.action?key=OtherSpace"><span param="value">link</span></a>
+        </p>
+        <p>
+          <a href="https://baseurl2.com/display/OtherSpace/?&amp;param=value#anchor"><span param="value">link</span></a>
+          <a href="https://baseurl2.com/display/OtherSpace/"><span param="value">link</span></a>
+        </p>
+        <p>
+          <a href="https://baseurl2.com/display/OtherSpace?&amp;param=value#anchor"><span param="value">link</span></a>
+          <a href="https://baseurl2.com/display/OtherSpace"><span param="value">link</span></a>
+        </p>
+        <p>
           <a href="https://baseurl2.com/pages/viewpage.action?spaceKey=NotFound&amp;title=Other+Page&amp;param=value#anchor"><span param="value">link</span></a>
         </p>
         <p>

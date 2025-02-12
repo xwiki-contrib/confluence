@@ -158,6 +158,8 @@ class ConfluenceURLMappingTest
     @ValueSource(strings = {
         "display/MySpace/?param=thatwedontcareabout",
         "display/MySpace?param=thatwedontcareabout",
+        "spaces/viewspace.action?key=MySpace",
+        "spaces/viewspace.action?param=thatwedontcareabout&key=MySpace",
         "display/MySpace/",
         "display/MySpace"
     })

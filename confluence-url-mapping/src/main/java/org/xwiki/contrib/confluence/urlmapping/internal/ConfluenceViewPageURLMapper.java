@@ -36,6 +36,7 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageTitleResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
+import org.xwiki.contrib.confluence.resolvers.ConfluenceSpaceKeyResolver;
 import org.xwiki.contrib.confluence.urlmapping.ConfluenceURLMapper;
 import org.xwiki.contrib.urlmapping.AbstractURLMapper;
 import org.xwiki.contrib.urlmapping.DefaultURLMappingMatch;
@@ -72,6 +73,9 @@ public class ConfluenceViewPageURLMapper extends AbstractURLMapper implements Co
     private ConfluencePageTitleResolver confluencePageTitleResolver;
 
     @Inject
+    private ConfluenceSpaceKeyResolver confluenceSpaceKeyResolver;
+
+    @Inject
     private URLMappingSuggestionUtils suggestionUtils;
 
     @Inject
@@ -82,7 +86,10 @@ public class ConfluenceViewPageURLMapper extends AbstractURLMapper implements Co
      */
     public ConfluenceViewPageURLMapper()
     {
-        super("pages/(?<action>view|edit)page.action\\?(?<params>.*)?");
+        super(
+            "pages/(?<action>view|edit)page.action\\?(?<params>.*)?",
+            "spaces/(?<action>view)space.action\\?(?<params>.*)?"
+        );
     }
 
     /**
@@ -133,12 +140,17 @@ public class ConfluenceViewPageURLMapper extends AbstractURLMapper implements Co
         if (docRef == null) {
             return null;
         }
-        EntityResourceAction action =  new EntityResourceAction(match.getMatcher().group("action"));
+        EntityResourceAction action = new EntityResourceAction(match.getMatcher().group("action"));
         return new EntityResourceReference(docRef, action);
     }
 
     private EntityReference convert(Map<String, String> params) throws ConfluenceResolverException
     {
+        String key = params.get("key");
+        if (StringUtils.isNotEmpty(key)) {
+            return confluenceSpaceKeyResolver.getSpaceByKey(key);
+        }
+
         String pageIdStr = params.get(PAGE_ID);
         if (StringUtils.isNotEmpty(pageIdStr)) {
             return confluenceIdResolver.getDocumentById(Long.parseLong(pageIdStr));
