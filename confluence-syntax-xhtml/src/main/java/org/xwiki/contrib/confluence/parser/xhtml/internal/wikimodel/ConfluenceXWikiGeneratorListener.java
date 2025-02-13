@@ -480,8 +480,11 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
     private void removeAutoCursorTargetBR(QueueListener queueListener)
     {
         int s = queueListener.size();
-        if (s > 2
-            && queueListener.get(0).eventType.equals(EventType.BEGIN_PARAGRAPH)
+        if (s < 3) {
+            return;
+        }
+
+        if (queueListener.get(0).eventType.equals(EventType.BEGIN_PARAGRAPH)
             && hasAutoCursorTargetClass(queueListener.get(0).eventParameters)
             && queueListener.get(s - 1).eventType.equals(EventType.END_PARAGRAPH)
             && queueListener.get(s - 2).eventType.equals(EventType.ON_NEW_LINE)
