@@ -19,7 +19,11 @@
 
 \\
 
-XWiki is a wiki software</string>
+XWiki is a wiki software
+
+1. {{expand title="Sample Output (Click here to expand...)"}}{{code language="none"}}
+long code
+{{/code}}{{/expand}}</string>
               </entry>
               <entry>
                 <string>syntax</string>

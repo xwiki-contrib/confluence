@@ -29,6 +29,7 @@
       <![CDATA[
         <h1 class="auto-cursor-target">Introduction</h1><p><br /></p><p class="auto-cursor-target"><br /></p>
         <p class="auto-cursor-target">XWiki is a wiki software</p>
+        <ol><li><ac:structured-macro ac:name="expand" ac:schema-version="1"><ac:parameter ac:name="title">Sample Output (Click here to expand...)</ac:parameter><ac:rich-text-body><p><code>long code</code></p></ac:rich-text-body></ac:structured-macro><p class="auto-cursor-target"><br /></p></li></ol>
       ]]>
     </property>
     <property name="content" class="Page"

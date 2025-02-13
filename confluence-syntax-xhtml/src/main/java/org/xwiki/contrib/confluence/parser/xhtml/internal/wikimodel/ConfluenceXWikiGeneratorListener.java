@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
@@ -458,6 +459,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
 
         QueueListener queueListener = maybePopListener();
         if (queueListener != null) {
+            removeAutoCursorTargetBR(queueListener);
             removeParagraphImmediatelyFollowedByList(queueListener);
 
             boolean wrapInGroup = needsGroupWrapInListItem(queueListener);
@@ -473,6 +475,30 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
             }
         }
         getListener().endListItem(params);
+    }
+
+    private void removeAutoCursorTargetBR(QueueListener queueListener)
+    {
+        int s = queueListener.size();
+        if (s > 2
+            && queueListener.get(0).eventType.equals(EventType.BEGIN_PARAGRAPH)
+            && hasAutoCursorTargetClass(queueListener.get(0).eventParameters)
+            && queueListener.get(s - 1).eventType.equals(EventType.END_PARAGRAPH)
+            && queueListener.get(s - 2).eventType.equals(EventType.ON_NEW_LINE)
+        ) {
+            queueListener.remove(s - 2);
+        }
+    }
+
+    private boolean hasAutoCursorTargetClass(Object[] eventParameters)
+    {
+        for (Object eventParameter : eventParameters) {
+            if (eventParameter instanceof Map) {
+                Map<?, ?> params = (Map<?, ?>) eventParameter;
+                return Objects.equals(params.get(CLASS), "auto-cursor-target");
+            }
+        }
+        return false;
     }
 
     private void removeParagraphImmediatelyFollowedByList(QueueListener queueListener)
