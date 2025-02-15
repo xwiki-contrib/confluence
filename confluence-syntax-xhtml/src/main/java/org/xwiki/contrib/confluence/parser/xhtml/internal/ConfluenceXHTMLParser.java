@@ -54,6 +54,8 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.AttachmentTa
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.CaptionHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.CodeTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceAttributeXMLFilter;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceImgTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceInlineCommentTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceListItemTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceOrderedListTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceParagraphTagHandler;
@@ -67,7 +69,6 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.FallbackConf
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.FallbackConfluenceURLConverter;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.IgnoredTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ImageTagHandler;
-import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceImgTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.LinkBodyTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.LinkTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroParameterTagHandler;
@@ -266,6 +267,8 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("ac:adf-attribute", new ADFAttributeHandler());
         handlers.put("ac:adf-content", new ADFContentHandler(this));
         handlers.put("ac:adf-mark", new ADFMarkHandler());
+
+        handlers.put("ac:inline-comment-marker", new ConfluenceInlineCommentTagHandler());
 
         parser.setExtraHandlers(handlers);
 

@@ -1,0 +1,16 @@
+.#-----------------------------------------------------
+.input|confluence+xhtml/1.0
+.#-----------------------------------------------------
+<p>before<ac:inline-comment-marker ac:ref="21641e47-9393-4d3c-890f-0994b2181443">annotation</ac:inline-comment-marker>after</p>
+.#-----------------------------------------------------
+.expect|event/1.0
+.#-----------------------------------------------------
+beginDocument
+beginParagraph
+onWord [before]
+beginFormat [NONE] [[ac:ref]=[21641e47-9393-4d3c-890f-0994b2181443]]
+onWord [annotation]
+endFormat [NONE] [[ac:ref]=[21641e47-9393-4d3c-890f-0994b2181443]]
+onWord [after]
+endParagraph
+endDocument

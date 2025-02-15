@@ -211,6 +211,13 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String KEY_LABELLING_CONTENT = KEY_CONTENT;
 
     /**
+     * The property key to access the object content properties.
+     * 
+     * @since 9.79.0
+     */
+    public static final String KEY_CONTENTPROPERTIES = "contentProperties";
+
+    /**
      * The property key to access the space permission username.
      * @since 9.24.0
      */
@@ -383,14 +390,20 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * The property key to access the attachment content properties.
+     * 
+     * @deprecated since 9.79.0, use {@link #KEY_CONTENTPROPERTIES} instead
      */
-    public static final String KEY_ATTACHMENT_CONTENTPROPERTIES = "contentProperties";
+    @Deprecated
+    public static final String KEY_ATTACHMENT_CONTENTPROPERTIES = KEY_CONTENTPROPERTIES;
 
     /**
      * The property key to access the comment content key.
+     * 
      * @since 9.72.0
+     * @deprecated since 9.79.0, use {@link #KEY_CONTENTPROPERTIES} instead
      */
-    public static final String KEY_COMMENT_CONTENTPROPERTIES = KEY_ATTACHMENT_CONTENTPROPERTIES;
+    @Deprecated
+    public static final String KEY_COMMENT_CONTENTPROPERTIES = KEY_CONTENTPROPERTIES;
 
     /**
      * The property key to access the attachment content status.
@@ -921,7 +934,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * @param source the source where to find the package to parse
-     * @param workingDirectory the directory to use to extract the conflence package for processing (can be null)
+     * @param workingDirectory the directory to use to extract the confluence package for processing (can be null)
      * @throws IOException when failing to access the package content
      * @throws FilterException when any error happen during the reading of the package
      * @since 9.37.0
