@@ -183,6 +183,7 @@ Line 8
               </p>
             </wikiObjectProperty>
             <wikiObjectProperty name="replyto"/>
+            <wikiObjectProperty name="selection" value="Line 2"/>
           </wikiObject>
           <wikiObject name="XWiki.XWikiComments">
             <p>
@@ -245,6 +246,7 @@ Line 8
               </p>
             </wikiObjectProperty>
             <wikiObjectProperty name="replyto"/>
+            <wikiObjectProperty name="selection" value="Line 4"/>
           </wikiObject>
           <wikiObject name="XWiki.XWikiComments">
             <p>

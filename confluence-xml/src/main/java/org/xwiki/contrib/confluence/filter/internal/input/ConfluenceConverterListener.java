@@ -31,10 +31,15 @@ import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
-import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceURLConverter;
+import org.xwiki.component.manager.ComponentLookupException;
+import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.parser.confluence.internal.wikimodel.ConfluenceResourceReference;
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceURLConverter;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceInlineCommentTagHandler;
+import org.xwiki.rendering.listener.CompositeListener;
+import org.xwiki.rendering.listener.Format;
 import org.xwiki.rendering.listener.HeaderLevel;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.listener.QueueListener;
@@ -45,6 +50,7 @@ import org.xwiki.rendering.listener.reference.ResourceType;
 import org.xwiki.rendering.listener.reference.UserResourceReference;
 import org.xwiki.rendering.renderer.PrintRenderer;
 import org.xwiki.rendering.renderer.printer.DefaultWikiPrinter;
+import org.xwiki.rendering.renderer.printer.WikiPrinter;
 
 import static org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter.getConfluenceServerAnchor;
 import static org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter.spacesToDash;
@@ -88,6 +94,9 @@ public class ConfluenceConverterListener extends WrappingListener
 
     @Inject
     private ConfluenceURLConverter urlConverter;
+
+    @Inject
+    private ComponentManager componentManager;
 
     /**
      * A stack of queues that are used to record the content of a paragraph with the auto-cursor-target class. For
@@ -152,6 +161,34 @@ public class ConfluenceConverterListener extends WrappingListener
             }
         }
     };
+
+    private class NormalizedPlainFilter extends CompositeListener
+    {
+        private final WikiPrinter printer = new DefaultWikiPrinter();
+
+        private final Listener wrappedListener;
+
+        NormalizedPlainFilter(PrintRenderer plainRenderer, Listener wrappedListener)
+        {
+            this.wrappedListener = wrappedListener;
+
+            plainRenderer.setPrinter(this.printer);
+
+            addListener(plainRenderer);
+            addListener(wrappedListener);
+        }
+    }
+
+    private Map<String, String> inlineComments = new LinkedHashMap<>();
+
+    /**
+     * @param inlineComments
+     * @since 9.79.0
+     */
+    public void setInlineComments(Map<String, String> inlineComments)
+    {
+        this.inlineComments = inlineComments;
+    }
 
     @Override
     public void onMacro(String id, Map<String, String> parameters, String content, boolean inline)
@@ -383,5 +420,74 @@ public class ConfluenceConverterListener extends WrappingListener
     {
         // Fix and optimize the link reference according to various rules
         super.onImage(convert(reference), freestanding, id, parameters);
+    }
+
+    private Map<String, String> removeInlineCommentParameter(Map<String, String> parameters)
+    {
+        Map<String, String> cleanedParameters;
+
+        // There is no point transmitting this marker to the final listener, it would just be noise
+        if (parameters.size() == 1) {
+            cleanedParameters = Listener.EMPTY_PARAMETERS;
+        } else {
+            cleanedParameters = new LinkedHashMap<>(parameters);
+            cleanedParameters.remove(ConfluenceInlineCommentTagHandler.PARAMETER_REF);
+        }
+
+        return cleanedParameters;
+    }
+
+    @Override
+    public void beginFormat(Format format, Map<String, String> parameters)
+    {
+        Map<String, String> finalParameters = parameters;
+
+        boolean annotation = finalParameters.containsKey(ConfluenceInlineCommentTagHandler.PARAMETER_REF);
+        if (annotation) {
+            // This is an inline comment marker
+            finalParameters = removeInlineCommentParameter(parameters);
+        }
+
+        super.beginFormat(format, finalParameters);
+
+        if (annotation) {
+            // Catch the plain version of the annotated content
+            try {
+                // Get the renderer in charge of normalizing the annotation content
+                PrintRenderer renderer = this.componentManager.getInstance(PrintRenderer.class, "normalizer-plain/1.0");
+
+                // Add the normalizer renderer to the receiving renders
+                this.wrappingListener.setWrappedListener(
+                    new NormalizedPlainFilter(renderer, this.wrappingListener.getWrappedListener()));
+            } catch (ComponentLookupException e) {
+                this.logger.error("Failed to get the [normalizer-plain/1.0] renderer, annotations won't be exteracted");
+            }
+        }
+    }
+
+    @Override
+    public void endFormat(Format format, Map<String, String> parameters)
+    {
+        Map<String, String> finalParameters = parameters;
+
+        String ref = finalParameters.get(ConfluenceInlineCommentTagHandler.PARAMETER_REF);
+        if (ref != null) {
+            // This is an inline comment marker
+            finalParameters = removeInlineCommentParameter(finalParameters);
+
+            Listener listener = this.wrappingListener.getWrappedListener();
+            if (listener instanceof NormalizedPlainFilter) {
+                NormalizedPlainFilter normalizedFilter = (NormalizedPlainFilter) listener;
+
+                String currentAnnotation = this.inlineComments.get(ref);
+                this.inlineComments.put(ref, currentAnnotation != null
+                    ? currentAnnotation + normalizedFilter.printer.toString() : normalizedFilter.printer.toString());
+
+                // Restore previous wrapped listener
+                this.wrappingListener.setWrappedListener(normalizedFilter.wrappedListener);
+            }
+        }
+
+        super.endFormat(format, finalParameters);
     }
 }

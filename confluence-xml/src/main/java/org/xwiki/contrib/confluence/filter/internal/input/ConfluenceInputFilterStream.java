@@ -145,6 +145,8 @@ public class ConfluenceInputFilterStream
 
     private static final String PARENT = "parent";
 
+    private static final String INLINE_MARKER_REF = "inline-marker-ref";
+
     private  static final String FAILED_TO_GET_GROUP_PROPERTIES = "Failed to get group properties";
 
     private static final String ERROR_SPACE_KEY_RESOLUTION =
@@ -198,6 +200,8 @@ public class ConfluenceInputFilterStream
     private JobContext jobContext;
 
     private final Map<String, Integer> macrosIds = new HashMap<>();
+
+    private final Map<String, String> inlineComments = new HashMap<>();
 
     private ConfluenceIdRangeList objectIdRanges;
 
@@ -2249,6 +2253,7 @@ public class ConfluenceInputFilterStream
         ConfluenceConverterListener converterListener = this.converterProvider.get();
         converterListener.setWrappedListener(listener);
         converterListener.setMacroIds(macrosIds);
+        converterListener.setInlineComments(inlineComments);
 
         return converterListener;
     }
@@ -2325,10 +2330,10 @@ public class ConfluenceInputFilterStream
         }
 
         ConfluenceProperties attachmentContentProperties = attachmentProperties;
-        if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTPROPERTIES)) {
+        if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_CONTENTPROPERTIES)) {
             try {
                 attachmentContentProperties =
-                    getContentProperties(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_CONTENTPROPERTIES);
+                    getContentProperties(attachmentProperties, ConfluenceXMLPackage.KEY_CONTENTPROPERTIES);
             } catch (FilterException e) {
                 logger.error("Failed to get attachment content properties for [{}] in page [{}]", attachmentName,
                     createPageIdentifier(pageProperties));
@@ -2505,8 +2510,28 @@ public class ConfluenceInputFilterStream
             proxyFilter.onWikiObjectProperty("comment", commentText, FilterEventParameters.EMPTY);
             proxyFilter.onWikiObjectProperty("date", commentDate, FilterEventParameters.EMPTY);
             proxyFilter.onWikiObjectProperty("replyto", parentIndex, FilterEventParameters.EMPTY);
+
+            // selection
+            readPageCommentSelection(commentProperties, proxyFilter);
         } finally {
             proxyFilter.endWikiObject(COMMENTS_CLASSNAME, commentParameters);
+        }
+    }
+
+    private void readPageCommentSelection(ConfluenceProperties commentProperties, ConfluenceFilter proxyFilter)
+        throws FilterException
+    {
+        ConfluenceProperties commentObjectProperties =
+            getContentProperties(commentProperties, ConfluenceXMLPackage.KEY_CONTENTPROPERTIES);
+        if (commentObjectProperties != null) {
+            String annotationRef = commentObjectProperties.getString(INLINE_MARKER_REF);
+            if (annotationRef != null) {
+                String annotation = this.inlineComments.get(annotationRef);
+
+                if (annotation != null) {
+                    proxyFilter.onWikiObjectProperty("selection", annotation, FilterEventParameters.EMPTY);
+                }
+            }
         }
     }
 
@@ -2521,16 +2546,15 @@ public class ConfluenceInputFilterStream
             return true;
         }
 
-        if (!commentProperties.containsKey(ConfluenceXMLPackage.KEY_COMMENT_CONTENTPROPERTIES)) {
+        if (!commentProperties.containsKey(ConfluenceXMLPackage.KEY_CONTENTPROPERTIES)) {
             return false;
         }
 
         ConfluenceProperties contentProps =
-            getContentProperties(commentProperties, ConfluenceXMLPackage.KEY_COMMENT_CONTENTPROPERTIES);
+            getContentProperties(commentProperties, ConfluenceXMLPackage.KEY_CONTENTPROPERTIES);
 
         if (contentProps == null || (!contentProps.containsKey("inline-comment")
-            && !contentProps.getString("actualCommentType", "").equals("inline")))
-        {
+            && !contentProps.getString("actualCommentType", "").equals("inline"))) {
             return false;
         }
         String commentStatus = contentProps.getString("status", "");
