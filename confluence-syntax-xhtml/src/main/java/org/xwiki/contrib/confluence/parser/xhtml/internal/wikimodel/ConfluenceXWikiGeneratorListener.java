@@ -84,8 +84,6 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
     private static final String CODE = "code";
     private static final String SOURCE = "source";
 
-    private static final String LINE_BREAK = "\n";
-
     private final Method pushListenerMethod;
 
     private final Method popListenerMethod;
@@ -637,23 +635,13 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
 
     private void outputCodeMacro(String content)
     {
-        String code = content;
-        boolean nl = code.endsWith(LINE_BREAK);
-        if (nl) {
-            // the inline code macro eats the last new line character, so we need to move it out.
-            code = code.substring(0, code.length() - 1);
-        }
-
         WikiParameters params = new WikiParameters().addParameter("language", "none");
         if (content.contains("{{/code}}")) {
-            params = params.addParameter(SOURCE, "string:" + code);
+            params = params.addParameter(SOURCE, "string:" + content);
             super.onMacroInline(CODE, params, null);
-        } else {
-            super.onMacroInline(CODE, params, code);
+            return;
         }
-        if (nl) {
-            super.onNewLine();
-        }
+        super.onMacroInline(CODE, params, content);
     }
 
     private static boolean isClassPre(QueueListener.Event e)

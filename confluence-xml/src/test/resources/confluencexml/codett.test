@@ -67,15 +67,6 @@ paragraph after
 )))
 * in the bash shell: run (% class="docutils literal" %){{code language="none"}}source some_script.sh &lt;tar.gz file> &lt;ip-address> 22{{/code}}
 
-{{code language="none"}}$ command{{/code}}
-{{code language="none"}}answer with a new line after, and colors:{{/code}}
-##    (% style="color: rgb(255,0,0);" %)**val2 = 1000
-**(%%)####    (% style="color: rgb(255,0,0);" %)**val2 = "42"
-**(%%)##{{code language="none"}}    val3 = ""{{/code}}
-##    (% style="color: rgb(255,0,0);" %)**val4 = "1337"
-**(%%)##{{code language="none"}}    val5 = "DA1"{{/code}}
-{{code language="none"}}    val6 = "DA1"{{/code}}
-
 {{code language="none"}}# ------- START{{/code}}
 ##/^name.surname@[[perdu.com>>url:http://perdu.com||shape="rect"]]$/ REJECT intra sender_access##
 ##/^hamed.[[mail@perdu.com>>mailto:mail@perdu.com||shape="rect"]]$/ REJECT intra sender_access##
