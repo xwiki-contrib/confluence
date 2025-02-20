@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic>
+    <object class="Space" package="com.atlassian.confluence.spaces">
+        <id name="id">46268417</id>
+        <property name="name"><![CDATA[My Space]]></property>
+        <property name="key"><![CDATA[MySpace]]></property>
+        <property name="lowerKey"><![CDATA[myspace]]></property>
+        <property name="homePage" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">45809846</id>
+        </property>
+        <collection name="permissions" class="java.util.Collection"/>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+        </property>
+        <property name="creationDate">2012-08-21 15:37:47.000</property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+        </property>
+        <property name="lastModificationDate">2016-10-11 14:47:37.000</property>
+        <property name="spaceType">global</property>
+        <property name="spaceStatus" enum-class="SpaceStatus" package="com.atlassian.confluence.spaces">CURRENT</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">156868656</id>
+        <property name="body"><![CDATA[
+<ac:structured-macro ac:name="scroll-ignore" ac:schema-version="1" ac:macro-id="placeholder-id">
+    <ac:parameter ac:name="parameter1">value1</ac:parameter>
+</ac:structured-macro>
+
+<ol>
+    <li>
+        <ac:structured-macro ac:name="scroll-ignore" ac:schema-version="1" ac:macro-id="placeholder-id">
+            <ac:parameter ac:name="parameter1">value1</ac:parameter>
+            <ac:rich-text-body>
+                <p>card content 3</p>
+            </ac:rich-text-body>
+        </ac:structured-macro>
+    </li>
+</ol>
+
+<ac:structured-macro ac:name="scroll-indexterm" ac:schema-version="1" ac:macro-id="placeholder-id">
+    <ac:parameter ac:name="parameter1">value1</ac:parameter>
+</ac:structured-macro>
+
+<ac:structured-macro ac:name="scroll-only" ac:schema-version="1" ac:macro-id="placeholder-id">
+    <ac:parameter ac:name="parameter1">value1</ac:parameter>
+</ac:structured-macro>
+
+<ac:structured-macro ac:name="scroll-pagetitle" ac:schema-version="1" ac:macro-id="placeholder-id">
+    <ac:parameter ac:name="parameter1">value1</ac:parameter>
+</ac:structured-macro>
+
+<ac:structured-macro ac:name="scroll-pdf-ignore" ac:schema-version="1" ac:macro-id="placeholder-id">
+    <ac:parameter ac:name="parameter1">value1</ac:parameter>
+</ac:structured-macro>
+
+<ac:structured-macro ac:name="scroll-title" ac:schema-version="1" ac:macro-id="placeholder-id">
+    <ac:parameter ac:name="parameter1">value1</ac:parameter>
+</ac:structured-macro>
+
+<ac:structured-macro ac:name="scroll-pdf-only" ac:schema-version="1" ac:macro-id="placeholder-id">
+    <ac:parameter ac:name="parameter1">value1</ac:parameter>
+</ac:structured-macro>
+
+<ac:structured-macro ac:name="scroll-bookmark" ac:schema-version="1" ac:macro-id="placeholder-id">
+    <ac:parameter ac:name="parameter1">value1</ac:parameter>
+</ac:structured-macro>
+
+<ac:structured-macro ac:name="scroll-ignore-inline" ac:schema-version="1" ac:macro-id="placeholder-id">
+    <ac:parameter ac:name="parameter1">value1</ac:parameter>
+</ac:structured-macro>
+
+<ol>
+    <li>
+        <ac:structured-macro ac:name="scroll-ignore-inline" ac:schema-version="1" ac:macro-id="placeholder-id">
+            <ac:parameter ac:name="parameter1">value1</ac:parameter>
+            <ac:rich-text-body>
+                <p>card content 3</p>
+            </ac:rich-text-body>
+        </ac:structured-macro>
+    </li>
+</ol>
+
+<ac:structured-macro ac:name="scroll-exportbutton" ac:schema-version="1" ac:macro-id="placeholder-id">
+    <ac:parameter ac:name="parameter1">value1</ac:parameter>
+</ac:structured-macro>
+
+<ac:structured-macro ac:name="scroll-only-inline" ac:schema-version="1" ac:macro-id="placeholder-id">
+    <ac:parameter ac:name="parameter1">value1</ac:parameter>
+</ac:structured-macro>
+
+<ac:structured-macro ac:name="scroll-pdf-ignore-inline" ac:schema-version="1" ac:macro-id="placeholder-id">
+    <ac:parameter ac:name="parameter1">value1</ac:parameter>
+</ac:structured-macro>
+
+<ac:structured-macro ac:name="scroll-content-block" ac:schema-version="1" ac:macro-id="placeholder-id">
+    <ac:parameter ac:name="parameter1">value1</ac:parameter>
+</ac:structured-macro>
+
+<ac:structured-macro ac:name="scroll-landscape" ac:schema-version="1" ac:macro-id="placeholder-id">
+    <ac:parameter ac:name="parameter1">value1</ac:parameter>
+</ac:structured-macro>
+
+<ac:structured-macro ac:name="scroll-pagebreak" ac:schema-version="1" ac:macro-id="placeholder-id">
+    <ac:parameter ac:name="parameter1">value1</ac:parameter>
+</ac:structured-macro>
+    ]]></property>
+        <property name="content" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">45809846</id>
+        </property>
+        <property name="bodyType">2</property>
+    </object>
+    <object class="Page" package="com.atlassian.confluence.pages">
+        <id name="id">45809846</id>
+        <property name="hibernateVersion">13</property>
+        <property name="title"><![CDATA[Links]]></property>
+        <property name="lowerTitle"><![CDATA[links]]></property>
+        <collection name="bodyContents" class="java.util.Collection">
+            <element class="BodyContent" package="com.atlassian.confluence.core">
+                <id name="id">156868656</id>
+            </element>
+        </collection>
+        <property name="version">1</property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+        </property>
+        <property name="creationDate">2019-02-13 08:05:54.000</property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+        </property>
+        <property name="lastModificationDate">2019-02-13 08:16:56.000</property>
+        <property name="versionComment"><![CDATA[]]></property>
+        <property name="contentStatus"><![CDATA[current]]></property>
+        <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+            <id name="id">46268417</id>
+        </property>
+        <property name="position"/>
+    </object>
+</hibernate-generic>
