@@ -153,6 +153,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String KEY_SPACE_PERMISSIONS = "permissions";
 
     /**
+     * The property key to access the space templates.
+     * @since 9.79.0
+     */
+    public static final String KEY_SPACE_PAGE_TEMPLATES = "pageTemplates";
+
+    /**
      * The property key to access the space status.
      * @since 9.31.0
      */
@@ -646,6 +652,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private static final String FOLDER_OBJECTS = "objects";
 
+    private static final String FOLDER_SPACE_PAGE_TEMPLATE = "template";
+
     private static final String FOLDER_SPACE_PERMISSIONS = KEY_SPACE_PERMISSIONS;
 
     private static final String PROPERTIES_FILENAME = "properties.properties";
@@ -686,6 +694,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private static final String OBJECT_TYPE_CONFLUENCE_USER_IMPL = "ConfluenceUserImpl";
 
+    private static final String OBJECT_TYPE_PAGE_TEMPLATE = "PageTemplate";
+
     private static final Collection<String> SUPPORTED_OBJECTS = new HashSet<>(Arrays.asList(
         OBJECT_TYPE_ATTACHMENT,
         OBJECT_TYPE_BLOG_POST,
@@ -699,6 +709,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
         OBJECT_TYPE_LABEL,
         OBJECT_TYPE_LABELLING,
         OBJECT_TYPE_PAGE,
+        OBJECT_TYPE_PAGE_TEMPLATE,
         OBJECT_TYPE_SPACE,
         OBJECT_TYPE_SPACE_DESCRIPTION,
         OBJECT_TYPE_SPACE_PERMISSION
@@ -1469,6 +1480,9 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 case OBJECT_TYPE_BODY_CONTENT:
                     readBodyContentObject(xmlReader);
                     break;
+                case OBJECT_TYPE_PAGE_TEMPLATE:
+                    readPageTemplateObject(xmlReader);
+                    break;
                 case OBJECT_TYPE_SPACE_PERMISSION:
                     readSpacePermissionObject(xmlReader);
                     break;
@@ -1727,6 +1741,21 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 }
             }
             setHomePage(spaceId, homePageId);
+        }
+    }
+
+    private void readPageTemplateObject(XMLStreamReader xmlReader)
+        throws XMLStreamException, ConfigurationException, FilterException
+    {
+        ConfluenceProperties properties = new ConfluenceProperties();
+
+        long templateId = readObjectProperties(xmlReader, properties);
+
+        Long spaceId = properties.getLong(KEY_PAGE_SPACE, null);
+        if (spaceId != null && !shouldIgnoreSpace(spaceId)) {
+            saveSpacePageTemplateProperties(properties, spaceId, templateId);
+            saveInParent(properties, KEY_PAGE_SPACE, OBJECT_TYPE_SPACE,
+                KEY_SPACE_PAGE_TEMPLATES, templateId);
         }
     }
 
@@ -2253,6 +2282,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return new File(getPageFolder(pageId), ATTACHMENTS);
     }
 
+    private File getSpacePageTemplateFolder(long spaceId)
+    {
+        return new File(getSpaceFolder(spaceId), FOLDER_SPACE_PAGE_TEMPLATE);
+    }
+
     private File getSpacePermissionFolder(long spaceId)
     {
         return new File(getSpaceFolder(spaceId), FOLDER_SPACE_PERMISSIONS);
@@ -2273,6 +2307,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return new File(getAttachmentsFolder(pageId), String.valueOf(attachmentId));
     }
 
+    private File getSpacePageTemplateFolder(long spaceId, long templateId)
+    {
+        return new File(getSpacePageTemplateFolder(spaceId), String.valueOf(templateId));
+    }
+
     private File getSpacePermissionFolder(long spaceId, long permissionId)
     {
         return new File(getSpacePermissionFolder(spaceId), String.valueOf(permissionId));
@@ -2289,6 +2328,14 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         return new File(folder, PROPERTIES_FILENAME);
     }
+
+    private File getSpacePageTemplatePropertiesFile(long spaceId, long templateId)
+    {
+        File folder = getSpacePageTemplateFolder(spaceId, templateId);
+
+        return new File(folder, PROPERTIES_FILENAME);
+    }
+
 
     private File getSpacePermissionPropertiesFile(long spaceId, long permissionId)
     {
@@ -2650,6 +2697,22 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * @param spaceId the identifier of the space
+     * @param templateId the identifier of the page template
+     * @param create whether to create the properties if they don't exist yet
+     * @return the properties containing information about the page template
+     * @throws ConfigurationException when failing to create the properties
+     * @since 9.79.0
+     */
+    public ConfluenceProperties getSpacePageTemplateProperties(long spaceId, long templateId, boolean create)
+        throws ConfigurationException
+    {
+        File file = getSpacePageTemplatePropertiesFile(spaceId, templateId);
+
+        return (create || file.exists()) ? ConfluenceProperties.create(file) : null;
+    }
+
+    /**
+     * @param spaceId the identifier of the space
      * @param permissionId the identifier of the permission
      * @return the properties containing information about the space permission
      * @throws ConfigurationException when failing to create the properties
@@ -2751,6 +2814,16 @@ public class ConfluenceXMLPackage implements AutoCloseable
         throws ConfigurationException
     {
         ConfluenceProperties fileProperties = getAttachmentProperties(pageId, attachmentId);
+
+        fileProperties.copy(properties);
+
+        fileProperties.save();
+    }
+
+    private void saveSpacePageTemplateProperties(ConfluenceProperties properties, long spaceId, long templateId)
+        throws ConfigurationException
+    {
+        ConfluenceProperties fileProperties = getSpacePageTemplateProperties(spaceId, templateId, true);
 
         fileProperties.copy(properties);
 

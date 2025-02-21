@@ -4316,4 +4316,5 @@
 .configuration.nestedSpacesEnabled=true
 .configuration.contentsEnabled=false
 .configuration.historyEnabled=false
+.configuration.templateSpaceName=
 .#------------------------------------------------------------------------------

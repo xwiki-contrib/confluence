@@ -478,6 +478,76 @@
       </wikiSpace>
     </wikiSpace>
   </wikiSpace>
+  <wikiSpace name="My Templates">
+    <wikiSpace name="Glossary Term">
+      <wikiDocument name="WebHome">
+        <wikiDocumentLocale>
+          <p>
+            <parameters>
+              <entry>
+                <string>creation_author</string>
+                <string>XWiki.17748644</string>
+              </entry>
+              <entry>
+                <string>creation_date</string>
+                <date>2021-05-28 12:09:49.0 UTC</date>
+              </entry>
+              <entry>
+                <string>lastrevision</string>
+                <string>1</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiDocumentRevision revision="1">
+            <p>
+              <parameters>
+                <entry>
+                  <string>hidden</string>
+                  <boolean>true</boolean>
+                </entry>
+                <entry>
+                  <string>revision_author</string>
+                  <string>XWiki.17748644</string>
+                </entry>
+                <entry>
+                  <string>revision_date</string>
+                  <date>2021-05-28 12:09:49.0 UTC</date>
+                </entry>
+                <entry>
+                  <string>title</string>
+                  <string>Glossary Term</string>
+                </entry>
+              </parameters>
+            </p>
+          </wikiDocumentRevision>
+        </wikiDocumentLocale>
+      </wikiDocument>
+    </wikiSpace>
+    <wikiDocument name="Glossary Term Template Provider">
+      <p>
+        <parameters>
+          <entry>
+            <string>hidden</string>
+            <boolean>true</boolean>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObject name="XWiki.TemplateProviderClass">
+        <p>
+          <parameters>
+            <entry>
+              <string>class_reference</string>
+              <string>XWiki.TemplateProviderClass</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObjectProperty name="description" value=""/>
+        <wikiObjectProperty name="name" value="Glossary Term"/>
+        <wikiObjectProperty name="template" value="Great.My Templates.Glossary Term.WebHome"/>
+        <wikiObjectProperty name="visibilityRestrictions" value="Great"/>
+      </wikiObject>
+    </wikiDocument>
+  </wikiSpace>
   <wikiDocument name="WebPreferences">
     <p>
       <parameters>
@@ -4315,4 +4385,5 @@
 .configuration.nestedSpacesEnabled=true
 .configuration.contentsEnabled=false
 .configuration.historyEnabled=false
+.configuration.templateSpaceName=My Templates
 .#------------------------------------------------------------------------------

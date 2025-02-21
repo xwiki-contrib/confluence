@@ -111,6 +111,8 @@ import org.xwiki.security.authorization.Right;
 public class ConfluenceInputFilterStream
     extends AbstractBeanInputFilterStream<ConfluenceInputProperties, ConfluenceFilter>
 {
+    private static final String TEMPLATE_PROVIDER_CLASS = "XWiki.TemplateProviderClass";
+
     private static final String CONFLUENCEPAGE_CLASSNAME = "Confluence.Code.ConfluencePageClass";
 
     private static final String TAGS_CLASSNAME = "XWiki.TagClass";
@@ -156,6 +158,12 @@ public class ConfluenceInputFilterStream
         "Configuration error while creating page identifier for page [{}]";
 
     private static final Marker SEND_PAGE_MARKER = MarkerFactory.getMarker("ConfluenceSendingPage");
+
+    private static final Marker SEND_TEMPLATE_MARKER = MarkerFactory.getMarker("ConfluenceSendingTemplate");
+
+    private static final String NAME = "name";
+
+    private static final String DESCRIPTION = "description";
 
     @Inject
     @Named(ConfluenceInputStreamParser.COMPONENT_NAME)
@@ -634,21 +642,19 @@ public class ConfluenceInputFilterStream
         }
         ((DefaultConfluenceInputContext) this.context).setCurrentSpace(spaceKey);
 
-        FilterEventParameters spaceParameters = new FilterEventParameters();
-
         if (this.properties.isVerbose()) {
             this.logger.info("Sending Confluence space [{}], id=[{}]", spaceKey, spaceId);
         }
 
-        sendSpace(spaceId, filter, proxyFilter, blogPages, spaceKey, spaceParameters, spaceProperties);
+        sendSpace(spaceId, filter, proxyFilter, blogPages, spaceKey, spaceProperties);
     }
 
     private void sendSpace(long spaceId, Object filter, ConfluenceFilter proxyFilter, List<Long> blogPages,
-        String spaceKey, FilterEventParameters spaceParameters, ConfluenceProperties spaceProperties)
+        String spaceKey, ConfluenceProperties spaceProperties)
         throws FilterException, ConfluenceInterruptedException
     {
         String spaceEntityName = confluenceConverter.toEntityName(spaceKey);
-        proxyFilter.beginWikiSpace(spaceEntityName, spaceParameters);
+        proxyFilter.beginWikiSpace(spaceEntityName, FilterEventParameters.EMPTY);
         try {
             Collection<ConfluenceRight> inheritedRights = null;
             ConfluenceProperties homePageProperties = null;
@@ -668,6 +674,8 @@ public class ConfluenceInputFilterStream
                     }
                     sendBlogs(spaceKey, blogPages, filter, proxyFilter);
                 }
+
+                sendSpaceTemplates(spaceProperties, spaceKey, spaceId, filter, proxyFilter);
 
                 if (this.properties.isPageOrderEnabled()) {
                     List<Long> children = confluencePackage.getPageChildren(homePageId);
@@ -690,10 +698,102 @@ public class ConfluenceInputFilterStream
         } finally {
             endWebPreferences(proxyFilter);
             // < WikiSpace
-            proxyFilter.endWikiSpace(spaceEntityName, spaceParameters);
+            proxyFilter.endWikiSpace(spaceEntityName, FilterEventParameters.EMPTY);
             if (this.properties.isVerbose()) {
                 this.logger.info("Finished sending Confluence space [{}], id=[{}]", spaceKey, spaceId);
             }
+        }
+    }
+
+    private void sendSpaceTemplates(ConfluenceProperties spaceProperties, String spaceKey, long spaceId, Object filter,
+        ConfluenceFilter proxyFilter) throws FilterException
+    {
+        String templateSpaceName = this.properties.getTemplateSpaceName();
+        if (StringUtils.isEmpty(templateSpaceName)) {
+            return;
+        }
+
+        templateSpaceName = confluenceConverter.toEntityName(templateSpaceName);
+        Collection<Object> templates = spaceProperties.getList(ConfluenceXMLPackage.KEY_SPACE_PAGE_TEMPLATES);
+        if (templates.isEmpty()) {
+            return;
+        }
+
+        proxyFilter.beginWikiSpace(templateSpaceName, FilterEventParameters.EMPTY);
+        try {
+            for (Object templateObject : templates) {
+                long templateId = toLong(templateObject);
+                if (!shouldSendObject(templateId)) {
+                    continue;
+                }
+
+                ConfluenceProperties templateProperties = null;
+                try {
+                    templateProperties = this.confluencePackage.getSpacePageTemplateProperties(spaceId, templateId,
+                        false);
+                } catch (ConfigurationException e) {
+                    logger.error("Failed to get template properties [{}] for the space [{}]", templateId, spaceKey, e);
+                }
+
+                if (templateProperties != null) {
+                    sendSpaceTemplate(filter, proxyFilter, templateProperties, templateSpaceName);
+                }
+            }
+        } finally {
+            proxyFilter.endWikiSpace(templateSpaceName, FilterEventParameters.EMPTY);
+        }
+    }
+
+    private void sendSpaceTemplate(Object filter, ConfluenceFilter proxyFilter, ConfluenceProperties templateProperties,
+        String templateSpaceName) throws FilterException
+    {
+        String title = templateProperties.getString(NAME);
+        String version = templateProperties.getString("version");
+
+        if (this.properties.isVerbose()) {
+            this.logger.info(SEND_TEMPLATE_MARKER, "Sending template [{}]", title);
+        }
+
+        String validatedName = confluenceConverter.toEntityName(title);
+        proxyFilter.beginWikiSpace(validatedName, FilterEventParameters.EMPTY);
+        try {
+            proxyFilter.beginWikiDocument(WEB_HOME, FilterEventParameters.EMPTY);
+            try {
+                sendSpaceTemplateDocumentLocale(filter, proxyFilter, templateProperties, version);
+            } finally {
+                proxyFilter.endWikiDocument(WEB_HOME, FilterEventParameters.EMPTY);
+            }
+        } finally {
+            proxyFilter.endWikiSpace(validatedName, FilterEventParameters.EMPTY);
+        }
+
+        if (this.properties.isTemplateProvidersEnabled()) {
+            String description = templateProperties.getString(DESCRIPTION, null);
+            // FIXME handle collisions?
+            String templateProviderName = confluenceConverter.toEntityName(title + " Template Provider");
+            FilterEventParameters providerDocParameters = new FilterEventParameters();
+            providerDocParameters.put(WikiDocumentFilter.PARAMETER_HIDDEN, true);
+            proxyFilter.beginWikiDocument(templateProviderName, providerDocParameters);
+            sendTemplateProviderObject(proxyFilter, description, title, validatedName, templateSpaceName);
+            proxyFilter.endWikiDocument(templateProviderName, providerDocParameters);
+        }
+    }
+
+    private void sendSpaceTemplateDocumentLocale(Object filter, ConfluenceFilter proxyFilter,
+        ConfluenceProperties templateProperties, String version) throws FilterException
+    {
+        Locale locale = Locale.ROOT;
+        FilterEventParameters documentLocaleParameters = getDocumentLocaleParameters(templateProperties);
+        proxyFilter.beginWikiDocumentLocale(locale, documentLocaleParameters);
+        try {
+            FilterEventParameters revisionParameters = new FilterEventParameters();
+            revisionParameters.put(WikiDocumentFilter.PARAMETER_HIDDEN, true);
+            prepareRevisionMetadata(templateProperties, revisionParameters);
+            beginPageRevision(false, templateProperties, filter, proxyFilter, version,
+                   revisionParameters, ConfluenceXMLPackage.KEY_CONTENT);
+            proxyFilter.endWikiDocumentRevision(version, revisionParameters);
+        } finally {
+            proxyFilter.endWikiDocumentLocale(locale, documentLocaleParameters);
         }
     }
 
@@ -1007,6 +1107,26 @@ public class ConfluenceInputFilterStream
         }
     }
 
+    private void sendTemplateProviderObject(ConfluenceFilter proxyFilter, String description, String name,
+        String template, String templateSpaceName) throws FilterException
+    {
+        String spaceRef = confluenceConverter.convertSpaceReference("");
+        String templateRef = spaceRef + '.' + templateSpaceName + '.' + template + ".WebHome";
+
+        FilterEventParameters parameters = new FilterEventParameters();
+        // Page report object
+        parameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, TEMPLATE_PROVIDER_CLASS);
+        proxyFilter.beginWikiObject(TEMPLATE_PROVIDER_CLASS, parameters);
+        try {
+            proxyFilter.onWikiObjectProperty(DESCRIPTION, description, FilterEventParameters.EMPTY);
+            proxyFilter.onWikiObjectProperty(NAME, name, FilterEventParameters.EMPTY);
+            proxyFilter.onWikiObjectProperty("template", templateRef, FilterEventParameters.EMPTY);
+            proxyFilter.onWikiObjectProperty("visibilityRestrictions", spaceRef, FilterEventParameters.EMPTY);
+        } finally {
+            proxyFilter.endWikiObject(TEMPLATE_PROVIDER_CLASS, parameters);
+        }
+    }
+
     private Map<String, Object> createPageIdentifier(Long pageId, String spaceKey)
     {
         PageIdentifier page = new PageIdentifier(pageId);
@@ -1026,7 +1146,11 @@ public class ConfluenceInputFilterStream
             return;
         }
 
-        pageIdentifier.setPageTitle(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE));
+        String title = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE, null);
+        if (StringUtils.isEmpty(title)) {
+            title = pageProperties.getString(NAME, null);
+        }
+        pageIdentifier.setPageTitle(title);
         pageIdentifier.setPageRevision(pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION));
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_PARENT)) {
             Long parentId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_PARENT);
@@ -1509,11 +1633,8 @@ public class ConfluenceInputFilterStream
         throws FilterException, ConfluenceCanceledException
     {
         Locale locale = Locale.ROOT;
-
         FilterEventParameters documentLocaleParameters = getDocumentLocaleParameters(pageProperties);
-
-        // > WikiDocumentLocale
-        proxyFilter.beginWikiDocumentLocale(locale, documentLocaleParameters);
+        proxyFilter.beginWikiDocumentLocale(Locale.ROOT, documentLocaleParameters);
 
         try {
             // Revisions
@@ -1548,7 +1669,6 @@ public class ConfluenceInputFilterStream
             readPageRevision(pageProperties, blog, attachments, filter, proxyFilter, spaceKey,
                 inheritedRights, hide);
         } finally {
-            // < WikiDocumentLocale
             proxyFilter.endWikiDocumentLocale(locale, documentLocaleParameters);
         }
     }
@@ -1767,7 +1887,9 @@ public class ConfluenceInputFilterStream
 
         prepareRevisionMetadata(pageProperties, docRevisionParameters);
 
-        beginPageRevision(blog, pageProperties, filter, proxyFilter, revision, docRevisionParameters);
+        beginPageRevision(blog, pageProperties, filter, proxyFilter, revision, docRevisionParameters,
+            ConfluenceXMLPackage.KEY_PAGE_BODY);
+
 
         if (this.properties.isRightsEnabled()) {
             sendPageRights(proxyFilter, pageProperties, inheritedRights);
@@ -1836,10 +1958,10 @@ public class ConfluenceInputFilterStream
     }
 
     private void beginPageRevision(boolean isBlog, ConfluenceProperties pageProperties,
-        Object filter, ConfluenceFilter proxyFilter, String revision, FilterEventParameters docRevisionParameters)
-        throws FilterException
+        Object filter, ConfluenceFilter proxyFilter, String revision, FilterEventParameters docRevisionParameters,
+        String keyPageBody) throws FilterException
     {
-        String bodyContent = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_BODY, null);
+        String bodyContent = pageProperties.getString(keyPageBody, null);
         if (bodyContent != null && this.properties.isContentsEnabled()) {
             // No bodyType means old Confluence syntax
             int bodyType = pageProperties.getInt(ConfluenceXMLPackage.KEY_PAGE_BODY_TYPE, 0);
@@ -1948,6 +2070,10 @@ public class ConfluenceInputFilterStream
             && pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE))
                 ? getSpaceTitle(pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null))
                 : pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE, null);
+
+        if (title == null) {
+            title = pageProperties.getString(NAME, null);
+        }
 
         if (title != null) {
             documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_TITLE, title);

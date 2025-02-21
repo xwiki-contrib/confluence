@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic datetime="2024-10-10 14:32:04">
+
+<object class="Space" package="com.atlassian.confluence.spaces">
+<id name="id">25657345</id>
+<property name="name"><![CDATA[Test space]]></property>
+<property name="key"><![CDATA[TestSpace]]></property>
+<property name="lowerKey"><![CDATA[TestSpace]]></property>
+<property name="description" class="SpaceDescription" package="com.atlassian.confluence.spaces"><id name="id">25592029</id>
+</property>
+<property name="homePage" class="Page" package="com.atlassian.confluence.pages"><id name="id">25591813</id>
+</property>
+<collection name="pageTemplates" class="java.util.Collection"><element class="PageTemplate" package="com.atlassian.confluence.pages.templates"><id name="id">1040482305</id>
+</element>
+<element class="PageTemplate" package="com.atlassian.confluence.pages.templates"><id name="id">642351109</id>
+</element>
+<element class="PageTemplate" package="com.atlassian.confluence.pages.templates"><id name="id">1275166721</id>
+</element>
+</collection>
+<property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[ff8080814ad3e003014ad3e4849407e8]]></id>
+</property>
+<property name="creationDate">2011-03-04 17:00:10.000</property>
+<property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[ff8080814ad3e003014ad3e4849407e8]]></id>
+</property>
+<property name="lastModificationDate">2023-12-06 12:48:09.828</property>
+<property name="spaceType">global</property>
+<property name="spaceStatus" enum-class="SpaceStatus" package="com.atlassian.confluence.spaces">CURRENT</property>
+</object>
+
+<object class="PageTemplate" package="com.atlassian.confluence.pages.templates">
+<id name="id">642351109</id>
+<property name="hibernateVersion">0</property>
+<property name="name"><![CDATA[Meeting notes]]></property>
+<property name="description"/><property name="pluginKey"><![CDATA[com.atlassian.confluence.plugins.confluence-business-blueprints]]></property>
+<property name="moduleKey"><![CDATA[meeting-notes-page]]></property>
+<property name="referencingPluginKey"><![CDATA[com.atlassian.confluence.plugins.confluence-business-blueprints]]></property>
+<property name="referencingModuleKey"><![CDATA[meeting-notes-blueprint]]></property>
+<property name="content"><![CDATA[<at:declarations><at:string at:name="currentDateLozenge" /></at:declarations><h2>Date</h2><p><at:var at:name="currentDateLozenge" at:rawxhtml="true" /></p><h2>Discussion items</h2><table><tbody><tr><th>Item</th><th>Notes</th></tr><tr><td><ac:placeholder>Agenda item</ac:placeholder></td><td><ul><li><ac:placeholder>Notes for this agenda item</ac:placeholder></li></ul></td></tr><tr><td>&nbsp;</td><td>&nbsp;</td></tr></tbody></table><h2>Action items</h2><ac:task-list>
+<ac:task>
+<ac:task-id>1</ac:task-id>
+<ac:task-status>incomplete</ac:task-status>
+<ac:task-body><ac:placeholder ac:type="mention">Type your task here. Use &quot;@&quot; to assign a user and &quot;//&quot; to select a due date.</ac:placeholder><p>&nbsp;</p></ac:task-body>
+</ac:task>
+</ac:task-list>
+<h2>Open tasks</h2><p><ac:structured-macro ac:macro-id="25b6a9b3-5512-4893-8ac0-789ed5b4543c" ac:name="tasks-report-macro" ac:schema-version="1"><ac:parameter ac:name="spaces">TestSpace</ac:parameter><ac:parameter ac:name="spaceAndPage">space:TestSpace</ac:parameter><ac:parameter ac:name="labels">meeting-notes</ac:parameter></ac:structured-macro></p>]]></property>
+<property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">25657345</id>
+</property>
+<property name="version">3</property>
+<property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[ff8080814ad3e003014ad3e4849407e8]]></id>
+</property>
+<property name="creationDate">2016-05-02 10:48:13.861</property>
+<property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[ff8080814ad3e003014ad3e4849407e8]]></id>
+</property>
+<property name="lastModificationDate">2016-05-02 11:20:43.476</property>
+<property name="bodyType">2</property>
+</object>
+
+<object class="PageTemplate" package="com.atlassian.confluence.pages.templates">
+<id name="id">1275166721</id>
+<property name="hibernateVersion">2</property>
+<property name="name"><![CDATA[Project tracking template]]></property>
+<property name="description"/><property name="pluginKey"/><property name="moduleKey"/><property name="referencingPluginKey"/><property name="referencingModuleKey"/><property name="content"><![CDATA[<at:declarations /><p>Type something here. An attachment: <ri:attachment ri:filename="myfile.txt" /></p>]]></property>
+<property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">25657345</id>
+</property>
+<property name="version">2</property>
+<property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[ff8080814ad3e003014ad3e4849407e8]]></id>
+</property>
+<property name="creationDate">2023-12-06 09:34:59.693</property>
+<property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[ff8080814ad3e003014ad3e4849407e8]]></id>
+</property>
+<property name="lastModificationDate">2023-12-06 09:44:14.846</property>
+<property name="bodyType">2</property>
+</object>
+
+<object class="Page" package="com.atlassian.confluence.pages">
+<id name="id">25591813</id>
+<property name="hibernateVersion">114</property>
+<property name="title"><![CDATA[Home]]></property>
+<property name="lowerTitle"><![CDATA[home]]></property>
+<collection name="bodyContents" class="java.util.Collection"><element class="BodyContent" package="com.atlassian.confluence.core"><id name="id">25624586</id>
+</element>
+</collection>
+<property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">25657345</id>
+</property>
+<property name="version">37</property>
+<property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[ff8080814ad3e003014ad3e4849407e8]]></id>
+</property>
+<property name="creationDate">2011-03-04 17:00:10.000</property>
+<property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[ff8080814ad3e003014ad3e4849407e8]]></id>
+</property>
+<property name="lastModificationDate">2023-12-06 09:38:14.660</property>
+<property name="versionComment"><![CDATA[]]></property>
+<property name="contentStatus"><![CDATA[current]]></property>
+</object>
+
+<object class="BodyContent" package="com.atlassian.confluence.core">
+<id name="id">25624586</id>
+<property name="body"><![CDATA[Hello]]></property>
+<property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">25591813</id>
+</property>
+<property name="bodyType">2</property>
+</object>
+
+<object class="Attachment" package="com.atlassian.confluence.pages">
+<id name="id">917124566</id>
+<property name="hibernateVersion">56</property>
+<property name="title"><![CDATA[myfile.txt]]></property>
+<property name="lowerTitle"><![CDATA[myfile.txt]]></property>
+<collection name="contentProperties" class="java.util.Collection"><element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">958849847</id>
+</element>
+<element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">958849848</id>
+</element>
+<element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">958849849</id>
+</element>
+<element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">958849850</id>
+</element>
+</collection>
+<property name="version">54</property>
+<property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[ff8080814ad3e003014ad3e46b542535]]></id>
+</property>
+<property name="creationDate">2020-10-12 04:55:04.379</property>
+<property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[ff8080814ad3e003014ad3e46b542535]]></id>
+</property>
+<property name="lastModificationDate">2020-10-12 04:55:04.379</property>
+<property name="versionComment"><![CDATA[Uploaded from Companion app]]></property>
+<property name="contentStatus"><![CDATA[current]]></property>
+<property name="containerContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">789115923</id>
+</property>
+<property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">25657345</id>
+</property>
+</object>
+
+<object class="ContentProperty" package="com.atlassian.confluence.content">
+<id name="id">958849848</id>
+<property name="name"><![CDATA[FILESIZE]]></property>
+<property name="stringValue"/><property name="longValue">132379</property>
+<property name="dateValue"/></object>
+
+<object class="ContentProperty" package="com.atlassian.confluence.content">
+<id name="id">958849849</id>
+<property name="name"><![CDATA[MINOR_EDIT]]></property>
+<property name="stringValue"/><property name="longValue">0</property>
+<property name="dateValue"/></object>
+
+<object class="ContentProperty" package="com.atlassian.confluence.content">
+<id name="id">958849850</id>
+<property name="name"><![CDATA[HIDDEN]]></property>
+<property name="stringValue"/><property name="longValue">0</property>
+<property name="dateValue"/></object>
+
+<object class="ContentProperty" package="com.atlassian.confluence.content">
+<id name="id">958849847</id>
+<property name="name"><![CDATA[MEDIA_TYPE]]></property>
+<property name="stringValue"><![CDATA[application/vnd.openxmlformats-officedocument.spreadsheetml.sheet]]></property>
+<property name="longValue"/><property name="dateValue"/></object>
+
+<object class="Page" package="com.atlassian.confluence.pages">
+<id name="id">789115923</id>
+<property name="hibernateVersion">14</property>
+<property name="title"><![CDATA[Common attachments]]></property>
+<property name="lowerTitle"><![CDATA[common attachments]]></property>
+<collection name="bodyContents" class="java.util.Collection"><element class="BodyContent" package="com.atlassian.confluence.core"><id name="id">788850267</id>
+</element>
+</collection>
+<property name="version">2</property>
+<property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[ff8080814ad3e003014ad3e4849407e8]]></id>
+</property>
+<property name="creationDate">2018-01-30 10:12:26.819</property>
+<property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[ff8080814ad3e003014ad3e4849407e8]]></id>
+</property>
+<property name="lastModificationDate">2018-01-30 10:14:40.702</property>
+<property name="versionComment"><![CDATA[]]></property>
+<property name="contentStatus"><![CDATA[current]]></property>
+<collection name="attachments" class="java.util.Collection">
+<element class="Attachment" package="com.atlassian.confluence.pages"><id name="id">917124566</id>
+</element>
+</collection>
+<property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">25657345</id>
+</property>
+<property name="position">2</property>
+<property name="parent" class="Page" package="com.atlassian.confluence.pages"><id name="id">25591813</id>
+</property>
+<collection name="ancestors" class="java.util.List"><element class="Page" package="com.atlassian.confluence.pages"><id name="id">25591813</id>
+</element>
+</collection>
+</object>
+</hibernate-generic>

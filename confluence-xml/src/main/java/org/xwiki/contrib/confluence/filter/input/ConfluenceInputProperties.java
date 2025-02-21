@@ -208,6 +208,16 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private String blogSpaceName = "Blog";
 
     /**
+     * @see #getTemplateSpaceName()
+     */
+    private String templateSpaceName = "Templates";
+
+    /**
+     * @see #isTemplateProvidersEnabled()
+     */
+    private boolean templateProvidersEnabled = true;
+
+    /**
      * @see #getRoot()
      */
     private EntityReference root;
@@ -930,6 +940,46 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setBlogSpaceName(String blogSpaceName)
     {
         this.blogSpaceName = blogSpaceName;
+    }
+
+    /**
+     * @return The name to use for blog space
+     * @since 9.79.0
+     */
+    @PropertyName("Template space name")
+    @PropertyDescription("The name to use to import templates")
+    public String getTemplateSpaceName()
+    {
+        return this.templateSpaceName;
+    }
+
+    /**
+     * @param templateSpaceName The name to use for templates space
+     * @since 9.79.0
+     */
+    public void setTemplateSpaceName(String templateSpaceName)
+    {
+        this.templateSpaceName = templateSpaceName;
+    }
+
+    /**
+     * @return The name to use for blog space
+     * @since 9.79.0
+     */
+    @PropertyName("Generate Template Providers")
+    @PropertyDescription("Whether to create a template provider for each imported template")
+    public boolean isTemplateProvidersEnabled()
+    {
+        return this.templateProvidersEnabled;
+    }
+
+    /**
+     * @param templateProvidersEnabled whether to enable template provider generation
+     * @since 9.79.0
+     */
+    public void setTemplateProvidersEnabled(boolean templateProvidersEnabled)
+    {
+        this.templateProvidersEnabled = templateProvidersEnabled;
     }
 
     /**

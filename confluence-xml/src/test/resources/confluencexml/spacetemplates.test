@@ -1,0 +1,344 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Content conversions
+.#------------------------------------------------------------------------------
+<wikiSpace name="Composed">
+  <wikiSpace name="Root">
+    <wikiSpace name="TestSpace">
+      <wikiDocument name="WebHome">
+        <wikiDocumentLocale>
+          <p>
+            <parameters>
+              <entry>
+                <string>creation_author</string>
+                <string>XWiki.ff8080814ad3e003014ad3e4849407e8</string>
+              </entry>
+              <entry>
+                <string>creation_date</string>
+                <date>2011-03-04 17:00:10.0 UTC</date>
+              </entry>
+              <entry>
+                <string>lastrevision</string>
+                <string>37</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiDocumentRevision revision="37">
+            <p>
+              <parameters>
+                <entry>
+                  <string>revision_author</string>
+                  <string>XWiki.ff8080814ad3e003014ad3e4849407e8</string>
+                </entry>
+                <entry>
+                  <string>revision_date</string>
+                  <date>2023-12-06 09:38:14.660 UTC</date>
+                </entry>
+                <entry>
+                  <string>revision_comment</string>
+                  <string></string>
+                </entry>
+                <entry>
+                  <string>title</string>
+                  <string>Test space</string>
+                </entry>
+                <entry>
+                  <string>content</string>
+                  <string>Hello</string>
+                </entry>
+                <entry>
+                  <string>syntax</string>
+                  <org.xwiki.rendering.syntax.Syntax>
+                    <type>
+                      <name>XWiki</name>
+                      <id>xwiki</id>
+                      <variants class="empty-list"/>
+                    </type>
+                    <version>2.1</version>
+                  </org.xwiki.rendering.syntax.Syntax>
+                </entry>
+              </parameters>
+            </p>
+          </wikiDocumentRevision>
+        </wikiDocumentLocale>
+      </wikiDocument>
+      <wikiSpace name="Common attachments">
+        <wikiDocument name="WebHome">
+          <wikiDocumentLocale>
+            <p>
+              <parameters>
+                <entry>
+                  <string>creation_author</string>
+                  <string>XWiki.ff8080814ad3e003014ad3e4849407e8</string>
+                </entry>
+                <entry>
+                  <string>creation_date</string>
+                  <date>2018-01-30 10:12:26.819 UTC</date>
+                </entry>
+                <entry>
+                  <string>lastrevision</string>
+                  <string>2</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiDocumentRevision revision="2">
+              <p>
+                <parameters>
+                  <entry>
+                    <string>revision_author</string>
+                    <string>XWiki.ff8080814ad3e003014ad3e4849407e8</string>
+                  </entry>
+                  <entry>
+                    <string>revision_date</string>
+                    <date>2018-01-30 10:14:40.702 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision_comment</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>title</string>
+                    <string>Common attachments</string>
+                  </entry>
+                </parameters>
+              </p>
+              <wikiAttachment name="myfile.txt" size="132379">
+                <p>
+                  <content>bXkgZmlsZQo=</content>
+                  <parameters>
+                    <entry>
+                      <string>creation_date</string>
+                      <date>2020-10-12 04:55:04.379 UTC</date>
+                    </entry>
+                    <entry>
+                      <string>revision_date</string>
+                      <date>2020-10-12 04:55:04.379 UTC</date>
+                    </entry>
+                    <entry>
+                      <string>revision</string>
+                      <string>54</string>
+                    </entry>
+                    <entry>
+                      <string>content_type</string>
+                      <string>application/vnd.openxmlformats-officedocument.spreadsheetml.sheet</string>
+                    </entry>
+                    <entry>
+                      <string>revision_author</string>
+                      <string>XWiki.ff8080814ad3e003014ad3e46b542535</string>
+                    </entry>
+                  </parameters>
+                </p>
+              </wikiAttachment>
+            </wikiDocumentRevision>
+          </wikiDocumentLocale>
+        </wikiDocument>
+      </wikiSpace>
+      <wikiSpace name="Templates">
+        <wikiSpace name="Meeting notes">
+          <wikiDocument name="WebHome">
+            <wikiDocumentLocale>
+              <p>
+                <parameters>
+                  <entry>
+                    <string>creation_author</string>
+                    <string>XWiki.ff8080814ad3e003014ad3e4849407e8</string>
+                  </entry>
+                  <entry>
+                    <string>creation_date</string>
+                    <date>2016-05-02 10:48:13.861 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>lastrevision</string>
+                    <string>3</string>
+                  </entry>
+                </parameters>
+              </p>
+              <wikiDocumentRevision revision="3">
+                <p>
+                  <parameters>
+                    <entry>
+                      <string>hidden</string>
+                      <boolean>true</boolean>
+                    </entry>
+                    <entry>
+                      <string>revision_author</string>
+                      <string>XWiki.ff8080814ad3e003014ad3e4849407e8</string>
+                    </entry>
+                    <entry>
+                      <string>revision_date</string>
+                      <date>2016-05-02 11:20:43.476 UTC</date>
+                    </entry>
+                    <entry>
+                      <string>title</string>
+                      <string>Meeting notes</string>
+                    </entry>
+                    <entry>
+                      <string>content</string>
+                      <string>== {{id name="Commonattachments-Date"/}}Date ==
+
+
+
+== {{id name="Commonattachments-Discussionitems"/}}Discussion items ==
+
+|=(((
+Item
+)))|=(((
+Notes
+)))
+|(((
+Agenda item
+)))|(((
+* Notes for this agenda item
+)))
+|(((
+ 
+)))|(((
+ 
+)))
+
+== {{id name="Commonattachments-Actionitems"/}}Action items ==
+
+{{task-list}}
+{{task id="1" status="incomplete"}}
+Type your task here. Use "@" to assign a user and "~/~/" to select a due date. 
+{{/task}}
+{{/task-list}}
+
+== {{id name="Commonattachments-Opentasks"/}}Open tasks ==
+
+{{tasks-report-macro spaces="TestSpace" spaceAndPage="space:TestSpace" labels="meeting-notes"/}}</string>
+                    </entry>
+                    <entry>
+                      <string>syntax</string>
+                      <org.xwiki.rendering.syntax.Syntax>
+                        <type>
+                          <name>XWiki</name>
+                          <id>xwiki</id>
+                          <variants class="empty-list"/>
+                        </type>
+                        <version>2.1</version>
+                      </org.xwiki.rendering.syntax.Syntax>
+                    </entry>
+                  </parameters>
+                </p>
+              </wikiDocumentRevision>
+            </wikiDocumentLocale>
+          </wikiDocument>
+        </wikiSpace>
+        <wikiDocument name="Meeting notes Template Provider">
+          <p>
+            <parameters>
+              <entry>
+                <string>hidden</string>
+                <boolean>true</boolean>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="XWiki.TemplateProviderClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.TemplateProviderClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="description" value=""/>
+            <wikiObjectProperty name="name" value="Meeting notes"/>
+            <wikiObjectProperty name="template" value="Composed.Root.TestSpace.Templates.Meeting notes.WebHome"/>
+            <wikiObjectProperty name="visibilityRestrictions" value="Composed.Root.TestSpace"/>
+          </wikiObject>
+        </wikiDocument>
+        <wikiSpace name="Project tracking template">
+          <wikiDocument name="WebHome">
+            <wikiDocumentLocale>
+              <p>
+                <parameters>
+                  <entry>
+                    <string>creation_author</string>
+                    <string>XWiki.ff8080814ad3e003014ad3e4849407e8</string>
+                  </entry>
+                  <entry>
+                    <string>creation_date</string>
+                    <date>2023-12-06 09:34:59.693 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>lastrevision</string>
+                    <string>2</string>
+                  </entry>
+                </parameters>
+              </p>
+              <wikiDocumentRevision revision="2">
+                <p>
+                  <parameters>
+                    <entry>
+                      <string>hidden</string>
+                      <boolean>true</boolean>
+                    </entry>
+                    <entry>
+                      <string>revision_author</string>
+                      <string>XWiki.ff8080814ad3e003014ad3e4849407e8</string>
+                    </entry>
+                    <entry>
+                      <string>revision_date</string>
+                      <date>2023-12-06 09:44:14.846 UTC</date>
+                    </entry>
+                    <entry>
+                      <string>title</string>
+                      <string>Project tracking template</string>
+                    </entry>
+                    <entry>
+                      <string>content</string>
+                      <string>Type something here. An attachment:</string>
+                    </entry>
+                    <entry>
+                      <string>syntax</string>
+                      <org.xwiki.rendering.syntax.Syntax>
+                        <type>
+                          <name>XWiki</name>
+                          <id>xwiki</id>
+                          <variants class="empty-list"/>
+                        </type>
+                        <version>2.1</version>
+                      </org.xwiki.rendering.syntax.Syntax>
+                    </entry>
+                  </parameters>
+                </p>
+              </wikiDocumentRevision>
+            </wikiDocumentLocale>
+          </wikiDocument>
+        </wikiSpace>
+        <wikiDocument name="Project tracking template Template Provider">
+          <p>
+            <parameters>
+              <entry>
+                <string>hidden</string>
+                <boolean>true</boolean>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="XWiki.TemplateProviderClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.TemplateProviderClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="description" value=""/>
+            <wikiObjectProperty name="name" value="Project tracking template"/>
+            <wikiObjectProperty name="template" value="Composed.Root.TestSpace.Templates.Project tracking template.WebHome"/>
+            <wikiObjectProperty name="visibilityRestrictions" value="Composed.Root.TestSpace"/>
+          </wikiObject>
+        </wikiDocument>
+      </wikiSpace>
+    </wikiSpace>
+  </wikiSpace>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
+.configuration.source=spacetemplates
+.configuration.root=Composed.Root
+.#------------------------------------------------------------------------------
