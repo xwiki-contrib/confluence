@@ -87,6 +87,8 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     private static final String CONFLUENCE_REF_EXPLANATION = "A Confluence reference will be used if possible. "
         + "Consider converting this reference later with a post import fix.";
 
+    private static final String FAILED_TO_RESOLVE_SPACE = "Failed to resolve space [{}]. " + CONFLUENCE_REF_EXPLANATION;
+
     private static final Marker CONFLUENCE_REF_MARKER = MarkerFactory.getMarker("confluenceRef");
 
     private static final EntityReference GUEST = new EntityReference(
@@ -339,9 +341,13 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         }
 
         if (this.context.getProperties().isUseConfluenceResolvers()) {
-            return getSpaceUsingResolver(spaceKey);
+            EntityReference spaceRef = getSpaceUsingResolver(spaceKey);
+            if (spaceRef != null) {
+                return spaceRef;
+            }
         }
 
+        logger.warn(CONFLUENCE_REF_MARKER, FAILED_TO_RESOLVE_SPACE, spaceKey);
         return null;
     }
 
@@ -529,7 +535,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             try {
                 return spaceKeyResolver.getSpaceByKey(spaceKey);
             } catch (ConfluenceResolverException e) {
-                logger.error("Failed to resolve space=[{}]", spaceKey, e);
+                logger.error(CONFLUENCE_REF_MARKER, FAILED_TO_RESOLVE_SPACE, spaceKey, e);
             }
             return null;
         });
