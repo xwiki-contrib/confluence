@@ -79,7 +79,7 @@ public class ConfluenceAttachmentURLMapper extends AbstractURLMapper implements 
             }
 
             AttachmentReference attachmentRef = new AttachmentReference(filename, new DocumentReference(docRef));
-            return new EntityResourceReference(attachmentRef, EntityResourceAction.VIEW);
+            return new EntityResourceReference(attachmentRef, new EntityResourceAction("download"));
         } catch (ConfluenceResolverException | NumberFormatException e) {
             logger.error("Could not convert URL", e);
             return null;

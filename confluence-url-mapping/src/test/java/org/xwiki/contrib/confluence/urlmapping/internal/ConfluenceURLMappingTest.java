@@ -221,7 +221,7 @@ class ConfluenceURLMappingTest
         assertEquals(
             new EntityResourceReference(
                 new AttachmentReference("hello world.txt", MY_DOC_REF),
-                EntityResourceAction.VIEW),
+                new EntityResourceAction("download")),
             converted.getResourceReference());
         assertEquals("", converted.getURL());
     }
