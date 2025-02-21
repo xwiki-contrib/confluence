@@ -312,24 +312,6 @@ public class ConfluenceInputFilterStream
         return n;
     }
 
-    private void pushLevelProgress(int steps)
-    {
-        try {
-            this.progress.pushLevelProgress(steps, this);
-        } catch (Exception e) {
-            logger.error("Could not push level progress", e);
-        }
-    }
-
-    private void popLevelProgress()
-    {
-        try {
-            this.progress.popLevelProgress(this);
-        } catch (Exception e) {
-            logger.error("Could not pop level progress", e);
-        }
-    }
-
     private void beginSpace(EntityReference space, ConfluenceFilter proxyFilter) throws FilterException
     {
         if (space == null || !EntityType.SPACE.equals(space.getType())) {
@@ -386,7 +368,7 @@ public class ConfluenceInputFilterStream
 
         int progressCount = countPagesToSend(willSendPages, pages, blogPages, disabledSpaces, users, groups);
 
-        pushLevelProgress(progressCount);
+        this.progress.pushLevelProgress(progressCount, this);
         try {
             sendUsersAndGroups(users, groups, proxyFilter);
             if (this.properties.isContentsEnabled()
@@ -400,10 +382,10 @@ public class ConfluenceInputFilterStream
         } catch (ConfluenceInterruptedException e) {
             logger.warn("The job was canceled.");
         } finally {
-            popLevelProgress();
+            this.progress.popLevelProgress(this);
             observationManager.notify(new ConfluenceFilteredEvent(), this, this.confluencePackage);
             closeConfluencePackage();
-            popLevelProgress();
+            this.progress.popLevelProgress(this);
         }
     }
 
@@ -421,7 +403,8 @@ public class ConfluenceInputFilterStream
         }
 
         try {
-            pushLevelProgress(restored ? 1 : 2);
+            int steps = restored ? 1 : 2;
+            this.progress.pushLevelProgress(steps, this);
             if (!restored) {
                 this.confluencePackage.read(wd);
             }
