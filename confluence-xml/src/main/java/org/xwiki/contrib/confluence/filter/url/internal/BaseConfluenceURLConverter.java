@@ -108,12 +108,12 @@ public class BaseConfluenceURLConverter extends AbstractConfluenceURLConverter
     private long tinyPartToPageId(String part)
     {
         // FIXME copy-pasted from ConfluenceShortURLMapper
-        // Reverse-engineered and inspired by https://confluence.atlassian.com/x/2EkGOQ
-        // not sure the replaceChars part is necessary, but it shouldn't hurt
+        // Inspired by https://confluence.atlassian.com/x/2EkGOQ and
+        // https://community.atlassian.com/t5/Confluence-questions/x/qaq-p/1968227#date-2114987
         String base64WithoutPadding = StringUtils.replaceChars(part, "-_/", "/+\n");
 
-        byte[] decoded = new byte[8];
-        Base64.getUrlDecoder().decode(base64WithoutPadding.getBytes(), decoded);
+        String base64 = StringUtils.rightPad(base64WithoutPadding, 11, 'A') + '=';
+        byte[] decoded = Base64.getDecoder().decode(base64);
         return ByteBuffer.wrap(decoded).order(ByteOrder.LITTLE_ENDIAN).getLong();
     }
 

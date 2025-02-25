@@ -138,6 +138,8 @@ class ConfluenceURLMappingTest
             new EntityReference("OK.2EkGOQ", EntityType.DOCUMENT));
         when(confluencePageIdResolver.getDocumentById(139521)).thenReturn(
             new EntityReference("OK.ASEC", EntityType.DOCUMENT));
+        when(confluencePageIdResolver.getDocumentById(1255346114)).thenReturn(
+            new EntityReference("OK.wg-TSg", EntityType.DOCUMENT));
         when(confluenceSpaceKeyResolver.getSpaceByKey(ConfluenceURLMappingTest.MY_SPACE)).thenReturn(SPACE_HOME_REF);
         when(confluenceSpaceKeyResolver.getSpaceByKey(PERSONAL_SPACE_KEY)).thenReturn(PERSONAL_SPACE_REF);
     }
@@ -279,6 +281,7 @@ class ConfluenceURLMappingTest
 
     @ParameterizedTest
     @ValueSource(strings = {
+        "x/wg-TSg",
         "x/liAC",
         "x/NgszKw",
         "x/SRwC",
