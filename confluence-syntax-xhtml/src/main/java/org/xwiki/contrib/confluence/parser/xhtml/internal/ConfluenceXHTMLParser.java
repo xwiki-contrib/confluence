@@ -74,6 +74,7 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.LinkTagHandl
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroParameterTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.MacroTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.PageTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.PlaceholderTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.PlainTextBodyTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.PlainTextLinkBodyTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.PreformattedTagHandler;
@@ -89,6 +90,7 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TaskTagHandl
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TimeTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.URLTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.UserTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.VarTagHandler;
 import org.xwiki.rendering.internal.parser.wikimodel.AbstractWikiModelParser;
 import org.xwiki.rendering.internal.parser.wikimodel.WikiModelStreamParser;
 import org.xwiki.rendering.internal.parser.wikimodel.XWikiGeneratorListener;
@@ -221,9 +223,12 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("ac:macro", new MacroTagHandler(this.macroSupport));
         handlers.put("ac:structured-macro", new MacroTagHandler(this.macroSupport));
         handlers.put("ac:default-parameter", new DefaultMacroParameterTagHandler());
+        handlers.put("ac:placeholder", new PlaceholderTagHandler());
         handlers.put("ac:parameter", new MacroParameterTagHandler());
         handlers.put("ac:plain-text-body", new PlainTextBodyTagHandler());
         handlers.put("ac:rich-text-body", new RichTextBodyTagHandler(this));
+
+        handlers.put("at:var", new VarTagHandler());
 
         handlers.put("ac:image", new ImageTagHandler());
         handlers.put("ac:caption", new CaptionHandler(this));
