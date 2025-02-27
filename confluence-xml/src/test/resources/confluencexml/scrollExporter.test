@@ -78,7 +78,11 @@ card content 3
 
 {{export-landscape parameter1="value1"/}}
 
-{{export-pagebreak parameter1="value1"/}}</string>
+{{export-portrait parameter1="value1"/}}
+
+{{export-pagebreak parameter1="value1"/}}
+
+{{export-tablelayout orientation="portrait" sortDirection="DESC" tableFit="AUTO_FIT_TO_CONTENTS" repeatTableHeaders="true" widths="10%,20%,30%" sortByColumn="2" tableStyling="word" sortEnabled="true" cellHighlighting="true"/}}</string>
             </entry>
             <entry>
               <string>syntax</string>

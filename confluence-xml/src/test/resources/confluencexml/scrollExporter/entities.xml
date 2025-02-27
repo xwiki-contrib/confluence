@@ -101,8 +101,24 @@
     <ac:parameter ac:name="parameter1">value1</ac:parameter>
 </ac:structured-macro>
 
+<ac:structured-macro ac:name="scroll-portrait" ac:schema-version="1" ac:macro-id="placeholder-id">
+    <ac:parameter ac:name="parameter1">value1</ac:parameter>
+</ac:structured-macro>
+
 <ac:structured-macro ac:name="scroll-pagebreak" ac:schema-version="1" ac:macro-id="placeholder-id">
     <ac:parameter ac:name="parameter1">value1</ac:parameter>
+</ac:structured-macro>
+
+<ac:structured-macro ac:name="scroll-tablelayout" ac:schema-version="1" ac:macro-id="6726a641-8b4b-4d1f-87af-1a9f27e091f3">
+    <ac:parameter ac:name="orientation">portrait</ac:parameter>
+    <ac:parameter ac:name="sortDirection">DESC</ac:parameter>
+    <ac:parameter ac:name="tableFit">AUTO_FIT_TO_CONTENTS</ac:parameter>
+    <ac:parameter ac:name="repeatTableHeaders">true</ac:parameter>
+    <ac:parameter ac:name="style" /><ac:parameter ac:name="widths">10%,20%,30%</ac:parameter>
+    <ac:parameter ac:name="sortByColumn">2</ac:parameter>
+    <ac:parameter ac:name="tableStyling">word</ac:parameter>
+    <ac:parameter ac:name="sortEnabled">true</ac:parameter>
+    <ac:parameter ac:name="cellHighlighting">true</ac:parameter>
 </ac:structured-macro>
     ]]></property>
         <property name="content" class="Page" package="com.atlassian.confluence.pages">
