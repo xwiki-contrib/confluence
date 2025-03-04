@@ -405,11 +405,11 @@ Image in Under Page A: [[image:attach:SmallNested.Page A.Under Page A.WebHome@im
 
 Default Page Tree:
 
-{{pagetree/}}
+{{documentTree/}}
 
 It shows Page A:
 
-{{pagetree root="SmallNested.Page A.WebHome" startDepth="1"/}}
+{{documentTree root="document:SmallNested.Page A.WebHome"/}}
 
 It includes Under Page A:
 

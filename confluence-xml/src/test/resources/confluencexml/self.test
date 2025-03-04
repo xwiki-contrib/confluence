@@ -100,11 +100,11 @@
               </entry>
               <entry>
                 <string>content</string>
-                <string>{{pagetree root="WebHome" startDepth="1"/}}
+                <string>{{documentTree root="document:WebHome"/}}
 
-{{pagetree root="MySpace.WebHome" startDepth="1"/}}
+{{documentTree root="document:MySpace.WebHome"/}}
 
-{{pagetree root="MySpace.WebHome" startDepth="1"/}}
+{{documentTree root="document:MySpace.WebHome"/}}
 
 {{recently-updated max="15" spaces="MySpace" maxToggle="false"/}}</string>
               </entry>

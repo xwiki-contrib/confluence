@@ -66,9 +66,9 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 (((
 ====== {{id name="Navigate-space"/}}Navigate space ======
 
-{{pagetreesearch/}}
+{{locationSearch reference="WebHome"/}}
 
-{{pagetree/}}
+{{documentTree/}}
 )))
 )))
 )))
@@ -328,9 +328,9 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 (((
 ====== {{id name="Navigate-space"/}}Navigate space ======
 
-{{pagetreesearch/}}
+{{locationSearch reference="WebHome"/}}
 
-{{pagetree/}}
+{{documentTree/}}
 )))
 )))
 )))
@@ -720,9 +720,9 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 (((
 ====== {{id name="Navigate-space"/}}Navigate space ======
 
-{{pagetreesearch/}}
+{{locationSearch reference="WebHome"/}}
 
-{{pagetree/}}
+{{documentTree/}}
 )))
 )))
 )))
@@ -1190,9 +1190,9 @@ content of the macro
 
 {{index/}}
 
-{{pagetree/}}
+{{documentTree/}}
 
-{{pagetreesearch/}}
+{{locationSearch reference="WebHome"/}}
 
 {{code language="none"}}
 no format content
@@ -1499,9 +1499,9 @@ content of the macro
 
 {{index/}}
 
-{{pagetree/}}
+{{documentTree/}}
 
-{{pagetreesearch/}}
+{{locationSearch reference="WebHome"/}}
 
 {{code language="none"}}
 no format content
@@ -1808,9 +1808,9 @@ content of the macro
 
 {{index/}}
 
-{{pagetree/}}
+{{documentTree/}}
 
-{{pagetreesearch/}}
+{{locationSearch reference="WebHome"/}}
 
 {{code language="none"}}
 no format content
@@ -2117,9 +2117,9 @@ content of the macro
 
 {{index/}}
 
-{{pagetree/}}
+{{documentTree/}}
 
-{{pagetreesearch/}}
+{{locationSearch reference="WebHome"/}}
 
 {{code language="none"}}
 no format content
@@ -2426,9 +2426,9 @@ content of the macro
 
 {{index/}}
 
-{{pagetree/}}
+{{documentTree/}}
 
-{{pagetreesearch/}}
+{{locationSearch reference="WebHome"/}}
 
 {{code language="none"}}
 no format content
@@ -2735,9 +2735,9 @@ content of the macro
 
 {{index/}}
 
-{{pagetree/}}
+{{documentTree/}}
 
-{{pagetreesearch/}}
+{{locationSearch reference="WebHome"/}}
 
 {{code language="none"}}
 no format content

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic datetime="2023-10-02 11:40:11">
+    <object class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+        <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+        <property name="name"><![CDATA[47826731]]></property>
+        <property name="lowerName"><![CDATA[47826731]]></property>
+        <property name="email"/>
+    </object>
+    <object class="Page" package="com.atlassian.confluence.spaces">
+        <id name="id">45809845</id>
+        <property name="hibernateVersion">5</property>
+        <property name="title">My Space Home</property>
+        <property name="lowerTitle">my space home</property>
+        <collection name="bodyContents" class="java.util.Collection"><element class="BodyContent" package="com.atlassian.confluence.core"><id name="id">156868656</id>
+        </element>
+        </collection>
+        <property name="version">1</property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+        </property>
+        <property name="creationDate">2012-08-21 15:37:47.000</property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+        </property>
+        <property name="lastModificationDate">2016-10-11 14:47:37.000</property>
+        <property name="versionComment"><![CDATA[]]></property>
+        <property name="contentStatus"><![CDATA[current]]></property>
+        <collection name="labellings" class="java.util.Collection"></collection>
+        <property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">46268417</id>
+        </property>
+        <collection name="attachments" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.attachments)"><element class="Attachment" package="com.atlassian.confluence.pages"><id name="id">134204920</id></element></collection>
+    </object>
+    <object class="Space" package="com.atlassian.confluence.spaces">
+        <id name="id">46268417</id>
+        <property name="name"><![CDATA[My Space]]></property>
+        <property name="key"><![CDATA[MySpace]]></property>
+        <property name="lowerKey"><![CDATA[myspace]]></property>
+        <property name="homePage" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809845</id></property>
+        <collection name="permissions" class="java.util.Collection"></collection>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+        </property>
+        <property name="creationDate">2012-08-21 15:37:47.000</property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+        </property>
+        <property name="lastModificationDate">2016-10-11 14:47:37.000</property>
+        <property name="spaceType">global</property>
+        <property name="spaceStatus" enum-class="SpaceStatus" package="com.atlassian.confluence.spaces">CURRENT</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">156868656</id>
+        <property name="body"><![CDATA[<p>Format = none, space = current space</p><p><ac:structured-macro ac:name="livesearch" ac:schema-version="1" ac:local-id="1b06a399-a2ea-4e7f-8605-644926a58266" ac:macro-id="6b3a5eca5933839827ef50a69a6723f4acac920ca178daa759820b3c376858c2"><ac:parameter ac:name="spaceKey"><ri:space ri:space-key="currentSpace()" /></ac:parameter><ac:parameter ac:name="size">large</ac:parameter><ac:parameter ac:name="additional">none</ac:parameter></ac:structured-macro></p><p>Format = none, space = Demo</p><p><ac:structured-macro ac:name="livesearch" ac:schema-version="1" ac:local-id="5112427b-328b-465d-9f2e-b55d1648ca16" ac:macro-id="774b15efe786529ef27079429764c0f46412c5c04cccee957f137630f43add03"><ac:parameter ac:name="spaceKey"><ri:space ri:space-key="DEMO" /></ac:parameter><ac:parameter ac:name="size">large</ac:parameter><ac:parameter ac:name="additional">none</ac:parameter></ac:structured-macro></p><p>Format = space name</p><p><ac:structured-macro ac:name="livesearch" ac:schema-version="1" ac:local-id="0c8aaa9d-8bb1-49b4-a92f-1162c720bffd" ac:macro-id="9cfd2880c82785d3cd9eb355e396875639e2429bdf091ad84b710be98f0e1b4e"><ac:parameter ac:name="size">large</ac:parameter></ac:structured-macro></p><p>format = excerpt</p><p><ac:structured-macro ac:name="livesearch" ac:schema-version="1" ac:local-id="ebb1b85d-598b-4100-b1a9-ccd673045a62" ac:macro-id="f32850fbeb2fa1c0756972f5145f92df0b197054d306f40ead083254743aca5e"><ac:parameter ac:name="size">large</ac:parameter><ac:parameter ac:name="additional">page excerpt</ac:parameter></ac:structured-macro></p><p>Page tree search, no root page specified</p><ac:structured-macro ac:name="pagetreesearch" ac:schema-version="1" data-layout="default" ac:local-id="18f580a5-990d-49c8-9879-4f930b2b309c" ac:macro-id="45841cf3ed7b1dc08f9207e489195b3c7bd65900d9f9d6e73e69b5f711290c8b" /><p>Page tree search, root page = Included page</p><ac:structured-macro ac:name="pagetreesearch" ac:schema-version="1" data-layout="default" ac:local-id="b9503cad-0764-4a57-ba3d-74561a447e47" ac:macro-id="ebfbcca562b7506e1ef150d21b6872eb5e232ea7fbc1da47f60e23dfbe9c3ab1"><ac:parameter ac:name="rootPage">Included page</ac:parameter></ac:structured-macro><p /><p>livesearch, type = page</p><p><ac:structured-macro ac:name="livesearch" ac:schema-version="1" ac:local-id="80d8fe9f-9c1a-4d76-8faf-45324c882325" ac:macro-id="4fd8e280feb5c2236f0426bb9503bb5eb342917a3a68010fe014e5b5614e98c9"><ac:parameter ac:name="type">page</ac:parameter><ac:parameter ac:name="labels" /></ac:structured-macro></p><p>livesearch, type = blogpost</p><p><ac:structured-macro ac:name="livesearch" ac:schema-version="1" ac:local-id="bdbdddf6-a0ff-433c-bdf4-92970614192b" ac:macro-id="0add3ab06877f9a2f135b1f32a6bac419954ed90131ca58a97aed54c095380f4"><ac:parameter ac:name="type">blogpost</ac:parameter></ac:structured-macro></p><p>livesearch, type = comment</p><p><ac:structured-macro ac:name="livesearch" ac:schema-version="1" ac:local-id="f7a7af4d-7945-46e0-b9af-78b17cd321cf" ac:macro-id="c174a4ac59e0efb0606091c8420ad9529de36cfb0a507c17a40e7814db404ddb"><ac:parameter ac:name="type">comment</ac:parameter></ac:structured-macro></p><p>livesearch, type = spacedesc</p><p><ac:structured-macro ac:name="livesearch" ac:schema-version="1" ac:local-id="b7e93f57-c4be-474b-ad53-0af7d436b03f" ac:macro-id="161595ca482df9c1575ee753fda6c702bc68afc8589302fa785e533fb5076b05"><ac:parameter ac:name="type">spacedesc</ac:parameter></ac:structured-macro></p><p>livesearch, type = all</p><p><ac:structured-macro ac:name="livesearch" ac:schema-version="1" ac:local-id="9e2c5b63-e701-4e87-ba8b-7f54429feb83" ac:macro-id="de5276df088b26e98f0bdae074ee771e0c4b4d3ecf5e7445822dd73c2f16ea38" /></p><p>livesearch, labels</p><p><ac:structured-macro ac:name="livesearch" ac:schema-version="1" ac:local-id="b3b96b53-ab32-4383-b3d8-69d2426046d6" ac:macro-id="b6252c953a23f9394e6ab61e8e50f3e93f3f957ccbed53791667fe1291a66e3b"><ac:parameter ac:name="labels">testlabel1,testlabel2</ac:parameter></ac:structured-macro></p>]]></property>
+        <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809845</id></property>
+        <property name="bodyType">2</property>
+    </object>
+</hibernate-generic>

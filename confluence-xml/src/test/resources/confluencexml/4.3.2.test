@@ -185,9 +185,9 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 (((
 ====== {{id name="privatespaceHome-Navigatespace"/}}Navigate space ======
 
-{{pagetreesearch/}}
+{{locationSearch reference="WebHome"/}}
 
-{{pagetree/}}
+{{documentTree/}}
 )))
 )))
 )))
@@ -447,9 +447,9 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 (((
 ====== {{id name="space2Home-Navigatespace"/}}Navigate space ======
 
-{{pagetreesearch/}}
+{{locationSearch reference="WebHome"/}}
 
-{{pagetree/}}
+{{documentTree/}}
 )))
 )))
 )))
@@ -896,9 +896,9 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 (((
 ====== {{id name="space1Home-Navigatespace"/}}Navigate space ======
 
-{{pagetreesearch/}}
+{{locationSearch reference="WebHome"/}}
 
-{{pagetree/}}
+{{documentTree/}}
 )))
 )))
 )))
@@ -1377,9 +1377,9 @@ content of the macro
 
 {{index/}}
 
-{{pagetree/}}
+{{documentTree/}}
 
-{{pagetreesearch/}}
+{{locationSearch reference="WebHome"/}}
 
 {{code language="none"}}
 no format content
@@ -1686,9 +1686,9 @@ content of the macro
 
 {{index/}}
 
-{{pagetree/}}
+{{documentTree/}}
 
-{{pagetreesearch/}}
+{{locationSearch reference="WebHome"/}}
 
 {{code language="none"}}
 no format content
@@ -1995,9 +1995,9 @@ content of the macro
 
 {{index/}}
 
-{{pagetree/}}
+{{documentTree/}}
 
-{{pagetreesearch/}}
+{{locationSearch reference="WebHome"/}}
 
 {{code language="none"}}
 no format content
@@ -2304,9 +2304,9 @@ content of the macro
 
 {{index/}}
 
-{{pagetree/}}
+{{documentTree/}}
 
-{{pagetreesearch/}}
+{{locationSearch reference="WebHome"/}}
 
 {{code language="none"}}
 no format content
@@ -2613,9 +2613,9 @@ content of the macro
 
 {{index/}}
 
-{{pagetree/}}
+{{documentTree/}}
 
-{{pagetreesearch/}}
+{{locationSearch reference="WebHome"/}}
 
 {{code language="none"}}
 no format content
@@ -2922,9 +2922,9 @@ content of the macro
 
 {{index/}}
 
-{{pagetree/}}
+{{documentTree/}}
 
-{{pagetreesearch/}}
+{{locationSearch reference="WebHome"/}}
 
 {{code language="none"}}
 no format content

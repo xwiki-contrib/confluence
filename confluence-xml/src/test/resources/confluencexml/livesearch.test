@@ -1,0 +1,115 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.#------------------------------------------------------------------------------
+<wikiSpace name="MySpace">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.47826731</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2012-08-21 15:37:47.0 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>1</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.47826731</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2016-10-11 14:47:37.0 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>My Space</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>Format = none, space = current space
+
+{{locationSearch reference="MySpace" width="100%" excerpt="true"/}}
+
+Format = none, space = Demo
+
+{{locationSearch reference="OutsideSpace.DEMO" width="100%" excerpt="true"/}}
+
+Format = space name
+
+{{locationSearch width="100%" excerpt="false"/}}
+
+format = excerpt
+
+{{locationSearch width="100%" excerpt="false"/}}
+
+Page tree search, no root page specified
+
+{{locationSearch reference="WebHome"/}}
+
+Page tree search, root page = Included page
+
+{{locationSearch reference="confluencePage:page:MySpace.Included page"/}}
+
+
+
+livesearch, type = page
+
+{{locationSearch kind="document" excerpt="false"/}}
+
+livesearch, type = blogpost
+
+{{locationSearch kind="document" className="Blog.BlogPostClass" excerpt="false"/}}
+
+livesearch, type = comment
+
+{{locationSearch kind="comment" className="Blog.BlogPostClass" excerpt="false"/}}
+
+livesearch, type = spacedesc
+
+{{locationSearch excerpt="false"/}}
+
+livesearch, type = all
+
+{{locationSearch excerpt="false"/}}
+
+livesearch, labels
+
+{{locationSearch excerpt="false" tags="testlabel1,testlabel2"/}}</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=livesearch
+.configuration.storeConfluenceDetailsEnabled=false
+.#------------------------------------------------------------------------------
