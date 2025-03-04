@@ -122,7 +122,7 @@ public class ChildrenMacroConverter extends AbstractMacroConverter
             if (reverse) {
                 convertedSort += ":desc";
             }
-            parameters.put(SORT, convertedSort);
+            parameters.put("sortDocumentsBy", convertedSort);
         }
     }
 

@@ -44,17 +44,17 @@
               <string>content</string>
               <string>{{documentTree limit="5"/}}
 
-{{children sort="title"/}}
+{{children sortDocumentsBy="title"/}}
 
-{{children sort="title:desc"/}}
+{{children sortDocumentsBy="title:desc"/}}
 
-{{children sort="creationDate:desc"/}}
+{{children sortDocumentsBy="creationDate:desc"/}}
 
-{{children sort="creationDate"/}}
+{{children sortDocumentsBy="creationDate"/}}
 
-{{children sort="date:desc"/}}
+{{children sortDocumentsBy="date:desc"/}}
 
-{{children sort="date"/}}</string>
+{{children sortDocumentsBy="date"/}}</string>
             </entry>
             <entry>
               <string>syntax</string>
