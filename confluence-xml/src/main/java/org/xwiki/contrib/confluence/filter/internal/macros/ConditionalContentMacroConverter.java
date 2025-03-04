@@ -86,7 +86,9 @@ public class ConditionalContentMacroConverter extends AbstractMacroConverter
 
         for (Entry<String, String> confluenceParameter : confluenceParameters.entrySet()) {
             String attributePrefixedID = confluenceParameter.getKey();
-            if (attributePrefixedID.startsWith(CONFLUENCE_PARAMETER_PREFIX)) {
+            boolean handled = attributePrefixedID.startsWith(CONFLUENCE_PARAMETER_PREFIX);
+            markHandledParameter(confluenceParameters, attributePrefixedID, handled);
+            if (handled) {
                 String attributeID = attributePrefixedID.replaceFirst(CONFLUENCE_PARAMETER_PREFIX, "");
                 String parameterValues = confluenceParameter.getValue();
 

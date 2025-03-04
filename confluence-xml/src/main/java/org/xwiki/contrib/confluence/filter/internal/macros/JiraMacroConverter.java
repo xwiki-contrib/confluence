@@ -77,9 +77,9 @@ public class JiraMacroConverter extends AbstractMacroConverter
         Map<String, String> parameters = new LinkedHashMap<>(confluenceParameters.size());
 
         for (Map.Entry<String, String> entry : confluenceParameters.entrySet()) {
-            String parameterName = toXWikiParameterName(entry.getKey(), confluenceId, parameters, content);
+            String parameterName = toXWikiParameterName(entry.getKey(), confluenceId, confluenceParameters, content);
             String parameterValue =
-                toXWikiParameterValue(entry.getKey(), entry.getValue(), confluenceId, parameters, content);
+                toXWikiParameterValue(entry.getKey(), entry.getValue(), confluenceId, confluenceParameters, content);
 
             parameters.put(parameterName, parameterValue);
             

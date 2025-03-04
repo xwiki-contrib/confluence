@@ -39,6 +39,8 @@ public class ViewportRedirectMacroConverter extends AbstractMacroConverter
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
+        markHandledParameter(confluenceParameters, "delay", true);
+        markHandledParameter(confluenceParameters, "visible", true);
         return "redirect";
     }
 

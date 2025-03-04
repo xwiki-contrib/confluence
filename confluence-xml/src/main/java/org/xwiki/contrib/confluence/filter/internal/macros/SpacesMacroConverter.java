@@ -19,12 +19,12 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 
 /**
@@ -42,6 +42,10 @@ public class SpacesMacroConverter extends AbstractMacroConverter
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
+        String v = confluenceParameters.get("");
+        if (StringUtils.isNotEmpty(v) && !"all".equals(v)) {
+            markUnhandledParameterValue(confluenceParameters, "");
+        }
         return "documentTree";
     }
 
@@ -49,8 +53,6 @@ public class SpacesMacroConverter extends AbstractMacroConverter
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {
-        Map<String, String> xwikiParameters = new HashMap<>();
-        xwikiParameters.put("finder", "true");
-        return xwikiParameters;
+        return Map.of("finder", "true");
     }
 }

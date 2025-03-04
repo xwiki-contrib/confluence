@@ -44,8 +44,7 @@
               <string>content</string>
               <string>== {{id name="MySpaceHome-alert"/}}alert ==
 
-{{success}}
-Wohoo! u succeeded
+{{success title="Wohoo! u succeeded"}}
 THis is more text of success
 
 **Strong **//italic//
@@ -57,23 +56,19 @@ That this supports rich content
 \\
 {{/success}}
 
-{{info}}
-Wohoo! u succeeded
+{{info title="Wohoo! u succeeded"}}
 THis is more text of success
 {{/info}}
 
-{{warning}}
-Wohoo! u succeeded
+{{warning title="Wohoo! u succeeded"}}
 THis is more text of success
 {{/warning}}
 
-{{info type="unknown"}}
-Wohoo! u succeeded
+{{info title="Wohoo! u succeeded"}}
 THis is more text of success
 {{/info}}
 
-{{error}}
-Wohoo! u succeeded
+{{error title="Wohoo! u succeeded"}}
 THis is more text of success
 {{/error}}</string>
             </entry>

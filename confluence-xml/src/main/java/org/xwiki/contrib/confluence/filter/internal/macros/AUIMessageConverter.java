@@ -40,23 +40,32 @@ import org.xwiki.component.annotation.Component;
 @Singleton
 public class AUIMessageConverter extends AbstractMacroConverter
 {
+
     private static final String PARAM_KEY_TITLE = "title";
 
     private static final String PARAM_KEY_CLASS = "class";
 
     private static final String PARAM_KEY_TYPE = "type";
 
+    private static final String INFO = "info";
+
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
-        switch (confluenceParameters.getOrDefault(PARAM_KEY_TYPE, "")) {
+        String type = confluenceParameters.getOrDefault(PARAM_KEY_TYPE, "");
+        switch (type) {
             case "":
             case "generic":
             case "hint":
-                return "info";
+            case INFO:
+                return INFO;
+            case "error":
+            case "warning":
+            case "success":
+                return type;
             default:
-                return confluenceParameters.get(PARAM_KEY_TYPE);
+                throw new RuntimeException("Unhandled AUI message type [{" + type + "}], killing the macro conversion");
         }
     }
 

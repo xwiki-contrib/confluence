@@ -35,10 +35,35 @@ import org.xwiki.component.annotation.Component;
 @Component(hints = { "swagger-open-api", "swagger-integration" })
 public class SwaggerOpenApiMacroConverter extends AbstractMacroConverter
 {
+    private static final String[] KNOWN_PARAMETERS = {
+        "displayOperationId",
+        "operationsSorter",
+        "supportedSubmitMethods",
+        "tagsSorter",
+        "userName",
+        "url",
+        "token",
+        "docExpansion",
+        "defaultModelRendering",
+        "filter",
+        "proxy",
+        "validatorUrl",
+        "password",
+        "showCommonExtensions",
+        "maxDisplayedTags",
+        "displayRequestDuration",
+        "showExtensions"
+    };
+
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
+        // Useless for now, since we don't override toXWikiParameters, all the parameters are output, but we could
+        // decide to warn about unknown parameters in the future even for such macro converters.
+        for (String p : KNOWN_PARAMETERS) {
+            markHandledParameter(confluenceParameters, p, true);
+        }
         return "swagger";
     }
 }

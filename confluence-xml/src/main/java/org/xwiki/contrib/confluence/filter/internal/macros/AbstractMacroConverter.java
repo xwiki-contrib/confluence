@@ -19,9 +19,14 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
 import org.xwiki.rendering.listener.Listener;
 
@@ -33,17 +38,45 @@ import org.xwiki.rendering.listener.Listener;
  */
 public abstract class AbstractMacroConverter implements MacroConverter
 {
+    private static final Marker UNHANDLED_PARAMETER_MARKER = MarkerFactory.getMarker("unhandledConfluenceParameter");
+    private static final Marker UNHANDLED_PARAMETER_VALUE_MARKER =
+        MarkerFactory.getMarker("unhandledConfluenceParameterValue");
+
+    private final Logger logger = LoggerFactory.getLogger(AbstractMacroConverter.class.getName());
+
     @Override
     public void toXWiki(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline, Listener listener)
     {
-        String id = toXWikiId(confluenceId, confluenceParameters, confluenceContent, inline);
+        TracedMap<String, String> tracedParameters = new TracedMap<>(confluenceParameters);
 
-        Map<String, String> parameters = toXWikiParameters(confluenceId, confluenceParameters, confluenceContent);
+        String id = toXWikiId(confluenceId, tracedParameters, confluenceContent, inline);
 
-        String content = toXWikiContent(confluenceId, confluenceParameters, confluenceContent);
+        Map<String, String> parameters = toXWikiParameters(confluenceId, tracedParameters, confluenceContent);
+
+        String content = toXWikiContent(confluenceId, tracedParameters, confluenceContent);
+
+        printUnhandledInfo(confluenceId, tracedParameters);
 
         listener.onMacro(id, parameters, content, inline);
+    }
+
+    private void printUnhandledInfo(String confluenceId, TracedMap<String, String> confluenceParameters)
+    {
+        Collection<String> parametersWithUnhandledValues = confluenceParameters.getParametersWithUnhandledValues();
+        Collection<String> unhandledParameters = confluenceParameters.getUnhandledParameters();
+
+        for (String p : unhandledParameters) {
+            if (!parametersWithUnhandledValues.contains(p)) {
+                logger.info(UNHANDLED_PARAMETER_MARKER, "Unhandled parameter [{}] (with value [{}]) in macro [{}]",
+                    p, confluenceParameters.get(p), confluenceId);
+            }
+        }
+
+        for (String p : parametersWithUnhandledValues) {
+            logger.info(UNHANDLED_PARAMETER_VALUE_MARKER, "Unhandled value [{}] for parameter [{}] in macro [{}]",
+                confluenceParameters.get(p), p, confluenceId);
+        }
     }
 
     @Override
@@ -59,11 +92,15 @@ public abstract class AbstractMacroConverter implements MacroConverter
         Map<String, String> parameters = new LinkedHashMap<>(confluenceParameters.size());
 
         for (Map.Entry<String, String> entry : confluenceParameters.entrySet()) {
-            String parameterName = toXWikiParameterName(entry.getKey(), confluenceId, parameters, content);
-            String parameterValue =
-                toXWikiParameterValue(entry.getKey(), entry.getValue(), confluenceId, parameters, content);
+            String confluenceParameterName = entry.getKey();
+            String parameterName = toXWikiParameterName(
+                confluenceParameterName, confluenceId, confluenceParameters, content);
+            String confluenceParameterValue = entry.getValue();
+            String parameterValue = toXWikiParameterValue(
+                confluenceParameterName, confluenceParameterValue, confluenceId, confluenceParameters, content);
 
             parameters.put(parameterName, parameterValue);
+            markHandledParameter(confluenceParameters, confluenceParameterName, true);
         }
 
         return parameters;
@@ -72,6 +109,7 @@ public abstract class AbstractMacroConverter implements MacroConverter
     protected String toXWikiParameterName(String confluenceParameterName, String id,
         Map<String, String> confluenceParameters, String confluenceContent)
     {
+        markHandledParameter(confluenceParameters, confluenceParameterName, true);
         if (confluenceParameterName.isEmpty()) {
             // xwiki/2.x syntax does not currently support empty parameter name so we workaround it using the same
             // default parameter name than the Confluence wiki syntax parser
@@ -85,11 +123,42 @@ public abstract class AbstractMacroConverter implements MacroConverter
     protected String toXWikiParameterValue(String confluenceParameterName, String confluenceParameterValue,
         String confluenceId, Map<String, String> parameters, String confluenceContent)
     {
+        markHandledParameter(parameters, confluenceParameterName, true);
         return confluenceParameterValue;
     }
 
     protected String toXWikiContent(String confluenceId, Map<String, String> parameters, String confluenceContent)
     {
         return confluenceContent;
+    }
+
+    protected void markHandledParameter(Map<String, String> confluenceParameters, String name, boolean handled)
+    {
+        if (confluenceParameters instanceof TracedMap) {
+            TracedMap<String, String> tracedParameters = (TracedMap<String, String>) confluenceParameters;
+            if (handled) {
+                tracedParameters.markAsUsed(name);
+            } else {
+                tracedParameters.markAsUnused(name);
+            }
+        } else {
+            warnCantMark();
+        }
+    }
+
+    protected void markUnhandledParameterValue(Map<String, String> confluenceParameters, String parameterName)
+    {
+        if (confluenceParameters instanceof TracedMap) {
+            TracedMap<String, String> tracedParameters = (TracedMap<String, String>) confluenceParameters;
+            tracedParameters.markAsUnhandledValue(parameterName);
+        } else {
+            warnCantMark();
+        }
+    }
+
+    private void warnCantMark()
+    {
+        logger.error(
+            "Can't mark parameter as (un)handled or missing. Please pass the original Confluence parameter map.");
     }
 }

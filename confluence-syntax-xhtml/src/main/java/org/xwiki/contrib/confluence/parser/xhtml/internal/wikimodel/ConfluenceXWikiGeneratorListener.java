@@ -630,13 +630,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
 
     private void outputCodeMacro(String content)
     {
-        WikiParameters params = new WikiParameters().addParameter("language", "none");
-        if (content.contains("{{/code}}")) {
-            params = params.addParameter(SOURCE, "string:" + content);
-            super.onMacroInline(CODE, params, null);
-            return;
-        }
-        super.onMacroInline(CODE, params, content);
+        super.onMacroInline(CODE, new WikiParameters().addParameter("language", "none"), content);
     }
 
     private static boolean isClassPre(QueueListener.Event e)

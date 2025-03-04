@@ -36,10 +36,15 @@ import org.xwiki.component.annotation.Component;
 @Named("widget")
 public class WidgetMacroConverter extends AbstractMacroConverter
 {
+    private static final String WIDTH = "width";
+    private static final String HEIGHT = "height";
+
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
+        markHandledParameter(confluenceParameters, WIDTH, true);
+        markHandledParameter(confluenceParameters, HEIGHT, true);
         return "embed";
     }
 
@@ -48,11 +53,11 @@ public class WidgetMacroConverter extends AbstractMacroConverter
         String confluenceId, Map<String, String> parameters, String confluenceContent)
     {
         if (confluenceParameterValue != null
-            && ("width".equals(confluenceParameterName) || "height".equals(confluenceParameterName)))
+            && (WIDTH.equals(confluenceParameterName) || HEIGHT.equals(confluenceParameterName)))
         {
             // Remove everything which is not a number
-            // By example: 100px -> 100 OR 200 -> 200
-            return confluenceParameterValue.replaceAll("[\\D]", "");
+            // For example: 100px -> 100 OR 200 -> 200
+            return confluenceParameterValue.replaceAll("\\D", "");
         }
         return confluenceParameterValue;
     }

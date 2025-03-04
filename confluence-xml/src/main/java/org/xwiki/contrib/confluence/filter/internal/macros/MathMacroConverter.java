@@ -39,7 +39,10 @@ import java.util.Map;
 @Singleton
 public class MathMacroConverter extends AbstractMacroConverter
 {
+
     private static final String INLINE = "inline";
+
+    private static final String BODY = "body";
 
     @Inject
     private Logger logger;
@@ -64,12 +67,12 @@ public class MathMacroConverter extends AbstractMacroConverter
 
         String content = confluenceContent;
         if (StringUtils.isEmpty(content)) {
-            content = parameters.get("body");
+            content = parameters.get(BODY);
         }
 
         if (StringUtils.isEmpty(content)) {
-            logger.warn("The body parameter of macro [{}] is missing", confluenceId);
-            return "";
+            throw new RuntimeException(
+                "The " + confluenceId + " macro is missing its body, killing the macro conversion");
         }
 
         if (content.startsWith("--uriencoded--")) {

@@ -123,13 +123,18 @@ public class DefaultMacroConverter extends AbstractMacroConverter
             conv = this;
         }
         try {
+            // Converting to a traced map to shut up unwanted warnings.
+            TracedMap<String, String> p = parameters instanceof TracedMap
+                ? (TracedMap<String, String>) parameters
+                : new TracedMap<>(parameters);
+
             if (conv != this) {
-                InlineSupport converterInlineSupport = conv.supportsInlineMode(id, parameters, content);
+                InlineSupport converterInlineSupport = conv.supportsInlineMode(id, p, content);
                 if (converterInlineSupport != null && !converterInlineSupport.equals(InlineSupport.MAYBE)) {
                     return converterInlineSupport;
                 }
             }
-            Macro<?> macro = macroManager.getMacro(new MacroId(conv.toXWikiId(id, parameters, content, true)));
+            Macro<?> macro = macroManager.getMacro(new MacroId(conv.toXWikiId(id, p, content, true)));
             if (macro != null) {
                 return macro.supportsInlineMode() ? InlineSupport.YES : InlineSupport.NO;
             }
@@ -137,9 +142,8 @@ public class DefaultMacroConverter extends AbstractMacroConverter
             // Ignore
         }
 
-        if (parameters != null && "INLINE".equals(parameters.get("atlassian-macro-output-type"))) {
-            return InlineSupport.YES;
-        }
-        return InlineSupport.MAYBE;
+        return "INLINE".equals(parameters.get("atlassian-macro-output-type"))
+            ? InlineSupport.YES
+            : InlineSupport.MAYBE;
     }
 }

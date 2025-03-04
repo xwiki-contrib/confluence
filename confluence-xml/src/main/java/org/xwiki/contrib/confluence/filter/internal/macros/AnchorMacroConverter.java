@@ -24,6 +24,7 @@ import java.util.Map;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 
 /**
@@ -45,14 +46,20 @@ public class AnchorMacroConverter extends AbstractMacroConverter
     }
 
     @Override
-    protected String toXWikiParameterName(String confluenceParameterName, String id,
-        Map<String, String> confluenceParameters, String confluenceContent)
+    protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
+        String content)
     {
-        if (confluenceParameterName.equals("0") || confluenceParameterName.isEmpty()) {
-            return "name";
+        // Sometimes, anchors use <ac:parameter ac:name="">the-anchor</ac:parameter>
+        // Sometimes, they use <ac:default-parameter>the-anchor</ac:default-parameter>
+        // This leads to the two following possible parameter name.
+        String anchor = confluenceParameters.get("");
+        if (StringUtils.isEmpty(anchor)) {
+            anchor = confluenceParameters.get("0");
         }
-
-        return super.toXWikiParameterName(confluenceParameterName, id, confluenceParameters, confluenceContent);
+        if (StringUtils.isEmpty(anchor)) {
+            throw new RuntimeException("The anchor macro is missing its main parameter, killing the macro conversion");
+        }
+        return Map.of("name", anchor);
     }
 
     @Override

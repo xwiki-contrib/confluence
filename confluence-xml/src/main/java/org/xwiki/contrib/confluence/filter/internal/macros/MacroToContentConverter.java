@@ -114,13 +114,15 @@ public class MacroToContentConverter extends AbstractMacroConverter
 
         List<String> classes = new ArrayList<>();
         classes.add(String.format(DIV_CLASS_FORMAT, confluenceId));
-        if (confluenceParameters.containsKey(HTML_ATTRIBUTE_CLASS)) {
-            classes.add(confluenceParameters.get(HTML_ATTRIBUTE_CLASS));
+        String className = confluenceParameters.get(HTML_ATTRIBUTE_CLASS);
+        if (StringUtils.isNotEmpty(className)) {
+            classes.add(className);
         }
         divWrapperParams.put(HTML_ATTRIBUTE_CLASS, String.join(" ", classes));
 
-        if (confluenceParameters.containsKey(HTML_ATTRIBUTE_ID)) {
-            divWrapperParams.put(HTML_ATTRIBUTE_ID, confluenceParameters.get(HTML_ATTRIBUTE_ID));
+        String id = confluenceParameters.get(HTML_ATTRIBUTE_ID);
+        if (StringUtils.isNotEmpty(id)) {
+            divWrapperParams.put(HTML_ATTRIBUTE_ID, id);
         }
         return divWrapperParams;
     }

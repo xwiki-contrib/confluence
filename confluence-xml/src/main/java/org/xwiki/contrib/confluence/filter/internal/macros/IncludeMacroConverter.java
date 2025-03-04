@@ -19,10 +19,12 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
+import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
+
 import java.util.Map;
 
 /**
@@ -47,9 +49,12 @@ public class IncludeMacroConverter extends AbstractMacroConverter
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {
-        Map<String, String> parameters = super.toXWikiParameters(confluenceId, confluenceParameters, content);
-        parameters.put("reference", parameters.remove("0"));
-        return parameters;
+        String v = confluenceParameters.get("");
+        if (StringUtils.isEmpty(v)) {
+            throw new RuntimeException("Missing parameter for the include macro, killing the macro conversion");
+        }
+
+        return Map.of("reference", v);
     }
 
     @Override

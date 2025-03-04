@@ -19,16 +19,13 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 
 /**
@@ -49,8 +46,6 @@ public class AlertMacroConverter extends AbstractMacroConverter
     private static final String TYPE = "type";
 
     private static final List<String> KNOWN_TYPES = List.of("Success", "Info", "Error", "Warning");
-    @Inject
-    private Logger logger;
 
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
@@ -61,31 +56,18 @@ public class AlertMacroConverter extends AbstractMacroConverter
             return type.toLowerCase();
         }
 
-        logger.warn("Type [{}] of alert is not supported", type);
+        markUnhandledParameterValue(confluenceParameters, TYPE);
         return INFO;
-    }
-
-    @Override
-    protected String toXWikiContent(String confluenceId, Map<String, String> parameters, String confluenceContent)
-    {
-        if (StringUtils.isEmpty(parameters.get(TITLE))) {
-            return confluenceContent;
-        }
-        return parameters.get(TITLE) + "\n" + confluenceContent;
     }
 
     @Override
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {
-        Map<String, String> parameters = new HashMap<>(confluenceParameters);
-        String type = confluenceParameters.getOrDefault(TYPE, "");
-
-        parameters.remove(TITLE);
-        if (KNOWN_TYPES.contains(type)) {
-            parameters.remove(TYPE);
+        String title = confluenceParameters.get(TITLE);
+        if (title.isEmpty()) {
+            return Collections.emptyMap();
         }
-
-        return parameters;
+        return Map.of(TITLE, title);
     }
 }

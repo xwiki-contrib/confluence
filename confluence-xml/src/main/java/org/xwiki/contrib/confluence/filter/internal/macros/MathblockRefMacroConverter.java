@@ -39,6 +39,8 @@ import java.util.Map;
 @Named("mathblock-ref")
 public class MathblockRefMacroConverter extends AbstractMacroConverter
 {
+    private static final String ANCHOR = "anchor";
+
     @Inject
     private Logger logger;
 
@@ -61,10 +63,10 @@ public class MathblockRefMacroConverter extends AbstractMacroConverter
     {
         // based on https://tex.stackexchange.com/questions/18311/what-are-the-valid-names-as-labels
         // this also makes sure we don't allow XWiki syntax injection by forbidding '"', '{', '}' and '$'
-        String anchor = parameters.get("anchor");
+        String anchor = parameters.get(ANCHOR);
         if (StringUtils.isEmpty(anchor)) {
-            logger.warn("The anchor parameter for macro [{}] is missing", confluenceId);
-            return "";
+            throw new RuntimeException(
+                "The mathblock-ref macro is missing its anchor, killing the macro conversion");
         }
         anchor = anchor.replaceAll(
             "[^!%&amp;()*+,\\-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ\\[\\]`abcdefghijklmnopqrstuvwxyz|]",

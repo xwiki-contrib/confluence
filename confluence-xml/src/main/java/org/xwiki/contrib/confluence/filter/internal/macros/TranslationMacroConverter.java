@@ -20,7 +20,6 @@
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
 import java.util.Map;
-import java.util.TreeMap;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -69,11 +68,11 @@ public class TranslationMacroConverter extends AbstractMacroConverter
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {
-        Map<String, String> parameters = new TreeMap<String, String>();
+        Map<String, String> parameters;
         Long currentPageId = confluenceInputContext.getCurrentPage();
 
         String language = confluenceParameters.get(MACRO_PARAMETER_LANGUAGE);
-        if (confluenceParameters == null || language == null) {
+        if (language == null) {
             throw new RuntimeException(String.format("Could not get the language from id [{}]", confluenceId), null);
         }
 
