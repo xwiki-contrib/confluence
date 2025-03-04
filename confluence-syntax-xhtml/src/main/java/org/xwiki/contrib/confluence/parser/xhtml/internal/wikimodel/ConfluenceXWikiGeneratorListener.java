@@ -148,11 +148,6 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         this.popListenerMethod = pop;
     }
 
-    private static ResourceReference getFallbackReference(String space, String pageTitle, String file, String anchor)
-    {
-        return new FallbackConfluenceReferenceConverter().getResourceReference(space, pageTitle, file, anchor);
-    }
-
     @Override
     public void onReference(WikiReference reference)
     {
