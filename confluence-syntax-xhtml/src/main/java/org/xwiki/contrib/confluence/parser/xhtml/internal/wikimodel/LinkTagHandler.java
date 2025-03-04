@@ -61,7 +61,7 @@ public class LinkTagHandler extends TagHandler implements ConfluenceTagHandler
     private final ConfluenceReferenceConverter referenceConverter;
 
     /**
-     * @param referenceConverter the reference converter to use (can be null)
+     * @param referenceConverter the reference converter to use
      */
     public LinkTagHandler(ConfluenceReferenceConverter referenceConverter)
     {
@@ -89,9 +89,38 @@ public class LinkTagHandler extends TagHandler implements ConfluenceTagHandler
         ConfluenceXHTMLWikiReference link =
             (ConfluenceXHTMLWikiReference) context.getTagStack().popStackParameter(CONFLUENCE_CONTAINER);
 
+        if (shouldNotIssueLink(link)) {
+            return;
+        }
+
+        if (context.getTagStack().getStackParameter(AbstractMacroParameterTagHandler.IN_CONFLUENCE_PARAMETER) != null) {
+            // We are in a confluence macro parameter, we put the link in the content instead of issuing a reference.
+            saveLinkInParameter(context, link);
+        } else {
+            context.getScannerContext().onReference(link);
+        }
+    }
+
+    private void saveLinkInParameter(TagContext context, ConfluenceXHTMLWikiReference link)
+    {
+        TagContext parentContext = context.getParentContext();
+        if (StringUtils.isNotEmpty(parentContext.getContent())) {
+            // ensure links are well separated
+            parentContext.appendContent("\n");
+        }
+
+        if (handleViewFile(context, link, parentContext)) {
+            return;
+        }
+        String ref = referenceConverter.convertDocumentReference(link.getSpace(), link.getPage());
+        parentContext.appendContent(ref);
+    }
+
+    private static boolean shouldNotIssueLink(ConfluenceXHTMLWikiReference link)
+    {
         // If a user tag was inside the link tag, it was transformed into a mention macro.
         if (link.getUser() != null) {
-            return;
+            return true;
         }
 
         // Make sure to have a label for local anchors
@@ -99,22 +128,32 @@ public class LinkTagHandler extends TagHandler implements ConfluenceTagHandler
             && link.getSpace() == null && link.getUser() == null && link.getAttachment() == null) {
             if (StringUtils.isEmpty(link.getAnchor())) {
                 // Skip empty links.
-                return;
+                return true;
             }
             link.setLabel(link.getAnchor());
         }
+        return false;
+    }
 
-        if (context.getTagStack().getStackParameter(AbstractMacroParameterTagHandler.IN_CONFLUENCE_PARAMETER) != null) {
-            // We are in a confluence macro parameter, we put the link in the content instead of issuing a reference.
-            String ref = referenceConverter.convertDocumentReference(link.getSpace(), link.getPage());
-            TagContext parentContext = context.getParentContext();
-            if (StringUtils.isNotEmpty(parentContext.getContent())) {
-                // ensure links are well separated
-                parentContext.appendContent("\n");
+    private static boolean handleViewFile(TagContext context, ConfluenceXHTMLWikiReference link,
+        TagContext parentContext)
+    {
+        if (MacroTagHandler.inViewFile(context)) {
+            // If we are in a view-file macro, there might be a separate space parameter. This means we can't
+            // resolve the page just yet.
+            if (StringUtils.isEmpty(link.getSpace()) && StringUtils.isNotEmpty(link.getPage())) {
+                // unfortunately, we can't assume the current space. Some macros define a space in a separate parameter,
+                // and it would be wrong to resolve the reference here
+                parentContext.appendContent(link.getPage());
+            } else if (StringUtils.isEmpty(link.getPage()) && StringUtils.isNotEmpty(link.getSpace())) {
+                // In case where the page and the space parameters are given separately, having the space resolved and
+                // not the page is not workable
+                parentContext.appendContent(link.getSpace());
             }
-            parentContext.appendContent(ref);
-        } else {
-            context.getScannerContext().onReference(link);
+            // if both the space and the page are provided, resolving the reference is the cleanest way we
+            // have to pass the information
+            return true;
         }
+        return false;
     }
 }

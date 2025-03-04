@@ -20,6 +20,7 @@
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceMacroSupport;
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
@@ -43,11 +44,12 @@ public class TaskTagHandler extends MacroTagHandler
     /**
      * Default constructor.
      *
-     * @param macroSupport macro support.
+     * @param macroSupport macro support
+     * @param converter the reference converter
      */
-    public TaskTagHandler(ConfluenceMacroSupport macroSupport)
+    public TaskTagHandler(ConfluenceMacroSupport macroSupport, ConfluenceReferenceConverter converter)
     {
-        super(macroSupport);
+        super(macroSupport, converter);
     }
 
     @Override

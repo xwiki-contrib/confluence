@@ -20,6 +20,7 @@
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceMacroSupport;
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 /**
@@ -34,11 +35,12 @@ public class ADFNodeHandler extends MacroTagHandler
     /**
      * Default constructor.
      *
-     * @param macroSupport macro support.
+     * @param macroSupport macro support
+     * @param converter the reference converter
      */
-    public ADFNodeHandler(ConfluenceMacroSupport macroSupport)
+    public ADFNodeHandler(ConfluenceMacroSupport macroSupport, ConfluenceReferenceConverter converter)
     {
-        super(macroSupport);
+        super(macroSupport, converter);
     }
 
     @Override

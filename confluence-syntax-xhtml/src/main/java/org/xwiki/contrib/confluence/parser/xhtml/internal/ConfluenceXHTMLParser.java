@@ -220,8 +220,8 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("ol", new ConfluenceOrderedListTagHandler());
 
         handlers.put("ac:emoticon", new EmoticonTagHandler());
-        handlers.put("ac:macro", new MacroTagHandler(this.macroSupport));
-        handlers.put("ac:structured-macro", new MacroTagHandler(this.macroSupport));
+        handlers.put("ac:macro", new MacroTagHandler(this.macroSupport, refConverter));
+        handlers.put("ac:structured-macro", new MacroTagHandler(this.macroSupport, refConverter));
         handlers.put("ac:default-parameter", new DefaultMacroParameterTagHandler());
         handlers.put("ac:placeholder", new PlaceholderTagHandler());
         handlers.put("ac:parameter", new MacroParameterTagHandler());
@@ -256,19 +256,19 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
         handlers.put("pre", new PreformattedTagHandler());
         handlers.put("code", new CodeTagHandler(this));
 
-        handlers.put("time", new TimeTagHandler(this.macroSupport));
+        handlers.put("time", new TimeTagHandler(this.macroSupport, refConverter));
 
         handlers.put("img", new ConfluenceImgTagHandler());
 
         handlers.put("ac:task-list", new ElementMacroTagHandler(this));
-        handlers.put("ac:task", new TaskTagHandler(this.macroSupport));
+        handlers.put("ac:task", new TaskTagHandler(this.macroSupport, refConverter));
         handlers.put("ac:task-id", new TaskIdTagHandler());
         handlers.put("ac:task-status", new TaskStatusTagHandler());
         handlers.put("ac:task-body", new TaskBodyTagHandler(this));
 
         // ac:adf-extension tags are ignored, but their content parsed. Nothing to do.
         handlers.put("ac:adf-fallback", new IgnoredTagHandler(this));
-        handlers.put("ac:adf-node", new ADFNodeHandler(this.macroSupport));
+        handlers.put("ac:adf-node", new ADFNodeHandler(this.macroSupport, refConverter));
         handlers.put("ac:adf-attribute", new ADFAttributeHandler());
         handlers.put("ac:adf-content", new ADFContentHandler(this));
         handlers.put("ac:adf-mark", new ADFMarkHandler());

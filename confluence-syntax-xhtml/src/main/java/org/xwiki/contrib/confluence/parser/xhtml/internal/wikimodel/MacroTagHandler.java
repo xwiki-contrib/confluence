@@ -20,6 +20,7 @@
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceMacroSupport;
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
 import org.xwiki.rendering.wikimodel.WikiParameter;
 import org.xwiki.rendering.wikimodel.WikiParameters;
 import org.xwiki.rendering.wikimodel.impl.IWikiScannerContext;
@@ -27,6 +28,7 @@ import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -48,7 +50,17 @@ import java.util.Map;
  */
 public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
 {
+
+    private static final List<String> VIEW_FILE_MACROS = List.of(
+        "view-file", "viewfile", "viewdoc", "viewppt", "viewxls", "viewpdf", "excel"
+    );
+
+    private static final String SPACE = "space";
+    private static final String PAGE = "page";
+    private static final String AC_NAME = "ac:name";
+
     private final ConfluenceMacroSupport macroSupport;
+    private final ConfluenceReferenceConverter converter;
 
     /**
      * A Confluence Macro.
@@ -78,12 +90,14 @@ public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
 
     /**
      * Default constructor.
-     * @param macroSupport macro support.
+     * @param macroSupport macro support
+     * @param converter the reference converter
      */
-    public MacroTagHandler(ConfluenceMacroSupport macroSupport)
+    public MacroTagHandler(ConfluenceMacroSupport macroSupport, ConfluenceReferenceConverter converter)
     {
         super(false);
         this.macroSupport = macroSupport;
+        this.converter = converter;
     }
 
     @Override
@@ -91,7 +105,7 @@ public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
     {
         ConfluenceMacro macro = new ConfluenceMacro();
 
-        macro.name = context.getParams().getParameter("ac:name").getValue();
+        macro.name = context.getParams().getParameter(AC_NAME).getValue();
 
         context.getTagStack().pushStackParameter(CONFLUENCE_CONTAINER, macro);
     }
@@ -115,7 +129,30 @@ public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
                 || isInTaskBody(context)
         );
 
+        handleViewFileQuirk(macro);
         s.onMacro(macro.name, macro.parameters, macro.content, isInline);
+    }
+
+    private void handleViewFileQuirk(ConfluenceMacro macro)
+    {
+        if (!VIEW_FILE_MACROS.contains(macro.name)) {
+            return;
+        }
+
+        WikiParameter pageParam = macro.parameters.getParameter(PAGE);
+        if (pageParam == null) {
+            return;
+        }
+
+        WikiParameter spaceParam = macro.parameters.getParameter(SPACE);
+        String space = "";
+        if (spaceParam != null) {
+            space = spaceParam.getValue();
+            macro.parameters = macro.parameters.remove(SPACE);
+        }
+
+        macro.parameters = macro.parameters.setParameter(PAGE,
+            converter.convertDocumentReference(space, pageParam.getValue()));
     }
 
     private static boolean isInTaskBody(TagContext context)
@@ -151,4 +188,19 @@ public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
 
         return macroSupport.supportsInlineMode(macro.name, parameters, macro.content);
     }
+
+    static boolean inViewFile(TagContext context)
+    {
+        if (context == null) {
+            return false;
+        }
+
+        WikiParameter nameParam = context.getParams().getParameter(AC_NAME);
+        if ("ac:structured-macro".equals(context.getName())) {
+            return nameParam != null && VIEW_FILE_MACROS.contains(nameParam.getValue());
+        }
+
+        return inViewFile(context.getParentContext());
+    }
+
 }
