@@ -21,6 +21,7 @@ org.xwiki.contrib.confluence.filter.internal.macros.DefaultMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.IncludeMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.ImgMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.LivesearchMacroConverter
+org.xwiki.contrib.confluence.filter.internal.macros.JiraChartMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.JiraMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.MacroToContentConverter
 org.xwiki.contrib.confluence.filter.internal.macros.MathblockRefMacroConverter

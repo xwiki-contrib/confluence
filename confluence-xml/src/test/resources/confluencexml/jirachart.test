@@ -1,0 +1,108 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Content conversions
+.#------------------------------------------------------------------------------
+<wikiSpace name="MySpace">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.01f7c1cc638e0d8c0163d05ca6f60124</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2019-02-13 08:05:54.0 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>1</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.01f7c1cc638e0d8c0163d05ca6f60124</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-02-13 08:16:56.0 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>My Space</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>Pie chart
+
+
+
+{{jiraPieChart border="false" showinfor="false" id="JIRA Dev" query="project = ~"Hello Word Toto for It~" " type="components" isAuthenticated="true" serverId="a60d537f-6941-4483-872e-913674cb30f4"/}}
+
+
+
+{{jiraPieChart border="true" showinfor="true" id="JIRA server ID" query="project = ~"Hello Word Toto for It~" " type="priorities" width="300" isAuthenticated="true" serverId="a60d537f-6941-4483-872e-913674cb30f4"/}}
+
+
+
+{{jiraPieChart border="false" showinfor="false" id="JIRA server ID" filterId="filter-20847" type="customfield_12234" serverId="a60d537f-6941-4483-872e-913674cb30f4"/}}
+
+
+
+{{jiraPieChart border="false" showinfor="false" id="JIRA server ID" filterId="filter-20847" type="reporter" serverId="a60d537f-6941-4483-872e-913674cb30f4"/}}
+
+CreatedVsResolved chart
+
+
+
+{{jiraCreatedVsResolvedChart border="false" id="JIRA server ID" query="project = ABCDX" period="DAILY" displayTrend="false" isAuthenticated="true" serverId="a60d537f-6941-4483-872e-913674cb30f4" showinfor="false" displayVersion="ALL" count="true" daysPreviously="300"/}}
+
+
+
+{{jiraCreatedVsResolvedChart border="true" id="JIRA server ID" query="project = ABCDX" period="WEEKLY" displayTrend="true" isAuthenticated="true" serverId="a60d537f-6941-4483-872e-913674cb30f4" showinfor="true" displayVersion="ONLY_MAJOR" count="false" width="400" daysPreviously="10"/}}
+
+
+
+{{jiraCreatedVsResolvedChart border="true" id="JIRA server ID" query="project = ABCDX" period="WEEKLY" displayTrend="true" isAuthenticated="true" serverId="a60d537f-6941-4483-872e-913674cb30f4" showinfor="true" displayVersion="NONE" count="false" width="400" daysPreviously="30"/}}
+
+BiDimensionalGrid chart
+
+
+
+{{jiraBiDimensionalGridChart id="JIRA server ID" query="filter = ~"MY YELLOW CAR~"" yAxisField="assignees" isAuthenticated="true" numberOfResults="5" xAxisField="statuses" serverId="a60d537f-6941-4483-872e-913674cb30f4"/}}
+
+
+
+{{jiraBiDimensionalGridChart id="JIRA server ID" filterId="filter-12341" yAxisField="customfield_13500" isAuthenticated="true" numberOfResults="20" xAxisField="customfield_14700" serverId="a60d537f-6941-4483-872e-913674cb30f4"/}}</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=jirachart
+.configuration.storeConfluenceDetailsEnabled=false
+.#------------------------------------------------------------------------------
