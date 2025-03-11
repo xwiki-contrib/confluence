@@ -64,7 +64,7 @@ public class ConfluenceTinyLinkURLMapper extends AbstractURLMapper implements Co
      */
     public ConfluenceTinyLinkURLMapper()
     {
-        super("x/(?<part>[^?#]+)(?<params>&.*)?");
+        super("x/+(?<part>[^?#]+)(?<params>&.*)?");
     }
 
     @Override
