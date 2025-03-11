@@ -1128,7 +1128,9 @@ info default macro
 Content of bloc code
 {{/code}}
 
-{{blog-posts/}}
+
+
+{{blogpostlist reference="SPACE1.Blog.WebHome" layout="link"/}}
 
 {{create-space-button/}}
 
@@ -1437,7 +1439,9 @@ info default macro
 Content of bloc code
 {{/code}}
 
-{{blog-posts/}}
+
+
+{{blogpostlist reference="SPACE1.Blog.WebHome" layout="link"/}}
 
 {{create-space-button/}}
 
@@ -1746,7 +1750,9 @@ info default macro
 Content of bloc code
 {{/code}}
 
-{{blog-posts/}}
+
+
+{{blogpostlist reference="SPACE1.Blog.WebHome" layout="link"/}}
 
 {{create-space-button/}}
 
@@ -2055,7 +2061,9 @@ info default macro
 Content of bloc code
 {{/code}}
 
-{{blog-posts/}}
+
+
+{{blogpostlist reference="SPACE1.Blog.WebHome" layout="link"/}}
 
 {{create-space-button/}}
 
@@ -2364,7 +2372,9 @@ info default macro
 Content of bloc code
 {{/code}}
 
-{{blog-posts/}}
+
+
+{{blogpostlist reference="SPACE1.Blog.WebHome" layout="link"/}}
 
 {{create-space-button/}}
 
@@ -2673,7 +2683,9 @@ info default macro
 Content of bloc code
 {{/code}}
 
-{{blog-posts/}}
+
+
+{{blogpostlist reference="SPACE1.Blog.WebHome" layout="link"/}}
 
 {{create-space-button/}}
 

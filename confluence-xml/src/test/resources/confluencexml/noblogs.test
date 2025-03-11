@@ -46,7 +46,9 @@
               <string>content</string>
               <string>Hello! [[Link to blog post>>doc:SpaceA.Blog.Blog post]]
 
-[[doc:SpaceA.Blog.Blog post]]</string>
+[[doc:SpaceA.Blog.Blog post]]
+
+{{blogpostlist reference="SpaceA.Blog.WebHome" layout="full" limit="4" layoutParams="displayTitle=true|useSummary=true"/}}</string>
             </entry>
             <entry>
               <string>syntax</string>
