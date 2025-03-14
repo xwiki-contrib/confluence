@@ -39,6 +39,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -2080,24 +2081,51 @@ public class ConfluenceInputFilterStream
 
     private void readComments(ConfluenceProperties pageProperties, ConfluenceFilter proxyFilter) throws FilterException
     {
-        Map<Long, ConfluenceProperties> pageComments = new LinkedHashMap<>();
-        Map<Long, Integer> commentIndices = new LinkedHashMap<>();
-        int commentIndex = 0;
-        for (Long commentId : confluencePackage.getPageComments(pageProperties)) {
-            ConfluenceProperties commentProperties = getCommentProperties(pageProperties, commentId);
-            if (commentProperties == null) {
-                continue;
+        List<Long> commentIds = confluencePackage.getPageComments(pageProperties);
+        Map<Long, ConfluenceProperties> commentsById = new HashMap<>(commentIds.size());
+        for (long commentId : commentIds) {
+            try {
+                ConfluenceProperties commentProperties = getCommentProperties(pageProperties, commentId);
+                commentsById.put(commentId, commentProperties);
+            } catch (FilterException e) {
+                logger.error("Failed to get properties of comment id [{}], skipping it", commentId, e);
             }
-
-            pageComments.put(commentId, commentProperties);
-            commentIndices.put(commentId, commentIndex);
-            commentIndex++;
         }
 
         Set<String> resolvedComments = new HashSet<>();
-        for (Long commentId : pageComments.keySet()) {
-            readPageComment(pageProperties, proxyFilter, commentId, pageComments, commentIndices, resolvedComments);
-        }
+        Map<Long, Integer> commentIndices = new HashMap<>();
+        AtomicInteger i = new AtomicInteger();
+
+        commentsById
+            .entrySet()
+            .stream()
+            .sorted((c1, c2) -> {
+                Date d1 = getCommentCreationDate(pageProperties, c1.getKey(), c1.getValue());
+                Date d2 = getCommentCreationDate(pageProperties, c2.getKey(), c2.getValue());
+                if (d1 == null || d2 == null) {
+                    if (Objects.equals(c1.getKey(), c2.getKey())) {
+                        return 0;
+                    }
+                    return c1.getKey() < c2.getKey() ? -1 : 1;
+                }
+                return d1.compareTo(d2);
+            })
+            .forEach(entry -> {
+                Long commentId = entry.getKey();
+                // The comment indices are used to fill the replyto field of comments.
+                // By filling the comment indices in the foreach loop, we are only passing partial information to
+                // readPageComment. We are assuming comments only reply to older comments, and so that readPageComment
+                // will always ever only need to access indexes of older comments. Which feels quite reasonable an
+                // assumption.
+                commentIndices.put(commentId, i.getAndIncrement());
+                try {
+                    readPageComment(pageProperties, proxyFilter, commentId, commentsById, commentIndices,
+                        resolvedComments);
+                } catch (FilterException e) {
+                    logger.error("Failed to read comment [{}] in page [{}]",
+                        commentId, createPageIdentifier(pageProperties), e);
+                }
+            });
     }
 
     private void readPageTags(ConfluenceProperties pageProperties, ConfluenceFilter proxyFilter) throws FilterException
@@ -2604,9 +2632,7 @@ public class ConfluenceInputFilterStream
             }
 
             // creation date
-            Date commentDate = getDate(commentProperties, "creationDate",
-                    "Failed to parse the creation date of the comment [{}] in page [{}]",
-                    commentId, pageProperties);
+            Date commentDate = getCommentCreationDate(pageProperties, commentId, commentProperties);
 
             // parent (replyto)
             Integer parentIndex = null;
@@ -2625,6 +2651,14 @@ public class ConfluenceInputFilterStream
         } finally {
             proxyFilter.endWikiObject(COMMENTS_CLASSNAME, commentParameters);
         }
+    }
+
+    private Date getCommentCreationDate(ConfluenceProperties pageProperties, Long commentId,
+        ConfluenceProperties commentProperties)
+    {
+        return getDate(commentProperties, "creationDate",
+            "Failed to parse the creation date of the comment [{}] in page [{}]",
+            commentId, pageProperties);
     }
 
     private void readPageCommentSelection(ConfluenceProperties commentProperties, ConfluenceFilter proxyFilter)
