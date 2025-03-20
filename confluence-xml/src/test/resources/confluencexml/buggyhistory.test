@@ -1,0 +1,1903 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Content conversions
+.#------------------------------------------------------------------------------
+<wikiSpace name="BuggyHist">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.8a94489a84cd3aa101854f4bec5a49d0</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2019-08-20 17:22:20.347 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>51</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bec5a49d0</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-08-20 17:22:20.347 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="2">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bb4192102</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-12-04 17:53:18.391 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="3">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bb4192102</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-12-04 17:57:27.405 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="4">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-12-05 12:24:50.412 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="5">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-12-05 14:27:46.165 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="6">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd27135e0</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-12-05 16:42:44.891 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="7">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-12-09 11:44:41.319 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="8">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-12-09 12:23:10.644 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="9">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-12-10 13:40:04.51 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="10">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-12-10 13:47:16.704 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="11">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd27135e0</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-12-11 11:55:54.773 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="12">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd27135e0</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-12-11 11:59:47.108 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="13">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-12-13 11:08:24.880 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="14">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-12-16 15:34:00.812 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="15">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-12-17 13:44:25.86 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="16">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-12-17 13:51:56.73 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="17">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-12-17 14:09:49.288 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="18">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-12-17 15:20:20.451 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="19">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-12-18 17:32:56.186 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="20">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-12-19 13:12:19.813 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="21">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2019-12-19 13:14:56.581 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="22">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-02-17 12:18:34.693 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="23">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-02-17 12:38:53.269 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="24">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-02-26 09:59:46.456 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="25">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-02-26 10:32:46.541 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="26">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-02-26 11:30:28.110 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="27">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-02-26 15:18:40.395 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="28">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-02-26 15:22:23.443 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="29">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-02-26 15:33:18.566 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="30">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-02-28 11:10:38.311 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="31">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-02-28 11:16:58.57 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="32">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-03-04 10:57:10.677 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="33">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bd1e93520</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-03-04 11:16:23.560 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="34">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4be8ef4747</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-04-03 09:27:02.917 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="35">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4be8ef4747</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-04-03 09:36:32.182 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="36">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4be8ef4747</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-04-03 09:37:57.201 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="37">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4be8ef4747</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-04-03 09:40:02.87 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="38">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4be8ef4747</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-04-03 09:40:51.502 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="39">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4be8ef4747</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-04-03 10:21:20.997 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="40">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bb4192102</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-05-27 16:31:53.57 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="41">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bb4192102</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-05-27 16:33:21.140 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="42">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bb4192102</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-05-28 08:44:59.992 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string>Reverted from v. 39</string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="43">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bb4192102</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-05-28 10:38:27.565 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="44">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4be8ef4747</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-06-02 10:40:46.872 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="45">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4be8ef4747</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-06-02 10:43:54.315 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="46">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4c24957526</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-06-09 10:18:26.194 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="47">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4c24957526</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2020-06-09 10:58:33.117 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="48">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4ba8d81855</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2022-01-26 11:43:05.254 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="49">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4ba8d81855</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2022-04-28 09:50:42.992 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="50">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bb8272448</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2024-07-24 15:50:18.335 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of credentials</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="51">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bb8272448</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2024-07-24 16:19:32.845 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>Buggy History</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>Hello original</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
+.configuration.source=buggyhistory
+.#------------------------------------------------------------------------------

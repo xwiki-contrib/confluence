@@ -27,6 +27,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -165,6 +166,10 @@ public class ConfluenceInputFilterStream
     private static final String NAME = "name";
 
     private static final String DESCRIPTION = "description";
+
+    private static final String COMMENT = "comment";
+
+    private static final String ATTACHMENT = "attachment";
 
     @Inject
     @Named(ConfluenceInputStreamParser.COMPONENT_NAME)
@@ -1612,6 +1617,29 @@ public class ConfluenceInputFilterStream
         }
     }
 
+    private Map<Long, ConfluenceProperties> getRevisions(ConfluenceProperties pageProperties)
+    {
+        List<Long> revisionIds =
+            this.confluencePackage.getLongList(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISIONS);
+        Map<Long, ConfluenceProperties> revisionsById = new HashMap<>(revisionIds.size());
+        for (Long revisionId : revisionIds) {
+            ConfluenceProperties revisionProperties = null;
+            try {
+                revisionProperties = getPageProperties(revisionId);
+                if (revisionProperties == null) {
+                    this.logger.warn("Can't find page revision with id [{}]", revisionId);
+                }
+            } catch (FilterException e) {
+                this.logger.error("Failed to get page revision with id [{}]", revisionId, e);
+            }
+
+            if (revisionProperties != null) {
+                revisionsById.put(revisionId, revisionProperties);
+            }
+        }
+        return revisionsById;
+    }
+
     private void sendRevisions(boolean blog, Object filter, ConfluenceFilter proxyFilter,
         ConfluenceProperties pageProperties, String spaceKey, Collection<ConfluenceRight> inheritedRights, boolean hide)
         throws FilterException, ConfluenceCanceledException
@@ -1621,28 +1649,28 @@ public class ConfluenceInputFilterStream
         proxyFilter.beginWikiDocumentLocale(Locale.ROOT, documentLocaleParameters);
 
         try {
-            // Revisions
             if (properties.isHistoryEnabled() && pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISIONS)) {
-                List<Long> revisions =
-                    this.confluencePackage.getLongList(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISIONS);
-                Collections.sort(revisions);
-                for (Long revisionId : revisions) {
-                    if (shouldSendObject(revisionId)) {
-                        ConfluenceProperties revisionProperties = getPageProperties(revisionId);
-                        if (revisionProperties == null) {
-                            this.logger.warn("Can't find page revision with id [{}]", revisionId);
-                            continue;
-                        }
+                Map<Long, ConfluenceProperties> revisionsById = getRevisions(pageProperties);
 
-                        try {
+                Iterable<Map.Entry<Long, ConfluenceProperties>> sortedRevisionEntries = revisionsById
+                    .entrySet()
+                    .stream()
+                    .sorted(getDateComparator(ConfluenceXMLPackage.KEY_PAGE_REVISION_DATE, "revision", null))
+                    ::iterator;
+
+                for (Map.Entry<Long, ConfluenceProperties> entry : sortedRevisionEntries) {
+                    Long revisionId = entry.getKey();
+                    ConfluenceProperties revisionProperties = entry.getValue();
+                    try {
+                        if (shouldSendObject(revisionId)) {
                             readPageRevision(revisionProperties, blog, Collections.emptyMap(), filter, proxyFilter,
                                 spaceKey, inheritedRights, hide);
-                        } catch (Exception e) {
-                            logger.error("Failed to filter the page revision with id [{}]",
-                                createPageIdentifier(revisionId, spaceKey), e);
                         }
-                        checkCanceled();
+                    } catch (Exception e) {
+                        logger.error("Failed to filter the page revision with id [{}]",
+                            createPageIdentifier(revisionId, spaceKey), e);
                     }
+                    checkCanceled();
                 }
             }
 
@@ -2099,18 +2127,8 @@ public class ConfluenceInputFilterStream
         commentsById
             .entrySet()
             .stream()
-            .sorted((c1, c2) -> {
-                Date d1 = getCommentCreationDate(pageProperties, c1.getKey(), c1.getValue());
-                Date d2 = getCommentCreationDate(pageProperties, c2.getKey(), c2.getValue());
-                if (d1 == null || d2 == null) {
-                    if (Objects.equals(c1.getKey(), c2.getKey())) {
-                        return 0;
-                    }
-                    return c1.getKey() < c2.getKey() ? -1 : 1;
-                }
-                return d1.compareTo(d2);
-            })
-            .forEach(entry -> {
+            .sorted(getDateComparator(ConfluenceXMLPackage.KEY_PAGE_CREATION_DATE, COMMENT, pageProperties))
+            .forEachOrdered(entry -> {
                 Long commentId = entry.getKey();
                 // The comment indices are used to fill the replyto field of comments.
                 // By filling the comment indices in the foreach loop, we are only passing partial information to
@@ -2126,6 +2144,22 @@ public class ConfluenceInputFilterStream
                         commentId, createPageIdentifier(pageProperties), e);
                 }
             });
+    }
+
+    private Comparator<Map.Entry<Long, ConfluenceProperties>> getDateComparator(String dateField, String type,
+        ConfluenceProperties pageProperties)
+    {
+        return (c1, c2) -> {
+            Date d1 = getDate(c1.getValue(), c1.getKey(), type, dateField, pageProperties);
+            Date d2 = getDate(c2.getValue(), c2.getKey(), type, dateField, pageProperties);
+            if (d1 == null || d2 == null) {
+                if (Objects.equals(c1.getKey(), c2.getKey())) {
+                    return 0;
+                }
+                return c1.getKey() < c2.getKey() ? -1 : 1;
+            }
+            return d1.compareTo(d2);
+        };
     }
 
     private void readPageTags(ConfluenceProperties pageProperties, ConfluenceFilter proxyFilter) throws FilterException
@@ -2502,11 +2536,11 @@ public class ConfluenceInputFilterStream
     private Date fillAttachmentDates(ConfluenceProperties pageProperties, ConfluenceProperties attachmentProperties,
         long attachmentId, FilterEventParameters attachmentParameters)
     {
-        Date creationDate = getDate(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_CREATION_DATE,
-            "Failed to parse the creation date of the attachment [{}] in page [{}]", attachmentId, pageProperties);
+        Date creationDate = getDate(attachmentProperties, attachmentId, ATTACHMENT,
+            ConfluenceXMLPackage.KEY_ATTACHMENT_CREATION_DATE, pageProperties);
 
-        Date revisionDate = getDate(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE,
-            "Failed to parse the revision date of the attachment [{}] in page [{}]", attachmentId, pageProperties);
+        Date revisionDate = getDate(attachmentProperties, attachmentId, ATTACHMENT,
+            ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_DATE, pageProperties);
         if (revisionDate == null) {
             revisionDate = creationDate;
         }
@@ -2533,19 +2567,6 @@ public class ConfluenceInputFilterStream
         if (mediaType != null) {
             attachmentParameters.put(WikiAttachmentFilter.PARAMETER_CONTENT_TYPE, mediaType);
         }
-    }
-
-    private Date getDate(ConfluenceProperties attachmentProperties, String keyAttachmentCreationDate, String s,
-        long attachmentId, ConfluenceProperties pageProperties)
-    {
-        Date creationDate = null;
-        try {
-            creationDate = this.confluencePackage.getDate(attachmentProperties, keyAttachmentCreationDate);
-        } catch (Exception e) {
-            this.logger.error(s,
-                attachmentId, createPageIdentifier(pageProperties), e);
-        }
-        return creationDate;
     }
 
     private void fillAttachmentAuthor(ConfluenceProperties attachmentProperties,
@@ -2632,7 +2653,8 @@ public class ConfluenceInputFilterStream
             }
 
             // creation date
-            Date commentDate = getCommentCreationDate(pageProperties, commentId, commentProperties);
+            Date commentDate = getDate(commentProperties, commentId, COMMENT,
+                ConfluenceXMLPackage.KEY_PAGE_CREATION_DATE, pageProperties);
 
             // parent (replyto)
             Integer parentIndex = null;
@@ -2642,7 +2664,7 @@ public class ConfluenceInputFilterStream
             }
 
             proxyFilter.onWikiObjectProperty("author", commentCreatorReference, FilterEventParameters.EMPTY);
-            proxyFilter.onWikiObjectProperty("comment", commentText, FilterEventParameters.EMPTY);
+            proxyFilter.onWikiObjectProperty(COMMENT, commentText, FilterEventParameters.EMPTY);
             proxyFilter.onWikiObjectProperty("date", commentDate, FilterEventParameters.EMPTY);
             proxyFilter.onWikiObjectProperty("replyto", parentIndex, FilterEventParameters.EMPTY);
 
@@ -2653,12 +2675,21 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private Date getCommentCreationDate(ConfluenceProperties pageProperties, Long commentId,
-        ConfluenceProperties commentProperties)
+    private Date getDate(ConfluenceProperties properties, Long objectId, String type, String dateField,
+        ConfluenceProperties pageProperties)
     {
-        return getDate(commentProperties, "creationDate",
-            "Failed to parse the creation date of the comment [{}] in page [{}]",
-            commentId, pageProperties);
+        Date creationDate = null;
+        try {
+            creationDate = this.confluencePackage.getDate(properties, dateField);
+        } catch (Exception e) {
+            if (pageProperties == null) {
+                this.logger.error("Failed to parse the {} of {} id [{}]", type, dateField, objectId, e);
+            } else {
+                this.logger.error("Failed to parse the {} of {} id [{}] in page [{}]", type, dateField,
+                    objectId, createPageIdentifier(pageProperties), e);
+            }
+        }
+        return creationDate;
     }
 
     private void readPageCommentSelection(ConfluenceProperties commentProperties, ConfluenceFilter proxyFilter)
