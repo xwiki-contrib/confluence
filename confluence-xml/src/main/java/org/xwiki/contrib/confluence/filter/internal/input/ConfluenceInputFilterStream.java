@@ -38,9 +38,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -113,6 +115,8 @@ import org.xwiki.security.authorization.Right;
 public class ConfluenceInputFilterStream
     extends AbstractBeanInputFilterStream<ConfluenceInputProperties, ConfluenceFilter>
 {
+    private static final Pattern VERSION_PATTERN = Pattern.compile("[0-9]+(.[0-9]+)*");
+
     private static final String TEMPLATE_PROVIDER_CLASS = "XWiki.TemplateProviderClass";
 
     private static final String CONFLUENCEPAGE_CLASSNAME = "Confluence.Code.ConfluencePageClass";
@@ -1652,15 +1656,24 @@ public class ConfluenceInputFilterStream
             if (properties.isHistoryEnabled() && pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISIONS)) {
                 Map<Long, ConfluenceProperties> revisionsById = getRevisions(pageProperties);
 
+                boolean buggyVersions = areThereBuggyVersions(pageProperties, revisionsById);
+
                 Iterable<Map.Entry<Long, ConfluenceProperties>> sortedRevisionEntries = revisionsById
                     .entrySet()
                     .stream()
-                    .sorted(getDateComparator(ConfluenceXMLPackage.KEY_PAGE_REVISION_DATE, "revision", null))
+                    .sorted(buggyVersions
+                        ? getDateComparator(ConfluenceXMLPackage.KEY_PAGE_REVISION_DATE, "revision", null)
+                        : getVersionComparator(pageProperties))
                     ::iterator;
 
+                int version = 0;
                 for (Map.Entry<Long, ConfluenceProperties> entry : sortedRevisionEntries) {
                     Long revisionId = entry.getKey();
                     ConfluenceProperties revisionProperties = entry.getValue();
+                    if (buggyVersions) {
+                        revisionProperties.setProperty(ConfluenceXMLPackage.KEY_PAGE_REVISION,
+                            Integer.toString(++version));
+                    }
                     try {
                         if (shouldSendObject(revisionId)) {
                             readPageRevision(revisionProperties, blog, Collections.emptyMap(), filter, proxyFilter,
@@ -1683,6 +1696,64 @@ public class ConfluenceInputFilterStream
         } finally {
             proxyFilter.endWikiDocumentLocale(locale, documentLocaleParameters);
         }
+    }
+
+    private boolean areThereBuggyVersions(ConfluenceProperties pageProperties,
+        Map<Long, ConfluenceProperties> revisionsById)
+    {
+        Optional<Map.Entry<Long, ConfluenceProperties>> buggyRevision = revisionsById
+            .entrySet()
+            .stream()
+            .filter(entry -> {
+                String version = entry.getValue().getString(ConfluenceXMLPackage.KEY_PAGE_REVISION, "");
+                return !VERSION_PATTERN.matcher(version).matches();
+            })
+            .findAny();
+        boolean buggyVersions = buggyRevision.isPresent();
+        if (buggyVersions) {
+            this.logger.error("Failed to get the version for page revision with id [{}]. Will use dates to "
+                + "sort revisions as a fallback for page [{}] and rewrite the versions. please double "
+                + "check its history", buggyRevision.get().getKey(), pageProperties);
+        }
+        return buggyVersions;
+    }
+
+    private Comparator<Map.Entry<Long, ConfluenceProperties>> getVersionComparator(ConfluenceProperties pageProperties)
+    {
+        return (a, b) -> {
+            String versionA = a.getValue().getString(ConfluenceXMLPackage.KEY_PAGE_REVISION);
+            String versionB = b.getValue().getString(ConfluenceXMLPackage.KEY_PAGE_REVISION);
+            if (StringUtils.isEmpty(versionA) || StringUtils.isEmpty(versionB)) {
+                logger.error("One of the versions is empty while comparing revisions, this should not "
+                    + "happen");
+                return 0;
+            }
+
+            String[] splitVersionA = StringUtils.split(versionA, '.');
+            String[] splitVersionB = StringUtils.split(versionB, '.');
+            for (int i = 0; i < splitVersionA.length; i++) {
+                if (i >= splitVersionB.length) {
+                    return 1;
+                }
+
+                try {
+                    int versionPartA = Integer.parseInt(splitVersionA[i]);
+                    int versionPartB = Integer.parseInt(splitVersionB[i]);
+                    if (versionPartA != versionPartB) {
+                        return versionPartA - versionPartB;
+                    }
+                } catch (NumberFormatException e) {
+                    logger.error("Failed to parse either [{}] or [{}] as a version, revisions might be "
+                            + "in the wrong order for page [{}]. This should not happen.", versionA, versionB,
+                        createPageIdentifier(pageProperties), e);
+                    return versionA.compareTo(versionB);
+                }
+            }
+
+            logger.error("Failed compare revisions [{}] and [{}], revisions might be in the wrong order "
+                + "for page [{}]. This should not happen.", versionA, versionB, createPageIdentifier(pageProperties));
+            return versionA.compareTo(versionB);
+        };
     }
 
     private FilterEventParameters getDocumentLocaleParameters(ConfluenceProperties pageProperties)
