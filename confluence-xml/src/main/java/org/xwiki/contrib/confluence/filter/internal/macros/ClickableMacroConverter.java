@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Named;
@@ -45,12 +46,17 @@ public class ClickableMacroConverter extends AbstractMacroConverter
     }
 
     @Override
-    protected String toXWikiParameterName(String confluenceParameterName, String id,
-        Map<String, String> confluenceParameters, String confluenceContent)
+    protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
+        String content)
     {
-        if ("link".equals(confluenceParameterName)) {
-            return "reference";
-        }
-        return super.toXWikiParameterName(confluenceParameterName, id, confluenceParameters, confluenceContent);
+        Map<String, String> parameters = new HashMap<>(1);
+        parameters.put("reference", confluenceParameters.get("link"));
+        return parameters;
+    }
+
+    @Override
+    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    {
+        return InlineSupport.NO;
     }
 }

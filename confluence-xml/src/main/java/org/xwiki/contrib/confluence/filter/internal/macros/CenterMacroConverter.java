@@ -19,12 +19,14 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.confluence.filter.MacroConverter;
 
 /**
  * Convert Confluence center macro.
@@ -37,11 +39,27 @@ import org.xwiki.component.annotation.Component;
 @Named("center")
 public class CenterMacroConverter extends AbstractMacroConverter
 {
+    private static final String CLASS = "class";
+
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
-        markHandledParameter(confluenceParameters, "class", true);
         return "center";
+    }
+
+    @Override
+    protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
+        String content)
+    {
+        Map<String, String> parameters = new HashMap<>(1);
+        parameters.put(CLASS, confluenceParameters.get(CLASS));
+        return parameters;
+    }
+
+    @Override
+    public MacroConverter.InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    {
+        return MacroConverter.InlineSupport.NO;
     }
 }

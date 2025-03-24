@@ -42,14 +42,14 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>{{link-group reference="confluencePage:page:PANDA.ABCD" atlassian-macro-output-type="INLINE"}}
+              <string>{{link-group reference="confluencePage:page:PANDA.ABCD"}}
 * a
 * b
 
 c
 {{/link-group}}
 
-{{link-group reference="https://xwiki.com" atlassian-macro-output-type="INLINE"}}
+{{link-group reference="https://xwiki.com"}}
 link to xwiki.com
 {{/link-group}}</string>
             </entry>
