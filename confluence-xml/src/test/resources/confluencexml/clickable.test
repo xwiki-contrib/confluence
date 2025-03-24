@@ -51,7 +51,17 @@ c
 
 {{link-group reference="https://xwiki.com"}}
 link to xwiki.com
-{{/link-group}}</string>
+{{/link-group}}
+
+inline
+
+{{link-group reference="https://xwiki.com"}}
+clickable text
+{{/link-group}}
+
+end
+
+inline {{link-group reference="https://xwiki.com"}}clickable text{{/link-group}}end</string>
             </entry>
             <entry>
               <string>syntax</string>

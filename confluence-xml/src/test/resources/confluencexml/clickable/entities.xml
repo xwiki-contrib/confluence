@@ -71,6 +71,22 @@
     <p>link to xwiki.com</p>
   </ac:rich-text-body>
 </ac:structured-macro>
+<!-- Test inline code from confluence even if it won't really work as expected -->
+<p>inline</p>
+<ac:structured-macro ac:name="clickable" ac:schema-version="1" ac:macro-id="4071e9d9-2ce4-4b60-9367-a53e13f8a3fa">
+  <ac:parameter ac:name="link"><a href="https://xwiki.com">https://xwiki.com</a></ac:parameter>
+  <ac:parameter ac:name="atlassian-macro-output-type">INLINE</ac:parameter>
+  <ac:rich-text-body><p>clickable text</p></ac:rich-text-body>
+</ac:structured-macro>
+<p>end</p>
+<!-- An other inline code which don't come from confluence but is expected to work correctly -->
+<p>inline
+<ac:structured-macro ac:name="clickable" ac:schema-version="1" ac:macro-id="4071e9d9-2ce4-4b60-9367-a53e13f8a3fa">
+  <ac:parameter ac:name="link"><a href="https://xwiki.com">https://xwiki.com</a></ac:parameter>
+  <ac:parameter ac:name="atlassian-macro-output-type">INLINE</ac:parameter>
+  <ac:rich-text-body><p>clickable text</p></ac:rich-text-body>
+</ac:structured-macro>
+end</p>
 ]]></property>
     <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809845</id></property>
     <property name="bodyType">2</property>

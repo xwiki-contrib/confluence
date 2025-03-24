@@ -57,6 +57,8 @@ public class ClickableMacroConverter extends AbstractMacroConverter
     @Override
     public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
     {
-        return InlineSupport.NO;
+        return "INLINE".equals(parameters.get("atlassian-macro-output-type"))
+            ? InlineSupport.YES
+            : InlineSupport.MAYBE;
     }
 }
