@@ -115,7 +115,7 @@ import org.xwiki.security.authorization.Right;
 public class ConfluenceInputFilterStream
     extends AbstractBeanInputFilterStream<ConfluenceInputProperties, ConfluenceFilter>
 {
-    private static final Pattern VERSION_PATTERN = Pattern.compile("[0-9]+(.[0-9]+)*");
+    private static final Pattern VERSION_PATTERN = Pattern.compile("\\d+(?:\\.\\d+)*+");
 
     private static final String TEMPLATE_PROVIDER_CLASS = "XWiki.TemplateProviderClass";
 
