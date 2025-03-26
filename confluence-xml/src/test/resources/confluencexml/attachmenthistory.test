@@ -202,6 +202,29 @@
                 </parameters>
               </p>
             </wikiAttachmentRevision>
+            <wikiAttachmentRevision version="6" size="24">
+              <p>
+                <content>Li8zNjk0ODMyOTgvMzY5NDgzMjk5LzYK</content>
+                <parameters>
+                  <entry>
+                    <string>creation_date</string>
+                    <date>2024-07-24 14:11:12.136 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision_date</string>
+                    <date>2024-07-24 14:11:12.136 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision</string>
+                    <string>6</string>
+                  </entry>
+                  <entry>
+                    <string>revision_author</string>
+                    <string>XWiki.Admin</string>
+                  </entry>
+                </parameters>
+              </p>
+            </wikiAttachmentRevision>
           </wikiAttachmentRevisions>
         </wikiDocumentAttachment>
         <wikiDocumentAttachment name="API.pdf" size="24">
@@ -265,6 +288,29 @@
                   <entry>
                     <string>revision</string>
                     <string>2</string>
+                  </entry>
+                  <entry>
+                    <string>revision_author</string>
+                    <string>XWiki.Admin</string>
+                  </entry>
+                </parameters>
+              </p>
+            </wikiAttachmentRevision>
+            <wikiAttachmentRevision version="3" size="24">
+              <p>
+                <content>Li8zNjk0ODMyOTgvMzY5NDgzMzAwLzMK</content>
+                <parameters>
+                  <entry>
+                    <string>creation_date</string>
+                    <date>2024-07-24 14:11:35.880 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision_date</string>
+                    <date>2024-07-24 14:11:35.880 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision</string>
+                    <string>3</string>
                   </entry>
                   <entry>
                     <string>revision_author</string>

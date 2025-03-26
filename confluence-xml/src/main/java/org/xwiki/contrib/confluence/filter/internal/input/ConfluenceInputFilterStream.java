@@ -2347,11 +2347,9 @@ public class ConfluenceInputFilterStream
             }
             return;
         }
-
-        List<AttachmentInfo> attachmentsWithoutLast = attachments.subList(0, attachments.size() - 1);
-
         if (a == null) {
             // We skip the last attachment version which we failed to read
+            List<AttachmentInfo> attachmentsWithoutLast = attachments.subList(0, attachments.size() - 1);
             readAttachments(pageProperties, proxyFilter, attachmentsWithoutLast, attachmentName);
             return;
         }
@@ -2359,7 +2357,7 @@ public class ConfluenceInputFilterStream
         try (InputSource fis = new DefaultFileInputSource(a.contentFile)) {
             proxyFilter.beginWikiDocumentAttachment(attachmentName, fis, a.size, a.parameters);
             try {
-                readWikiAttachmentRevisions(pageProperties, proxyFilter, attachmentsWithoutLast);
+                readWikiAttachmentRevisions(pageProperties, proxyFilter, attachments);
             } finally {
                 proxyFilter.endWikiDocumentAttachment(attachmentName, fis, a.size, a.parameters);
             }
