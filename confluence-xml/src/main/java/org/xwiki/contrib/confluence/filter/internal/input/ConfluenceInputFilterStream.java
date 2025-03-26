@@ -242,17 +242,15 @@ public class ConfluenceInputFilterStream
         private final long size;
         private final File contentFile;
         private final long revision;
-        private final Date date;
         private final FilterEventParameters parameters;
 
-        private AttachmentInfo(long attachmentId, long size, File contentFile, long revision, Date date,
+        private AttachmentInfo(long attachmentId, long size, File contentFile, long revision,
             FilterEventParameters parameters)
         {
             this.attachmentId = attachmentId;
             this.size = size;
             this.contentFile = contentFile;
             this.revision = revision;
-            this.date = date;
             this.parameters = parameters;
         }
     }
@@ -2601,7 +2599,7 @@ public class ConfluenceInputFilterStream
                 attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_COMMENT));
         }
 
-        return new AttachmentInfo(attachmentId, attachmentSize, contentFile, version, date, attachmentParameters);
+        return new AttachmentInfo(attachmentId, attachmentSize, contentFile, version, attachmentParameters);
     }
 
     private Date fillAttachmentDates(ConfluenceProperties pageProperties, ConfluenceProperties attachmentProperties,
