@@ -32,7 +32,7 @@ import org.xwiki.contrib.confluence.filter.MacroConverter;
  * Convert Confluence center macro.
  *
  * @version $Id$
- * @since 9.82
+ * @since 9.82.0
  */
 @Component
 @Singleton
