@@ -1711,7 +1711,7 @@ public class ConfluenceInputFilterStream
         if (buggyVersions) {
             this.logger.error("Failed to get the version for page revision with id [{}]. Will use dates to "
                 + "sort revisions as a fallback for page [{}] and rewrite the versions. please double "
-                + "check its history", buggyRevision.get().getKey(), pageProperties);
+                + "check its history", buggyRevision.get().getKey(), createPageIdentifier(pageProperties));
         }
         return buggyVersions;
     }
