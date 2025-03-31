@@ -1748,8 +1748,6 @@ public class ConfluenceInputFilterStream
                 }
             }
 
-            logger.error("Failed compare revisions [{}] and [{}], revisions might be in the wrong order "
-                + "for page [{}]. This should not happen.", versionA, versionB, createPageIdentifier(pageProperties));
             return versionA.compareTo(versionB);
         };
     }
