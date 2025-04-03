@@ -137,6 +137,8 @@ class ConfluenceResolversTest
         XWikiDocument notFoundHome = mock(XWikiDocument.class);
         when(fallbackHome.isNew()).thenReturn(false);
         when(notFoundHome.isNew()).thenReturn(true);
+        when(wiki.exists((DocumentReference) any(), (XWikiContext) any())).thenAnswer(
+            i ->  MY_DOC_REF.equals(i.getArgument(0)));
         when(wiki.getDocument((EntityReference) any(), refEq(xcontext))).thenAnswer(invocationOnMock -> {
             EntityReference docRef = invocationOnMock.getArgument(0);
             if (docRef.equals(MY_FALLBACK_HOME)) {
@@ -191,10 +193,15 @@ class ConfluenceResolversTest
             return query;
         });
         when(query.bindValue(anyString(), anyString())).thenAnswer(i -> {
-            if (i.getArgument(0).equals(FULLNAME)
-                && i.getArgument(1).equals(MY_DOC_REF.toString().replace("xwiki:", ""))) {
+            if (
+                i.getArgument(0).equals(FULLNAME)
+                && ((String) i.getArgument(1)).contains(MY_SPACE)
+                && ((String) i.getArgument(1)).endsWith(WEB_HOME)
+            ) {
                 // This is the getSpace query
                 hqlResult.set(MY_SPACE);
+            } else {
+                hqlResult.set(null);
             }
             return query;
         });
@@ -241,22 +248,12 @@ class ConfluenceResolversTest
             }
             SolrDocumentList res = new SolrDocumentList();
             if (id.get() == 42) {
-                res.add(fakeSolrDocument(MY_COPY_DOC_REF, 42, MY_SPACE, MY_DOC,
-                    new Date(DEFAULT_DATE.getTime() + 10)));
                 res.add(fakeSolrDocument(MY_DOC_REF, 42, MY_SPACE, MY_DOC));
             } else if (space.get().equals(MY_SPACE)) {
                 if (title.get().isEmpty()) {
                     res.add(fakeSolrDocument(MY_DOC_REF, 42, MY_SPACE, MY_DOC));
-                    // This is to test that we get the correct space even if the space (home, or with its children)
-                    // has been copied
-                    // FIXME: check the sorting. This basically requires having an actual Solr running for this test.
-                    res.add(fakeSolrDocument(MY_COPY_DOC_REF, 42, MY_SPACE, MY_DOC,
-                        new Date(DEFAULT_DATE.getTime() + 10)));
-                    res.add(fakeSolrDocument(MY_SPACE_REF, 40, MY_SPACE, "Space home"));
                 } else if (title.get().equals(MY_DOC)) {
                     res.add(fakeSolrDocument(MY_DOC_REF, 42, MY_SPACE, MY_DOC));
-                    res.add(fakeSolrDocument(MY_COPY_DOC_REF, 42, MY_SPACE, MY_DOC,
-                        new Date(DEFAULT_DATE.getTime() + 10)));
                 } else if (!title.get().equals(NOT_FOUND_DOC)) {
                     res.add(fakeSolrDocument(
                         new DocumentReference(
