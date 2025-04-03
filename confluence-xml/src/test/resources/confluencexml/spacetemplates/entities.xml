@@ -126,6 +126,9 @@
 <property name="contentStatus"><![CDATA[current]]></property>
 <property name="containerContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">789115923</id>
 </property>
+<collection name="labellings" class="java.util.Collection">
+     <element class="Labelling" package="com.atlassian.confluence.labels"><id name="id">600</id></element>
+</collection>
 <property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">25657345</id>
 </property>
 </object>
@@ -184,4 +187,21 @@
 </element>
 </collection>
 </object>
+
+<object class="Labelling" package="com.atlassian.confluence.labels">
+  <id name="id">600</id>
+  <property name="label" class="Label" package="com.atlassian.confluence.labels"><id name="id">601</id></property>
+  <property name="content" class="Attachment" package="com.atlassian.confluence.pages"><id name="id">917124566</id></property>
+  <property name="user"><![CDATA[someone]]></property>
+  <property name="creationDate">2010-01-02 18:27:32.000</property>
+  <property name="lastModificationDate">2010-01-02 18:27:32.000</property>
+</object>
+<object class="Label" package="com.atlassian.confluence.labels">
+  <id name="id">601</id>
+  <property name="name"><![CDATA[space label]]></property>
+  <property name="owner"/><property name="namespace"><![CDATA[global]]></property>
+  <property name="creationDate">2010-01-02 18:27:32.000</property>
+  <property name="lastModificationDate">2010-01-02 18:27:32.000</property>
+</object>
+
 </hibernate-generic>

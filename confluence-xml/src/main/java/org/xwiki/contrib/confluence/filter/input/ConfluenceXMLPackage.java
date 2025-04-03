@@ -1970,7 +1970,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
         ConfluenceProperties properties = new ConfluenceProperties();
 
         long labellingId = readObjectProperties(xmlReader, properties);
-        saveObjectProperties(properties, labellingId);
 
         // Since Confluence 8.0, the labellings are not part of the Page Object anymore (most probably because it can be
         // associated to a space object too).
@@ -1981,7 +1980,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
             if (parentClass == null) {
                 // Assume it's a page by default
                 parentClass = OBJECT_TYPE_PAGE;
+            } else if (OBJECT_TYPE_ATTACHMENT.equals(parentClass)) {
+                // when what is labelled is an attachment we skip saving the labelling object altogether.
+                // We don't currently support importing attachment labels.
+                return;
             }
+
             ConfluenceProperties parent = getParentObjectByType(parentClass, parentId);
 
             if (parent != null && !parent.getList(KEY_LABELLINGS).contains(labellingId)) {
@@ -1989,6 +1993,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 parent.save();
             }
         }
+
+        saveObjectProperties(properties, labellingId);
     }
 
     private void readInternalUserObject(XMLStreamReader xmlReader)
