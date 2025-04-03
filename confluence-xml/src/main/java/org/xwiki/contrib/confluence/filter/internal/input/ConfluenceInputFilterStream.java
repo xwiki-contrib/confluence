@@ -38,7 +38,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -1712,7 +1711,7 @@ public class ConfluenceInputFilterStream
 
             if (!VERSION_PATTERN.matcher(version).matches()) {
                 this.logger.error("Failed to get the version for page revision with id [{}]. Will use dates to sort"
-                        + "revisions as a fallback for page [{}] and rewrite the versions. Please double-check its history",
+                    + "revisions as a fallback for page [{}] and rewrite the versions. Please double-check its history",
                     entry.getKey(), createPageIdentifier(pageProperties));
                 return true;
             }
