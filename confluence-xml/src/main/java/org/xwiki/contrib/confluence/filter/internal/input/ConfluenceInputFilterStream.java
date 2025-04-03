@@ -1621,6 +1621,7 @@ public class ConfluenceInputFilterStream
 
     private Map<Long, ConfluenceProperties> getRevisions(ConfluenceProperties pageProperties)
     {
+        // Note: revisions can appear several times in the list
         List<Long> revisionIds =
             this.confluencePackage.getLongList(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISIONS);
         Map<Long, ConfluenceProperties> revisionsById = new HashMap<>(revisionIds.size());
@@ -1699,21 +1700,26 @@ public class ConfluenceInputFilterStream
     private boolean areThereBuggyVersions(ConfluenceProperties pageProperties,
         Map<Long, ConfluenceProperties> revisionsById)
     {
-        Optional<Map.Entry<Long, ConfluenceProperties>> buggyRevision = revisionsById
-            .entrySet()
-            .stream()
-            .filter(entry -> {
-                String version = entry.getValue().getString(ConfluenceXMLPackage.KEY_PAGE_REVISION, "");
-                return !VERSION_PATTERN.matcher(version).matches();
-            })
-            .findAny();
-        boolean buggyVersions = buggyRevision.isPresent();
-        if (buggyVersions) {
-            this.logger.error("Failed to get the version for page revision with id [{}]. Will use dates to "
-                + "sort revisions as a fallback for page [{}] and rewrite the versions. please double "
-                + "check its history", buggyRevision.get().getKey(), createPageIdentifier(pageProperties));
+        Set<String> knownVersions = new HashSet<>(revisionsById.size());
+        for (Map.Entry<Long, ConfluenceProperties> entry : revisionsById.entrySet()) {
+            String version = entry.getValue().getString(ConfluenceXMLPackage.KEY_PAGE_REVISION, "");
+            if (knownVersions.contains(version)) {
+                this.logger.error("Two revisions have the same version ([{}]).  Will use dates to sort revisions as a"
+                        + " fallback for page [{}] and rewrite the versions. Please double-check its history",
+                    entry.getKey(), createPageIdentifier(pageProperties));
+                return true;
+            }
+
+            if (!VERSION_PATTERN.matcher(version).matches()) {
+                this.logger.error("Failed to get the version for page revision with id [{}]. Will use dates to sort"
+                        + "revisions as a fallback for page [{}] and rewrite the versions. Please double-check its history",
+                    entry.getKey(), createPageIdentifier(pageProperties));
+                return true;
+            }
+
+            knownVersions.add(version);
         }
-        return buggyVersions;
+        return false;
     }
 
     private Comparator<Map.Entry<Long, ConfluenceProperties>> getVersionComparator(ConfluenceProperties pageProperties)
