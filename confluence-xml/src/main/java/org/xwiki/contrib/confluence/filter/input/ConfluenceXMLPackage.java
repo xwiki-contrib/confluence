@@ -399,7 +399,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
      * 
      * @deprecated since 9.79.0, use {@link #KEY_CONTENTPROPERTIES} instead
      */
-    @Deprecated
+    @Deprecated (since = "9.79.0")
     public static final String KEY_ATTACHMENT_CONTENTPROPERTIES = KEY_CONTENTPROPERTIES;
 
     /**
@@ -408,7 +408,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
      * @since 9.72.0
      * @deprecated since 9.79.0, use {@link #KEY_CONTENTPROPERTIES} instead
      */
-    @Deprecated
+    @Deprecated (since = "9.79.0")
     public static final String KEY_COMMENT_CONTENTPROPERTIES = KEY_CONTENTPROPERTIES;
 
     /**
@@ -792,8 +792,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     // maps a space id to a title to page id mapping
     private final Map<Long, Map<String, Long>> pagesBySpaceAndTitle = new HashMap<>();
-
-    private final Collection<Long> spaceIDsToIgnore = new HashSet<>();
 
     private String spaceKeyToImport;
     private long spaceIdToImport;
@@ -1705,7 +1703,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 spaceIdToImport = spaceId;
                 cleanUpUnwantedSpaces();
             } else {
-                spaceIDsToIgnore.add(spaceId);
                 return;
             }
         }
@@ -2260,7 +2257,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * @param pageId the identifier of the page where the attachments are located
-     * @return the attachments located in the passed page
+     * @return the attachments located in the given page
      */
     public Collection<Long> getAttachments(long pageId)
     {

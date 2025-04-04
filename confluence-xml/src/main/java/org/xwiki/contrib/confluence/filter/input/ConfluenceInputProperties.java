@@ -246,6 +246,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @see #getUserFormat()
      */
     private String userFormat;
+
     /*
      * @see #getWorkingDirectory()
      */
@@ -276,8 +277,14 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      */
     private boolean extraneousSpacesEnabled;
 
+    /**
+     * @see #isSkipResolvedInlineComments()
+     */
     private boolean skipResolvedInlineComments;
 
+    /**
+     * @see #getOrphanMode()
+     */
     private String orphanMode = "NORMAL";
 
     /**
