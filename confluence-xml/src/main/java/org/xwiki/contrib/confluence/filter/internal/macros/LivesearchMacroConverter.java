@@ -20,7 +20,6 @@
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
 import org.slf4j.Logger;
-import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
 import org.xwiki.component.annotation.Component;
 
 import javax.inject.Inject;
@@ -30,6 +29,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+import org.xwiki.contrib.confluence.filter.ConfluenceFilterReferenceConverter;
 
 /**
  * Livesearch Macro Converter - converts livesearch to the Location Search Macro.
@@ -62,7 +62,7 @@ public class LivesearchMacroConverter extends AbstractMacroConverter
     private static final String PLACEHOLDER = "placeholder";
 
     @Inject
-    private ConfluenceConverter converter;
+    private ConfluenceFilterReferenceConverter converter;
 
     @Inject
     private Logger logger;

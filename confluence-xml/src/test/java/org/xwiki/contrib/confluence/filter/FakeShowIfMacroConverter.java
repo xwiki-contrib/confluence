@@ -26,7 +26,6 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
 import org.xwiki.contrib.confluence.filter.internal.macros.AbstractMacroConverter;
 
 @Component
@@ -37,7 +36,7 @@ public class FakeShowIfMacroConverter extends AbstractMacroConverter
     private static final String GROUP_ID_PARAM = "groupIds";
 
     @Inject
-    private ConfluenceConverter converter;
+    private ConfluenceFilterReferenceConverter converter;
 
     @Override
     protected String toXWikiParameterValue(String confluenceParameterName, String confluenceParameterValue,

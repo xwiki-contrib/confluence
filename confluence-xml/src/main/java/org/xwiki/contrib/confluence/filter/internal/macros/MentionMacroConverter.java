@@ -29,7 +29,7 @@ import javax.inject.Singleton;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
+import org.xwiki.contrib.confluence.filter.ConfluenceFilterReferenceConverter;
 import org.xwiki.rendering.listener.reference.ResourceReference;
 import org.xwiki.rendering.listener.reference.UserResourceReference;
 
@@ -49,7 +49,7 @@ public class MentionMacroConverter extends AbstractMacroConverter
     private static final String REFERENCE_PARAMETER_KEY = "reference";
 
     @Inject
-    private ConfluenceConverter confluenceConverter;
+    private ConfluenceFilterReferenceConverter confluenceConverter;
 
     @Inject
     private Logger logger;
