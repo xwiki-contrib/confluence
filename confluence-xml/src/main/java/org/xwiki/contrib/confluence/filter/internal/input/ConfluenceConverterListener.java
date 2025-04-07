@@ -137,7 +137,8 @@ public class ConfluenceConverterListener extends WrappingListener
                 return;
             }
 
-            String currentPageTitle = confluenceConverter.getCurrentPageTitleForAnchor();
+            String currentPageTitle =
+                confluenceConverter.getCurrentPageTitleForAnchor();
 
             if (context.isConfluenceCloud()) {
                 String dashedName = spacesToDash(name);

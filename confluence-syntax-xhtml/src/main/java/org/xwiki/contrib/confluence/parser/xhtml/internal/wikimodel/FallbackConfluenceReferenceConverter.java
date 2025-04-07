@@ -34,9 +34,9 @@ import javax.inject.Named;
 public class FallbackConfluenceReferenceConverter implements ConfluenceReferenceConverter
 {
     @Override
-    public String convertUserReference(String userId)
+    public String convertUserReference(String userKey)
     {
-        return userId == null ? "" : userId;
+        return userKey == null ? "" : userKey;
     }
 
     @Override

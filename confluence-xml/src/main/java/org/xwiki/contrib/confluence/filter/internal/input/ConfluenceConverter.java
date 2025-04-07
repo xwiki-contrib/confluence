@@ -19,7 +19,15 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.input;
 
-import com.xpn.xwiki.XWikiContext;
+import java.util.Collections;
+import java.util.Map;
+import java.util.regex.Pattern;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Provider;
+import javax.inject.Singleton;
+
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -28,13 +36,13 @@ import org.slf4j.MarkerFactory;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
-import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceURLConverter;
+import org.xwiki.contrib.confluence.filter.ConfluenceFilterReferenceConverter;
 import org.xwiki.contrib.confluence.filter.Mapping;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
-import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
+import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceURLConverter;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageTitleResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
@@ -52,25 +60,24 @@ import org.xwiki.rendering.listener.reference.ResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceType;
 import org.xwiki.rendering.listener.reference.UserResourceReference;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.inject.Provider;
-import javax.inject.Singleton;
-import java.util.Collections;
-import java.util.Map;
-import java.util.regex.Pattern;
+import com.xpn.xwiki.XWikiContext;
 
 import static org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage.KEY_GROUP_EXTERNAL_ID;
 import static org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage.KEY_GROUP_NAME;
 
 /**
- * Default implementation of ConfluenceConverter.
+ * Default implementation of ConfluenceFilterReferenceConverter.
+ *
+ * Note: the ConfluenceConverter role is deprecated and will eventually go away. We give a grace period to let
+ * projects switch to {@link ConfluenceFilterReferenceConverter}, ideally we should get rid of this deprecated role
+ * early 2026.
+ *
  * @version $Id$
  * @since 9.26.0
  */
-@Component(roles = ConfluenceConverter.class)
+@Component (roles = {ConfluenceFilterReferenceConverter.class, ConfluenceConverter.class})
 @Singleton
-public class ConfluenceConverter implements ConfluenceReferenceConverter
+public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
 {
     private static final Pattern FORBIDDEN_USER_CHARACTERS = Pattern.compile("[. /]");
 
@@ -239,7 +246,8 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return getUserOrGroupReference(toGroupReferenceName(groupName));
     }
 
-    String getGuestUser()
+    @Override
+    public String getGuestUser()
     {
         return serialize(GUEST);
     }
@@ -260,11 +268,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return serialize(reference);
     }
 
-    /**
-     * @param reference the reference of a user that can be either a username or a user key.
-     * @return a XWiki user reference.
-     * @since 9.26
-     */
+    @Override
     public ResourceReference resolveUserReference(UserResourceReference reference)
     {
         String userReference = reference.getReference();
@@ -273,8 +277,10 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             // Keep the UserResourceReference
 
             // Clean the user id
-            String userName = toUserReferenceName(resolveUserName(userReference));
-            if (userName == null || userName.isEmpty()) {
+            String userName = toUserReferenceName(
+                context.getConfluencePackage().resolveUserName(userReference, userReference));
+            if (StringUtils.isEmpty(userName)) {
+                logger.error("Failed to resolve user [{}]", userReference);
                 return null;
             }
 
@@ -287,7 +293,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         // FIXME: would not really been needed if the XWiki Instance output filter was taking care of that when
         // receiving a user reference
 
-        String userName = getReferenceFromUserKey(userReference);
+        String userName = toUserReference(context.getConfluencePackage().resolveUserName(userReference, userReference));
         if (StringUtils.isEmpty(userName)) {
             return null;
         }
@@ -299,27 +305,10 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return documentReference;
     }
 
-    String resolveUserName(String userKey)
-    {
-        if (StringUtils.isEmpty(userKey)) {
-            return null;
-        }
-        String userName = context.getConfluencePackage().resolveUserName(userKey, userKey);
-        if (StringUtils.isEmpty(userName)) {
-            logger.error("Could not resolve user key [{}]", userKey);
-        }
-        return userName;
-    }
-
-    String getReferenceFromUserKey(String userKey)
-    {
-        return toUserReference(resolveUserName(userKey));
-    }
-
     @Override
-    public String convertUserReference(String userId)
+    public String convertUserReference(String userKey)
     {
-        return resolveUserReference(new UserResourceReference(userId)).getReference();
+        return resolveUserReference(new UserResourceReference(userKey)).getReference();
     }
 
     private EntityReference newEntityReference(String name, EntityType type, EntityReference parent)
