@@ -34,9 +34,9 @@ public interface ConfluenceReferenceConverter
 {
     /**
      * @return the converted user reference
-     * @param userId the user identifier to convert
+     * @param userKey the user identifier to convert
      */
-    String convertUserReference(String userId);
+    String convertUserReference(String userKey);
 
     /**
      * @return the converted document reference
