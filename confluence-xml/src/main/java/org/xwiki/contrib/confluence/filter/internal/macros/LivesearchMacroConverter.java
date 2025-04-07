@@ -29,6 +29,8 @@ import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+
 /**
  * Livesearch Macro Converter - converts livesearch to the Location Search Macro.
  *

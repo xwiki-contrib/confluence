@@ -29,6 +29,8 @@ import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+
 /**
  * Children Macro converter.
  * @since 6.62.0
@@ -39,7 +41,6 @@ import java.util.Map;
 @Singleton
 public class ChildrenMacroConverter extends AbstractMacroConverter
 {
-
     private static final String SORT = "sort";
     private static final String REVERSE = "reverse";
     private static final String SORT_AND_REVERSE = "sortAndReverse";

@@ -28,6 +28,8 @@ import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+
 /**
  * Code macro converter.
  * @since 9.74.0
@@ -38,7 +40,6 @@ import java.util.Map;
 @Singleton
 public class CodeMacroConverter extends AbstractMacroConverter
 {
-
     static final String CODE = "code";
     private static final String LANGUAGE = "language";
     private static final String LINENUMBERS = "linenumbers";

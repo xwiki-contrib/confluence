@@ -19,11 +19,16 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
+import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
+
+import java.util.Collections;
 import java.util.Map;
+
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
 
 /**
  * Convert Confluence warning macro.
@@ -36,11 +41,24 @@ import java.util.Map;
 @Named("warning")
 public class WarningMacroConverter extends AbstractMacroConverter
 {
+    private static final String TITLE = "title";
+
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
         return "error";
+    }
+
+    @Override
+    protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
+        String content)
+    {
+        String title = confluenceParameters.get(TITLE);
+        if (StringUtils.isEmpty(title)) {
+            return Collections.emptyMap();
+        }
+        return Collections.singletonMap(TITLE, title);
     }
 
     @Override

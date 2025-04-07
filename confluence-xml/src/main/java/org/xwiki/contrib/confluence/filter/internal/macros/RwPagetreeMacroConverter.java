@@ -31,6 +31,8 @@ import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+
 /**
  * Minimally convert the rw-pagetree macro to a standard pagetree.
  * See <a href="https://help.refined.com/space/CONFDC/4704255589/Page+Tree+macro">Refined Page Tree</a>
