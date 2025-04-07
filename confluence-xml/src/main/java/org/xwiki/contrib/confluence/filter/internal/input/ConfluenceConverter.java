@@ -845,7 +845,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
     /**
      * @deprecated since 9.76.0
-     * Use ConfluenceURLConverter#convertURL(String)
+     * Use {@link ConfluenceURLConverter#convertURL(String)}
      */
     @Override
     @Deprecated(since = "9.76.0")
