@@ -29,6 +29,8 @@ import javax.inject.Singleton;
 import java.util.Collections;
 import java.util.Map;
 
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+
 /**
  * Convert Mathblock-ref to mathjax.
  * @since 9.57.0

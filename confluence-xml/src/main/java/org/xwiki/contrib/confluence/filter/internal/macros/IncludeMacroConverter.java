@@ -27,6 +27,8 @@ import javax.inject.Singleton;
 
 import java.util.Map;
 
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+
 /**
  * Convert Confluence include macro to XWiki display macro.
  *

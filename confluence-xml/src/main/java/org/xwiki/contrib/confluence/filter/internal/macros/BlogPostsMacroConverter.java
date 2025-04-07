@@ -28,6 +28,7 @@ import javax.inject.Singleton;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
 

@@ -26,6 +26,7 @@ import javax.inject.Singleton;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
 
 /**
  * Convert Confluence jira macro.
@@ -98,6 +99,7 @@ public class JiraMacroConverter extends AbstractMacroConverter
         return confluenceContent;
     }
 
+    @Override
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {

@@ -27,6 +27,8 @@ import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+
 /**
  * Converts a macro call into a group, using the value of the "text" parameter as its content.
  *

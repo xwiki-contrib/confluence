@@ -37,6 +37,8 @@ import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollVariantResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+
 /**
  * Convert the Conditional Content macro.
  *
@@ -82,7 +84,7 @@ public class ConditionalContentMacroConverter extends AbstractMacroConverter
     {
         Throwable cause = null;
 
-        List<String> variantReferences = new ArrayList<String>();
+        List<String> variantReferences = new ArrayList<>();
 
         for (Entry<String, String> confluenceParameter : confluenceParameters.entrySet()) {
             String attributePrefixedID = confluenceParameter.getKey();
@@ -92,7 +94,7 @@ public class ConditionalContentMacroConverter extends AbstractMacroConverter
                 String attributeID = attributePrefixedID.replaceFirst(CONFLUENCE_PARAMETER_PREFIX, "");
                 String parameterValues = confluenceParameter.getValue();
 
-                List<String> attributeValueIDs = new ArrayList<String>();
+                List<String> attributeValueIDs = new ArrayList<>();
 
                 if (parameterValues != null) {
                     attributeValueIDs = Stream.of(parameterValues.split(" ")).collect(Collectors.toList());

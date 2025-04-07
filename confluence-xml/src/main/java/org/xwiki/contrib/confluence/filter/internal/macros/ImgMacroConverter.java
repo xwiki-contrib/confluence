@@ -18,6 +18,7 @@
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +27,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceURLConverter;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.listener.reference.ResourceReference;
@@ -59,5 +61,18 @@ public class ImgMacroConverter extends AbstractMacroConverter
         Map<String, String> parameters = new HashMap<>(confluenceParameters);
         parameters.remove(SRC);
         listener.onImage(reference, false, parameters);
+    }
+
+    @Override
+    protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
+        String content)
+    {
+        return Collections.emptyMap();
+    }
+
+    @Override
+    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    {
+        return InlineSupport.YES;
     }
 }

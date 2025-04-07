@@ -27,6 +27,8 @@ import javax.inject.Singleton;
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+
 /**
  * Convert Confluence plantumlrender macros.
  *

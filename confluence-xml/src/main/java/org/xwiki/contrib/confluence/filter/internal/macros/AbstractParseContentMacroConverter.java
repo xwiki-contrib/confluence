@@ -34,6 +34,8 @@ import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.parser.ParseException;
 import org.xwiki.rendering.parser.Parser;
 
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+
 abstract class AbstractParseContentMacroConverter extends AbstractMacroConverter
 {
     @Inject
@@ -54,6 +56,4 @@ abstract class AbstractParseContentMacroConverter extends AbstractMacroConverter
                 false).traverse(listener);
         }
     }
-
-
 }

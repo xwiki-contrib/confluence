@@ -20,7 +20,7 @@
 package org.xwiki.contrib.confluence.filter;
 
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.confluence.filter.internal.macros.AbstractMacroConverter;
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -59,5 +59,11 @@ public class FakeBlockMacroConverter extends AbstractMacroConverter
         }
 
         return confluenceParameters;
+    }
+
+    @Override
+    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    {
+        return InlineSupport.NO;
     }
 }

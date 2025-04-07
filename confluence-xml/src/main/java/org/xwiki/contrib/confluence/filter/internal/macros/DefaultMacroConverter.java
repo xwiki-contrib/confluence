@@ -38,6 +38,8 @@ import org.xwiki.rendering.macro.MacroManager;
 
 /**
  * Find converter for passed macro.
+ * Note: the default parameter extends the deprecated internal AbstractMacroConverter for backward compatiblity reasons.
+ * This should probably be changed after early 2027.
  * @version $Id$
  * @since 9.1
  */

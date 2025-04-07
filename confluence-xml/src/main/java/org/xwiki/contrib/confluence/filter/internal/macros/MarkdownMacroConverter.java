@@ -26,6 +26,8 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.Map;
 
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+
 /**
  * The markdown macro.
  * @since 9.61.0

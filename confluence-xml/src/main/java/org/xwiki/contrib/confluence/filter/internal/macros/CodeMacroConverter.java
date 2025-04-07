@@ -28,6 +28,8 @@ import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+
 /**
  * Code macro converter.
  * @since 9.74.0

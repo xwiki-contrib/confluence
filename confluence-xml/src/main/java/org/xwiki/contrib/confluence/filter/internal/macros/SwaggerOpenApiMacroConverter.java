@@ -25,6 +25,8 @@ import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
 
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+
 /**
  * Converter used for swagger open API macro.
  *
@@ -59,12 +61,17 @@ public class SwaggerOpenApiMacroConverter extends AbstractMacroConverter
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
-        // Useless for now, since we don't override toXWikiParameters, all the parameters are output, but we could
-        // decide to warn about unknown parameters in the future even for such macro converters.
+        return "swagger";
+    }
+
+    @Override
+    protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
+        String content) throws ConversionException
+    {
         for (String p : KNOWN_PARAMETERS) {
             markHandledParameter(confluenceParameters, p, true);
         }
-        return "swagger";
+        return confluenceParameters;
     }
 
     @Override

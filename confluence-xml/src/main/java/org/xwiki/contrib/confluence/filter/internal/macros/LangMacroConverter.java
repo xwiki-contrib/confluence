@@ -142,6 +142,12 @@ public class LangMacroConverter extends AbstractTranslationMacroConverter
     }
 
     @Override
+    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    {
+        return InlineSupport.NO;
+    }
+
+    @Override
     public Locale getLanguage(String id, Map<String, String> parameters, String content, boolean inline)
     {
         String l = LANGUAGE_NAME_TO_CODE.get(id);

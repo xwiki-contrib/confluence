@@ -27,6 +27,8 @@ import javax.inject.Singleton;
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+
 /**
  * Convert the popular-labels macro to tagcloud.
  * @since 9.88.0

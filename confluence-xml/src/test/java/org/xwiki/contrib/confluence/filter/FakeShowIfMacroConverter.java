@@ -19,15 +19,16 @@
  */
 package org.xwiki.contrib.confluence.filter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
-import org.xwiki.contrib.confluence.filter.internal.macros.AbstractMacroConverter;
 
 @Component
 @Singleton
@@ -40,14 +41,25 @@ public class FakeShowIfMacroConverter extends AbstractMacroConverter
     private ConfluenceConverter converter;
 
     @Override
-    protected String toXWikiParameterValue(String confluenceParameterName, String confluenceParameterValue,
-        String confluenceId, Map<String, String> parameters, String confluenceContent)
+    protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
+        String content)
     {
-        if (confluenceParameterName.equals(GROUP_ID_PARAM)) {
-            String groupRef = converter.convertGroupId(confluenceParameterValue);
-            return groupRef == null ? confluenceParameterValue : groupRef;
+        String groupId = confluenceParameters.get(GROUP_ID_PARAM);
+        if (StringUtils.isNotEmpty(groupId)) {
+            String groupRef = converter.convertGroupId(groupId);
+            if (groupRef != null) {
+                HashMap<String, String> parameters = new HashMap<>(confluenceParameters);
+                parameters.put(GROUP_ID_PARAM, groupRef);
+                return parameters;
+            }
         }
-        return super.toXWikiParameterValue(confluenceParameterName, confluenceParameterValue, confluenceId, parameters,
-            confluenceContent);
+
+        return confluenceParameters;
+    }
+
+    @Override
+    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    {
+        return InlineSupport.MAYBE;
     }
 }

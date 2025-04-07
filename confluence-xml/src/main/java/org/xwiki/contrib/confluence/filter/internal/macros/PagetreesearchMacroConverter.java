@@ -28,6 +28,8 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.Map;
 
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+
 /**
  * Pagetreesearch Macro Converter - converts pagetreesearch to the Location Search Macro.
  *

@@ -24,6 +24,7 @@ import java.util.Map;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
 
 /**
  * Converts scroll- prefixed macros to export- prefixed macros.
@@ -51,6 +52,13 @@ public class ScrollExporterMacrosConverter extends AbstractMacroConverter
         String macroName = confluenceId.replace(SCROLL_PREFIX + "pdf-", SCROLL_PREFIX);
         macroName = macroName.replace(SUFFIX_INLINE, "");
         return macroName.replace(SCROLL_PREFIX, "export-");
+    }
+
+    @Override
+    protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
+        String content) throws ConversionException
+    {
+        return confluenceParameters;
     }
 
     @Override
