@@ -19,73 +19,30 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
-import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.Marker;
-import org.slf4j.MarkerFactory;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
-import org.xwiki.rendering.listener.Listener;
 
 /**
- * Base class for {@link MacroConverter} implementations.
+ * Formerly the internal, base class for {@link MacroConverter} implementations.
+ * We wanted outside projects to be able to use it, hence the move to public.
+ * But since a few projects have been using this internal class, we are giving a grace / transition period and
+ * deprecating it instead of removing it directly, not to break them hard. We will remove it soon, so use the public
+ * version instead and don't procrastinate doing this.
+ * We also want macro converters to be more explicit about the parameter handling, and in particular we don't want
+ * Confluence parameters to be implicitly imported when converting macros, so we are deprecating the implementation
+ * of {@link AbstractMacroConverter#toXWikiParameters(String, Map, String)}, and methods
+ * {@link AbstractMacroConverter#toXWikiParameterName(String, String, Map, String)} and
+ * {@link AbstractMacroConverter#toXWikiParameterValue(String, String, String, Map, String)}.
  *
  * @version $Id$
  * @since 9.1
+ * @deprecated since 9.83.0, use {@link org.xwiki.contrib.confluence.filter.AbstractMacroConverter} instead
  */
-public abstract class AbstractMacroConverter implements MacroConverter
+@Deprecated (since = "9.83.0")
+public abstract class AbstractMacroConverter extends org.xwiki.contrib.confluence.filter.AbstractMacroConverter
 {
-    private static final Marker UNHANDLED_PARAMETER_MARKER = MarkerFactory.getMarker("unhandledConfluenceParameter");
-    private static final Marker UNHANDLED_PARAMETER_VALUE_MARKER =
-        MarkerFactory.getMarker("unhandledConfluenceParameterValue");
-
-    private final Logger logger = LoggerFactory.getLogger(AbstractMacroConverter.class.getName());
-
-    @Override
-    public void toXWiki(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
-        boolean inline, Listener listener)
-    {
-        TracedMap<String, String> tracedParameters = new TracedMap<>(confluenceParameters);
-
-        String id = toXWikiId(confluenceId, tracedParameters, confluenceContent, inline);
-
-        Map<String, String> parameters = toXWikiParameters(confluenceId, tracedParameters, confluenceContent);
-
-        String content = toXWikiContent(confluenceId, tracedParameters, confluenceContent);
-
-        printUnhandledInfo(confluenceId, tracedParameters);
-
-        listener.onMacro(id, parameters, content, inline);
-    }
-
-    private void printUnhandledInfo(String confluenceId, TracedMap<String, String> confluenceParameters)
-    {
-        Collection<String> parametersWithUnhandledValues = confluenceParameters.getParametersWithUnhandledValues();
-        Collection<String> unhandledParameters = confluenceParameters.getUnhandledParameters();
-
-        for (String p : unhandledParameters) {
-            if (!parametersWithUnhandledValues.contains(p)) {
-                logger.info(UNHANDLED_PARAMETER_MARKER, "Unhandled parameter [{}] (with value [{}]) in macro [{}]",
-                    p, confluenceParameters.get(p), confluenceId);
-            }
-        }
-
-        for (String p : parametersWithUnhandledValues) {
-            logger.info(UNHANDLED_PARAMETER_VALUE_MARKER, "Unhandled value [{}] for parameter [{}] in macro [{}]",
-                confluenceParameters.get(p), p, confluenceId);
-        }
-    }
-
-    @Override
-    public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
-        boolean inline)
-    {
-        return confluenceId;
-    }
-
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {
@@ -106,6 +63,7 @@ public abstract class AbstractMacroConverter implements MacroConverter
         return parameters;
     }
 
+    @Deprecated (since = "9.82.0")
     protected String toXWikiParameterName(String confluenceParameterName, String id,
         Map<String, String> confluenceParameters, String confluenceContent)
     {
@@ -120,6 +78,7 @@ public abstract class AbstractMacroConverter implements MacroConverter
         return confluenceParameterName;
     }
 
+    @Deprecated (since = "9.82.0")
     protected String toXWikiParameterValue(String confluenceParameterName, String confluenceParameterValue,
         String confluenceId, Map<String, String> parameters, String confluenceContent)
     {
@@ -127,38 +86,9 @@ public abstract class AbstractMacroConverter implements MacroConverter
         return confluenceParameterValue;
     }
 
-    protected String toXWikiContent(String confluenceId, Map<String, String> parameters, String confluenceContent)
+    @Override
+    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
     {
-        return confluenceContent;
-    }
-
-    protected void markHandledParameter(Map<String, String> confluenceParameters, String name, boolean handled)
-    {
-        if (confluenceParameters instanceof TracedMap) {
-            TracedMap<String, String> tracedParameters = (TracedMap<String, String>) confluenceParameters;
-            if (handled) {
-                tracedParameters.markAsUsed(name);
-            } else {
-                tracedParameters.markAsUnused(name);
-            }
-        } else {
-            warnCantMark();
-        }
-    }
-
-    protected void markUnhandledParameterValue(Map<String, String> confluenceParameters, String parameterName)
-    {
-        if (confluenceParameters instanceof TracedMap) {
-            TracedMap<String, String> tracedParameters = (TracedMap<String, String>) confluenceParameters;
-            tracedParameters.markAsUnhandledValue(parameterName);
-        } else {
-            warnCantMark();
-        }
-    }
-
-    private void warnCantMark()
-    {
-        logger.error(
-            "Can't mark parameter as (un)handled or missing. Please pass the original Confluence parameter map.");
+        return InlineSupport.MAYBE;
     }
 }
