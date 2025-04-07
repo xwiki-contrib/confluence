@@ -57,6 +57,7 @@ import org.slf4j.MarkerFactory;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
+import org.xwiki.contrib.confluence.filter.ConfluenceFilterReferenceConverter;
 import org.xwiki.contrib.confluence.filter.PageIdentifier;
 import org.xwiki.contrib.confluence.filter.event.ConfluenceFilteredEvent;
 import org.xwiki.contrib.confluence.filter.event.ConfluenceFilteringEvent;
@@ -206,7 +207,7 @@ public class ConfluenceInputFilterStream
     private ConfluenceInputContext context;
 
     @Inject
-    private ConfluenceConverter confluenceConverter;
+    private ConfluenceFilterReferenceConverter confluenceConverter;
 
     @Inject
     private ConfluenceURLConverter urlConverter;

@@ -28,7 +28,7 @@ import javax.inject.Singleton;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
+import org.xwiki.contrib.confluence.filter.ConfluenceFilterReferenceConverter;
 
 /**
  * Page Tree macro converter.
@@ -45,7 +45,7 @@ public class PagetreeMacroConverter extends AbstractWithSortAndReverseMacroConve
     private static final String DOT_WEB_HOME = ".WebHome";
 
     @Inject
-    private ConfluenceConverter confluenceConverter;
+    private ConfluenceFilterReferenceConverter confluenceConverter;
 
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,

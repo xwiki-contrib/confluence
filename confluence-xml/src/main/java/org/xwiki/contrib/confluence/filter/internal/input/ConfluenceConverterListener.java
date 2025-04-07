@@ -33,6 +33,7 @@ import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
+import org.xwiki.contrib.confluence.filter.ConfluenceFilterReferenceConverter;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.parser.confluence.internal.wikimodel.ConfluenceResourceReference;
@@ -86,7 +87,7 @@ public class ConfluenceConverterListener extends WrappingListener
     private ConfluenceInputContext context;
 
     @Inject
-    private ConfluenceConverter confluenceConverter;
+    private ConfluenceFilterReferenceConverter confluenceConverter;
 
     @Inject
     @Named("plain/1.0")
@@ -136,7 +137,7 @@ public class ConfluenceConverterListener extends WrappingListener
                 return;
             }
 
-            String currentPageTitle = confluenceConverter.getCurrentPageTitleForAnchor();
+            String currentPageTitle = ((ConfluenceConverter) confluenceConverter).getCurrentPageTitleForAnchor();
 
             if (context.isConfluenceCloud()) {
                 String dashedName = spacesToDash(name);
