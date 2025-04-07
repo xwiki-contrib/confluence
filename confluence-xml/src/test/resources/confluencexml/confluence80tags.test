@@ -106,8 +106,6 @@ Welcome to your first space. Go ahead, edit and customize this home page any way
 
 {{layout-section ac:type="single"}}
 {{layout-cell}}
-
-
 \\
 {{/layout-cell}}
 {{/layout-section}}
@@ -131,18 +129,12 @@ Welcome to your first space. Go ahead, edit and customize this home page any way
 (% class="content-wrapper" %)
 (((
 (% style="text-align: center;" %)
-
-
-(% style="text-align: center;" %)
 **Harvey Honner-white
 **Team Lead** **
 )))
 )))|(((
 (% class="content-wrapper" %)
 (((
-(% style="text-align: center;" %)
-
-
 (% style="text-align: center;" %)
 **Alana Baczewski
  **Tech Lead
@@ -151,18 +143,12 @@ Welcome to your first space. Go ahead, edit and customize this home page any way
 (% class="content-wrapper" %)
 (((
 (% style="text-align: center;" %)
-
-
-(% style="text-align: center;" %)
 **Sameer Farrell
  **Marketing
 )))
 )))|(((
 (% class="content-wrapper" %)
 (((
-(% style="text-align: center;" %)
-
-
 (% style="text-align: center;" %)
 **Mia Bednarczyk
  **Recruitment

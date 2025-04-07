@@ -126,4 +126,10 @@ public class MacroToContentConverter extends AbstractMacroConverter
         }
         return divWrapperParams;
     }
+
+    @Override
+    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    {
+        return InlineSupport.NO;
+    }
 }

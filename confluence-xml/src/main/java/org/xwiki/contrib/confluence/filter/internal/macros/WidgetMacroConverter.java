@@ -49,6 +49,12 @@ public class WidgetMacroConverter extends AbstractMacroConverter
     }
 
     @Override
+    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    {
+        return InlineSupport.NO;
+    }
+
+    @Override
     protected String toXWikiParameterValue(String confluenceParameterName, String confluenceParameterValue,
         String confluenceId, Map<String, String> parameters, String confluenceContent)
     {

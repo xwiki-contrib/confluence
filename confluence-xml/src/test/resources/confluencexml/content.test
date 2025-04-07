@@ -21,8 +21,6 @@
 sub macro rich **text** content
 {{/submacro}}{{/macro}}
 
-
-
 {{view-file/}}
 
 {{view-file/}}

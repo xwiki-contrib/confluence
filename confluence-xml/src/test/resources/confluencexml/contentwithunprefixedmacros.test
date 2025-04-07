@@ -21,8 +21,6 @@
 sub macro rich **text** content
 {{/confluence_submacro}}{{/confluence_macro}}
 
-
-
 {{view-file/}}
 
 {{view-file/}}

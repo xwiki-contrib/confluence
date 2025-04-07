@@ -1315,8 +1315,6 @@ info default macro
 Content of bloc code
 {{/code}}
 
-
-
 {{blogpostlist reference="SPACE1.Blog.WebHome" layout="link"/}}
 
 {{create-space-button/}}
@@ -1625,8 +1623,6 @@ info default macro
 {{code language="java"}}
 Content of bloc code
 {{/code}}
-
-
 
 {{blogpostlist reference="SPACE1.Blog.WebHome" layout="link"/}}
 
@@ -1937,8 +1933,6 @@ info default macro
 Content of bloc code
 {{/code}}
 
-
-
 {{blogpostlist reference="SPACE1.Blog.WebHome" layout="link"/}}
 
 {{create-space-button/}}
@@ -2247,8 +2241,6 @@ info default macro
 {{code language="java"}}
 Content of bloc code
 {{/code}}
-
-
 
 {{blogpostlist reference="SPACE1.Blog.WebHome" layout="link"/}}
 
@@ -2559,8 +2551,6 @@ info default macro
 Content of bloc code
 {{/code}}
 
-
-
 {{blogpostlist reference="SPACE1.Blog.WebHome" layout="link"/}}
 
 {{create-space-button/}}
@@ -2869,8 +2859,6 @@ info default macro
 {{code language="java"}}
 Content of bloc code
 {{/code}}
-
-
 
 {{blogpostlist reference="SPACE1.Blog.WebHome" layout="link"/}}
 

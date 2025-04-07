@@ -48,8 +48,6 @@
 Spaces help your team structure, organize, and share work, so every team member has visibility into institutional knowledge and access to the information they need to do their best work.
 {{/panel}}
 
-
-
 == {{id name="RemoveHome-Getstartedwiththebasics"/}}**Get started with the basics** ==
 
 **Start editing this page:**
@@ -149,9 +147,7 @@ Line 6
 
 Line 7
 
-Line 8
-
-</string>
+Line 8</string>
               </entry>
               <entry>
                 <string>syntax</string>

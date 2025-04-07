@@ -49,8 +49,6 @@
 Spaces help your team structure, organize, and share work, so every team member has visibility into institutional knowledge and access to the information they need to do their best work.
 {{/panel}}
 
-
-
 = {{id name="Get-started-with-the-basics"/}}**Get started with the basics** =
 
 **Start editing this page:**
@@ -72,8 +70,6 @@ Spaces help your team structure, organize, and share work, so every team member 
 (% class="placeholder-inline-tasks" %)Click {{code language="none"}}close{{/code}} to save your draft or {{code language="none"}}publish{{/code}} when your page is ready to be shared
 {{/task}}
 {{/task-list}}
-
-
 
 ==== {{id name="🪄-Need-some-inspiration?"/}}🪄 Need some inspiration? ====
 
@@ -271,8 +267,6 @@ Spaces help your team structure, organize, and share work, so every team member 
                   <entry>
                     <string>content</string>
                     <string>This page is under Page A.
-
-
 
 {{excerpt}}
 This is an excerpt

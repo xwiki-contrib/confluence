@@ -103,7 +103,9 @@
                     <string>content</string>
                     <string>{{display reference="sp.hello.long 1.WebHome"/}}
 
-{{documentTree root="document:sp.hello.short 1.WebHome" limit="2"/}} </string>
+{{documentTree root="document:sp.hello.short 1.WebHome" limit="2"/}}
+
+ </string>
                   </entry>
                   <entry>
                     <string>syntax</string>

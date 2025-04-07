@@ -56,6 +56,12 @@ public class ChildrenMacroConverter extends AbstractMacroConverter
         return shouldConvertToDocumentTree(confluenceParameters) ? "documentTree" : "children";
     }
 
+    @Override
+    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    {
+        return InlineSupport.NO;
+    }
+
     private static boolean shouldConvertToDocumentTree(Map<String, String> confluenceParameters)
     {
         String first = getFirst(confluenceParameters);

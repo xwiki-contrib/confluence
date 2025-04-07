@@ -65,8 +65,6 @@ Page tree search, root page = Included page
 
 {{locationSearch reference="confluencePage:page:MySpace.Included page"/}}
 
-
-
 livesearch, type = page
 
 {{locationSearch kind="document" excerpt="false"/}}

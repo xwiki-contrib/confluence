@@ -66,4 +66,10 @@ public class SwaggerOpenApiMacroConverter extends AbstractMacroConverter
         }
         return "swagger";
     }
+
+    @Override
+    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    {
+        return InlineSupport.NO;
+    }
 }

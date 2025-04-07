@@ -53,4 +53,10 @@ public class PlantumlRenderMacroConverter extends AbstractMacroConverter
     {
         return PLANTUML;
     }
+
+    @Override
+    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    {
+        return InlineSupport.YES;
+    }
 }

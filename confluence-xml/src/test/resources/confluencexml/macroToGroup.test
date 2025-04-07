@@ -41,9 +41,7 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>
-
-= {{id name="MySpaceHome-CFMFootNote"/}}CFMFootNote =
+              <string>= {{id name="MySpaceHome-CFMFootNote"/}}CFMFootNote =
 
 (% id="j61cfghrf8" class="confluence_cfm-footnote_content" %)
 (((
@@ -132,9 +130,7 @@ Some element
 )))|(((
 Some element
 )))
-)))
-
-</string>
+)))</string>
             </entry>
             <entry>
               <string>syntax</string>

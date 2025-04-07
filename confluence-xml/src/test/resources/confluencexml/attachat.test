@@ -42,10 +42,7 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>(% class="media-group" %)
-
-
-{{view-file att--filename="test\@withat.txt"/}}
+              <string>{{view-file att--filename="test\@withat.txt"/}}
 
 [[image:attach:test\@withat.txt||custom-width="true" original-height="1" data-xwiki-image-style-alignment="center" width="24" align="center" original-width="1"]]</string>
             </entry>

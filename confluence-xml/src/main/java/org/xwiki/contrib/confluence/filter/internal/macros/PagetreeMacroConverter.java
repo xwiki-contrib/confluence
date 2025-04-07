@@ -49,6 +49,12 @@ public class PagetreeMacroConverter extends AbstractMacroConverter
     }
 
     @Override
+    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    {
+        return InlineSupport.NO;
+    }
+
+    @Override
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {

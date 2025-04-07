@@ -45,6 +45,12 @@ public class RedirectMacroConverter extends AbstractMacroConverter
     }
 
     @Override
+    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    {
+        return InlineSupport.NO;
+    }
+
+    @Override
     protected String toXWikiParameterName(String confluenceParameterName, String confluenceId,
         Map<String, String> parameters, String confluenceContent)
     {

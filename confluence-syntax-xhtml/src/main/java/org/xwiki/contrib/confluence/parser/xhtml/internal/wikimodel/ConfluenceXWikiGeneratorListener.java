@@ -687,7 +687,8 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
                 macroEvent.eventParameters[3] = false;
             }
             macroEvent.eventType.fireEvent(this.getListener(), macroEvent.eventParameters);
-        } else {
+        } else if (!(!isInListItem() && queueListener.size() == 2)) {
+            // we discard empty paragraphs
             queueListener.consumeEvents(this.getListener());
         }
     }

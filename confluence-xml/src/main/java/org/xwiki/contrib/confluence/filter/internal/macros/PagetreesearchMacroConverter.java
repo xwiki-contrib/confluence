@@ -63,4 +63,10 @@ public class PagetreesearchMacroConverter extends AbstractMacroConverter
         }
         return Map.of("reference", converter.convertDocumentReference(null, root));
     }
+
+    @Override
+    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    {
+        return InlineSupport.NO;
+    }
 }
