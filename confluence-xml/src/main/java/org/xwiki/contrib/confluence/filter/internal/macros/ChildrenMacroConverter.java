@@ -37,13 +37,9 @@ import java.util.Map;
 @Component
 @Named("children")
 @Singleton
-public class ChildrenMacroConverter extends AbstractMacroConverter
+public class ChildrenMacroConverter extends AbstractWithSortAndReverseMacroConverter
 {
-    private static final String SORT = "sort";
-    private static final String REVERSE = "reverse";
-    private static final String SORT_AND_REVERSE = "sortAndReverse";
     private static final String ALL_CHILDREN = "allChildren";
-    private static final String TRUE = "true";
     private static final String ROOT = "root";
 
     @Inject
@@ -110,83 +106,11 @@ public class ChildrenMacroConverter extends AbstractMacroConverter
         }
 
         String allChildren = confluenceParameters.get(ALL_CHILDREN);
-        if (StringUtils.isNotEmpty(allChildren) && !TRUE.equals(allChildren)) {
+        if (StringUtils.isNotEmpty(allChildren) && !"true".equals(allChildren)) {
             markUnhandledParameterValue(confluenceParameters, ALL_CHILDREN);
         }
 
-        handleSortParameter(confluenceParameters, parameters, this);
+        handleSortParameter(confluenceParameters, parameters);
         return parameters;
-    }
-
-    static void handleSortParameter(Map<String, String> confluenceParameters, Map<String, String> parameters,
-        AbstractMacroConverter c)
-    {
-        String sortAndReverse = confluenceParameters.get(SORT_AND_REVERSE);
-        String[] sortReverse = StringUtils.isEmpty(sortAndReverse) ? null : sortAndReverse.split("\\.");
-
-        String convertedSort = getConvertedSortParameter(confluenceParameters, sortReverse, c);
-        boolean reverse = getConvertedReverseParameter(confluenceParameters, sortReverse, c);
-
-        if (convertedSort != null) {
-            if (reverse) {
-                convertedSort += ":desc";
-            }
-            parameters.put("sortDocumentsBy", convertedSort);
-        }
-    }
-
-    private static boolean getConvertedReverseParameter(Map<String, String> confluenceParameters, String[] sortReverse,
-        AbstractMacroConverter c)
-    {
-        String reverse = confluenceParameters.get(REVERSE);
-        if (StringUtils.isEmpty(reverse) && sortReverse != null && sortReverse.length > 1) {
-            return convertReverse(confluenceParameters, sortReverse[1], SORT_AND_REVERSE, c);
-        }
-        return convertReverse(confluenceParameters, reverse, REVERSE, c);
-    }
-
-    private static boolean convertReverse(Map<String, String> confluenceParameters, String reverse, String paramName,
-        AbstractMacroConverter c)
-    {
-        if (TRUE.equals(reverse)) {
-            return true;
-        }
-
-        if (StringUtils.isNotEmpty(reverse) && !"false".equals(reverse)) {
-            c.markUnhandledParameterValue(confluenceParameters, paramName);
-        }
-
-        return false;
-    }
-
-    private static String getConvertedSortParameter(Map<String, String> confluenceParameters, String[] sortReverse,
-        AbstractMacroConverter c)
-    {
-        String sort = confluenceParameters.get(SORT);
-        if (StringUtils.isEmpty(sort) && sortReverse != null && sortReverse.length > 0) {
-            return convertSort(confluenceParameters, sortReverse[0], SORT_AND_REVERSE, c);
-        }
-        return convertSort(confluenceParameters, sort, SORT, c);
-    }
-
-    private static String convertSort(Map<String, String> confluenceParameters, String sort, String parameterName,
-        AbstractMacroConverter c)
-    {
-        if (StringUtils.isEmpty(sort)) {
-            return null;
-        }
-        switch (sort) {
-            case "creation":
-                return "creationDate";
-            case "title":
-            case "bitwise":
-            case "natural":
-                return sort;
-            case "modified":
-                return "date";
-            default:
-                c.markUnhandledParameterValue(confluenceParameters, parameterName);
-                return null;
-        }
     }
 }

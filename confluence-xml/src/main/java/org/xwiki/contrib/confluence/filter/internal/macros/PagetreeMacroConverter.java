@@ -38,9 +38,8 @@ import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
 @Component
 @Singleton
 @Named("pagetree")
-public class PagetreeMacroConverter extends AbstractMacroConverter
+public class PagetreeMacroConverter extends AbstractWithSortAndReverseMacroConverter
 {
-
     private static final String ROOT = "root";
     private static final String START_DEPTH = "startDepth";
     private static final String DOT_WEB_HOME = ".WebHome";
@@ -90,7 +89,7 @@ public class PagetreeMacroConverter extends AbstractMacroConverter
 
         Map<String, String> parameters = new TreeMap<>();
         parameters.put(ROOT, "document:" + root);
-        ChildrenMacroConverter.handleSortParameter(confluenceParameters, parameters, this);
+        handleSortParameter(confluenceParameters, parameters);
 
         return parameters;
     }
