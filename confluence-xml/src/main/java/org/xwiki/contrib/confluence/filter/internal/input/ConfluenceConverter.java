@@ -140,7 +140,9 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     {
         String r = entityNameValidationManagerProvider.get().getEntityReferenceNameStrategy().transform(entityName);
         if (StringUtils.isEmpty(r)) {
-            logger.warn("The naming strategy transformed [{}] to an empty name", r);
+            logger.warn("The name strategy transformed [{}] to an empty name, will use the original name instead of"
+                + " following the name strategy", entityName);
+            return entityName;
         }
         return r;
     }
