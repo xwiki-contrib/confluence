@@ -69,15 +69,18 @@ import static org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage.KEY
 /**
  * Default implementation of ConfluenceFilterReferenceConverter.
  *
- * Note: the ConfluenceConverter role is deprecated and will eventually go away. We give a grace period to let
- * projects switch to {@link ConfluenceFilterReferenceConverter}, ideally we should get rid of this deprecated role
- * early 2026.
+ * Note: While the implementation itself is not deprecated, the ConfluenceConverter role is deprecated and will
+ * eventually go away. We give a grace period to let projects switch to {@link ConfluenceFilterReferenceConverter},
+ * ideally we should get rid of this deprecated role early 2027. We use the deprecated annotations to make the IDEs
+ * warn against using it.
  *
  * @version $Id$
  * @since 9.26.0
+ * @deprecated since 9.89.0, use {@link ConfluenceFilterReferenceConverter} instead
  */
 @Component (roles = {ConfluenceFilterReferenceConverter.class, ConfluenceConverter.class})
 @Singleton
+@Deprecated (since = "9.89.0")
 public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
 {
     private static final Pattern FORBIDDEN_USER_CHARACTERS = Pattern.compile("[. /]");
