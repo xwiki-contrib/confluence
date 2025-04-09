@@ -174,6 +174,8 @@ public class ConfluenceInputFilterStream
 
     private static final String ATTACHMENT = "attachment";
 
+    private static final String REVISION = "revision";
+
     @Inject
     @Named(ConfluenceInputStreamParser.COMPONENT_NAME)
     private StreamParser confluenceWIKIParser;
@@ -1660,7 +1662,7 @@ public class ConfluenceInputFilterStream
                     .entrySet()
                     .stream()
                     .sorted(buggyVersions
-                        ? getDateComparator(ConfluenceXMLPackage.KEY_PAGE_REVISION_DATE, "revision", null)
+                        ? getDateComparator(ConfluenceXMLPackage.KEY_PAGE_REVISION_DATE, REVISION, null)
                         : getVersionComparator(pageProperties))
                     ::iterator;
 
@@ -1699,24 +1701,47 @@ public class ConfluenceInputFilterStream
     private boolean areThereBuggyVersions(ConfluenceProperties pageProperties,
         Map<Long, ConfluenceProperties> revisionsById)
     {
-        Set<String> knownVersions = new HashSet<>(revisionsById.size());
+        Map<String, Long> knownVersions = new HashMap<>(revisionsById.size());
         for (Map.Entry<Long, ConfluenceProperties> entry : revisionsById.entrySet()) {
-            String version = entry.getValue().getString(ConfluenceXMLPackage.KEY_PAGE_REVISION, "");
-            if (knownVersions.contains(version)) {
-                this.logger.error("Two revisions have the same version ([{}]).  Will use dates to sort revisions as a"
-                        + " fallback for page [{}] and rewrite the versions. Please double-check its history",
-                    entry.getKey(), createPageIdentifier(pageProperties));
-                return true;
+            Long revisionId = entry.getKey();
+            ConfluenceProperties revision = entry.getValue();
+            String version = revision.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION, "");
+            Long existing = knownVersions.get(version);
+            final long dropped;
+            final long kept;
+            if (existing == null) {
+                kept = revisionId;
+            } else {
+                // We have duplicate versions. The following lines check that they have the same date. if so, we drop
+                // the lowest id. From what we saw in Confluence packages having this, objects are duplicated but
+                // identical. If not, we consider the history buggy and revert to using dates.
+                Date dExisting = getDate(revisionsById.get(existing), existing, REVISION,
+                    ConfluenceXMLPackage.KEY_PAGE_REVISION_DATE, pageProperties);
+                Date dCurrent = getDate(revision, revisionId, REVISION, ConfluenceXMLPackage.KEY_PAGE_REVISION_DATE,
+                    pageProperties);
+                if (Objects.equals(dCurrent, dExisting)) {
+                    // Both revisions have the same modification date, we keep the highest id
+                    dropped = Math.min(revisionId, existing);
+                    kept = Math.max(revisionId, existing);
+                    this.logger.info("Duplicate version ([{}]) for page [{}]. Dropping id [{}] in favor of [{}]",
+                        revisionId, createPageIdentifier(pageProperties), dropped, kept);
+                    revisionsById.remove(dropped);
+                } else {
+                    this.logger.error("Two revisions have the same version ([{}]). Will sort revisions by date as a"
+                            + " fallback for page [{}] and rewrite the versions. Please double-check its history",
+                        entry.getKey(), createPageIdentifier(pageProperties));
+                    return true;
+                }
             }
 
             if (!VERSION_PATTERN.matcher(version).matches()) {
                 this.logger.error("Failed to get the version for page revision with id [{}]. Will use dates to sort"
                     + "revisions as a fallback for page [{}] and rewrite the versions. Please double-check its history",
-                    entry.getKey(), createPageIdentifier(pageProperties));
+                    revisionId, createPageIdentifier(pageProperties));
                 return true;
             }
 
-            knownVersions.add(version);
+            knownVersions.put(version, kept);
         }
         return false;
     }

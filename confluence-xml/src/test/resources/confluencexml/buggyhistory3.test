@@ -1,0 +1,142 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Content conversions
+.#------------------------------------------------------------------------------
+<wikiSpace name="BuggyHist">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.8a94489a84cd3aa101854f4bec5a49d0</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2019-08-20 17:22:20.347 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>3</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bb8272448</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2024-07-24 15:50:18.335 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of history</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO101</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="2">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4ba8d81855</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2022-04-28 09:50:42.992 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>1.2. Verification of history</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>HELLO102</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+      <wikiDocumentRevision revision="3">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bb8272448</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2024-07-24 16:19:32.845 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>Buggy History</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>Hello original</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
+.configuration.source=buggyhistory3
+.#------------------------------------------------------------------------------
