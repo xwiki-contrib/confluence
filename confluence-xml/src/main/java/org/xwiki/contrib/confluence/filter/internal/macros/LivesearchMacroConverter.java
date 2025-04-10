@@ -90,7 +90,7 @@ public class LivesearchMacroConverter extends AbstractMacroConverter
         }
 
         boolean excerpt = confluenceParameters.getOrDefault("additional", "").contains("none");
-        parameters.put(EXCERPT, excerpt ? "true" : "false");
+        parameters.put("showExcerpts", excerpt ? "true" : "false");
 
         if (LARGE.equals(confluenceParameters.get("size"))) {
             parameters.put(WIDTH, "100%");

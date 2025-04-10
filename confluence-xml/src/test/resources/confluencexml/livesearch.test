@@ -43,19 +43,19 @@
               <string>content</string>
               <string>Format = none, space = current space
 
-{{locationSearch reference="MySpace" width="100%" excerpt="true"/}}
+{{locationSearch reference="MySpace" showExcerpts="true" width="100%"/}}
 
 Format = none, space = Demo
 
-{{locationSearch reference="OutsideSpace.DEMO" width="100%" excerpt="true"/}}
+{{locationSearch reference="OutsideSpace.DEMO" showExcerpts="true" width="100%"/}}
 
 Format = space name
 
-{{locationSearch width="100%" excerpt="false"/}}
+{{locationSearch showExcerpts="false" width="100%"/}}
 
 format = excerpt
 
-{{locationSearch width="100%" excerpt="false"/}}
+{{locationSearch showExcerpts="false" width="100%"/}}
 
 Page tree search, no root page specified
 
@@ -67,27 +67,27 @@ Page tree search, root page = Included page
 
 livesearch, type = page
 
-{{locationSearch kind="document" excerpt="false"/}}
+{{locationSearch showExcerpts="false" kind="document"/}}
 
 livesearch, type = blogpost
 
-{{locationSearch kind="document" className="Blog.BlogPostClass" excerpt="false"/}}
+{{locationSearch showExcerpts="false" kind="document" className="Blog.BlogPostClass"/}}
 
 livesearch, type = comment
 
-{{locationSearch kind="comment" className="Blog.BlogPostClass" excerpt="false"/}}
+{{locationSearch showExcerpts="false" kind="comment" className="Blog.BlogPostClass"/}}
 
 livesearch, type = spacedesc
 
-{{locationSearch excerpt="false"/}}
+{{locationSearch showExcerpts="false"/}}
 
 livesearch, type = all
 
-{{locationSearch excerpt="false"/}}
+{{locationSearch showExcerpts="false"/}}
 
 livesearch, labels
 
-{{locationSearch excerpt="false" tags="testlabel1,testlabel2"/}}</string>
+{{locationSearch showExcerpts="false" tags="testlabel1,testlabel2"/}}</string>
             </entry>
             <entry>
               <string>syntax</string>
