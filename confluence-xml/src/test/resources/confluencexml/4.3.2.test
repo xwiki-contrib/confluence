@@ -187,7 +187,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 
 {{locationSearch reference="WebHome"/}}
 
-{{documentTree/}}
+{{documentTree root="document:PRIV.WebHome"/}}
 )))
 )))
 )))
@@ -449,7 +449,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 
 {{locationSearch reference="WebHome"/}}
 
-{{documentTree/}}
+{{documentTree root="document:SPACE2.WebHome"/}}
 )))
 )))
 )))
@@ -898,7 +898,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 
 {{locationSearch reference="WebHome"/}}
 
-{{documentTree/}}
+{{documentTree root="document:SPACE1.WebHome"/}}
 )))
 )))
 )))
@@ -1377,7 +1377,7 @@ content of the macro
 
 {{index/}}
 
-{{documentTree/}}
+{{documentTree root="document:SPACE1.WebHome"/}}
 
 {{locationSearch reference="WebHome"/}}
 
@@ -1686,7 +1686,7 @@ content of the macro
 
 {{index/}}
 
-{{documentTree/}}
+{{documentTree root="document:SPACE1.WebHome"/}}
 
 {{locationSearch reference="WebHome"/}}
 
@@ -1995,7 +1995,7 @@ content of the macro
 
 {{index/}}
 
-{{documentTree/}}
+{{documentTree root="document:SPACE1.WebHome"/}}
 
 {{locationSearch reference="WebHome"/}}
 
@@ -2304,7 +2304,7 @@ content of the macro
 
 {{index/}}
 
-{{documentTree/}}
+{{documentTree root="document:SPACE1.WebHome"/}}
 
 {{locationSearch reference="WebHome"/}}
 
@@ -2613,7 +2613,7 @@ content of the macro
 
 {{index/}}
 
-{{documentTree/}}
+{{documentTree root="document:SPACE1.WebHome"/}}
 
 {{locationSearch reference="WebHome"/}}
 
@@ -2922,7 +2922,7 @@ content of the macro
 
 {{index/}}
 
-{{documentTree/}}
+{{documentTree root="document:SPACE1.WebHome"/}}
 
 {{locationSearch reference="WebHome"/}}
 

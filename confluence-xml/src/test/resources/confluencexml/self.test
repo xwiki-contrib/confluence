@@ -106,6 +106,14 @@
 
 {{documentTree root="document:MySpace.WebHome"/}}
 
+Restricted to a specific space:
+
+{{documentTree root="document:WebHome"/}}
+
+No root:
+
+{{documentTree root="document:MySpace.WebHome"/}}
+
 {{recently-updated max="15" spaces="MySpace" maxToggle="false"/}}</string>
               </entry>
               <entry>

@@ -19,14 +19,15 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
-import java.util.Collections;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
 
 /**
  * Page Tree macro converter.
@@ -40,6 +41,9 @@ public class PagetreeMacroConverter extends AbstractMacroConverter
 {
     private static final String ROOT = "root";
     private static final String START_DEPTH = "startDepth";
+
+    @Inject
+    private ConfluenceConverter confluenceConverter;
 
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
@@ -60,7 +64,7 @@ public class PagetreeMacroConverter extends AbstractMacroConverter
     {
         String root = confluenceParameters.get(ROOT);
         if (StringUtils.isEmpty(root)) {
-            return Collections.emptyMap();
+            root = confluenceConverter.convertSpaceReference("@self", true);
         }
 
         String startDepth = confluenceParameters.get(START_DEPTH);

@@ -68,7 +68,7 @@ To help you on your way, we've inserted some of our favourite macros on this hom
 
 {{locationSearch reference="WebHome"/}}
 
-{{documentTree/}}
+{{documentTree root="document:PRIV.WebHome"/}}
 )))
 )))
 )))
