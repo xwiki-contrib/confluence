@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic>
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">100</id>
+    <property name="name"><![CDATA[TestSpace]]></property>
+    <property name="key"><![CDATA[TestSpace]]></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">10</id>
+    <property name="space" class="Space"
+      package="com.atlassian.confluence.spaces">
+      <id name="id">100</id>
+    </property>
+    <property name="title"><![CDATA[TestContent]]></property>
+    <collection name="bodyContents">
+      <element class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">0</id>
+      </element>
+    </collection>
+    <property name="parent" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">42</id>
+    </property>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">0</id>
+    <property name="body"><![CDATA[
+<p>
+  <ac:structured-macro ac:macro-id="7c1183cc-9abb-4c84-bfb2-53dacae2ee84" ac:name="jira" ac:schema-version="1">
+    <ac:parameter ac:name="server">Jira ID</ac:parameter>
+    <ac:parameter ac:name="columnIds">issuekey,summary,issuetype,created,updated,duedate,assignee,reporter,priority,status,resolution</ac:parameter>
+    <ac:parameter ac:name="columns">key,summary,type,created,updated,due,assignee,reporter,priority,status,resolution</ac:parameter>
+    <ac:parameter ac:name="maximumIssues">20</ac:parameter>
+    <ac:parameter ac:name="jqlQuery">project = "Confluence test"  </ac:parameter>
+    <ac:parameter ac:name="serverId">520ce16e-e768-373b-b327-d7568ea882d1</ac:parameter>
+  </ac:structured-macro>
+</p>
+<p>
+  <ac:structured-macro ac:macro-id="11311ecc-9abb-4c84-bfb2-53dacae2ee84" ac:name="jiraissues" ac:schema-version="1">
+    <ac:parameter ac:name="server">Jira ID</ac:parameter>
+    <ac:parameter ac:name="columnIds">issuekey,summary,issuetype,created,updated,duedate,assignee,reporter,priority,status,resolution</ac:parameter>
+    <ac:parameter ac:name="columns">key,summary,type,created,updated,due,assignee,reporter,priority,status,resolution</ac:parameter>
+    <ac:parameter ac:name="maximumIssues">20</ac:parameter>
+    <ac:parameter ac:name="jqlQuery">project = "Hello toto"  </ac:parameter>
+    <ac:parameter ac:name="serverId">520ce16e-e768-373b-b327-d7568ea882d1</ac:parameter>
+  </ac:structured-macro>
+</p>
+    ]]></property>
+    <property name="content" class="Page"
+      package="com.atlassian.confluence.pages">
+      <id name="id">10</id>
+    </property>
+    <property name="bodyType">2</property>
+  </object>
+
+</hibernate-generic>

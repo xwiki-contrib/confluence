@@ -22,24 +22,29 @@ package org.xwiki.contrib.confluence.filter.internal.macros;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
 
 /**
  * Convert Confluence jira macro.
- * 
+ *
  * @version $Id$
  * @since 9.11.3
  */
-@Component
+@Component(hints = { "jira", "jiraissues" })
 @Singleton
-@Named("jira")
 public class JiraMacroConverter extends AbstractMacroConverter
 {
     private static final String CONFLUENCE_JQL_PARAMETER_NAME = "jqlQuery";
-    
+
+    @Override
+    public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
+        boolean inline)
+    {
+        return "jira";
+    }
+
     @Override
     protected String toXWikiParameterName(String confluenceParameterName, String id,
         Map<String, String> confluenceParameters, String confluenceContent)
@@ -51,7 +56,7 @@ public class JiraMacroConverter extends AbstractMacroConverter
 
         return super.toXWikiParameterName(confluenceParameterName, id, confluenceParameters, confluenceContent);
     }
-    
+
     @Override
     protected String toXWikiContent(String confluenceId, Map<String, String> parameters, String confluenceContent)
     {
@@ -60,17 +65,17 @@ public class JiraMacroConverter extends AbstractMacroConverter
         if (jqlQuery != null) {
             return jqlQuery;
         }
-        
+
         // return the content of the key parameter if no jql query is specified
         String keyValue = parameters.get("key");
         if (keyValue != null) {
             return keyValue;
         }
-        
+
         // return (empty) confluence content by default
         return confluenceContent;
     }
-    
+
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {
@@ -82,7 +87,7 @@ public class JiraMacroConverter extends AbstractMacroConverter
                 toXWikiParameterValue(entry.getKey(), entry.getValue(), confluenceId, confluenceParameters, content);
 
             parameters.put(parameterName, parameterValue);
-            
+
             // set the source to jql if the jqlQuery parameter is present and has a value
             if (parameterName.equals(CONFLUENCE_JQL_PARAMETER_NAME) && !parameterValue.trim().isEmpty()) {
                 parameters.put("source", "jql");
