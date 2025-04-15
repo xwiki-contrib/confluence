@@ -1583,13 +1583,11 @@ public class ConfluenceInputFilterStream
                 sendWebPreference(proxyFilter, pageProperties, children, inheritedRights);
             }
 
-            if (!macrosIds.isEmpty()) {
-                if (properties.isVerbose()) {
-                    logger.info(ConfluenceFilter.LOG_MACROS_FOUND, "The following macros [{}] were found on page [{}].",
-                        macrosIds, createPageIdentifier(pageProperties));
-                }
-                macrosIds.clear();
+            if (!macrosIds.isEmpty() && properties.isVerbose()) {
+                logger.info(ConfluenceFilter.LOG_MACROS_FOUND, "The following macros [{}] were found on page [{}].",
+                    macrosIds, createPageIdentifier(pageProperties));
             }
+
             if (this.remainingPages > 0) {
                 this.remainingPages--;
             }
@@ -1982,6 +1980,8 @@ public class ConfluenceInputFilterStream
         if (this.properties.isVerbose()) {
             this.logger.info(SEND_PAGE_MARKER, "Sending page [{}]", createPageIdentifier(pageProperties, spaceKey));
         }
+
+        macrosIds.clear();
 
         // pageId is used as a fallback, an empty revision would prevent the revision from going through.
         String revision = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION, null);
