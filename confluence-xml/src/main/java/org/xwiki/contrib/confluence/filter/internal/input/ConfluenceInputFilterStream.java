@@ -1702,7 +1702,7 @@ public class ConfluenceInputFilterStream
         Map<Long, ConfluenceProperties> revisionsById)
     {
         Map<String, Long> knownVersions = new HashMap<>(revisionsById.size());
-        for (Map.Entry<Long, ConfluenceProperties> entry : revisionsById.entrySet()) {
+        for (Map.Entry<Long, ConfluenceProperties> entry : new ArrayList<>(revisionsById.entrySet())) {
             Long revisionId = entry.getKey();
             ConfluenceProperties revision = entry.getValue();
             String version = revision.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION, "");
@@ -1724,12 +1724,12 @@ public class ConfluenceInputFilterStream
                     dropped = Math.min(revisionId, existing);
                     kept = Math.max(revisionId, existing);
                     this.logger.info("Duplicate version ([{}]) for page [{}]. Dropping id [{}] in favor of [{}]",
-                        revisionId, createPageIdentifier(pageProperties), dropped, kept);
+                        version, createPageIdentifier(pageProperties), dropped, kept);
                     revisionsById.remove(dropped);
                 } else {
                     this.logger.error("Two revisions have the same version ([{}]). Will sort revisions by date as a"
                             + " fallback for page [{}] and rewrite the versions. Please double-check its history",
-                        entry.getKey(), createPageIdentifier(pageProperties));
+                        version, createPageIdentifier(pageProperties));
                     return true;
                 }
             }
