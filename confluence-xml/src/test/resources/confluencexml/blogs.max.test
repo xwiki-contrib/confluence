@@ -48,7 +48,7 @@
 
 [[doc:SpaceA.Blog.Blog post]]
 
-{{blogpostlist reference="SpaceA.Blog.WebHome" layout="full" limit="4" layoutParams="displayTitle=true|useSummary=true"/}}</string>
+{{blogpostlist layout="full" limit="4" layoutParams="displayTitle=true|useSummary=true" blog="SpaceA.Blog.WebHome"/}}</string>
             </entry>
             <entry>
               <string>syntax</string>

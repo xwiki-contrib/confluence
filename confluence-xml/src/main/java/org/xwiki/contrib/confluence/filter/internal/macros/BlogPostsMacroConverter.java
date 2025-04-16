@@ -41,7 +41,6 @@ import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
 @Singleton
 public class BlogPostsMacroConverter extends AbstractMacroConverter
 {
-
     private static final String CONTENT = "content";
     private static final String TITLES = "titles";
     private static final String FULL = "full";
@@ -126,7 +125,7 @@ public class BlogPostsMacroConverter extends AbstractMacroConverter
                     + KILLING_THE_CONVERSION);
         }
 
-        parameters.put("reference", space + "." + context.getProperties().getBlogSpaceName() + ".WebHome");
+        parameters.put("blog", space + "." + context.getProperties().getBlogSpaceName() + ".WebHome");
     }
 
     private void handleLayout(Map<String, String> confluenceParameters, Map<String, String> parameters)
