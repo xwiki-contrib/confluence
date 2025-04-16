@@ -127,6 +127,17 @@ A urlencoded inline math with + signs: {{mathjax}}\(K_\text{S}\to\pi^-\pi^+\){{/
 \begin{equation}
 1337 = x \times 42\\
 \end{equation}
+{{/mathjax}}
+
+ Math block with an align environment: 
+
+{{mathjax}}
+\begin{align}
+label{myanchor}
+
+\left&lt; 1 &amp;=&amp; 1\\
+\left&lt; 1 &amp;=&amp; 1
+\end{align}
 {{/mathjax}}</string>
             </entry>
             <entry>

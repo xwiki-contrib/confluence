@@ -86,10 +86,14 @@ public class MathMacroConverter extends AbstractMacroConverter
             content = "\\(" + content + "\\)";
         } else {
             String anchor = parameters.get("anchor");
-            if (StringUtils.isNotEmpty(anchor)) {
-                content = "\\label{" + escapeMathjax(anchor) + "}\n" + content;
+            String label = StringUtils.isEmpty(anchor) ? "" : "\\label{" + escapeMathjax(anchor) + "}\n";
+            if (content.trim().startsWith("\\begin")) {
+                if (StringUtils.isNotEmpty(label)) {
+                    content = content.replaceFirst("\\\\begin[\\s]*\\{[^}]+}", "$0\n" + label);
+                }
+            } else {
+                content = "\\begin{equation}\n" + label + content + "\n\\end{equation}";
             }
-            content = "\\begin{equation}\n" + content + "\n\\end{equation}";
         }
 
         return content;

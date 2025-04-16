@@ -134,7 +134,15 @@
 
 <p><ac:link ac:tooltip="an empty link"><ac:plain-text-link-body><![CDATA[this page]] ></ac:plain-text-link-body></ac:link></p>
 
-<ac:structured-macro ac:name="mathblock" ac:schema-version="1" ac:macro-id="f2b55061-df1f-4e70-9dfb-f99a6d4b1ebc"><ac:plain-text-body><![CDATA[1337 = x \times 42\\]] ></ac:plain-text-body></ac:structured-macro>]]>
+<ac:structured-macro ac:name="mathblock" ac:schema-version="1" ac:macro-id="f2b55061-df1f-4e70-9dfb-f99a6d4b1ebc"><ac:plain-text-body><![CDATA[1337 = x \times 42\\]] ></ac:plain-text-body></ac:structured-macro>
+
+Math block with an align environment:
+
+<ac:structured-macro ac:name="mathblock" ac:schema-version="1" ac:macro-id="b3b7dbe2-8eee-4f0d-b206-aed8a5afadbb"><ac:parameter ac:name="anchor">myanchor</ac:parameter><ac:plain-text-body><![CDATA[\begin{align}
+\left< 1 &=& 1\\
+\left< 1 &=& 1
+\end{align}]] ></ac:plain-text-body></ac:structured-macro>
+]]>
     </property>
     <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809845</id></property>
     <property name="bodyType">2</property>
