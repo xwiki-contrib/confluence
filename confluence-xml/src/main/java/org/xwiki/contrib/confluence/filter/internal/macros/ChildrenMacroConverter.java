@@ -39,7 +39,6 @@ import java.util.Map;
 @Singleton
 public class ChildrenMacroConverter extends AbstractMacroConverter
 {
-
     private static final String SORT = "sort";
     private static final String REVERSE = "reverse";
     private static final String SORT_AND_REVERSE = "sortAndReverse";
@@ -100,6 +99,8 @@ public class ChildrenMacroConverter extends AbstractMacroConverter
                         : confluenceConverter.convertDocumentReference("", pageTitle)
                 )
             );
+        } else if (shouldConvertToDocumentTree(confluenceParameters)) {
+            parameters.put("root", "document:WebHome");
         }
 
         String first = getFirst(confluenceParameters);
