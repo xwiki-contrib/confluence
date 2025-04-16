@@ -27,6 +27,7 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
@@ -36,6 +37,7 @@ import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.contrib.confluence.filter.ConfluenceFilterReferenceConverter;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.parser.confluence.internal.wikimodel.ConfluenceResourceReference;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceURLConverter;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceInlineCommentTagHandler;
@@ -88,6 +90,9 @@ public class ConfluenceConverterListener extends WrappingListener
 
     @Inject
     private ConfluenceFilterReferenceConverter confluenceConverter;
+
+    @Inject
+    private ConfluenceXMLPackage confluencePackage;
 
     @Inject
     @Named("plain/1.0")
@@ -404,9 +409,17 @@ public class ConfluenceConverterListener extends WrappingListener
     {
         if (reference instanceof UserResourceReference) {
             // Resolve proper user reference
-            ResourceReference userRef = confluenceConverter.resolveUserReference((UserResourceReference) reference);
-            if (userRef != null) {
-                return userRef;
+            String userName = "";
+            String userKey = reference.getReference();
+            if (StringUtils.isNotEmpty(userKey)) {
+                String confluenceUserName = confluencePackage.resolveUserName(userKey, userKey);
+                if (StringUtils.isNotEmpty(confluenceUserName)) {
+                    userName = confluenceConverter.convertUserNameToReferenceName(confluenceUserName);
+                }
+            }
+            if (userName != null) {
+                reference.setReference(userName);
+                return reference;
             }
             // FIXME should we handle things like this when userRef is null?
             // (probably meaning that the Confluence user is mapped to nothing)

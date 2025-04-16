@@ -27,11 +27,10 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.ConfluenceFilterReferenceConverter;
-import org.xwiki.rendering.listener.reference.ResourceReference;
-import org.xwiki.rendering.listener.reference.UserResourceReference;
 
 import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
 
@@ -58,19 +57,17 @@ public class MentionMacroConverter extends AbstractMacroConverter
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {
-        UserResourceReference userReference =
-            new UserResourceReference(confluenceParameters.get(REFERENCE_PARAMETER_KEY));
-
-        ResourceReference reference = confluenceConverter.resolveUserReference(userReference);
-        if (reference == null) {
-            throw new RuntimeException("Failed to resolve the mentioned user for the mention macro");
+        String userKey = confluenceParameters.get(REFERENCE_PARAMETER_KEY);
+        String userRef = confluenceConverter.convertUserReference(userKey);
+        if (StringUtils.isEmpty(userRef)) {
+            logger.error("Failed to resolve user [{}]", userKey);
+            return null;
         }
 
         Map<String, String> parameters = new LinkedHashMap<>(3);
-        String stringReference = reference.getReference();
-        parameters.put(REFERENCE_PARAMETER_KEY, stringReference);
+        parameters.put(REFERENCE_PARAMETER_KEY, userRef);
         parameters.put("style", "FULL_NAME");
-        parameters.put("anchor", createAnchor(stringReference));
+        parameters.put("anchor", createAnchor(userRef));
         return parameters;
     }
 

@@ -22,8 +22,6 @@ package org.xwiki.contrib.confluence.filter;
 import org.xwiki.component.annotation.Role;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
 import org.xwiki.model.reference.EntityReference;
-import org.xwiki.rendering.listener.reference.ResourceReference;
-import org.xwiki.rendering.listener.reference.UserResourceReference;
 
 /**
  * Confluence Filter Reference Converter.
@@ -49,13 +47,14 @@ public interface ConfluenceFilterReferenceConverter extends ConfluenceReferenceC
      * @param userName the Confluence username
      * @return the corresponding XWiki username, without forbidden characters
      */
-    String toUserReferenceName(String userName);
+    String convertUserNameToReferenceName(String userName);
 
     /**
-     * @param userName the Confluence username
-     * @return the corresponding XWiki user reference
+     * @return the full XWiki reference of the user corresponding to this Confluence username
+     * @param userName the user's name to convert
+     * @see #convertUserReference(String)
      */
-    String toUserReference(String userName);
+    String convertUserName(String userName);
 
     /**
      * @param groupName the Confluence username
@@ -67,12 +66,6 @@ public interface ConfluenceFilterReferenceConverter extends ConfluenceReferenceC
      * @return the serialized guest user
      */
     String getGuestUser();
-
-    /**
-     * @param reference the reference of a user that can be either a username or a user key.
-     * @return a XWiki user reference.
-     */
-    ResourceReference resolveUserReference(UserResourceReference reference);
 
     /**
      * Convert an external group ID to a XWiki reference.

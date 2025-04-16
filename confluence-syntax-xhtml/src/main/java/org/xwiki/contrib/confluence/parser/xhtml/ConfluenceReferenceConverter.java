@@ -33,8 +33,8 @@ import org.xwiki.rendering.listener.reference.ResourceType;
 public interface ConfluenceReferenceConverter
 {
     /**
-     * @return the converted user reference
-     * @param userKey the user identifier to convert
+     * @return the full XWiki reference of the user corresponding to this Confluence user key
+     * @param userKey the user identifier (user key) to convert
      */
     String convertUserReference(String userKey);
 
@@ -48,6 +48,7 @@ public interface ConfluenceReferenceConverter
     /**
      * @return the converted document reference
      * @param pageId the page id to convert
+     * @since 9.66.0
      */
     default String convertDocumentReference(long pageId)
     {
@@ -110,8 +111,7 @@ public interface ConfluenceReferenceConverter
      * @return the URL converted to a resource reference (that can link to a document, attachment or the URL itself if
      *         it doesn't need conversion or cannot be converted
      * @since 9.56.0
-     * @deprecated since 9.76.0
-     * use #getSpaceKey()
+     * @deprecated since 9.76.0, use {@link ConfluenceURLConverter#convertURL(String)})
      */
     @Deprecated(since = "9.76.0")
     default ResourceReference convertURL(String url)

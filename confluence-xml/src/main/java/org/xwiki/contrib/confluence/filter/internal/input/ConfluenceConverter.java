@@ -202,10 +202,18 @@ public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
     }
 
     /**
-     * @param userName the Confluence username
-     * @return the corresponding XWiki username, without forbidden characters
+     * @return the user reference name in XWiki corresponding to the given Confluence username
+     * @param userName the name of the user
+     * @deprecated since 9.89.0, use {@link #convertUserNameToReferenceName(String)}
      */
+    @Deprecated (since = "9.89.0")
     public String toUserReferenceName(String userName)
+    {
+        return convertUserNameToReferenceName(userName);
+    }
+
+    @Override
+    public String convertUserNameToReferenceName(String userName)
     {
         if (StringUtils.isEmpty(userName) || !context.getProperties().isConvertToXWiki()) {
             return userName;
@@ -236,12 +244,20 @@ public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
     }
 
     /**
-     * @param userName the Confluence username
-     * @return the corresponding XWiki user reference
+     * @return the full XWiki reference to the user with the given Confluence username
+     * @param userName the name of the user
+     * @deprecated since 9.89.0, use {@link #convertUserName(String)}
      */
+    @Deprecated (since = "9.89.0")
     public String toUserReference(String userName)
     {
-        return serialize(getUserOrGroupReference(toUserReferenceName(userName)));
+        return convertUserName(userName);
+    }
+
+    @Override
+    public String convertUserName(String userName)
+    {
+        return serialize(getUserOrGroupReference(convertUserNameToReferenceName(userName)));
     }
 
     /**
@@ -274,47 +290,65 @@ public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
             : new DocumentReference(context.getProperties().getUsersWiki(), XWIKI, userOrGroupReferenceName);
     }
 
-    @Override
+    /**
+     * @return the converted resource reference
+     * @param reference the reference to the user
+     * @deprecated since 9.89.0, use {@link #convertUserKeyToResourceReference(String)}
+     */
+    @Deprecated (since = "9.89.0")
     public ResourceReference resolveUserReference(UserResourceReference reference)
     {
-        String userReference = reference.getReference();
+        ResourceReference ref = convertUserKeyToResourceReference(reference.getReference());
+        if (ref != null) {
+            ref.setParameters(reference.getParameters());
+        }
+        return ref;
+    }
 
+    /**
+     * @return the resource reference corresponding to the provided user
+     * @param userKey the user key in Confluence
+     * @since 9.89.0
+     */
+    public ResourceReference convertUserKeyToResourceReference(String userKey)
+    {
+        String userName = toUserReferenceName(context.getConfluencePackage().resolveUserName(userKey, userKey));
+        if (StringUtils.isEmpty(userName)) {
+            logger.error("Failed to resolve user [{}]", userKey);
+            return null;
+        }
+
+        return convertUserNameToResourceReference(userName);
+    }
+
+    private ResourceReference convertUserNameToResourceReference(String userName)
+    {
         if (context.getProperties().isUserReferences()) {
-            // Keep the UserResourceReference
-
-            // Clean the user id
-            String userName = toUserReferenceName(
-                context.getConfluencePackage().resolveUserName(userReference, userReference));
-            if (StringUtils.isEmpty(userName)) {
-                logger.error("Failed to resolve user [{}]", userReference);
-                return null;
-            }
-
-            reference.setReference(userName);
-
-            return reference;
+            return new UserResourceReference(userName);
         }
 
         // Convert to link to user profile
         // FIXME: would not really been needed if the XWiki Instance output filter was taking care of that when
         // receiving a user reference
 
-        String userName = toUserReference(context.getConfluencePackage().resolveUserName(userReference, userReference));
-        if (StringUtils.isEmpty(userName)) {
+        String convertedUserName = convertUserName(userName);
+        if (StringUtils.isEmpty(convertedUserName)) {
             return null;
         }
 
-        DocumentResourceReference documentReference = new DocumentResourceReference(userName);
+        return new DocumentResourceReference(convertedUserName);
+    }
 
-        documentReference.setParameters(reference.getParameters());
-
-        return documentReference;
+    private String convertUserKeyToReferenceName(String userKey)
+    {
+        return convertUserNameToReferenceName(
+            context.getConfluencePackage().resolveUserName(userKey, userKey));
     }
 
     @Override
     public String convertUserReference(String userKey)
     {
-        return resolveUserReference(new UserResourceReference(userKey)).getReference();
+        return serialize(getUserOrGroupReference(convertUserKeyToReferenceName(userKey)));
     }
 
     private EntityReference newEntityReference(String name, EntityType type, EntityReference parent)
