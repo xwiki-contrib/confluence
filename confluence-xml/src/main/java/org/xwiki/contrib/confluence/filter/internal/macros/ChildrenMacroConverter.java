@@ -44,6 +44,7 @@ public class ChildrenMacroConverter extends AbstractMacroConverter
     private static final String SORT_AND_REVERSE = "sortAndReverse";
     private static final String ALL_CHILDREN = "allChildren";
     private static final String TRUE = "true";
+    private static final String ROOT = "root";
 
     @Inject
     private ConfluenceConverter confluenceConverter;
@@ -93,14 +94,14 @@ public class ChildrenMacroConverter extends AbstractMacroConverter
         // FIXME: find some cleaner way to detect that the reference has already been converted.
         if (StringUtils.isNotEmpty(pageTitle)) {
             parameters.put(
-                "root", "document:" + (
+                ROOT, "document:" + (
                     pageTitle.endsWith(".WebHome")
                         ? pageTitle
                         : confluenceConverter.convertDocumentReference("", pageTitle)
                 )
             );
         } else if (shouldConvertToDocumentTree(confluenceParameters)) {
-            parameters.put("root", "document:WebHome");
+            parameters.put(ROOT, "document:WebHome");
         }
 
         String first = getFirst(confluenceParameters);

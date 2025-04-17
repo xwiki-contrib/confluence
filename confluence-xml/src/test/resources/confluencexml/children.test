@@ -42,7 +42,7 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>{{documentTree limit="5"/}}
+              <string>{{documentTree root="document:WebHome" limit="5"/}}
 
 {{children sortDocumentsBy="title"/}}
 
