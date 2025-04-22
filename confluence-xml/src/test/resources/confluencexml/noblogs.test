@@ -48,7 +48,13 @@
 
 [[doc:SpaceA.Blog.Blog post]]
 
-{{blogpostlist layout="full" limit="4" layoutParams="displayTitle=true|useSummary=true" blog="SpaceA.Blog.WebHome"/}}</string>
+{{blogpostlist layout="full" limit="4" layoutParams="displayTitle=true|useSummary=true" blog="SpaceA.Blog.WebHome"/}}
+
+{{blogpostlist layout="link" blog="OutsideSpace.DEMO.Blog.WebHome"/}}
+
+{{blogpostlist layout="link" blog="SpaceA.Blog.WebHome"/}}
+
+{{blogpostlist layout="link" blog="confluenceSpace:FOS.Blog.WebHome"/}}</string>
             </entry>
             <entry>
               <string>syntax</string>

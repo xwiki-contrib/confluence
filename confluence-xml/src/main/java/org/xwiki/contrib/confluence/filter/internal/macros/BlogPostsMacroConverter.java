@@ -107,7 +107,7 @@ public class BlogPostsMacroConverter extends AbstractMacroConverter
     {
         String spaces = confluenceParameters.get("spaces");
         if (StringUtils.isEmpty(spaces)) {
-            spaces = SELF;
+            spaces = converter.convertSpaceReference(SELF);
         }
 
         for (String spaceVal : UNSUPPORTED_SPACES) {
@@ -118,14 +118,7 @@ public class BlogPostsMacroConverter extends AbstractMacroConverter
             }
         }
 
-        String space = converter.convertSpaceReference(spaces);
-        if (StringUtils.isEmpty(space) || space.startsWith("confluence")) {
-            throw new RuntimeException(
-                "Failed to convert the spaces parameter [" + spaces + "] of the blogpostlist macro."
-                    + KILLING_THE_CONVERSION);
-        }
-
-        parameters.put("blog", space + "." + context.getProperties().getBlogSpaceName() + ".WebHome");
+        parameters.put("blog", spaces + "." + context.getProperties().getBlogSpaceName() + ".WebHome");
     }
 
     private void handleLayout(Map<String, String> confluenceParameters, Map<String, String> parameters)

@@ -1106,6 +1106,9 @@
   <ac:link ac:card-appearance="inline"><ri:page ri:content-title="Blog post" ri:version-at-save="1" /><ac:link-body>Link to blog post</ac:link-body></ac:link></p>
   <ac:link><ri:blog-post ri:content-title="Blog post" ri:posting-day="2023/09/27" /></ac:link>
   <p><ac:structured-macro ac:name="blog-posts" ac:schema-version="1" ac:macro-id="a476e9a5-7285-4bbe-af60-ca968b483f83"><ac:parameter ac:name="max">4</ac:parameter><ac:parameter ac:name="sort">modified</ac:parameter><ac:parameter ac:name="content">excerpts</ac:parameter></ac:structured-macro></p>
+<p /><ac:structured-macro ac:name="blog-posts" ac:schema-version="1" data-layout="default" ac:local-id="74f8aedc-af75-4698-937c-e52e4be62b11" ac:macro-id="e54987df-c25e-40d8-b805-b76e55f5b784"><ac:parameter ac:name="spaces"><ri:space ri:space-key="DEMO" /></ac:parameter></ac:structured-macro>
+<p /><ac:structured-macro ac:name="blog-posts" ac:schema-version="1" data-layout="default" ac:local-id="74f8aedc-af75-4698-937c-e52e4be62b11" ac:macro-id="e54987df-c25e-40d8-b805-b76e55f5b784"><ac:parameter ac:name="spaces"><ri:space ri:space-key="SpaceA" /></ac:parameter></ac:structured-macro>
+<p /><ac:structured-macro ac:name="blog-posts" ac:schema-version="1" data-layout="default" ac:local-id="74f8aedc-af75-4698-937c-e52e4be62b11" ac:macro-id="e54987df-c25e-40d8-b805-b76e55f5b784"><ac:parameter ac:name="spaces"><ri:space ri:space-key="FOS" /></ac:parameter></ac:structured-macro>
 ]]></property>
 <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">2616328494</id>
 </property>
