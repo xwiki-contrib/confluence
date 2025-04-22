@@ -129,7 +129,7 @@ public class EmoticonTagHandler extends AbstractConfluenceTagHandler implements 
         NAME_MAP.put("cross", "❌️");
         NAME_MAP.put("warning", "⚠️");
         NAME_MAP.put("plus", "➕️");
-        NAME_MAP.put("minus", "➖️");
+        NAME_MAP.put("minus", "⛔");
         NAME_MAP.put("question", "❓️");
         NAME_MAP.put("light-on", "💡️");
         NAME_MAP.put("light-off", "⚪️");
