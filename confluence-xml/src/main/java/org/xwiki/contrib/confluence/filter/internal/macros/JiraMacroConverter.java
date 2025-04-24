@@ -24,6 +24,7 @@ import java.util.Map;
 
 import javax.inject.Singleton;
 
+import org.apache.commons.lang.StringUtils;
 import org.xwiki.component.annotation.Component;
 
 /**
@@ -38,23 +39,28 @@ public class JiraMacroConverter extends AbstractMacroConverter
 {
     private static final String CONFLUENCE_JQL_PARAMETER_NAME = "jqlQuery";
 
+    private static final String XWIKI_PARAM_ID = "id";
+
+    private static final String XWIKI_PARAM_SOURCE = "source";
+
+    private static final String CONFLUENCE_PARAM_KEY = "key";
+
+    private static final String CONFLUENCE_PARAM_SERVER = "server";
+
+    private static final String COMMA = ",";
+
+    enum MacroUsageType
+    {
+        LIST,
+        COUNT,
+        SINGLE
+    }
+
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
         return "jira";
-    }
-
-    @Override
-    protected String toXWikiParameterName(String confluenceParameterName, String id,
-        Map<String, String> confluenceParameters, String confluenceContent)
-    {
-        // change the name of the 'server' parameter to 'id'
-        if (confluenceParameterName.equals("server")) {
-            return "id";
-        }
-
-        return super.toXWikiParameterName(confluenceParameterName, id, confluenceParameters, confluenceContent);
     }
 
     @Override
@@ -67,7 +73,7 @@ public class JiraMacroConverter extends AbstractMacroConverter
         }
 
         // return the content of the key parameter if no jql query is specified
-        String keyValue = parameters.get("key");
+        String keyValue = parameters.get(CONFLUENCE_PARAM_KEY);
         if (keyValue != null) {
             return keyValue;
         }
@@ -80,21 +86,64 @@ public class JiraMacroConverter extends AbstractMacroConverter
         String content)
     {
         Map<String, String> parameters = new LinkedHashMap<>(confluenceParameters.size());
+        parameters.put(XWIKI_PARAM_ID, confluenceParameters.get(CONFLUENCE_PARAM_SERVER));
 
-        for (Map.Entry<String, String> entry : confluenceParameters.entrySet()) {
-            String parameterName = toXWikiParameterName(entry.getKey(), confluenceId, confluenceParameters, content);
-            String parameterValue =
-                toXWikiParameterValue(entry.getKey(), entry.getValue(), confluenceId, confluenceParameters, content);
-
-            parameters.put(parameterName, parameterValue);
-
-            // set the source to jql if the jqlQuery parameter is present and has a value
-            if (parameterName.equals(CONFLUENCE_JQL_PARAMETER_NAME) && !parameterValue.trim().isEmpty()) {
-                parameters.put("source", "jql");
-            }
+        switch (getMacroUsageType(confluenceParameters)) {
+            case LIST:
+                parameters.put("maxCount", confluenceParameters.get("maximumIssues"));
+                if (!StringUtils.isBlank(confluenceParameters.get(CONFLUENCE_JQL_PARAMETER_NAME))) {
+                    parameters.put(XWIKI_PARAM_SOURCE, "jql");
+                }
+                parameters.put("fields",
+                    convertColumnParams(confluenceParameters.get("columnIds"), confluenceParameters.get("columns")));
+                break;
+            case COUNT:
+                throw new RuntimeException(
+                    "Converting the jira macro with count=true is not yet supported");
+            case SINGLE:
+                parameters.put(XWIKI_PARAM_SOURCE, "list");
+                parameters.put("style", "enum");
+                break;
+            default:
+                throw new RuntimeException("Unsupported macro usage type");
         }
-
+        markHandledParameter(confluenceParameters, "serverId", false);
         return parameters;
+    }
+
+    private MacroUsageType getMacroUsageType(Map<String, String> confluenceParameters)
+    {
+        if (confluenceParameters.containsKey(CONFLUENCE_PARAM_KEY)) {
+            return MacroUsageType.SINGLE;
+        } else if ("true".equals(confluenceParameters.get("count"))) {
+            return MacroUsageType.COUNT;
+        } else {
+            return MacroUsageType.LIST;
+        }
+    }
+
+    private String convertColumnParams(String columnIds, String columns)
+    {
+        if (StringUtils.isNotEmpty(columnIds)) {
+            String[] columnIdsList = columnIds.split(COMMA);
+            String[] columnsNames = columns != null ? columns.split(COMMA) : new String[] {};
+            StringBuilder result = new StringBuilder();
+            for (int i = 0; i < columnIdsList.length; i++) {
+                String columnId = columnIdsList[i];
+                String columnName = columnsNames.length > i ? columnsNames[i] : null;
+                result.append(columnId);
+                if (columnName != null) {
+                    result.append(":");
+                    result.append(columnName);
+                }
+                if (i < columnIdsList.length - 1) {
+                    result.append(COMMA);
+                }
+            }
+            return result.toString();
+        } else {
+            return "";
+        }
     }
 
     @Override

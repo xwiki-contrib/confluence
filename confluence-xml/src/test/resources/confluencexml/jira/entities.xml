@@ -46,6 +46,51 @@
     <ac:parameter ac:name="serverId">520ce16e-e768-373b-b327-d7568ea882d1</ac:parameter>
   </ac:structured-macro>
 </p>
+<p>
+  <ac:structured-macro ac:macro-id="7c1e11cc-9abb-4c84-bfb2-53dacae2ee84" ac:name="jira" ac:schema-version="1">
+    <ac:parameter ac:name="server">Jira ID</ac:parameter>
+    <ac:parameter ac:name="columnIds">issuekey,summary,issuetype,created,updated,duedate,assignee,reporter,priority,status,resolution</ac:parameter>
+    <ac:parameter ac:name="columns">key,summary,type,created,updated,due,assignee,reporter,priority,status,resolution</ac:parameter>
+    <ac:parameter ac:name="maximumIssues">20</ac:parameter>
+    <ac:parameter ac:name="jqlQuery">project = "My project yolo"  </ac:parameter>
+    <ac:parameter ac:name="serverId">520ce16e-e768-373b-b327-d7568ea882d1</ac:parameter>
+  </ac:structured-macro>
+</p>
+<p>
+  <ac:structured-macro ac:macro-id="2c131b56-aee8-4b83-806d-514f476725e3" ac:name="jira" ac:schema-version="1">
+    <ac:parameter ac:name="server">Jira ID</ac:parameter>
+    <ac:parameter ac:name="columnIds">issuekey,summary,issuetype,created,updated,duedate,assignee,reporter,priority,status,customfield_26400,resolution,customfield_18112,customfield_26802</ac:parameter>
+    <ac:parameter ac:name="columns">key,summary,type,created,updated,due,assignee,reporter,priority,status,Status,resolution,End Date,Time Saving</ac:parameter>
+    <ac:parameter ac:name="maximumIssues">26</ac:parameter>
+    <ac:parameter ac:name="jqlQuery">project = "test java"    </ac:parameter>
+    <ac:parameter ac:name="serverId">520ce16e-e768-373b-b327-d7568ea882d1</ac:parameter>
+  </ac:structured-macro>
+</p>
+<p>
+  <ac:structured-macro ac:macro-id="2c131b56-aee8-4b83-806d-514f476725e3" ac:name="jira" ac:schema-version="1">
+    <ac:parameter ac:name="server">Jira ID</ac:parameter>
+    <ac:parameter ac:name="maximumIssues">26</ac:parameter>
+    <ac:parameter ac:name="jqlQuery">project = "test java empty column"    </ac:parameter>
+    <ac:parameter ac:name="serverId">520ce16e-e768-373b-b327-d7568ea882d1</ac:parameter>
+  </ac:structured-macro>
+</p>
+<p>
+  <ac:structured-macro ac:macro-id="4afd731f-a17b-49dc-8a79-aa4fa8677d37" ac:name="jira" ac:schema-version="1">
+    <ac:parameter ac:name="server">Jira ID</ac:parameter>
+    <ac:parameter ac:name="jqlQuery">project = "it s a test"   </ac:parameter>
+    <ac:parameter ac:name="count">true</ac:parameter>
+    <ac:parameter ac:name="serverId">520ce16e-e768-373b-b327-d7568ea882d1</ac:parameter>
+  </ac:structured-macro>
+</p>
+<p>
+  <ac:structured-macro ac:macro-id="3b4e50da-d8b0-410c-be22-bbd27f9fddc3" ac:name="jira" ac:schema-version="1">
+    <ac:parameter ac:name="server">Jira ID</ac:parameter>
+    <ac:parameter ac:name="columnIds">issuekey,summary,issuetype,created,updated,duedate,assignee,reporter,priority,status,resolution</ac:parameter>
+    <ac:parameter ac:name="columns">key,summary,type,created,updated,due,assignee,reporter,priority,status,resolution</ac:parameter>
+    <ac:parameter ac:name="serverId">520ce16e-e768-373b-b327-d7568ea882d1</ac:parameter>
+    <ac:parameter ac:name="key">JAXA-27</ac:parameter>
+  </ac:structured-macro>
+</p>
     ]]></property>
     <property name="content" class="Page"
       package="com.atlassian.confluence.pages">
