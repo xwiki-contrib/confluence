@@ -38,7 +38,6 @@ import java.util.Map;
 @Singleton
 public class CodeMacroConverter extends AbstractMacroConverter
 {
-
     static final String CODE = "code";
     private static final String LANGUAGE = "language";
     private static final String LINENUMBERS = "linenumbers";
@@ -72,6 +71,11 @@ public class CodeMacroConverter extends AbstractMacroConverter
             parameters.put("layout", LINENUMBERS);
         }
 
+        String title = confluenceParameters.get(TITLE);
+        if (StringUtils.isNotEmpty(title)) {
+            parameters.put(TITLE, title);
+        }
+
         checkUnhandledParameterValues(confluenceParameters);
 
         return parameters;
@@ -87,10 +91,6 @@ public class CodeMacroConverter extends AbstractMacroConverter
         String collapse = confluenceParameters.get(COLLAPSE);
         if (StringUtils.isNotEmpty(collapse) && !FALSE.equals(collapse)) {
             markUnhandledParameterValue(confluenceParameters, COLLAPSE);
-        }
-
-        if (StringUtils.isNotEmpty(confluenceParameters.get(TITLE))) {
-            markUnhandledParameterValue(confluenceParameters, TITLE);
         }
     }
 

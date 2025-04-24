@@ -1311,7 +1311,7 @@ info default macro
 
 {{id name="Page1-anchor"/}}
 
-{{code language="java"}}
+{{code title="Bloc code title for java with Django theme" language="java"}}
 Content of bloc code
 {{/code}}
 
@@ -1620,7 +1620,7 @@ info default macro
 
 {{id name="Page1-anchor"/}}
 
-{{code language="java"}}
+{{code title="Bloc code title for java with Django theme" language="java"}}
 Content of bloc code
 {{/code}}
 
@@ -1929,7 +1929,7 @@ info default macro
 
 {{id name="Page1-anchor"/}}
 
-{{code language="java"}}
+{{code title="Bloc code title for java with Django theme" language="java"}}
 Content of bloc code
 {{/code}}
 
@@ -2238,7 +2238,7 @@ info default macro
 
 {{id name="Page1-anchor"/}}
 
-{{code language="java"}}
+{{code title="Bloc code title for java with Django theme" language="java"}}
 Content of bloc code
 {{/code}}
 
@@ -2547,7 +2547,7 @@ info default macro
 
 {{id name="Page1-anchor"/}}
 
-{{code language="java"}}
+{{code title="Bloc code title for java with Django theme" language="java"}}
 Content of bloc code
 {{/code}}
 
@@ -2856,7 +2856,7 @@ info default macro
 
 {{id name="Page1-anchor"/}}
 
-{{code language="java"}}
+{{code title="Bloc code title for java with Django theme" language="java"}}
 Content of bloc code
 {{/code}}
 
