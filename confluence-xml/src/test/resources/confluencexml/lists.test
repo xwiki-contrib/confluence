@@ -73,10 +73,10 @@
 (% style="list-style-type: square;" %)
 * (((
 {{mathjax}}
-\begin{equation}
+\begin{aligned}
 \label{myanchor}
 1337=k\times 42
-\end{equation}
+\end{aligned}
 {{/mathjax}}
 )))
 
@@ -124,9 +124,9 @@ A urlencoded inline math with + signs: {{mathjax}}\(K_\text{S}\to\pi^-\pi^+\){{/
 [[this page>>doc:]]
 
 {{mathjax}}
-\begin{equation}
+\begin{aligned}
 1337 = x \times 42\\
-\end{equation}
+\end{aligned}
 {{/mathjax}}
 
  Math block with an align environment: 
@@ -135,9 +135,18 @@ A urlencoded inline math with + signs: {{mathjax}}\(K_\text{S}\to\pi^-\pi^+\){{/
 \begin{align}
 label{myanchor}
 
-\left&lt; 1 &amp;=&amp; 1\\
-\left&lt; 1 &amp;=&amp; 1
+1 &amp;= 1\\
+1 &amp;= 1
 \end{align}
+{{/mathjax}}
+
+ 
+
+{{mathjax}}
+\begin{aligned}
+|E_1|^2 &amp;=&amp; \frac 12m_1v_1p^2\\
+|E_2|^2 &amp;=&amp; \frac 12m_2v_2p^2.
+\end{aligned}
 {{/mathjax}}</string>
             </entry>
             <entry>

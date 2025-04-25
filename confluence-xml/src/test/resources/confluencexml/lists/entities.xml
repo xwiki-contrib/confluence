@@ -139,11 +139,11 @@
 Math block with an align environment:
 
 <ac:structured-macro ac:name="mathblock" ac:schema-version="1" ac:macro-id="b3b7dbe2-8eee-4f0d-b206-aed8a5afadbb"><ac:parameter ac:name="anchor">myanchor</ac:parameter><ac:plain-text-body><![CDATA[\begin{align}
-\left< 1 &=& 1\\
-\left< 1 &=& 1
+1 &= 1\\
+1 &= 1
 \end{align}]] ></ac:plain-text-body></ac:structured-macro>
-]]>
-    </property>
+<ac:structured-macro ac:name="mathblock" ac:schema-version="1" ac:macro-id="302c7c9d-adba-4cf8-ad74-16ae88387452"><ac:plain-text-body><![CDATA[|E_1|^2 &=& \frac 12m_1v_1p^2\\
+|E_2|^2 &=& \frac 12m_2v_2p^2.]] ></ac:plain-text-body></ac:structured-macro>]]></property>
     <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809845</id></property>
     <property name="bodyType">2</property>
   </object>
