@@ -117,6 +117,7 @@ public class EmoticonTagHandler extends AbstractConfluenceTagHandler implements 
     }
 
     static {
+        NAME_MAP.put("heart", "♥️");
         NAME_MAP.put("smile", "🙂️");
         NAME_MAP.put("sad", "😞️");
         NAME_MAP.put("cheeky", "😛️");
