@@ -21,12 +21,14 @@ package org.xwiki.contrib.confluence.filter.internal.macros;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
+import org.xwiki.contrib.confluence.filter.ConfluenceFilterReferenceConverter;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.Map;
+
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
 
 /**
  * Pagetreesearch Macro Converter - converts pagetreesearch to the Location Search Macro.
@@ -44,7 +46,7 @@ import java.util.Map;
 public class PagetreesearchMacroConverter extends AbstractMacroConverter
 {
     @Inject
-    private ConfluenceConverter converter;
+    private ConfluenceFilterReferenceConverter converter;
 
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,

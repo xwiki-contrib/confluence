@@ -27,6 +27,7 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
 
 /**
  * Converts auimessage to either info, success, warning or error macros.
@@ -40,7 +41,6 @@ import org.xwiki.component.annotation.Component;
 @Singleton
 public class AUIMessageConverter extends AbstractMacroConverter
 {
-
     private static final String PARAM_KEY_TITLE = "title";
 
     private static final String PARAM_KEY_CLASS = "class";

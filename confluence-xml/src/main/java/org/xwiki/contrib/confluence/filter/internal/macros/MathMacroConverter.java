@@ -30,6 +30,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.Map;
 
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+
 /**
  * Convert Mathinline to mathjax.
  * @since 9.57.0
@@ -39,7 +41,6 @@ import java.util.Map;
 @Singleton
 public class MathMacroConverter extends AbstractMacroConverter
 {
-
     private static final String INLINE = "inline";
 
     private static final String BODY = "body";

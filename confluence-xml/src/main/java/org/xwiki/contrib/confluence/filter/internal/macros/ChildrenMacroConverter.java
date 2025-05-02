@@ -21,13 +21,15 @@ package org.xwiki.contrib.confluence.filter.internal.macros;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
+import org.xwiki.contrib.confluence.filter.ConfluenceFilterReferenceConverter;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
+
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
 
 /**
  * Children Macro converter.
@@ -47,7 +49,7 @@ public class ChildrenMacroConverter extends AbstractMacroConverter
     private static final String ROOT = "root";
 
     @Inject
-    private ConfluenceConverter confluenceConverter;
+    private ConfluenceFilterReferenceConverter confluenceConverter;
 
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
