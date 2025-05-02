@@ -83,6 +83,8 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
     private static final String AT_HOME = "@home";
 
+    private static final String AT_NONE = "@none";
+
     private static final String AT_PARENT = "@parent";
 
     private static final String CONFLUENCE_REF_EXPLANATION = "A Confluence reference will be used if possible. "
@@ -424,7 +426,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             return new EntityReference(WEB_HOME, EntityType.DOCUMENT);
         }
 
-        if (AT_HOME.equals(ciPageTitle) || StringUtils.isEmpty(ciPageTitle)) {
+        if (AT_HOME.equals(ciPageTitle) || AT_NONE.equals(ciPageTitle) || StringUtils.isEmpty(ciPageTitle)) {
             return getDocumentReference(fromSpaceKey(ciSpaceKey), false, false);
         }
 
