@@ -59,6 +59,9 @@ public class CodeMacroConverter extends AbstractMacroConverter
     {
         Map<String, String> parameters = new HashMap<>(1);
         String language = confluenceParameters.get(LANGUAGE);
+        if (StringUtils.isEmpty(language)) {
+            language = confluenceParameters.get("");
+        }
         if (StringUtils.isNotEmpty(language)) {
             parameters.put(LANGUAGE, language);
         }

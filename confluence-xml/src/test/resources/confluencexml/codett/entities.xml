@@ -45,6 +45,7 @@
     <li><p class="first">in the bash shell: run <code class="docutils literal"><span class="pre">source</span> <span class="pre">some_script.sh</span> <span class="pre">&lt;tar.gz</span> <span class="pre">file&gt;</span> <span class="pre">&lt;ip-address&gt;</span> <span class="pre">22</span></code></p></li>
           </ul>
           <p><code># ------- START</code><br /><code>/^name.surname@<a href="http://perdu.com">perdu.com</a>$/ REJECT intra sender_access</code><br /><code>/^hamed.<a href="mailto:mail@perdu.com">mail@perdu.com</a>$/ REJECT intra sender_access</code><br /><code>/^anothermail@<a href="http://perdu.com">perdu.com</a>$/ REJECT intra sender_access</code><br /><code># ------- END</code></p><p><br /></p><p><code># postfix -c /etc/postfix-incoming reload</code></p><p><br /></p>
+          <ac:structured-macro ac:name="code" ac:schema-version="1" ac:macro-id="80282b94-f043-49dd-becd-a1c2b1202964"><ac:parameter ac:name="">SQL</ac:parameter><ac:plain-text-body><![CDATA[select 1]] ></ac:plain-text-body></ac:structured-macro>
           <p><code>{{/code}}</code></p>]]></property>
         <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809846</id></property>
         <property name="bodyType">2</property>

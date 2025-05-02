@@ -81,6 +81,10 @@ paragraph after
 
 \\
 
+{{code language="SQL"}}
+select 1
+{{/code}}
+
 {{code language="none" source="string:{{/code~}~}"/}}</string>
             </entry>
             <entry>
