@@ -14,11 +14,11 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>[[(% param="value" %)link1>>doc:OtherSpace.Other Page.WebHome||anchor="OtherPage-anchor" shape="rect"]](%%) [[(% param="value" %)link1>>doc:OtherSpace.Other Page.WebHome||shape="rect"]]
+              <string>[[(% param="value" %)link1>>doc:OtherSpace.WebHome||anchor="OtherPage-anchor" shape="rect"]](%%) [[(% param="value" %)link1>>doc:OtherSpace.WebHome||shape="rect"]]
 
-[[(% param="value" %)link2>>doc:OtherSpace.Other Page.WebHome||anchor="OtherPage-anchor" shape="rect"]](%%) [[(% param="value" %)link2>>doc:OtherSpace.Other Page.WebHome||shape="rect"]]
+[[(% param="value" %)link2>>doc:OtherSpace.WebHome||anchor="OtherPage-anchor" shape="rect"]](%%) [[(% param="value" %)link2>>doc:OtherSpace.WebHome||shape="rect"]]
 
-[[(% param="value" %)link>>doc:OtherSpace.Other Page.WebHome||anchor="OtherPage-anchor" shape="rect"]](%%) [[(% param="value" %)link>>doc:OtherSpace.Other Page.WebHome||shape="rect"]]
+[[(% param="value" %)link>>doc:OtherSpace.WebHome||anchor="OtherPage-anchor" shape="rect"]](%%) [[(% param="value" %)link>>doc:OtherSpace.WebHome||shape="rect"]]
 
 [[(% param="value" %)link>>doc:OtherSpace.WebHome||anchor="TestContent-anchor" shape="rect"]](%%) [[(% param="value" %)link>>doc:OtherSpace.WebHome||shape="rect"]]
 
@@ -28,17 +28,17 @@
 
 [[(% param="value" %)link>>confluencePage:page:NotFound.Other Page#OtherPage-anchor||shape="rect"]]
 
-[[(% param="value" %)link>>doc:OtherSpace.Other Page.WebHome||shape="rect"]]
+[[(% param="value" %)link>>doc:OtherSpace.WebHome||shape="rect"]]
 
 [[(% param="value" %)link>>doc:validatedspace.validatedpage.WebHome||shape="rect"]]
 
-[[(% param="value" %)link3>>attach:OtherSpace.Other Page.WebHome@attachment.png||shape="rect"]](%%) [[(% param="value" %)link3>>attach:OtherSpace.Other Page.WebHome@attachment.png||shape="rect"]]
+[[(% param="value" %)link3>>attach:OtherSpace.WebHome@attachment.png||shape="rect"]](%%) [[(% param="value" %)link3>>attach:OtherSpace.WebHome@attachment.png||shape="rect"]]
 
-[[(% param="value" %)link3 bis>>attach:OtherSpace.Other Page.WebHome@attachment.png||shape="rect"]](%%) [[(% param="value" %)link3 bis>>attach:OtherSpace.Other Page.WebHome@attachment.png||shape="rect"]]
+[[(% param="value" %)link3 bis>>attach:OtherSpace.WebHome@attachment.png||shape="rect"]](%%) [[(% param="value" %)link3 bis>>attach:OtherSpace.WebHome@attachment.png||shape="rect"]]
 
 [[(% param="value" %)link4>>icon:icon||shape="rect"]](%%) [[(% param="value" %)link4>>icon:icon||shape="rect"]]
 
-[[(% param="value" %)link5>>doc:OtherSpace.Other Page.WebHome||anchor="OtherPage-anchor" shape="rect"]](%%) [[(% param="value" %)link5>>doc:OtherSpace.Other Page.WebHome||shape="rect"]]
+[[(% param="value" %)link5>>doc:OtherSpace.WebHome||anchor="OtherPage-anchor" shape="rect"]](%%) [[(% param="value" %)link5>>doc:OtherSpace.WebHome||shape="rect"]]
 
 [[link6>>doc:validatedspace.validatedpage.WebHome||shape="rect"]]
 
@@ -88,22 +88,20 @@ Some content
   </wikiDocument>
 </wikiSpace>
 <wikiSpace name="OtherSpace">
-  <wikiSpace name="Other Page">
-    <wikiDocument name="WebHome">
-      <wikiDocumentLocale>
-        <wikiDocumentRevision revision="11">
-          <p>
-            <parameters>
-              <entry>
-                <string>title</string>
-                <string>Other Page</string>
-              </entry>
-            </parameters>
-          </p>
-        </wikiDocumentRevision>
-      </wikiDocumentLocale>
-    </wikiDocument>
-  </wikiSpace>
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <wikiDocumentRevision revision="11">
+        <p>
+          <parameters>
+            <entry>
+              <string>title</string>
+              <string>OtherSpace</string>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
 </wikiSpace>
 <wikiSpace name="validatedspace">
   <wikiDocument name="WebHome">

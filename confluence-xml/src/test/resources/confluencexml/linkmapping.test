@@ -165,5 +165,5 @@ It includes Under Page A:
 .input|confluence+xml
 .configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=missingpage
-.configuration.linkMapping={"SmallNested": {"Under Page A": "xwiki:SmallNested.PageA.Under Page A.WebHome"}}
+.configuration.linkMapping={"Smallnested": {"Under page A": "xwiki:SmallNested.PageA.Under Page A.WebHome"}}
 .#------------------------------------------------------------------------------

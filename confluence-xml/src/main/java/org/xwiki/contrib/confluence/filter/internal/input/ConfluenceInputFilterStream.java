@@ -31,7 +31,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -436,9 +435,8 @@ public class ConfluenceInputFilterStream
 
         getJobStatus();
 
-        maybeRemoveArchivedSpaces();
-
         ConfluenceFilteringEvent filteringEvent = new ConfluenceFilteringEvent();
+        maybeRemoveArchivedSpaces(filteringEvent);
         this.observationManager.notify(filteringEvent, this, this.confluencePackage);
         if (filteringEvent.isCanceled()) {
             closeConfluencePackage();
@@ -449,6 +447,7 @@ public class ConfluenceInputFilterStream
         if (this.objectIdRanges != null) {
             prepareNextObjectRangeId();
         }
+
         return filteringEvent;
     }
 
@@ -530,18 +529,15 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void maybeRemoveArchivedSpaces() throws FilterException
+    private void maybeRemoveArchivedSpaces(ConfluenceFilteringEvent event) throws FilterException
     {
         // Yes, this is a bit hacky, I know. It would be better to not even create objects related to spaces that should
         // not be there. This is harder to do. If you find a cleaner way, don't hesitate do change this.
         if (!properties.isArchivedSpacesEnabled()) {
             try {
-                for (Iterator<Long> it = confluencePackage.getPages().keySet().iterator(); it.hasNext();) {
-                    Long spaceId = it.next();
-                    if (spaceId != null && confluencePackage.isSpaceArchived(spaceId)) {
-                        confluencePackage.getBlogPages().remove(spaceId);
-                        confluencePackage.getSpacesByKey().remove(confluencePackage.getSpaceKey(spaceId));
-                        it.remove();
+                for (Long spaceId : confluencePackage.getSpaces()) {
+                    if (confluencePackage.isSpaceArchived(spaceId)) {
+                        event.disableSpace(spaceId);
                     }
                 }
             } catch (ConfigurationException e) {
@@ -855,7 +851,7 @@ public class ConfluenceInputFilterStream
     private void sendPages(String spaceKey, boolean blog, List<Long> pages, Object filter, ConfluenceFilter proxyFilter,
         boolean hide) throws ConfluenceInterruptedException
     {
-        Long homePageId = confluencePackage.getHomePage(confluencePackage.getSpacesByKey().get(spaceKey));
+        Long homePageId = confluencePackage.getHomePage(confluencePackage.getSpaceId(spaceKey));
         for (Long pageId : pages) {
             if (Objects.equals(pageId, homePageId)) {
                 logger.warn("The home page (id: [{}]) of space [{}] is a child of another page, "

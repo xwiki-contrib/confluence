@@ -17,11 +17,11 @@
                   </entry>
                   <entry>
                     <string>content</string>
-                    <string>[[(% param="value" %)link1>>doc:Composed.Root.OtherSpace.Other Page.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link1>>doc:Composed.Root.OtherSpace.Other Page.WebHome||shape="rect"]]
+                    <string>[[(% param="value" %)link1>>doc:Composed.Root.OtherSpace.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link1>>doc:Composed.Root.OtherSpace.WebHome||shape="rect"]]
 
-[[(% param="value" %)link2>>doc:Composed.Root.OtherSpace.Other Page.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link2>>doc:Composed.Root.OtherSpace.Other Page.WebHome||shape="rect"]]
+[[(% param="value" %)link2>>doc:Composed.Root.OtherSpace.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link2>>doc:Composed.Root.OtherSpace.WebHome||shape="rect"]]
 
-[[(% param="value" %)link>>doc:Composed.Root.OtherSpace.Other Page.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link>>doc:Composed.Root.OtherSpace.Other Page.WebHome||shape="rect"]]
+[[(% param="value" %)link>>doc:Composed.Root.OtherSpace.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link>>doc:Composed.Root.OtherSpace.WebHome||shape="rect"]]
 
 [[(% param="value" %)link>>doc:Composed.Root.OtherSpace.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link>>doc:Composed.Root.OtherSpace.WebHome||shape="rect"]]
 
@@ -31,17 +31,17 @@
 
 [[(% param="value" %)link>>confluencePage:page:NotFound.Other Page#anchor||shape="rect"]]
 
-[[(% param="value" %)link>>doc:Composed.Root.OtherSpace.Other Page.WebHome||shape="rect"]]
+[[(% param="value" %)link>>doc:Composed.Root.OtherSpace.WebHome||shape="rect"]]
 
 [[(% param="value" %)link>>doc:Composed.Root.validatedspace.validatedpage.WebHome||shape="rect"]]
 
-[[(% param="value" %)link3>>attach:Composed.Root.OtherSpace.Other Page.WebHome@attachment.png||shape="rect"]](%%) [[(% param="value" %)link3>>attach:Composed.Root.OtherSpace.Other Page.WebHome@attachment.png||shape="rect"]]
+[[(% param="value" %)link3>>attach:Composed.Root.OtherSpace.WebHome@attachment.png||shape="rect"]](%%) [[(% param="value" %)link3>>attach:Composed.Root.OtherSpace.WebHome@attachment.png||shape="rect"]]
 
-[[(% param="value" %)link3 bis>>attach:Composed.Root.OtherSpace.Other Page.WebHome@attachment.png||shape="rect"]](%%) [[(% param="value" %)link3 bis>>attach:Composed.Root.OtherSpace.Other Page.WebHome@attachment.png||shape="rect"]]
+[[(% param="value" %)link3 bis>>attach:Composed.Root.OtherSpace.WebHome@attachment.png||shape="rect"]](%%) [[(% param="value" %)link3 bis>>attach:Composed.Root.OtherSpace.WebHome@attachment.png||shape="rect"]]
 
 [[(% param="value" %)link4>>icon:icon||shape="rect"]](%%) [[(% param="value" %)link4>>icon:icon||shape="rect"]]
 
-[[(% param="value" %)link5>>doc:Composed.Root.OtherSpace.Other Page.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link5>>doc:Composed.Root.OtherSpace.Other Page.WebHome||shape="rect"]]
+[[(% param="value" %)link5>>doc:Composed.Root.OtherSpace.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link5>>doc:Composed.Root.OtherSpace.WebHome||shape="rect"]]
 
 [[link6>>doc:Composed.Root.validatedspace.validatedpage.WebHome||shape="rect"]]
 
@@ -114,45 +114,43 @@ Some content
         </wikiDocument>
       </wikiSpace>
       <wikiSpace name="OtherSpace">
-        <wikiSpace name="Other Page">
-          <wikiDocument name="WebHome">
-            <wikiDocumentLocale>
-              <wikiDocumentRevision revision="11">
+        <wikiDocument name="WebHome">
+          <wikiDocumentLocale>
+            <wikiDocumentRevision revision="11">
+              <p>
+                <parameters>
+                  <entry>
+                    <string>title</string>
+                    <string>OtherSpace</string>
+                  </entry>
+                </parameters>
+              </p>
+              <wikiObject name="Confluence.Code.ConfluencePageClass">
                 <p>
                   <parameters>
                     <entry>
-                      <string>title</string>
-                      <string>Other Page</string>
+                      <string>class_reference</string>
+                      <string>Confluence.Code.ConfluencePageClass</string>
                     </entry>
                   </parameters>
                 </p>
-                <wikiObject name="Confluence.Code.ConfluencePageClass">
+                <wikiObjectProperty name="id">
                   <p>
-                    <parameters>
-                      <entry>
-                        <string>class_reference</string>
-                        <string>Confluence.Code.ConfluencePageClass</string>
-                      </entry>
-                    </parameters>
+                    <value t="java.lang.Long">11</value>
                   </p>
-                  <wikiObjectProperty name="id">
-                    <p>
-                      <value t="java.lang.Long">11</value>
-                    </p>
-                  </wikiObjectProperty>
-                  <wikiObjectProperty name="stableId">
-                    <p>
-                      <value t="java.lang.Long">11</value>
-                    </p>
-                  </wikiObjectProperty>
-                  <wikiObjectProperty name="title" value="Other Page"/>
-                  <wikiObjectProperty name="url" value="https://baseurl1.com/spaces/OtherSpace/pages/11/Other Page"/>
-                  <wikiObjectProperty name="space" value="OtherSpace"/>
-                </wikiObject>
-              </wikiDocumentRevision>
-            </wikiDocumentLocale>
-          </wikiDocument>
-        </wikiSpace>
+                </wikiObjectProperty>
+                <wikiObjectProperty name="stableId">
+                  <p>
+                    <value t="java.lang.Long">11</value>
+                  </p>
+                </wikiObjectProperty>
+                <wikiObjectProperty name="title" value="Other Page"/>
+                <wikiObjectProperty name="url" value="https://baseurl1.com/spaces/OtherSpace"/>
+                <wikiObjectProperty name="space" value="OtherSpace"/>
+              </wikiObject>
+            </wikiDocumentRevision>
+          </wikiDocumentLocale>
+        </wikiDocument>
       </wikiSpace>
       <wikiSpace name="validatedspace">
         <wikiDocument name="WebHome">

@@ -30,6 +30,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.map.CaseInsensitiveMap;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -1328,6 +1329,12 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setLinkMapping(Map<String, Map<String, EntityReference>> linkMapping)
     {
         this.linkMapping = linkMapping;
+        if (linkMapping != null) {
+            if (!(linkMapping instanceof CaseInsensitiveMap)) {
+                this.linkMapping = new CaseInsensitiveMap<>(linkMapping);
+            }
+            this.linkMapping.replaceAll((k, v) -> v instanceof CaseInsensitiveMap ? v : new CaseInsensitiveMap<>(v));
+        }
     }
 
     /**

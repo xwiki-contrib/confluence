@@ -788,10 +788,13 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private final Map<Long, List<Long>> orphans = new LinkedHashMap<>();
 
     // maps a space key to its id
-    private final Map<String, Long> spacesByKey = new HashMap<>();
+    private final Map<String, Long> casePreservingSpacesByKey = new HashMap<>();
+    private final Map<String, Long> lowerSpacesByKey = new HashMap<>();
 
-    // maps a space id to a title to page id mapping
-    private final Map<Long, Map<String, Long>> pagesBySpaceAndTitle = new HashMap<>();
+    // maps a space id to a lowercase title to page id mapping
+    private final Map<Long, Map<String, Long>> pagesBySpaceAndLowerTitle = new HashMap<>();
+
+    private final Collection<Long> ignoredSpaces = new HashSet<>();
 
     private String spaceKeyToImport;
     private long spaceIdToImport;
@@ -858,24 +861,28 @@ public class ConfluenceXMLPackage implements AutoCloseable
     }
 
     /**
-     * @return a page id from a space key and its title
-     * @param spaceKey the space in which the page is supposed to be
-     * @param pageTitle the title of the page
+     * @return a page id from a space key and its title (this operation is case insensitive)
+     * @param ciSpaceKey the space in which the page is supposed to be
+     * @param ciPageTitle the title of the page
      * @since 9.35.0
      */
-    public Long getPageId(String spaceKey, String pageTitle)
+    public Long getPageId(String ciSpaceKey, String ciPageTitle)
     {
-        Long spaceId = this.spacesByKey.get(spaceKey);
+        if (StringUtils.isEmpty(ciSpaceKey) || StringUtils.isEmpty(ciPageTitle)) {
+            return null;
+        }
+
+        Long spaceId = this.lowerSpacesByKey.get(ciSpaceKey.toLowerCase());
         if (spaceId == null) {
             return null;
         }
 
-        Map<String, Long> pagesByTitle = this.pagesBySpaceAndTitle.get(spaceId);
+        Map<String, Long> pagesByTitle = this.pagesBySpaceAndLowerTitle.get(spaceId);
         if (pagesByTitle == null) {
             return null;
         }
 
-        return pagesByTitle.get(pageTitle);
+        return pagesByTitle.get(ciPageTitle.toLowerCase());
     }
 
     /**
@@ -1304,10 +1311,46 @@ public class ConfluenceXMLPackage implements AutoCloseable
     /**
      * @return a map of spaces where the key is the name of the space and the value is its id
      * @since 9.21.0
+     * @deprecated since 9.83.0, because many uses of this method are erroneous: space keys are case-insensitive and
+     *             these uses likely don't take this in account. They also modified the list of spaces, which is not
+     *             supported anymore. Use {@link #getSpaceKeys(boolean)}, {@link #getSpaces()} and
+     *             {@link #getSpaceId(String)} instead
      */
+    @Deprecated (since = "9.83.0")
     public Map<String, Long> getSpacesByKey()
     {
-        return spacesByKey;
+        return casePreservingSpacesByKey;
+    }
+
+    /**
+     * @return the id of the given space
+     * @param spaceKey the space key (the operation is case-insensitive)
+     * @since 9.83.0
+     */
+    public Long getSpaceId(String spaceKey)
+    {
+        if (spaceKey == null) {
+            return null;
+        }
+        return lowerSpacesByKey.get(spaceKey.toLowerCase());
+    }
+
+    /**
+     * @return the collection of spaces in this package
+     * @since 9.83.0
+     */
+    public Collection<Long> getSpaces()
+    {
+        return Collections.unmodifiableCollection(lowerSpacesByKey.values());
+    }
+
+    /**
+     * @param lowerCase whether the space keys should be returned lower case
+     * @return the list of space keys
+     */
+    public Collection<String> getSpaceKeys(boolean lowerCase)
+    {
+        return new ArrayList<>((lowerCase ? lowerSpacesByKey : casePreservingSpacesByKey).keySet());
     }
 
     /**
@@ -1685,8 +1728,9 @@ public class ConfluenceXMLPackage implements AutoCloseable
         blogPages.keySet().removeIf(spaceIdNotToImport);
         homePages.keySet().removeIf(spaceIdNotToImport);
         orphans.keySet().removeIf(spaceIdNotToImport);
-        pagesBySpaceAndTitle.keySet().removeIf(spaceIdNotToImport);
-        spacesByKey.keySet().removeIf(spaceKey -> !spaceKey.equals(spaceKeyToImport));
+        pagesBySpaceAndLowerTitle.keySet().removeIf(spaceIdNotToImport);
+        casePreservingSpacesByKey.keySet().removeIf(spaceKey -> !spaceKey.equals(spaceKeyToImport));
+        lowerSpacesByKey.keySet().removeIf(spaceKey -> !spaceKey.equalsIgnoreCase(spaceKeyToImport));
     }
 
     private void readSpaceObject(XMLStreamReader xmlReader)
@@ -1708,7 +1752,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
         }
 
         if (spaceKey != null) {
-            this.spacesByKey.put(spaceKey, spaceId);
+            this.casePreservingSpacesByKey.put(spaceKey, spaceId);
+            this.lowerSpacesByKey.put(spaceKey.toLowerCase(), spaceId);
         }
 
         saveSpaceProperties(properties, spaceId);
@@ -1928,7 +1973,9 @@ public class ConfluenceXMLPackage implements AutoCloseable
         (isBlog ? this.blogPages : this.pages).computeIfAbsent(spaceId, k -> new LinkedList<>()).add(pageId);
         String title = properties.getString(KEY_PAGE_TITLE, null);
         if (title != null) {
-            pagesBySpaceAndTitle.computeIfAbsent(spaceId, k -> new HashMap<>()).put(title, pageId);
+            // FIXME: we could probably reuse the already existing lowerTitle property, but I don't think we can rely on
+            // it being present so we'd have to have a fallback anyway
+            pagesBySpaceAndLowerTitle.computeIfAbsent(spaceId, k -> new HashMap<>()).put(title.toLowerCase(), pageId);
         }
     }
 

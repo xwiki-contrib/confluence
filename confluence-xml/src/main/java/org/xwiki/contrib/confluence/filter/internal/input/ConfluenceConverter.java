@@ -57,6 +57,7 @@ import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -333,23 +334,23 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return new EntityReference(name, type, parent);
     }
 
-    private EntityReference fromSpaceKey(String spaceKey)
+    private EntityReference fromSpaceKey(String ciSpaceKey)
     {
-        String space = ensureNonEmptySpaceKey(spaceKey);
-        if (context.getConfluencePackage().getSpacesByKey().containsKey(space)) {
+        String space = ensureNonEmptySpaceKey(ciSpaceKey);
+        if (context.getConfluencePackage().getSpaceId(space) != null) {
             String convertedSpace = toEntityName(space);
             EntityReference root = getRoot();
             return newEntityReference(convertedSpace, EntityType.SPACE, root);
         }
 
         if (this.context.getProperties().isUseConfluenceResolvers()) {
-            EntityReference spaceRef = getSpaceUsingResolver(spaceKey);
+            EntityReference spaceRef = getSpaceUsingResolver(ciSpaceKey);
             if (spaceRef != null) {
                 return spaceRef;
             }
         }
 
-        logger.warn(CONFLUENCE_REF_MARKER, FAILED_TO_RESOLVE_SPACE, spaceKey);
+        logger.warn(CONFLUENCE_REF_MARKER, FAILED_TO_RESOLVE_SPACE, ciSpaceKey);
         return null;
     }
 
@@ -412,28 +413,22 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         }
     }
 
-    EntityReference convertDocumentReference(ConfluenceProperties pageProperties, String spaceKey, boolean asSpace)
+    EntityReference convertDocumentReference(ConfluenceProperties pageProperties, String ciSpaceKey, boolean asSpace)
     {
-        String pageTitle = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
-
-        if (pageTitle == null) {
-            return null;
-        }
-
-        return toNestedDocumentReference(spaceKey, pageTitle, pageProperties, asSpace, true);
+        return toNestedDocumentReference(ciSpaceKey, pageProperties, asSpace, true);
     }
 
-    private EntityReference toDocumentReference(String spaceKey, String pageTitle)
+    private EntityReference toDocumentReference(String ciSpaceKey, String ciPageTitle)
     {
-        if (AT_SELF.equals(pageTitle)) {
+        if (AT_SELF.equals(ciPageTitle)) {
             return new EntityReference(WEB_HOME, EntityType.DOCUMENT);
         }
 
-        if (AT_HOME.equals(pageTitle) || StringUtils.isEmpty(pageTitle)) {
-            return getDocumentReference(fromSpaceKey(spaceKey), false, false);
+        if (AT_HOME.equals(ciPageTitle) || StringUtils.isEmpty(ciPageTitle)) {
+            return getDocumentReference(fromSpaceKey(ciSpaceKey), false, false);
         }
 
-        if (AT_PARENT.equals(pageTitle)) {
+        if (AT_PARENT.equals(ciPageTitle)) {
             Long currentPageId = context.getCurrentPage();
             ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
 
@@ -453,24 +448,24 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             return new EntityReference(AT_PARENT, EntityType.DOCUMENT);
         }
 
-        String nonEmptySpaceKey = ensureNonEmptySpaceKey(spaceKey);
+        String nonEmptySpaceKey = ensureNonEmptySpaceKey(ciSpaceKey);
         // Try first producing a reference without assuming a page without parent is a root page and without using
         // link mapping. If this fails, produce a reference using the link mapping and doing this assumption.
-        EntityReference res = toDocumentReferenceNoSpecialSpaceKey(nonEmptySpaceKey, pageTitle, false);
-        return res == null ? toDocumentReferenceNoSpecialSpaceKey(nonEmptySpaceKey, pageTitle, true) : res;
+        EntityReference res = toDocumentReferenceNoSpecialSpaceKey(nonEmptySpaceKey, ciPageTitle, false);
+        return res == null ? toDocumentReferenceNoSpecialSpaceKey(nonEmptySpaceKey, ciPageTitle, true) : res;
     }
 
-    private EntityReference toDocumentReferenceNoSpecialSpaceKey(String spaceKey, String pageTitle, boolean guess)
+    private EntityReference toDocumentReferenceNoSpecialSpaceKey(String ciSpaceKey, String ciPageTitle, boolean guess)
     {
-        if (spaceKey != null) {
+        if (ciSpaceKey != null) {
             ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
 
-            Long pageId = confluencePackage.getPageId(spaceKey, pageTitle);
+            Long pageId = confluencePackage.getPageId(ciSpaceKey, ciPageTitle);
             if (pageId != null) {
                 try {
                     ConfluenceProperties pageProperties = confluencePackage.getPageProperties(pageId, false);
                     if (pageProperties != null) {
-                        return toNestedDocumentReference(spaceKey, pageTitle, pageProperties, false, guess);
+                        return toNestedDocumentReference(ciSpaceKey, pageProperties, false, guess);
                     }
                 } catch (ConfigurationException e) {
                     logger.error("Failed to get properties for page id [{}]", pageId, e);
@@ -478,37 +473,38 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             }
 
             if (guess) {
-                return getDocRefFromLinkMapping(spaceKey, pageTitle, false, true);
+                return getDocRefFromLinkMapping(ciSpaceKey, ciPageTitle, false, true);
             }
         }
 
         return null;
     }
 
-    private String ensureNonEmptySpaceKey(String spaceKey)
+    private String ensureNonEmptySpaceKey(String ciSpaceKey)
     {
-        return (StringUtils.isEmpty(spaceKey) || spaceKey.equals("currentSpace()") || spaceKey.equals(AT_SELF))
+        return (StringUtils.isEmpty(ciSpaceKey) || ciSpaceKey.equals("currentSpace()") || ciSpaceKey.equals(AT_SELF))
             ? context.getCurrentSpace()
-            : spaceKey;
+            : ciSpaceKey;
     }
 
-    private void warnMissingPage(String spaceKey, String pageTitle)
+    private void warnMissingPage(String ciSpaceKey, String ciPageTitle)
     {
         this.logger.warn(CONFLUENCE_REF_MARKER, "Could not find page [{}] in space [{}]. " + CONFLUENCE_REF_EXPLANATION,
-            pageTitle, spaceKey);
+            ciPageTitle, ciSpaceKey);
     }
 
-    private EntityReference getDocRefFromLinkMapping(String spaceKey, String pageTitle, boolean asSpace, boolean warn)
+    private EntityReference getDocRefFromLinkMapping(String ciSpaceKey, String ciPageTitle, boolean asSpace,
+        boolean warn)
     {
         EntityReference ref = maybeAsSpace(context.getProperties().getLinkMapping()
-            .getOrDefault(spaceKey, Collections.emptyMap()).get(pageTitle), asSpace);
+            .getOrDefault(ciSpaceKey, Collections.emptyMap()).get(ciPageTitle), asSpace);
 
         if (ref == null && pageTitleResolver != null && this.context.getProperties().isUseConfluenceResolvers()) {
-            ref = maybeAsSpace(getDocumentByTitleUsingResolver(spaceKey, pageTitle), asSpace);
+            ref = maybeAsSpace(getDocumentByTitleUsingResolver(ciSpaceKey, ciPageTitle), asSpace);
         }
 
         if (warn && ref == null) {
-            warnMissingPage(spaceKey, pageTitle);
+            warnMissingPage(ciSpaceKey, ciPageTitle);
         }
 
         return ref;
@@ -516,7 +512,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
     private EntityReference getDocumentByTitleUsingResolver(String spaceKey, String pageTitle)
     {
-        if (context.getConfluencePackage().getSpacesByKey().containsKey(spaceKey)) {
+        if (context.getConfluencePackage().getSpaceId(spaceKey) != null) {
             // We are not going to resolve something that's supposed to be in the package being imported
             return null;
         }
@@ -589,21 +585,27 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         });
     }
 
-    private EntityReference toNestedDocumentReference(String spaceKey, String pageTitle,
-        ConfluenceProperties pageProperties, boolean asSpace, boolean guess)
+    private EntityReference toNestedDocumentReference(String ciSpaceKey, ConfluenceProperties pageProperties,
+        boolean asSpace, boolean guess)
     {
-        if (StringUtils.isEmpty(pageTitle)) {
-            return null;
-        }
+        String pageTitle = pageProperties.getString("title");
 
         if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
-            return getDocumentReference(fromSpaceKey(spaceKey), asSpace, false);
+            return getDocumentReference(fromSpaceKey(ciSpaceKey), asSpace, false);
         }
 
         EntityReference parent = null;
 
         Long parentId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_PARENT, null);
-        if (parentId != null) {
+        if (parentId == null) {
+            // is the page an orphan? Then it lives at the root of the space
+            ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
+            List<Long> orphans = confluencePackage.getOrphans(confluencePackage.getSpaceId(ciSpaceKey));
+            Long id = pageProperties.getLong("id", null);
+            if (id != null && orphans.contains(id)) {
+                parent = fromSpaceKey(ciSpaceKey);
+            }
+        } else {
             parent = convertDocumentReference(parentId, true);
         }
 
@@ -611,13 +613,13 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             // Missing parent, let's see if the provided link mapping has this document.
             // If parentId is null, this most likely means that this is a root page which parent is the space though.
             // But even in this case, we allow the link mapping data to override this conclusion.
-            EntityReference docRef = getDocRefFromLinkMapping(spaceKey, pageTitle, asSpace, parentId != null);
+            EntityReference docRef = getDocRefFromLinkMapping(ciSpaceKey, pageTitle, asSpace, parentId != null);
             if (docRef != null) {
                 return docRef;
             }
 
             // if the page has no parent, if the parent page is missing, we consider the space as the parent
-            parent = fromSpaceKey(spaceKey);
+            parent = fromSpaceKey(ciSpaceKey);
         }
 
         if (parent == null) {
@@ -652,13 +654,13 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     }
 
     @Override
-    public ResourceReference getResourceReference(String spaceKey, String pageTitle, String filename, String anchor)
+    public ResourceReference getResourceReference(String ciSpaceKey, String ciPageTitle, String filename, String anchor)
     {
         String convertedAnchor = StringUtils.isBlank(anchor)
             ? null
-            : convertAnchor("", pageTitle, anchor);
+            : convertAnchor("", ciPageTitle, anchor);
 
-        if (StringUtils.isEmpty(pageTitle) && StringUtils.isEmpty(spaceKey)) {
+        if (StringUtils.isEmpty(ciPageTitle) && StringUtils.isEmpty(ciSpaceKey)) {
             if (StringUtils.isNotEmpty(filename)) {
                 AttachmentResourceReference attachmentResourceReference =
                     new AttachmentResourceReference(escapeAtAndHash(filename));
@@ -675,11 +677,12 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
             return docRef;
         }
-        EntityReference documentReference = toDocumentReference(spaceKey, pageTitle);
+        EntityReference documentReference = toDocumentReference(ciSpaceKey, ciPageTitle);
         if (documentReference == null) {
-            boolean isHomePage = AT_HOME.equals(pageTitle);
+            boolean isHomePage = AT_HOME.equals(ciPageTitle);
             return new ConfluenceResourceReference(
-                ensureNonEmptySpaceKey(spaceKey), isHomePage ? null : pageTitle, filename, convertedAnchor, isHomePage);
+                ensureNonEmptySpaceKey(ciSpaceKey), isHomePage ? null : ciPageTitle, filename, convertedAnchor,
+                isHomePage);
         }
         return toResolvedResourceReference(documentReference, filename, convertedAnchor);
     }
@@ -732,12 +735,12 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     }
 
     @Override
-    public String convertAttachmentReference(String spaceKey, String pageTitle, String filename)
+    public String convertAttachmentReference(String ciSpaceKey, String ciPageTitle, String filename)
     {
         if (StringUtils.isEmpty(filename)) {
             return "";
         }
-        return serialize(getResourceReference(spaceKey, pageTitle, filename, null));
+        return serialize(getResourceReference(ciSpaceKey, ciPageTitle, filename, null));
     }
 
     static String spacesToDash(String name)
@@ -796,7 +799,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
                 title = getCurrentPageTitleForAnchor();
             } else {
                 ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
-                Long spaceId = confluencePackage.getSpacesByKey().get(context.getCurrentSpace());
+                Long spaceId = confluencePackage.getSpaceId(context.getCurrentSpace());
                 if (spaceId == null) {
                     logger.warn("Could not get the home page of space [{}], anchor [{}] might be broken",
                         spaceKey, anchor);
