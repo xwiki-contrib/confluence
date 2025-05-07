@@ -31,7 +31,7 @@ import java.io.InputStream;
  */
 public class WithoutControlCharactersReader extends InputStream
 {
-    private InputStream is;
+    private final InputStream is;
 
     /**
      * Convert this input stream into a reader that skips the BS characters.
