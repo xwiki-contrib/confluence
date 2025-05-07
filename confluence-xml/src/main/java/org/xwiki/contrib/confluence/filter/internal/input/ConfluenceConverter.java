@@ -395,24 +395,29 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
      */
     public EntityReference convertDocumentReference(long pageId, boolean asSpace)
     {
+        EntityReference ref = null;
         try {
             ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
 
             ConfluenceProperties pageProperties = confluencePackage.getPageProperties(pageId, false);
-
-            if (pageProperties == null) {
-                return getDocRefFromLinkMapping(pageId, asSpace);
+            if (pageProperties != null) {
+                Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
+                if (spaceId != null) {
+                    ref = convertDocumentReference(pageProperties, confluencePackage.getSpaceKey(spaceId), asSpace);
+                }
             }
 
-            Long spaceId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_SPACE, null);
-            if (spaceId == null) {
-                return null;
+            if (ref == null) {
+                ref = getDocRefFromLinkMapping(pageId, asSpace);
             }
-            return convertDocumentReference(pageProperties, confluencePackage.getSpaceKey(spaceId), asSpace);
-        } catch (ConfigurationException exception) {
-            logger.error(exception.getMessage(), exception);
-            return null;
+        } catch (ConfigurationException e) {
+            logger.error("Failed to resolve page id [{}]", pageId, e);
         }
+
+        if (ref == null) {
+            warnMissingPage(pageId);
+        }
+        return ref;
     }
 
     EntityReference convertDocumentReference(ConfluenceProperties pageProperties, String ciSpaceKey, boolean asSpace)
@@ -493,6 +498,12 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
     {
         this.logger.warn(CONFLUENCE_REF_MARKER, "Could not find page [{}] in space [{}]. " + CONFLUENCE_REF_EXPLANATION,
             ciPageTitle, ciSpaceKey);
+    }
+
+    private void warnMissingPage(long pageId)
+    {
+        this.logger.warn(CONFLUENCE_REF_MARKER, "Could not find page id [{}]. " + CONFLUENCE_REF_EXPLANATION,
+            pageId);
     }
 
     private EntityReference getDocRefFromLinkMapping(String ciSpaceKey, String ciPageTitle, boolean asSpace,
