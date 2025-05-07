@@ -42,7 +42,9 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>1. Hello
+              <string>{{documentTree root="document:WebHome"/}}
+
+1. Hello
 1. world
 11. Hello nested
 11. world nested
@@ -121,7 +123,7 @@ A urlencoded inline math with + signs: {{mathjax}}\(K_\text{S}\to\pi^-\pi^+\){{/
 
 [[correctly migrated label>>doc:||anchor="MySpaceHome-myanchor"]]
 
-[[this page>>doc:]]
+[[this page>>doc:WebHome]]
 
 {{mathjax}}
 \begin{aligned}

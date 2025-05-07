@@ -151,7 +151,13 @@
                     </parameters>
                   </p>
                   <wikiObjectProperty name="title" value="Blog post"/>
-                  <wikiObjectProperty name="content" value="Content of the blog post"/>
+                  <wikiObjectProperty name="content">
+                    <p>
+                      <value>Content of the blog post
+
+[[this page>>doc:Composed.Root.SpaceA.Blog.Blog post]]</value>
+                    </p>
+                  </wikiObjectProperty>
                   <wikiObjectProperty name="publishDate">
                     <p>
                       <value t="java.util.Date">2023-09-27 17:02:59.635 UTC</value>

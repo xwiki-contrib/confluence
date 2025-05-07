@@ -45,7 +45,10 @@
   </object>
   <object class="BodyContent" package="com.atlassian.confluence.core">
     <id name="id">156868656</id>
-    <property name="body"><![CDATA[<ol>
+    <property name="body"><![CDATA[
+<p><ac:structured-macro ac:name="pagetree"><ac:parameter ac:name="root"><ac:link /></ac:parameter><ac:parameter ac:name="startDepth">3</ac:parameter><ac:parameter ac:name="searchBox">true</ac:parameter><ac:parameter ac:name="expandCollapseAll">true</ac:parameter></ac:structured-macro></p>
+
+    <ol>
   <li><p>Hello</p></li>
   <li><p>world</p>
     <ol>

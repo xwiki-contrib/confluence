@@ -427,8 +427,9 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
     private EntityReference toDocumentReference(String ciSpaceKey, String ciPageTitle)
     {
+        Long currentPageId = context.getCurrentPage();
         if (AT_SELF.equals(ciPageTitle)) {
-            return new EntityReference(WEB_HOME, EntityType.DOCUMENT);
+            return getSelfDocumentReference(currentPageId);
         }
 
         if (AT_HOME.equals(ciPageTitle) || AT_NONE.equals(ciPageTitle) || StringUtils.isEmpty(ciPageTitle)) {
@@ -436,12 +437,10 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         }
 
         if (AT_PARENT.equals(ciPageTitle)) {
-            Long currentPageId = context.getCurrentPage();
-            ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
-
             try {
                 if (currentPageId != null) {
-                    ConfluenceProperties pageProperties = confluencePackage.getPageProperties(currentPageId, false);
+                    ConfluenceProperties pageProperties = context.getConfluencePackage()
+                        .getPageProperties(currentPageId, false);
                     Long parentId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_PARENT, null);
                     if (parentId != null) {
                         return convertDocumentReference(parentId, false);
@@ -460,6 +459,23 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         // link mapping. If this fails, produce a reference using the link mapping and doing this assumption.
         EntityReference res = toDocumentReferenceNoSpecialSpaceKey(nonEmptySpaceKey, ciPageTitle, false);
         return res == null ? toDocumentReferenceNoSpecialSpaceKey(nonEmptySpaceKey, ciPageTitle, true) : res;
+    }
+
+    private EntityReference getSelfDocumentReference(Long currentPageId)
+    {
+        if (currentPageId != null) {
+            try {
+                ConfluenceProperties pageProperties = context.getConfluencePackage()
+                    .getPageProperties(currentPageId, false);
+                boolean isBlogPost = pageProperties.getBoolean(ConfluenceXMLPackage.KEY_PAGE_BLOGPOST, false);
+                if (isBlogPost) {
+                    return convertDocumentReference(currentPageId, false);
+                }
+            } catch (ConfigurationException e) {
+                logger.warn("Could not get page properties of id [{}]", currentPageId, e);
+            }
+        }
+        return new EntityReference(WEB_HOME, EntityType.DOCUMENT);
     }
 
     private EntityReference toDocumentReferenceNoSpecialSpaceKey(String ciSpaceKey, String ciPageTitle, boolean guess)
