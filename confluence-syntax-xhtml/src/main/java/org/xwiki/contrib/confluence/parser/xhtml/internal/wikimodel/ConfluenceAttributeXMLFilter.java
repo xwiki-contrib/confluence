@@ -44,6 +44,7 @@ public class ConfluenceAttributeXMLFilter extends DefaultXMLFilter
         "blue", "#deebff",
         "green", "#e3fcef",
         "yellow", "#fffae6",
+        "grey", "#f4f5f7",
         // guessed
         "white", "#ffffff",
         "teal", "#e6fcff",

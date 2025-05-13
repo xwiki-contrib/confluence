@@ -7,6 +7,7 @@
     <tr>
       <td style="text-align: center;">
       <p style="text-align: left;">Disposer d'un mail (2)</p></td>
+      <td class="highlight-grey" data-highlight-colour="grey">Gris</td>
       <td class="highlight-green" data-highlight-colour="green">Oui</td>
       <td class="highlight-red" data-highlight-colour="red">Non</td>
       <td class="highlight-red" data-highlight-colour="red"><span>Non</span></td>
@@ -36,6 +37,13 @@ onSpecialSymbol [)]
 endParagraph [[style]=[text-align: left;]]
 endGroup
 endTableCell [[style]=[text-align: center;]]
+beginTableCell [[class]=[highlight-grey][style]=[background-color: #f4f5f7]]
+beginGroup
+beginParagraph
+onWord [Gris]
+endParagraph
+endGroup
+endTableCell [[class]=[highlight-grey][style]=[background-color: #f4f5f7]]
 beginTableCell [[class]=[highlight-green][style]=[background-color: #e3fcef]]
 beginGroup
 beginParagraph
