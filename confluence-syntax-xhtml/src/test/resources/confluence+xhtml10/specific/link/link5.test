@@ -2,6 +2,8 @@
 .input|confluence+xhtml/1.0
 .#-----------------------------------------------------
 <a href="http://url"><span param="value">label</span></a>
+<ac:structured-macro ac:name="somemacro"><ac:parameter name="url"><a href="http://perdu.com">Perdu</a></ac:parameter></ac:structured-macro>
+<a href="http://url">label</a>
 .#-----------------------------------------------------
 .expect|event/1.0
 .#-----------------------------------------------------
@@ -11,6 +13,14 @@ beginLink [Typed = [true] Type = [url] Reference = [http://url]] [false] [[shape
 beginFormat [NONE] [[param]=[value]]
 onWord [label]
 endFormat [NONE] [[param]=[value]]
+endLink [Typed = [true] Type = [url] Reference = [http://url]] [false] [[shape]=[rect]]
+onSpace
+endParagraph
+onMacroStandalone [somemacro] []
+beginParagraph
+onSpace
+beginLink [Typed = [true] Type = [url] Reference = [http://url]] [false] [[shape]=[rect]]
+onWord [label]
 endLink [Typed = [true] Type = [url] Reference = [http://url]] [false] [[shape]=[rect]]
 endParagraph
 endDocument

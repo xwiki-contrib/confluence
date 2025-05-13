@@ -65,6 +65,7 @@ public class ReferenceTagHandler extends TagHandler
         if (context.getTagStack().getStackParameter(IN_CONFLUENCE_PARAMETER) != null) {
             setAccumulateContent(true);
         } else {
+            setAccumulateContent(false);
             this.tagHandler.beginElement(context);
         }
     }
