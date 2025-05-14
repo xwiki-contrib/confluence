@@ -25,6 +25,7 @@ import org.xwiki.contrib.confluence.filter.internal.macros.AbstractMacroConverte
 import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Converts to a block macro.
@@ -44,5 +45,19 @@ public class FakeBlockMacroConverter extends AbstractMacroConverter
             throw new RuntimeException("Crash requested, happy to oblige");
         }
         return "view-file";
+    }
+
+    @Override
+    protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
+        String content)
+    {
+        if (confluenceParameters.containsKey("pleasecollide")) {
+            return new TreeMap<>(Map.of(
+                "origpleasecollide", "fromConverter",
+                "randomParam", "42"
+            ));
+        }
+
+        return confluenceParameters;
     }
 }

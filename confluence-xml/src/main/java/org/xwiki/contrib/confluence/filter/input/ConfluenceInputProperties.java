@@ -59,10 +59,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private static final String XWIKI_ALL_GROUP_NAME = "XWikiAllGroup";
     private static final String CLEANUP_SYNC = "SYNC";
     private static final String WEB_HOME = "WebHome";
+    private static final String CONFLUENCE_UNDERSCORE = "confluence_";
+    private static final String DEFAULT_GROUP_FORMAT = "${group._clean}";
+    private static final String NONE = "NONE";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfluenceInputProperties.class);
-
-    private static final String DEFAULT_GROUP_FORMAT = "${group._clean}";
 
     /**
      * @see #getSource()
@@ -132,7 +133,14 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     /**
      * @see #getUnknownMacroPrefix()
      */
-    private String unknownMacroPrefix = "confluence_";
+    private String unknownMacroPrefix = CONFLUENCE_UNDERSCORE;
+
+    /**
+     * @see #getUnknownMacroPrefix()
+     */
+    private String keptMacroParameterPrefix = CONFLUENCE_UNDERSCORE;
+
+    private String keptMacroParameterMode = NONE;
 
     private Set<String> prefixedMacros;
 
@@ -627,6 +635,58 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
         this.unknownMacroPrefix = unknownMacroPrefix;
     }
 
+    /**
+     * @return the prefix to use in the name of the macros parameters that are kept as-is
+     * @since 9.84.0
+     */
+    @PropertyName("Kept macro parameter prefix")
+    @PropertyDescription("The prefix to use in the name of the macro parameters that are kept as-is "
+        + "(except for atlassian-macro-output-type and for parameters that happen to be already prefixed with this "
+        + "string: those will be kept unprefixed)")
+    public String getKeptMacroParameterPrefix()
+    {
+        return this.keptMacroParameterPrefix;
+    }
+
+    /**
+     * @param keptMacroParameterPrefix the prefix to use in the name of the macros parameters that are kept as-is
+     * @since 9.84.0
+     */
+    public void setKeptMacroParameterPrefix(String keptMacroParameterPrefix)
+    {
+        this.keptMacroParameterPrefix = keptMacroParameterPrefix == null ? "" : keptMacroParameterPrefix;
+    }
+
+    /**
+     * @return the prefix to use in the name of the macros parameters that are kept as-is
+     * @since 9.84.0
+     */
+    @PropertyName("Kept macro parameter mode")
+    @PropertyDescription("Which macro parameter to keep as is with the specified prefix. NONE: don't keep Confluence "
+        + "macro parameters. UNHANDLED: keep macro parameters that are not handled and normally kept during macro "
+        + "conversion. ALL: keep all the parameters, even those ")
+    public String getKeptMacroParameterMode()
+    {
+        return this.keptMacroParameterMode;
+    }
+
+    /**
+     * @param keptMacroParameterMode the prefix to use in the name of the macros parameters that are kept as-is
+     * @since 9.84.0
+     */
+    public void setKeptMacroParameterMode(String keptMacroParameterMode)
+    {
+        String mode = StringUtils.isEmpty(keptMacroParameterMode)
+            ? NONE
+            : keptMacroParameterMode.toUpperCase();
+
+        if (mode.equals("UNHANDLED") || mode.equals("ALL") || mode.equals(NONE)) {
+            this.keptMacroParameterMode = mode;
+        } else {
+            LOGGER.error("Unexpected Kept macro parameter mode [{}], will default to NONE", mode);
+            this.keptMacroParameterMode = NONE;
+        }
+    }
     /**
      * @return the unknown macros for which the name should be prefixed
      * @since 9.8

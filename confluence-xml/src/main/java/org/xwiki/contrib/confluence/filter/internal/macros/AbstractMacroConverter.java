@@ -22,12 +22,18 @@ package org.xwiki.contrib.confluence.filter.internal.macros;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
+import javax.inject.Inject;
+
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.rendering.listener.Listener;
 
 /**
@@ -38,11 +44,15 @@ import org.xwiki.rendering.listener.Listener;
  */
 public abstract class AbstractMacroConverter implements MacroConverter
 {
+    private static final String ATLASSIAN_MACRO_OUTPUT_TYPE = "atlassian-macro-output-type";
     private static final Marker UNHANDLED_PARAMETER_MARKER = MarkerFactory.getMarker("unhandledConfluenceParameter");
     private static final Marker UNHANDLED_PARAMETER_VALUE_MARKER =
         MarkerFactory.getMarker("unhandledConfluenceParameterValue");
 
     private final Logger logger = LoggerFactory.getLogger(AbstractMacroConverter.class.getName());
+
+    @Inject
+    private ConfluenceInputContext inputContext;
 
     @Override
     public void toXWiki(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
@@ -54,11 +64,78 @@ public abstract class AbstractMacroConverter implements MacroConverter
 
         Map<String, String> parameters = toXWikiParameters(confluenceId, tracedParameters, confluenceContent);
 
+        parameters = maybeKeepConfluenceParameters(confluenceParameters, parameters,
+            tracedParameters.getParametersWithUnhandledValues(), tracedParameters.getUnhandledParameters());
+
         String content = toXWikiContent(confluenceId, tracedParameters, confluenceContent);
 
         printUnhandledInfo(confluenceId, tracedParameters);
 
         listener.onMacro(id, parameters, content, inline);
+    }
+
+    private Map<String, String> maybeKeepConfluenceParameters(Map<String, String> confluenceParameters,
+        Map<String, String> parameters, Collection<String> parametersWithUnhandledValues,
+        Collection<String> unhandledParameters)
+    {
+        if (inputContext == null) {
+            logger.info("Could not determine the keeping parameter mode, assuming NONE");
+            return parameters;
+        }
+
+        ConfluenceInputProperties properties = inputContext.getProperties();
+        String mode = properties.getKeptMacroParameterMode();
+        if (StringUtils.isEmpty(mode) || mode.equals("NONE")) {
+            return parameters;
+        }
+
+        String prefix = properties.getKeptMacroParameterPrefix();
+
+        Map<String, String> newParameters = null;
+        if (mode.equals("ALL")) {
+            for (Map.Entry<String, String> confluenceParameter : confluenceParameters.entrySet()) {
+                newParameters = maybeAddKeptParameter(parameters, prefix, newParameters,
+                    confluenceParameter.getKey(), confluenceParameter.getValue());
+            }
+        } else if (mode.equals("UNHANDLED")) {
+            newParameters = addUnhandledParameters(confluenceParameters, parameters, parametersWithUnhandledValues,
+                newParameters, prefix);
+            newParameters = addUnhandledParameters(confluenceParameters, parameters, unhandledParameters,
+                newParameters, prefix);
+        } else {
+            logger.error("Unexpected keeping parameter mode [{}]. Assuming NONE. This should not happen.", mode);
+        }
+
+        return newParameters == null ? parameters : newParameters;
+    }
+
+    private static Map<String, String> addUnhandledParameters(Map<String, String> confluenceParameters,
+        Map<String, String> parameters, Collection<String> parametersWithUnhandledValues,
+        Map<String, String> newParameters, String prefix)
+    {
+        Map<String, String> np = newParameters;
+        for (String parameterName : parametersWithUnhandledValues) {
+            String parameterValue = confluenceParameters.get(parameterName);
+            np = maybeAddKeptParameter(parameters, prefix, newParameters, parameterName, parameterValue);
+        }
+        return np;
+    }
+
+    private static Map<String, String> maybeAddKeptParameter(Map<String, String> parameters,
+        String prefix, Map<String, String> newParameters, String parameterName, String parameterValue)
+    {
+        Map<String, String> np = newParameters;
+        String keptParameterName =
+            (ATLASSIAN_MACRO_OUTPUT_TYPE.equals(parameterName) || parameterName.startsWith(prefix))
+            ? parameterName
+            : prefix + parameterName;
+        if (!parameters.containsKey(parameterName) && !parameters.containsKey(keptParameterName)) {
+            if (np == null) {
+                np = new TreeMap<>(parameters);
+            }
+            np.put(keptParameterName, parameterValue);
+        }
+        return np;
     }
 
     private void printUnhandledInfo(String confluenceId, TracedMap<String, String> confluenceParameters)
