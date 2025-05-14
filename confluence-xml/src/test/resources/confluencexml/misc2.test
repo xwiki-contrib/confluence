@@ -1,0 +1,137 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Various misc tests for which having a dedicated entitie.xml is a bit overkill
+.#------------------------------------------------------------------------------
+<wikiSpace name="MISC">
+  <wikiSpace name="Misc content">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Misc content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>{{plantuml}}
+@startgantt
+&lt;style>
+ganttDiagram {
+task {
+HorizontalAlignment right
+FontName Helvetica
+FontColor red
+FontSize 10
+FontStyle normal
+BackGroundColor GreenYellow
+LineColor blue
+
+}
+milestone {
+FontColor blue
+FontSize 18
+FontStyle italic
+BackGroundColor yellow
+LineColor red
+}
+note {
+FontColor black
+FontSize 7
+LineColor white
+BackgroundColor white
+}
+arrow {
+FontName Helvetica
+FontColor red
+FontSize 18
+FontStyle bold
+BackGroundColor GreenYellow
+LineColor blue
+LineStyle 8.0;13.0
+LineThickness 3.0
+}
+separator {
+BackgroundColor linen
+LineStyle 1
+LineColor red
+LineThickness 1.0
+FontSize 10
+FontStyle bold
+FontColor purple
+Margin 1
+Padding 1
+}
+timeline {
+BackgroundColor Bisque
+}
+closed {
+BackgroundColor pink
+FontColor red
+}
+}
+&lt;/style>
+title My title
+legend My legend
+
+ganttscale quarterly
+project starts 2022-06-01
+
+-- Snip --
+@endgannt
+{{/plantuml}}
+
+\\</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
+.configuration.source=misc2
+.#------------------------------------------------------------------------------

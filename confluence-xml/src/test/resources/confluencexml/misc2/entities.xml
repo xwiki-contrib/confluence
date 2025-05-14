@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<hibernate-generic datetime="2025-04-22 15:59:07">
+    <object class="Page" package="com.atlassian.confluence.pages">
+        <id name="id">463168605</id>
+        <property name="hibernateVersion">25</property>
+        <property name="title">Misc content</property>
+        <property name="lowerTitle">misc content</property>
+        <property name="version">7</property>
+        <property name="creationDate">2023-05-14 13:30:42.247</property>
+        <property name="lastModificationDate">2023-06-28 02:05:24.230</property>
+        <property name="versionComment"/>
+        <property name="contentStatus">current</property>
+        <property name="position">4</property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key">2c9889aa637e9b11016469a29aef4e5d</id>
+        </property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key">2c9889aa637e9b11016469a29aef4e5d</id>
+        </property>
+        <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+            <id name="id">296026119</id>
+        </property>
+        <property name="parent" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">424775527</id>
+        </property>
+    </object>
+    <object class="Space" package="com.atlassian.confluence.spaces">
+        <id name="id">296026119</id>
+        <property name="name">Misc</property>
+        <property name="key">MISC</property>
+        <property name="lowerKey">misc</property>
+        <property name="creationDate">2018-08-06 08:08:34.820</property>
+        <property name="lastModificationDate">2018-08-06 08:08:34.820</property>
+        <property name="spaceType">global</property>
+        <property name="spaceStatus" enum-class="SpaceStatus" package="com.atlassian.confluence.spaces">CURRENT</property>
+        <property name="description" class="SpaceDescription" package="com.atlassian.confluence.spaces">
+            <id name="id">295744487</id>
+        </property>
+        <property name="homePage" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">295744488</id>
+        </property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key">2c98884858d9cb680159de3c83404974</id>
+        </property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key">2c98884858d9cb680159de3c83404974</id>
+        </property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">461143607</id>
+        <property name="body"><![CDATA[<ac:structured-macro ac:name="plantuml" ac:schema-version="1" ac:macro-id="ffeb162d-02b0-4f65-97ac-590de9b4ffe9"><ac:parameter ac:name="atlassian-macro-output-type">INLINE</ac:parameter><ac:plain-text-body><![CDATA[@startgantt
+<style>
+ganttDiagram {
+task {
+HorizontalAlignment right
+FontName Helvetica
+FontColor red
+FontSize 10
+FontStyle normal
+BackGroundColor GreenYellow
+LineColor blue
+
+}
+milestone {
+FontColor blue
+FontSize 18
+FontStyle italic
+BackGroundColor yellow
+LineColor red
+}
+note {
+FontColor black
+FontSize 7
+LineColor white
+BackgroundColor white
+}
+arrow {
+FontName Helvetica
+FontColor red
+FontSize 18
+FontStyle bold
+BackGroundColor GreenYellow
+LineColor blue
+LineStyle 8.0;13.0
+LineThickness 3.0
+}
+separator {
+BackgroundColor linen
+LineStyle 1
+LineColor red
+LineThickness 1.0
+FontSize 10
+FontStyle bold
+FontColor purple
+Margin 1
+Padding 1
+}
+timeline {
+BackgroundColor Bisque
+}
+closed {
+BackgroundColor pink
+FontColor red
+}
+}
+</style>
+title My title
+legend My legend
+
+ganttscale quarterly
+project starts 2022-06-01
+
+-- Snip --
+@endgannt   ]] ></ac:plain-text-body></ac:structured-macro><p><br /></p>]]></property>
+        <property name="bodyType">2</property>
+        <property name="content" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">463168605</id>
+        </property>
+    </object>
+</hibernate-generic>

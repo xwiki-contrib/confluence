@@ -19,11 +19,12 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 
 /**
@@ -32,9 +33,8 @@ import org.xwiki.component.annotation.Component;
  * @version $Id$
  * @since 9.66.0
  */
-@Component
+@Component (hints = {PlantumlRenderMacroConverter.PLANTUML, PlantumlRenderMacroConverter.PLANTUML_RENDER})
 @Singleton
-@Named(PlantumlRenderMacroConverter.PLANTUML_RENDER)
 public class PlantumlRenderMacroConverter extends AbstractMacroConverter
 {
     /**
@@ -57,6 +57,38 @@ public class PlantumlRenderMacroConverter extends AbstractMacroConverter
     @Override
     public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
     {
-        return InlineSupport.YES;
+        return "BLOCK".equals(parameters.get("atlassian-macro-output-type"))
+            ? InlineSupport.NO
+            : InlineSupport.YES;
+    }
+
+    @Override
+    protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
+        String content)
+    {
+        Map<String, String> parameters = new LinkedHashMap<>();
+        for (String parameterName : new String[] { "server", "title" }) {
+            String value = confluenceParameters.get(parameterName);
+            if (StringUtils.isNotEmpty(value)) {
+                parameters.put(parameterName, value);
+            }
+        }
+
+        for (String parameterName : new String[] { "type", "format" }) {
+            String value = confluenceParameters.get(parameterName);
+            if (StringUtils.isNotEmpty(value)) {
+                parameters.put(parameterName, value.toLowerCase());
+            }
+        }
+
+        return parameters;
+    }
+
+    @Override
+    protected String toXWikiContent(String confluenceId, Map<String, String> parameters, String confluenceContent)
+    {
+        // Remove the white spaces at the ends, including non-breaking spaces that have been observed and are bound to
+        // cause issues
+        return confluenceContent == null ? "" : confluenceContent.replaceAll("(^\\h*)|(\\h*$)", "");
     }
 }
