@@ -63,6 +63,10 @@ public abstract class AbstractMacroConverter implements MacroConverter
 
     private void printUnhandledInfo(String confluenceId, TracedMap<String, String> confluenceParameters)
     {
+        if (!logger.isInfoEnabled()) {
+            return;
+        }
+
         Collection<String> parametersWithUnhandledValues = confluenceParameters.getParametersWithUnhandledValues();
         Collection<String> unhandledParameters = confluenceParameters.getUnhandledParameters();
 
