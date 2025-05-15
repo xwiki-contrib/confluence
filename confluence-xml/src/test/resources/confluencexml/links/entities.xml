@@ -26,6 +26,7 @@
         <p>
           <a href="https://baseurl1.com/display/OtherSpace/Other+Page?param=value#anchor"><span param="value">link1</span></a>
           <a href="https://baseurl1.com/display/OtherSpace/Other+Page"><span param="value">link1</span></a>
+          <a href="https://baseurl1.com/display/OtherSpace/Other+Page#OtherSpaceOtherPage-SomeTitle"><span param="value">link1</span></a>
         </p>
         <p>
           <a href="https://baseurl2.com/pages/viewpage.action?pageId=11&amp;param=value#anchor"><span param="value">link2</span></a>

@@ -57,25 +57,25 @@ import java.util.regex.Pattern;
 @Named("base")
 public class BaseConfluenceURLConverter extends AbstractConfluenceURLConverter
 {
-    private static final Pattern PATTERN_URL_DISPLAY = Pattern.compile("^display/([^/?]+)/([^?/#]+)(\\?.*)?$");
+    private static final Pattern PATTERN_URL_DISPLAY = Pattern.compile("^display/([^/?]+)/([^?/#]+)$");
 
-    private static final Pattern PATTERN_URL_SPACE_DISPLAY = Pattern.compile("^display/([^/?]+)/?(\\?.*)?$");
+    private static final Pattern PATTERN_URL_SPACE_DISPLAY = Pattern.compile("^display/([^/?]+)/?$");
 
-    private static final Pattern PATTERN_URL_VIEWPAGE = Pattern.compile("^pages/viewpage\\.action\\?.*$");
+    private static final Pattern PATTERN_URL_VIEWPAGE = Pattern.compile("^pages/viewpage\\.action$");
 
-    private static final Pattern PATTERN_URL_VIEWSPACE = Pattern.compile("^spaces/viewspace\\.action\\?.*$");
+    private static final Pattern PATTERN_URL_VIEWSPACE = Pattern.compile("^spaces/viewspace\\.action$");
 
     private static final Pattern PATTERN_URL_HTML = Pattern.compile("^.*-(\\d+).html$");
 
-    private static final Pattern PATTERN_TINY_LINK = Pattern.compile("^x/([^?#]+)(\\?.*)?$");
+    private static final Pattern PATTERN_TINY_LINK = Pattern.compile("^x/([^?#]+)$");
 
-    private static final Pattern PATTERN_URL_SPACES = Pattern.compile("^spaces/(.+)/pages/\\d+/([^?#]+)(\\?.*)?$");
+    private static final Pattern PATTERN_URL_SPACES = Pattern.compile("^spaces/(.+)/pages/\\d+/([^?#]+)$");
 
     private static final Pattern PATTERN_URL_ATTACHMENT =
-        Pattern.compile("^download/(?:attachments|thumbnails)/(\\d+)/([^?#]+)(\\?.*)?$");
+        Pattern.compile("^download/(?:attachments|thumbnails)/(\\d+)/([^?#]+)$");
 
     private static final Pattern PATTERN_URL_EMOTICON =
-        Pattern.compile("^images/icons/emoticons/([^?#]+)(\\....)(\\?.*)?$");
+        Pattern.compile("^images/icons/emoticons/([^?#]+)(\\....)$");
 
     @Inject
     private ConfluenceConverter converter;
@@ -220,8 +220,6 @@ public class BaseConfluenceURLConverter extends AbstractConfluenceURLConverter
         }
 
         Map<String, String> urlParameters = parseURLParameters(uri.getQuery());
-        String urlAnchor = uri.getFragment();
-
-        return fixReference(path, urlParameters, urlAnchor);
+        return fixReference(uri.getPath(), urlParameters, uri.getFragment());
     }
 }

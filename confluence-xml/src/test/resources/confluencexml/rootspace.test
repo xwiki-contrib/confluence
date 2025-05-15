@@ -17,7 +17,7 @@
                   </entry>
                   <entry>
                     <string>content</string>
-                    <string>[[(% param="value" %)link1>>doc:Composed.Root.OtherSpace.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link1>>doc:Composed.Root.OtherSpace.WebHome||shape="rect"]]
+                    <string>[[(% param="value" %)link1>>doc:Composed.Root.OtherSpace.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link1>>doc:Composed.Root.OtherSpace.WebHome||shape="rect"]](%%) [[(% param="value" %)link1>>doc:Composed.Root.OtherSpace.WebHome||anchor="OtherSpaceOtherPage-SomeTitle" shape="rect"]]
 
 [[(% param="value" %)link2>>doc:Composed.Root.OtherSpace.WebHome||anchor="anchor" shape="rect"]](%%) [[(% param="value" %)link2>>doc:Composed.Root.OtherSpace.WebHome||shape="rect"]]
 
