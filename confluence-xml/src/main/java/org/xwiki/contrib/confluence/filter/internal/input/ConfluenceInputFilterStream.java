@@ -2119,7 +2119,11 @@ public class ConfluenceInputFilterStream
             Date publishDate = null;
             try {
                 publishDate =
-                    this.confluencePackage.getDate(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISION_DATE);
+                    this.confluencePackage.getDate(pageProperties, ConfluenceXMLPackage.KEY_PAGE_CREATION_DATE);
+                if (publishDate == null) {
+                    publishDate =
+                        this.confluencePackage.getDate(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISION_DATE);
+                }
             } catch (Exception e) {
                 this.logger.error(
                     "Failed to parse the publish date of the blog post document with id [{}]",

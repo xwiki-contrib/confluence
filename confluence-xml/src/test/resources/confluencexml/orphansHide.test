@@ -447,7 +447,7 @@
             <wikiObjectProperty name="content"/>
             <wikiObjectProperty name="publishDate">
               <p>
-                <value t="java.util.Date">2025-01-29 15:34:19.599 UTC</value>
+                <value t="java.util.Date">2025-01-29 15:34:19.478 UTC</value>
               </p>
             </wikiObjectProperty>
             <wikiObjectProperty name="published">
@@ -516,7 +516,7 @@
             <wikiObjectProperty name="content"/>
             <wikiObjectProperty name="publishDate">
               <p>
-                <value t="java.util.Date">2025-01-29 15:34:31.580 UTC</value>
+                <value t="java.util.Date">2025-01-29 15:34:31.455 UTC</value>
               </p>
             </wikiObjectProperty>
             <wikiObjectProperty name="published">
