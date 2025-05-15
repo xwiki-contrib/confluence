@@ -794,8 +794,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
     // maps a space id to a lowercase title to page id mapping
     private final Map<Long, Map<String, Long>> pagesBySpaceAndLowerTitle = new HashMap<>();
 
-    private final Collection<Long> ignoredSpaces = new HashSet<>();
-
     private String spaceKeyToImport;
     private long spaceIdToImport;
 
