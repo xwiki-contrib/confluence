@@ -7,6 +7,35 @@
 .# XWIKI-10014 - Failed to import attachments with multiple versions in some version of Confluence
 .#------------------------------------------------------------------------------
 <wikiSpace name="~clemens">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>title</string>
+              <string>~clemens</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>{{children/}}</string>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
   <wikiSpace name="with [[brace]]s (and [single brace])">
     <wikiDocument name="WebHome">
       <wikiDocumentLocale>

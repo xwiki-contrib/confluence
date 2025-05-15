@@ -822,24 +822,37 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             return spacesToDash(anchor);
         }
 
-        String title = pageTitle;
-        if (StringUtils.isEmpty(title)) {
-            if (StringUtils.isEmpty(spaceKey)) {
-                title = getCurrentPageTitleForAnchor();
-            } else {
-                ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
-                Long spaceId = confluencePackage.getSpaceId(context.getCurrentSpace());
-                if (spaceId == null) {
-                    logger.warn("Could not get the home page of space [{}], anchor [{}] might be broken",
-                        spaceKey, anchor);
-                    title = "";
-                } else {
-                    title = getPageTitleForAnchor(confluencePackage.getHomePage(spaceId));
-                }
+        String title = getAnchorTitle(spaceKey, pageTitle, anchor);
+        return getConfluenceServerAnchor(title, anchor);
+    }
+
+    private String getAnchorTitle(String spaceKey, String pageTitle, String anchor)
+    {
+        if (!StringUtils.isEmpty(pageTitle)) {
+            return pageTitle;
+        }
+
+        if (StringUtils.isEmpty(spaceKey)) {
+            return getCurrentPageTitleForAnchor();
+        }
+        ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
+        Long spaceId = confluencePackage.getSpaceId(context.getCurrentSpace());
+
+        String title = null;
+        if (spaceId != null) {
+            Long homePage = confluencePackage.getHomePage(spaceId);
+            if (homePage != null) {
+                title = getPageTitleForAnchor(homePage);
             }
         }
 
-        return getConfluenceServerAnchor(title, anchor);
+        if (title == null) {
+            logger.warn("Could not get the title of the home page of space [{}], anchor [{}] might be broken",
+                spaceKey, anchor);
+            title = "";
+        }
+
+        return title;
     }
 
     @Override

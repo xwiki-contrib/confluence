@@ -34,6 +34,7 @@
     <id name="id">101</id>
     <property name="name"><![CDATA[SpaceB]]></property>
     <property name="key"><![CDATA[SpaceB]]></property>
+    <property name="homePage" class="Page" package="com.atlassian.confluence.pages"><id name="id">10</id></property>
   </object>
 
   <object class="Page" package="com.atlassian.confluence.pages">

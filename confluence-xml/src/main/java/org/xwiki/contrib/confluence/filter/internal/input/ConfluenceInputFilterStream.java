@@ -175,6 +175,8 @@ public class ConfluenceInputFilterStream
 
     private static final String REVISION = "revision";
 
+    private static final String ONE = "1";
+
     @Inject
     @Named(ConfluenceInputStreamParser.COMPONENT_NAME)
     private StreamParser confluenceWIKIParser;
@@ -650,7 +652,10 @@ public class ConfluenceInputFilterStream
                 List<Long> orphans = confluencePackage.getOrphans(spaceId);
                 Long homePageId = confluencePackage.getHomePage(spaceId);
                 if (this.properties.isContentsEnabled() || this.properties.isRightsEnabled()) {
-                    if (homePageId != null) {
+                    if (homePageId == null) {
+                        // no home page, we send a minimal one to avoid overly confusing space trees
+                        sendSyntheticHomePage(spaceKey, proxyFilter);
+                    } else {
                         inheritedRights = sendPage(homePageId, spaceKey, false, filter, proxyFilter, false);
                         homePageProperties = getPageProperties(homePageId);
                     }
@@ -690,6 +695,36 @@ public class ConfluenceInputFilterStream
             if (this.properties.isVerbose()) {
                 this.logger.info("Finished sending Confluence space [{}], id=[{}]", spaceKey, spaceId);
             }
+        }
+    }
+
+    private void sendSyntheticHomePage(String spaceKey, ConfluenceFilter proxyFilter) throws
+        FilterException
+    {
+        FilterEventParameters documentParameters = new FilterEventParameters();
+        if (this.properties.getDefaultLocale() != null) {
+            documentParameters.put(WikiDocumentFilter.PARAMETER_LOCALE, this.properties.getDefaultLocale());
+        }
+        proxyFilter.beginWikiDocument(WEB_HOME, documentParameters);
+        try {
+            if (this.properties.isContentsEnabled()) {
+                FilterEventParameters documentLocaleParameters = new FilterEventParameters();
+                proxyFilter.beginWikiDocumentLocale(Locale.ROOT, documentLocaleParameters);
+                try {
+                    FilterEventParameters docRevisionParameters = new FilterEventParameters();
+                    docRevisionParameters.put(WikiDocumentFilter.PARAMETER_TITLE, spaceKey);
+                    // TODO: we may want to make this body content customizable at some point
+                    docRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, Syntax.XWIKI_2_1);
+                    docRevisionParameters.put(WikiDocumentFilter.PARAMETER_CONTENT, "{{children/}}");
+                    proxyFilter.beginWikiDocumentRevision(ONE, docRevisionParameters);
+                    storeConfluenceDetails(spaceKey, null, null, null, true, proxyFilter);
+                    proxyFilter.endWikiDocumentRevision(ONE, docRevisionParameters);
+                } finally {
+                    proxyFilter.endWikiDocumentLocale(Locale.ROOT, documentLocaleParameters);
+                }
+            }
+        } finally {
+            proxyFilter.endWikiDocument(WEB_HOME, documentParameters);
         }
     }
 
@@ -1086,7 +1121,7 @@ public class ConfluenceInputFilterStream
         rightParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, rightClassName);
         proxyFilter.beginWikiObject(rightClassName, rightParameters);
         try {
-            proxyFilter.onWikiObjectProperty("allow", "1", FilterEventParameters.EMPTY);
+            proxyFilter.onWikiObjectProperty("allow", ONE, FilterEventParameters.EMPTY);
             proxyFilter.onWikiObjectProperty("groups", group, FilterEventParameters.EMPTY);
             proxyFilter.onWikiObjectProperty("levels", right.getName(), FilterEventParameters.EMPTY);
             proxyFilter.onWikiObjectProperty("users", users, FilterEventParameters.EMPTY);
@@ -2004,7 +2039,10 @@ public class ConfluenceInputFilterStream
             readAttachments(pageProperties, attachments, proxyFilter);
             readPageTags(pageProperties, proxyFilter);
             readComments(pageProperties, proxyFilter);
-            storeConfluenceDetails(spaceKey, pageId, pageProperties, proxyFilter);
+            String title = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE, null);
+            Long stableId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_ORIGINAL_VERSION, pageId);
+            boolean home = pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE);
+            storeConfluenceDetails(spaceKey, title, pageId, stableId, home, proxyFilter);
         } finally {
             // < WikiDocumentRevision
             proxyFilter.endWikiDocumentRevision(revision, docRevisionParameters);
@@ -2470,7 +2508,7 @@ public class ConfluenceInputFilterStream
     /**
      * @since 9.13
      */
-    private void storeConfluenceDetails(String spaceKey, Long pageId, ConfluenceProperties pageProperties,
+    private void storeConfluenceDetails(String spaceKey, String pageTitle, Long pageId, Long stableId, boolean home,
         ConfluenceFilter proxyFilter) throws FilterException
     {
         if (!this.properties.isStoreConfluenceDetailsEnabled()) {
@@ -2483,20 +2521,25 @@ public class ConfluenceInputFilterStream
         pageReportParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, CONFLUENCEPAGE_CLASSNAME);
         proxyFilter.beginWikiObject(CONFLUENCEPAGE_CLASSNAME, pageReportParameters);
         try {
-            proxyFilter.onWikiObjectProperty(ConfluenceXMLPackage.KEY_ID, pageId, FilterEventParameters.EMPTY);
-            long stableId = pageProperties.getLong(ConfluenceXMLPackage.KEY_PAGE_ORIGINAL_VERSION, pageId);
-            proxyFilter.onWikiObjectProperty("stableId", stableId, FilterEventParameters.EMPTY);
+            if (pageId != null) {
+                proxyFilter.onWikiObjectProperty(ConfluenceXMLPackage.KEY_ID, pageId, FilterEventParameters.EMPTY);
+            }
+
+            if (stableId != null) {
+                proxyFilter.onWikiObjectProperty("stableId", stableId, FilterEventParameters.EMPTY);
+            }
+
             StringBuilder pageURLBuilder = new StringBuilder();
             if (!this.properties.getBaseURLs().isEmpty()) {
                 pageURLBuilder.append(this.properties.getBaseURLs().get(0).toString());
                 pageURLBuilder.append("/spaces/").append(spaceKey);
-                if (!pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE)) {
-                    String pageName = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
-                    pageURLBuilder.append("/pages/").append(pageId).append('/').append(pageName);
+                if (!home && pageTitle != null) {
+                    pageURLBuilder.append("/pages/").append(pageId).append('/').append(pageTitle);
                 }
             }
-            String title = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE, null);
-            proxyFilter.onWikiObjectProperty(TITLE, title, FilterEventParameters.EMPTY);
+            if (pageTitle != null) {
+                proxyFilter.onWikiObjectProperty(TITLE, pageTitle, FilterEventParameters.EMPTY);
+            }
             proxyFilter.onWikiObjectProperty("url", pageURLBuilder.toString(), FilterEventParameters.EMPTY);
             proxyFilter.onWikiObjectProperty("space", spaceKey, FilterEventParameters.EMPTY);
         } finally {

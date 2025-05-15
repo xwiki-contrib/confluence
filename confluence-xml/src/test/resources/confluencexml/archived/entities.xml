@@ -19,7 +19,7 @@
       package="com.atlassian.confluence.spaces">
       <id name="id">100</id>
     </property>
-    <property name="title"/>
+    <property name="title">Page in archived space</property>
   </object>
 
   <object class="Page" package="com.atlassian.confluence.pages">
@@ -28,7 +28,7 @@
       package="com.atlassian.confluence.spaces">
       <id name="id">200</id>
     </property>
-    <property name="title"/>
+    <property name="title">Page in current space</property>
   </object>
 
 </hibernate-generic>

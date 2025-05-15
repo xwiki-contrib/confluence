@@ -4,6 +4,7 @@
     <id name="id">100</id>
     <property name="name"><![CDATA[TestSpace]]></property>
     <property name="key"><![CDATA[TestSpace]]></property>
+    <property name="homePage" class="Page" package="com.atlassian.confluence.pages"><id name="id">10</id></property>
   </object>
 
   <object class="Page" package="com.atlassian.confluence.pages">
@@ -133,6 +134,7 @@
     <id name="id">101</id>
     <property name="name"><![CDATA[OtherSpace]]></property>
     <property name="key"><![CDATA[OtherSpace]]></property>
+    <property name="homePage" class="Page" package="com.atlassian.confluence.pages"><id name="id">11</id></property>
   </object>
 
   <object class="Page" package="com.atlassian.confluence.pages">

@@ -1982,11 +1982,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
         Long parent = properties.getLong(KEY_PAGE_PARENT, null);
         if (parent == null) {
             Long homePage = homePages.get(spaceId);
-            if (homePage == null) {
-                // some spaces don't have a homePage property, but the property is here, we try to fix this.
-                properties.setProperty(KEY_PAGE_HOMEPAGE, true);
-                setHomePage(spaceId, pageId);
-            } else if (!homePage.equals(pageId)) {
+            if (homePage == null || !homePage.equals(pageId)) {
                 orphans.computeIfAbsent(spaceId, k -> new ArrayList<>()).add(pageId);
             }
         } else {

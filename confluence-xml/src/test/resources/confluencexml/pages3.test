@@ -2,6 +2,47 @@
 .expect|filter+xml
 .#------------------------------------------------------------------------------
 <wikiSpace name="SpaceA">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>title</string>
+              <string>SpaceA</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>{{children/}}</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObject name="Confluence.Code.ConfluencePageClass">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>Confluence.Code.ConfluencePageClass</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="url" value="https://example.org/wiki/spaces/SpaceA"/>
+          <wikiObjectProperty name="space" value="SpaceA"/>
+        </wikiObject>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
   <wikiSpace name="Page0">
     <wikiDocument name="WebHome">
       <wikiDocumentLocale>
