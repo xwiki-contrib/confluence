@@ -654,7 +654,7 @@ public class ConfluenceInputFilterStream
                 if (this.properties.isContentsEnabled() || this.properties.isRightsEnabled()) {
                     if (homePageId == null) {
                         // no home page, we send a minimal one to avoid overly confusing space trees
-                        sendSyntheticHomePage(spaceKey, proxyFilter);
+                        sendSyntheticWebHomePageListingChildren(spaceKey, spaceKey, proxyFilter);
                     } else {
                         inheritedRights = sendPage(homePageId, spaceKey, false, filter, proxyFilter, false);
                         homePageProperties = getPageProperties(homePageId);
@@ -698,8 +698,8 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void sendSyntheticHomePage(String spaceKey, ConfluenceFilter proxyFilter) throws
-        FilterException
+    private void sendSyntheticWebHomePageListingChildren(String spaceKey, String title, ConfluenceFilter proxyFilter)
+        throws FilterException
     {
         FilterEventParameters documentParameters = new FilterEventParameters();
         if (this.properties.getDefaultLocale() != null) {
@@ -712,12 +712,16 @@ public class ConfluenceInputFilterStream
                 proxyFilter.beginWikiDocumentLocale(Locale.ROOT, documentLocaleParameters);
                 try {
                     FilterEventParameters docRevisionParameters = new FilterEventParameters();
-                    docRevisionParameters.put(WikiDocumentFilter.PARAMETER_TITLE, spaceKey);
+                    if (title != null) {
+                        docRevisionParameters.put(WikiDocumentFilter.PARAMETER_TITLE, title);
+                    }
                     // TODO: we may want to make this body content customizable at some point
                     docRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, Syntax.XWIKI_2_1);
                     docRevisionParameters.put(WikiDocumentFilter.PARAMETER_CONTENT, "{{children/}}");
                     proxyFilter.beginWikiDocumentRevision(ONE, docRevisionParameters);
-                    storeConfluenceDetails(spaceKey, null, null, null, true, proxyFilter);
+                    if (spaceKey != null) {
+                        storeConfluenceDetails(spaceKey, null, null, null, true, proxyFilter);
+                    }
                     proxyFilter.endWikiDocumentRevision(ONE, docRevisionParameters);
                 } finally {
                     proxyFilter.endWikiDocumentLocale(Locale.ROOT, documentLocaleParameters);
@@ -743,6 +747,7 @@ public class ConfluenceInputFilterStream
         }
 
         proxyFilter.beginWikiSpace(templateSpaceName, FilterEventParameters.EMPTY);
+        sendSyntheticWebHomePageListingChildren(null, null, proxyFilter);
         try {
             for (Object templateObject : templates) {
                 long templateId = toLong(templateObject);
