@@ -43,9 +43,15 @@ public class JiraMacroConverter extends AbstractMacroConverter
 
     private static final String XWIKI_PARAM_SOURCE = "source";
 
+    private static final String XWIKI_PARAM_FIELDS = "fields";
+
     private static final String CONFLUENCE_PARAM_KEY = "key";
 
     private static final String CONFLUENCE_PARAM_SERVER = "server";
+
+    private static final String CONFLUENCE_PARAM_COLUMN_IDS = "columnIds";
+
+    private static final String CONFLUENCE_PARAM_COLUMNS = "columns";
 
     private static final String COMMA = ",";
 
@@ -88,14 +94,20 @@ public class JiraMacroConverter extends AbstractMacroConverter
         Map<String, String> parameters = new LinkedHashMap<>(confluenceParameters.size());
         parameters.put(XWIKI_PARAM_ID, confluenceParameters.get(CONFLUENCE_PARAM_SERVER));
 
+        if (StringUtils.isEmpty(confluenceParameters.get(CONFLUENCE_PARAM_SERVER))) {
+            throw new RuntimeException("The server parameter is required");
+        }
+        markHandledParameter(confluenceParameters, "serverId", false);
+
         switch (getMacroUsageType(confluenceParameters)) {
             case LIST:
                 parameters.put("maxCount", confluenceParameters.get("maximumIssues"));
                 if (!StringUtils.isBlank(confluenceParameters.get(CONFLUENCE_JQL_PARAMETER_NAME))) {
                     parameters.put(XWIKI_PARAM_SOURCE, "jql");
                 }
-                parameters.put("fields",
-                    convertColumnParams(confluenceParameters.get("columnIds"), confluenceParameters.get("columns")));
+                parameters.put(XWIKI_PARAM_FIELDS,
+                    convertColumnParams(confluenceParameters.get(CONFLUENCE_PARAM_COLUMN_IDS),
+                        confluenceParameters.get(CONFLUENCE_PARAM_COLUMNS)));
                 break;
             case COUNT:
                 throw new RuntimeException(
@@ -103,11 +115,15 @@ public class JiraMacroConverter extends AbstractMacroConverter
             case SINGLE:
                 parameters.put(XWIKI_PARAM_SOURCE, "list");
                 parameters.put("style", "enum");
+                // We don't really need the fields parameter for this usage, but we convert it and keep it in case
+                // the user want to change this macro to show a table with all macro details
+                parameters.put(XWIKI_PARAM_FIELDS,
+                    convertColumnParams(confluenceParameters.get(CONFLUENCE_PARAM_COLUMN_IDS),
+                        confluenceParameters.get(CONFLUENCE_PARAM_COLUMNS)));
                 break;
             default:
                 throw new RuntimeException("Unsupported macro usage type");
         }
-        markHandledParameter(confluenceParameters, "serverId", false);
         return parameters;
     }
 
