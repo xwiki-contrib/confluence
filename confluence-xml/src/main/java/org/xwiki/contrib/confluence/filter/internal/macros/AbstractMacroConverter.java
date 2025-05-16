@@ -84,7 +84,7 @@ public abstract class AbstractMacroConverter implements MacroConverter
         }
 
         ConfluenceInputProperties properties = inputContext.getProperties();
-        String mode = properties.getKeptMacroParameterMode();
+        String mode = properties.getMacroParameterKeepingMode();
         if (StringUtils.isEmpty(mode) || mode.equals("NONE")) {
             return parameters;
         }

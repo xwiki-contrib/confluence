@@ -72,5 +72,5 @@
 .input|confluence+xml
 .configuration.source=keptparams
 .configuration.storeConfluenceDetailsEnabled=false
-.configuration.keptMacroParameterMode=NONE
+.configuration.macroParameterKeepingMode=NONE
 .#------------------------------------------------------------------------------

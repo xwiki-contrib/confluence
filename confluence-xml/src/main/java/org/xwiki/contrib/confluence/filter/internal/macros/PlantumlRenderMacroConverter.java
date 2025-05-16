@@ -88,11 +88,8 @@ public class PlantumlRenderMacroConverter extends AbstractMacroConverter
     protected String toXWikiContent(String confluenceId, Map<String, String> parameters, String confluenceContent)
     {
         // Remove the white spaces at the ends, including non-breaking spaces that have been observed and are bound to
-        // cause issues
-        return confluenceContent == null
-            ? ""
-            : confluenceContent
-                .replaceAll("^\\h+", "")
-                .replaceAll("\\h+$", "");
+        // cause issues. The list of characters comes from the following documentation:
+        // https://docs.oracle.com/javase/8/docs/api/java/lang/Character.html#isWhitespace-char-
+        return StringUtils.strip(confluenceContent, "\n\r\t\f\u00A0\u2007\u202F\u000B\u001C\u001D\u001E\u001F ");
     }
 }

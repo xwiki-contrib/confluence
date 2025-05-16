@@ -140,7 +140,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      */
     private String keptMacroParameterPrefix = CONFLUENCE_UNDERSCORE;
 
-    private String keptMacroParameterMode = NONE;
+    private String macroParameterKeepingMode = NONE;
 
     private Set<String> prefixedMacros;
 
@@ -661,30 +661,30 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @return the prefix to use in the name of the macros parameters that are kept as-is
      * @since 9.84.0
      */
-    @PropertyName("Kept macro parameter mode")
+    @PropertyName("Macro parameter keeping mode")
     @PropertyDescription("Which macro parameter to keep as is with the specified prefix. NONE: don't keep Confluence "
         + "macro parameters. UNHANDLED: keep macro parameters that are not handled and normally kept during macro "
         + "conversion. ALL: keep all the parameters, even those ")
-    public String getKeptMacroParameterMode()
+    public String getMacroParameterKeepingMode()
     {
-        return this.keptMacroParameterMode;
+        return this.macroParameterKeepingMode;
     }
 
     /**
-     * @param keptMacroParameterMode the prefix to use in the name of the macros parameters that are kept as-is
+     * @param macroParameterKeepingMode the prefix to use in the name of the macros parameters that are kept as-is
      * @since 9.84.0
      */
-    public void setKeptMacroParameterMode(String keptMacroParameterMode)
+    public void setMacroParameterKeepingMode(String macroParameterKeepingMode)
     {
-        String mode = StringUtils.isEmpty(keptMacroParameterMode)
+        String mode = StringUtils.isEmpty(macroParameterKeepingMode)
             ? NONE
-            : keptMacroParameterMode.toUpperCase();
+            : macroParameterKeepingMode.toUpperCase();
 
         if (mode.equals("UNHANDLED") || mode.equals("ALL") || mode.equals(NONE)) {
-            this.keptMacroParameterMode = mode;
+            this.macroParameterKeepingMode = mode;
         } else {
             LOGGER.error("Unexpected Kept macro parameter mode [{}], will default to NONE", mode);
-            this.keptMacroParameterMode = NONE;
+            this.macroParameterKeepingMode = NONE;
         }
     }
     /**
