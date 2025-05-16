@@ -89,6 +89,10 @@ public class PlantumlRenderMacroConverter extends AbstractMacroConverter
     {
         // Remove the white spaces at the ends, including non-breaking spaces that have been observed and are bound to
         // cause issues
-        return confluenceContent == null ? "" : confluenceContent.replaceAll("(^\\h*)|(\\h*$)", "");
+        return confluenceContent == null
+            ? ""
+            : confluenceContent
+                .replaceAll("^\\h+", "")
+                .replaceAll("\\h+$", "");
     }
 }
