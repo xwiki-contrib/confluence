@@ -2010,11 +2010,19 @@ public class ConfluenceXMLPackage implements AutoCloseable
         long labellingId = readObjectProperties(xmlReader, properties);
 
         // Since Confluence 8.0, the labellings are not part of the Page Object anymore (most probably because it can be
-        // associated to a space object too).
+        // associated to a space or a PageTemplate object too).
         Long parentId = properties.getLong(KEY_LABELLING_CONTENT, null);
+        String parentClass = null;
+        if (parentId == null) {
+            parentId = properties.getLong("pageTemplate", null);
+            parentClass = OBJECT_TYPE_PAGE_TEMPLATE;
+        }
 
         if (parentId != null) {
-            String parentClass = getBodyPropertyClass(properties);
+            if (parentClass == null) {
+                parentClass = getBodyPropertyClass(properties);
+            }
+
             if (parentClass == null) {
                 // Assume it's a page by default
                 parentClass = OBJECT_TYPE_PAGE;

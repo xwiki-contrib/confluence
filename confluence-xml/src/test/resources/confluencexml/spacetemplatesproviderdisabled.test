@@ -219,6 +219,17 @@ Type your task here. Use "@" to assign a user and "~/~/" to select a due date.
                 </entry>
               </parameters>
             </p>
+            <wikiObject name="XWiki.TagClass">
+              <p>
+                <parameters>
+                  <entry>
+                    <string>class_reference</string>
+                    <string>XWiki.TagClass</string>
+                  </entry>
+                </parameters>
+              </p>
+              <wikiObjectProperty name="tags" value="mytemplatelabel"/>
+            </wikiObject>
           </wikiDocumentRevision>
         </wikiDocumentLocale>
       </wikiDocument>

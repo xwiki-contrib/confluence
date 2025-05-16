@@ -53,6 +53,9 @@
 </property>
 <property name="lastModificationDate">2016-05-02 11:20:43.476</property>
 <property name="bodyType">2</property>
+<collection name="labellings" class="java.util.Collection(com.atlassian.confluence.pages.templates.PageTemplate.labellings)"><element class="Labelling" package="com.atlassian.confluence.labels"><id name="id">999948290</id>
+</element>
+</collection>
 </object>
 
 <object class="PageTemplate" package="com.atlassian.confluence.pages.templates">
@@ -202,6 +205,28 @@
   <property name="owner"/><property name="namespace"><![CDATA[global]]></property>
   <property name="creationDate">2010-01-02 18:27:32.000</property>
   <property name="lastModificationDate">2010-01-02 18:27:32.000</property>
+</object>
+
+<object class="Label" package="com.atlassian.confluence.labels">
+  <id name="id">999948289</id>
+  <property name="name"><![CDATA[mytemplatelabel]]></property>
+  <property name="namespace"><![CDATA[global]]></property>
+  <property name="creationDate">2025-05-16 07:20:25.077</property>
+  <property name="lastModificationDate">2025-05-16 07:20:25.077</property>
+</object>
+
+<object class="Labelling" package="com.atlassian.confluence.labels">
+  <id name="id">999948290</id>
+  <property name="label" class="Label" package="com.atlassian.confluence.labels"><id name="id">999948289</id>
+  </property>
+  <property name="pageTemplate" class="PageTemplate" package="com.atlassian.confluence.pages.templates"><id name="id">642351109</id>
+  </property>
+  <property name="owningUser" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+  </property>
+  <property name="creationDate">2025-05-16 07:20:25.124</property>
+  <property name="lastModificationDate">2025-05-16 07:20:25.124</property>
+  <property name="labelableId">999784449</property>
+  <property name="labelableType"><![CDATA[PAGETEMPLATE]]></property>
 </object>
 
 </hibernate-generic>

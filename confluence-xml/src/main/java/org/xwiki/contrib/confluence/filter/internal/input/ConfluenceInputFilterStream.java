@@ -814,6 +814,7 @@ public class ConfluenceInputFilterStream
             prepareRevisionMetadata(templateProperties, revisionParameters);
             beginPageRevision(false, templateProperties, filter, proxyFilter, version,
                    revisionParameters, ConfluenceXMLPackage.KEY_CONTENT);
+            readPageTags(templateProperties, proxyFilter);
             proxyFilter.endWikiDocumentRevision(version, revisionParameters);
         } finally {
             proxyFilter.endWikiDocumentLocale(locale, documentLocaleParameters);
