@@ -2,35 +2,6 @@
 .expect|filter+xml
 .#------------------------------------------------------------------------------
 <wikiSpace name="SpaceA">
-  <wikiDocument name="WebHome">
-    <wikiDocumentLocale>
-      <wikiDocumentRevision revision="1">
-        <p>
-          <parameters>
-            <entry>
-              <string>title</string>
-              <string>SpaceA</string>
-            </entry>
-            <entry>
-              <string>syntax</string>
-              <org.xwiki.rendering.syntax.Syntax>
-                <type>
-                  <name>XWiki</name>
-                  <id>xwiki</id>
-                  <variants class="empty-list"/>
-                </type>
-                <version>2.1</version>
-              </org.xwiki.rendering.syntax.Syntax>
-            </entry>
-            <entry>
-              <string>content</string>
-              <string>{{children/}}</string>
-            </entry>
-          </parameters>
-        </p>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
   <wikiSpace name="Page0">
     <wikiDocument name="WebHome">
       <wikiDocumentLocale>
@@ -47,6 +18,7 @@
       </wikiDocumentLocale>
     </wikiDocument>
   </wikiSpace>
+  <wikiSpace name="Page1"/>
 </wikiSpace>
 <wikiSpace name="SpaceB">
   <wikiDocument name="WebHome">

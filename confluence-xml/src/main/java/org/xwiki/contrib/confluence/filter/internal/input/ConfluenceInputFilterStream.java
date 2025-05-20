@@ -47,6 +47,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Provider;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.StringUtils;
@@ -648,13 +649,16 @@ public class ConfluenceInputFilterStream
         try {
             Collection<ConfluenceRight> inheritedRights = null;
             ConfluenceProperties homePageProperties = null;
+            Long homePageId = confluencePackage.getHomePage(spaceId);
             try {
                 List<Long> orphans = confluencePackage.getOrphans(spaceId);
-                Long homePageId = confluencePackage.getHomePage(spaceId);
                 if (this.properties.isContentsEnabled() || this.properties.isRightsEnabled()) {
                     if (homePageId == null) {
-                        // no home page, we send a minimal one to avoid overly confusing space trees
-                        sendSyntheticWebHomePageListingChildren(spaceKey, spaceKey, proxyFilter);
+                        if (CollectionUtils.isEmpty(properties.getIncludedPages())) {
+                            // no home page, we send a minimal one to avoid overly confusing space trees
+                            // but only if we are not sending a specific list of pages
+                            sendSyntheticWebHomePageListingChildren(spaceKey, spaceKey, proxyFilter);
+                        }
                     } else {
                         inheritedRights = sendPage(homePageId, spaceKey, false, filter, proxyFilter, false);
                         homePageProperties = getPageProperties(homePageId);
@@ -668,23 +672,26 @@ public class ConfluenceInputFilterStream
                     sendBlogs(spaceKey, blogPages, filter, proxyFilter);
                 }
 
-                sendSpaceTemplates(spaceProperties, spaceKey, spaceId, filter, proxyFilter);
+                if (CollectionUtils.isEmpty(properties.getIncludedPages())) {
+                    // We don't send templates and pinned pages if we are sending a specific list of pages
+                    sendSpaceTemplates(spaceProperties, spaceKey, spaceId, filter, proxyFilter);
 
-                if (this.properties.isPageOrderEnabled()) {
-                    List<Long> children = confluencePackage.getPageChildren(homePageId);
-                    Collection<String> orderedTitles = getOrderedDocumentTitles(
-                        IterableUtils.chainedIterable(children, blogPages));
-                    sendPinnedPages(proxyFilter, orderedTitles);
+                    if (this.properties.isPageOrderEnabled()) {
+                        List<Long> children = confluencePackage.getPageChildren(homePageId);
+                        Collection<String> orderedTitles = getOrderedDocumentTitles(
+                            IterableUtils.chainedIterable(children, blogPages));
+                        sendPinnedPages(proxyFilter, orderedTitles);
+                    }
                 }
             } catch (ConfluenceInterruptedException e) {
                 // Even if we reached the maximum page count, we want to send the space rights.
-                if (this.properties.isRightsEnabled()) {
+                if (shouldSendSpaceRights(homePageId)) {
                     sendSpaceRights(proxyFilter, spaceProperties, spaceKey, spaceId,
                         inheritedRights, homePageProperties);
                 }
                 throw e;
             }
-            if (this.properties.isRightsEnabled()) {
+            if (shouldSendSpaceRights(homePageId)) {
                 sendSpaceRights(proxyFilter, spaceProperties, spaceKey, spaceId,
                     inheritedRights, homePageProperties);
             }
@@ -696,6 +703,28 @@ public class ConfluenceInputFilterStream
                 this.logger.info("Finished sending Confluence space [{}], id=[{}]", spaceKey, spaceId);
             }
         }
+    }
+
+    private boolean shouldSendSpaceRights(Long homePageId)
+    {
+        // we only send space rights if rights are enabled and we are not sending a specific list of pages, unless
+        // the home page is included
+        if (!this.properties.isRightsEnabled()) {
+            return false;
+        }
+
+        if (CollectionUtils.isEmpty(properties.getIncludedPages())) {
+            // we always send space rights if we are not working with a specific list of pages and rights are enabled
+            return true;
+        }
+
+        if (homePageId == null) {
+            // if we send a specific list of pages and the home page is null, we don't send space rights
+            return false;
+        }
+
+        // we only send space rights if the home page is in the specific list of included pages
+        return properties.isIncluded(homePageId);
     }
 
     private void sendSyntheticWebHomePageListingChildren(String spaceKey, String title, ConfluenceFilter proxyFilter)
@@ -844,17 +873,15 @@ public class ConfluenceInputFilterStream
 
         Collection<ConfluenceRight> inheritedRights = null;
 
-        if (this.properties.isIncluded(pageId)) {
-            ((DefaultConfluenceInputContext) this.context).setCurrentPage(pageId);
-            try {
-                inheritedRights = readPage(pageId, spaceKey, blog, filter, proxyFilter, hide);
-            } catch (MaxPageCountReachedException e) {
-                // ignore
-            } catch (ConfluenceCanceledException e) {
-                throw e;
-            } catch (Exception e) {
-                logger.error("Failed to filter the page with id [{}]", createPageIdentifier(pageId, spaceKey), e);
-            }
+        ((DefaultConfluenceInputContext) this.context).setCurrentPage(pageId);
+        try {
+            inheritedRights = readPage(pageId, spaceKey, blog, filter, proxyFilter, hide);
+        } catch (MaxPageCountReachedException e) {
+            // ignore
+        } catch (ConfluenceCanceledException e) {
+            throw e;
+        } catch (Exception e) {
+            logger.error("Failed to filter the page with id [{}]", createPageIdentifier(pageId, spaceKey), e);
         }
 
         return inheritedRights;
@@ -873,14 +900,16 @@ public class ConfluenceInputFilterStream
         // > WikiSpace
         proxyFilter.beginWikiSpace(blogSpaceKey, FilterEventParameters.EMPTY);
         try {
-            if (this.properties.isPageOrderEnabled()) {
-                Collection<String> orderedTitles = getOrderedDocumentTitles(blogPages);
-                sendPinnedPages(proxyFilter, orderedTitles);
-                endWebPreferences(proxyFilter);
+            if (CollectionUtils.isEmpty(this.properties.getIncludedPages())) {
+                // we only send the pinned pages and the pinned pages, the WebPreferences document and the blog
+                // descriptor if we are not sending a specific list of pages.
+                if (this.properties.isPageOrderEnabled()) {
+                    Collection<String> orderedTitles = getOrderedDocumentTitles(blogPages);
+                    sendPinnedPages(proxyFilter, orderedTitles);
+                    endWebPreferences(proxyFilter);
+                    addBlogDescriptorPage(proxyFilter);
+                }
             }
-            // Blog Descriptor page
-            addBlogDescriptorPage(proxyFilter);
-
             // Blog post pages
             sendPages(spaceKey, true, blogPages, filter, proxyFilter, false);
         } finally {
@@ -1573,7 +1602,7 @@ public class ConfluenceInputFilterStream
 
         try {
             Collection<ConfluenceRight> inheritedRights = sendTerminalDoc(blog, filter, proxyFilter, documentName,
-                documentParameters, pageProperties, spaceKey, isHomePage, children, hide);
+                documentParameters, pageProperties, spaceKey, isHomePage, children, hide, pageId);
 
             if (isHomePage) {
                 // We only send inherited rights of the home page so they are added to the space's WebPreference page
@@ -1600,34 +1629,38 @@ public class ConfluenceInputFilterStream
 
     private Collection<ConfluenceRight> sendTerminalDoc(boolean blog, Object filter, ConfluenceFilter proxyFilter,
         String documentName, FilterEventParameters documentParameters, ConfluenceProperties pageProperties,
-        String spaceKey, boolean isHomePage, List<Long> children, boolean hide)
+        String spaceKey, boolean isHomePage, List<Long> children, boolean hide, long pageId)
             throws FilterException, ConfluenceCanceledException
     {
         this.progress.startStep(this);
-        // > WikiDocument
-        proxyFilter.beginWikiDocument(documentName, documentParameters);
 
         Collection<ConfluenceRight> inheritedRights = blog ? null : new ArrayList<>();
-        try {
-            if (this.properties.isContentsEnabled() || this.properties.isRightsEnabled()) {
-                sendRevisions(blog, filter, proxyFilter, pageProperties, spaceKey, inheritedRights, hide);
-            }
-        } finally {
-            // < WikiDocument
-            proxyFilter.endWikiDocument(documentName, documentParameters);
+        if (properties.isIncluded(pageId)) {
+            proxyFilter.beginWikiDocument(documentName, documentParameters);
 
-            if (!blog && !isHomePage) {
-                sendWebPreference(proxyFilter, pageProperties, children, inheritedRights);
-            }
+            try {
+                if (this.properties.isContentsEnabled() || this.properties.isRightsEnabled()) {
+                    sendRevisions(blog, filter, proxyFilter, pageProperties, spaceKey, inheritedRights, hide);
+                }
+            } finally {
+                // < WikiDocument
+                proxyFilter.endWikiDocument(documentName, documentParameters);
 
-            if (!macrosIds.isEmpty() && properties.isVerbose()) {
-                logger.info(ConfluenceFilter.LOG_MACROS_FOUND, "The following macros [{}] were found on page [{}].",
-                    macrosIds, createPageIdentifier(pageProperties));
-            }
+                if (!blog && !isHomePage) {
+                    sendWebPreference(proxyFilter, pageProperties, children, inheritedRights);
+                }
 
-            if (this.remainingPages > 0) {
-                this.remainingPages--;
+                if (!macrosIds.isEmpty() && properties.isVerbose()) {
+                    logger.info(ConfluenceFilter.LOG_MACROS_FOUND, "The following macros [{}] were found on page [{}].",
+                        macrosIds, createPageIdentifier(pageProperties));
+                }
+
+                if (this.remainingPages > 0) {
+                    this.remainingPages--;
+                }
+                this.progress.endStep(this);
             }
+        } else {
             this.progress.endStep(this);
         }
 

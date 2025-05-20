@@ -1,0 +1,75 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Test that only the included page is sent (no page order, no home page)
+.#------------------------------------------------------------------------------
+<wikiSpace name="TestNavOrder">
+  <wikiSpace name="Page 3"/>
+  <wikiSpace name="Page 2">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.marketing@xwiki_com</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2024-07-23 11:56:28.457 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>1</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="1">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.marketing@xwiki_com</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2024-07-23 11:57:15.519 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Page 2</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>hello 2</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+  <wikiSpace name="Page 1"/>
+  <wikiSpace name="Page / %"/>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
+.configuration.source=pageorder
+.configuration.rightsEnabled=false
+.configuration.includedPages=795574280
+.#------------------------------------------------------------------------------

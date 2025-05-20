@@ -1,0 +1,135 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Test that only the blog post is sent (no space rights, no WebPreferences, no home page, no blog descriptor)
+.#------------------------------------------------------------------------------
+<wiki name="sub">
+  <wikiSpace name="Composed">
+    <wikiSpace name="Root">
+      <wikiSpace name="SpaceA">
+        <wikiSpace name="Blog">
+          <wikiDocument name="Blog post">
+            <wikiDocumentLocale>
+              <p>
+                <parameters>
+                  <entry>
+                    <string>creation_author</string>
+                    <string>XWiki.testuser@mail_com</string>
+                  </entry>
+                  <entry>
+                    <string>creation_date</string>
+                    <date>2023-09-27 17:02:59.448 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>lastrevision</string>
+                    <string>1</string>
+                  </entry>
+                </parameters>
+              </p>
+              <wikiDocumentRevision revision="1">
+                <p>
+                  <parameters>
+                    <entry>
+                      <string>revision_author</string>
+                      <string>XWiki.testuser@mail_com</string>
+                    </entry>
+                    <entry>
+                      <string>revision_date</string>
+                      <date>2023-09-27 17:02:59.635 UTC</date>
+                    </entry>
+                    <entry>
+                      <string>revision_comment</string>
+                      <string></string>
+                    </entry>
+                    <entry>
+                      <string>title</string>
+                      <string>Blog post</string>
+                    </entry>
+                    <entry>
+                      <string>syntax</string>
+                      <org.xwiki.rendering.syntax.Syntax>
+                        <type>
+                          <name>XWiki</name>
+                          <id>xwiki</id>
+                          <variants class="empty-list"/>
+                        </type>
+                        <version>2.1</version>
+                      </org.xwiki.rendering.syntax.Syntax>
+                    </entry>
+                  </parameters>
+                </p>
+                <wikiObject name="Blog.BlogPostClass">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>Blog.BlogPostClass</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="title" value="Blog post"/>
+                  <wikiObjectProperty name="content">
+                    <p>
+                      <value>Content of the blog post
+
+[[this page>>doc:Composed.Root.SpaceA.Blog.Blog post]]</value>
+                    </p>
+                  </wikiObjectProperty>
+                  <wikiObjectProperty name="publishDate">
+                    <p>
+                      <value t="java.util.Date">2023-09-27 17:02:59.448 UTC</value>
+                    </p>
+                  </wikiObjectProperty>
+                  <wikiObjectProperty name="published">
+                    <p>
+                      <value t="java.lang.Integer">1</value>
+                    </p>
+                  </wikiObjectProperty>
+                  <wikiObjectProperty name="hidden">
+                    <p>
+                      <value t="java.lang.Integer">0</value>
+                    </p>
+                  </wikiObjectProperty>
+                </wikiObject>
+                <wikiObject name="XWiki.XWikiRights">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>XWiki.XWikiRights</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="allow" value="1"/>
+                  <wikiObjectProperty name="groups" value=""/>
+                  <wikiObjectProperty name="levels" value="view"/>
+                  <wikiObjectProperty name="users" value="XWiki.032984bc44b6c6890144baa3d7620003"/>
+                </wikiObject>
+                <wikiObject name="XWiki.XWikiRights">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>XWiki.XWikiRights</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="allow" value="1"/>
+                  <wikiObjectProperty name="groups" value=""/>
+                  <wikiObjectProperty name="levels" value="edit"/>
+                  <wikiObjectProperty name="users" value="XWiki.032984bc44b6c6890144baa3d7620003"/>
+                </wikiObject>
+              </wikiDocumentRevision>
+            </wikiDocumentLocale>
+          </wikiDocument>
+        </wikiSpace>
+      </wikiSpace>
+    </wikiSpace>
+  </wikiSpace>
+</wiki>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
+.configuration.source=blogs
+.configuration.root=sub:Composed.Root
+.configuration.includedPages=2616164357
+.#------------------------------------------------------------------------------

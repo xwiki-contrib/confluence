@@ -1,0 +1,273 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Test that only the excluded page is excluded (page order, home page, other pages, everything else should be here)
+.#------------------------------------------------------------------------------
+<wikiSpace name="TestNavOrder">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <p>
+        <parameters>
+          <entry>
+            <string>creation_author</string>
+            <string>XWiki.marketing@xwiki_com</string>
+          </entry>
+          <entry>
+            <string>creation_date</string>
+            <date>2024-07-23 11:53:52.574 UTC</date>
+          </entry>
+          <entry>
+            <string>lastrevision</string>
+            <string>1</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>revision_author</string>
+              <string>XWiki.marketing@xwiki_com</string>
+            </entry>
+            <entry>
+              <string>revision_date</string>
+              <date>2024-07-23 11:53:52.574 UTC</date>
+            </entry>
+            <entry>
+              <string>revision_comment</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>title</string>
+              <string>TestNavigationOrder</string>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string></string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+  <wikiSpace name="Page 3">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.marketing@xwiki_com</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2024-07-23 11:57:30.705 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>1</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="1">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.marketing@xwiki_com</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2024-07-23 11:58:05.654 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Page 3</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>hello 3</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+  <wikiSpace name="Page 2"/>
+  <wikiSpace name="Page 1">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.marketing@xwiki_com</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2024-07-23 11:54:52.54 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>1</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="1">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.marketing@xwiki_com</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2024-07-23 11:56:18.953 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Page 1</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>hello 1</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+  <wikiSpace name="Page / %">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.marketing@xwiki_com</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2024-07-23 11:54:52.54 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>1</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="1">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.marketing@xwiki_com</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2024-07-23 11:56:18.953 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Page / %</string>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+  <wikiDocument name="WebPreferences">
+    <p>
+      <parameters>
+        <entry>
+          <string>hidden</string>
+          <boolean>true</boolean>
+        </entry>
+      </parameters>
+    </p>
+    <wikiObject name="XWiki.XWikiPreferences">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiPreferences</string>
+          </entry>
+        </parameters>
+      </p>
+    </wikiObject>
+    <wikiObject name="XWiki.PinnedChildPagesClass">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.PinnedChildPagesClass</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="pinnedChildPages">
+        <p>
+          <value t="java.util.ArrayList">
+            <string>Page 1/</string>
+            <string>Page 3/</string>
+            <string>Page 2/</string>
+            <string>Page %2F %25/</string>
+          </value>
+        </p>
+      </wikiObjectProperty>
+    </wikiObject>
+  </wikiDocument>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
+.configuration.source=pageorder
+.configuration.rightsEnabled=false
+.configuration.excludedPages=795574280
+.#------------------------------------------------------------------------------
