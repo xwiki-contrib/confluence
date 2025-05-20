@@ -1,0 +1,244 @@
+.#-----------------------------------------------------
+.input|confluence+xhtml/1.0
+.# Make sure styles in col are propagated to the individual cells.
+.#-----------------------------------------------------
+<table class="wrapped relative-table" style="width: 63.969%;"><colgroup><col style="width: 31.3875%;" /><col style="width: 30.8168%;" /><col style="width: 32.624%;" /><col style="width: 30.7217%;" /></colgroup>
+<tbody>
+<tr>
+<td>
+<div class="content-wrapper">
+<p>hello</p></div></td>
+<td>
+<div class="content-wrapper">
+<p>hello</p></div></td>
+<td>
+<div class="content-wrapper">
+<p>hello</p></div></td>
+<td>
+<div class="content-wrapper">
+<p>hello</p></div></td></tr>
+<tr>
+<td style="text-align: center;"><strong>HELLO </strong><br />world</td>
+<td style="text-align: center;">
+<p style="text-align: center;"><strong style="text-decoration: none;text-align: left;">HELLO2<br /></strong>world2</p>
+</td>
+<td style="text-align: center;">
+<p><strong style="text-decoration: none;text-align: left;">HELLO3<br /></strong>world3</p>
+</td>
+<td style="text-align: center;">
+<p><strong>HELLO4</strong><br />SoMe content </p>
+</td>
+<td style="content:'untouched'">Extraneous cell added for robustness of the tested code</td>
+</tr>
+</tbody>
+</table>
+<p>Hello</p>
+<table>
+  <colgroup>
+    <col span="2" style="background:gray"/>
+    <col style="background:black"/>
+  </colgroup>
+  <tr>
+    <td>gray</td>
+    <td>gray</td>
+    <td>black</td>
+  </tr>
+  <tr>
+    <td colspan="2">gray</td>
+    <td colspan="1">black</td>
+  </tr>
+  <tr>
+    <td colspan="1">gray</td>
+    <td colspan="2">gray, I guess</td>
+    <td>nothing</td>
+  </tr>
+</table>
+.#-----------------------------------------------------
+.expect|event/1.0
+beginDocument
+beginTable [[class]=[wrapped relative-table][style]=[width: 63.969%;]]
+beginTableRow
+beginTableCell [[style]=[width: 31.3875%;]]
+beginGroup
+beginGroup [[class]=[content-wrapper]]
+beginParagraph
+onWord [hello]
+endParagraph
+endGroup [[class]=[content-wrapper]]
+endGroup
+endTableCell [[style]=[width: 31.3875%;]]
+beginTableCell [[style]=[width: 30.8168%;]]
+beginGroup
+beginGroup [[class]=[content-wrapper]]
+beginParagraph
+onWord [hello]
+endParagraph
+endGroup [[class]=[content-wrapper]]
+endGroup
+endTableCell [[style]=[width: 30.8168%;]]
+beginTableCell [[style]=[width: 32.624%;]]
+beginGroup
+beginGroup [[class]=[content-wrapper]]
+beginParagraph
+onWord [hello]
+endParagraph
+endGroup [[class]=[content-wrapper]]
+endGroup
+endTableCell [[style]=[width: 32.624%;]]
+beginTableCell [[style]=[width: 30.7217%;]]
+beginGroup
+beginGroup [[class]=[content-wrapper]]
+beginParagraph
+onWord [hello]
+endParagraph
+endGroup [[class]=[content-wrapper]]
+endGroup
+endTableCell [[style]=[width: 30.7217%;]]
+endTableRow
+beginTableRow
+beginTableCell [[style]=[width: 31.3875%; text-align: center;]]
+beginGroup
+beginParagraph
+beginFormat [BOLD]
+onWord [HELLO]
+onSpace
+endFormat [BOLD]
+onNewLine
+onWord [world]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 31.3875%; text-align: center;]]
+beginTableCell [[style]=[width: 30.8168%; text-align: center;]]
+beginGroup
+beginParagraph [[style]=[text-align: center;]]
+beginFormat [BOLD] [[style]=[text-decoration: none;text-align: left;]]
+onWord [HELLO2]
+onNewLine
+endFormat [BOLD] [[style]=[text-decoration: none;text-align: left;]]
+onWord [world2]
+endParagraph [[style]=[text-align: center;]]
+endGroup
+endTableCell [[style]=[width: 30.8168%; text-align: center;]]
+beginTableCell [[style]=[width: 32.624%; text-align: center;]]
+beginGroup
+beginParagraph
+beginFormat [BOLD] [[style]=[text-decoration: none;text-align: left;]]
+onWord [HELLO3]
+onNewLine
+endFormat [BOLD] [[style]=[text-decoration: none;text-align: left;]]
+onWord [world3]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 32.624%; text-align: center;]]
+beginTableCell [[style]=[width: 30.7217%; text-align: center;]]
+beginGroup
+beginParagraph
+beginFormat [BOLD]
+onWord [HELLO4]
+endFormat [BOLD]
+onNewLine
+onWord [SoMe]
+onSpace
+onWord [content]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 30.7217%; text-align: center;]]
+beginTableCell [[style]=[content:'untouched']]
+beginGroup
+beginParagraph
+onWord [Extraneous]
+onSpace
+onWord [cell]
+onSpace
+onWord [added]
+onSpace
+onWord [for]
+onSpace
+onWord [robustness]
+onSpace
+onWord [of]
+onSpace
+onWord [the]
+onSpace
+onWord [tested]
+onSpace
+onWord [code]
+endParagraph
+endGroup
+endTableCell [[style]=[content:'untouched']]
+endTableRow
+endTable [[class]=[wrapped relative-table][style]=[width: 63.969%;]]
+beginParagraph
+onWord [Hello]
+endParagraph
+beginTable
+beginTableRow
+beginTableCell [[style]=[background:gray]]
+beginGroup
+beginParagraph
+onWord [gray]
+endParagraph
+endGroup
+endTableCell [[style]=[background:gray]]
+beginTableCell [[style]=[background:gray]]
+beginGroup
+beginParagraph
+onWord [gray]
+endParagraph
+endGroup
+endTableCell [[style]=[background:gray]]
+beginTableCell [[style]=[background:black]]
+beginGroup
+beginParagraph
+onWord [black]
+endParagraph
+endGroup
+endTableCell [[style]=[background:black]]
+endTableRow
+beginTableRow
+beginTableCell [[colspan]=[2][style]=[background:gray]]
+beginGroup
+beginParagraph
+onWord [gray]
+endParagraph
+endGroup
+endTableCell [[colspan]=[2][style]=[background:gray]]
+beginTableCell [[style]=[background:black]]
+beginGroup
+beginParagraph
+onWord [black]
+endParagraph
+endGroup
+endTableCell [[style]=[background:black]]
+endTableRow
+beginTableRow
+beginTableCell [[style]=[background:gray]]
+beginGroup
+beginParagraph
+onWord [gray]
+endParagraph
+endGroup
+endTableCell [[style]=[background:gray]]
+beginTableCell [[colspan]=[2][style]=[background:gray]]
+beginGroup
+beginParagraph
+onWord [gray]
+onSpecialSymbol [,]
+onSpace
+onWord [I]
+onSpace
+onWord [guess]
+endParagraph
+endGroup
+endTableCell [[colspan]=[2][style]=[background:gray]]
+beginTableCell
+beginGroup
+beginParagraph
+onWord [nothing]
+endParagraph
+endGroup
+endTableCell
+endTableRow
+endTable
+endDocument
+.#-----------------------------------------------------

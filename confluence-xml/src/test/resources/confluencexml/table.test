@@ -45,52 +45,52 @@
               <entry>
                 <string>content</string>
                 <string>(% class="fixed-width wrapped" style="width: 1037.0px;" %)
-|=(((
+|=(% scope="col" style="width: 297.0px;" %)(((
 Text left aligned in this column
-)))|=(((
+)))|=(% scope="col" style="width: 503.0px;" %)(((
 Text centered in this column
-)))|=(((
+)))|=(% scope="col" style="width: 236.0px;" %)(((
 Text right aligned in this column
 )))
-|(% class="highlight-#79f2c0" style="text-align: left; background-color: #79f2c0" %)(((
+|(% class="highlight-#79f2c0" style="width: 297.0px; text-align: left; background-color: #79f2c0" %)(((
 Lorem
-)))|(% class="highlight-#79f2c0" style="text-align: center; background-color: #79f2c0" %)(((
+)))|(% class="highlight-#79f2c0" style="width: 503.0px; text-align: center; background-color: #79f2c0" %)(((
 Ipsum
-)))|(% class="highlight-#79f2c0" style="text-align: right; background-color: #79f2c0" %)(((
+)))|(% class="highlight-#79f2c0" style="width: 236.0px; text-align: right; background-color: #79f2c0" %)(((
 Dolor - Erste Zeile ist in gr;ner Farbe
 )))
-|(% style="text-align: left;" %)(((
+|(% style="width: 297.0px; text-align: left;" %)(((
 More tuff
-)))|(% style="text-align: center;" %)(((
+)))|(% style="width: 503.0px; text-align: center;" %)(((
 centered text
-)))|(% style="text-align: right;" %)(((
+)))|(% style="width: 236.0px; text-align: right;" %)(((
 Further text comes here
 )))
-|(% style="text-align: left;" %)(((
+|(% style="width: 297.0px; text-align: left;" %)(((
 \\
-)))|(% class="highlight-#de350b" style="text-align: center; background-color: #de350b" %)(((
+)))|(% class="highlight-#de350b" style="width: 503.0px; text-align: center; background-color: #de350b" %)(((
 (% style="color: rgb(255,255,255);" %)This cell is with red background and white color
-)))|(% style="text-align: right;" %)(((
+)))|(% style="width: 236.0px; text-align: right;" %)(((
 and here
 )))
-|(% style="text-align: left;" %)(((
+|(% style="width: 297.0px; text-align: left;" %)(((
 \\
-)))|(% style="text-align: center;" %)(((
+)))|(% style="width: 503.0px; text-align: center;" %)(((
 * (% style="color: rgb(255, 255, 255); color: rgb(0, 0, 0)" %)Test with bullet points(% style="color: rgb(255,255,255);" %)
 
 * (% style="color: rgb(255, 255, 255); color: rgb(0, 0, 0)" %)Test with bullet points
 * (% style="color: rgb(255, 255, 255); color: rgb(0, 0, 0)" %)Test with bullet points
-)))|(% style="text-align: right;" %)(((
+)))|(% style="width: 236.0px; text-align: right;" %)(((
 \\
 )))
-|(% style="text-align: left;" %)(((
+|(% style="width: 297.0px; text-align: left;" %)(((
 * (% style="color: rgb(255, 255, 255); color: rgb(0, 0, 0)" %)Test with bullet points
 * (% style="color: rgb(255, 255, 255); color: rgb(0, 0, 0)" %)Test with bullet points
 * (% style="color: rgb(255, 255, 255); color: rgb(0, 0, 0)" %)Test with bullet points
-)))|(% style="text-align: center;" %)(((
+)))|(% style="width: 503.0px; text-align: center;" %)(((
 (% style="color: rgb(255,255,255);" %)
 
-)))|(% style="text-align: right;" %)(((
+)))|(% style="width: 236.0px; text-align: right;" %)(((
 * (% style="color: rgb(255, 255, 255); color: rgb(0, 0, 0)" %)Test with bullet points
 * (% style="color: rgb(255, 255, 255); color: rgb(0, 0, 0)" %)Test with bullet points
 * (% style="color: rgb(255, 255, 255); color: rgb(0, 0, 0)" %)Test with bullet points
@@ -100,52 +100,52 @@ and here
 __**Flexible **table with colors and set widths:__
 
 (% class="wrapped relative-table" style="width: 68.3351%;" %)
-|=(((
+|=(% style="width: 25.0965%;" %)(((
 Text left aligned in this column
-)))|=(% style="text-align: center;" %)(((
+)))|=(% style="width: 45.8908%; text-align: center;" %)(((
 Text centered in this column
-)))|=(% style="text-align: right;" %)(((
+)))|=(% style="width: 29.0127%; text-align: right;" %)(((
 Text right aligned in this column
 )))
-|(% class="highlight-#79f2c0" style="text-align: left; background-color: #79f2c0" %)(((
+|(% class="highlight-#79f2c0" style="width: 25.0965%; text-align: left; background-color: #79f2c0" %)(((
 Lorem
-)))|(% class="highlight-#79f2c0" style="text-align: center; background-color: #79f2c0" %)(((
+)))|(% class="highlight-#79f2c0" style="width: 45.8908%; text-align: center; background-color: #79f2c0" %)(((
 Ipsum
-)))|(% class="highlight-#79f2c0" style="text-align: right; background-color: #79f2c0" %)(((
+)))|(% class="highlight-#79f2c0" style="width: 29.0127%; text-align: right; background-color: #79f2c0" %)(((
 Dolor - Erste Zeile ist in gr;ner Farbe
 )))
-|(% style="text-align: left;" %)(((
+|(% style="width: 25.0965%; text-align: left;" %)(((
 More stuff
-)))|(% style="text-align: center;" %)(((
+)))|(% style="width: 45.8908%; text-align: center;" %)(((
 This is a Table just for testing purposes, the text is centered
-)))|(% style="text-align: right;" %)(((
+)))|(% style="width: 29.0127%; text-align: right;" %)(((
 Further text comes here
 )))
-|(% style="text-align: left;" %)(((
+|(% style="width: 25.0965%; text-align: left;" %)(((
 \\
-)))|(% class="highlight-#0065ff" style="text-align: center; background-color: #0065ff" %)(((
+)))|(% class="highlight-#0065ff" style="width: 45.8908%; text-align: center; background-color: #0065ff" %)(((
 (% style="color: rgb(255,255,255);" %)This cell is with blue background and white color
-)))|(% style="text-align: right;" %)(((
+)))|(% style="width: 29.0127%; text-align: right;" %)(((
 and here
 )))
-|(% style="text-align: left;" %)(((
+|(% style="width: 25.0965%; text-align: left;" %)(((
 \\
-)))|(% style="text-align: center;" %)(((
+)))|(% style="width: 45.8908%; text-align: center;" %)(((
 * (% style="color: rgb(255, 255, 255); color: rgb(0, 0, 0)" %)Test with bullet points(% style="color: rgb(255,255,255);" %)
 
 * (% style="color: rgb(255, 255, 255); color: rgb(0, 0, 0)" %)Test with bullet points
 * (% style="color: rgb(255, 255, 255); color: rgb(0, 0, 0)" %)Test with bullet points
-)))|(% style="text-align: right;" %)(((
+)))|(% style="width: 29.0127%; text-align: right;" %)(((
 \\
 )))
-|(% style="text-align: left;" %)(((
+|(% style="width: 25.0965%; text-align: left;" %)(((
 * (% style="color: rgb(255, 255, 255); color: rgb(0, 0, 0)" %)Test with bullet points
 * (% style="color: rgb(255, 255, 255); color: rgb(0, 0, 0)" %)Test with bullet points
 * (% style="color: rgb(255, 255, 255); color: rgb(0, 0, 0)" %)Test with bullet points
-)))|(% style="text-align: center;" %)(((
+)))|(% style="width: 45.8908%; text-align: center;" %)(((
 (% style="color: rgb(255,255,255);" %)
 
-)))|(% style="text-align: right;" %)(((
+)))|(% style="width: 29.0127%; text-align: right;" %)(((
 * (% style="color: rgb(255, 255, 255); color: rgb(0, 0, 0)" %)Test with bullet points
 * (% style="color: rgb(255, 255, 255); color: rgb(0, 0, 0)" %)Test with bullet points
 * (% style="color: rgb(255, 255, 255); color: rgb(0, 0, 0)" %)Test with bullet points
@@ -194,14 +194,14 @@ and here
 )))
 
 (% class="wrapped" %)
-|=(% class="highlight-blue" style="background-color: #deebff" %)(((
+|=(% class="highlight-blue" style="width: 385.0px; background-color: #deebff" %)(((
 Name
-)))|=(% class="highlight-blue" style="background-color: #deebff" %)(((
+)))|=(% class="highlight-blue" style="width: 97.0px; background-color: #deebff" %)(((
 Description
-)))|=(% class="highlight-blue" style="background-color: #deebff" %)(((
+)))|=(% class="highlight-blue" style="width: 256.0px; background-color: #deebff" %)(((
 Link
 )))
-|(% class="highlight-yellow" colspan="3" style="background-color: #fffae6" %)(((
+|(% class="highlight-yellow" colspan="3" style="width: 385.0px; background-color: #fffae6" %)(((
 == {{id name="TestContent-AdministrativeSpaces"/}}(% style="color: rgb(0,0,255);" %)Administrative Spaces(%%) ==
 )))</string>
               </entry>

@@ -59,6 +59,9 @@ import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceIn
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceListItemTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceOrderedListTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceParagraphTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceTableColHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceTableRowTagHandler;
+import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceTableTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceUnorderedListTagHandler;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXHTMLWhitespaceXMLFilter;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceXWikiGeneratorListener;
@@ -250,6 +253,9 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
 
         handlers.put("ri:attachment", new AttachmentTagHandler(refConverter));
 
+        handlers.put("table", new ConfluenceTableTagHandler());
+        handlers.put("col", new ConfluenceTableColHandler());
+        handlers.put("tr", new ConfluenceTableRowTagHandler());
         handlers.put("th", new TableHeadTagHandler());
         handlers.put("td", new TableCellTagHandler());
 

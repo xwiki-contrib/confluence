@@ -17,32 +17,39 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import org.xwiki.rendering.wikimodel.xhtml.handler.TableRowTagHandler;
+import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
+
+import static org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceTagHandler.CONFLUENCE_TABLE_CURRENT_COL;
+
 /**
- * Common interface of all confluence tag handlers.
- *
+ * Table row tag handler.
+ * @since 9.85.0
  * @version $Id$
- * @since 9.0
  */
-public interface ConfluenceTagHandler
+public class ConfluenceTableRowTagHandler extends TableRowTagHandler
 {
     /**
-     * Stack parameter key pointing to the current confluence container.
+     * Constructor.
      */
-    String CONFLUENCE_CONTAINER = "confluence-container";
+    public ConfluenceTableRowTagHandler()
+    {
+        super();
+    }
 
-    /**
-     * Stack parameter key used in tables, so styles from colgroup / col tags can be propagated to the cells.
-     */
-    String CONFLUENCE_TABLE_COLUMN_ATTRIBUTES = "confluence-table-column-attributes";
-    /**
-     * Stack parameter key used in table rows, to know which is the current column when handling a td or th element.
-     */
-    String CONFLUENCE_TABLE_CURRENT_COL = "confluence-table-current-col";
-    /**
-     * Stack parameter key used if in a paragraph.
-     */
-    String CONFLUENCE_IN_PARAGRAPH = "confluence-in-paragraph";
+    @Override
+    protected void begin(TagContext context)
+    {
+        context.getTagStack().pushStackParameter(CONFLUENCE_TABLE_CURRENT_COL, 0);
+        super.begin(context);
+    }
+
+    @Override
+    protected void end(TagContext context)
+    {
+        context.getTagStack().popStackParameter(CONFLUENCE_TABLE_CURRENT_COL);
+        super.end(context);
+    }
 }

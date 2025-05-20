@@ -120,9 +120,9 @@ Some content?
 
 (% class="confluence_tableenhancer_content" %)
 (((
-|=(((
+|=(% scope="col" %)(((
 Some title
-)))|=(((
+)))|=(% scope="col" %)(((
 Some title2
 )))
 |(((

@@ -19,8 +19,12 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XWikiTableDataTagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
+
+import static org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.TableCellTagHandler.beginCell;
 
 /**
  * Make sure to produce something that won't break xwiki/2.x table. See https://jira.xwiki.org/browse/XRENDERING-488
@@ -30,11 +34,12 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public class TableHeadTagHandler extends XWikiTableDataTagHandler
 {
+    private static final Logger LOGGER = LoggerFactory.getLogger(TableHeadTagHandler.class);
+
     @Override
     protected void begin(TagContext context)
     {
-        super.begin(context);
-
+        beginCell(context);
         beginDocument(context);
     }
 
@@ -42,7 +47,7 @@ public class TableHeadTagHandler extends XWikiTableDataTagHandler
     protected void end(TagContext context)
     {
         endDocument(context);
-
+        TableCellTagHandler.advanceCurrentCol(context, LOGGER);
         super.end(context);
     }
 }
