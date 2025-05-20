@@ -59,7 +59,9 @@ public class ImageTagHandler extends TagHandler implements ConfluenceTagHandler
         "align-start", START,
         "align-end", END,
         "wrap-left", START,
-        "wrap-right", END
+        "wrap-right", END,
+        "left", START,
+        "right", END
     );
 
     private static final String AC_CLASS = "ac:class";
@@ -82,16 +84,19 @@ public class ImageTagHandler extends TagHandler implements ConfluenceTagHandler
         ConfluenceImageWikiReference image = new ConfluenceImageWikiReference();
 
         for (WikiParameter param : context.getParams()) {
-            if ("ac:layout".equals(param.getKey())) {
-                image.getImageParameters().put("data-xwiki-image-style-alignment",
-                    CONFLUENCE_TO_WIKI_PARAMS.getOrDefault(param.getValue(), param.getValue()));
-                if (param.getValue().contains("wrap-")) {
-                    image.getImageParameters().put("data-xwiki-image-style-text-wrap", "true");
-                }
-            } else {
-                String confluenceParam = param.getKey().replace("ac:", "");
-                String p = CONFLUENCE_TO_WIKI_PARAMS.getOrDefault(confluenceParam, confluenceParam);
-                image.getImageParameters().put(p, param.getValue());
+            switch (param.getKey()) {
+                case "ac:layout":
+                case "ac:align":
+                    image.getImageParameters().put("data-xwiki-image-style-alignment",
+                        CONFLUENCE_TO_WIKI_PARAMS.getOrDefault(param.getValue(), param.getValue()));
+                    if (param.getValue().contains("wrap-")) {
+                        image.getImageParameters().put("data-xwiki-image-style-text-wrap", "true");
+                    }
+                    break;
+                default:
+                    String confluenceParam = param.getKey().replace("ac:", "");
+                    String p = CONFLUENCE_TO_WIKI_PARAMS.getOrDefault(confluenceParam, confluenceParam);
+                    image.getImageParameters().put(p, param.getValue());
             }
         }
 

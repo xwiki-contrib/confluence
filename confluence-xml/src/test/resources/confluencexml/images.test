@@ -16,15 +16,15 @@
               <string>content</string>
               <string>[[image:attach:validatedspace.validatedpage.WebHome@image.png||width="524" data-xwiki-image-style-border="true" height="217"]]
 
-[[sos//asdas//ame ca**sasd**ion>>image:attach:rock.jpg||custom-width="true" original-height="1200" data-xwiki-image-style-alignment="start" alt="some alt text" width="50" align="left" original-width="1200" data-xwiki-image-style-border="true"]]
+[[sos//asdas//ame ca**sasd**ion>>image:attach:rock.jpg||custom-width="true" original-height="1200" data-xwiki-image-style-alignment="start" alt="some alt text" width="50" original-width="1200" data-xwiki-image-style-border="true"]]
 
-[[some caption1>>image:attach:rock.jpg||custom-width="true" original-height="1200" data-xwiki-image-style-alignment="center" alt="some alt text" width="50" align="center" original-width="1200"]]
+[[some caption1>>image:attach:rock.jpg||custom-width="true" original-height="1200" data-xwiki-image-style-alignment="center" alt="some alt text" width="50" original-width="1200"]]
 
-[[some caption2>>image:attach:rock.jpg||custom-width="true" original-height="1200" data-xwiki-image-style-alignment="end" alt="some alt text" width="50" align="right" original-width="1200"]]
+[[some caption2>>image:attach:rock.jpg||custom-width="true" original-height="1200" data-xwiki-image-style-alignment="end" alt="some alt text" width="50" original-width="1200"]]
 
-[[some caption3>>image:attach:rock.jpg||custom-width="true" original-height="1200" data-xwiki-image-style-alignment="start" alt="some alt text" width="50" data-xwiki-image-style-text-wrap="true" align="left" original-width="1200"]]
+[[some caption3>>image:attach:rock.jpg||custom-width="true" original-height="1200" data-xwiki-image-style-alignment="start" alt="some alt text" width="50" data-xwiki-image-style-text-wrap="true" original-width="1200"]]
 
-[[some caption4>>image:attach:rock.jpg||custom-width="true" original-height="1200" data-xwiki-image-style-alignment="end" alt="some alt text" width="50" data-xwiki-image-style-text-wrap="true" align="right" original-width="1200"]]</string>
+[[some caption4>>image:attach:rock.jpg||custom-width="true" original-height="1200" data-xwiki-image-style-alignment="end" alt="some alt text" width="50" data-xwiki-image-style-text-wrap="true" original-width="1200"]]</string>
             </entry>
             <entry>
               <string>syntax</string>

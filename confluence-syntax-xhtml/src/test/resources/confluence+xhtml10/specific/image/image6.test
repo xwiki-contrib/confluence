@@ -15,7 +15,7 @@
 beginDocument
 beginParagraph
 beginFigure [[class]=[image]]
-onImage [Typed = [true] Type = [attach] Reference = [rock.jpg]] [false] [Irock.jpg] [[align]=[left][alt]=[some alt text][custom-width]=[true][data-xwiki-image-style-alignment]=[start][data-xwiki-image-style-border]=[true][original-height]=[1200][original-width]=[1200][width]=[50]]
+onImage [Typed = [true] Type = [attach] Reference = [rock.jpg]] [false] [Irock.jpg] [[alt]=[some alt text][custom-width]=[true][data-xwiki-image-style-alignment]=[start][data-xwiki-image-style-border]=[true][original-height]=[1200][original-width]=[1200][width]=[50]]
 beginFigureCaption
 onWord [sos]
 beginFormat [ITALIC]
