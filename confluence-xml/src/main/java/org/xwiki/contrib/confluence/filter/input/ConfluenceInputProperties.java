@@ -499,7 +499,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @since 9.4
      */
     @PropertyName("Included pages")
-    @PropertyDescription("The Confluence identifiers of the pages to read from the input package.")
+    @PropertyDescription("The Confluence identifiers of the pages and/or templates to import from the input package.")
     public Set<Long> getIncludedPages()
     {
         return this.includedPages;
@@ -519,7 +519,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @since 9.4
      */
     @PropertyName("Excluded pages")
-    @PropertyDescription("The Confluence identifiers of the pages to skip from the input package.")
+    @PropertyDescription("The Confluence identifiers of the pages and/or templates to skip from the input package.")
     public Set<Long> getExcludedPages()
     {
         return this.excludedPages;

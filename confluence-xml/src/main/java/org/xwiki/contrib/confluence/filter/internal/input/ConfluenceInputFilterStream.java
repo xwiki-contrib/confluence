@@ -672,9 +672,9 @@ public class ConfluenceInputFilterStream
                     sendBlogs(spaceKey, blogPages, filter, proxyFilter);
                 }
 
+                sendSpaceTemplates(spaceProperties, spaceKey, spaceId, filter, proxyFilter);
                 if (CollectionUtils.isEmpty(properties.getIncludedPages())) {
                     // We don't send templates and pinned pages if we are sending a specific list of pages
-                    sendSpaceTemplates(spaceProperties, spaceKey, spaceId, filter, proxyFilter);
 
                     if (this.properties.isPageOrderEnabled()) {
                         List<Long> children = confluencePackage.getPageChildren(homePageId);
@@ -776,11 +776,13 @@ public class ConfluenceInputFilterStream
         }
 
         proxyFilter.beginWikiSpace(templateSpaceName, FilterEventParameters.EMPTY);
-        sendSyntheticWebHomePageListingChildren(null, null, proxyFilter);
+        if (CollectionUtils.isEmpty(properties.getIncludedPages())) {
+            sendSyntheticWebHomePageListingChildren(null, null, proxyFilter);
+        }
         try {
             for (Object templateObject : templates) {
                 long templateId = toLong(templateObject);
-                if (!shouldSendObject(templateId)) {
+                if (!shouldSendObject(templateId) || !properties.isIncluded(templateId)) {
                     continue;
                 }
 

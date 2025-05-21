@@ -1,0 +1,146 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Content conversions
+.#------------------------------------------------------------------------------
+<wikiSpace name="Composed">
+  <wikiSpace name="Root">
+    <wikiSpace name="TestSpace">
+      <wikiSpace name="Common attachments"/>
+      <wikiSpace name="Templates">
+        <wikiSpace name="Meeting notes">
+          <wikiDocument name="WebHome">
+            <wikiDocumentLocale>
+              <p>
+                <parameters>
+                  <entry>
+                    <string>creation_author</string>
+                    <string>XWiki.ff8080814ad3e003014ad3e4849407e8</string>
+                  </entry>
+                  <entry>
+                    <string>creation_date</string>
+                    <date>2016-05-02 10:48:13.861 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>lastrevision</string>
+                    <string>3</string>
+                  </entry>
+                </parameters>
+              </p>
+              <wikiDocumentRevision revision="3">
+                <p>
+                  <parameters>
+                    <entry>
+                      <string>hidden</string>
+                      <boolean>true</boolean>
+                    </entry>
+                    <entry>
+                      <string>revision_author</string>
+                      <string>XWiki.ff8080814ad3e003014ad3e4849407e8</string>
+                    </entry>
+                    <entry>
+                      <string>revision_date</string>
+                      <date>2016-05-02 11:20:43.476 UTC</date>
+                    </entry>
+                    <entry>
+                      <string>title</string>
+                      <string>Meeting notes</string>
+                    </entry>
+                    <entry>
+                      <string>content</string>
+                      <string>== {{id name="Commonattachments-Date"/}}Date ==
+
+{currentDateLozenge}
+
+== {{id name="Commonattachments-Discussionitems"/}}Discussion items ==
+
+|=(((
+Item
+)))|=(((
+Notes
+)))
+|(((
+Agenda item
+)))|(((
+* Notes for this agenda item
+)))
+|(((
+ 
+)))|(((
+ 
+)))
+
+== {{id name="Commonattachments-Actionitems"/}}Action items ==
+
+{{task-list}}
+{{task id="1" status="incomplete"}}
+Type your task here. Use "@" to assign a user and "~/~/" to select a due date. 
+{{/task}}
+{{/task-list}}
+
+== {{id name="Commonattachments-Opentasks"/}}Open tasks ==
+
+{{tasks-report-macro spaces="TestSpace" spaceAndPage="space:TestSpace" labels="meeting-notes"/}}</string>
+                    </entry>
+                    <entry>
+                      <string>syntax</string>
+                      <org.xwiki.rendering.syntax.Syntax>
+                        <type>
+                          <name>XWiki</name>
+                          <id>xwiki</id>
+                          <variants class="empty-list"/>
+                        </type>
+                        <version>2.1</version>
+                      </org.xwiki.rendering.syntax.Syntax>
+                    </entry>
+                  </parameters>
+                </p>
+                <wikiObject name="XWiki.TagClass">
+                  <p>
+                    <parameters>
+                      <entry>
+                        <string>class_reference</string>
+                        <string>XWiki.TagClass</string>
+                      </entry>
+                    </parameters>
+                  </p>
+                  <wikiObjectProperty name="tags" value="mytemplatelabel"/>
+                </wikiObject>
+              </wikiDocumentRevision>
+            </wikiDocumentLocale>
+          </wikiDocument>
+        </wikiSpace>
+        <wikiDocument name="Meeting notes Template Provider">
+          <p>
+            <parameters>
+              <entry>
+                <string>hidden</string>
+                <boolean>true</boolean>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="XWiki.TemplateProviderClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.TemplateProviderClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="description" value=""/>
+            <wikiObjectProperty name="name" value="Meeting notes"/>
+            <wikiObjectProperty name="template" value="Composed.Root.TestSpace.Templates.Meeting notes.WebHome"/>
+            <wikiObjectProperty name="visibilityRestrictions" value="Composed.Root.TestSpace"/>
+          </wikiObject>
+        </wikiDocument>
+      </wikiSpace>
+    </wikiSpace>
+  </wikiSpace>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
+.configuration.source=spacetemplates
+.configuration.includedPages=642351109
+.configuration.root=Composed.Root
+.#------------------------------------------------------------------------------
