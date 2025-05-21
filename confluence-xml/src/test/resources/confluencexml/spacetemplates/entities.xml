@@ -53,9 +53,6 @@
 </property>
 <property name="lastModificationDate">2016-05-02 11:20:43.476</property>
 <property name="bodyType">2</property>
-<collection name="labellings" class="java.util.Collection(com.atlassian.confluence.pages.templates.PageTemplate.labellings)"><element class="Labelling" package="com.atlassian.confluence.labels"><id name="id">999948290</id>
-</element>
-</collection>
 </object>
 
 <object class="PageTemplate" package="com.atlassian.confluence.pages.templates">

@@ -1681,6 +1681,9 @@ public class ConfluenceXMLPackage implements AutoCloseable
             case OBJECT_TYPE_COMMENT:
                 properties = getObjectProperties(FOLDER_OBJECTS, id.toString(), true);
                 break;
+            case OBJECT_TYPE_PAGE_TEMPLATE:
+                properties = getSpacePageTemplateProperties(id, false);
+                break;
             default:
                 logger.error(
                     "Unexpected type [{}] for parent object id [{}]. This is a bug in confluence-xml, please report.",
@@ -2334,11 +2337,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return new File(getPageFolder(pageId), ATTACHMENTS);
     }
 
-    private File getSpacePageTemplateFolder(long spaceId)
-    {
-        return new File(getSpaceFolder(spaceId), FOLDER_SPACE_PAGE_TEMPLATE);
-    }
-
     private File getSpacePermissionFolder(long spaceId)
     {
         return new File(getSpaceFolder(spaceId), FOLDER_SPACE_PERMISSIONS);
@@ -2359,9 +2357,9 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return new File(getAttachmentsFolder(pageId), String.valueOf(attachmentId));
     }
 
-    private File getSpacePageTemplateFolder(long spaceId, long templateId)
+    private File getSpacePageTemplateFolder(long templateId)
     {
-        return new File(getSpacePageTemplateFolder(spaceId), String.valueOf(templateId));
+        return new File(new File(this.tree, FOLDER_SPACE_PAGE_TEMPLATE), String.valueOf(templateId));
     }
 
     private File getSpacePermissionFolder(long spaceId, long permissionId)
@@ -2381,9 +2379,9 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return new File(folder, PROPERTIES_FILENAME);
     }
 
-    private File getSpacePageTemplatePropertiesFile(long spaceId, long templateId)
+    private File getSpacePageTemplatePropertiesFile(long templateId)
     {
-        File folder = getSpacePageTemplateFolder(spaceId, templateId);
+        File folder = getSpacePageTemplateFolder(templateId);
 
         return new File(folder, PROPERTIES_FILENAME);
     }
@@ -2748,17 +2746,30 @@ public class ConfluenceXMLPackage implements AutoCloseable
     }
 
     /**
-     * @param spaceId the identifier of the space
+     * @param ignored the identifier of the space
+     * @param templateId the identifier of the page template
+     * @param create whether to create the properties if they don't exist yet
+     * @return the properties containing information about the page template
+     * @throws ConfigurationException when failing to create the properties
+     * @since 9.86.0
+     */
+    public ConfluenceProperties getSpacePageTemplateProperties(long ignored, long templateId, boolean create)
+        throws ConfigurationException
+    {
+        return getSpacePageTemplateProperties(templateId, create);
+    }
+
+    /**
      * @param templateId the identifier of the page template
      * @param create whether to create the properties if they don't exist yet
      * @return the properties containing information about the page template
      * @throws ConfigurationException when failing to create the properties
      * @since 9.79.0
      */
-    public ConfluenceProperties getSpacePageTemplateProperties(long spaceId, long templateId, boolean create)
+    public ConfluenceProperties getSpacePageTemplateProperties(long templateId, boolean create)
         throws ConfigurationException
     {
-        File file = getSpacePageTemplatePropertiesFile(spaceId, templateId);
+        File file = getSpacePageTemplatePropertiesFile(templateId);
 
         return (create || file.exists()) ? ConfluenceProperties.create(file) : null;
     }
