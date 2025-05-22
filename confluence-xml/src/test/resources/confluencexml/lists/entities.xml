@@ -46,6 +46,13 @@
   <object class="BodyContent" package="com.atlassian.confluence.core">
     <id name="id">156868656</id>
     <property name="body"><![CDATA[
+<blockquote>
+  <ol>
+    <li><ac:inline-comment-marker ac:ref="31c632a6-86ec-4a76-9cad-b39db413b79c">hello</ac:inline-comment-marker>
+    </li>
+  </ol>
+</blockquote>
+
 <p><ac:structured-macro ac:name="pagetree"><ac:parameter ac:name="root"><ac:link /></ac:parameter><ac:parameter ac:name="startDepth">3</ac:parameter><ac:parameter ac:name="searchBox">true</ac:parameter><ac:parameter ac:name="expandCollapseAll">true</ac:parameter></ac:structured-macro></p>
 
     <ol>

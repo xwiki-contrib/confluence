@@ -25,6 +25,7 @@ import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -596,14 +597,25 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
     private void fireEvents(Iterable<QueueListener.Event> contentEvents, Listener listener)
     {
         int sections = 0;
+        LinkedList<QueueListener.Event> formats = new LinkedList<>();
         for (QueueListener.Event e : contentEvents) {
             if (e.eventType.equals(EventType.BEGIN_SECTION)) {
                 sections++;
             } else if (e.eventType.equals(EventType.END_SECTION)) {
                 sections--;
+            } else if (e.eventType.equals(EventType.BEGIN_FORMAT)) {
+                formats.add(e);
+            } else if (e.eventType.equals(EventType.END_FORMAT) && !formats.isEmpty()) {
+                formats.removeLast();
             }
             e.eventType.fireEvent(listener, e.eventParameters);
         }
+
+        while (!formats.isEmpty()) {
+            QueueListener.Event e = formats.removeLast();
+            EventType.END_FORMAT.fireEvent(listener, e.eventParameters);
+        }
+
 
         // If BEGIN_SECTION and END_SECTION are unbalanced, we balance them. We must ignore the corresponding
         // number of end sections later, because they are coming outside this block.

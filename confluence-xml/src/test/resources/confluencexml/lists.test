@@ -42,7 +42,11 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>{{documentTree root="document:WebHome"/}}
+              <string>&gt;
+
+1. hello
+
+{{documentTree root="document:WebHome"/}}
 
 1. Hello
 1. world
