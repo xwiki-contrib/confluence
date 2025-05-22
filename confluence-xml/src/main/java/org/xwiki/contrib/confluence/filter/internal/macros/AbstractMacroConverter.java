@@ -71,7 +71,7 @@ public abstract class AbstractMacroConverter implements MacroConverter
 
         printUnhandledInfo(confluenceId, tracedParameters);
 
-        listener.onMacro(id, parameters, content, inline);
+        listener.onMacro(StringUtils.isEmpty(id) ? "confluence_" : id, parameters, content, inline);
     }
 
     private Map<String, String> maybeKeepConfluenceParameters(Map<String, String> confluenceParameters,

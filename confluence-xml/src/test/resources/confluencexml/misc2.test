@@ -110,7 +110,9 @@ project starts 2022-06-01
 @endgannt
 {{/plantuml}}
 
-\\</string>
+\\
+
+{{confluence_ displayName="My name" name="My name" pagePin="6"/}}</string>
               </entry>
               <entry>
                 <string>syntax</string>

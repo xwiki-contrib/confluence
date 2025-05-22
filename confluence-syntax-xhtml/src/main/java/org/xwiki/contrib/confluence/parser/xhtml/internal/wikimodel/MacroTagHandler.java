@@ -105,7 +105,8 @@ public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
     {
         ConfluenceMacro macro = new ConfluenceMacro();
 
-        macro.name = context.getParams().getParameter(AC_NAME).getValue();
+        WikiParameter macroNameParam = context.getParams().getParameter(AC_NAME);
+        macro.name = macroNameParam == null ? "" : macroNameParam.getValue();
 
         context.getTagStack().pushStackParameter(CONFLUENCE_CONTAINER, macro);
     }
