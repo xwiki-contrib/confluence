@@ -43,7 +43,9 @@
               </entry>
               <entry>
                 <string>content</string>
-                <string>{{plantuml}}
+                <string>{{documentTree root="document:WebHome"/}}
+
+{{plantuml}}
 @startgantt
 &lt;style>
 ganttDiagram {

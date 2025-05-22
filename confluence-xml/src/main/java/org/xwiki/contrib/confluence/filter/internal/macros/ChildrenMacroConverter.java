@@ -95,7 +95,7 @@ public class ChildrenMacroConverter extends AbstractMacroConverter
         if (StringUtils.isNotEmpty(pageTitle)) {
             parameters.put(
                 ROOT, "document:" + (
-                    pageTitle.endsWith(".WebHome")
+                    (pageTitle.equals("WebHome") || pageTitle.endsWith(".WebHome"))
                         ? pageTitle
                         : confluenceConverter.convertDocumentReference("", pageTitle)
                 )
