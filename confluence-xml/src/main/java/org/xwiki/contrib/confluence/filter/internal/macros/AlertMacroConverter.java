@@ -26,6 +26,7 @@ import java.util.Map;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 
 /**
@@ -71,7 +72,7 @@ public class AlertMacroConverter extends AbstractMacroConverter
         String content)
     {
         String title = confluenceParameters.get(TITLE);
-        if (title.isEmpty()) {
+        if (StringUtils.isEmpty(title)) {
             return Collections.emptyMap();
         }
         return Map.of(TITLE, title);
