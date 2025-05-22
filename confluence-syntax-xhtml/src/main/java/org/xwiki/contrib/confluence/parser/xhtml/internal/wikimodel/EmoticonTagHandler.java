@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xwiki.rendering.wikimodel.WikiParameter;
@@ -175,16 +176,28 @@ public class EmoticonTagHandler extends AbstractConfluenceTagHandler implements 
             String name = nameParam.getValue();
             if (name != null && !name.isEmpty()) {
                 String emoji = NAME_MAP.get(name);
-                if (emoji == null || emoji.isEmpty()) {
+                if (StringUtils.isEmpty(emoji)) {
                     emoji = EMOJI_MAP.get(':' + name + ':');
                 }
-                if (emoji != null && !emoji.isEmpty()) {
+                if (StringUtils.isEmpty(emoji)) {
+                    emoji = tryKeyCapEmoji(name);
+                }
+                if (!StringUtils.isEmpty(emoji)) {
                     context.getScannerContext().onWord(emoji);
                     return true;
                 }
             }
         }
         return false;
+    }
+
+    private static String tryKeyCapEmoji(String name)
+    {
+        if (name.startsWith("keycap: ")) {
+            String cap = name.substring(8);
+            return cap + "\uFE0F\u20E3";
+        }
+        return null;
     }
 
     private static boolean sendShortName(TagContext context, WikiParameters params)
@@ -221,18 +234,42 @@ public class EmoticonTagHandler extends AbstractConfluenceTagHandler implements 
         WikiParameter emojiIdParam = params.getParameter("ac:emoji-id");
         if (emojiIdParam != null) {
             String emojiId = emojiIdParam.getValue();
-            if (emojiId != null && emojiId.matches("[a-fA-F0-9]+")) {
-                try {
-                    int emojiCodePoint = Integer.parseInt(emojiId, 16);
-                    if (Character.isValidCodePoint(emojiCodePoint)) {
-                        context.getScannerContext().onWord(Character.toString(emojiCodePoint));
-                        return true;
-                    }
-                } catch (NumberFormatException ignored) {
-                    LOGGER.warn("Failed to parse the [ac:emoji-id] parameter with value [{}].", emojiId);
+            return emojiId != null && convertEmojiId(context, emojiId);
+        }
+        return false;
+    }
+
+    private static boolean convertEmojiId(TagContext context, String emojiId)
+    {
+        if (emojiId.matches("[a-fA-F0-9]+")) {
+            try {
+                String c = fromHexaCode(emojiId);
+                if (c != null) {
+                    context.getScannerContext().onWord(c);
+                    return true;
                 }
+            } catch (NumberFormatException ignored) {
+                LOGGER.warn("Failed to parse the [ac:emoji-id] parameter with value [{}].", emojiId);
+            }
+        } else if (emojiId.matches("[a-fA-F0-9]+-[a-fA-F0-9]+")) {
+            String[] chars = emojiId.split("-");
+            String c0 = fromHexaCode(chars[0]);
+            String c1 = fromHexaCode(chars[1]);
+            if (c0 != null && c1 != null) {
+                context.getScannerContext().onWord(c0 + "\uFE0F" + c1);
+                return true;
             }
         }
         return false;
+    }
+
+    private static String fromHexaCode(String emojiId)
+    {
+        int emojiCodePoint = Integer.parseInt(emojiId, 16);
+        String c = null;
+        if (Character.isValidCodePoint(emojiCodePoint)) {
+            c = Character.toString(emojiCodePoint);
+        }
+        return c;
     }
 }

@@ -42,6 +42,8 @@
       <p>Legacy image emoticon:<img class="emoticon emoticon-warning" title="(warning)" src="http://confluence.atlatian.net/s/en_US/7901/4635873c8e185dc5df37b4e2487dfbef570b5e2c/_/images/icons/emoticons/warning.svg" alt="(warning)" border="0" />.</p>
       <p>Legacy image emoticon 2:<ac:image ac:class="emoticon emoticon-smile" ac:title="(L&auml;cheln)" ac:alt="(L&auml;cheln)"><ri:url ri:value="http://confluence.atlatian.net/s/de_DE/7901/4635873c8e185dc5df37b4e2487dfbef570b5e2c/_/images/icons/emoticons/smile.svg" /></ac:image></p>
       <p>New Confluence Cloud emoticon: <ac:emoticon ac:name="cross" ac:emoji-shortname=":cross_mark:" ac:emoji-id="atlassian-cross_mark" ac:emoji-fallback=":cross_mark:" /></p>
+      <p>Two keycap 1 emojis: <ac:emoticon ac:name="keycap: 1"/> <ac:emoticon ac:emoji-id="31-20e3"/></p>
+      <p>Two keycap 2 emojis: <ac:emoticon ac:name="keycap: 2"/> <ac:emoticon ac:emoji-id="32-20e3"/></p>
     ]]></property>
     <property name="content" class="Page"
       package="com.atlassian.confluence.pages">
