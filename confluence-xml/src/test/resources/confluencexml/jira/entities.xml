@@ -91,6 +91,14 @@
     <ac:parameter ac:name="key">JAXA-27</ac:parameter>
   </ac:structured-macro>
 </p>
+<p>
+  <ac:structured-macro ac:macro-id="3b4e50da-d8b0-410c-be22-bbd27f9fddc3" ac:name="jira" ac:schema-version="1">
+    <ac:parameter ac:name="server">Jira ID</ac:parameter>
+    <ac:parameter ac:name="columnIds">issuekey,summary,issuetype,created,updated,duedate,assignee,reporter,priority,status,resolution,fixVersions,resolutiondate,versions,components,votes,issuelinks,labels</ac:parameter>
+    <ac:parameter ac:name="columns">key,summary,type,created,updated,due,assignee,reporter,priority,status,resolution,fixVersions,resolutiondate,versions,components,votes,issuelinks,labels</ac:parameter>
+    <ac:parameter ac:name="key">JAXA-27</ac:parameter>
+  </ac:structured-macro>
+</p>
     ]]></property>
     <property name="content" class="Page"
       package="com.atlassian.confluence.pages">

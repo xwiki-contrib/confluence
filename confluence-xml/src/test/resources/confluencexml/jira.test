@@ -44,19 +44,19 @@
               </entry>
               <entry>
                 <string>content</string>
-                <string>{{jira id="Jira ID" maxCount="20" source="jql" fields="issuekey:key,summary:summary,issuetype:type,created:created,updated:updated,duedate:due,assignee:assignee,reporter:reporter,priority:priority,status:status,resolution:resolution"}}
+                <string>{{jira id="Jira ID" maxCount="20" source="jql" fields="key:key,summary:summary,type:type,created:created,updated:updated,duedate:due,assignee:assignee,reporter:reporter,priority:priority,status:status,resolution:resolution"}}
 project = "Confluence test" 
 {{/jira}}
 
-{{jira id="Jira ID" maxCount="20" source="jql" fields="issuekey:key,summary:summary,issuetype:type,created:created,updated:updated,duedate:due,assignee:assignee,reporter:reporter,priority:priority,status:status,resolution:resolution"}}
+{{jira id="Jira ID" maxCount="20" source="jql" fields="key:key,summary:summary,type:type,created:created,updated:updated,duedate:due,assignee:assignee,reporter:reporter,priority:priority,status:status,resolution:resolution"}}
 project = "Hello toto" 
 {{/jira}}
 
-{{jira id="Jira ID" maxCount="20" source="jql" fields="issuekey:key,summary:summary,issuetype:type,created:created,updated:updated,duedate:due,assignee:assignee,reporter:reporter,priority:priority,status:status,resolution:resolution"}}
+{{jira id="Jira ID" maxCount="20" source="jql" fields="key:key,summary:summary,type:type,created:created,updated:updated,duedate:due,assignee:assignee,reporter:reporter,priority:priority,status:status,resolution:resolution"}}
 project = "My project yolo" 
 {{/jira}}
 
-{{jira id="Jira ID" maxCount="26" source="jql" fields="issuekey:key,summary:summary,issuetype:type,created:created,updated:updated,duedate:due,assignee:assignee,reporter:reporter,priority:priority,status:status,customfield_26400:Status,resolution:resolution,customfield_18112:End Date,customfield_26802:Time Saving"}}
+{{jira id="Jira ID" maxCount="26" source="jql" fields="key:key,summary:summary,type:type,created:created,updated:updated,duedate:due,assignee:assignee,reporter:reporter,priority:priority,status:status,customfield_26400:Status,resolution:resolution,customfield_18112:End Date,customfield_26802:Time Saving"}}
 project = "test java" 
 {{/jira}}
 
@@ -66,7 +66,11 @@ project = "test java empty column"
 
 {{confluence_jira server="Jira ID" jqlQuery="project = ~"it s a test~" " count="true" serverId="520ce16e-e768-373b-b327-d7568ea882d1"/}}
 
-{{jira id="Jira ID" source="list" style="enum" fields="issuekey:key,summary:summary,issuetype:type,created:created,updated:updated,duedate:due,assignee:assignee,reporter:reporter,priority:priority,status:status,resolution:resolution"}}
+{{jira id="Jira ID" source="list" style="enum" fields="key:key,summary:summary,type:type,created:created,updated:updated,duedate:due,assignee:assignee,reporter:reporter,priority:priority,status:status,resolution:resolution"}}
+JAXA-27
+{{/jira}}
+
+{{jira id="Jira ID" source="list" style="enum" fields="key:key,summary:summary,type:type,created:created,updated:updated,duedate:due,assignee:assignee,reporter:reporter,priority:priority,status:status,resolution:resolution,fixVersion:fixVersions,resolved:resolutiondate,version:versions,component:components,votes:votes,link:issuelinks,labels:labels"}}
 JAXA-27
 {{/jira}}</string>
               </entry>

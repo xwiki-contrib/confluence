@@ -45,7 +45,7 @@ public class JiraMacroConverter extends AbstractMacroConverter
 
     private static final String XWIKI_PARAM_FIELDS = "fields";
 
-    private static final String CONFLUENCE_PARAM_KEY = "key";
+    private static final String KEY = "key";
 
     private static final String CONFLUENCE_PARAM_SERVER = "server";
 
@@ -54,6 +54,16 @@ public class JiraMacroConverter extends AbstractMacroConverter
     private static final String CONFLUENCE_PARAM_COLUMNS = "columns";
 
     private static final String COMMA = ",";
+
+    private static final Map<String, String> CONFLUENCE_TO_XWIKI_COLUMN_NAME = Map.of(
+        "issuekey", KEY,
+        "issuetype", "type",
+        "resolutiondate", "resolved",
+        "fixVersions", "fixVersion",
+        "versions", "version",
+        "components", "component",
+        "issuelinks", "link"
+    );
 
     enum MacroUsageType
     {
@@ -79,7 +89,7 @@ public class JiraMacroConverter extends AbstractMacroConverter
         }
 
         // return the content of the key parameter if no jql query is specified
-        String keyValue = parameters.get(CONFLUENCE_PARAM_KEY);
+        String keyValue = parameters.get(KEY);
         if (keyValue != null) {
             return keyValue;
         }
@@ -129,7 +139,7 @@ public class JiraMacroConverter extends AbstractMacroConverter
 
     private MacroUsageType getMacroUsageType(Map<String, String> confluenceParameters)
     {
-        if (confluenceParameters.containsKey(CONFLUENCE_PARAM_KEY)) {
+        if (confluenceParameters.containsKey(KEY)) {
             return MacroUsageType.SINGLE;
         } else if ("true".equals(confluenceParameters.get("count"))) {
             return MacroUsageType.COUNT;
@@ -145,7 +155,7 @@ public class JiraMacroConverter extends AbstractMacroConverter
             String[] columnsNames = columns != null ? columns.split(COMMA) : new String[] {};
             StringBuilder result = new StringBuilder();
             for (int i = 0; i < columnIdsList.length; i++) {
-                String columnId = columnIdsList[i];
+                String columnId = CONFLUENCE_TO_XWIKI_COLUMN_NAME.getOrDefault(columnIdsList[i], columnIdsList[i]);
                 String columnName = columnsNames.length > i ? columnsNames[i] : null;
                 result.append(columnId);
                 if (columnName != null) {
