@@ -40,8 +40,10 @@ import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
 @Named("pagetree")
 public class PagetreeMacroConverter extends AbstractMacroConverter
 {
+
     private static final String ROOT = "root";
     private static final String START_DEPTH = "startDepth";
+    private static final String DOT_WEB_HOME = ".WebHome";
 
     @Inject
     private ConfluenceConverter confluenceConverter;
@@ -63,9 +65,22 @@ public class PagetreeMacroConverter extends AbstractMacroConverter
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {
+        // We get it even if we don't use it so it is marked as handled
+        String spaces = confluenceParameters.get("spaces");
+
         String root = confluenceParameters.get(ROOT);
+
         if (StringUtils.isEmpty(root)) {
-            root = confluenceConverter.convertSpaceReference("@self", true);
+            if (StringUtils.isEmpty(spaces)) {
+                root = confluenceConverter.convertSpaceReference("@self", true);
+            } else {
+                //FIXME if several spaces are specified, this probably won't go well...
+                if (!spaces.endsWith(DOT_WEB_HOME)) {
+                    root = spaces.contains(".")
+                        ? spaces + DOT_WEB_HOME
+                        : confluenceConverter.convertSpaceReference(spaces, true);
+                }
+            }
         }
 
         String startDepth = confluenceParameters.get(START_DEPTH);

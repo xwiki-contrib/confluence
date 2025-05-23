@@ -54,7 +54,8 @@
 </blockquote>
 
 <p><ac:structured-macro ac:name="pagetree"><ac:parameter ac:name="sort">natural</ac:parameter><ac:parameter ac:name="root"><ac:link /></ac:parameter><ac:parameter ac:name="startDepth">3</ac:parameter><ac:parameter ac:name="searchBox">true</ac:parameter><ac:parameter ac:name="expandCollapseAll">true</ac:parameter></ac:structured-macro></p>
-
+<p><ac:structured-macro ac:name="pagetree" ac:schema-version="1" ac:macro-id="9016388f-3094-47b6-8bb9-47bde952b72e"><ac:parameter ac:name="expandCollapseAll">true</ac:parameter><ac:parameter ac:name="root"><ac:link /></ac:parameter><ac:parameter ac:name="spaces"><ri:space ri:space-key="EOWEB" /></ac:parameter><ac:parameter ac:name="startDepth">3</ac:parameter><ac:parameter ac:name="excerpt">true</ac:parameter><ac:parameter ac:name="searchBox">true</ac:parameter></ac:structured-macro></p>
+<p><ac:structured-macro ac:name="pagetree" ac:schema-version="1" ac:macro-id="9016388f-3094-47b6-8bb9-47bde952b72e"><ac:parameter ac:name="expandCollapseAll">true</ac:parameter><ac:parameter ac:name="spaces"><ri:space ri:space-key="EOWEB" /></ac:parameter><ac:parameter ac:name="startDepth">3</ac:parameter><ac:parameter ac:name="excerpt">true</ac:parameter><ac:parameter ac:name="searchBox">true</ac:parameter></ac:structured-macro></p>
     <ol>
   <li><p>Hello</p></li>
   <li><p>world</p>

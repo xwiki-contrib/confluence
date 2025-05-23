@@ -48,6 +48,10 @@
 
 {{documentTree root="document:WebHome" sortDocumentsBy="natural"/}}
 
+{{documentTree root="document:WebHome"/}}
+
+{{documentTree root="document:OutsideSpace.EOWEB.WebHome"/}}
+
 1. Hello
 1. world
 11. Hello nested
