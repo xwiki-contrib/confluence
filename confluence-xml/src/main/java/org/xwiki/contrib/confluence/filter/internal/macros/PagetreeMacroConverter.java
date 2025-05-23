@@ -20,6 +20,7 @@
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -72,6 +73,10 @@ public class PagetreeMacroConverter extends AbstractMacroConverter
             markUnhandledParameterValue(confluenceParameters, START_DEPTH);
         }
 
-        return Map.of(ROOT, "document:" + root);
+        Map<String, String> parameters = new TreeMap<>();
+        parameters.put(ROOT, "document:" + root);
+        ChildrenMacroConverter.handleSortParameter(confluenceParameters, parameters, this);
+
+        return parameters;
     }
 }

@@ -46,7 +46,7 @@
 
 1. hello
 
-{{documentTree root="document:WebHome"/}}
+{{documentTree root="document:WebHome" sortDocumentsBy="natural"/}}
 
 1. Hello
 1. world
