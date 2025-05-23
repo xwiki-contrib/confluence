@@ -926,7 +926,7 @@ public class ConfluenceInputFilterStream
         Long homePageId = confluencePackage.getHomePage(confluencePackage.getSpaceId(spaceKey));
         for (Long pageId : pages) {
             if (Objects.equals(pageId, homePageId)) {
-                logger.warn("The home page (id: [{}]) of space [{}] is a child of another page, "
+                logger.info("The home page (id: [{}]) of space [{}] is a child of another page, "
                         + "not sending it a second time", pageId, spaceKey);
                 continue;
             }
