@@ -58,13 +58,7 @@ public class CodeMacroConverter extends AbstractMacroConverter
         String content)
     {
         Map<String, String> parameters = new HashMap<>(1);
-        String language = confluenceParameters.get(LANGUAGE);
-        if (StringUtils.isEmpty(language)) {
-            language = confluenceParameters.get("");
-        }
-        if (StringUtils.isNotEmpty(language)) {
-            parameters.put(LANGUAGE, language);
-        }
+        putLanguageParameter(confluenceParameters, parameters);
 
         if (content != null && containsEndCode(content)) {
             parameters.put("source",  "string:" + content);
@@ -82,6 +76,20 @@ public class CodeMacroConverter extends AbstractMacroConverter
         checkUnhandledParameterValues(confluenceParameters);
 
         return parameters;
+    }
+
+    private static void putLanguageParameter(Map<String, String> confluenceParameters, Map<String, String> parameters)
+    {
+        String language = confluenceParameters.get(LANGUAGE);
+        if (StringUtils.isEmpty(language)) {
+            language = confluenceParameters.get("");
+        }
+        if (StringUtils.isEmpty(language)) {
+            language = confluenceParameters.get("lang");
+        }
+        if (StringUtils.isNotEmpty(language)) {
+            parameters.put(LANGUAGE, language);
+        }
     }
 
     private void checkUnhandledParameterValues(Map<String, String> confluenceParameters)
