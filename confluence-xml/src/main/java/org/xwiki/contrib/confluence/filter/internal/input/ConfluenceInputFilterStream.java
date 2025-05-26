@@ -2030,6 +2030,7 @@ public class ConfluenceInputFilterStream
         }
 
         macrosIds.clear();
+        inlineComments.clear();
 
         // pageId is used as a fallback, an empty revision would prevent the revision from going through.
         String revision = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION, null);
