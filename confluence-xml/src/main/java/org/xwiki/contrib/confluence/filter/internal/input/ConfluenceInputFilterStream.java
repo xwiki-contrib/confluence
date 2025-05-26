@@ -1805,7 +1805,7 @@ public class ConfluenceInputFilterStream
             }
 
             if (!VERSION_PATTERN.matcher(version).matches()) {
-                this.logger.error("Failed to get the version for page revision with id [{}]. Will use dates to sort"
+                this.logger.error("Failed to get the version for page revision with id [{}]. Will use dates to sort "
                     + "revisions as a fallback for page [{}] and rewrite the versions. Please double-check its history",
                     revisionId, createPageIdentifier(pageProperties));
                 return true;
