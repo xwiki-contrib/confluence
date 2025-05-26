@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic datetime="'2025-05-02 11:23:43.902'">
+    <object class="Space" package="com.atlassian.confluence.spaces">
+        <id name="id">60391710</id>
+        <property name="name"><![CDATA[My Space]]></property>
+        <property name="key"><![CDATA[MySpace]]></property>
+        <property name="lowerKey"><![CDATA[myspace]]></property>
+    </object>
+    <object class="Page" package="com.atlassian.confluence.pages">
+        <id name="id">63897036</id>
+        <property name="hibernateVersion">8</property>
+        <property name="title"><![CDATA[Page with deleted revision]]></property>
+        <property name="lowerTitle"><![CDATA[page with deleted revision]]></property>
+        <collection name="bodyContents" class="java.util.Collection">
+            <element class="BodyContent" package="com.atlassian.confluence.core">
+                <id name="id">63948939</id>
+            </element>
+        </collection>
+        <collection name="contentProperties" class="java.util.Collection">
+            <element class="ContentProperty" package="com.atlassian.confluence.content">
+                <id name="id">64004452</id>
+            </element>
+        </collection>
+        <property name="version">2</property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a94489a84cd3aa101854f4bf3e94f20]]></id>
+        </property>
+        <property name="creationDate">2015-12-08 15:39:38.000</property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a94489a84cd3aa101854f4b8b110365]]></id>
+        </property>
+        <property name="lastModificationDate">2021-10-14 11:09:09.164</property>
+        <property name="versionComment"><![CDATA[Migrated to Confluence 5.3]]></property>
+        <collection name="historicalVersions" class="java.util.Collection">
+            <element class="Page" package="com.atlassian.confluence.pages">
+                <id name="id">63897111</id>
+            </element>
+        </collection>
+        <property name="contentStatus"><![CDATA[current]]></property>
+        <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+            <id name="id">60391710</id>
+        </property>
+        <property name="position">2</property>
+    </object>
+    <object class="Page" package="com.atlassian.confluence.pages">
+        <id name="id">63897111</id>
+        <property name="hibernateVersion">1</property>
+        <property name="title"><![CDATA[Page with deleted revision]]></property>
+        <property name="lowerTitle"><![CDATA[page with deleted revision]]></property>
+        <collection name="bodyContents" class="java.util.Collection">
+            <element class="BodyContent" package="com.atlassian.confluence.core">
+                <id name="id">63949116</id>
+            </element>
+        </collection>
+        <property name="version">1</property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a94489a84cd3aa101854f4bf3e94f20]]></id>
+        </property>
+        <property name="creationDate">2015-12-08 15:39:38.000</property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key"><![CDATA[8a94489a84cd3aa101854f4bf3e94f20]]></id>
+        </property>
+        <property name="lastModificationDate">2015-12-08 15:39:38.000</property>
+        <property name="versionComment"><![CDATA[]]></property>
+        <property name="originalVersion" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">63897036</id>
+        </property>
+        <property name="contentStatus"><![CDATA[deleted]]></property>
+        <property name="position"/>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">63949116</id>
+        <property name="body"><![CDATA[<p>hello deleted</p>]]></property>
+        <property name="content" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">63897111</id>
+        </property>
+        <property name="bodyType">2</property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">63948939</id>
+        <property name="body"><![CDATA[<p>hello current</p>]]></property>
+        <property name="content" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">63897036</id>
+        </property>
+        <property name="bodyType">2</property>
+    </object>
+</hibernate-generic>

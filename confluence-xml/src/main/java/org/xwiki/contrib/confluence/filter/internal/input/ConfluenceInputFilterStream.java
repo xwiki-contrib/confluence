@@ -1690,30 +1690,6 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private Map<Long, ConfluenceProperties> getRevisions(ConfluenceProperties pageProperties)
-    {
-        // Note: revisions can appear several times in the list
-        List<Long> revisionIds =
-            this.confluencePackage.getLongList(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISIONS);
-        Map<Long, ConfluenceProperties> revisionsById = new HashMap<>(revisionIds.size());
-        for (Long revisionId : revisionIds) {
-            ConfluenceProperties revisionProperties = null;
-            try {
-                revisionProperties = getPageProperties(revisionId);
-                if (revisionProperties == null) {
-                    this.logger.warn("Can't find page revision with id [{}]", revisionId);
-                }
-            } catch (FilterException e) {
-                this.logger.error("Failed to get page revision with id [{}]", revisionId, e);
-            }
-
-            if (revisionProperties != null) {
-                revisionsById.put(revisionId, revisionProperties);
-            }
-        }
-        return revisionsById;
-    }
-
     private void sendRevisions(boolean blog, Object filter, ConfluenceFilter proxyFilter,
         ConfluenceProperties pageProperties, String spaceKey, Collection<ConfluenceRight> inheritedRights, boolean hide)
         throws FilterException, ConfluenceCanceledException
@@ -1724,7 +1700,14 @@ public class ConfluenceInputFilterStream
 
         try {
             if (properties.isHistoryEnabled() && pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISIONS)) {
-                Map<Long, ConfluenceProperties> revisionsById = getRevisions(pageProperties);
+                Map<Long, ConfluenceProperties> revisionsById;
+                try {
+                    revisionsById = confluencePackage.getRevisionsById(pageProperties, false, false);
+                } catch (ConfigurationException e) {
+                    logger.error("Failed to get revisions of page [{}]. This should not happen.",
+                        createPageIdentifier(pageProperties), e);
+                    return;
+                }
 
                 boolean buggyVersions = areThereBuggyVersions(pageProperties, revisionsById);
 
@@ -2026,14 +2009,7 @@ public class ConfluenceInputFilterStream
     private ConfluenceProperties getPageProperties(Long pageId) throws FilterException
     {
         try {
-            ConfluenceProperties props = this.confluencePackage.getPageProperties(pageId, false);
-            if (props == null || props.getLong(ConfluenceXMLPackage.KEY_ID, null) == null) {
-                // Null ID can happen when the home page is missing. ConfluenceXMLPackage has set the homePage property
-                // when parsing the space, but the page id and any other property is missing. This means the page
-                // isn't actually there.
-                return null;
-            }
-            return props;
+            return this.confluencePackage.getPageProperties(pageId, false);
         } catch (ConfigurationException e) {
             throw new FilterException("Failed to get page properties", e);
         }

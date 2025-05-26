@@ -1433,6 +1433,41 @@ public class ConfluenceXMLPackage implements AutoCloseable
         }
     }
 
+    /**
+     * @return the revisions of a content by id.
+     * @param pageProperties The page for which to get the revisions
+     * @param includeIgnored Whether to include deleted or draft pages
+     * @param throwOnError Whether to throw if something wrong happens
+     * @throws ConfigurationException if something wrong happens
+     * @since 9.87.O
+     */
+    public Map<Long, ConfluenceProperties> getRevisionsById(ConfluenceProperties pageProperties,
+        boolean includeIgnored, boolean throwOnError) throws ConfigurationException
+    {
+        // Note: revisions can appear several times in the list
+        List<Long> revisionIds = getLongList(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISIONS);
+        Map<Long, ConfluenceProperties> revisionsById = new HashMap<>(revisionIds.size());
+        for (Long revisionId : revisionIds) {
+            ConfluenceProperties revisionProperties = null;
+            try {
+                revisionProperties = getPageProperties(revisionId, false);
+                if (revisionProperties == null) {
+                    this.logger.warn("Can't find page revision with id [{}]", revisionId);
+                }
+            } catch (ConfigurationException e) {
+                if (throwOnError) {
+                    throw e;
+                }
+                this.logger.error("Failed to get page revision with id [{}]", revisionId, e);
+            }
+
+            if (revisionProperties != null && (includeIgnored || !mustIgnoreContent(revisionProperties))) {
+                revisionsById.put(revisionId, revisionProperties);
+            }
+        }
+        return revisionsById;
+    }
+
     private void mkdirTree() throws FilterException
     {
         if (!this.tree.isDirectory() && !this.tree.mkdir()) {
@@ -1932,19 +1967,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         long pageId = readObjectProperties(xmlReader, properties);
 
-        // Skip deleted, archived or draft pages
-        // Note that some draft pages don't have spaces and this causes issues.
-        String contentStatus = properties.getString(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS);
-        if (contentStatus != null && (contentStatus.equals("deleted") || contentStatus.equals("draft"))) {
-            return;
-        }
-
         Long spaceId = properties.getLong(KEY_PAGE_SPACE, null);
         if (spaceId != null && shouldIgnoreSpace(spaceId)) {
             return;
         }
 
-        if (properties.getLong(KEY_PAGE_ORIGINAL_VERSION, null) == null) {
+        if (!mustIgnoreContent(properties) && properties.getLong(KEY_PAGE_ORIGINAL_VERSION, null) == null) {
             // Register only current pages (they will take care of handling their history)
             if (spaceId == null) {
                 this.logger.error("Could not find space of page [{}]. Importing it may fail.", pageId);
@@ -1959,6 +1987,14 @@ public class ConfluenceXMLPackage implements AutoCloseable
             properties.setProperty(KEY_PAGE_BLOGPOST, true);
         }
         savePageProperties(properties, pageId);
+    }
+
+    private static boolean mustIgnoreContent(ConfluenceProperties properties)
+    {
+        // Skip deleted, archived or draft pages
+        // Note that some draft pages don't have spaces and this causes issues.
+        String contentStatus = properties.getString(ConfluenceXMLPackage.KEY_PAGE_CONTENT_STATUS);
+        return contentStatus != null && (contentStatus.equals("deleted") || contentStatus.equals("draft"));
     }
 
     private void registerPage(boolean isBlog, ConfluenceProperties properties, long pageId, long spaceId)
@@ -2439,7 +2475,22 @@ public class ConfluenceXMLPackage implements AutoCloseable
     {
         File file = getPagePropertiesFile(pageId);
 
-        return create || file.exists() ? ConfluenceProperties.create(file) : null;
+        if (create) {
+            return ConfluenceProperties.create(file);
+        }
+
+        if (!file.exists()) {
+            return null;
+        }
+
+        ConfluenceProperties props = ConfluenceProperties.create(file);
+        if (props.getLong(ConfluenceXMLPackage.KEY_ID, null) == null) {
+            // Null ID can happen when the home page is missing. ConfluenceXMLPackage has set the homePage property
+            // when parsing the space, but the page id and any other property is missing. This means the page
+            // isn't actually there and we should not return it
+            return null;
+        }
+        return props;
     }
 
     /**

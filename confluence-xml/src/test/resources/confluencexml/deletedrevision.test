@@ -1,0 +1,98 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.#------------------------------------------------------------------------------
+<wikiSpace name="MySpace">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>title</string>
+              <string>MySpace</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>{{children/}}</string>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+  <wikiSpace name="Page with deleted revision">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.8a94489a84cd3aa101854f4bf3e94f20</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2015-12-08 15:39:38.0 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>2</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="2">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.8a94489a84cd3aa101854f4b8b110365</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2021-10-14 11:09:09.164 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string>Migrated to Confluence 5.3</string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Page with deleted revision</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>hello current</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
+.configuration.source=deletedrevision
+.#------------------------------------------------------------------------------
