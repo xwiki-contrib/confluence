@@ -673,15 +673,12 @@ public class ConfluenceInputFilterStream
                 }
 
                 sendSpaceTemplates(spaceProperties, spaceKey, spaceId, filter, proxyFilter);
-                if (CollectionUtils.isEmpty(properties.getIncludedPages())) {
+                if (CollectionUtils.isEmpty(properties.getIncludedPages()) && this.properties.isPageOrderEnabled()) {
                     // We don't send templates and pinned pages if we are sending a specific list of pages
-
-                    if (this.properties.isPageOrderEnabled()) {
-                        List<Long> children = confluencePackage.getPageChildren(homePageId);
-                        Collection<String> orderedTitles = getOrderedDocumentTitles(
-                            IterableUtils.chainedIterable(children, blogPages));
-                        sendPinnedPages(proxyFilter, orderedTitles);
-                    }
+                    List<Long> children = confluencePackage.getPageChildren(homePageId);
+                    Collection<String> orderedTitles = getOrderedDocumentTitles(
+                        IterableUtils.chainedIterable(children, blogPages));
+                    sendPinnedPages(proxyFilter, orderedTitles);
                 }
             } catch (ConfluenceInterruptedException e) {
                 // Even if we reached the maximum page count, we want to send the space rights.
@@ -902,15 +899,13 @@ public class ConfluenceInputFilterStream
         // > WikiSpace
         proxyFilter.beginWikiSpace(blogSpaceKey, FilterEventParameters.EMPTY);
         try {
-            if (CollectionUtils.isEmpty(this.properties.getIncludedPages())) {
+            if (CollectionUtils.isEmpty(this.properties.getIncludedPages()) && this.properties.isPageOrderEnabled()) {
                 // we only send the pinned pages and the pinned pages, the WebPreferences document and the blog
                 // descriptor if we are not sending a specific list of pages.
-                if (this.properties.isPageOrderEnabled()) {
-                    Collection<String> orderedTitles = getOrderedDocumentTitles(blogPages);
-                    sendPinnedPages(proxyFilter, orderedTitles);
-                    endWebPreferences(proxyFilter);
-                    addBlogDescriptorPage(proxyFilter);
-                }
+                Collection<String> orderedTitles = getOrderedDocumentTitles(blogPages);
+                sendPinnedPages(proxyFilter, orderedTitles);
+                endWebPreferences(proxyFilter);
+                addBlogDescriptorPage(proxyFilter);
             }
             // Blog post pages
             sendPages(spaceKey, true, blogPages, filter, proxyFilter, false);
@@ -2048,7 +2043,6 @@ public class ConfluenceInputFilterStream
         beginPageRevision(blog, pageProperties, filter, proxyFilter, revision, docRevisionParameters,
             ConfluenceXMLPackage.KEY_PAGE_BODY);
 
-
         if (this.properties.isRightsEnabled()) {
             sendPageRights(proxyFilter, pageProperties, inheritedRights);
         }
@@ -2260,7 +2254,7 @@ public class ConfluenceInputFilterStream
         return null;
     }
 
-    private void readComments(ConfluenceProperties pageProperties, ConfluenceFilter proxyFilter) throws FilterException
+    private void readComments(ConfluenceProperties pageProperties, ConfluenceFilter proxyFilter)
     {
         List<Long> commentIds = confluencePackage.getPageComments(pageProperties);
         Map<Long, ConfluenceProperties> commentsById = new HashMap<>(commentIds.size());
