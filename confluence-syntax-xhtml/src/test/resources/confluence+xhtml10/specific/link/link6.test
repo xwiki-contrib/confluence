@@ -2,13 +2,82 @@
 .input|confluence+xhtml/1.0
 .#-----------------------------------------------------
 <ac:link ac:anchor="anchor"/>
+Page: <ac:link ac:anchor="otheranchor"><ri:page ri:space-key="OtherSpace" ri:content-title="Other Page" /></ac:link>
+Home: <ac:link ac:anchor="otheranchor"><ri:page ri:space-key="OtherSpace" ri:content-title="@home" /></ac:link>
+Self: <ac:link ac:anchor="otheranchor"><ri:page ri:content-title="@self" /></ac:link>
+Home: <ac:link ac:anchor="otheranchor"><ri:page ri:content-title="@home" /></ac:link>
+Home 2: <ac:link ac:anchor="otheranchor"><ri:page ri:space-key="currentSpace()" ri:content-title="@home" /></ac:link>
+Home 3: <ac:link ac:anchor="otheranchor"><ri:page ri:space-key="OtherSpace" ri:content-title="@home" /></ac:link>
 .#-----------------------------------------------------
 .expect|event/1.0
 .#-----------------------------------------------------
 beginDocument
 beginParagraph
 beginLink [Typed = [true] Type = [doc] Reference = [] Parameters = [[anchor] = [anchor]]] [false]
+onSpecialSymbol [#]
 onWord [anchor]
 endLink [Typed = [true] Type = [doc] Reference = [] Parameters = [[anchor] = [anchor]]] [false]
+onWord [Page]
+onSpecialSymbol [:]
+onSpace
+beginLink [Typed = [true] Type = [confluencePage] Reference = [page:OtherSpace.Other Page#otheranchor]] [false]
+onWord [Other]
+onSpace
+onWord [Page]
+onSpecialSymbol [#]
+onWord [otheranchor]
+endLink [Typed = [true] Type = [confluencePage] Reference = [page:OtherSpace.Other Page#otheranchor]] [false]
+onSpace
+onWord [Home]
+onSpecialSymbol [:]
+onSpace
+beginLink [Typed = [true] Type = [confluencePage] Reference = [page:OtherSpace.\@home#otheranchor]] [false]
+onWord [OtherSpace]
+onSpecialSymbol [#]
+onWord [otheranchor]
+endLink [Typed = [true] Type = [confluencePage] Reference = [page:OtherSpace.\@home#otheranchor]] [false]
+onSpace
+onWord [Self]
+onSpecialSymbol [:]
+onSpace
+beginLink [Typed = [true] Type = [confluencePage] Reference = [page:@self.\@self#otheranchor]] [false]
+onSpecialSymbol [#]
+onWord [otheranchor]
+endLink [Typed = [true] Type = [confluencePage] Reference = [page:@self.\@self#otheranchor]] [false]
+onSpace
+onWord [Home]
+onSpecialSymbol [:]
+onSpace
+beginLink [Typed = [true] Type = [confluencePage] Reference = [page:@self.\@home#otheranchor]] [false]
+onWord [currentSpace]
+onSpecialSymbol [(]
+onSpecialSymbol [)]
+onSpecialSymbol [#]
+onWord [otheranchor]
+endLink [Typed = [true] Type = [confluencePage] Reference = [page:@self.\@home#otheranchor]] [false]
+onSpace
+onWord [Home]
+onSpace
+onWord [2]
+onSpecialSymbol [:]
+onSpace
+beginLink [Typed = [true] Type = [confluencePage] Reference = [page:currentSpace().\@home#otheranchor]] [false]
+onWord [currentSpace]
+onSpecialSymbol [(]
+onSpecialSymbol [)]
+onSpecialSymbol [#]
+onWord [otheranchor]
+endLink [Typed = [true] Type = [confluencePage] Reference = [page:currentSpace().\@home#otheranchor]] [false]
+onSpace
+onWord [Home]
+onSpace
+onWord [3]
+onSpecialSymbol [:]
+onSpace
+beginLink [Typed = [true] Type = [confluencePage] Reference = [page:OtherSpace.\@home#otheranchor]] [false]
+onWord [OtherSpace]
+onSpecialSymbol [#]
+onWord [otheranchor]
+endLink [Typed = [true] Type = [confluencePage] Reference = [page:OtherSpace.\@home#otheranchor]] [false]
 endParagraph
 endDocument

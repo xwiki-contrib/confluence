@@ -58,6 +58,11 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public class LinkTagHandler extends TagHandler implements ConfluenceTagHandler
 {
+
+    private static final String SELF = "@self";
+    private static final String HOME = "@home";
+    private static final String CURRENT_SPACE = "currentSpace()";
+
     private final ConfluenceReferenceConverter referenceConverter;
 
     /**
@@ -116,7 +121,7 @@ public class LinkTagHandler extends TagHandler implements ConfluenceTagHandler
         parentContext.appendContent(ref);
     }
 
-    private static boolean shouldNotIssueLink(ConfluenceXHTMLWikiReference link)
+    private boolean shouldNotIssueLink(ConfluenceXHTMLWikiReference link)
     {
         // If a user tag was inside the link tag, it was transformed into a mention macro.
         if (link.getUser() != null) {
@@ -126,16 +131,48 @@ public class LinkTagHandler extends TagHandler implements ConfluenceTagHandler
         // Make sure to have a label for local anchors
 
         String anchor = link.getAnchor();
+        String page = link.getPage();
         if (!StringUtils.isEmpty(anchor)) {
             if (link.getLabelXDOM() == null && StringUtils.isEmpty(link.getLabel())) {
-                link.setLabel(anchor);
+                setPrettyLabel(link, anchor, page);
             }
-        } else if (link.getPage() == null && link.getSpace() == null && link.getUser() == null
+        } else if (page == null && link.getSpace() == null && link.getUser() == null
             && link.getAttachment() == null) {
             // empty links are links to the current page
-            link.setPageTitle("@self");
+            link.setPageTitle(SELF);
         }
         return false;
+    }
+
+    private void setPrettyLabel(ConfluenceXHTMLWikiReference link, String anchor, String page)
+    {
+        String label = '#' + anchor;
+        if (page != null && !SELF.equals(page)) {
+            if (HOME.equals(page)) {
+                label = convertSpaceForLabel(link.getSpace()) + label;
+            } else {
+                label = page + label;
+            }
+        }
+        link.setLabel(label);
+    }
+
+    private String convertSpaceForLabel(String space)
+    {
+        if (StringUtils.isEmpty(space) || CURRENT_SPACE.equals(space)) {
+            // current space
+            String spaceRef = referenceConverter.convertSpaceReference(CURRENT_SPACE, false);
+            if (StringUtils.isEmpty(spaceRef)) {
+                return "";
+            }
+            int lastDot = spaceRef.lastIndexOf('.');
+            if (lastDot == -1) {
+                lastDot = 0;
+            }
+            return spaceRef.substring(lastDot);
+        }
+
+        return space;
     }
 
     private static boolean handleViewFile(TagContext context, ConfluenceXHTMLWikiReference link,

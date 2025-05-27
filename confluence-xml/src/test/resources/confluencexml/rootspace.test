@@ -71,7 +71,9 @@ Some content
 
 [[(% param="value" %)unhandled link>>url:https://baseurl1.com/display/public/OtherSpace/Other+Page?param=value#anchor||shape="rect"]]
 
-[[Should be converted fake path>>url:http://perdu.con||shape="rect"]] [[Should not be converted fake path>>url:https://perdu.com/fake/path||shape="rect"]]</string>
+[[Should be converted fake path>>url:http://perdu.con||shape="rect"]] [[Should not be converted fake path>>url:https://perdu.com/fake/path||shape="rect"]]
+
+[[Other Page#myanchor>>doc:Composed.Root.OtherSpace.WebHome||anchor="myanchor"]]</string>
                   </entry>
                   <entry>
                     <string>syntax</string>
