@@ -1,6 +1,6 @@
 .#------------------------------------------------------------------------------
 .expect|filter+xml
-.# Various misc tests for which having a dedicated entitie.xml is a bit overkill
+.# Various misc tests for which having a dedicated entities.xml is a bit overkill
 .#------------------------------------------------------------------------------
 <wikiSpace name="MISC">
   <wikiSpace name="Misc content">
