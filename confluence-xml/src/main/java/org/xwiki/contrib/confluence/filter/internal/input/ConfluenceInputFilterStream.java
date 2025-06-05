@@ -2117,40 +2117,44 @@ public class ConfluenceInputFilterStream
         String keyPageBody) throws FilterException
     {
         String bodyContent = pageProperties.getString(keyPageBody, null);
-        if (bodyContent != null && this.properties.isContentsEnabled()) {
-            // No bodyType means old Confluence syntax
-            int bodyType = pageProperties.getInt(ConfluenceXMLPackage.KEY_PAGE_BODY_TYPE, 0);
+        if (this.properties.isContentsEnabled()) {
+            if (bodyContent == null) {
+                logger.error("Content is missing for page with id [{}]", createPageIdentifier(pageProperties));
+            } else {
+                // No bodyType means old Confluence syntax
+                int bodyType = pageProperties.getInt(ConfluenceXMLPackage.KEY_PAGE_BODY_TYPE, 0);
 
-            if (!isBlog && this.properties.isContentEvents() && filter instanceof Listener) {
-                // > WikiDocumentRevision
-                proxyFilter.beginWikiDocumentRevision(revision, docRevisionParameters);
+                if (!isBlog && this.properties.isContentEvents() && filter instanceof Listener) {
+                    // > WikiDocumentRevision
+                    proxyFilter.beginWikiDocumentRevision(revision, docRevisionParameters);
 
-                try {
-                    parse(bodyContent, bodyType, this.properties.getMacroContentSyntax(), proxyFilter);
-                } catch (Exception e) {
-                    this.logger.error("Failed to parse content of page with id [{}]",
-                        createPageIdentifier(pageProperties), e);
+                    try {
+                        parse(bodyContent, bodyType, this.properties.getMacroContentSyntax(), proxyFilter);
+                    } catch (Exception e) {
+                        this.logger.error("Failed to parse content of page with id [{}]",
+                            createPageIdentifier(pageProperties), e);
+                    }
+                    return;
                 }
-                return;
-            }
 
-            Syntax bodySyntax = getBodySyntax(pageProperties, bodyType);
+                Syntax bodySyntax = getBodySyntax(pageProperties, bodyType);
 
-            if (this.properties.isConvertToXWiki()) {
-                try {
-                    bodyContent = convertToXWiki21(bodyContent, bodyType);
-                    bodySyntax = Syntax.XWIKI_2_1;
-                } catch (Exception e) {
-                    this.logger.error("Failed to convert content of the page with id [{}]",
-                        createPageIdentifier(pageProperties), e);
+                if (this.properties.isConvertToXWiki()) {
+                    try {
+                        bodyContent = convertToXWiki21(bodyContent, bodyType);
+                        bodySyntax = Syntax.XWIKI_2_1;
+                    } catch (Exception e) {
+                        this.logger.error("Failed to convert content of the page with id [{}]",
+                            createPageIdentifier(pageProperties), e);
+                    }
                 }
-            }
 
-            if (!isBlog) {
-                docRevisionParameters.put(WikiDocumentFilter.PARAMETER_CONTENT, bodyContent);
-            }
+                if (!isBlog) {
+                    docRevisionParameters.put(WikiDocumentFilter.PARAMETER_CONTENT, bodyContent);
+                }
 
-            docRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, bodySyntax);
+                docRevisionParameters.put(WikiDocumentFilter.PARAMETER_SYNTAX, bodySyntax);
+            }
         }
 
         // > WikiDocumentRevision
