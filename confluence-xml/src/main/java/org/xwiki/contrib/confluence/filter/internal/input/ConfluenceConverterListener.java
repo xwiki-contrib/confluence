@@ -98,6 +98,8 @@ public class ConfluenceConverterListener extends WrappingListener
     @Inject
     private ComponentManager componentManager;
 
+    private Map<String, String> inlineComments = new LinkedHashMap<>();
+
     /**
      * A stack of queues that are used to record the content of a paragraph with the auto-cursor-target class. For
      * the unlikely case that paragraphs are nested (e.g., because there is a paragraph in a nested macro), a stack
@@ -118,10 +120,7 @@ public class ConfluenceConverterListener extends WrappingListener
         @Override
         public void onMacro(String id, Map<String, String> parameters, String content, boolean inline)
         {
-            if (macroIds != null && !isQueuingEvents()) {
-                // Don't count the macros if we are recording events, we only count them when actually rendering.
-                macroIds.put(id, macroIds.getOrDefault(id, 0) + 1);
-            }
+            countMacro(id);
 
             if (ID_MACRO_NAME.equals(id)) {
                 handleIdMacro(parameters, content, inline);
@@ -162,6 +161,14 @@ public class ConfluenceConverterListener extends WrappingListener
         }
     };
 
+    private void countMacro(String id)
+    {
+        if (macroIds != null && !isQueuingEvents()) {
+            // Don't count the macros if we are recording events, we only count them when actually rendering.
+            macroIds.put(id, macroIds.getOrDefault(id, 0) + 1);
+        }
+    }
+
     private class NormalizedPlainFilter extends CompositeListener
     {
         private final WikiPrinter printer = new DefaultWikiPrinter();
@@ -178,8 +185,6 @@ public class ConfluenceConverterListener extends WrappingListener
             addListener(wrappedListener);
         }
     }
-
-    private Map<String, String> inlineComments = new LinkedHashMap<>();
 
     /**
      * @param inlineComments
@@ -299,7 +304,7 @@ public class ConfluenceConverterListener extends WrappingListener
 
             DefaultWikiPrinter printer = new DefaultWikiPrinter();
             plainTextRenderer.setPrinter(printer);
-            contentListener.forEach(event -> event.eventType.fireEvent(plainTextRenderer, event.eventParameters));
+            contentListener.forEach(this::fireEvent);
             String titleText = printer.toString();
             String anchor = confluenceConverter.convertAnchor("", "", titleText);
 
@@ -318,6 +323,14 @@ public class ConfluenceConverterListener extends WrappingListener
             super.endHeader(level, id, removeClassParameter(parameters));
         } else {
             super.endHeader(level, id, parameters);
+        }
+    }
+
+    private void fireEvent(QueueListener.Event event)
+    {
+        event.eventType.fireEvent(plainTextRenderer, event.eventParameters);
+        if (event.eventType.equals(EventType.ON_MACRO)) {
+            countMacro((String) event.eventParameters[0]);
         }
     }
 
