@@ -83,7 +83,6 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
     private static final String CLASS = "class";
     private static final String STYLE = "style";
     private static final String CODE = "code";
-    private static final String SOURCE = "source";
 
     private final Method pushListenerMethod;
 
