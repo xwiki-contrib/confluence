@@ -104,7 +104,7 @@ public class TableCellTagHandler extends TableDataTagHandler
     private static Map<String, String> fetchColumnAttributes(TagContext context)
     {
         Integer currentCol = (Integer) context.getTagStack().getStackParameter(CONFLUENCE_TABLE_CURRENT_COL);
-        if (currentCol == null) {
+        if (currentCol == null || currentCol.equals(-1)) {
             return null;
         }
         List<Map<String, String>> tableAttributes =
