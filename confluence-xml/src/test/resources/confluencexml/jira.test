@@ -64,7 +64,9 @@ project = "test java"
 project = "test java empty column" 
 {{/jira}}
 
-{{confluence_jira server="Jira ID" jqlQuery="project = ~"it s a test~" " count="true" serverId="520ce16e-e768-373b-b327-d7568ea882d1"/}}
+{{jiraCount id="Jira ID"}}
+project = "it s a test" 
+{{/jiraCount}}
 
 {{jira id="Jira ID" source="list" style="enum" fields="key:key,summary:summary,type:type,created:created,updated:updated,duedate:due,assignee:assignee,reporter:reporter,priority:priority,status:status,resolution:resolution"}}
 JAXA-27

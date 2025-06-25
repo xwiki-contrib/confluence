@@ -76,7 +76,7 @@ public class JiraMacroConverter extends AbstractMacroConverter
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
-        return "jira";
+        return getMacroUsageType(confluenceParameters) == MacroUsageType.COUNT ? "jiraCount" : "jira";
     }
 
     @Override
@@ -120,8 +120,7 @@ public class JiraMacroConverter extends AbstractMacroConverter
                         confluenceParameters.get(CONFLUENCE_PARAM_COLUMNS)));
                 break;
             case COUNT:
-                throw new RuntimeException(
-                    "Converting the jira macro with count=true is not yet supported");
+                break;
             case SINGLE:
                 parameters.put(XWIKI_PARAM_SOURCE, "list");
                 parameters.put("style", "enum");
