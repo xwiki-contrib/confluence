@@ -29,7 +29,7 @@
   </parent>
   <groupId>org.xwiki.contrib.confluence</groupId>
   <artifactId>confluence</artifactId>
-  <version>9.87.4-SNAPSHOT</version>
+  <version>9.87.3-SNAPSHOT</version>
   <name>Confluence - Parent POM</name>
   <description>Parent POM for Confluence modules</description>
   <packaging>pom</packaging>
