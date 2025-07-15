@@ -113,7 +113,8 @@ project starts 2022-06-01
 
 -- Snip --
 @endgannt   ]] ></ac:plain-text-body></ac:structured-macro><p><br /></p>
-<p><ac:structured-macro><ac:parameter ac:name="displayName">My name</ac:parameter><ac:parameter ac:name="name">My name</ac:parameter><ac:parameter ac:name="pagePin">6</ac:parameter></ac:structured-macro></p>]]></property>
+<p><ac:structured-macro><ac:parameter ac:name="displayName">My name</ac:parameter><ac:parameter ac:name="name">My name</ac:parameter><ac:parameter ac:name="pagePin">6</ac:parameter></ac:structured-macro></p>
+<p><ac:structured-macro ac:name="popular-labels"><ac:parameter ac:name="spaceKey">MySpace</ac:parameter></ac:structured-macro></p>]]></property>
         <property name="bodyType">2</property>
         <property name="content" class="Page" package="com.atlassian.confluence.pages">
             <id name="id">463168605</id>

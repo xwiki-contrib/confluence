@@ -114,7 +114,9 @@ project starts 2022-06-01
 
 \\
 
-{{confluence_ displayName="My name" name="My name" pagePin="6"/}}</string>
+{{confluence_ displayName="My name" name="My name" pagePin="6"/}}
+
+{{tagcloud space="MySpace"/}}</string>
               </entry>
               <entry>
                 <string>syntax</string>
