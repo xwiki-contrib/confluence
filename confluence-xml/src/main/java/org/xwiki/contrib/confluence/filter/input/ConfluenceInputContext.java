@@ -74,7 +74,7 @@ public interface ConfluenceInputContext
      * @return the cached reference
      * @param pageId the page id corresponding to the cached reference to find
      * @param valueGetter the function to call to get the value if not found (the result will be added to the cache)
-     * @since 6.68.0
+     * @since 9.68.0
      */
     default EntityReference getCachedReference(long pageId, Supplier<EntityReference> valueGetter)
     {
