@@ -838,6 +838,7 @@ public class ConfluenceInputFilterStream
     private void sendSpaceTemplateDocumentLocale(Object filter, ConfluenceFilter proxyFilter,
         ConfluenceProperties templateProperties, String version) throws FilterException
     {
+        // TODO handle localized template migration?
         Locale locale = Locale.ROOT;
         FilterEventParameters documentLocaleParameters = getDocumentLocaleParameters(templateProperties);
         proxyFilter.beginWikiDocumentLocale(locale, documentLocaleParameters);
@@ -1629,42 +1630,64 @@ public class ConfluenceInputFilterStream
         String spaceKey, boolean isHomePage, List<Long> children, boolean hide, long pageId)
             throws FilterException, ConfluenceCanceledException
     {
-        this.progress.startStep(this);
-
         Collection<ConfluenceRight> inheritedRights = blog ? null : new ArrayList<>();
-        if (properties.isIncluded(pageId)) {
-            proxyFilter.beginWikiDocument(documentName, documentParameters);
+        this.progress.startStep(this);
+        try {
+            if (properties.isIncluded(pageId)) {
+                proxyFilter.beginWikiDocument(documentName, documentParameters);
 
-            try {
-                if (this.properties.isContentsEnabled() || this.properties.isRightsEnabled()) {
-                    sendRevisions(blog, filter, proxyFilter, pageProperties, spaceKey, inheritedRights, hide);
-                }
-            } finally {
-                // < WikiDocument
-                proxyFilter.endWikiDocument(documentName, documentParameters);
+                try {
+                    if (this.properties.isContentsEnabled() || this.properties.isRightsEnabled()) {
+                        sendRevisions(blog, filter, proxyFilter, pageProperties, spaceKey, inheritedRights, hide,
+                            Locale.ROOT);
+                    }
+                } finally {
+                    sendTranslations(blog, filter, proxyFilter, pageProperties, spaceKey, hide, inheritedRights);
+                    proxyFilter.endWikiDocument(documentName, documentParameters);
 
-                if (!blog && !isHomePage) {
-                    sendWebPreference(proxyFilter, pageProperties, children, inheritedRights);
-                }
+                    if (!blog && !isHomePage) {
+                        sendWebPreferences(proxyFilter, pageProperties, children, inheritedRights);
+                    }
 
-                if (!macrosIds.isEmpty() && properties.isVerbose()) {
-                    logger.info(ConfluenceFilter.LOG_MACROS_FOUND, "The following macros [{}] were found on page [{}].",
-                        macrosIds, createPageIdentifier(pageProperties));
+                    if (this.remainingPages > 0) {
+                        this.remainingPages--;
+                    }
                 }
-
-                if (this.remainingPages > 0) {
-                    this.remainingPages--;
-                }
-                this.progress.endStep(this);
             }
-        } else {
+        } finally {
             this.progress.endStep(this);
         }
 
         return isHomePage ? inheritedRights : null;
     }
 
-    private void sendWebPreference(ConfluenceFilter proxyFilter, ConfluenceProperties pageProperties,
+    private void maybeLogMacroUsage(ConfluenceProperties pageProperties, Locale locale)
+    {
+        if (!macrosIds.isEmpty() && properties.isVerbose()) {
+            logger.info(ConfluenceFilter.LOG_MACROS_FOUND,
+                "The following macros [{}] were found on page [{}], locale [{}].",
+                macrosIds, createPageIdentifier(pageProperties), locale);
+        }
+    }
+
+    private void sendTranslations(boolean blog, Object filter, ConfluenceFilter proxyFilter,
+        ConfluenceProperties pageProperties, String spaceKey, boolean hide,
+        Collection<ConfluenceRight> inheritedRights) throws FilterException, ConfluenceCanceledException
+    {
+        Collection<Locale> usedLocales = context.getCurrentlyUsedLocales();
+        if (!CollectionUtils.isEmpty(usedLocales)) {
+            for (Locale locale : usedLocales) {
+                if (locale.equals(context.getDefaultLocale())) {
+                    // TODO should we use Locale.filter here instead of .equals?
+                    continue;
+                }
+                context.setCurrentLocale(locale);
+                sendRevisions(blog, filter, proxyFilter, pageProperties, spaceKey, inheritedRights, hide, locale);
+            }
+        }
+    }
+
+    private void sendWebPreferences(ConfluenceFilter proxyFilter, ConfluenceProperties pageProperties,
         List<Long> children, Collection<ConfluenceRight> inheritedRights) throws FilterException
     {
         try {
@@ -1686,12 +1709,12 @@ public class ConfluenceInputFilterStream
     }
 
     private void sendRevisions(boolean blog, Object filter, ConfluenceFilter proxyFilter,
-        ConfluenceProperties pageProperties, String spaceKey, Collection<ConfluenceRight> inheritedRights, boolean hide)
+        ConfluenceProperties pageProperties, String spaceKey, Collection<ConfluenceRight> inheritedRights,
+        boolean hide, Locale locale)
         throws FilterException, ConfluenceCanceledException
     {
-        Locale locale = Locale.ROOT;
         FilterEventParameters documentLocaleParameters = getDocumentLocaleParameters(pageProperties);
-        proxyFilter.beginWikiDocumentLocale(Locale.ROOT, documentLocaleParameters);
+        proxyFilter.beginWikiDocumentLocale(locale, documentLocaleParameters);
 
         try {
             if (properties.isHistoryEnabled() && pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISIONS)) {
@@ -1725,7 +1748,7 @@ public class ConfluenceInputFilterStream
                     try {
                         if (shouldSendObject(revisionId)) {
                             readPageRevision(revisionProperties, blog, Collections.emptyMap(), filter, proxyFilter,
-                                spaceKey, inheritedRights, hide);
+                                spaceKey, inheritedRights, hide, locale);
                         }
                     } catch (Exception e) {
                         logger.error("Failed to filter the page revision with id [{}]",
@@ -1740,7 +1763,8 @@ public class ConfluenceInputFilterStream
             // function
             Map<String, List<AttachmentInfo>> attachments = getAttachments(pageProperties);
             readPageRevision(pageProperties, blog, attachments, filter, proxyFilter, spaceKey,
-                inheritedRights, hide);
+                inheritedRights, hide, locale);
+            maybeLogMacroUsage(pageProperties, locale);
         } finally {
             proxyFilter.endWikiDocumentLocale(locale, documentLocaleParameters);
         }
@@ -2012,7 +2036,8 @@ public class ConfluenceInputFilterStream
 
     private void readPageRevision(ConfluenceProperties pageProperties, boolean blog,
         Map<String, List<AttachmentInfo>> attachments, Object filter, ConfluenceFilter proxyFilter,
-        String spaceKey, Collection<ConfluenceRight> inheritedRights, boolean hide) throws FilterException
+        String spaceKey, Collection<ConfluenceRight> inheritedRights, boolean hide, Locale locale)
+        throws FilterException
     {
         // beware. Here, pageProperties might not have a space key. You need to use the one passed in parameters
         // FIXME we could ensure it though with some work
@@ -2021,7 +2046,8 @@ public class ConfluenceInputFilterStream
         checkNonNullPageId(spaceKey, pageId);
 
         if (this.properties.isVerbose()) {
-            this.logger.info(SEND_PAGE_MARKER, "Sending page [{}]", createPageIdentifier(pageProperties, spaceKey));
+            this.logger.info(SEND_PAGE_MARKER, "Sending page [{}], locale [{}]", createPageIdentifier(pageProperties,
+                spaceKey), locale);
         }
 
         macrosIds.clear();

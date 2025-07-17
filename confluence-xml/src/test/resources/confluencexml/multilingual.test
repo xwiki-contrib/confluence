@@ -1,0 +1,784 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.#------------------------------------------------------------------------------
+<wikiSpace name="TestSpace">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>title</string>
+              <string>TestSpace</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>{{children/}}</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObject name="Confluence.Code.ConfluencePageClass">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>Confluence.Code.ConfluencePageClass</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="url" value="http://my.wiki.invalid/wiki/spaces/TestSpace"/>
+          <wikiObjectProperty name="space" value="TestSpace"/>
+        </wikiObject>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+  <wikiSpace name="A translated page">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.331651</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2014-07-29 21:11:24.0 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>43</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="41">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.496262</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2015-06-08 13:40:07.0 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string>comment 1</string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>A translated page</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>This text is unconditionally present.
+
+{{excerpt atlassian-macro-output-type="INLINE"}}
+This initial article explains something and links to [[some page>>confluencePage:page:TestSpace.Some Page]].
+{{/excerpt}}
+
+This text is also unconditionally present.</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="Confluence.Code.ConfluencePageClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>Confluence.Code.ConfluencePageClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="id">
+              <p>
+                <value t="java.lang.Long">12</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="stableId">
+              <p>
+                <value t="java.lang.Long">95917606</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="title" value="A translated page"/>
+            <wikiObjectProperty name="url" value="http://my.wiki.invalid/wiki/spaces/TestSpace/pages/12/A translated page"/>
+            <wikiObjectProperty name="space" value="TestSpace"/>
+          </wikiObject>
+        </wikiDocumentRevision>
+        <wikiDocumentRevision revision="42">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.496262</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2015-06-18 18:37:41.0 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string>comment 2</string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>A Translated page</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>This text is unconditionally present.
+
+{{excerpt atlassian-macro-output-type="INLINE"}}
+This article version 2 explains something and links to [[some page>>confluencePage:page:TestSpace.Some Page]].
+{{/excerpt}}
+
+This text is also unconditionally present.</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="Confluence.Code.ConfluencePageClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>Confluence.Code.ConfluencePageClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="id">
+              <p>
+                <value t="java.lang.Long">123797568</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="stableId">
+              <p>
+                <value t="java.lang.Long">95917606</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="title" value="A Translated page"/>
+            <wikiObjectProperty name="url" value="http://my.wiki.invalid/wiki/spaces/TestSpace/pages/123797568/A Translated page"/>
+            <wikiObjectProperty name="space" value="TestSpace"/>
+          </wikiObject>
+        </wikiDocumentRevision>
+        <wikiDocumentRevision revision="43">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.408010</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2016-04-14 17:59:20.0 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string>comment 3</string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>A translated page</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>This text is unconditionally present.
+
+{{excerpt atlassian-macro-output-type="INLINE"}}
+This article version 3 explains something and links to [[some page>>confluencePage:page:TestSpace.Some Page]].
+{{/excerpt}}
+
+(Spanish translation removed because it was outdated - whatever, made up reason for the test)
+
+This text is also unconditionally present.</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="Confluence.Code.ConfluencePageClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>Confluence.Code.ConfluencePageClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="id">
+              <p>
+                <value t="java.lang.Long">95917606</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="stableId">
+              <p>
+                <value t="java.lang.Long">95917606</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="title" value="A translated page"/>
+            <wikiObjectProperty name="url" value="http://my.wiki.invalid/wiki/spaces/TestSpace/pages/95917606/A translated page"/>
+            <wikiObjectProperty name="space" value="TestSpace"/>
+          </wikiObject>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="fr">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.331651</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2014-07-29 21:11:24.0 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>43</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="41">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.496262</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2015-06-08 13:40:07.0 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string>comment 1</string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>A translated page</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>This text is unconditionally present.
+
+This text is also unconditionally present.</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="Confluence.Code.ConfluencePageClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>Confluence.Code.ConfluencePageClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="id">
+              <p>
+                <value t="java.lang.Long">12</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="stableId">
+              <p>
+                <value t="java.lang.Long">95917606</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="title" value="A translated page"/>
+            <wikiObjectProperty name="url" value="http://my.wiki.invalid/wiki/spaces/TestSpace/pages/12/A translated page"/>
+            <wikiObjectProperty name="space" value="TestSpace"/>
+          </wikiObject>
+        </wikiDocumentRevision>
+        <wikiDocumentRevision revision="42">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.496262</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2015-06-18 18:37:41.0 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string>comment 2</string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>A Translated page</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>This text is unconditionally present.
+
+{{status colour="Yellow" title="Translated on 2020-12-27 using DeepL"/}}
+
+Cet article version 2 explique quelque chose et lie vers [[une page>>confluencePage:page:TestSpace.Some Page]].
+
+[[image:attach:image2020-5-18_15-37-19.png]]
+
+This text is also unconditionally present.</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="Confluence.Code.ConfluencePageClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>Confluence.Code.ConfluencePageClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="id">
+              <p>
+                <value t="java.lang.Long">123797568</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="stableId">
+              <p>
+                <value t="java.lang.Long">95917606</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="title" value="A Translated page"/>
+            <wikiObjectProperty name="url" value="http://my.wiki.invalid/wiki/spaces/TestSpace/pages/123797568/A Translated page"/>
+            <wikiObjectProperty name="space" value="TestSpace"/>
+          </wikiObject>
+        </wikiDocumentRevision>
+        <wikiDocumentRevision revision="43">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.408010</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2016-04-14 17:59:20.0 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string>comment 3</string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>A translated page</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>This text is unconditionally present.
+
+{{status colour="Yellow" title="Translated on 2020-12-27 using DeepL"/}}
+
+Cet article version 3 explique quelque chose et lie vers [[une page>>confluencePage:page:TestSpace.Some Page]].
+
+[[image:attach:image2020-5-18_15-37-19.png]]
+
+(Spanish translation removed because it was outdated - whatever, made up reason for the test)
+
+This text is also unconditionally present.</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="Confluence.Code.ConfluencePageClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>Confluence.Code.ConfluencePageClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="id">
+              <p>
+                <value t="java.lang.Long">95917606</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="stableId">
+              <p>
+                <value t="java.lang.Long">95917606</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="title" value="A translated page"/>
+            <wikiObjectProperty name="url" value="http://my.wiki.invalid/wiki/spaces/TestSpace/pages/95917606/A translated page"/>
+            <wikiObjectProperty name="space" value="TestSpace"/>
+          </wikiObject>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="es">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.331651</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2014-07-29 21:11:24.0 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>43</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="41">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.496262</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2015-06-08 13:40:07.0 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string>comment 1</string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>A translated page</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>This text is unconditionally present.
+
+This text is also unconditionally present.</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="Confluence.Code.ConfluencePageClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>Confluence.Code.ConfluencePageClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="id">
+              <p>
+                <value t="java.lang.Long">12</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="stableId">
+              <p>
+                <value t="java.lang.Long">95917606</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="title" value="A translated page"/>
+            <wikiObjectProperty name="url" value="http://my.wiki.invalid/wiki/spaces/TestSpace/pages/12/A translated page"/>
+            <wikiObjectProperty name="space" value="TestSpace"/>
+          </wikiObject>
+        </wikiDocumentRevision>
+        <wikiDocumentRevision revision="42">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.496262</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2015-06-18 18:37:41.0 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string>comment 2</string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>A Translated page</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>This text is unconditionally present.
+
+{{status colour="Yellow" title="Translated"/}}
+
+Este articulo versión 2 explica algo y pones un enlace a [[una página>>confluencePage:page:TestSpace.Some Page]]
+
+This text is also unconditionally present.</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="Confluence.Code.ConfluencePageClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>Confluence.Code.ConfluencePageClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="id">
+              <p>
+                <value t="java.lang.Long">123797568</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="stableId">
+              <p>
+                <value t="java.lang.Long">95917606</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="title" value="A Translated page"/>
+            <wikiObjectProperty name="url" value="http://my.wiki.invalid/wiki/spaces/TestSpace/pages/123797568/A Translated page"/>
+            <wikiObjectProperty name="space" value="TestSpace"/>
+          </wikiObject>
+        </wikiDocumentRevision>
+        <wikiDocumentRevision revision="43">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.408010</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2016-04-14 17:59:20.0 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string>comment 3</string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>A translated page</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>This text is unconditionally present.
+
+(Spanish translation removed because it was outdated - whatever, made up reason for the test)
+
+This text is also unconditionally present.</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="Confluence.Code.ConfluencePageClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>Confluence.Code.ConfluencePageClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="id">
+              <p>
+                <value t="java.lang.Long">95917606</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="stableId">
+              <p>
+                <value t="java.lang.Long">95917606</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="title" value="A translated page"/>
+            <wikiObjectProperty name="url" value="http://my.wiki.invalid/wiki/spaces/TestSpace/pages/95917606/A translated page"/>
+            <wikiObjectProperty name="space" value="TestSpace"/>
+          </wikiObject>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+  <wikiSpace name="A not translated page after a translated page">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.331651</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2014-07-29 21:11:24.0 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>41</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="41">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.496262</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2015-06-08 13:40:07.0 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string>comment 1</string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>A not translated page after a translated page</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>This text is not translated.</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="Confluence.Code.ConfluencePageClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>Confluence.Code.ConfluencePageClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="id">
+              <p>
+                <value t="java.lang.Long">200000000</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="stableId">
+              <p>
+                <value t="java.lang.Long">200000000</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="title" value="A not translated page after a translated page"/>
+            <wikiObjectProperty name="url" value="http://my.wiki.invalid/wiki/spaces/TestSpace/pages/200000000/A not translated page after a translated page"/>
+            <wikiObjectProperty name="space" value="TestSpace"/>
+          </wikiObject>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=multilingual
+.configuration.translationsEnabled=true
+.configuration.baseURLs=http://my.wiki.invalid/wiki
+.#------------------------------------------------------------------------------

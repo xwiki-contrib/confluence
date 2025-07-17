@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.filter;
 
+import java.util.Locale;
 import java.util.Map;
 
 import org.xwiki.component.annotation.Role;
@@ -101,5 +102,21 @@ public interface MacroConverter
                 }
             });
         return mid[0];
+    }
+
+    /**
+     * @return the language this macro is restricted to (for instance, if it is a language macro), or null if the
+     * macro is not restricted to a particular language.
+     * If the conversion is performed under a specific language, toXWiki will only be called if getLanguage() returns
+     * the requested language or null.
+     * @param id the Confluence macro id
+     * @param parameters the macro parameters
+     * @param content the macro content
+     * @param inline whether the macro is being converted in an inline context
+     * @since 9.88.0
+     */
+    default Locale getLanguage(String id, Map<String, String> parameters, String content, boolean inline)
+    {
+        return null;
     }
 }

@@ -19,19 +19,23 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
+import java.util.Locale;
 import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollTranslationResolver;
 
 /**
- * Convert the translation macro.
+ * Convert the sv-translation macro. If translation support is enabled, the macro will be dropped, and the content
+ * will only be kept if the current language matches the language specified in the language parameter. If translation
+ * support is disabled, the macro will be converted to the contentTranslation macro, implemented in book versions.
  *
  * @version $Id$
  * @since 9.75.0
@@ -39,7 +43,7 @@ import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollTranslationResolve
 @Singleton
 @Component
 @Named("sv-translation")
-public class TranslationMacroConverter extends AbstractMacroConverter
+public class TranslationMacroConverter extends AbstractTranslationMacroConverter
 {
     private static final String MACRO_ID = "contentTranslation";
 
@@ -73,14 +77,14 @@ public class TranslationMacroConverter extends AbstractMacroConverter
 
         String language = confluenceParameters.get(MACRO_PARAMETER_LANGUAGE);
         if (language == null) {
-            throw new RuntimeException(String.format("Could not get the language from id [{}]", confluenceId), null);
+            throw new RuntimeException(String.format("Could not get the language from macro [%s]", confluenceId), null);
         }
 
         try {
             parameters = confluenceScrollTranslationResolver.getMacroParameters(currentPageId, language);
         } catch (ConfluenceResolverException e) {
             throw new RuntimeException(String.format(
-                "Could not get the language parameters from id [{}] with language [{{}]", confluenceId, language), e);
+                "Could not get the language parameters from macro [%s] with language [%s]", confluenceId, language), e);
         }
 
         parameters.put(MACRO_PARAMETER_LANGUAGE, language);
@@ -88,4 +92,10 @@ public class TranslationMacroConverter extends AbstractMacroConverter
         return parameters;
     }
 
+    @Override
+    public Locale getLanguage(String id, Map<String, String> parameters, String content, boolean inline)
+    {
+        String l = parameters.get(MACRO_PARAMETER_LANGUAGE);
+        return StringUtils.isEmpty(l) ? null : new Locale(l);
+    }
 }

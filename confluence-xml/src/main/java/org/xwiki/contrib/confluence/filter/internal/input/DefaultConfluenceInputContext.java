@@ -19,6 +19,8 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.input;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
@@ -27,9 +29,15 @@ import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.model.reference.EntityReference;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Supplier;
+
+import com.xpn.xwiki.XWikiContext;
 
 /**
  * Default implementation of {@link ConfluenceInputContext}.
@@ -53,6 +61,15 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
 
     private final ThreadLocal<Map<Long, EntityReference>> idReferenceCache = new ThreadLocal<>();
 
+    private final ThreadLocal<Locale> currentLocale = new ThreadLocal<>();
+
+    private final ThreadLocal<Locale> defaultLocale = new ThreadLocal<>();
+
+    private final ThreadLocal<Set<Locale>> currentlyUsedLocales = new ThreadLocal<>();
+
+    @Inject
+    private Provider<XWikiContext> contextProvider;
+
     /**
      * @param confluencePackage the Confluence input package
      * @param properties the Confluence input properties
@@ -63,6 +80,7 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
         this.properties.set(properties);
         this.titleReferenceCache.set(new HashMap<>());
         this.idReferenceCache.set(new HashMap<>());
+        initializeDefaultLocale();
     }
 
     /**
@@ -79,8 +97,51 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
     public void setCurrentPage(long pageId)
     {
         currentPage.set(pageId);
+        this.currentlyUsedLocales.set(new LinkedHashSet<>());
+        this.currentLocale.set(defaultLocale.get());
     }
 
+    private void initializeDefaultLocale()
+    {
+        Locale dl = this.properties.get().getDefaultLocale();
+        if (dl == null || dl == Locale.ROOT) {
+            XWikiContext xcontext = contextProvider.get();
+            if (xcontext != null) {
+                dl = xcontext.getWiki().getDefaultLocale(xcontext);
+            }
+        }
+        if (dl == null || dl == Locale.ROOT) {
+            dl = Locale.ENGLISH;
+        }
+        this.defaultLocale.set(dl);
+    }
+
+    @Override
+    public Locale getDefaultLocale()
+    {
+        return this.defaultLocale.get();
+    }
+
+    @Override
+    public void setCurrentLocale(Locale locale)
+    {
+        this.currentLocale.set(locale);
+    }
+
+    @Override
+    public void addUsedLocale(Locale locale)
+    {
+        Set<Locale> locales = this.currentlyUsedLocales.get();
+        if (locales != null) {
+            locales.add(locale);
+        }
+    }
+
+    @Override
+    public Collection<Locale> getCurrentlyUsedLocales()
+    {
+        return this.currentlyUsedLocales.get();
+    }
     /**
      * Clean the current context.
      */
@@ -92,6 +153,9 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
         this.currentSpace.remove();
         this.titleReferenceCache.remove();
         this.idReferenceCache.remove();
+        this.currentLocale.remove();
+        this.currentlyUsedLocales.remove();
+        this.defaultLocale.remove();
     }
 
     @Override
@@ -143,5 +207,11 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
             space.put(pageTitle, ref);
         }
         return ref;
+    }
+
+    @Override
+    public Locale getCurrentLocale()
+    {
+        return currentLocale.get();
     }
 }

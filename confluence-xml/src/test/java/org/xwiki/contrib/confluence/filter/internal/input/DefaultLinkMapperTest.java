@@ -19,6 +19,8 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.input;
 
+import com.xpn.xwiki.XWiki;
+import com.xpn.xwiki.XWikiContext;
 import com.xpn.xwiki.test.reference.ReferenceComponentList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -55,9 +57,12 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URL;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 @ReferenceComponentList
 @ComponentList({
@@ -89,6 +94,9 @@ class DefaultLinkMapperTest
     @MockComponent
     private JobContext jobContext;
 
+    @MockComponent
+    private XWikiContext xcontext;
+
     @InjectMockComponents
     private DefaultStringEntityReferenceResolver resolver;
 
@@ -116,6 +124,9 @@ class DefaultLinkMapperTest
         when(validation.transform(anyString())).thenAnswer((Answer<String>) invocation -> invocation.getArgument(0));
         when(validation.transform("spacetovalidate")).thenReturn("validatedspace");
         when(validation.transform("pagetovalidate")).thenReturn("validatedpage");
+        XWiki wiki = mock(XWiki.class);
+        when(wiki.getDefaultLocale(any())).thenReturn(Locale.ENGLISH);
+        when(xcontext.getWiki()).thenReturn(wiki);
     }
 
     private void prepareTest(String testPackage) throws NoSuchFieldException, IllegalAccessException, ComponentLookupException, IOException, FilterException

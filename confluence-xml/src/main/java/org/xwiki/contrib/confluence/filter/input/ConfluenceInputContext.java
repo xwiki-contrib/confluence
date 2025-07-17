@@ -22,6 +22,8 @@ package org.xwiki.contrib.confluence.filter.input;
 import org.xwiki.component.annotation.Role;
 import org.xwiki.model.reference.EntityReference;
 
+import java.util.Collection;
+import java.util.Locale;
 import java.util.function.Supplier;
 
 /**
@@ -86,10 +88,61 @@ public interface ConfluenceInputContext
      * @param spaceKey the spaceKey corresponding to the cached reference to find
      * @param pageTitle the spaceKey corresponding to the cached reference to find
      * @param valueGetter the function to call to get the value if not found (the result will be added to the cache)
-     * @since 6.68.0
+     * @since 9.68.0
      */
     default EntityReference getCachedReference(String spaceKey, String pageTitle, Supplier<EntityReference> valueGetter)
     {
         return null;
+    }
+
+    /**
+     * @return the language in which content is to be analysed, or null if the language should not be taken in
+     *         account.
+     *         If set, the content of language macros matching this language
+     *         is supposed to be imported and content of language macros not matching this language is supposed to be
+     *        dropped. If not set, macros should be imported as is.
+     * @since 9.88.0
+     */
+    default Locale getCurrentLocale()
+    {
+        return null;
+    }
+
+    /**
+     * Advertise the use of a language in the current content.
+     * @param language the language to advertise
+     * @since 9.88.0
+     */
+    default void addUsedLocale(Locale language)
+    {
+        // ignore
+    }
+
+    /**
+     * @return the ISO 639‑1 or IETF language tag of the languages that were advertized as used in the current
+     * content.
+     * @since 9.88.0
+     */
+    default Collection<Locale> getCurrentlyUsedLocales()
+    {
+        return null;
+    }
+
+    /**
+     * @param language the language being processed
+     * @since 9.88.0
+     */
+    default void setCurrentLocale(Locale language)
+    {
+        // ignore
+    }
+
+    /**
+     * @return the default locale
+     * @since 9.88.0
+     */
+    default Locale getDefaultLocale()
+    {
+        return Locale.ROOT;
     }
 }

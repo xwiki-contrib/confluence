@@ -292,6 +292,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private boolean skipResolvedInlineComments;
 
     /**
+     * @see #isTranslationsEnabled()
+     */
+    private boolean translationsEnabled = true;
+
+    /**
      * @see #getOrphanMode()
      */
     private String orphanMode = "NORMAL";
@@ -1547,4 +1552,26 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     {
         this.skipResolvedInlineComments = skipResolvedInlineComments;
     }
+
+    /**
+     * @return whether pages containing different languages should be converted to translated XWiki documents.
+     * @since 9.88.0
+     */
+    @PropertyName("Translated content support")
+    @PropertyDescription("Convert pages containing translations to a XWiki translated document per language")
+    public boolean isTranslationsEnabled()
+    {
+        return translationsEnabled;
+    }
+
+    /**
+     * @param translationsEnabled whether to enable translations
+     * @since 9.88.0
+     */
+    public void setTranslationsEnabled(boolean translationsEnabled)
+    {
+        this.translationsEnabled = translationsEnabled;
+    }
+
+
 }

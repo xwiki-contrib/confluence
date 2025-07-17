@@ -19,9 +19,7 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
-import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,15 +29,9 @@ import javax.inject.Singleton;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
-import org.xwiki.component.manager.ComponentLookupException;
-import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
-import org.xwiki.rendering.block.MacroBlock;
-import org.xwiki.rendering.block.XDOM;
 import org.xwiki.rendering.listener.Listener;
-import org.xwiki.rendering.parser.ParseException;
-import org.xwiki.rendering.parser.Parser;
 import org.xwiki.rendering.syntax.Syntax;
 
 /**
@@ -51,7 +43,7 @@ import org.xwiki.rendering.syntax.Syntax;
 @Component(hints = { "ul", "legend", "auihorizontalnav", "auibuttongroup", "auihorizontalnavpage", "tableenhancer",
     "footnote" })
 @Singleton
-public class MacroToContentConverter extends AbstractMacroConverter
+public class MacroToContentConverter extends AbstractParseContentMacroConverter
 {
     private static final String DIV_CLASS_FORMAT = "confluence_%s_content";
 
@@ -61,9 +53,6 @@ public class MacroToContentConverter extends AbstractMacroConverter
 
     @Inject
     protected ConfluenceInputContext context;
-
-    @Inject
-    protected ComponentManager componentManager;
 
     @Override
     public void toXWiki(String id, Map<String, String> parameters, String content, boolean inline, Listener listener)
@@ -76,22 +65,6 @@ public class MacroToContentConverter extends AbstractMacroConverter
         beginEvent(id, divWrapperParams, newContent, inline, listener);
         parseContent(id, listener, syntaxId, newContent);
         endEvent(id, divWrapperParams, newContent, inline, listener);
-    }
-
-    protected void parseContent(String id, Listener listener, String syntaxId, String newContent)
-    {
-        if (StringUtils.isEmpty(newContent)) {
-            return;
-        }
-        try {
-            Parser parser = componentManager.getInstance(Parser.class, syntaxId);
-            XDOM contentXDOM = parser.parse(new StringReader(newContent));
-            contentXDOM.getChildren().forEach(child -> child.traverse(listener));
-        } catch (ComponentLookupException | ParseException e) {
-            new MacroBlock("error", Collections.emptyMap(),
-                String.format("Failed to parse the content of the [%s] macro with the syntax [%s].", id, syntaxId),
-                false).traverse(listener);
-        }
     }
 
     protected void beginEvent(String id, Map<String, String> parameters, String content, boolean inline,

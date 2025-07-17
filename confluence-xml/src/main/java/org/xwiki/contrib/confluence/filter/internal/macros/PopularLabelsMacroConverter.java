@@ -55,4 +55,10 @@ public class PopularLabelsMacroConverter extends AbstractMacroConverter
 
         return Map.of("space", spaceKey);
     }
+
+    @Override
+    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    {
+        return InlineSupport.NO;
+    }
 }

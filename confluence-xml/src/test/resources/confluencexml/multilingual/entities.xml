@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic>
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">73990168</id>
+    <property name="name"><![CDATA[TestSpace]]></property>
+    <property name="key"><![CDATA[TestSpace]]></property>
+  </object>
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">95917606</id>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+      <id name="id">73990168</id>
+    </property>
+    <property name="title"><![CDATA[A translated page]]></property>
+    <property name="version">43</property>
+    <property name="creatorName"><![CDATA[331651]]></property>
+    <property name="creationDate">2014-07-29 21:11:24.000</property>
+    <property name="lastModifierName"><![CDATA[408010]]></property>
+    <property name="lastModificationDate">2016-04-14 17:59:20.000</property>
+    <property name="versionComment"><![CDATA[comment 3]]></property>
+    <collection name="historicalVersions">
+      <element class="Page" package="com.atlassian.confluence.pages">
+        <id name="id">12</id>
+      </element>
+      <element class="Page" package="com.atlassian.confluence.pages">
+        <id name="id">123797568</id>
+      </element>
+    </collection>
+    <property name="parent" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">42</id>
+    </property>
+  </object>
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">12</id>
+    <property name="title"><![CDATA[A translated page]]></property>
+    <property name="version">41</property>
+    <property name="creatorName"><![CDATA[331651]]></property>
+    <property name="creationDate">2014-07-29 21:11:24.000</property>
+    <property name="lastModifierName"><![CDATA[496262]]></property>
+    <property name="lastModificationDate">2015-06-08 13:40:07.000</property>
+    <property name="versionComment"><![CDATA[comment 1]]></property>
+    <property name="originalVersion" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">95917606</id>
+    </property>
+    <property name="parent" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">42</id>
+    </property>
+  </object>
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">123</id>
+    <property name="body"><![CDATA[
+<p> This text is unconditionally present.</p>
+
+<ac:structured-macro ac:name="sv-translation" ac:schema-version="1" ac:macro-id="ce9317e6-494f-4266-859e-494636ba5bac">
+    <ac:parameter ac:name="language">en</ac:parameter>
+    <ac:rich-text-body>
+        <ac:structured-macro ac:name="excerpt" ac:schema-version="1" ac:macro-id="c33cc301-9e2a-4396-86bc-56e46575394d">
+            <ac:parameter ac:name="atlassian-macro-output-type">INLINE</ac:parameter>
+            <ac:rich-text-body>
+            <p>This initial article explains something and links to <ac:link ac:card-appearance="inline"><ri:page ri:content-title="Some Page" ri:version-at-save="1" /><ac:link-body>some page</ac:link-body></ac:link>.</p>
+            </ac:rich-text-body>
+        </ac:structured-macro>
+    </ac:rich-text-body>
+</ac:structured-macro>
+
+<p> This text is also unconditionally present.</p>]]></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">12</id>
+    </property>
+    <property name="bodyType">2</property>
+  </object>
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">123306980</id>
+    <property name="body"><![CDATA[
+<p> This text is unconditionally present.</p>
+
+<ac:structured-macro ac:name="sv-translation" ac:schema-version="1" ac:macro-id="ce9317e6-494f-4266-859e-494636ba5bac">
+    <ac:parameter ac:name="language">en</ac:parameter>
+    <ac:rich-text-body>
+        <ac:structured-macro ac:name="excerpt" ac:schema-version="1" ac:macro-id="c33cc301-9e2a-4396-86bc-56e46575394d">
+            <ac:parameter ac:name="atlassian-macro-output-type">INLINE</ac:parameter>
+            <ac:rich-text-body>
+            <p>This article version 3 explains something and links to <ac:link ac:card-appearance="inline"><ri:page ri:content-title="Some Page" ri:version-at-save="1" /><ac:link-body>some page</ac:link-body></ac:link>.</p>
+            </ac:rich-text-body>
+        </ac:structured-macro>
+    </ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="sv-translation" ac:schema-version="1" ac:macro-id="2408a0b0-a2cb-4f61-ac1a-51182d51739d">
+    <ac:parameter ac:name="language">fr</ac:parameter>
+    <ac:rich-text-body>
+        <ac:structured-macro ac:name="status" ac:schema-version="1" ac:macro-id="217131b5-6a8a-44fb-9766-3a66a48ca626">
+            <ac:parameter ac:name="colour">Yellow</ac:parameter>
+            <ac:parameter ac:name="title">Translated on 2020-12-27 using DeepL</ac:parameter>
+        </ac:structured-macro>
+        <p>Cet article version 3 explique quelque chose et lie vers <ac:link ac:card-appearance="inline"><ri:page ri:content-title="Some Page" ri:version-at-save="1" /><ac:link-body>une page</ac:link-body></ac:link>.</p>
+        <ac:image>
+            <ri:attachment ri:filename="image2020-5-18_15-37-19.png" />
+        </ac:image>
+    </ac:rich-text-body>
+</ac:structured-macro>
+
+<p> (Spanish translation removed because it was outdated - whatever, made up reason for the test) </p>
+<p> This text is also unconditionally present.</p>]]></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">95917606</id>
+    </property>
+    <property name="bodyType">2</property>
+  </object>
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">123797568</id>
+    <property name="title"><![CDATA[A Translated page]]></property>
+    <collection name="bodyContents">
+      <element class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">123928635</id>
+      </element>
+    </collection>
+    <property name="version">42</property>
+    <property name="creatorName"><![CDATA[331651]]></property>
+    <property name="creationDate">2014-07-29 21:11:24.000</property>
+    <property name="lastModifierName"><![CDATA[496262]]></property>
+    <property name="lastModificationDate">2015-06-18 18:37:41.000</property>
+    <property name="versionComment"><![CDATA[comment 2]]></property>
+    <property name="originalVersion" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">95917606</id>
+    </property>
+    <property name="parent" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">42</id>
+    </property>
+  </object>
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">123928635</id>
+    <property name="body"><![CDATA[
+<p> This text is unconditionally present.</p>
+
+<ac:structured-macro ac:name="sv-translation" ac:schema-version="1" ac:macro-id="ce9317e6-494f-4266-859e-494636ba5bac">
+    <ac:parameter ac:name="language">en</ac:parameter>
+    <ac:rich-text-body>
+        <ac:structured-macro ac:name="excerpt" ac:schema-version="1" ac:macro-id="c33cc301-9e2a-4396-86bc-56e46575394d">
+            <ac:parameter ac:name="atlassian-macro-output-type">INLINE</ac:parameter>
+            <ac:rich-text-body>
+            <p>This article version 2 explains something and links to <ac:link ac:card-appearance="inline"><ri:page ri:content-title="Some Page" ri:version-at-save="1" /><ac:link-body>some page</ac:link-body></ac:link>.</p>
+            </ac:rich-text-body>
+        </ac:structured-macro>
+    </ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="sv-translation" ac:schema-version="1" ac:macro-id="2408a0b0-a2cb-4f61-ac1a-51182d51739d">
+    <ac:parameter ac:name="language">fr</ac:parameter>
+    <ac:rich-text-body>
+        <ac:structured-macro ac:name="status" ac:schema-version="1" ac:macro-id="217131b5-6a8a-44fb-9766-3a66a48ca626">
+            <ac:parameter ac:name="colour">Yellow</ac:parameter>
+            <ac:parameter ac:name="title">Translated on 2020-12-27 using DeepL</ac:parameter>
+        </ac:structured-macro>
+        <p>Cet article version 2 explique quelque chose et lie vers <ac:link ac:card-appearance="inline"><ri:page ri:content-title="Some Page" ri:version-at-save="1" /><ac:link-body>une page</ac:link-body></ac:link>.</p>
+        <ac:image>
+            <ri:attachment ri:filename="image2020-5-18_15-37-19.png" />
+        </ac:image>
+    </ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="sv-translation" ac:schema-version="1" ac:macro-id="ffbf4f19-8a6e-4f25-981e-060a98c89809">
+    <ac:parameter ac:name="language">es</ac:parameter>
+    <ac:rich-text-body>
+        <p>
+            <ac:structured-macro ac:name="status" ac:schema-version="1" ac:macro-id="e9dd306b-a846-4e68-8d22-d9df604fe6b5">
+                <ac:parameter ac:name="colour">Yellow</ac:parameter>
+                <ac:parameter ac:name="title">Translated</ac:parameter>
+            </ac:structured-macro>
+        </p>
+        <p> Este articulo versión 2 explica algo y pones un enlace a <ac:link ac:card-appearance="inline"><ri:page ri:content-title="Some Page" ri:version-at-save="1" /><ac:link-body>una página</ac:link-body></ac:link></p>
+    </ac:rich-text-body>
+</ac:structured-macro>
+
+<p> This text is also unconditionally present.</p>]]></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">123797568</id>
+    </property>
+    <property name="bodyType">2</property>
+  </object>
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">200000000</id>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+      <id name="id">73990168</id>
+    </property>
+    <property name="title"><![CDATA[A not translated page after a translated page]]></property>
+    <property name="version">41</property>
+    <property name="creatorName"><![CDATA[331651]]></property>
+    <property name="creationDate">2014-07-29 21:11:24.000</property>
+    <property name="lastModifierName"><![CDATA[496262]]></property>
+    <property name="lastModificationDate">2015-06-08 13:40:07.000</property>
+    <property name="versionComment"><![CDATA[comment 1]]></property>
+    <property name="parent" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">42</id>
+    </property>
+  </object>
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">124</id>
+    <property name="body"><![CDATA[<p> This text is not translated.</p>]]></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages">
+      <id name="id">200000000</id>
+    </property>
+    <property name="bodyType">2</property>
+  </object>
+</hibernate-generic>
