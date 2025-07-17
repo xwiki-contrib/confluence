@@ -1,0 +1,238 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Test the confluence language macros
+.#------------------------------------------------------------------------------
+<wikiSpace name="LANG">
+  <wikiSpace name="Lang content">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>{{contentTranslation language="en"}}
+English
+{{/contentTranslation}}
+
+{{contentTranslation language="en_US"}}
+English US
+{{/contentTranslation}}
+
+{{contentTranslation language="en_CA"}}
+Canadian English
+{{/contentTranslation}}
+
+{{contentTranslation language="fr"}}
+French
+{{/contentTranslation}}
+
+{{contentTranslation language="fr_CA"}}
+Canadian French
+{{/contentTranslation}}
+
+{{contentTranslation language="is"}}
+Icelandic
+{{/contentTranslation}}
+
+{{contentTranslation language="ga"}}
+Irish
+{{/contentTranslation}}
+
+{{contentTranslation language="sk"}}
+Slovack
+{{/contentTranslation}}
+
+{{contentTranslation language="es"}}
+Spanish
+{{/contentTranslation}}
+
+{{contentTranslation language="it"}}
+Italian
+{{/contentTranslation}}
+
+{{contentTranslation language="ca"}}
+Catalan
+{{/contentTranslation}}
+
+{{contentTranslation language="zh"}}
+Chinese
+{{/contentTranslation}}
+
+{{contentTranslation language="cs"}}
+Czech
+{{/contentTranslation}}
+
+{{contentTranslation language="hi"}}
+Hindi
+{{/contentTranslation}}
+
+{{contentTranslation language="lv"}}
+Latvian
+{{/contentTranslation}}
+
+{{contentTranslation language="hu"}}
+Hungarian
+{{/contentTranslation}}
+
+{{contentTranslation language="id"}}
+Indonesian
+{{/contentTranslation}}
+
+{{contentTranslation language="mt"}}
+Maltese
+{{/contentTranslation}}
+
+{{contentTranslation language="nl"}}
+Dutch
+{{/contentTranslation}}
+
+{{contentTranslation language="de"}}
+German
+{{/contentTranslation}}
+
+{{contentTranslation language="pl"}}
+Polish
+{{/contentTranslation}}
+
+{{contentTranslation language="tr"}}
+Turkish
+{{/contentTranslation}}
+
+{{contentTranslation language="nb"}}
+Norwegian Bokmal
+{{/contentTranslation}}
+
+{{contentTranslation language="nn"}}
+Norwegian Nynorsk
+{{/contentTranslation}}
+
+{{contentTranslation language="ko"}}
+Korean
+{{/contentTranslation}}
+
+{{contentTranslation language="ja"}}
+Japonese
+{{/contentTranslation}}
+
+{{contentTranslation language="pt"}}
+Portuguese
+{{/contentTranslation}}
+
+{{contentTranslation language="hr"}}
+Croatian
+{{/contentTranslation}}
+
+{{contentTranslation language="cy"}}
+Welsh
+{{/contentTranslation}}
+
+{{contentTranslation language="el"}}
+Greek
+{{/contentTranslation}}
+
+{{contentTranslation language="ru"}}
+Russian
+{{/contentTranslation}}
+
+{{contentTranslation language="uk"}}
+Ukrainian
+{{/contentTranslation}}
+
+{{contentTranslation language="sl"}}
+Slovenian
+{{/contentTranslation}}
+
+{{contentTranslation language="ro"}}
+Romanian
+{{/contentTranslation}}
+
+{{contentTranslation language="be"}}
+Belarusian
+{{/contentTranslation}}
+
+{{contentTranslation language="et"}}
+Estonian
+{{/contentTranslation}}
+
+{{contentTranslation language="pt_BR"}}
+Portuguese Brazil
+{{/contentTranslation}}
+
+{{contentTranslation language="th"}}
+Thai
+{{/contentTranslation}}
+
+{{contentTranslation language="lt"}}
+Lithuanian
+{{/contentTranslation}}
+
+{{contentTranslation language="bg"}}
+Bulgarian
+{{/contentTranslation}}
+
+{{contentTranslation language="da"}}
+Danish
+{{/contentTranslation}}
+
+{{contentTranslation language="vi"}}
+Vietnamese
+{{/contentTranslation}}</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
+.configuration.languages
+.configuration.translationsEnabled=false
+.configuration.source=lang
+.#------------------------------------------------------------------------------

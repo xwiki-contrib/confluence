@@ -1,0 +1,2114 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Test the confluence language macros
+.#------------------------------------------------------------------------------
+<wikiSpace name="LANG">
+  <wikiSpace name="Lang content">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>English
+
+English US
+
+Canadian English</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="fr">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>French
+
+Canadian French</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="is">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Icelandic</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="ga">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Irish</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="sk">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Slovack</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="es">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Spanish</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="it">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Italian</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="ca">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Catalan</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="zh">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Chinese</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="cs">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Czech</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="hi">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Hindi</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="lv">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Latvian</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="hu">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Hungarian</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="id">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Indonesian</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="mt">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Maltese</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="nl">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Dutch</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="de">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>German</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="pl">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Polish</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="tr">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Turkish</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="nb">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Norwegian Bokmal</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="nn">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Norwegian Nynorsk</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="ko">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Korean</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="ja">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Japonese</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="pt">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Portuguese
+
+Portuguese Brazil</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="hr">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Croatian</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="cy">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Welsh</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="el">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Greek</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="ru">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Russian</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="uk">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Ukrainian</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="sl">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Slovenian</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="ro">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Romanian</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="be">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Belarusian</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="et">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Estonian</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="th">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Thai</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="lt">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Lithuanian</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="bg">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Bulgarian</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="da">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Danish</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+      <wikiDocumentLocale locale="vi">
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_author</string>
+              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+            </entry>
+            <entry>
+              <string>creation_date</string>
+              <date>2023-05-14 13:30:42.247 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>7</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="7">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_author</string>
+                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
+              </entry>
+              <entry>
+                <string>revision_date</string>
+                <date>2023-06-28 02:05:24.230 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Lang content</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Vietnamese</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
+.configuration.translationsEnabled=true
+.configuration.source=lang
+.#------------------------------------------------------------------------------

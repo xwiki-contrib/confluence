@@ -1,0 +1,267 @@
+<?xml version="1.0"?>
+<hibernate-generic datetime="2025-04-22 15:59:07">
+    <object class="Page" package="com.atlassian.confluence.pages">
+        <id name="id">463168605</id>
+        <property name="hibernateVersion">25</property>
+        <property name="title">Lang content</property>
+        <property name="lowerTitle">misc content</property>
+        <property name="version">7</property>
+        <property name="creationDate">2023-05-14 13:30:42.247</property>
+        <property name="lastModificationDate">2023-06-28 02:05:24.230</property>
+        <property name="versionComment"/>
+        <property name="contentStatus">current</property>
+        <property name="position">4</property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key">2c9889aa637e9b11016469a29aef4e5d</id>
+        </property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key">2c9889aa637e9b11016469a29aef4e5d</id>
+        </property>
+        <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+            <id name="id">296026119</id>
+        </property>
+        <property name="parent" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">424775527</id>
+        </property>
+    </object>
+    <object class="Space" package="com.atlassian.confluence.spaces">
+        <id name="id">296026119</id>
+        <property name="name">Lang</property>
+        <property name="key">LANG</property>
+        <property name="lowerKey">misc</property>
+        <property name="creationDate">2018-08-06 08:08:34.820</property>
+        <property name="lastModificationDate">2018-08-06 08:08:34.820</property>
+        <property name="spaceType">global</property>
+        <property name="spaceStatus" enum-class="SpaceStatus" package="com.atlassian.confluence.spaces">CURRENT</property>
+        <property name="description" class="SpaceDescription" package="com.atlassian.confluence.spaces">
+            <id name="id">295744487</id>
+        </property>
+        <property name="homePage" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">295744488</id>
+        </property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key">2c98884858d9cb680159de3c83404974</id>
+        </property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key">2c98884858d9cb680159de3c83404974</id>
+        </property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">461143607</id>
+        <property name="body"><![CDATA[<ac:structured-macro ac:name="english" ac:schema-version="1" data-layout="default" ac:local-id="d354d731-ac13-4298-96ab-0859fa92f38c" ac:macro-id="a7ec307b-18db-46fd-9b11-1e66f40c169a">
+<ac:rich-text-body>
+<p>English</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="english-us" ac:schema-version="1" data-layout="default" ac:local-id="07d007b8-e8b0-4a8f-b7cd-881896229ae5" ac:macro-id="8567fea8-0739-46fb-82c6-4ee41c9fdb2a">
+<ac:rich-text-body>
+<p>English US</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="canadian-en" ac:schema-version="1" data-layout="default" ac:local-id="183b4008-8f32-45a9-b877-ed67f47388bf" ac:macro-id="e67b7db0-f209-48e0-9d5d-507361505ab0">
+<ac:rich-text-body>
+<p>Canadian English</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="french" ac:schema-version="1" data-layout="default" ac:local-id="fc843301-8723-4239-a0af-488ce5b06602" ac:macro-id="ed899fab-a5c8-45f7-910c-b7a4c2e41671">
+<ac:rich-text-body>
+<p>French</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="canadian-fr" ac:schema-version="1" data-layout="default" ac:local-id="b6b27ad7-84f8-475a-a095-772b38e9ba93" ac:macro-id="7a652332-3ede-43dd-b54a-73d376d82dfa">
+<ac:rich-text-body>
+<p>Canadian French</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="icelandic" ac:schema-version="1" data-layout="default" ac:local-id="8cc938c9-6bf5-4bec-825f-ac5a953504aa" ac:macro-id="94c54bb8-de25-4eb5-8506-2a06fce9247d">
+<ac:rich-text-body>
+<p>Icelandic</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="irish" ac:schema-version="1" data-layout="default" ac:local-id="09e7aeb3-0c56-4509-94bb-716372941a57" ac:macro-id="9c56a9a8-d1b3-4f8e-a79e-ad438d913ac0">
+<ac:rich-text-body>
+<p>Irish</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="slovak" ac:schema-version="1" data-layout="default" ac:local-id="25be225e-a4b7-4217-ad64-743152014cfb" ac:macro-id="fa5ea9a7-b8a4-41f2-96ea-c92b03f669fd">
+<ac:rich-text-body>
+<p>Slovack</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="spanish" ac:schema-version="1" data-layout="default" ac:local-id="75007ab5-a702-49cb-8b84-6148fccfb6c0" ac:macro-id="e397782c-2e02-49c8-99c6-da9f2e6d8ce3">
+<ac:rich-text-body>
+<p>Spanish</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="italian" ac:schema-version="1" data-layout="default" ac:local-id="12ba190e-9215-409b-9fe4-ece3c9cfeaf7" ac:macro-id="dba76334-a80c-448c-8c40-7a821984c625">
+<ac:rich-text-body>
+<p>Italian</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="catalan" ac:schema-version="1" data-layout="default" ac:local-id="7b6280d9-2e09-4e6f-895f-79308252d9e7" ac:macro-id="befa2561-36a6-44af-94a6-8fc40277d698">
+<ac:rich-text-body>
+<p>Catalan</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="chinese" ac:schema-version="1" data-layout="default" ac:local-id="11fcea26-d16d-4852-b361-1e809d431c79" ac:macro-id="43e8c5ec-67a3-47dd-ac24-ad24d8811f32">
+<ac:rich-text-body>
+<p>Chinese</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="czech" ac:schema-version="1" data-layout="default" ac:local-id="dbac4f14-7902-4b90-8798-5a4a94405321" ac:macro-id="73b790e7-1670-4192-bb26-d23e5960436f">
+<ac:rich-text-body>
+<p>Czech</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="hindi" ac:schema-version="1" data-layout="default" ac:local-id="70d66de6-b989-42e4-9eae-203485686a75" ac:macro-id="baff3818-68c3-46ab-a43d-4adcf93ee2f4">
+<ac:rich-text-body>
+<p>Hindi</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="latvian" ac:schema-version="1" data-layout="default" ac:local-id="22ec2957-e174-4744-84f5-c6d181cbe1c2" ac:macro-id="e6bf0306-36e5-4428-afb6-be15eafcd813">
+<ac:rich-text-body>
+<p>Latvian</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="hungarian" ac:schema-version="1" data-layout="default" ac:local-id="e725119e-b619-4330-adfe-6de9e4710343" ac:macro-id="15f27364-622f-470a-bd98-e1a0118de9f7">
+<ac:rich-text-body>
+<p>Hungarian</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="indonesian" ac:schema-version="1" data-layout="default" ac:local-id="be5044c0-29e7-4f5b-9225-f87c799f71e1" ac:macro-id="b00d73b6-f9bc-404d-a6f0-6cb36e0a974a">
+<ac:rich-text-body>
+<p>Indonesian</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="maltese" ac:schema-version="1" data-layout="default" ac:local-id="151f76ec-01fa-4322-9cd7-d34ea54225eb" ac:macro-id="d33790e8-4e22-4d22-af32-34f03c78e455">
+<ac:rich-text-body>
+<p>Maltese</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="dutch" ac:schema-version="1" data-layout="default" ac:local-id="fc4d5ed6-2b41-40e5-ab4b-f1cb06187b28" ac:macro-id="bfd2536d-6e70-493e-af11-59c81eed1ba3">
+<ac:rich-text-body>
+<p>Dutch</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="german" ac:schema-version="1" data-layout="default" ac:local-id="98e80c4b-b922-47f4-948f-6096aea2d94d" ac:macro-id="7c9e5be1-86db-466d-939a-b1a865253d20">
+<ac:rich-text-body>
+<p>German</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="polish" ac:schema-version="1" data-layout="default" ac:local-id="68d00449-df2f-4599-ad75-f6d7a101966e" ac:macro-id="9cec21a2-f5dc-4ee7-a52b-35235dc3fcfb">
+<ac:rich-text-body>
+<p>Polish</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="turkish" ac:schema-version="1" data-layout="default" ac:local-id="cb5978a0-8cdf-4ec8-b25e-1cbd0c44a99a" ac:macro-id="fda9c3a7-e6de-4e0b-9c2e-e486f4a8eaf1">
+<ac:rich-text-body>
+<p>Turkish</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="norwegian-nb" ac:schema-version="1" data-layout="default" ac:local-id="857a13fe-d7e1-4691-bd37-8b6cb8be1d2a" ac:macro-id="8842cb2d-7cfa-46bd-b958-194432768618">
+<ac:rich-text-body>
+<p>Norwegian Bokmal</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="norwegian" ac:schema-version="1" data-layout="default" ac:local-id="7a810dd5-9b48-4599-94fd-ad3e63701d27" ac:macro-id="65129cc8-88d8-4279-8fe6-b712a5510b1a">
+<ac:rich-text-body>
+<p>Norwegian Nynorsk</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="korean" ac:schema-version="1" data-layout="default" ac:local-id="f8abb874-92f1-4733-875c-3fb4dec6987d" ac:macro-id="01ce30ed-fc89-46fe-a370-62cf7d35e9c7">
+<ac:rich-text-body>
+<p>Korean</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="japanese" ac:schema-version="1" data-layout="default" ac:local-id="da4a9ba8-940b-4340-9c25-60ef2eb5474c" ac:macro-id="57255aaa-85ea-457c-be1d-6e13f97ad0cf">
+<ac:rich-text-body>
+<p>Japonese</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="portuguese" ac:schema-version="1" data-layout="default" ac:local-id="13baf35d-2b32-40be-a982-167d4d74a305" ac:macro-id="b77ee457-aa58-48ac-98b7-fb6a4e835b9d">
+<ac:rich-text-body>
+<p>Portuguese</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="croatian" ac:schema-version="1" data-layout="default" ac:local-id="16d71e7c-a65b-426c-b4d7-8af468c27729" ac:macro-id="125c7423-b363-4620-8c9c-4aa68ae410ce">
+<ac:rich-text-body>
+<p>Croatian</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="welsh" ac:schema-version="1" data-layout="default" ac:local-id="c08a66fe-4907-45ab-afb3-5d59c27c5626" ac:macro-id="2fac6f9f-fe4b-4489-a913-c45d922547d7">
+<ac:rich-text-body>
+<p>Welsh</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="greek" ac:schema-version="1" data-layout="default" ac:local-id="c52ce861-48ee-40c1-83dc-58fcded1529e" ac:macro-id="21c9bed3-1db0-4056-a1e5-734d1c717054">
+<ac:rich-text-body>
+<p>Greek</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="russian" ac:schema-version="1" data-layout="default" ac:local-id="fc36f2e4-1007-4147-a299-ff3dbe5a949c" ac:macro-id="a5abe191-1491-4428-80d5-a32e6725f52d">
+<ac:rich-text-body>
+<p>Russian</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="ukrainian" ac:schema-version="1" data-layout="default" ac:local-id="9dc6a680-fa68-4d4a-adfe-88694d53d861" ac:macro-id="9e294dbb-f8f8-41b4-bbcb-01fdc5a38487">
+<ac:rich-text-body>
+<p>Ukrainian</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="slovenian" ac:schema-version="1" data-layout="default" ac:local-id="4a4d19ea-320c-438e-9640-253d1dbcd960" ac:macro-id="2bc2d826-3480-4871-ba5a-2d5cd3a9d636">
+<ac:rich-text-body>
+<p>Slovenian</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="romanian" ac:schema-version="1" data-layout="default" ac:local-id="ee31c270-3a06-4974-996d-062d04ebb86e" ac:macro-id="2f63ddea-7262-4e13-a57b-bea2b02b5eba">
+<ac:rich-text-body>
+<p>Romanian</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="belarusian" ac:schema-version="1" data-layout="default" ac:local-id="c316f13e-f724-4cd3-8f5e-99c3427fee84" ac:macro-id="4ff229eb-a2a9-4824-82a5-ab34f0a02eb2">
+<ac:rich-text-body>
+<p>Belarusian</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="estonian" ac:schema-version="1" data-layout="default" ac:local-id="dd601c3a-debd-4d2a-92e3-859aced63fd1" ac:macro-id="7c9aaa8e-e32e-4822-b8fc-b15f98fa2451">
+<ac:rich-text-body>
+<p>Estonian</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="portuguese-br" ac:schema-version="1" data-layout="default" ac:local-id="a9fa11bf-1aca-4148-905f-c6a914fceccd" ac:macro-id="bc92f080-e5ca-4a63-aa6f-41b9c43770d3">
+<ac:rich-text-body>
+<p>Portuguese Brazil</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="thai" ac:schema-version="1" data-layout="default" ac:local-id="63b0a998-fde3-47a4-883f-96e7219acb03" ac:macro-id="8a698a68-85fb-47a5-bf41-784f14e86e6f">
+<ac:rich-text-body>
+<p>Thai</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="lithuanian" ac:schema-version="1" data-layout="default" ac:local-id="cf0b20d3-70ff-43b0-906a-4511527967de" ac:macro-id="ca0a9ef2-c8b3-448b-9181-ab7b220fdeca">
+<ac:rich-text-body>
+<p>Lithuanian</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="bulgarian" ac:schema-version="1" data-layout="default" ac:local-id="ee2a6476-6574-4596-a287-81daf0f3a9f4" ac:macro-id="0db85ecf-e7ff-44a3-b797-b431e6a85cf4">
+<ac:rich-text-body>
+<p>Bulgarian</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="danish" ac:schema-version="1" data-layout="default" ac:local-id="b9ff37b3-020b-46e8-b9b4-b6d58fb479ad" ac:macro-id="38cc7f13-fce8-4ea0-bbf2-c280e7b975f3">
+<ac:rich-text-body>
+<p>Danish</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+<ac:structured-macro ac:name="vietnamese" ac:schema-version="1" data-layout="default" ac:local-id="f9120d06-45d2-413f-93fa-0479f9f50f70" ac:macro-id="690bd22d-8736-4ffa-898c-84b26b583440">
+<ac:rich-text-body>
+<p>Vietnamese</p>
+</ac:rich-text-body>
+</ac:structured-macro>
+]]></property>
+        <property name="bodyType">2</property>
+        <property name="content" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">463168605</id>
+        </property>
+    </object>
+</hibernate-generic>

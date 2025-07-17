@@ -23,6 +23,7 @@ org.xwiki.contrib.confluence.filter.internal.macros.ConditionalContentMacroConve
 org.xwiki.contrib.confluence.filter.internal.macros.DefaultMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.IncludeMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.ImgMacroConverter
+org.xwiki.contrib.confluence.filter.internal.macros.LangMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.LivesearchMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.JiraMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.MacroToContentConverter
