@@ -25,6 +25,7 @@ import java.util.Map;
 
 import javax.inject.Singleton;
 
+import org.apache.commons.lang3.LocaleUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 
@@ -148,6 +149,11 @@ public class LangMacroConverter extends AbstractTranslationMacroConverter
             return null;
         }
 
-        return new Locale(l.split("_")[0]);
+        try {
+            return LocaleUtils.toLocale(l.split("_")[0]);
+        } catch (IllegalArgumentException e) {
+            // Should never happen
+            throw new RuntimeException("Failed to compute a Locale for language macro " + id, e);
+        }
     }
 }

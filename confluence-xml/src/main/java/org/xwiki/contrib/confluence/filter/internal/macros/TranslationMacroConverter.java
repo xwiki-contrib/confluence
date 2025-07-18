@@ -26,6 +26,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.apache.commons.lang3.LocaleUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
@@ -96,6 +97,15 @@ public class TranslationMacroConverter extends AbstractTranslationMacroConverter
     public Locale getLanguage(String id, Map<String, String> parameters, String content, boolean inline)
     {
         String l = parameters.get(MACRO_PARAMETER_LANGUAGE);
-        return StringUtils.isEmpty(l) ? null : new Locale(l);
+        if (StringUtils.isEmpty(l)) {
+            return null;
+        }
+
+        try {
+            return LocaleUtils.toLocale(l.split("_")[0]);
+        } catch (IllegalArgumentException e) {
+            // Should never happen
+            throw new RuntimeException("Failed to compute a Locale for the sv-translation macro with language " + l, e);
+        }
     }
 }
