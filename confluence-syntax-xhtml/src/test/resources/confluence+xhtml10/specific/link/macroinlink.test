@@ -1,0 +1,22 @@
+.#-----------------------------------------------------
+.input|confluence+xhtml/1.0
+.#-----------------------------------------------------
+<div>
+    <a href="https://perdu.com">
+      <ac:structured-macro ac:name="random-macro">
+        <ac:parameter ac:name="param">value</ac:parameter>
+      </ac:structured-macro>
+    </a>
+</div>
+.#-----------------------------------------------------
+.expect|event/1.0
+beginDocument
+beginGroup
+beginParagraph
+beginLink [Typed = [true] Type = [url] Reference = [https://perdu.com]] [false] [[shape]=[rect]]
+onMacroInline [random-macro] [param=value]
+endLink [Typed = [true] Type = [url] Reference = [https://perdu.com]] [false] [[shape]=[rect]]
+endParagraph
+endGroup
+endDocument
+.#-----------------------------------------------------

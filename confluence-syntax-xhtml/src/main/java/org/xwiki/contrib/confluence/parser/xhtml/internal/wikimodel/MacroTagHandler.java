@@ -128,6 +128,7 @@ public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
                 || isInParagraph(context)
                 || isInSpan(context)
                 || isInTaskBody(context)
+                || isInLink(context)
         );
 
         handleViewFileQuirk(macro);
@@ -159,6 +160,11 @@ public class MacroTagHandler extends TagHandler implements ConfluenceTagHandler
     private static boolean isInTaskBody(TagContext context)
     {
         return context.getParent() != null && "ac:task-body".equals(context.getParent().getName());
+    }
+
+    private static boolean isInLink(TagContext context)
+    {
+        return context.getParent() != null && "a".equals(context.getParent().getName());
     }
 
     private static boolean isInSpan(TagContext context)

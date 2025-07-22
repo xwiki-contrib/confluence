@@ -33,6 +33,8 @@ import java.util.Objects;
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceReferenceConverter;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceURLConverter;
+import org.xwiki.rendering.block.Block;
+import org.xwiki.rendering.block.MacroBlock;
 import org.xwiki.rendering.block.XDOM;
 import org.xwiki.rendering.internal.parser.wikimodel.DefaultXWikiGeneratorListener;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XHTMLXWikiGeneratorListener;
@@ -200,15 +202,38 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
             resourceReference = urlConverter.convertURL(ref.getReference());
         }
 
+        XDOM labelXDOM = xwikiReference.getLabelXDOM();
+        XDOM fixedLabel =  fixupStandaloneMacro(xwikiReference.getLabelXDOM());
+
         super.onReference(
-            resourceReference == null
+            (resourceReference == null && fixedLabel != null)
                 ? reference
                 :  new XWikiWikiReference(
-                    resourceReference,
-                    xwikiReference.getLabelXDOM(),
+                    Objects.requireNonNullElse(resourceReference, ref),
+                    Objects.requireNonNullElse(fixedLabel, labelXDOM),
                     xwikiReference.getParameters(),
                     xwikiReference.isFreeStanding())
         );
+    }
+
+    private XDOM fixupStandaloneMacro(XDOM labelXDOM)
+    {
+        // we fix up paragraphs containing only one macro: we replace them with a block macro instead.
+        // but this fix applies to children of links as well, because wikimodel opens and closes a paragraphs inside
+        // links. We end up with a block macro in link labels, which is wrong, so we revert this.
+        // This is a bit convoluted, sorry for this, we didn't find another way to do this.
+        // This fixup is safe, because we don't support paragraphs inside link labels anyway.
+        List<Block> children = labelXDOM.getChildren();
+        if (children != null && children.size() == 1) {
+            Block child = children.get(0);
+            if (child instanceof MacroBlock) {
+                MacroBlock macro = (MacroBlock) child;
+                if (!macro.isInline()) {
+                    children.replaceAll(b -> new MacroBlock(macro.getId(), macro.getParameters(), true));
+                }
+            }
+        }
+        return labelXDOM;
     }
 
     /**
@@ -694,6 +719,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
             QueueListener.Event macroEvent = queueListener.get(1);
             // Set the inline parameter to false in macros that are alone in paragraph. These macros can be block
             // macros. If they are inline, not having the inline attribute should not hurt when generating XWiki syntax.
+            // Note: this applies inside link labels, which is wrong. We revert this in #fixupStandaloneMacro(XDOM)
             if (macroEvent.eventParameters.length == 4 && macroEvent.eventParameters[3] instanceof Boolean) {
                 macroEvent.eventParameters[3] = false;
             }

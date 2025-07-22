@@ -48,7 +48,15 @@
     </object>
     <object class="BodyContent" package="com.atlassian.confluence.core">
         <id name="id">461143607</id>
-        <property name="body"><![CDATA[<p><ac:structured-macro ac:name="children" ac:schema-version="2" ac:macro-id="3dd5812b-f65b-4890-87ba-b83ad0d08e40"><ac:parameter ac:name="depth">2</ac:parameter><ac:parameter ac:name="style">h4</ac:parameter><ac:parameter ac:name="page"><ac:link /></ac:parameter></ac:structured-macro></p>
+        <property name="body"><![CDATA[
+<div>
+    <a href="https://perdu.com">
+      <ac:structured-macro ac:name="random-macro">
+        <ac:parameter ac:name="param">value</ac:parameter>
+      </ac:structured-macro>
+    </a>
+</div>
+<p><ac:structured-macro ac:name="children" ac:schema-version="2" ac:macro-id="3dd5812b-f65b-4890-87ba-b83ad0d08e40"><ac:parameter ac:name="depth">2</ac:parameter><ac:parameter ac:name="style">h4</ac:parameter><ac:parameter ac:name="page"><ac:link /></ac:parameter></ac:structured-macro></p>
 <ac:structured-macro ac:name="plantuml" ac:schema-version="1" ac:macro-id="ffeb162d-02b0-4f65-97ac-590de9b4ffe9"><ac:parameter ac:name="atlassian-macro-output-type">INLINE</ac:parameter><ac:plain-text-body><![CDATA[@startgantt
 <style>
 ganttDiagram {

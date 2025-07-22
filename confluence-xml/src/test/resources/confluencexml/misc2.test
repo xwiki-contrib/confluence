@@ -43,7 +43,11 @@
               </entry>
               <entry>
                 <string>content</string>
-                <string>{{documentTree root="document:WebHome"/}}
+                <string>(((
+[[{{random-macro param="value"/}}>>url:https://perdu.com||shape="rect"]]
+)))
+
+{{documentTree root="document:WebHome"/}}
 
 {{plantuml}}
 @startgantt
