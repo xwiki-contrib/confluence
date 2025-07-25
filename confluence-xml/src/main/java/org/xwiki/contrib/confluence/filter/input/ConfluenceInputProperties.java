@@ -301,6 +301,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      */
     private String orphanMode = "NORMAL";
 
+    private boolean favoritesEnabled = true;
+
     /**
      * @return The source to load the wiki from
      */
@@ -1573,5 +1575,23 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
         this.translationsEnabled = translationsEnabled;
     }
 
+    /**
+     * @return whether pages containing different languages should be converted to translated XWiki documents.
+     * @since 9.88.0
+     */
+    @PropertyName("Favorites")
+    @PropertyDescription("Import favorites (requires the Favorites Application)")
+    public boolean isFavoritesEnabled()
+    {
+        return favoritesEnabled;
+    }
 
+    /**
+     * @param favoritesEnabled whether to enable translations
+     * @since 9.88.0
+     */
+    public void setFavoritesEnabled(boolean favoritesEnabled)
+    {
+        this.favoritesEnabled = favoritesEnabled;
+    }
 }

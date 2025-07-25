@@ -160,6 +160,11 @@
       <scope>test</scope>
       <type>pom</type>
     </dependency>
+    <dependency>
+      <groupId>org.xwiki.contrib</groupId>
+      <artifactId>application-favorites-filter-api</artifactId>
+      <version>1.3.2-SNAPSHOT-5</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>

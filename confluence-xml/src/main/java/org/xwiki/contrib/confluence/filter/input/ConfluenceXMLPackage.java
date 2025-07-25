@@ -395,6 +395,18 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String KEY_ATTACHMENT_CONTENTTYPE = "contentType";
 
     /**
+     * The property key to access the owning user of a label.
+     * @since 9.88.0
+     */
+    public static final String KEY_LABEL_OWNINGUSER = "owningUser";
+
+    /**
+     * The property key to access the owning user of a label - previous version.
+     * @since 9.88.0
+     */
+    public static final String KEY_LABEL_USER = "user";
+
+    /**
      * The property key to access the attachment content properties.
      * 
      * @deprecated since 9.79.0, use {@link #KEY_CONTENTPROPERTIES} instead

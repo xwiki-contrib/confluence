@@ -272,18 +272,6 @@ Learn more about [[inviting your team to Confluence>>url:https://confluence.atla
           </p>
           <wikiObjectProperty name="tags" value="knowledge-bases|category2|category1|homepagelabel|generic"/>
         </wikiObject>
-        <userFavorite>
-          <p>
-            <userRef>
-              <name>Admin</name>
-              <parent>
-                <name>XWiki</name>
-                <type>SPACE</type>
-              </parent>
-              <type>DOCUMENT</type>
-            </userRef>
-          </p>
-        </userFavorite>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
@@ -493,4 +481,5 @@ fghgfgdffgfg</string>
 .input|confluence+xml
 .configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=confluence80tags
+.configuration.favoritesEnabled=false
 .#------------------------------------------------------------------------------

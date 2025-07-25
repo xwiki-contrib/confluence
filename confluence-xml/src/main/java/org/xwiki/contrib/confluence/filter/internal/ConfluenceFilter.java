@@ -33,6 +33,7 @@ import org.xwiki.filter.event.model.WikiSpaceFilter;
 import org.xwiki.filter.event.user.GroupFilter;
 import org.xwiki.filter.event.user.UserFilter;
 import org.xwiki.rendering.listener.Listener;
+import org.xwiki.contrib.favorites.filter.EntityFavoriteFilter;
 
 /**
  * All events supported by Confluence module.
@@ -42,7 +43,7 @@ import org.xwiki.rendering.listener.Listener;
  */
 public interface ConfluenceFilter extends WikiFarmFilter, WikiFilter, WikiSpaceFilter, WikiDocumentFilter,
     WikiAttachmentFilter, WikiClassFilter, WikiClassPropertyFilter, WikiObjectFilter, WikiObjectPropertyFilter,
-    UserFilter, GroupFilter, Listener
+    UserFilter, GroupFilter, EntityFavoriteFilter, Listener
 {
     /**
      * Mark a log as the list of macros found during the filtering process. First log parameter should be a list of

@@ -231,7 +231,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
      */
     public String toUserReference(String userName)
     {
-        return getUserOrGroupReference(toUserReferenceName(userName));
+        return serialize(getUserOrGroupReference(toUserReferenceName(userName)));
     }
 
     /**
@@ -241,7 +241,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
      */
     public String toGroupReference(String groupName)
     {
-        return getUserOrGroupReference(toGroupReferenceName(groupName));
+        return serialize(getUserOrGroupReference(toGroupReferenceName(groupName)));
     }
 
     String getGuestUser()
@@ -249,20 +249,18 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return serialize(GUEST);
     }
 
-    private String getUserOrGroupReference(String userReferenceName)
+    EntityReference getUserOrGroupReference(String userOrGroupReferenceName)
     {
         // Transform user name according to configuration
-        if (StringUtils.isEmpty(userReferenceName)) {
+        if (StringUtils.isEmpty(userOrGroupReferenceName)) {
             return null;
         }
 
         // Add the "XWiki" space and the wiki if configured. Ideally this should probably be done on XWiki Instance
         // Output filter side
-        EntityReference reference = context.getProperties().getUsersWiki() == null
-            ? new LocalDocumentReference(XWIKI, userReferenceName)
-            : new DocumentReference(context.getProperties().getUsersWiki(), XWIKI, userReferenceName);
-
-        return serialize(reference);
+        return context.getProperties().getUsersWiki() == null
+            ? new LocalDocumentReference(XWIKI, userOrGroupReferenceName)
+            : new DocumentReference(context.getProperties().getUsersWiki(), XWIKI, userOrGroupReferenceName);
     }
 
     /**
@@ -278,7 +276,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
             // Keep the UserResourceReference
 
             // Clean the user id
-            String userName = toUserReferenceName(resolveUserName(userReference));
+            String userName = toUserReferenceName(convertUserKeyToUserName(userReference));
             if (userName == null || userName.isEmpty()) {
                 return null;
             }
@@ -304,7 +302,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         return documentReference;
     }
 
-    String resolveUserName(String userKey)
+    String convertUserKeyToUserName(String userKey)
     {
         if (StringUtils.isEmpty(userKey)) {
             return null;
@@ -318,7 +316,7 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
 
     String getReferenceFromUserKey(String userKey)
     {
-        return toUserReference(resolveUserName(userKey));
+        return toUserReference(convertUserKeyToUserName(userKey));
     }
 
     @Override

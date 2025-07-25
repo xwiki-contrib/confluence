@@ -660,8 +660,20 @@ Link to page 1 [[here>>doc:SPACE1.Page 1.WebHome]]</string>
                 </entry>
               </parameters>
             </p>
-            <wikiObjectProperty name="tags" value="tag1|favourite"/>
+            <wikiObjectProperty name="tags" value="tag1"/>
           </wikiObject>
+          <userFavorite>
+            <p>
+              <userRef>
+                <name>Admin</name>
+                <parent>
+                  <name>XWiki</name>
+                  <type>SPACE</type>
+                </parent>
+                <type>DOCUMENT</type>
+              </userRef>
+            </p>
+          </userFavorite>
           <wikiObject name="XWiki.XWikiComments">
             <p>
               <parameters>
@@ -922,17 +934,18 @@ To help you on your way, we've inserted some of our favourite macros on this hom
             </entry>
           </parameters>
         </p>
-        <wikiObject name="XWiki.TagClass">
+        <userFavorite>
           <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.TagClass</string>
-              </entry>
-            </parameters>
+            <userRef>
+              <name>Admin</name>
+              <parent>
+                <name>XWiki</name>
+                <type>SPACE</type>
+              </parent>
+              <type>DOCUMENT</type>
+            </userRef>
           </p>
-          <wikiObjectProperty name="tags" value="favourite"/>
-        </wikiObject>
+        </userFavorite>
         <wikiObject name="XWiki.XWikiComments">
           <p>
             <parameters>

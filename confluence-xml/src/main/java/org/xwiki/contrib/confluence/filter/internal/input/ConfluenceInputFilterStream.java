@@ -1097,7 +1097,7 @@ public class ConfluenceInputFilterStream
         String userName = permProperties.getString(ConfluenceXMLPackage.KEY_SPACEPERMISSION_USERNAME, null);
         if (StringUtils.isEmpty(userName)) {
             String userKey = permProperties.getString(ConfluenceXMLPackage.KEY_PERMISSION_USERSUBJECT, null);
-            userName = confluenceConverter.resolveUserName(userKey);
+            userName = confluenceConverter.convertUserKeyToUserName(userKey);
         }
 
         if (!StringUtils.isEmpty(userName)) {
@@ -2361,7 +2361,7 @@ public class ConfluenceInputFilterStream
 
         // Send tags
         if (!tags.isEmpty()) {
-            sendPageTags(proxyFilter, tags);
+            sendPageTags(proxyFilter, tags, pageProperties);
         }
     }
 
@@ -2761,7 +2761,7 @@ public class ConfluenceInputFilterStream
         String creatorName = null;
         if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_CREATION_AUTHOR_KEY)) {
             String creatorKey = attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_CREATION_AUTHOR_KEY);
-            creatorName = confluenceConverter.resolveUserName(creatorKey);
+            creatorName = confluenceConverter.convertUserKeyToUserName(creatorKey);
         } else if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_AUTHOR)) {
             creatorName = attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_AUTHOR);
         }
@@ -2772,29 +2772,63 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void sendPageTags(ConfluenceFilter proxyFilter, Map<String, ConfluenceProperties> pageTags)
+    private void sendPageTags(ConfluenceFilter proxyFilter, Map<String, ConfluenceProperties> pageTags,
+        ConfluenceProperties pageProperties)
         throws FilterException
     {
-        FilterEventParameters pageTagsParameters = new FilterEventParameters();
-
-        // Tag object
-        pageTagsParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, TAGS_CLASSNAME);
-        proxyFilter.beginWikiObject(TAGS_CLASSNAME, pageTagsParameters);
-        try {
-            // get page tags separated by | as string
-            StringBuilder tagBuilder = new StringBuilder();
-            String prefix = "";
-            for (String tag : pageTags.keySet()) {
+        Collection<ConfluenceProperties> favorites = new ArrayList<>();
+        // get page tags separated by | as string
+        StringBuilder tagBuilder = new StringBuilder();
+        String prefix = "";
+        for (Map.Entry<String, ConfluenceProperties> tagEntry : pageTags.entrySet()) {
+            String tag = tagEntry.getKey();
+            if ("favourite".equals(tag)) {
+                favorites.add(tagEntry.getValue());
+            } else {
                 tagBuilder.append(prefix);
                 tagBuilder.append(tag);
                 prefix = "|";
             }
-
-            // <tags> object property
-            proxyFilter.onWikiObjectProperty("tags", tagBuilder.toString(), FilterEventParameters.EMPTY);
-        } finally {
-            proxyFilter.endWikiObject(TAGS_CLASSNAME, pageTagsParameters);
         }
+
+        String tags = tagBuilder.toString();
+        if (!tags.isEmpty()) {
+            FilterEventParameters pageTagsParameters = new FilterEventParameters();
+
+            pageTagsParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, TAGS_CLASSNAME);
+            proxyFilter.beginWikiObject(TAGS_CLASSNAME, pageTagsParameters);
+            try {
+                proxyFilter.onWikiObjectProperty("tags", tags, FilterEventParameters.EMPTY);
+            } finally {
+                proxyFilter.endWikiObject(TAGS_CLASSNAME, pageTagsParameters);
+            }
+        }
+
+        for (ConfluenceProperties favorite : favorites) {
+            String userName = getFavoriteUser(favorite);
+            if (StringUtils.isEmpty(userName)) {
+                logger.error("Could not find the owning user of the favourite on page [{}]",
+                    createPageIdentifier(pageProperties));
+            } else {
+                String xwikiUserNane = confluenceConverter.toUserReferenceName(userName);
+                EntityReference userRef = confluenceConverter.getUserOrGroupReference(xwikiUserNane);
+                if (userRef == null) {
+                    logger.error("Could not get an XWiki reference for the owner of the favourite [{}] on page [{}]",
+                        userName, createPageIdentifier(pageProperties));
+                }
+                proxyFilter.onUserFavorite(userRef, FilterEventParameters.EMPTY);
+            }
+        }
+    }
+
+    private String getFavoriteUser(ConfluenceProperties favorite)
+    {
+        String userKey = favorite.getString(ConfluenceXMLPackage.KEY_LABEL_OWNINGUSER);
+        if (userKey != null) {
+            return confluenceConverter.convertUserKeyToUserName(userKey);
+        }
+
+        return favorite.getString(ConfluenceXMLPackage.KEY_LABEL_USER);
     }
 
     private void readPageComment(ConfluenceProperties pageProperties, ConfluenceFilter proxyFilter, Long commentId,

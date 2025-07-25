@@ -48,17 +48,18 @@
             </entry>
           </parameters>
         </p>
-        <wikiObject name="XWiki.TagClass">
+        <userFavorite>
           <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.TagClass</string>
-              </entry>
-            </parameters>
+            <userRef>
+              <name>Admin</name>
+              <parent>
+                <name>XWiki</name>
+                <type>SPACE</type>
+              </parent>
+              <type>DOCUMENT</type>
+            </userRef>
           </p>
-          <wikiObjectProperty name="tags" value="favourite"/>
-        </wikiObject>
+        </userFavorite>
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
