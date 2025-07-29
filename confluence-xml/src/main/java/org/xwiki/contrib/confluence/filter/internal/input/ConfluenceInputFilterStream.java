@@ -2776,14 +2776,16 @@ public class ConfluenceInputFilterStream
         ConfluenceProperties pageProperties)
         throws FilterException
     {
-        Collection<ConfluenceProperties> favorites = new ArrayList<>();
+        Collection<ConfluenceProperties> favorites = properties.isFavoritesEnabled() ? new ArrayList<>() : null;
         // get page tags separated by | as string
         StringBuilder tagBuilder = new StringBuilder();
         String prefix = "";
         for (Map.Entry<String, ConfluenceProperties> tagEntry : pageTags.entrySet()) {
             String tag = tagEntry.getKey();
             if ("favourite".equals(tag)) {
-                favorites.add(tagEntry.getValue());
+                if (favorites != null) {
+                    favorites.add(tagEntry.getValue());
+                }
             } else {
                 tagBuilder.append(prefix);
                 tagBuilder.append(tag);
@@ -2804,6 +2806,14 @@ public class ConfluenceInputFilterStream
             }
         }
 
+        if (favorites != null) {
+            sendFavorites(proxyFilter, pageProperties, favorites);
+        }
+    }
+
+    private void sendFavorites(ConfluenceFilter proxyFilter, ConfluenceProperties pageProperties,
+        Collection<ConfluenceProperties> favorites) throws FilterException
+    {
         for (ConfluenceProperties favorite : favorites) {
             String userName = getFavoriteUser(favorite);
             if (StringUtils.isEmpty(userName)) {

@@ -726,61 +726,6 @@ Canadian French</string>
           </p>
         </wikiDocumentRevision>
       </wikiDocumentLocale>
-      <wikiDocumentLocale locale="id">
-        <p>
-          <parameters>
-            <entry>
-              <string>creation_author</string>
-              <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
-            </entry>
-            <entry>
-              <string>creation_date</string>
-              <date>2023-05-14 13:30:42.247 UTC</date>
-            </entry>
-            <entry>
-              <string>lastrevision</string>
-              <string>7</string>
-            </entry>
-          </parameters>
-        </p>
-        <wikiDocumentRevision revision="7">
-          <p>
-            <parameters>
-              <entry>
-                <string>revision_author</string>
-                <string>XWiki.2c9889aa637e9b11016469a29aef4e5d</string>
-              </entry>
-              <entry>
-                <string>revision_date</string>
-                <date>2023-06-28 02:05:24.230 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
-                <string>title</string>
-                <string>Lang content</string>
-              </entry>
-              <entry>
-                <string>content</string>
-                <string>Indonesian</string>
-              </entry>
-              <entry>
-                <string>syntax</string>
-                <org.xwiki.rendering.syntax.Syntax>
-                  <type>
-                    <name>XWiki</name>
-                    <id>xwiki</id>
-                    <variants class="empty-list"/>
-                  </type>
-                  <version>2.1</version>
-                </org.xwiki.rendering.syntax.Syntax>
-              </entry>
-            </parameters>
-          </p>
-        </wikiDocumentRevision>
-      </wikiDocumentLocale>
       <wikiDocumentLocale locale="mt">
         <p>
           <parameters>

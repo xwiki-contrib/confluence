@@ -128,11 +128,6 @@
 <p>Hungarian</p>
 </ac:rich-text-body>
 </ac:structured-macro>
-<ac:structured-macro ac:name="indonesian" ac:schema-version="1" data-layout="default" ac:local-id="be5044c0-29e7-4f5b-9225-f87c799f71e1" ac:macro-id="b00d73b6-f9bc-404d-a6f0-6cb36e0a974a">
-<ac:rich-text-body>
-<p>Indonesian</p>
-</ac:rich-text-body>
-</ac:structured-macro>
 <ac:structured-macro ac:name="maltese" ac:schema-version="1" data-layout="default" ac:local-id="151f76ec-01fa-4322-9cd7-d34ea54225eb" ac:macro-id="d33790e8-4e22-4d22-af32-34f03c78e455">
 <ac:rich-text-body>
 <p>Maltese</p>
