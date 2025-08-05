@@ -1,0 +1,662 @@
+.#-----------------------------------------------------
+.input|confluence+xhtml/1.0
+.# Make sure styles in col are propagated to the individual cells.
+.#-----------------------------------------------------
+<table class="relative-table wrapped" style="width: 94.1904%;">
+    <colgroup>
+        <col style="width: 01%; color: one" />
+        <col style="width: 02%; color: two" />
+        <col style="width: 03%; color: three" />
+        <col style="width: 04%; color: four" />
+        <col style="width: 05%; color: five" />
+        <col style="width: 06%; color: six" />
+        <col style="width: 07%; color: seven" />
+        <col style="width: 08%; color: height" />
+        <col style="width: 09%; color: nine" />
+        <col style="width: 10%; color: ten" />
+        <col style="width: 11%; color: eleven" />
+        <col style="width: 12%; color: twelve" />
+        <col style="width: 13%; color: thirteen" />
+        <col style="width: 14%; color: fourteen" />
+    </colgroup>
+    <tbody>
+        <tr>
+            <th rowspan="2">Head 1</th>
+            <th rowspan="2">Head 2</th>
+            <th rowspan="2">Head 3</th>
+            <th rowspan="2">Head 4</th>
+            <th rowspan="2">Head 5</th>
+            <th rowspan="2">Head 6</th>
+            <th rowspan="2">Head 7</th>
+            <th colspan="7" style="text-align: center;">Over head</th>
+        </tr>
+        <tr>
+            <th>Head 8</th>
+            <th>Head 9</th>
+            <th>Head 10</th>
+            <th>Head 11</th>
+            <th style="text-align: center;">Head 12</th>
+            <th style="text-align: center;">Head 13</th>
+            <th style="text-align: center;">Head 14</th>
+        </tr>
+        <tr><td>Cell</td><td rowspan="0">Cell</td><td>Cell</td><td>Cell</td><td>Cell</td>           <td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td></tr>
+        <tr><td>Cell</td>                         <td>Cell</td><td rowspan="2" colspan="2">Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td></tr>
+        <tr><td>Cell</td>                         <td>Cell</td>                                     <td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td></tr>
+        <tr><td>Cell</td>                         <td>Cell</td>                                     <td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td></tr>
+        <tr><td>Cell</td>                         <td>Cell</td><td>Cell</td><td colspan="0">Cell                                                                                                                    </td></tr>
+        <tr><td>Cell</td>                         <td>Cell</td><td>Cell</td><td>Cell</td>           <td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td><td>Cell</td></tr>
+    </tbody>
+</table>
+.#-----------------------------------------------------
+.expect|event/1.0
+beginDocument
+beginTable [[class]=[relative-table wrapped][style]=[width: 94.1904%;]]
+beginTableRow
+beginTableHeadCell [[rowspan]=[2][style]=[width: 01%; color: one]]
+beginGroup
+beginParagraph
+onWord [Head]
+onSpace
+onWord [1]
+endParagraph
+endGroup
+endTableHeadCell [[rowspan]=[2][style]=[width: 01%; color: one]]
+beginTableHeadCell [[rowspan]=[2][style]=[width: 02%; color: two]]
+beginGroup
+beginParagraph
+onWord [Head]
+onSpace
+onWord [2]
+endParagraph
+endGroup
+endTableHeadCell [[rowspan]=[2][style]=[width: 02%; color: two]]
+beginTableHeadCell [[rowspan]=[2][style]=[width: 03%; color: three]]
+beginGroup
+beginParagraph
+onWord [Head]
+onSpace
+onWord [3]
+endParagraph
+endGroup
+endTableHeadCell [[rowspan]=[2][style]=[width: 03%; color: three]]
+beginTableHeadCell [[rowspan]=[2][style]=[width: 04%; color: four]]
+beginGroup
+beginParagraph
+onWord [Head]
+onSpace
+onWord [4]
+endParagraph
+endGroup
+endTableHeadCell [[rowspan]=[2][style]=[width: 04%; color: four]]
+beginTableHeadCell [[rowspan]=[2][style]=[width: 05%; color: five]]
+beginGroup
+beginParagraph
+onWord [Head]
+onSpace
+onWord [5]
+endParagraph
+endGroup
+endTableHeadCell [[rowspan]=[2][style]=[width: 05%; color: five]]
+beginTableHeadCell [[rowspan]=[2][style]=[width: 06%; color: six]]
+beginGroup
+beginParagraph
+onWord [Head]
+onSpace
+onWord [6]
+endParagraph
+endGroup
+endTableHeadCell [[rowspan]=[2][style]=[width: 06%; color: six]]
+beginTableHeadCell [[rowspan]=[2][style]=[width: 07%; color: seven]]
+beginGroup
+beginParagraph
+onWord [Head]
+onSpace
+onWord [7]
+endParagraph
+endGroup
+endTableHeadCell [[rowspan]=[2][style]=[width: 07%; color: seven]]
+beginTableHeadCell [[colspan]=[7][style]=[color: height; text-align: center]]
+beginGroup
+beginParagraph
+onWord [Over]
+onSpace
+onWord [head]
+endParagraph
+endGroup
+endTableHeadCell [[colspan]=[7][style]=[color: height; text-align: center]]
+endTableRow
+beginTableRow
+beginTableHeadCell [[style]=[width: 08%; color: height]]
+beginGroup
+beginParagraph
+onWord [Head]
+onSpace
+onWord [8]
+endParagraph
+endGroup
+endTableHeadCell [[style]=[width: 08%; color: height]]
+beginTableHeadCell [[style]=[width: 09%; color: nine]]
+beginGroup
+beginParagraph
+onWord [Head]
+onSpace
+onWord [9]
+endParagraph
+endGroup
+endTableHeadCell [[style]=[width: 09%; color: nine]]
+beginTableHeadCell [[style]=[width: 10%; color: ten]]
+beginGroup
+beginParagraph
+onWord [Head]
+onSpace
+onWord [10]
+endParagraph
+endGroup
+endTableHeadCell [[style]=[width: 10%; color: ten]]
+beginTableHeadCell [[style]=[width: 11%; color: eleven]]
+beginGroup
+beginParagraph
+onWord [Head]
+onSpace
+onWord [11]
+endParagraph
+endGroup
+endTableHeadCell [[style]=[width: 11%; color: eleven]]
+beginTableHeadCell [[style]=[width: 12%; color: twelve; text-align: center;]]
+beginGroup
+beginParagraph
+onWord [Head]
+onSpace
+onWord [12]
+endParagraph
+endGroup
+endTableHeadCell [[style]=[width: 12%; color: twelve; text-align: center;]]
+beginTableHeadCell [[style]=[width: 13%; color: thirteen; text-align: center;]]
+beginGroup
+beginParagraph
+onWord [Head]
+onSpace
+onWord [13]
+endParagraph
+endGroup
+endTableHeadCell [[style]=[width: 13%; color: thirteen; text-align: center;]]
+beginTableHeadCell [[style]=[width: 14%; color: fourteen; text-align: center;]]
+beginGroup
+beginParagraph
+onWord [Head]
+onSpace
+onWord [14]
+endParagraph
+endGroup
+endTableHeadCell [[style]=[width: 14%; color: fourteen; text-align: center;]]
+endTableRow
+beginTableRow
+beginTableCell [[style]=[width: 01%; color: one]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 01%; color: one]]
+beginTableCell [[rowspan]=[0][style]=[width: 02%; color: two]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[rowspan]=[0][style]=[width: 02%; color: two]]
+beginTableCell [[style]=[width: 03%; color: three]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 03%; color: three]]
+beginTableCell [[style]=[width: 04%; color: four]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 04%; color: four]]
+beginTableCell [[style]=[width: 05%; color: five]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 05%; color: five]]
+beginTableCell [[style]=[width: 06%; color: six]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 06%; color: six]]
+beginTableCell [[style]=[width: 07%; color: seven]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 07%; color: seven]]
+beginTableCell [[style]=[width: 08%; color: height]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 08%; color: height]]
+beginTableCell [[style]=[width: 09%; color: nine]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 09%; color: nine]]
+beginTableCell [[style]=[width: 10%; color: ten]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 10%; color: ten]]
+beginTableCell [[style]=[width: 11%; color: eleven]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 11%; color: eleven]]
+beginTableCell [[style]=[width: 12%; color: twelve]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 12%; color: twelve]]
+beginTableCell [[style]=[width: 13%; color: thirteen]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 13%; color: thirteen]]
+beginTableCell [[style]=[width: 14%; color: fourteen]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 14%; color: fourteen]]
+endTableRow
+beginTableRow
+beginTableCell [[style]=[width: 01%; color: one]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 01%; color: one]]
+beginTableCell [[style]=[width: 03%; color: three]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 03%; color: three]]
+beginTableCell [[colspan]=[2][rowspan]=[2][style]=[color: four]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[colspan]=[2][rowspan]=[2][style]=[color: four]]
+beginTableCell [[style]=[width: 06%; color: six]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 06%; color: six]]
+beginTableCell [[style]=[width: 07%; color: seven]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 07%; color: seven]]
+beginTableCell [[style]=[width: 08%; color: height]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 08%; color: height]]
+beginTableCell [[style]=[width: 09%; color: nine]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 09%; color: nine]]
+beginTableCell [[style]=[width: 10%; color: ten]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 10%; color: ten]]
+beginTableCell [[style]=[width: 11%; color: eleven]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 11%; color: eleven]]
+beginTableCell [[style]=[width: 12%; color: twelve]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 12%; color: twelve]]
+beginTableCell [[style]=[width: 13%; color: thirteen]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 13%; color: thirteen]]
+beginTableCell [[style]=[width: 14%; color: fourteen]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 14%; color: fourteen]]
+endTableRow
+beginTableRow
+beginTableCell [[style]=[width: 01%; color: one]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 01%; color: one]]
+beginTableCell [[style]=[width: 03%; color: three]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 03%; color: three]]
+beginTableCell [[style]=[width: 06%; color: six]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 06%; color: six]]
+beginTableCell [[style]=[width: 07%; color: seven]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 07%; color: seven]]
+beginTableCell [[style]=[width: 08%; color: height]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 08%; color: height]]
+beginTableCell [[style]=[width: 09%; color: nine]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 09%; color: nine]]
+beginTableCell [[style]=[width: 10%; color: ten]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 10%; color: ten]]
+beginTableCell [[style]=[width: 11%; color: eleven]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 11%; color: eleven]]
+beginTableCell [[style]=[width: 12%; color: twelve]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 12%; color: twelve]]
+beginTableCell [[style]=[width: 13%; color: thirteen]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 13%; color: thirteen]]
+beginTableCell [[style]=[width: 14%; color: fourteen]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 14%; color: fourteen]]
+endTableRow
+beginTableRow
+beginTableCell [[style]=[width: 01%; color: one]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 01%; color: one]]
+beginTableCell [[style]=[width: 03%; color: three]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 03%; color: three]]
+beginTableCell [[style]=[width: 04%; color: four]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 04%; color: four]]
+beginTableCell [[style]=[width: 05%; color: five]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 05%; color: five]]
+beginTableCell [[style]=[width: 06%; color: six]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 06%; color: six]]
+beginTableCell [[style]=[width: 07%; color: seven]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 07%; color: seven]]
+beginTableCell [[style]=[width: 08%; color: height]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 08%; color: height]]
+beginTableCell [[style]=[width: 09%; color: nine]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 09%; color: nine]]
+beginTableCell [[style]=[width: 10%; color: ten]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 10%; color: ten]]
+beginTableCell [[style]=[width: 11%; color: eleven]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 11%; color: eleven]]
+beginTableCell [[style]=[width: 12%; color: twelve]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 12%; color: twelve]]
+endTableRow
+beginTableRow
+beginTableCell [[style]=[width: 01%; color: one]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 01%; color: one]]
+beginTableCell [[style]=[width: 03%; color: three]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 03%; color: three]]
+beginTableCell [[style]=[width: 04%; color: four]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 04%; color: four]]
+beginTableCell [[colspan]=[0][style]=[color: five]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[colspan]=[0][style]=[color: five]]
+endTableRow
+beginTableRow
+beginTableCell [[style]=[width: 01%; color: one]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 01%; color: one]]
+beginTableCell [[style]=[width: 03%; color: three]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 03%; color: three]]
+beginTableCell [[style]=[width: 04%; color: four]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 04%; color: four]]
+beginTableCell [[style]=[width: 05%; color: five]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 05%; color: five]]
+beginTableCell [[style]=[width: 06%; color: six]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 06%; color: six]]
+beginTableCell [[style]=[width: 07%; color: seven]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 07%; color: seven]]
+beginTableCell [[style]=[width: 08%; color: height]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 08%; color: height]]
+beginTableCell [[style]=[width: 09%; color: nine]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 09%; color: nine]]
+beginTableCell [[style]=[width: 10%; color: ten]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 10%; color: ten]]
+beginTableCell [[style]=[width: 11%; color: eleven]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 11%; color: eleven]]
+beginTableCell [[style]=[width: 12%; color: twelve]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 12%; color: twelve]]
+beginTableCell [[style]=[width: 13%; color: thirteen]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 13%; color: thirteen]]
+beginTableCell [[style]=[width: 14%; color: fourteen]]
+beginGroup
+beginParagraph
+onWord [Cell]
+endParagraph
+endGroup
+endTableCell [[style]=[width: 14%; color: fourteen]]
+endTableRow
+endTable [[class]=[relative-table wrapped][style]=[width: 94.1904%;]]
+endDocument
+.#-----------------------------------------------------

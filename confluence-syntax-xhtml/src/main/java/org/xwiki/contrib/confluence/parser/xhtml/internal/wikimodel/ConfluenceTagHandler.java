@@ -37,6 +37,12 @@ public interface ConfluenceTagHandler
      * Stack parameter key used in tables, so styles from colgroup / col tags can be propagated to the cells.
      */
     String CONFLUENCE_TABLE_COLUMN_ATTRIBUTES = "confluence-table-column-attributes";
+
+    /**
+     * Stack parameter key used in tables to keep track of row-spanning cells.
+     */
+    String CONFLUENCE_TABLE_ROWSPANS = "confluence-table-rowspans";
+
     /**
      * Stack parameter key used in table rows, to know which is the current column when handling a td or th element.
      */

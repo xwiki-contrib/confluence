@@ -19,10 +19,13 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
+import java.util.List;
+
 import org.xwiki.rendering.wikimodel.xhtml.handler.TableRowTagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 import static org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceTagHandler.CONFLUENCE_TABLE_CURRENT_COL;
+import static org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceTagHandler.CONFLUENCE_TABLE_ROWSPANS;
 
 /**
  * Table row tag handler.
@@ -42,8 +45,40 @@ public class ConfluenceTableRowTagHandler extends TableRowTagHandler
     @Override
     protected void begin(TagContext context)
     {
-        context.getTagStack().pushStackParameter(CONFLUENCE_TABLE_CURRENT_COL, 0);
+        context.getTagStack().pushStackParameter(CONFLUENCE_TABLE_CURRENT_COL, -1);
+        updateRowspans(context);
         super.begin(context);
+    }
+
+    private static void updateRowspans(TagContext context)
+    {
+        // For rowspan values we have, we decrement all values that are not already 0.
+        // negative values mean the affected columns are taken by some previous row spanning cell for the whole
+        // table (rowspan = 0).
+        List<Integer> rowspans = (List<Integer>) context.getTagStack().getStackParameter(CONFLUENCE_TABLE_ROWSPANS);
+        if (rowspans == null) {
+            return;
+        }
+
+        boolean allZeros = true;
+        boolean updated = false;
+        int length = rowspans.size();
+        for (int i = 0; i < length; i++) {
+            int val = rowspans.get(i);
+            if (val > 0) {
+                val--;
+                rowspans.set(i, val);
+                updated = true;
+            }
+
+            if (val != 0) {
+                allZeros = false;
+            }
+        }
+
+        if (updated) {
+            context.getTagStack().setStackParameter(CONFLUENCE_TABLE_ROWSPANS, allZeros ? null : rowspans);
+        }
     }
 
     @Override

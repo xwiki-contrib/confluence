@@ -26,6 +26,7 @@ import org.xwiki.rendering.wikimodel.xhtml.handler.TableTagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 import static org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceTagHandler.CONFLUENCE_TABLE_COLUMN_ATTRIBUTES;
+import static org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceTagHandler.CONFLUENCE_TABLE_ROWSPANS;
 
 /**
  * Table tag handler.
@@ -45,6 +46,7 @@ public class ConfluenceTableTagHandler extends TableTagHandler
     @Override
     protected void begin(TagContext context)
     {
+        context.getTagStack().pushStackParameter(CONFLUENCE_TABLE_ROWSPANS, null);
         context.getTagStack().pushStackParameter(CONFLUENCE_TABLE_COLUMN_ATTRIBUTES,
             new ArrayList<Map<String, String>>());
         super.begin(context);
@@ -54,6 +56,7 @@ public class ConfluenceTableTagHandler extends TableTagHandler
     protected void end(TagContext context)
     {
         context.getTagStack().popStackParameter(CONFLUENCE_TABLE_COLUMN_ATTRIBUTES);
+        context.getTagStack().popStackParameter(CONFLUENCE_TABLE_ROWSPANS);
         super.end(context);
     }
 }
