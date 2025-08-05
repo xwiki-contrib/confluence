@@ -36,7 +36,7 @@
   <properties>
     <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
     <xwiki.issueManagement.jira.id>CONFLUENCE</xwiki.issueManagement.jira.id>
-    <urlmapping.version>0.0.5</urlmapping.version>
+    <urlmapping.version>0.0.6</urlmapping.version>
   </properties>
   <scm>
     <connection>scm:git:git://github.com/xwiki-contrib/confluence.git</connection>
