@@ -135,6 +135,24 @@ project starts 2022-06-01
               </entry>
             </parameters>
           </p>
+          <wikiObject name="XWiki.XWikiComments">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.XWikiComments</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="author" value="XWiki.ff808181987fb1e501987fbd9ba50000"/>
+            <wikiObjectProperty name="comment" value="hello"/>
+            <wikiObjectProperty name="date">
+              <p>
+                <value t="java.util.Date">2025-08-06 14:23:40.557 UTC</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="replyto"/>
+          </wikiObject>
         </wikiDocumentRevision>
       </wikiDocumentLocale>
     </wikiDocument>

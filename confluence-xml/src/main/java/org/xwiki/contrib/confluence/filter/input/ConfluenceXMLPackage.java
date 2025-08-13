@@ -664,6 +664,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private static final String FOLDER_OBJECTS = "objects";
 
+    private static final String FOLDER_BODY_CONTENTS = "bodies";
+
     private static final String FOLDER_SPACE_PAGE_TEMPLATE = "template";
 
     private static final String FOLDER_SPACE_PERMISSIONS = KEY_SPACE_PERMISSIONS;
@@ -681,6 +683,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private static final String OBJECT_TYPE_BLOG_POST = "BlogPost";
 
     private static final String OBJECT_TYPE_COMMENT = "Comment";
+
+    private static final String OBJECT_TYPE_CONTENT_ENTITY_OBJECT = "ContentEntityObject";
 
     private static final String OBJECT_TYPE_CONTENT_PERMISSION_SET = "ContentPermissionSet";
 
@@ -713,6 +717,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
         OBJECT_TYPE_BLOG_POST,
         OBJECT_TYPE_BODY_CONTENT,
         OBJECT_TYPE_COMMENT,
+        OBJECT_TYPE_CONTENT_ENTITY_OBJECT,
         OBJECT_TYPE_CONTENT_PERMISSION,
         OBJECT_TYPE_CONTENT_PERMISSION_SET,
         OBJECT_TYPE_CONTENT_PROPERTY,
@@ -1608,7 +1613,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     {
         ConfluenceProperties properties = new ConfluenceProperties();
         long id = readObjectProperties(xmlReader, properties);
-        saveObjectProperties(properties, id);
+        saveObjectProperties(properties, Long.toString(id));
     }
 
     private long readObjectProperties(XMLStreamReader xmlReader, ConfluenceProperties properties)
@@ -1680,7 +1685,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         long commentId = readObjectProperties(xmlReader, properties);
 
-        saveObjectProperties(properties, commentId);
+        saveObjectProperties(properties, Long.toString(commentId));
 
         saveInParent(properties, KEY_COMMENT_CONTAINERCONTENT, OBJECT_TYPE_PAGE, KEY_PAGE_COMMENTS, commentId);
     }
@@ -1707,7 +1712,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
         }
     }
 
-    private ConfluenceProperties getParentObjectByType(String type, Long id) throws ConfigurationException
+    private ConfluenceProperties getParentObjectByType(String type, long id) throws ConfigurationException
     {
         ConfluenceProperties properties = null;
 
@@ -1718,6 +1723,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
             case OBJECT_TYPE_SPACE_DESCRIPTION:
                 properties = getSpaceDescriptorProperties(id, true);
                 break;
+            case OBJECT_TYPE_CONTENT_ENTITY_OBJECT:
+                // Apparently, some Confluence versions don't specify the actual, concrete type of objects (anymore?)
+                // in the BodyContent's content property, and gives "ContentEntityObject" instead. This is not very
+                // convenient.
+                properties = getContentEntityPropertiesForBodyContent(id);
+                break;
             case OBJECT_TYPE_PAGE:
             case OBJECT_TYPE_BLOG_POST:
                 properties = getPageProperties(id, true);
@@ -1726,7 +1737,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 properties = getContentPermissionSetProperties(id);
                 break;
             case OBJECT_TYPE_COMMENT:
-                properties = getObjectProperties(FOLDER_OBJECTS, id.toString(), true);
+                properties = getCommentProperties(id, true);
                 break;
             case OBJECT_TYPE_PAGE_TEMPLATE:
                 properties = getSpacePageTemplateProperties(id, false);
@@ -1735,6 +1746,46 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 logger.error(
                     "Unexpected type [{}] for parent object id [{}]. This is a bug in confluence-xml, please report.",
                     type, id);
+        }
+
+        return properties;
+    }
+
+    private ConfluenceProperties getCommentProperties(long id, boolean create) throws ConfigurationException
+    {
+        return getObjectProperties(FOLDER_OBJECTS, Long.toString(id), create);
+    }
+
+    private ConfluenceProperties getBodyContentProperties(String objectId, boolean create) throws ConfigurationException
+    {
+        return getObjectProperties(FOLDER_BODY_CONTENTS, objectId, create);
+    }
+
+    /**
+     * @return properties in which to store the body content of an object. Preferably, we want to store the body in
+     * the object properties itself, if possible. If not (because we have not parsed it yet, we will store body content
+     * properties in a dedicated properties object.
+     * @param id the id of which the body content will be filled
+     * @throws ConfigurationException if something wrong happens
+     */
+    private ConfluenceProperties getContentEntityPropertiesForBodyContent(long id) throws ConfigurationException
+    {
+        ConfluenceProperties properties = getPageProperties(id, false);
+
+        if (properties == null) {
+            properties = getSpaceDescriptorProperties(id, false);
+        }
+
+        if (properties == null) {
+            properties = getCommentProperties(id, false);
+        }
+
+        if (properties == null) {
+            properties = getSpacePageTemplateProperties(id, false);
+        }
+
+        if (properties == null) {
+            properties = getBodyContentProperties(Long.toString(id), true);
         }
 
         return properties;
@@ -2091,7 +2142,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
             }
         }
 
-        saveObjectProperties(properties, labellingId);
+        saveObjectProperties(properties, Long.toString(labellingId));
     }
 
     private void readInternalUserObject(XMLStreamReader xmlReader)
@@ -2101,7 +2152,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         long pageId = readObjectProperties(xmlReader, properties);
 
-        saveObjectProperties(FOLDER_INTERNALUSER, properties, pageId);
+        saveObjectProperties(FOLDER_INTERNALUSER, properties, Long.toString(pageId));
     }
 
     private void readUserImplObject(XMLStreamReader xmlReader)
@@ -2121,7 +2172,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         long pageId = readObjectProperties(xmlReader, properties);
 
-        saveObjectProperties(FOLDER_GROUP, properties, pageId);
+        saveObjectProperties(FOLDER_GROUP, properties, Long.toString(pageId));
     }
 
     private void readMembershipObject(XMLStreamReader xmlReader)
@@ -2154,7 +2205,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 groupProperties.setProperty(KEY_GROUP_MEMBERGROUPS, groups);
             }
 
-            saveObjectProperties(FOLDER_GROUP, groupProperties, parentGroup);
+            saveObjectProperties(FOLDER_GROUP, groupProperties, Long.toString(parentGroup));
         }
     }
 
@@ -2291,7 +2342,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private File getObjectsFolder(String folderName)
     {
-        return new File(this.tree, folderName);
+        return new File(this.tree, escapeWindowsFolderName(folderName));
+    }
+
+    private File getObjectFolder(File folder, String objectId)
+    {
+        return new File(folder, escapeWindowsFolderName(objectId));
     }
 
     private File getInternalUserFolder()
@@ -2324,11 +2380,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return new File(getObjectsFolder(folderName), escapeWindowsFolderName(objectId));
     }
 
-    private File getObjectFolder(File folder, String objectId)
-    {
-        return new File(folder, escapeWindowsFolderName(objectId));
-    }
-
     private File getSpaceDescriptorPropertiesFile(long spaceDescriptorId)
     {
         File folder = getSpaceDescriptorFolder(spaceDescriptorId);
@@ -2343,16 +2394,16 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return new File(folder, PROPERTIES_FILENAME);
     }
 
+    private File getObjectPropertiesFile(File folder, String propertyId)
+    {
+        return new File(getObjectFolder(folder, propertyId), PROPERTIES_FILENAME);
+    }
+
     private File getObjectPropertiesFile(String folderName, String propertyId)
     {
         File folder = getObjectFolder(folderName, propertyId);
 
         return new File(folder, PROPERTIES_FILENAME);
-    }
-
-    private File getObjectPropertiesFile(File folder, String propertyId)
-    {
-        return new File(getObjectFolder(folder, propertyId), PROPERTIES_FILENAME);
     }
 
     /**
@@ -2474,7 +2525,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     {
         File file = getSpaceDescriptorPropertiesFile(spaceDescriptorId);
 
-        return create || file.exists() ? ConfluenceProperties.create(file) : null;
+        return getObjectProperties(Long.toString(spaceDescriptorId), file, create);
     }
 
     /**
@@ -2486,17 +2537,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public ConfluenceProperties getPageProperties(long pageId, boolean create) throws ConfigurationException
     {
         File file = getPagePropertiesFile(pageId);
-
-        if (create) {
-            return ConfluenceProperties.create(file);
-        }
-
-        if (!file.exists()) {
-            return null;
-        }
-
-        ConfluenceProperties props = ConfluenceProperties.create(file);
-        if (props.getLong(ConfluenceXMLPackage.KEY_ID, null) == null) {
+        ConfluenceProperties props = getObjectProperties(Long.toString(pageId), file, create);
+        if (!create && (props == null || props.getLong(ConfluenceXMLPackage.KEY_ID, null) == null)) {
             // Null ID can happen when the home page is missing. ConfluenceXMLPackage has set the homePage property
             // when parsing the space, but the page id and any other property is missing. This means the page
             // isn't actually there and we should not return it
@@ -2544,22 +2586,24 @@ public class ConfluenceXMLPackage implements AutoCloseable
             return null;
         }
 
-        return getObjectProperties(getObjectPropertiesFile(folder, objectId), create);
+        return getObjectProperties(objectId, getObjectPropertiesFile(folder, objectId), create);
     }
 
-    private ConfluenceProperties getObjectProperties(File folder, String objectId)
-        throws ConfigurationException
+    private ConfluenceProperties getObjectProperties(String objectId, File propertiesFile, boolean create)
+            throws ConfigurationException
     {
-        if (objectId == null) {
-            return null;
+        ConfluenceProperties confluenceProperties =
+            (create || propertiesFile.exists()) ? ConfluenceProperties.create(propertiesFile) : null;
+        if (confluenceProperties != null) {
+            String body = confluenceProperties.getString(KEY_PAGE_BODY);
+            if (StringUtils.isEmpty(body)) {
+                ConfluenceProperties bodyContentProperties = getBodyContentProperties(objectId, false);
+                if (bodyContentProperties != null) {
+                    confluenceProperties.copy(bodyContentProperties);
+                }
+            }
         }
-
-        return getObjectProperties(getObjectPropertiesFile(folder, objectId), false);
-    }
-
-    private ConfluenceProperties getObjectProperties(File propertiesFile, boolean create) throws ConfigurationException
-    {
-        return (create || propertiesFile.exists()) ? ConfluenceProperties.create(propertiesFile) : null;
+        return confluenceProperties;
     }
 
     /**
@@ -2642,19 +2686,14 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return null;
     }
 
-    private ConfluenceProperties getConfluenceProperties(String id) throws ConfigurationException
+    private ConfluenceProperties getConfluenceProperties(String objectId) throws ConfigurationException
     {
-        File objectFolder = findObjectFolder(id);
+        File objectFolder = findObjectFolder(this.tree, objectId);
         if (objectFolder == null) {
             return null;
         }
 
-        return getObjectProperties(objectFolder, id);
-    }
-
-    private File findObjectFolder(String id)
-    {
-        return findObjectFolder(this.tree, id);
+        return getObjectProperties(objectId, getObjectPropertiesFile(objectFolder, objectId), false);
     }
 
     /**
@@ -2834,7 +2873,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     {
         File file = getSpacePageTemplatePropertiesFile(templateId);
 
-        return (create || file.exists()) ? ConfluenceProperties.create(file) : null;
+        return getObjectProperties(Long.toString(templateId), file, create);
     }
 
     /**
@@ -2911,19 +2950,9 @@ public class ConfluenceXMLPackage implements AutoCloseable
         fileProperties.save();
     }
 
-    private void saveObjectProperties(ConfluenceProperties properties, long objectId) throws ConfigurationException
+    private void saveObjectProperties(ConfluenceProperties properties, String objectId) throws ConfigurationException
     {
         saveObjectProperties(FOLDER_OBJECTS, properties, objectId);
-    }
-
-    private void saveObjectProperties(String folder, ConfluenceProperties properties, long objectId)
-        throws ConfigurationException
-    {
-        ConfluenceProperties fileProperties = getObjectProperties(folder, objectId);
-
-        fileProperties.copy(properties);
-
-        fileProperties.save();
     }
 
     private void saveObjectProperties(String folder, ConfluenceProperties properties, String objectKey)
