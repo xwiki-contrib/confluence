@@ -1404,7 +1404,7 @@ PDF macro
 
 {{attachments/}}
 
-{{popular-labels/}}
+{{tagcloud/}}
 
 {{profile-picture User="admin"/}}
 
@@ -1713,7 +1713,7 @@ PDF macro
 
 {{attachments/}}
 
-{{popular-labels/}}
+{{tagcloud/}}
 
 {{profile-picture User="admin"/}}
 
@@ -2022,7 +2022,7 @@ PDF macro
 
 {{attachments/}}
 
-{{popular-labels/}}
+{{tagcloud/}}
 
 {{profile-picture User="admin"/}}
 
@@ -2331,7 +2331,7 @@ PDF macro
 
 {{attachments/}}
 
-{{popular-labels/}}
+{{tagcloud/}}
 
 {{profile-picture User="admin"/}}
 
@@ -2640,7 +2640,7 @@ PDF macro
 
 {{attachments/}}
 
-{{popular-labels/}}
+{{tagcloud/}}
 
 {{profile-picture User="admin"/}}
 
@@ -2949,7 +2949,7 @@ PDF macro
 
 {{attachments/}}
 
-{{popular-labels/}}
+{{tagcloud/}}
 
 {{profile-picture User="admin"/}}
 

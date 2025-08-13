@@ -49,11 +49,9 @@ public class PopularLabelsMacroConverter extends AbstractMacroConverter
         String content)
     {
         String spaceKey = confluenceParameters.get("spaceKey");
-        if (StringUtils.isEmpty(spaceKey)) {
-            throw new RuntimeException("the spaceKey is missing or empty, we don't know how to convert this");
-        }
-
-        return Map.of("space", spaceKey);
+        return StringUtils.isEmpty(spaceKey)
+            ? Map.of()
+            : Map.of("space", spaceKey);
     }
 
     @Override
