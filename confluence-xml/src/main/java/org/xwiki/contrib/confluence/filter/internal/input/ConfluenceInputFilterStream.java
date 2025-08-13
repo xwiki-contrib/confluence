@@ -2812,7 +2812,7 @@ public class ConfluenceInputFilterStream
     }
 
     private void sendFavorites(ConfluenceFilter proxyFilter, ConfluenceProperties pageProperties,
-        Collection<ConfluenceProperties> favorites) throws FilterException
+        Collection<ConfluenceProperties> favorites)
     {
         for (ConfluenceProperties favorite : favorites) {
             String userName = getFavoriteUser(favorite);
@@ -2826,7 +2826,12 @@ public class ConfluenceInputFilterStream
                     logger.error("Could not get an XWiki reference for the owner of the favourite [{}] on page [{}]",
                         userName, createPageIdentifier(pageProperties));
                 }
-                proxyFilter.onUserFavorite(userRef, FilterEventParameters.EMPTY);
+                try {
+                    proxyFilter.onUserFavorite(userRef, FilterEventParameters.EMPTY);
+                } catch (FilterException e) {
+                    logger.error("Failed to send favorite for user [{}] on document [{}]", userRef,
+                        createPageIdentifier(pageProperties));
+                }
             }
         }
     }
