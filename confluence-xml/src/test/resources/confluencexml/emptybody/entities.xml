@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<hibernate-generic datetime="2025-04-22 15:59:07">
+    <object class="Page" package="com.atlassian.confluence.pages">
+        <id name="id">463168605</id>
+        <property name="hibernateVersion">25</property>
+        <property name="title">Empty body</property>
+        <property name="lowerTitle">empty body</property>
+        <property name="version">7</property>
+        <property name="creationDate">2023-05-14 13:30:42.247</property>
+        <property name="lastModificationDate">2023-06-28 02:05:24.230</property>
+        <property name="versionComment"/>
+        <property name="contentStatus">current</property>
+        <property name="position">4</property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key">2c9889aa637e9b11016469a29aef4e5d</id>
+        </property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key">2c9889aa637e9b11016469a29aef4e5d</id>
+        </property>
+        <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+            <id name="id">296026119</id>
+        </property>
+        <property name="parent" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">424775527</id>
+        </property>
+    </object>
+    <object class="Space" package="com.atlassian.confluence.spaces">
+        <id name="id">296026119</id>
+        <property name="name">Misc</property>
+        <property name="key">MISC</property>
+        <property name="lowerKey">misc</property>
+        <property name="creationDate">2018-08-06 08:08:34.820</property>
+        <property name="lastModificationDate">2018-08-06 08:08:34.820</property>
+        <property name="spaceType">global</property>
+        <property name="spaceStatus" enum-class="SpaceStatus" package="com.atlassian.confluence.spaces">CURRENT</property>
+        <property name="description" class="SpaceDescription" package="com.atlassian.confluence.spaces">
+            <id name="id">295744487</id>
+        </property>
+        <property name="homePage" class="Page" package="com.atlassian.confluence.pages">
+            <id name="id">295744488</id>
+        </property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key">2c98884858d9cb680159de3c83404974</id>
+        </property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+            <id name="key">2c98884858d9cb680159de3c83404974</id>
+        </property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">461143607</id>
+        <property name="bodyType">2</property>
+        <property name="content" class="ContentEntityObject" package="com.atlassian.confluence.core">
+            <id name="id">463168605</id>
+        </property>
+    </object>
+    <object class="BodyContent" package="com.atlassian.confluence.core">
+        <id name="id">1212429</id>
+        <property name="bodyType">2</property>
+        <property name="content" class="ContentEntityObject" package="com.atlassian.confluence.core"><id name="id">851987</id></property>
+    </object>
+
+    <object class="Comment" package="com.atlassian.confluence.pages">
+        <id name="id">851987</id>
+        <property name="hibernateVersion">2</property>
+        <property name="version">1</property>
+        <property name="creationDate">2025-08-06 14:23:40.557</property>
+        <property name="lastModificationDate">2025-08-06 14:23:40.557</property>
+        <property name="versionComment"></property>
+        <property name="contentStatus">current</property>
+        <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">ff808181987fb1e501987fbd9ba50000</id></property>
+        <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key">ff808181987fb1e501987fbd9ba50000</id></property>
+        <property name="containerContent" class="ContentEntityObject" package="com.atlassian.confluence.core"><id name="id">463168605</id></property>
+    </object>
+</hibernate-generic>

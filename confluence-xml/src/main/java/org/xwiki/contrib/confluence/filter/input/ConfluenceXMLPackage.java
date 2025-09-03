@@ -1758,7 +1758,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private ConfluenceProperties getBodyContentProperties(String objectId, boolean create) throws ConfigurationException
     {
-        return getObjectProperties(FOLDER_BODY_CONTENTS, objectId, create);
+        return getObjectProperties(FOLDER_BODY_CONTENTS, objectId, create, false);
     }
 
     /**
@@ -2525,7 +2525,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     {
         File file = getSpaceDescriptorPropertiesFile(spaceDescriptorId);
 
-        return getObjectProperties(Long.toString(spaceDescriptorId), file, create);
+        return getObjectProperties(Long.toString(spaceDescriptorId), file, create, true);
     }
 
     /**
@@ -2537,7 +2537,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public ConfluenceProperties getPageProperties(long pageId, boolean create) throws ConfigurationException
     {
         File file = getPagePropertiesFile(pageId);
-        ConfluenceProperties props = getObjectProperties(Long.toString(pageId), file, create);
+        ConfluenceProperties props = getObjectProperties(Long.toString(pageId), file, create, true);
         if (!create && (props == null || props.getLong(ConfluenceXMLPackage.KEY_ID, null) == null)) {
             // Null ID can happen when the home page is missing. ConfluenceXMLPackage has set the homePage property
             // when parsing the space, but the page id and any other property is missing. This means the page
@@ -2582,21 +2582,27 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public ConfluenceProperties getObjectProperties(String folder, String objectId, boolean create)
         throws ConfigurationException
     {
+        return getObjectProperties(folder, objectId, create, true);
+    }
+
+    private ConfluenceProperties getObjectProperties(String folder, String objectId, boolean create,
+        boolean lookForBody) throws ConfigurationException
+    {
         if (objectId == null) {
             return null;
         }
 
-        return getObjectProperties(objectId, getObjectPropertiesFile(folder, objectId), create);
+        return getObjectProperties(objectId, getObjectPropertiesFile(folder, objectId), create, lookForBody);
     }
 
-    private ConfluenceProperties getObjectProperties(String objectId, File propertiesFile, boolean create)
-            throws ConfigurationException
+    private ConfluenceProperties getObjectProperties(String objectId, File propertiesFile, boolean create,
+        boolean lookForBody) throws ConfigurationException
     {
         ConfluenceProperties confluenceProperties =
             (create || propertiesFile.exists()) ? ConfluenceProperties.create(propertiesFile) : null;
-        if (confluenceProperties != null) {
+        if (confluenceProperties != null && lookForBody) {
             String body = confluenceProperties.getString(KEY_PAGE_BODY);
-            if (StringUtils.isEmpty(body)) {
+            if (body == null) {
                 ConfluenceProperties bodyContentProperties = getBodyContentProperties(objectId, false);
                 if (bodyContentProperties != null) {
                     confluenceProperties.copy(bodyContentProperties);
@@ -2693,7 +2699,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
             return null;
         }
 
-        return getObjectProperties(objectId, getObjectPropertiesFile(objectFolder, objectId), false);
+        return getObjectProperties(objectId, getObjectPropertiesFile(objectFolder, objectId), false, true);
     }
 
     /**
@@ -2873,7 +2879,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     {
         File file = getSpacePageTemplatePropertiesFile(templateId);
 
-        return getObjectProperties(Long.toString(templateId), file, create);
+        return getObjectProperties(Long.toString(templateId), file, create, true);
     }
 
     /**
