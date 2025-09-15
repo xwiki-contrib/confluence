@@ -25,6 +25,57 @@
 <property name="parent" class="Page" package="com.atlassian.confluence.pages"><id name="id">795411610</id>
 </property>
 </object>
+<object class="Page" package="com.atlassian.confluence.pages">
+  <id name="id">796196870</id>
+  <property name="hibernateVersion">9</property>
+  <property name="title"><![CDATA[Page deleted]]></property>
+  <property name="lowerTitle"><![CDATA[page deleted]]></property>
+  <collection name="bodyContents" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.bodyContents)"><element class="BodyContent" package="com.atlassian.confluence.core"><id name="id">795967500</id>
+  </element>
+  </collection>
+  <collection name="adfContentBodies" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.adfContentBodies)"></collection>
+  <property name="version">1</property>
+  <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+  </property>
+  <property name="creationDate">2024-07-23 11:57:30.705</property>
+  <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+  </property>
+  <property name="lastModificationDate">2024-07-23 11:58:05.654</property>
+  <property name="versionComment"><![CDATA[]]></property>
+  <property name="contentStatus"><![CDATA[deleted]]></property>
+  <property name="navigationType">1</property>
+  <property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">795410438</id>
+  </property>
+  <property name="position">1730</property>
+  <property name="parent" class="Page" package="com.atlassian.confluence.pages"><id name="id">795411610</id>
+  </property>
+</object>
+<object class="Page" package="com.atlassian.confluence.pages">
+  <id name="id">796196875</id>
+  <property name="hibernateVersion">9</property>
+  <property name="title"><![CDATA[Page draft]]></property>
+  <property name="lowerTitle"><![CDATA[page draft]]></property>
+  <collection name="bodyContents"
+    class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.bodyContents)"><element class="BodyContent" package="com.atlassian.confluence.core"><id name="id">795967501</id>
+  </element>
+  </collection>
+  <collection name="adfContentBodies" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.adfContentBodies)"></collection>
+  <property name="version">1</property>
+  <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+  </property>
+  <property name="creationDate">2024-07-23 11:57:30.705</property>
+  <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[8a7f80897523097801753189db971e45]]></id>
+  </property>
+  <property name="lastModificationDate">2024-07-23 11:58:05.654</property>
+  <property name="versionComment"><![CDATA[]]></property>
+  <property name="contentStatus"><![CDATA[draft]]></property>
+  <property name="navigationType">1</property>
+  <property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">795410438</id>
+  </property>
+  <property name="position">1735</property>
+  <property name="parent" class="Page" package="com.atlassian.confluence.pages"><id name="id">795411610</id>
+  </property>
+</object>
 <object class="Notification" package="com.atlassian.confluence.mail.notification">
 <id name="id">795411615</id>
 <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">795411610</id>
@@ -470,6 +521,20 @@
 <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">796196865</id>
 </property>
 <property name="bodyType">2</property>
+</object>
+<object class="BodyContent" package="com.atlassian.confluence.core">
+  <id name="id">795967500</id>
+  <property name="body"><![CDATA[<p>hello deleted</p>]]></property>
+  <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">796196870</id>
+  </property>
+  <property name="bodyType">2</property>
+</object>
+<object class="BodyContent" package="com.atlassian.confluence.core">
+  <id name="id">795967501</id>
+  <property name="body"><![CDATA[<p>hello draft</p>]]></property>
+  <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">796196875</id>
+  </property>
+  <property name="bodyType">2</property>
 </object>
 <object class="BodyContent" package="com.atlassian.confluence.core">
 <id name="id">795803664</id>
