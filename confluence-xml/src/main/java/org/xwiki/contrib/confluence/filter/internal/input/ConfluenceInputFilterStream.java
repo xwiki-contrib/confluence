@@ -239,6 +239,8 @@ public class ConfluenceInputFilterStream
         private static final long serialVersionUID = 1L;
     }
 
+    private Map<String, String> renamedSpaces;
+
     private static final class AttachmentInfo
     {
         private final long attachmentId;
@@ -369,6 +371,8 @@ public class ConfluenceInputFilterStream
 
         Collection<Long> disabledSpaces = filteringEvent.getDisabledSpaces();
 
+        this.renamedSpaces = filteringEvent.getRenamedSpaces();
+
         Collection<Long> users = this.properties.isUsersEnabled()
             ? this.confluencePackage.getInternalUsers()
             : Collections.emptyList();
@@ -440,6 +444,7 @@ public class ConfluenceInputFilterStream
 
         ConfluenceFilteringEvent filteringEvent = new ConfluenceFilteringEvent();
         maybeRemoveArchivedSpaces(filteringEvent);
+        renameSpaces(filteringEvent);
         this.observationManager.notify(filteringEvent, this, this.confluencePackage);
         if (filteringEvent.isCanceled()) {
             closeConfluencePackage();
@@ -637,10 +642,9 @@ public class ConfluenceInputFilterStream
             this.logger.info("Sending Confluence space [{}], id=[{}]", spaceKey, spaceId);
         }
 
-        if (shouldSpaceBeRenamed(spaceKey))
+        if (this.renamedSpaces != null && this.renamedSpaces.containsKey(spaceKey))
         {
-            spaceKey = confluenceConverter.convertSpaceKey(spaceKey, this.properties.getSpaceRenamingFormat());
-
+            spaceKey = this.renamedSpaces.get(spaceKey);
         }
 
         sendSpace(spaceId, filter, proxyFilter, blogPages, spaceKey, spaceProperties);
@@ -704,6 +708,19 @@ public class ConfluenceInputFilterStream
             proxyFilter.endWikiSpace(spaceEntityName, FilterEventParameters.EMPTY);
             if (this.properties.isVerbose()) {
                 this.logger.info("Finished sending Confluence space [{}], id=[{}]", spaceKey, spaceId);
+            }
+        }
+    }
+
+    private void renameSpaces(ConfluenceFilteringEvent event)
+    {
+        for (String spaceKey : confluencePackage.getSpaceKeys(false)) {
+            if (shouldSpaceBeRenamed(spaceKey)) {
+                String convertedSpaceKey = confluenceConverter
+                    .convertSpaceKey(spaceKey,
+                        this.properties.getSpaceRenamingFormat()
+                    );
+                event.renameSpace(spaceKey, convertedSpaceKey);
             }
         }
     }

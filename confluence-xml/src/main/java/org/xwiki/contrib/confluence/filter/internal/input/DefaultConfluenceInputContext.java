@@ -124,7 +124,7 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
     {
         Set<String> forbiddenSpaces = this.properties.get().getForbiddenSpaces();
 
-        if (forbiddenSpaces.isEmpty()) {
+        if (forbiddenSpaces == null || forbiddenSpaces.isEmpty()) {
             return false;
         }
 

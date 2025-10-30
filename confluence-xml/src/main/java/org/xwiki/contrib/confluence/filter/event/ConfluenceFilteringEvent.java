@@ -23,7 +23,9 @@ import org.xwiki.observation.event.AbstractCancelableEvent;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 
 /**
  * Event emitted after the confluence package has been read and the filtering process starts.
@@ -40,6 +42,8 @@ public class ConfluenceFilteringEvent extends AbstractCancelableEvent
 {
     private Collection<Long> disabledSpaces;
 
+    private Map<String, String> renamedSpaces;
+
     /**
      * Don't import the given space.
      * @param spaceId the space to disable
@@ -54,11 +58,34 @@ public class ConfluenceFilteringEvent extends AbstractCancelableEvent
     }
 
     /**
+     * Rename an imported space.
+     * @param spaceKey the space to rename
+     * @param newSpaceKey the new space name
+     * @since 9.88.5
+     */
+    public void renameSpace(String spaceKey, String newSpaceKey)
+    {
+        if (renamedSpaces == null) {
+            renamedSpaces = new HashMap<>();
+        }
+        renamedSpaces.put(spaceKey, newSpaceKey);
+    }
+
+    /**
      * @return the disabled spaces
      * @since 9.35.0
      */
     public Collection<Long> getDisabledSpaces()
     {
         return disabledSpaces == null ? Collections.emptyList() : disabledSpaces;
+    }
+
+    /**
+     * @return the renamed spaces
+     * @since 9.88.5
+     */
+    public Map<String, String> getRenamedSpaces()
+    {
+        return renamedSpaces == null ? new HashMap<>() : renamedSpaces;
     }
 }
