@@ -27,8 +27,14 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
+import org.xwiki.model.EntityType;
+import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.EntityReference;
+import org.xwiki.model.reference.EntityReferenceResolver;
+import org.xwiki.model.reference.SpaceReference;
+import org.xwiki.model.reference.WikiReference;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -37,7 +43,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
+import com.xpn.xwiki.XWiki;
 import com.xpn.xwiki.XWikiContext;
+import com.xpn.xwiki.XWikiException;
+import com.xpn.xwiki.doc.XWikiDocument;
+import com.xpn.xwiki.objects.BaseObject;
 
 /**
  * Default implementation of {@link ConfluenceInputContext}.
@@ -70,6 +80,9 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
     @Inject
     private Provider<XWikiContext> contextProvider;
 
+    @Inject
+    private EntityReferenceResolver<String> entityReferenceResolver;
+
     /**
      * @param confluencePackage the Confluence input package
      * @param properties the Confluence input properties
@@ -99,6 +112,101 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
         currentPage.set(pageId);
         this.currentlyUsedLocales.set(new LinkedHashSet<>());
         this.currentLocale.set(defaultLocale.get());
+    }
+
+    /**
+     * Checks whether a given space is forbidden to be overwritten based on the configured forbidden spaces.
+     * @param spaceKey the space to check
+     * @return true if the specified space is listed among the forbidden spaces and cannot be overwritten
+     * @since 9.88.5
+     */
+    public boolean checkIfTheSpaceOverwriteIsForbidden(String spaceKey)
+    {
+        Set<String> forbiddenSpaces = this.properties.get().getForbiddenSpaces();
+
+        if (forbiddenSpaces.isEmpty()) {
+            return false;
+        }
+
+        EntityReference rootReference = this.properties.get().getRoot();
+
+        SpaceReference spaceReference = getRootWithWikiSpaceReference(rootReference, spaceKey);
+
+        for (String forbiddenSpace : forbiddenSpaces) {
+            EntityReference forbiddenRef =
+                entityReferenceResolver.resolve(forbiddenSpace, EntityType.SPACE);
+            if (forbiddenRef.equals(spaceReference)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param spaceKey the reference of a user, which can be either a username or a user key.
+     * @param checkIfConfluenceImported flag that specifies whether to check if another space imported from
+     *     Confluence already exists, or to simply search for any space.
+     * @return a user reference.
+     * @since 9.88.5
+     */
+    public boolean checkIfSpaceExists(String spaceKey, Boolean checkIfConfluenceImported)
+    {
+        String webHomeString = "WebHome";
+        XWikiContext xContext = contextProvider.get();
+
+        DocumentReference docRef;
+
+        EntityReference rootReference = this.properties.get().getRoot();
+
+        if (rootReference != null) {
+            SpaceReference rootSpaceReference = getRootWithWikiSpaceReference(rootReference, spaceKey);
+            docRef = new DocumentReference(webHomeString, rootSpaceReference);
+        } else {
+            docRef = new DocumentReference(xContext.getWikiId(), spaceKey, webHomeString);
+        }
+
+        try {
+            XWiki xWiki = xContext.getWiki();
+
+            XWikiDocument doc = xWiki.getDocument(docRef, xContext);
+
+            if (!xWiki.exists(docRef, xContext)) {
+                return false;
+            }
+
+            if (checkIfConfluenceImported) {
+                DocumentReference confluenceClassReference =
+                    new DocumentReference(docRef.getRoot().getName(), Arrays.asList("Confluence", "Code"),
+                        "ConfluencePageClass");
+                BaseObject obj = doc.getXObject(confluenceClassReference);
+                return obj != null;
+            }
+
+            return true;
+        } catch (XWikiException e) {
+            throw new RuntimeException("An exception occurred while checking if a space was already imported!");
+        }
+    }
+
+    private SpaceReference getRootWithWikiSpaceReference(EntityReference rootReference, String spaceKey)
+    {
+        XWikiContext xContext = contextProvider.get();
+        WikiReference wikiReference = new WikiReference(xContext.getWikiId());
+        if (rootReference == null) {
+            return new SpaceReference(spaceKey, wikiReference);
+        }
+
+        if (rootReference.getType().equals(EntityType.SPACE)) {
+            SpaceReference rootSpaceReference = new SpaceReference(rootReference,
+                rootReference.getParent() == null ? wikiReference
+                    :
+                    rootReference.getParent());
+            return new SpaceReference(spaceKey, rootSpaceReference);
+        } else {
+            WikiReference wikiRef = new WikiReference(rootReference.extractReference(EntityType.WIKI));
+            return new SpaceReference(spaceKey, wikiRef);
+        }
     }
 
     private void initializeDefaultLocale()

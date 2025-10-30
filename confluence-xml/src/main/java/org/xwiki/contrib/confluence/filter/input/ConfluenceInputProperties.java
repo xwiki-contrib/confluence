@@ -304,6 +304,21 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private boolean favoritesEnabled = true;
 
     /**
+     * @see #getForbiddenSpaces()
+     */
+    private Set<String> forbiddenSpaces;
+
+    /**
+     * @see #getSpaceRenamingFormat()
+     */
+    private String spaceRenamingFormat = "${spaceKey}_";
+
+    /**
+     * @see #getOverwriteProtectionMode()
+     */
+    private String overwriteProtectionMode = NONE;
+
+    /**
      * @return The source to load the wiki from
      */
     @PropertyName("The source")
@@ -1593,5 +1608,84 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     public void setFavoritesEnabled(boolean favoritesEnabled)
     {
         this.favoritesEnabled = favoritesEnabled;
+    }
+
+    /**
+     * @return a set of forbidden spaces that should not be overwritten during an import when a name conflict exists
+     *     between a Confluence space and an XWiki space
+     * @since 9.88.5
+     */
+    @PropertyName("Forbidden spaces")
+    @PropertyDescription(
+        "The list of spaces, separated by \",\", that should not be overwritten by a Confluence import if there is a "
+            + "conflict between a Confluence space name and an XWiki space name. The spaces name should contain the "
+            + "full path, including the wiki")
+    public Set<String> getForbiddenSpaces()
+    {
+        return forbiddenSpaces;
+    }
+
+    /**
+     * Sets the list of spaces that should not be overwritten during an import when a name conflict exists between a
+     * Confluence space and an XWiki space.
+     *
+     * @param forbiddenSpaces the set of forbidden spaces that should not be overwritten
+     * @since 9.88.5
+     */
+    public void setForbiddenSpaces(Set<String> forbiddenSpaces)
+    {
+        this.forbiddenSpaces = forbiddenSpaces;
+    }
+
+    /**
+     * @return the space renaming format to use for resolving name conflicts between spaces
+     * @since 9.88.5
+     */
+    @PropertyName("Space renaming format")
+    @PropertyDescription("The format to use when renaming a space in case of a space names conflict. String "
+        + "${spaceKey} will be replaced with the Confluence space name.")
+    public String getSpaceRenamingFormat()
+    {
+        return spaceRenamingFormat;
+    }
+
+    /**
+     * Sets the space renaming format to use for resolving name conflicts between spaces. The string "${spaceKey}" will
+     * be replaced with the Confluence space name.
+     *
+     * @param spaceRenamingFormat the space renaming format to apply in case of a space name conflict
+     * @since 9.88.5
+     */
+    public void setSpaceRenamingFormat(String spaceRenamingFormat)
+    {
+        this.spaceRenamingFormat = spaceRenamingFormat;
+    }
+
+    /**
+     * @return the Overwrite Protection Mode for the spaces that have a name conflict and are not present in the
+     *     Forbidden Spaces list
+     * @since 9.88.5
+     */
+    @PropertyName("Overwrite protection mode")
+    @PropertyDescription("The protection mode to use for the Confluence spaces that have a conflict with a XWiki "
+        + "space. The possible values for the protection mode are: NONE - If there is a conflict, no renaming will be"
+        + " applied; IMPORTED - if there is a conflict, only the spaces that have a name conflict with an already "
+        + "imported space will be renamed; ANY - if there is a conflict, all the spaces that have a name conflict "
+        + "will be renamed.")
+    public String getOverwriteProtectionMode()
+    {
+        return overwriteProtectionMode;
+    }
+
+    /**
+     * Sets the overwrite protection mode to use for spaces that have a name conflict and are not included in the
+     * Forbidden Spaces list.
+     *
+     * @param overwriteProtectionMode the overwrite protection mode to apply for conflicting spaces
+     * @since 9.88.5
+     */
+    public void setOverwriteProtectionMode(String overwriteProtectionMode)
+    {
+        this.overwriteProtectionMode = overwriteProtectionMode;
     }
 }

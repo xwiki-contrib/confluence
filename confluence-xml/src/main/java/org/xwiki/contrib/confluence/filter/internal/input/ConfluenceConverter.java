@@ -22,6 +22,7 @@ package org.xwiki.contrib.confluence.filter.internal.input;
 import com.xpn.xwiki.XWikiContext;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringSubstitutor;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
@@ -300,6 +301,17 @@ public class ConfluenceConverter implements ConfluenceReferenceConverter
         documentReference.setParameters(reference.getParameters());
 
         return documentReference;
+    }
+
+    /**
+     * @param spaceKey the reference of a Confluence space.
+     * @param spaceFormat  the format used to convert the spaceKey
+     * @return the converted spaceKey.
+     * @since 9.88.5
+     */
+    public String convertSpaceKey(String spaceKey, String spaceFormat)
+    {
+        return new StringSubstitutor(Map.of("spaceKey", spaceKey)).replace(spaceFormat);
     }
 
     String convertUserKeyToUserName(String userKey)

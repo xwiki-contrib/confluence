@@ -637,6 +637,12 @@ public class ConfluenceInputFilterStream
             this.logger.info("Sending Confluence space [{}], id=[{}]", spaceKey, spaceId);
         }
 
+        if (shouldSpaceBeRenamed(spaceKey))
+        {
+            spaceKey = confluenceConverter.convertSpaceKey(spaceKey, this.properties.getSpaceRenamingFormat());
+
+        }
+
         sendSpace(spaceId, filter, proxyFilter, blogPages, spaceKey, spaceProperties);
     }
 
@@ -3024,6 +3030,25 @@ public class ConfluenceInputFilterStream
             return this.confluencePackage.getContentProperties(properties, key);
         } catch (Exception e) {
             throw new FilterException("Failed to parse content properties", e);
+        }
+    }
+
+    private boolean shouldSpaceBeRenamed(String spaceKey)
+    {
+        String overwriteProtectionMode = this.properties.getOverwriteProtectionMode();
+
+        if (((DefaultConfluenceInputContext) this.context).checkIfTheSpaceOverwriteIsForbidden(spaceKey)) {
+            return true;
+        }
+
+        switch (overwriteProtectionMode) {
+            case "IMPORTED":
+                return ((DefaultConfluenceInputContext) this.context).checkIfSpaceExists(spaceKey, true);
+            case "ANY":
+                return ((DefaultConfluenceInputContext) this.context).checkIfSpaceExists(spaceKey, false);
+            case "NONE":
+            default:
+                return false;
         }
     }
 }
