@@ -1,108 +1,119 @@
 .#------------------------------------------------------------------------------
 .expect|filter+xml
 .#------------------------------------------------------------------------------
-<wikiSpace name="Annotation">
-  <wikiDocument name="WebHome">
-    <wikiDocumentLocale>
-      <p>
-        <parameters>
-          <entry>
-            <string>creation_author</string>
-            <string>XWiki.8a7f80897523097801753189db971e45</string>
-          </entry>
-          <entry>
-            <string>creation_date</string>
-            <date>2025-02-10 14:32:09.233 UTC</date>
-          </entry>
-          <entry>
-            <string>lastrevision</string>
-            <string>2</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiDocumentRevision revision="2">
-        <p>
-          <parameters>
-            <entry>
-              <string>revision_author</string>
-              <string>XWiki.8a7f80897523097801753189db971e45</string>
-            </entry>
-            <entry>
-              <string>revision_date</string>
-              <date>2025-02-10 14:33:22.946 UTC</date>
-            </entry>
-            <entry>
-              <string>revision_comment</string>
-              <string>
+<wiki name="sub">
+  <wikiSpace name="Sub">
+    <wikiSpace name="Space">
+      <wikiSpace name="Annotation">
+        <wikiDocument name="WebHome">
+          <wikiDocumentLocale>
+            <p>
+              <parameters>
+                <entry>
+                  <string>creation_author</string>
+                  <string>XWiki.8a7f80897523097801753189db971e45</string>
+                </entry>
+                <entry>
+                  <string>creation_date</string>
+                  <date>2025-02-10 14:32:09.233 UTC</date>
+                </entry>
+                <entry>
+                  <string>lastrevision</string>
+                  <string>2</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiDocumentRevision revision="2">
+              <p>
+                <parameters>
+                  <entry>
+                    <string>revision_author</string>
+                    <string>XWiki.8a7f80897523097801753189db971e45</string>
+                  </entry>
+                  <entry>
+                    <string>revision_date</string>
+                    <date>2025-02-10 14:33:22.946 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision_comment</string>
+                    <string>
     </string>
-            </entry>
-            <entry>
-              <string>title</string>
-              <string>Annotations</string>
-            </entry>
-            <entry>
-              <string>content</string>
-              <string>before annotation after
+                  </entry>
+                  <entry>
+                    <string>title</string>
+                    <string>Annotations</string>
+                  </entry>
+                  <entry>
+                    <string>content</string>
+                    <string>before annotation after
 
 Other paragraph.</string>
-            </entry>
-            <entry>
-              <string>syntax</string>
-              <org.xwiki.rendering.syntax.Syntax>
-                <type>
-                  <name>XWiki</name>
-                  <id>xwiki</id>
-                  <variants class="empty-list"/>
-                </type>
-                <version>2.1</version>
-              </org.xwiki.rendering.syntax.Syntax>
-            </entry>
-          </parameters>
-        </p>
-        <wikiObject name="XWiki.XWikiComments">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.XWikiComments</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="author" value="XWiki.8a7f80897523097801753189db971e45"/>
-          <wikiObjectProperty name="comment" value="annotation 1"/>
-          <wikiObjectProperty name="date">
-            <p>
-              <value t="java.util.Date">2025-02-10 14:33:37.774 UTC</value>
-            </p>
-          </wikiObjectProperty>
-          <wikiObjectProperty name="replyto"/>
-          <wikiObjectProperty name="selection" value="annotation"/>
-        </wikiObject>
-        <wikiObject name="XWiki.XWikiComments">
-          <p>
-            <parameters>
-              <entry>
-                <string>class_reference</string>
-                <string>XWiki.XWikiComments</string>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObjectProperty name="author" value="XWiki.8a7f80897523097801753189db971e45"/>
-          <wikiObjectProperty name="comment" value="annotation 2"/>
-          <wikiObjectProperty name="date">
-            <p>
-              <value t="java.util.Date">2025-02-10 14:33:49.425 UTC</value>
-            </p>
-          </wikiObjectProperty>
-          <wikiObjectProperty name="replyto"/>
-          <wikiObjectProperty name="selection" value="Other paragraph."/>
-        </wikiObject>
-      </wikiDocumentRevision>
-    </wikiDocumentLocale>
-  </wikiDocument>
-</wikiSpace>
+                  </entry>
+                  <entry>
+                    <string>syntax</string>
+                    <org.xwiki.rendering.syntax.Syntax>
+                      <type>
+                        <name>XWiki</name>
+                        <id>xwiki</id>
+                        <variants class="empty-list"/>
+                      </type>
+                      <version>2.1</version>
+                    </org.xwiki.rendering.syntax.Syntax>
+                  </entry>
+                </parameters>
+              </p>
+              <wikiObject name="XWiki.XWikiComments">
+                <p>
+                  <parameters>
+                    <entry>
+                      <string>class_reference</string>
+                      <string>XWiki.XWikiComments</string>
+                    </entry>
+                  </parameters>
+                </p>
+                <wikiObjectProperty name="author" value="XWiki.8a7f80897523097801753189db971e45"/>
+                <wikiObjectProperty name="comment" value="annotation 1"/>
+                <wikiObjectProperty name="date">
+                  <p>
+                    <value t="java.util.Date">2025-02-10 14:33:37.774 UTC</value>
+                  </p>
+                </wikiObjectProperty>
+                <wikiObjectProperty name="replyto"/>
+                <wikiObjectProperty name="selection" value="annotation"/>
+                <wikiObjectProperty name="state" value="SAFE"/>
+                <wikiObjectProperty name="target" value="Sub.Space.Annotation.WebHome"/>
+              </wikiObject>
+              <wikiObject name="XWiki.XWikiComments">
+                <p>
+                  <parameters>
+                    <entry>
+                      <string>class_reference</string>
+                      <string>XWiki.XWikiComments</string>
+                    </entry>
+                  </parameters>
+                </p>
+                <wikiObjectProperty name="author" value="XWiki.8a7f80897523097801753189db971e45"/>
+                <wikiObjectProperty name="comment" value="annotation 2"/>
+                <wikiObjectProperty name="date">
+                  <p>
+                    <value t="java.util.Date">2025-02-10 14:33:49.425 UTC</value>
+                  </p>
+                </wikiObjectProperty>
+                <wikiObjectProperty name="replyto"/>
+                <wikiObjectProperty name="selection" value="Other paragraph."/>
+                <wikiObjectProperty name="state" value="SAFE"/>
+                <wikiObjectProperty name="target" value="Sub.Space.Annotation.WebHome"/>
+              </wikiObject>
+            </wikiDocumentRevision>
+          </wikiDocumentLocale>
+        </wikiDocument>
+      </wikiSpace>
+    </wikiSpace>
+  </wikiSpace>
+</wiki>
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.storeConfluenceDetailsEnabled=false
 .configuration.source=annotations
+.configuration.root=sub:Sub.Space
 .#------------------------------------------------------------------------------
