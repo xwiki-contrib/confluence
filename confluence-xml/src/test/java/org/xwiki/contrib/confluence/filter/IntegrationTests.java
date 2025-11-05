@@ -27,6 +27,7 @@ import org.mockito.stubbing.Answer;
 import org.slf4j.LoggerFactory;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceInputFilterStream;
+import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceSpaceHelpers;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageTitleResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceSpaceKeyResolver;
@@ -39,10 +40,13 @@ import org.xwiki.model.reference.WikiReference;
 import org.xwiki.model.validation.EntityNameValidation;
 import org.xwiki.model.validation.EntityNameValidationManager;
 import org.xwiki.observation.ObservationManager;
+import org.xwiki.query.Query;
+import org.xwiki.query.QueryManager;
 import org.xwiki.test.XWikiTempDirUtil;
 import org.xwiki.test.annotation.AllComponents;
 import org.xwiki.test.mockito.MockitoComponentManager;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -93,6 +97,14 @@ public class IntegrationTests
             componentManager.registerMockComponent(ConfluencePageTitleResolver.class);
         ConfluenceSpaceKeyResolver spaceKeyResolver =
             componentManager.registerMockComponent(ConfluenceSpaceKeyResolver.class);
+
+        componentManager.registerMockComponent(ConfluenceSpaceHelpers.class);
+
+        Query query = componentManager.registerMockComponent(Query.class);
+        QueryManager queryManager = componentManager.registerMockComponent(QueryManager.class);
+
+        when(query.execute()).thenReturn(List.of(0));
+        when(queryManager.createQuery(anyString(), anyString())).thenReturn(query);
 
         // Those cache related mocks test if resolvers are not called several times for the same page
         AtomicInteger foundTitleCache = new AtomicInteger();

@@ -61,6 +61,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private static final String WEB_HOME = "WebHome";
     private static final String CONFLUENCE_UNDERSCORE = "confluence_";
     private static final String DEFAULT_GROUP_FORMAT = "${group._clean}";
+    private static final String DEFAULT_SPACE_RENAMING_FORMAT = "${spaceKey}_";
+    private static final String DEFAULT_OVERWRITE_PROTECTION_MODE = "WIKI";
     private static final String NONE = "NONE";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfluenceInputProperties.class);
@@ -311,12 +313,12 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     /**
      * @see #getSpaceRenamingFormat()
      */
-    private String spaceRenamingFormat = "${spaceKey}_";
+    private String spaceRenamingFormat = DEFAULT_SPACE_RENAMING_FORMAT;
 
     /**
      * @see #getOverwriteProtectionMode()
      */
-    private String overwriteProtectionMode = NONE;
+    private String overwriteProtectionMode = DEFAULT_OVERWRITE_PROTECTION_MODE;
 
     /**
      * @return The source to load the wiki from
@@ -1616,10 +1618,9 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @since 9.88.5
      */
     @PropertyName("Forbidden spaces")
-    @PropertyDescription(
-        "The list of spaces, separated by \",\", that should not be overwritten by a Confluence import if there is a "
-            + "conflict between a Confluence space name and an XWiki space name. The spaces name should contain the "
-            + "full path, including the wiki")
+    @PropertyDescription("A comma-separated list of spaces that should not be overwritten during a Confluence import "
+        + "if a conflict occurs between an XWiki space name and a Confluence space name."
+        + " Each space name must include the full path, including the wiki.")
     public Set<String> getForbiddenSpaces()
     {
         return forbiddenSpaces;
@@ -1669,8 +1670,9 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     @PropertyName("Overwrite protection mode")
     @PropertyDescription("The protection mode to use for the Confluence spaces that have a conflict with a XWiki "
         + "space. The possible values for the protection mode are: NONE - If there is a conflict, no renaming will be"
-        + " applied; IMPORTED - if there is a conflict, only the spaces that have a name conflict with an already "
-        + "imported space will be renamed; ANY - if there is a conflict, all the spaces that have a name conflict "
+        + " applied; WIKI - if there is a conflict, only the spaces that have a name conflict with an already "
+        + "existing Wiki space will be renamed; ANY - if there is a conflict, all the spaces that have a name "
+        + "conflict "
         + "will be renamed.")
     public String getOverwriteProtectionMode()
     {

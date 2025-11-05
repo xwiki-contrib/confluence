@@ -220,6 +220,9 @@ public class ConfluenceInputFilterStream
     @Inject
     private JobContext jobContext;
 
+    @Inject
+    private ConfluenceSpaceHelpers spaceHelpers;
+
     private final Map<String, Integer> macrosIds = new HashMap<>();
 
     private final Map<String, String> inlineComments = new HashMap<>();
@@ -272,6 +275,8 @@ public class ConfluenceInputFilterStream
         if (this.context instanceof DefaultConfluenceInputContext) {
             ((DefaultConfluenceInputContext) this.context).set(this.confluencePackage, this.properties);
         }
+
+        this.spaceHelpers.setProperties(this.properties);
 
         try {
             readInternal(filter, proxyFilter);
@@ -720,8 +725,20 @@ public class ConfluenceInputFilterStream
                     .convertSpaceKey(spaceKey,
                         this.properties.getSpaceRenamingFormat()
                     );
+
+                convertedSpaceKey = renameIfMoreRenamingIsRequired(convertedSpaceKey);
+
                 event.renameSpace(spaceKey, convertedSpaceKey);
             }
+        }
+    }
+
+    private String renameIfMoreRenamingIsRequired(String spaceKey)
+    {
+        if (shouldSpaceBeRenamed(spaceKey)) {
+            return renameIfMoreRenamingIsRequired(spaceKey + "_");
+        } else {
+            return spaceKey;
         }
     }
 
@@ -3054,15 +3071,15 @@ public class ConfluenceInputFilterStream
     {
         String overwriteProtectionMode = this.properties.getOverwriteProtectionMode();
 
-        if (((DefaultConfluenceInputContext) this.context).checkIfTheSpaceOverwriteIsForbidden(spaceKey)) {
+        if (spaceHelpers.checkIfTheSpaceOverwriteIsForbidden(spaceKey)) {
             return true;
         }
 
         switch (overwriteProtectionMode) {
-            case "IMPORTED":
-                return ((DefaultConfluenceInputContext) this.context).checkIfSpaceExists(spaceKey, true);
+            case "WIKI":
+                return spaceHelpers.checkIfSpaceExists(spaceKey, true);
             case "ANY":
-                return ((DefaultConfluenceInputContext) this.context).checkIfSpaceExists(spaceKey, false);
+                return spaceHelpers.checkIfSpaceExists(spaceKey, false);
             case "NONE":
             default:
                 return false;
