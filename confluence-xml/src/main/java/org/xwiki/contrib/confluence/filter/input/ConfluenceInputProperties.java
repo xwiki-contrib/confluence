@@ -59,10 +59,11 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private static final String XWIKI_ALL_GROUP_NAME = "XWikiAllGroup";
     private static final String CLEANUP_SYNC = "SYNC";
     private static final String WEB_HOME = "WebHome";
+    private static final ConfluenceOverwriteProtectionModeType DEFAULT_OVERWRITE_PROTECTION_MODE =
+        ConfluenceOverwriteProtectionModeType.NONCONFLUENCE;
     private static final String CONFLUENCE_UNDERSCORE = "confluence_";
     private static final String DEFAULT_GROUP_FORMAT = "${group._clean}";
     private static final String DEFAULT_SPACE_RENAMING_FORMAT = "${spaceKey}_";
-    private static final String DEFAULT_OVERWRITE_PROTECTION_MODE = "WIKI";
     private static final String NONE = "NONE";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfluenceInputProperties.class);
@@ -306,9 +307,9 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private boolean favoritesEnabled = true;
 
     /**
-     * @see #getForbiddenSpaces()
+     * @see #getOverwriteProtectedSpaces()
      */
-    private Set<String> forbiddenSpaces;
+    private Set<String> overwriteProtectedSpaces;
 
     /**
      * @see #getSpaceRenamingFormat()
@@ -318,7 +319,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     /**
      * @see #getOverwriteProtectionMode()
      */
-    private String overwriteProtectionMode = DEFAULT_OVERWRITE_PROTECTION_MODE;
+    private ConfluenceOverwriteProtectionModeType overwriteProtectionMode =
+        ConfluenceOverwriteProtectionModeType.NONCONFLUENCE;
 
     /**
      * @return The source to load the wiki from
@@ -1613,49 +1615,46 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     }
 
     /**
-     * @return a set of forbidden spaces that should not be overwritten during an import when a name conflict exists
-     *     between a Confluence space and an XWiki space
-     * @since 9.88.5
+     * @return a static set of XWiki spaces that should not be overwritten during an import.
+     * @since 9.89.0
      */
-    @PropertyName("Forbidden spaces")
-    @PropertyDescription("A comma-separated list of spaces that should not be overwritten during a Confluence import "
-        + "if a conflict occurs between an XWiki space name and a Confluence space name."
-        + " Each space name must include the full path, including the wiki.")
-    public Set<String> getForbiddenSpaces()
+    @PropertyName("Overwrite-protected spaces")
+    @PropertyDescription(
+        "A comma-separated list of XWiki spaces that should not be overwritten during a Confluence import."
+            + " If a Confluence space collides with one of these references,"
+            + " it will be imported at a different location"
+            + " by renaming the Confluence space key according to the Space Renaming Format property."
+            + " If the renamed space conflicts, underscores will be added as needed."
+            + " Each space name must include the full path, including the wiki.")
+    public Set<String> getOverwriteProtectedSpaces()
     {
-        return forbiddenSpaces;
+        return overwriteProtectedSpaces;
     }
 
     /**
-     * Sets the list of spaces that should not be overwritten during an import when a name conflict exists between a
-     * Confluence space and an XWiki space.
-     *
-     * @param forbiddenSpaces the set of forbidden spaces that should not be overwritten
-     * @since 9.88.5
+     * @param overwriteProtectedSpaces the static set of XWiki spaces that should not be overwritten during an import.
+     * @since 9.89.0
      */
-    public void setForbiddenSpaces(Set<String> forbiddenSpaces)
+    public void setOverwriteProtectedSpaces(Set<String> overwriteProtectedSpaces)
     {
-        this.forbiddenSpaces = forbiddenSpaces;
+        this.overwriteProtectedSpaces = overwriteProtectedSpaces;
     }
 
     /**
      * @return the space renaming format to use for resolving name conflicts between spaces
-     * @since 9.88.5
+     * @since 9.89.0
      */
     @PropertyName("Space renaming format")
-    @PropertyDescription("The format to use when renaming a space in case of a space names conflict. String "
-        + "${spaceKey} will be replaced with the Confluence space name.")
+    @PropertyDescription("The format to use when renaming a space in case of conflict. "
+        + "The ${spaceKey} placeholder will be replaced with the Confluence space name.")
     public String getSpaceRenamingFormat()
     {
-        return spaceRenamingFormat;
+        return spaceRenamingFormat == null ? "" : spaceRenamingFormat;
     }
 
     /**
-     * Sets the space renaming format to use for resolving name conflicts between spaces. The string "${spaceKey}" will
-     * be replaced with the Confluence space name.
-     *
      * @param spaceRenamingFormat the space renaming format to apply in case of a space name conflict
-     * @since 9.88.5
+     * @since 9.89.0
      */
     public void setSpaceRenamingFormat(String spaceRenamingFormat)
     {
@@ -1663,20 +1662,19 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     }
 
     /**
-     * @return the Overwrite Protection Mode for the spaces that have a name conflict and are not present in the
-     *     Forbidden Spaces list
-     * @since 9.88.5
+     * @return the Overwrite Protection Mode for the spaces that have a name conflict and are not present in the static
+     *     set of overwrite-protected spaces Forbidden Spaces list
+     * @since 9.89.0
      */
     @PropertyName("Overwrite protection mode")
-    @PropertyDescription("The protection mode to use for the Confluence spaces that have a conflict with a XWiki "
-        + "space. The possible values for the protection mode are: NONE - If there is a conflict, no renaming will be"
-        + " applied; WIKI - if there is a conflict, only the spaces that have a name conflict with an already "
-        + "existing Wiki space will be renamed; ANY - if there is a conflict, all the spaces that have a name "
-        + "conflict "
-        + "will be renamed.")
+    @PropertyDescription("The protection mode to use for the Confluence spaces that have a conflict with a XWiki space."
+        + "space. Possible values: "
+        + "NONE - no overwrite protection: don't rename any space;"
+        + "NONCONFLUENCE - only rename spaces conflicting with existing XWiki spaces not imported from Confluence;"
+        + "ANY - rename any space conflicting with an existing XWiki space.")
     public String getOverwriteProtectionMode()
     {
-        return overwriteProtectionMode;
+        return overwriteProtectionMode.toString();
     }
 
     /**
@@ -1684,10 +1682,14 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * Forbidden Spaces list.
      *
      * @param overwriteProtectionMode the overwrite protection mode to apply for conflicting spaces
-     * @since 9.88.5
+     * @since 9.89.0
      */
     public void setOverwriteProtectionMode(String overwriteProtectionMode)
     {
-        this.overwriteProtectionMode = overwriteProtectionMode;
+        try {
+            this.overwriteProtectionMode = ConfluenceOverwriteProtectionModeType.valueOf(overwriteProtectionMode);
+        } catch (IllegalArgumentException e) {
+            this.overwriteProtectionMode = DEFAULT_OVERWRITE_PROTECTION_MODE;
+        }
     }
 }

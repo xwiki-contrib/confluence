@@ -62,6 +62,7 @@ import org.xwiki.contrib.confluence.filter.event.ConfluenceFilteredEvent;
 import org.xwiki.contrib.confluence.filter.event.ConfluenceFilteringEvent;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceOverwriteProtectionModeType;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.filter.input.ContentPermissionType;
@@ -227,6 +228,8 @@ public class ConfluenceInputFilterStream
 
     private final Map<String, String> inlineComments = new HashMap<>();
 
+    private final Map<String, String> spaceTargets = new HashMap<>();
+
     private ConfluenceIdRangeList objectIdRanges;
 
     private List<Long> nextIdsForObjectIdRanges;
@@ -241,8 +244,6 @@ public class ConfluenceInputFilterStream
     {
         private static final long serialVersionUID = 1L;
     }
-
-    private Map<String, String> renamedSpaces;
 
     private static final class AttachmentInfo
     {
@@ -376,8 +377,6 @@ public class ConfluenceInputFilterStream
 
         Collection<Long> disabledSpaces = filteringEvent.getDisabledSpaces();
 
-        this.renamedSpaces = filteringEvent.getRenamedSpaces();
-
         Collection<Long> users = this.properties.isUsersEnabled()
             ? this.confluencePackage.getInternalUsers()
             : Collections.emptyList();
@@ -449,7 +448,7 @@ public class ConfluenceInputFilterStream
 
         ConfluenceFilteringEvent filteringEvent = new ConfluenceFilteringEvent();
         maybeRemoveArchivedSpaces(filteringEvent);
-        renameSpaces(filteringEvent);
+        computeSpaceTargets(filteringEvent);
         this.observationManager.notify(filteringEvent, this, this.confluencePackage);
         if (filteringEvent.isCanceled()) {
             closeConfluencePackage();
@@ -647,11 +646,6 @@ public class ConfluenceInputFilterStream
             this.logger.info("Sending Confluence space [{}], id=[{}]", spaceKey, spaceId);
         }
 
-        if (this.renamedSpaces != null && this.renamedSpaces.containsKey(spaceKey))
-        {
-            spaceKey = this.renamedSpaces.get(spaceKey);
-        }
-
         sendSpace(spaceId, filter, proxyFilter, blogPages, spaceKey, spaceProperties);
     }
 
@@ -659,7 +653,7 @@ public class ConfluenceInputFilterStream
         String spaceKey, ConfluenceProperties spaceProperties)
         throws FilterException, ConfluenceInterruptedException
     {
-        String spaceEntityName = confluenceConverter.toEntityName(spaceKey);
+        String spaceEntityName = this.spaceTargets.get(spaceKey);
         proxyFilter.beginWikiSpace(spaceEntityName, FilterEventParameters.EMPTY);
         try {
             Collection<ConfluenceRight> inheritedRights = null;
@@ -717,29 +711,26 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void renameSpaces(ConfluenceFilteringEvent event)
+    private void computeSpaceTargets(ConfluenceFilteringEvent event)
     {
         for (String spaceKey : confluencePackage.getSpaceKeys(false)) {
-            if (shouldSpaceBeRenamed(spaceKey)) {
-                String convertedSpaceKey = confluenceConverter
-                    .convertSpaceKey(spaceKey,
-                        this.properties.getSpaceRenamingFormat()
-                    );
+            String spaceEntityName = confluenceConverter.toEntityName(spaceKey);
+            String target = spaceKey.replace("${spaceKey}", this.properties.getSpaceRenamingFormat());
+            if (shouldSpaceTargetBeRenamed(spaceKey)) {
+                if (target.isEmpty()) {
+                    target = spaceEntityName;
+                }
 
-                convertedSpaceKey = renameIfMoreRenamingIsRequired(convertedSpaceKey);
-
-                event.renameSpace(spaceKey, convertedSpaceKey);
+                target = renameIfMoreRenamingIsRequired(target);
             }
+            this.spaceTargets.put(spaceKey, target);
         }
+        event.setSpaceTargets(spaceTargets);
     }
 
-    private String renameIfMoreRenamingIsRequired(String spaceKey)
+    private String renameIfMoreRenamingIsRequired(String target)
     {
-        if (shouldSpaceBeRenamed(spaceKey)) {
-            return renameIfMoreRenamingIsRequired(spaceKey + "_");
-        } else {
-            return spaceKey;
-        }
+        return shouldSpaceTargetBeRenamed(target) ? renameIfMoreRenamingIsRequired(target + "_") : target;
     }
 
     private boolean shouldSendSpaceRights(Long homePageId)
@@ -3067,20 +3058,21 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private boolean shouldSpaceBeRenamed(String spaceKey)
+    private boolean shouldSpaceTargetBeRenamed(String target)
     {
-        String overwriteProtectionMode = this.properties.getOverwriteProtectionMode();
+        ConfluenceOverwriteProtectionModeType overwriteProtectionMode =
+            ConfluenceOverwriteProtectionModeType.valueOf(this.properties.getOverwriteProtectionMode());
 
-        if (spaceHelpers.checkIfTheSpaceOverwriteIsForbidden(spaceKey)) {
+        if (spaceHelpers.isSpaceOverwriteProtected(target)) {
             return true;
         }
 
         switch (overwriteProtectionMode) {
-            case "WIKI":
-                return spaceHelpers.checkIfSpaceExists(spaceKey, true);
-            case "ANY":
-                return spaceHelpers.checkIfSpaceExists(spaceKey, false);
-            case "NONE":
+            case NONCONFLUENCE:
+                return spaceHelpers.isCollidingWithAProtectedSpace(target, false);
+            case ANY:
+                return spaceHelpers.isCollidingWithAProtectedSpace(target, true);
+            case NONE:
             default:
                 return false;
         }

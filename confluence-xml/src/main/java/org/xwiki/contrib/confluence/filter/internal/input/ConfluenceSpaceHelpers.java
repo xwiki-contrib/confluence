@@ -19,11 +19,11 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.input;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.inject.Provider;
 import javax.inject.Singleton;
 
@@ -33,6 +33,7 @@ import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.DocumentReference;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceResolver;
+import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.model.reference.WikiReference;
 import org.xwiki.query.Query;
@@ -42,14 +43,13 @@ import org.xwiki.query.QueryManager;
 import com.xpn.xwiki.XWiki;
 import com.xpn.xwiki.XWikiContext;
 import com.xpn.xwiki.XWikiException;
-import com.xpn.xwiki.doc.XWikiDocument;
 import com.xpn.xwiki.objects.BaseObject;
 
 /**
  * Provides utility methods for managing and validating Confluence spaces within XWiki during a Confluence import.
  *
  * @version $Id$
- * @since 9.88.5
+ * @since 9.89.0
  */
 @Component (roles = ConfluenceSpaceHelpers.class)
 @Singleton
@@ -64,12 +64,16 @@ public class ConfluenceSpaceHelpers
     private EntityReferenceResolver<String> entityReferenceResolver;
 
     @Inject
+    @Named("local")
+    private EntityReferenceSerializer<String> entityReferenceSerializer;
+
+    @Inject
     private QueryManager queryManager;
 
     /**
      * Sets the Confluence input properties.
      * @param properties the Confluence input properties
-     * @since 9.88.5
+     * @since 9.89.0
      */
     public void setProperties(ConfluenceInputProperties properties)
     {
@@ -77,14 +81,13 @@ public class ConfluenceSpaceHelpers
     }
 
     /**
-     * Checks whether a given space is forbidden to be overwritten based on the configured forbidden spaces.
+     * @return whether it is forbidden to overwrite a given space.
      * @param spaceKey the spaceKey of the space that is checked
-     * @return true if the specified space is listed among the forbidden spaces and cannot be overwritten
-     * @since 9.88.5
+     * @since 9.89.0
      */
-    public boolean checkIfTheSpaceOverwriteIsForbidden(String spaceKey)
+    public boolean isSpaceOverwriteProtected(String spaceKey)
     {
-        Set<String> forbiddenSpaces = this.properties.get().getForbiddenSpaces();
+        Set<String> forbiddenSpaces = this.properties.get().getOverwriteProtectedSpaces();
 
         if (forbiddenSpaces == null || forbiddenSpaces.isEmpty()) {
             return false;
@@ -107,60 +110,61 @@ public class ConfluenceSpaceHelpers
 
     /**
      * @param spaceKey the spaceKey of the space that is checked
-     * @param checkIfConfluenceImported flag that specifies whether to check if another space imported from
+     * @param confluenceSpacesAreProtected flag that specifies whether to check if another space imported from
      *     Confluence already exists, or to simply search for any space.
      * @return a user reference.
-     * @since 9.88.5
+     * @since 9.89.0
      */
-    public boolean checkIfSpaceExists(String spaceKey, Boolean checkIfConfluenceImported)
+    public boolean isCollidingWithAProtectedSpace(String spaceKey, Boolean confluenceSpacesAreProtected)
     {
         EntityReference rootReference = this.properties.get().getRoot();
 
-        SpaceReference spaceReference = getRootWithWikiSpaceReference(rootReference, spaceKey);
+        SpaceReference spaceTargetReference = getRootWithWikiSpaceReference(rootReference, spaceKey);
 
-        String spaceName = spaceReference.getName();
+        String spaceTargetName = entityReferenceSerializer.serialize(spaceTargetReference);
 
         String queryString =
-            "select count(doc) from XWikiDocument as doc"
+            "select 1 from XWikiDocument as doc"
                 + " where doc.space = :spaceName or doc.space like :spacePrefix";
 
         try {
             List<Long> result = queryManager.createQuery(queryString, Query.HQL)
-                .setWiki(spaceReference.getWikiReference().getName())
-                .bindValue("spaceName", spaceName)
-                .bindValue("spacePrefix", spaceName + ".%")
+                .setWiki(spaceTargetReference.getWikiReference().getName())
+                .bindValue("spaceName", spaceTargetName)
+                .bindValue("spacePrefix", spaceTargetName + ".%")
                 .execute();
 
-            if (result.isEmpty() || result.get(0) == 0) {
+            if (result.isEmpty()) {
                 return false;
             }
 
-            if (checkIfConfluenceImported) {
-                String webHomeString = "WebHome";
-                XWikiContext xContext = contextProvider.get();
-                DocumentReference docRef;
-
-                if (rootReference != null) {
-                    docRef = new DocumentReference(webHomeString, spaceReference);
-                } else {
-                    docRef = new DocumentReference(xContext.getWikiId(), spaceKey, webHomeString);
-                }
+            if (!confluenceSpacesAreProtected) {
+                DocumentReference docRef = new DocumentReference("WebHome", spaceTargetReference);
 
                 try {
-                    XWiki xWiki = xContext.getWiki();
+                    XWikiContext xContext = contextProvider.get();
 
-                    XWikiDocument doc = xWiki.getDocument(docRef, xContext);
+                    XWiki xWiki = xContext.getWiki();
 
                     if (!xWiki.exists(docRef, xContext)) {
                         return true;
                     }
 
-                    DocumentReference confluenceClassReference =
-                        new DocumentReference(docRef.getRoot().getName(), Arrays.asList("Confluence", "Code"),
-                            "ConfluencePageClass");
-                    BaseObject obj = doc.getXObject(confluenceClassReference);
+                    String objectQueryString =
+                        "select obj "
+                            + "from BaseObject as obj, XWikiDocument as doc "
+                            + "where obj.name = doc.fullName "
+                            + "and doc.fullName = :fullName "
+                            + "and obj.className = :className";
 
-                    return obj == null;
+                    List<BaseObject> objectQueryResult = queryManager
+                        .createQuery(objectQueryString, Query.HQL)
+                        .setWiki(docRef.getWikiReference().getName())
+                        .bindValue("fullName", entityReferenceSerializer.serialize(docRef))
+                        .bindValue("className", "Confluence.Code.ConfluencePageClass")
+                        .execute();
+
+                    return objectQueryResult.isEmpty();
                 } catch (XWikiException e) {
                     throw new RuntimeException("An exception occurred while checking if a space was already "
                         + "imported!", e);
@@ -176,20 +180,26 @@ public class ConfluenceSpaceHelpers
     private SpaceReference getRootWithWikiSpaceReference(EntityReference rootReference, String spaceKey)
     {
         XWikiContext xContext = contextProvider.get();
-        WikiReference wikiReference = new WikiReference(xContext.getWikiId());
+        WikiReference wikiReference = xContext.getWikiReference();
+
         if (rootReference == null) {
             return new SpaceReference(spaceKey, wikiReference);
         }
 
-        if (rootReference.getType().equals(EntityType.SPACE)) {
-            SpaceReference rootSpaceReference = new SpaceReference(rootReference,
-                rootReference.getParent() == null ? wikiReference
-                    :
-                    rootReference.getParent());
-            return new SpaceReference(spaceKey, rootSpaceReference);
-        } else {
-            WikiReference wikiRef = new WikiReference(rootReference.extractReference(EntityType.WIKI));
-            return new SpaceReference(spaceKey, wikiRef);
+        List<EntityReference> referencesChain = rootReference.getReversedReferenceChain();
+        EntityReference topReference = referencesChain.get(0);
+
+        if (topReference.getType() != EntityType.WIKI && topReference.getParent() == null) {
+            topReference = topReference.appendParent(wikiReference);
+
+            for (int i = 1; i < referencesChain.size(); i++) {
+                EntityReference current = referencesChain.get(i);
+                topReference = new EntityReference(current.getName(), current.getType(), topReference);
+            }
+
+            return new SpaceReference(spaceKey, topReference);
         }
+
+        return new SpaceReference(spaceKey, rootReference);
     }
 }

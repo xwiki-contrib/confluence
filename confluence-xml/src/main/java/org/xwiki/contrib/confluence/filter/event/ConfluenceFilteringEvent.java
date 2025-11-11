@@ -23,7 +23,6 @@ import org.xwiki.observation.event.AbstractCancelableEvent;
 
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
@@ -42,7 +41,7 @@ public class ConfluenceFilteringEvent extends AbstractCancelableEvent
 {
     private Collection<Long> disabledSpaces;
 
-    private Map<String, String> renamedSpaces;
+    private Map<String, String> spaceTargets = Collections.emptyMap();
 
     /**
      * Don't import the given space.
@@ -58,17 +57,12 @@ public class ConfluenceFilteringEvent extends AbstractCancelableEvent
     }
 
     /**
-     * Rename an imported space.
-     * @param spaceKey the space to rename
-     * @param newSpaceKey the new space name
-     * @since 9.88.5
+     * @param spaceTargets the space targets
+     * @since 9.89.0
      */
-    public void renameSpace(String spaceKey, String newSpaceKey)
+    public void setSpaceTargets(Map<String, String> spaceTargets)
     {
-        if (renamedSpaces == null) {
-            renamedSpaces = new HashMap<>();
-        }
-        renamedSpaces.put(spaceKey, newSpaceKey);
+        this.spaceTargets = spaceTargets;
     }
 
     /**
@@ -81,11 +75,11 @@ public class ConfluenceFilteringEvent extends AbstractCancelableEvent
     }
 
     /**
-     * @return the renamed spaces
-     * @since 9.88.5
+     * @return the space targets
+     * @since 9.89.0
      */
-    public Map<String, String> getRenamedSpaces()
+    public Map<String, String> getSpaceTargets()
     {
-        return renamedSpaces == null ? new HashMap<>() : renamedSpaces;
+        return spaceTargets;
     }
 }
