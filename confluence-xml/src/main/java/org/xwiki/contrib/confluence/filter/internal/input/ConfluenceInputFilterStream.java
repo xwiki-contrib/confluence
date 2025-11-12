@@ -3057,12 +3057,12 @@ public class ConfluenceInputFilterStream
 
     private boolean shouldSpaceTargetBeRenamed(String target)
     {
-        ConfluenceOverwriteProtectionModeType overwriteProtectionMode =
-            ConfluenceOverwriteProtectionModeType.valueOf(this.properties.getOverwriteProtectionMode());
-
         if (spaceHelpers.isSpaceOverwriteProtected(target)) {
             return true;
         }
+
+        ConfluenceOverwriteProtectionModeType overwriteProtectionMode =
+            ConfluenceOverwriteProtectionModeType.valueOf(this.properties.getOverwriteProtectionMode());
 
         switch (overwriteProtectionMode) {
             case NONCONFLUENCE:

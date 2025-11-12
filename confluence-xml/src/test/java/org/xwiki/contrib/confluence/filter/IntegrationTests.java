@@ -50,6 +50,7 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
@@ -64,7 +65,7 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(FilterTestSuite.class)
 @AllComponents
-@FilterTestSuite.Scope(value = "confluencexml"/*, pattern = "confluence80tags.test"*/)
+@FilterTestSuite.Scope(value = "confluencexml", pattern = "overwritespaces.*")
 public class IntegrationTests
 {
     private static final String OTHER_SPACE = "OtherSpace";
@@ -98,7 +99,14 @@ public class IntegrationTests
         ConfluenceSpaceKeyResolver spaceKeyResolver =
             componentManager.registerMockComponent(ConfluenceSpaceKeyResolver.class);
 
-        componentManager.registerMockComponent(ConfluenceSpaceHelpers.class);
+        ConfluenceSpaceHelpers spaceHelpers = componentManager.registerMockComponent(ConfluenceSpaceHelpers.class);
+
+        when(spaceHelpers.isCollidingWithAProtectedSpace(eq("OverwriteSpace1"), anyBoolean())).thenReturn(true);
+        when(spaceHelpers.isCollidingWithAProtectedSpace(eq("OverwriteSpace2"), anyBoolean())).thenReturn(true);
+        when(spaceHelpers.isCollidingWithAProtectedSpace(eq("RootSpace.OverwriteSpace1"), anyBoolean())).thenReturn(true);
+        when(spaceHelpers.isSpaceOverwriteProtected("OverwriteSpace2")).thenReturn(true);
+        when(spaceHelpers.isSpaceOverwriteProtected("RootSpace.OverwriteSpace2")).thenReturn(true);
+
 
         Query query = componentManager.registerMockComponent(Query.class);
         QueryManager queryManager = componentManager.registerMockComponent(QueryManager.class);
