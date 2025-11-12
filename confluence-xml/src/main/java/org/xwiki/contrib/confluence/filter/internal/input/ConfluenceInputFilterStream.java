@@ -653,7 +653,7 @@ public class ConfluenceInputFilterStream
         String spaceKey, ConfluenceProperties spaceProperties)
         throws FilterException, ConfluenceInterruptedException
     {
-        String spaceEntityName = this.spaceTargets.get(spaceKey);
+        String spaceEntityName = this.confluenceConverter.toEntityName(this.spaceTargets.get(spaceKey));
         proxyFilter.beginWikiSpace(spaceEntityName, FilterEventParameters.EMPTY);
         try {
             Collection<ConfluenceRight> inheritedRights = null;
@@ -714,12 +714,9 @@ public class ConfluenceInputFilterStream
     private void computeSpaceTargets(ConfluenceFilteringEvent event)
     {
         for (String spaceKey : confluencePackage.getSpaceKeys(false)) {
-            String spaceEntityName = confluenceConverter.toEntityName(spaceKey);
-            String target = spaceKey.replace("${spaceKey}", this.properties.getSpaceRenamingFormat());
+            String target = spaceKey;
             if (shouldSpaceTargetBeRenamed(spaceKey)) {
-                if (target.isEmpty()) {
-                    target = spaceEntityName;
-                }
+                target = this.properties.getSpaceRenamingFormat().replace("${spaceKey}", spaceKey);
 
                 target = renameIfMoreRenamingIsRequired(target);
             }
