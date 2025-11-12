@@ -36,6 +36,7 @@ import org.xwiki.filter.input.InputFilterStreamFactory;
 import org.xwiki.filter.test.integration.FilterTestSuite;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
+import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.model.reference.WikiReference;
 import org.xwiki.model.validation.EntityNameValidation;
 import org.xwiki.model.validation.EntityNameValidationManager;
@@ -47,6 +48,7 @@ import org.xwiki.test.annotation.AllComponents;
 import org.xwiki.test.mockito.MockitoComponentManager;
 
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -101,12 +103,11 @@ public class IntegrationTests
 
         ConfluenceSpaceHelpers spaceHelpers = componentManager.registerMockComponent(ConfluenceSpaceHelpers.class);
 
-        when(spaceHelpers.isCollidingWithAProtectedSpace(eq("OverwriteSpace1"), anyBoolean())).thenReturn(true);
-        when(spaceHelpers.isCollidingWithAProtectedSpace(eq("OverwriteSpace2"), anyBoolean())).thenReturn(true);
-        when(spaceHelpers.isCollidingWithAProtectedSpace(eq("RootSpace.OverwriteSpace1"), anyBoolean())).thenReturn(true);
-        when(spaceHelpers.isSpaceOverwriteProtected("OverwriteSpace2")).thenReturn(true);
-        when(spaceHelpers.isSpaceOverwriteProtected("RootSpace.OverwriteSpace2")).thenReturn(true);
+        Map<String, SpaceReference> spaces = getStringSpaceReferenceMap(spaceHelpers);
 
+        List<String> protectedSpaces = List.of("OverwriteSpace2", "RootSpace.OverwriteSpace2");
+        protectedSpaces.forEach(
+            name -> when(spaceHelpers.isSpaceOverwriteProtected(spaces.get(name))).thenReturn(true));
 
         Query query = componentManager.registerMockComponent(Query.class);
         QueryManager queryManager = componentManager.registerMockComponent(QueryManager.class);
@@ -184,5 +185,23 @@ public class IntegrationTests
         logger.setLevel(Level.WARN);
         logger = (Logger) LoggerFactory.getLogger(ConfluenceInputFilterStream.class);
         logger.setLevel(Level.WARN);
+    }
+
+    private static Map<String, SpaceReference> getStringSpaceReferenceMap(ConfluenceSpaceHelpers spaceHelpers)
+    {
+        SpaceReference rootSpace = new SpaceReference("RootSpace", WIKI_REFERENCE);
+
+        Map<String, SpaceReference> spaces = Map.of(
+            "OverwriteSpace1", new SpaceReference("OverwriteSpace1", WIKI_REFERENCE),
+            "OverwriteSpace2", new SpaceReference("OverwriteSpace2", WIKI_REFERENCE),
+            "RootSpace.OverwriteSpace1", new SpaceReference("OverwriteSpace1", rootSpace),
+            "RootSpace.OverwriteSpace2", new SpaceReference("OverwriteSpace2", rootSpace)
+        );
+
+        spaces.forEach((name, ref) -> {
+            when(spaceHelpers.getSpaceReferenceWithRoot(name)).thenReturn(ref);
+            when(spaceHelpers.isCollidingWithAProtectedSpace(eq(ref), anyBoolean())).thenReturn(true);
+        });
+        return spaces;
     }
 }

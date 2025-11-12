@@ -95,6 +95,7 @@ import org.xwiki.job.event.status.JobProgressManager;
 import org.xwiki.job.event.status.JobStatus;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
+import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.observation.ObservationManager;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.parser.ParseException;
@@ -3057,7 +3058,9 @@ public class ConfluenceInputFilterStream
 
     private boolean shouldSpaceTargetBeRenamed(String target)
     {
-        if (spaceHelpers.isSpaceOverwriteProtected(target)) {
+        SpaceReference spaceReference = spaceHelpers.getSpaceReferenceWithRoot(target);
+
+        if (spaceHelpers.isSpaceOverwriteProtected(spaceReference)) {
             return true;
         }
 
@@ -3066,9 +3069,9 @@ public class ConfluenceInputFilterStream
 
         switch (overwriteProtectionMode) {
             case NONCONFLUENCE:
-                return spaceHelpers.isCollidingWithAProtectedSpace(target, false);
+                return spaceHelpers.isCollidingWithAProtectedSpace(spaceReference, false);
             case ANY:
-                return spaceHelpers.isCollidingWithAProtectedSpace(target, true);
+                return spaceHelpers.isCollidingWithAProtectedSpace(spaceReference, true);
             case NONE:
             default:
                 return false;

@@ -35,7 +35,6 @@ import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceResolver;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.model.reference.SpaceReference;
-import org.xwiki.model.reference.WikiReference;
 import org.xwiki.query.Query;
 import org.xwiki.query.QueryException;
 import org.xwiki.query.QueryManager;
@@ -82,20 +81,16 @@ public class ConfluenceSpaceHelpers
 
     /**
      * @return whether it is forbidden to overwrite a given space.
-     * @param spaceKey the spaceKey of the space that is checked
+     * @param spaceReference the spaceReference of the space that is checked
      * @since 9.89.0
      */
-    public boolean isSpaceOverwriteProtected(String spaceKey)
+    public boolean isSpaceOverwriteProtected(SpaceReference spaceReference)
     {
         Set<String> forbiddenSpaces = this.properties.get().getOverwriteProtectedSpaces();
 
         if (forbiddenSpaces == null || forbiddenSpaces.isEmpty()) {
             return false;
         }
-
-        EntityReference rootReference = this.properties.get().getRoot();
-
-        SpaceReference spaceReference = getRootWithWikiSpaceReference(rootReference, spaceKey);
 
         for (String forbiddenSpace : forbiddenSpaces) {
             EntityReference forbiddenRef =
@@ -109,19 +104,16 @@ public class ConfluenceSpaceHelpers
     }
 
     /**
-     * @param spaceKey the spaceKey of the space that is checked
+     * @param spaceReference the spaceKey of the space that is checked
      * @param confluenceSpacesAreProtected flag that specifies whether to check if another space imported from
      *     Confluence already exists, or to simply search for any space.
      * @return a user reference.
      * @since 9.89.0
      */
-    public boolean isCollidingWithAProtectedSpace(String spaceKey, Boolean confluenceSpacesAreProtected)
+    public boolean isCollidingWithAProtectedSpace(SpaceReference spaceReference,
+        Boolean confluenceSpacesAreProtected)
     {
-        EntityReference rootReference = this.properties.get().getRoot();
-
-        SpaceReference spaceTargetReference = getRootWithWikiSpaceReference(rootReference, spaceKey);
-
-        String spaceTargetName = entityReferenceSerializer.serialize(spaceTargetReference);
+        String spaceTargetName = entityReferenceSerializer.serialize(spaceReference);
 
         String queryString =
             "select 1 from XWikiDocument as doc"
@@ -129,7 +121,7 @@ public class ConfluenceSpaceHelpers
 
         try {
             List<Long> result = queryManager.createQuery(queryString, Query.HQL)
-                .setWiki(spaceTargetReference.getWikiReference().getName())
+                .setWiki(spaceReference.getWikiReference().getName())
                 .bindValue("spaceName", spaceTargetName)
                 .bindValue("spacePrefix", spaceTargetName + ".%")
                 .execute();
@@ -139,7 +131,7 @@ public class ConfluenceSpaceHelpers
             }
 
             if (!confluenceSpacesAreProtected) {
-                DocumentReference docRef = new DocumentReference("WebHome", spaceTargetReference);
+                DocumentReference docRef = new DocumentReference("WebHome", spaceReference);
 
                 try {
                     XWikiContext xContext = contextProvider.get();
@@ -177,29 +169,24 @@ public class ConfluenceSpaceHelpers
         }
     }
 
-    private SpaceReference getRootWithWikiSpaceReference(EntityReference rootReference, String spaceKey)
+    /**
+     * Retrieves the complete {@link SpaceReference} for the specified space,
+     * including the root parameter.
+     *
+     * @param target the identifier of the space
+     * @return the complete {@link SpaceReference} including root
+     * @since 9.89.0
+     */
+    public SpaceReference getSpaceReferenceWithRoot(String target)
     {
-        XWikiContext xContext = contextProvider.get();
-        WikiReference wikiReference = xContext.getWikiReference();
+        EntityReference rootReference = this.properties.get().getRoot();
 
         if (rootReference == null) {
-            return new SpaceReference(spaceKey, wikiReference);
+            rootReference = contextProvider.get().getWikiReference();
         }
-
-        List<EntityReference> referencesChain = rootReference.getReversedReferenceChain();
-        EntityReference topReference = referencesChain.get(0);
-
-        if (topReference.getType() != EntityType.WIKI && topReference.getParent() == null) {
-            topReference = topReference.appendParent(wikiReference);
-
-            for (int i = 1; i < referencesChain.size(); i++) {
-                EntityReference current = referencesChain.get(i);
-                topReference = new EntityReference(current.getName(), current.getType(), topReference);
-            }
-
-            return new SpaceReference(spaceKey, topReference);
+        if (rootReference.getRoot().getType() != EntityType.WIKI) {
+            rootReference = rootReference.appendParent(contextProvider.get().getWikiReference());
         }
-
-        return new SpaceReference(spaceKey, rootReference);
+        return new SpaceReference(target, rootReference);
     }
 }
