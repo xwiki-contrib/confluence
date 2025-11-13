@@ -67,7 +67,7 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(FilterTestSuite.class)
 @AllComponents
-@FilterTestSuite.Scope(value = "confluencexml", pattern = "overwritespaces.*")
+@FilterTestSuite.Scope(value = "confluencexml" /*, pattern = "overwritespaces.*" */)
 public class IntegrationTests
 {
     private static final String OTHER_SPACE = "OtherSpace";
