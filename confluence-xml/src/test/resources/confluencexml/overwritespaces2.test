@@ -44,7 +44,7 @@
     </wikiDocumentLocale>
   </wikiDocument>
 </wikiSpace>
-<wikiSpace name="OverwriteSpace2_renamed">
+<wikiSpace name="OverwriteSpace2">
   <wikiDocument name="WebHome">
     <wikiDocumentLocale>
       <wikiDocumentRevision revision="1">
@@ -90,7 +90,6 @@
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=overwritespaces
-.configuration.overwriteProtection
 .configuration.overwriteProtectionMode=NONE
 .configuration.spaceRenamingFormat=${spaceKey}_renamed
 .#------------------------------------------------------------------------------

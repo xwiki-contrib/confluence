@@ -278,8 +278,6 @@ public class ConfluenceInputFilterStream
             ((DefaultConfluenceInputContext) this.context).set(this.confluencePackage, this.properties);
         }
 
-        this.spaceHelpers.setProperties(this.properties);
-
         try {
             readInternal(filter, proxyFilter);
         } finally {
@@ -3058,14 +3056,14 @@ public class ConfluenceInputFilterStream
 
     private boolean shouldSpaceTargetBeRenamed(String target)
     {
-        SpaceReference spaceReference = spaceHelpers.getSpaceReferenceWithRoot(target);
+        SpaceReference spaceReference = spaceHelpers.getSpaceReferenceWithRoot(target, this.properties.getRoot());
 
-        if (spaceHelpers.isSpaceOverwriteProtected(spaceReference)) {
+        if (spaceHelpers.isSpaceOverwriteProtected(spaceReference, this.properties.getOverwriteProtectedSpaces()))
+        {
             return true;
         }
 
-        ConfluenceOverwriteProtectionModeType overwriteProtectionMode =
-            ConfluenceOverwriteProtectionModeType.valueOf(this.properties.getOverwriteProtectionMode());
+        ConfluenceOverwriteProtectionModeType overwriteProtectionMode = this.properties.getOverwriteProtectionMode();
 
         switch (overwriteProtectionMode) {
             case NONCONFLUENCE:

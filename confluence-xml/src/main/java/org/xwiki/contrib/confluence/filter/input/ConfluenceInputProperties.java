@@ -1672,9 +1672,9 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
         + "NONE - no overwrite protection: don't rename any space;"
         + "NONCONFLUENCE - only rename spaces conflicting with existing XWiki spaces not imported from Confluence;"
         + "ANY - rename any space conflicting with an existing XWiki space.")
-    public String getOverwriteProtectionMode()
+    public ConfluenceOverwriteProtectionModeType getOverwriteProtectionMode()
     {
-        return overwriteProtectionMode.toString();
+        return overwriteProtectionMode;
     }
 
     /**
@@ -1684,12 +1684,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @param overwriteProtectionMode the overwrite protection mode to apply for conflicting spaces
      * @since 9.89.0
      */
-    public void setOverwriteProtectionMode(String overwriteProtectionMode)
+    public void setOverwriteProtectionMode(ConfluenceOverwriteProtectionModeType overwriteProtectionMode)
     {
-        try {
-            this.overwriteProtectionMode = ConfluenceOverwriteProtectionModeType.valueOf(overwriteProtectionMode);
-        } catch (IllegalArgumentException e) {
-            this.overwriteProtectionMode = DEFAULT_OVERWRITE_PROTECTION_MODE;
-        }
+        this.overwriteProtectionMode = overwriteProtectionMode;
     }
 }

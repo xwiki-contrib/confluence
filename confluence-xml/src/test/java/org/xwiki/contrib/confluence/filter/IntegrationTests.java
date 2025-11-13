@@ -48,12 +48,12 @@ import org.xwiki.test.annotation.AllComponents;
 import org.xwiki.test.mockito.MockitoComponentManager;
 
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -67,7 +67,7 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(FilterTestSuite.class)
 @AllComponents
-@FilterTestSuite.Scope(value = "confluencexml" /*, pattern = "overwritespaces.*" */)
+@FilterTestSuite.Scope(value = "confluencexml"/*, pattern = "confluence80tags.test"*/)
 public class IntegrationTests
 {
     private static final String OTHER_SPACE = "OtherSpace";
@@ -103,11 +103,7 @@ public class IntegrationTests
 
         ConfluenceSpaceHelpers spaceHelpers = componentManager.registerMockComponent(ConfluenceSpaceHelpers.class);
 
-        Map<String, SpaceReference> spaces = getStringSpaceReferenceMap(spaceHelpers);
-
-        List<String> protectedSpaces = List.of("OverwriteSpace2", "RootSpace.OverwriteSpace2");
-        protectedSpaces.forEach(
-            name -> when(spaceHelpers.isSpaceOverwriteProtected(spaces.get(name))).thenReturn(true));
+        handleSpaceHelpersMocks(spaceHelpers);
 
         Query query = componentManager.registerMockComponent(Query.class);
         QueryManager queryManager = componentManager.registerMockComponent(QueryManager.class);
@@ -187,21 +183,44 @@ public class IntegrationTests
         logger.setLevel(Level.WARN);
     }
 
-    private static Map<String, SpaceReference> getStringSpaceReferenceMap(ConfluenceSpaceHelpers spaceHelpers)
+    private void handleSpaceHelpersMocks(ConfluenceSpaceHelpers spaceHelpers)
     {
-        SpaceReference rootSpace = new SpaceReference("RootSpace", WIKI_REFERENCE);
+        SpaceReference rootReference = new SpaceReference("RootSpace", WIKI_REFERENCE);
+        SpaceReference overwriteSpace1Ref = new SpaceReference("OverwriteSpace1", WIKI_REFERENCE);
 
-        Map<String, SpaceReference> spaces = Map.of(
-            "OverwriteSpace1", new SpaceReference("OverwriteSpace1", WIKI_REFERENCE),
-            "OverwriteSpace2", new SpaceReference("OverwriteSpace2", WIKI_REFERENCE),
-            "RootSpace.OverwriteSpace1", new SpaceReference("OverwriteSpace1", rootSpace),
-            "RootSpace.OverwriteSpace2", new SpaceReference("OverwriteSpace2", rootSpace)
-        );
+        when(spaceHelpers.getSpaceReferenceWithRoot("OverwriteSpace1", null)).thenReturn(overwriteSpace1Ref);
+        when(spaceHelpers.isCollidingWithAProtectedSpace(eq(overwriteSpace1Ref), anyBoolean())).thenReturn(true);
+        when(spaceHelpers.isSpaceOverwriteProtected(
+            eq(overwriteSpace1Ref),
+            argThat(ref -> ref != null && ref.contains("OverwriteSpace1"))
+        )).thenReturn(true);
 
-        spaces.forEach((name, ref) -> {
-            when(spaceHelpers.getSpaceReferenceWithRoot(name)).thenReturn(ref);
-            when(spaceHelpers.isCollidingWithAProtectedSpace(eq(ref), anyBoolean())).thenReturn(true);
-        });
-        return spaces;
+        SpaceReference overwriteSpace2Ref = new SpaceReference("OverwriteSpace2", WIKI_REFERENCE);
+
+        when(spaceHelpers.getSpaceReferenceWithRoot("OverwriteSpace2", null)).thenReturn(overwriteSpace2Ref);
+        when(spaceHelpers.isCollidingWithAProtectedSpace(eq(overwriteSpace2Ref), anyBoolean())).thenReturn(true);
+
+        SpaceReference rootOverwriteSpace1Ref = new SpaceReference("OverwriteSpace1", rootReference);
+
+        when(spaceHelpers.getSpaceReferenceWithRoot(eq("OverwriteSpace1"),
+            argThat(root -> root != null && root.getName().equals("RootSpace")))).thenReturn(
+            rootOverwriteSpace1Ref);
+        when(spaceHelpers.isCollidingWithAProtectedSpace(eq(rootOverwriteSpace1Ref), anyBoolean())).thenReturn(true);
+
+        SpaceReference rootOverwriteSpace2Ref = new SpaceReference("OverwriteSpace2", rootReference);
+
+        when(spaceHelpers.getSpaceReferenceWithRoot(eq("OverwriteSpace2"),
+            argThat(root -> root != null && root.getName().equals("RootSpace")))).thenReturn(
+            rootOverwriteSpace2Ref);
+        when(spaceHelpers.isCollidingWithAProtectedSpace(eq(rootOverwriteSpace2Ref), anyBoolean())).thenReturn(true);
+
+        SpaceReference overwriteSpace1ReferenceWithSubwiki = new SpaceReference("OverwriteSpace1", new WikiReference(
+            "subwiki"));
+
+        when(spaceHelpers.getSpaceReferenceWithRoot(eq("OverwriteSpace1"),
+            argThat(root -> root != null && root.getType().equals(EntityType.WIKI)))).thenReturn(
+            overwriteSpace1ReferenceWithSubwiki);
+        when(spaceHelpers.isCollidingWithAProtectedSpace(eq(overwriteSpace1ReferenceWithSubwiki),
+            anyBoolean())).thenReturn(true);
     }
 }

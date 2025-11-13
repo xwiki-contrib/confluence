@@ -90,6 +90,5 @@
 .#------------------------------------------------------------------------------
 .input|confluence+xml
 .configuration.source=overwritespaces
-.configuration.overwriteProtection
 .configuration.overwriteProtectionMode=ANY
 .#------------------------------------------------------------------------------
