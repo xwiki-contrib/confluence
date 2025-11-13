@@ -62,7 +62,7 @@ import org.xwiki.contrib.confluence.filter.event.ConfluenceFilteredEvent;
 import org.xwiki.contrib.confluence.filter.event.ConfluenceFilteringEvent;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
-import org.xwiki.contrib.confluence.filter.input.ConfluenceOverwriteProtectionModeType;
+import org.xwiki.contrib.confluence.filter.input.OverwriteProtectionMode;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.filter.input.ContentPermissionType;
@@ -3063,7 +3063,7 @@ public class ConfluenceInputFilterStream
             return true;
         }
 
-        ConfluenceOverwriteProtectionModeType overwriteProtectionMode = this.properties.getOverwriteProtectionMode();
+        OverwriteProtectionMode overwriteProtectionMode = this.properties.getOverwriteProtectionMode();
 
         switch (overwriteProtectionMode) {
             case NONCONFLUENCE:

@@ -63,7 +63,7 @@ public class ConfluenceSpaceHelpers
 
     /**
      * @param spaceReference the spaceReference of the space that is checked
-     * @param overwriteProtectedSpaces the list of overwrite protected spaces the Set of Forbidden Spaces
+     * @param overwriteProtectedSpaces the set of Overwrite Protected Spaces
      * @return whether it is forbidden to overwrite a given space.
      * @since 9.89.0
      */
@@ -73,10 +73,10 @@ public class ConfluenceSpaceHelpers
             return false;
         }
 
-        for (String forbiddenSpace : overwriteProtectedSpaces) {
-            EntityReference forbiddenRef =
-                entityReferenceResolver.resolve(forbiddenSpace, EntityType.SPACE);
-            if (forbiddenRef.equals(spaceReference)) {
+        for (String overwriteProtectedSpace : overwriteProtectedSpaces) {
+            EntityReference overwriteReference =
+                entityReferenceResolver.resolve(overwriteProtectedSpace, EntityType.SPACE);
+            if (overwriteReference.equals(spaceReference)) {
                 return true;
             }
         }
@@ -122,7 +122,7 @@ public class ConfluenceSpaceHelpers
     }
 
     /**
-     * Retrieves the complete {@link SpaceReference} for the specified space, including the root parameter.
+     * Retrieve the complete {@link SpaceReference} for the specified space, including the root parameter.
      *
      * @param target the identifier of the space
      * @param rootReference the root reference of the space

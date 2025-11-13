@@ -59,8 +59,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private static final String XWIKI_ALL_GROUP_NAME = "XWikiAllGroup";
     private static final String CLEANUP_SYNC = "SYNC";
     private static final String WEB_HOME = "WebHome";
-    private static final ConfluenceOverwriteProtectionModeType DEFAULT_OVERWRITE_PROTECTION_MODE =
-        ConfluenceOverwriteProtectionModeType.NONCONFLUENCE;
+    private static final OverwriteProtectionMode DEFAULT_OVERWRITE_PROTECTION_MODE =
+        OverwriteProtectionMode.NONCONFLUENCE;
     private static final String CONFLUENCE_UNDERSCORE = "confluence_";
     private static final String DEFAULT_GROUP_FORMAT = "${group._clean}";
     private static final String DEFAULT_SPACE_RENAMING_FORMAT = "${spaceKey}_";
@@ -319,8 +319,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     /**
      * @see #getOverwriteProtectionMode()
      */
-    private ConfluenceOverwriteProtectionModeType overwriteProtectionMode =
-        ConfluenceOverwriteProtectionModeType.NONCONFLUENCE;
+    private OverwriteProtectionMode overwriteProtectionMode =
+        OverwriteProtectionMode.NONCONFLUENCE;
 
     /**
      * @return The source to load the wiki from
@@ -1672,7 +1672,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
         + "NONE - no overwrite protection: don't rename any space;"
         + "NONCONFLUENCE - only rename spaces conflicting with existing XWiki spaces not imported from Confluence;"
         + "ANY - rename any space conflicting with an existing XWiki space.")
-    public ConfluenceOverwriteProtectionModeType getOverwriteProtectionMode()
+    public OverwriteProtectionMode getOverwriteProtectionMode()
     {
         return overwriteProtectionMode;
     }
@@ -1684,7 +1684,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @param overwriteProtectionMode the overwrite protection mode to apply for conflicting spaces
      * @since 9.89.0
      */
-    public void setOverwriteProtectionMode(ConfluenceOverwriteProtectionModeType overwriteProtectionMode)
+    public void setOverwriteProtectionMode(OverwriteProtectionMode overwriteProtectionMode)
     {
         this.overwriteProtectionMode = overwriteProtectionMode;
     }

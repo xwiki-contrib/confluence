@@ -24,7 +24,7 @@ package org.xwiki.contrib.confluence.filter.input;
  * @since 9.89.0
  * @version $Id$
  */
-public enum ConfluenceOverwriteProtectionModeType
+public enum OverwriteProtectionMode
 {
     /**
      * No overwrite protection: don't rename any space.
