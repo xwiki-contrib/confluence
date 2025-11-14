@@ -1,0 +1,97 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.#------------------------------------------------------------------------------
+<wikiSpace name="RootSpace">
+  <wikiSpace name="OverwriteSpace1_renamed">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <wikiDocumentRevision revision="1">
+          <p>
+            <parameters>
+              <entry>
+                <string>title</string>
+                <string>OverwriteSpace1</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>{{children/}}</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="Confluence.Code.ConfluencePageClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>Confluence.Code.ConfluencePageClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="url" value=""/>
+            <wikiObjectProperty name="space" value="OverwriteSpace1"/>
+          </wikiObject>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+  <wikiSpace name="OverwriteSpace2_renamed">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <wikiDocumentRevision revision="1">
+          <p>
+            <parameters>
+              <entry>
+                <string>title</string>
+                <string>OverwriteSpace2</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>{{children/}}</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="Confluence.Code.ConfluencePageClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>Confluence.Code.ConfluencePageClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="url" value=""/>
+            <wikiObjectProperty name="space" value="OverwriteSpace2"/>
+          </wikiObject>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.source=overwritespaces
+.configuration.spaceRenamingFormat=${spaceKey}_renamed
+.configuration.root=RootSpace
+.#------------------------------------------------------------------------------

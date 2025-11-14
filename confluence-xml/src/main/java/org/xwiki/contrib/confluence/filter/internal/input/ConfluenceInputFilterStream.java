@@ -62,6 +62,7 @@ import org.xwiki.contrib.confluence.filter.event.ConfluenceFilteredEvent;
 import org.xwiki.contrib.confluence.filter.event.ConfluenceFilteringEvent;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
+import org.xwiki.contrib.confluence.filter.input.OverwriteProtectionMode;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.filter.input.ContentPermissionType;
@@ -94,6 +95,7 @@ import org.xwiki.job.event.status.JobProgressManager;
 import org.xwiki.job.event.status.JobStatus;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
+import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.observation.ObservationManager;
 import org.xwiki.rendering.listener.Listener;
@@ -225,9 +227,14 @@ public class ConfluenceInputFilterStream
     @Inject
     private JobContext jobContext;
 
+    @Inject
+    private ConfluenceSpaceHelpers spaceHelpers;
+
     private final Map<String, Integer> macrosIds = new HashMap<>();
 
     private final Map<String, String> inlineComments = new HashMap<>();
+
+    private final Map<String, String> spaceTargets = new HashMap<>();
 
     private ConfluenceIdRangeList objectIdRanges;
 
@@ -445,6 +452,7 @@ public class ConfluenceInputFilterStream
 
         ConfluenceFilteringEvent filteringEvent = new ConfluenceFilteringEvent();
         maybeRemoveArchivedSpaces(filteringEvent);
+        computeSpaceTargets(filteringEvent);
         this.observationManager.notify(filteringEvent, this, this.confluencePackage);
         if (filteringEvent.isCanceled()) {
             closeConfluencePackage();
@@ -649,7 +657,7 @@ public class ConfluenceInputFilterStream
         String spaceKey, ConfluenceProperties spaceProperties, EntityReference rootSpace)
         throws FilterException, ConfluenceInterruptedException
     {
-        String spaceEntityName = confluenceConverter.toEntityName(spaceKey);
+        String spaceEntityName = this.spaceTargets.get(spaceKey);
         proxyFilter.beginWikiSpace(spaceEntityName, FilterEventParameters.EMPTY);
         try {
             Collection<ConfluenceRight> inheritedRights = null;
@@ -708,6 +716,29 @@ public class ConfluenceInputFilterStream
                 this.logger.info("Finished sending Confluence space [{}], id=[{}]", spaceKey, spaceId);
             }
         }
+    }
+
+    private void computeSpaceTargets(ConfluenceFilteringEvent event)
+    {
+        for (String spaceKey : confluencePackage.getSpaceKeys(false)) {
+            String target = this.confluenceConverter.toEntityName(spaceKey);
+            if (shouldSpaceTargetBeRenamed(target)) {
+                target = this.confluenceConverter
+                    .toEntityName(
+                        this.properties.getSpaceRenamingFormat().replace("${spaceKey}", spaceKey)
+                    );
+
+                target = renameIfMoreRenamingIsRequired(target);
+            }
+            this.spaceTargets.put(spaceKey, target);
+        }
+        event.setSpaceTargets(spaceTargets);
+    }
+
+    private String renameIfMoreRenamingIsRequired(String target)
+    {
+        return shouldSpaceTargetBeRenamed(target)
+            ? renameIfMoreRenamingIsRequired(this.confluenceConverter.toEntityName(target + "_")) : target;
     }
 
     private boolean shouldSendSpaceRights(Long homePageId)
@@ -905,6 +936,7 @@ public class ConfluenceInputFilterStream
         String blogSpaceKey = confluenceConverter.toEntityName(this.properties.getBlogSpaceName());
         EntityReference blogSpaceRef = new EntityReference(blogSpaceKey, EntityType.SPACE, spaceRef);
 
+        // > WikiSpace
         proxyFilter.beginWikiSpace(blogSpaceKey, FilterEventParameters.EMPTY);
         try {
             if (CollectionUtils.isEmpty(this.properties.getIncludedPages()) && this.properties.isPageOrderEnabled()) {
@@ -3040,6 +3072,28 @@ public class ConfluenceInputFilterStream
             return this.confluencePackage.getContentProperties(properties, key);
         } catch (Exception e) {
             throw new FilterException("Failed to parse content properties", e);
+        }
+    }
+
+    private boolean shouldSpaceTargetBeRenamed(String target)
+    {
+        SpaceReference spaceReference = spaceHelpers.getSpaceReferenceWithRoot(target, this.properties.getRoot());
+
+        if (spaceHelpers.isSpaceOverwriteProtected(spaceReference, this.properties.getOverwriteProtectedSpaces()))
+        {
+            return true;
+        }
+
+        OverwriteProtectionMode overwriteProtectionMode = this.properties.getOverwriteProtectionMode();
+
+        switch (overwriteProtectionMode) {
+            case NONCONFLUENCE:
+                return spaceHelpers.isCollidingWithAProtectedSpace(spaceReference, false);
+            case ANY:
+                return spaceHelpers.isCollidingWithAProtectedSpace(spaceReference, true);
+            case NONE:
+            default:
+                return false;
         }
     }
 }

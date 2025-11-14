@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic>
+
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">1</id>
+    <property name="name"><![CDATA[OverwriteSpace1]]></property>
+    <property name="key"><![CDATA[OverwriteSpace1]]></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">2</id>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+      <id name="id">1</id>
+    </property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">3</id>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+      <id name="id">1</id>
+    </property>
+  </object>
+
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">4</id>
+    <property name="name"><![CDATA[OverwriteSpace2]]></property>
+    <property name="key"><![CDATA[OverwriteSpace2]]></property>
+  </object>
+
+  <object class="Page" package="com.atlassian.confluence.pages">
+    <id name="id">5</id>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
+      <id name="id">4</id>
+    </property>
+  </object>
+
+</hibernate-generic>

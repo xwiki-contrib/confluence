@@ -7,7 +7,7 @@
 <suppressions>
   <suppress checks="ClassFanOutComplexity|CyclomaticComplexity|FileLength|JavaNCSS"
             files="src/main/java/org/xwiki/contrib/confluence/filter/input/ConfluenceXMLPackage\.java$"/>
-  <suppress checks="ClassFanOutComplexity|NPathComplexity|CyclomaticComplexity|FileLength|ParameterNumber"
+  <suppress checks="ClassFanOutComplexity|NPathComplexity|CyclomaticComplexity|FileLength|ParameterNumber|JavaNCSS"
             files="src/main/java/org/xwiki/contrib/confluence/filter/internal/input/ConfluenceInputFilterStream\.java$"/>
   <suppress checks="ClassFanOutComplexity"
             files="src/main/java/org/xwiki/contrib/confluence/filter/internal/input/ConfluenceConverter\.java$"/>
