@@ -657,7 +657,7 @@ public class ConfluenceInputFilterStream
         String spaceKey, ConfluenceProperties spaceProperties, EntityReference rootSpace)
         throws FilterException, ConfluenceInterruptedException
     {
-        String spaceEntityName = this.confluenceConverter.toEntityName(this.spaceTargets.get(spaceKey));
+        String spaceEntityName = this.spaceTargets.get(spaceKey);
         proxyFilter.beginWikiSpace(spaceEntityName, FilterEventParameters.EMPTY);
         try {
             Collection<ConfluenceRight> inheritedRights = null;
@@ -721,9 +721,12 @@ public class ConfluenceInputFilterStream
     private void computeSpaceTargets(ConfluenceFilteringEvent event)
     {
         for (String spaceKey : confluencePackage.getSpaceKeys(false)) {
-            String target = spaceKey;
+            String target = this.confluenceConverter.toEntityName(spaceKey);
             if (shouldSpaceTargetBeRenamed(spaceKey)) {
-                target = this.properties.getSpaceRenamingFormat().replace("${spaceKey}", spaceKey);
+                target = this.confluenceConverter
+                    .toEntityName(
+                        this.properties.getSpaceRenamingFormat().replace("${spaceKey}", spaceKey)
+                    );
 
                 target = renameIfMoreRenamingIsRequired(target);
             }
@@ -734,7 +737,8 @@ public class ConfluenceInputFilterStream
 
     private String renameIfMoreRenamingIsRequired(String target)
     {
-        return shouldSpaceTargetBeRenamed(target) ? renameIfMoreRenamingIsRequired(target + "_") : target;
+        return shouldSpaceTargetBeRenamed(target)
+            ? renameIfMoreRenamingIsRequired(this.confluenceConverter.toEntityName(target + "_")) : target;
     }
 
     private boolean shouldSendSpaceRights(Long homePageId)
