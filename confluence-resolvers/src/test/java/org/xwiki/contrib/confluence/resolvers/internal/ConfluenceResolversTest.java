@@ -25,6 +25,7 @@ import com.xpn.xwiki.doc.XWikiDocument;
 import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
@@ -41,6 +42,7 @@ import org.xwiki.model.reference.WikiReference;
 import org.xwiki.query.Query;
 import org.xwiki.query.QueryException;
 import org.xwiki.query.QueryManager;
+import org.xwiki.search.solr.Solr;
 import org.xwiki.search.solr.SolrUtils;
 import org.xwiki.test.annotation.BeforeComponent;
 import org.xwiki.test.annotation.ComponentList;
@@ -94,8 +96,6 @@ class ConfluenceResolversTest
         WEB_HOME
     );
 
-    private static final DocumentReference MY_COPY_DOC_REF = new DocumentReference(XWIKI, List.of("S"), WEB_HOME);
-
     private static final DocumentReference MY_SPACE_REF = new DocumentReference(
         XWIKI,
         List.of(MIGRATION_ROOT, MY_SPACE),
@@ -124,9 +124,14 @@ class ConfluenceResolversTest
     @MockComponent
     private SolrUtils solrUtils;
 
+    @MockComponent
+    private Solr solr;
+
     @BeforeComponent
     void setup() throws Exception
     {
+        when(solr.getClient(anyString())).thenThrow(
+            new org.apache.solr.common.SolrException(SolrException.ErrorCode.UNKNOWN, "mock"));
         when(solrDocumentDocumentReferenceResolver.resolve(any())).thenAnswer(i ->
             new DocumentReference(((Map<String, DocumentReference>) i.getArgument(0)).get(FAKE_SOLR_DOC_KEY)));
         XWikiContext xcontext = mock(XWikiContext.class);
