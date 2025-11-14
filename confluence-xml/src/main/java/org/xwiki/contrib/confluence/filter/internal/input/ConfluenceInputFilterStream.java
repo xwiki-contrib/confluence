@@ -722,7 +722,7 @@ public class ConfluenceInputFilterStream
     {
         for (String spaceKey : confluencePackage.getSpaceKeys(false)) {
             String target = this.confluenceConverter.toEntityName(spaceKey);
-            if (shouldSpaceTargetBeRenamed(spaceKey)) {
+            if (shouldSpaceTargetBeRenamed(target)) {
                 target = this.confluenceConverter
                     .toEntityName(
                         this.properties.getSpaceRenamingFormat().replace("${spaceKey}", spaceKey)
