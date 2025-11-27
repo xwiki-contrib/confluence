@@ -9,6 +9,7 @@ org.xwiki.contrib.confluence.filter.internal.input.ConfluenceInputFilterStream
 org.xwiki.contrib.confluence.filter.internal.input.ConfluenceInputFilterStreamFactory
 org.xwiki.contrib.confluence.filter.internal.input.ConfluenceInputStreamParser
 org.xwiki.contrib.confluence.filter.internal.input.ConfluenceXMLMacroSupport
+org.xwiki.contrib.confluence.filter.internal.input.ConfluenceSpaceHelpers
 org.xwiki.contrib.confluence.filter.internal.input.DefaultConfluenceInputContext
 org.xwiki.contrib.confluence.filter.internal.input.DefaultLinkMapper
 org.xwiki.contrib.confluence.filter.internal.macros.AlertMacroConverter

@@ -44,6 +44,8 @@ import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.model.validation.EntityNameValidation;
 import org.xwiki.model.validation.EntityNameValidationManager;
 import org.xwiki.observation.ObservationManager;
+import org.xwiki.query.Query;
+import org.xwiki.query.QueryManager;
 import org.xwiki.test.XWikiTempDirUtil;
 import org.xwiki.test.annotation.BeforeComponent;
 import org.xwiki.test.annotation.ComponentList;
@@ -108,6 +110,12 @@ class DefaultLinkMapperTest
 
     @MockComponent
     private ConfluenceSpaceKeyResolver spaceKeyResolver;
+
+    @MockComponent
+    private QueryManager queryManager;
+
+    @MockComponent
+    private Query query;
 
     private MockitoComponentManager componentManager;
 

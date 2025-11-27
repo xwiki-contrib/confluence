@@ -27,6 +27,7 @@ import org.mockito.stubbing.Answer;
 import org.slf4j.LoggerFactory;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceInputFilterStream;
+import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceSpaceHelpers;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageTitleResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceSpaceKeyResolver;
@@ -35,18 +36,24 @@ import org.xwiki.filter.input.InputFilterStreamFactory;
 import org.xwiki.filter.test.integration.FilterTestSuite;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
+import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.model.reference.WikiReference;
 import org.xwiki.model.validation.EntityNameValidation;
 import org.xwiki.model.validation.EntityNameValidationManager;
 import org.xwiki.observation.ObservationManager;
+import org.xwiki.query.Query;
+import org.xwiki.query.QueryManager;
 import org.xwiki.test.XWikiTempDirUtil;
 import org.xwiki.test.annotation.AllComponents;
 import org.xwiki.test.mockito.MockitoComponentManager;
 
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -93,6 +100,16 @@ public class IntegrationTests
             componentManager.registerMockComponent(ConfluencePageTitleResolver.class);
         ConfluenceSpaceKeyResolver spaceKeyResolver =
             componentManager.registerMockComponent(ConfluenceSpaceKeyResolver.class);
+
+        ConfluenceSpaceHelpers spaceHelpers = componentManager.registerMockComponent(ConfluenceSpaceHelpers.class);
+
+        handleSpaceHelpersMocks(spaceHelpers);
+
+        Query query = componentManager.registerMockComponent(Query.class);
+        QueryManager queryManager = componentManager.registerMockComponent(QueryManager.class);
+
+        when(query.execute()).thenReturn(List.of(0));
+        when(queryManager.createQuery(anyString(), anyString())).thenReturn(query);
 
         // Those cache related mocks test if resolvers are not called several times for the same page
         AtomicInteger foundTitleCache = new AtomicInteger();
@@ -164,5 +181,46 @@ public class IntegrationTests
         logger.setLevel(Level.WARN);
         logger = (Logger) LoggerFactory.getLogger(ConfluenceInputFilterStream.class);
         logger.setLevel(Level.WARN);
+    }
+
+    private void handleSpaceHelpersMocks(ConfluenceSpaceHelpers spaceHelpers)
+    {
+        SpaceReference rootReference = new SpaceReference("RootSpace", WIKI_REFERENCE);
+        SpaceReference overwriteSpace1Ref = new SpaceReference("OverwriteSpace1", WIKI_REFERENCE);
+
+        when(spaceHelpers.getSpaceReferenceWithRoot("OverwriteSpace1", null)).thenReturn(overwriteSpace1Ref);
+        when(spaceHelpers.isCollidingWithAProtectedSpace(eq(overwriteSpace1Ref), anyBoolean())).thenReturn(true);
+        when(spaceHelpers.isSpaceOverwriteProtected(
+            eq(overwriteSpace1Ref),
+            argThat(ref -> ref != null && ref.contains("OverwriteSpace1"))
+        )).thenReturn(true);
+
+        SpaceReference overwriteSpace2Ref = new SpaceReference("OverwriteSpace2", WIKI_REFERENCE);
+
+        when(spaceHelpers.getSpaceReferenceWithRoot("OverwriteSpace2", null)).thenReturn(overwriteSpace2Ref);
+        when(spaceHelpers.isCollidingWithAProtectedSpace(eq(overwriteSpace2Ref), anyBoolean())).thenReturn(true);
+
+        SpaceReference rootOverwriteSpace1Ref = new SpaceReference("OverwriteSpace1", rootReference);
+
+        when(spaceHelpers.getSpaceReferenceWithRoot(eq("OverwriteSpace1"),
+            argThat(root -> root != null && root.getName().equals("RootSpace")))).thenReturn(
+            rootOverwriteSpace1Ref);
+        when(spaceHelpers.isCollidingWithAProtectedSpace(eq(rootOverwriteSpace1Ref), anyBoolean())).thenReturn(true);
+
+        SpaceReference rootOverwriteSpace2Ref = new SpaceReference("OverwriteSpace2", rootReference);
+
+        when(spaceHelpers.getSpaceReferenceWithRoot(eq("OverwriteSpace2"),
+            argThat(root -> root != null && root.getName().equals("RootSpace")))).thenReturn(
+            rootOverwriteSpace2Ref);
+        when(spaceHelpers.isCollidingWithAProtectedSpace(eq(rootOverwriteSpace2Ref), anyBoolean())).thenReturn(true);
+
+        SpaceReference overwriteSpace1ReferenceWithSubwiki = new SpaceReference("OverwriteSpace1", new WikiReference(
+            "subwiki"));
+
+        when(spaceHelpers.getSpaceReferenceWithRoot(eq("OverwriteSpace1"),
+            argThat(root -> root != null && root.getType().equals(EntityType.WIKI)))).thenReturn(
+            overwriteSpace1ReferenceWithSubwiki);
+        when(spaceHelpers.isCollidingWithAProtectedSpace(eq(overwriteSpace1ReferenceWithSubwiki),
+            anyBoolean())).thenReturn(true);
     }
 }
