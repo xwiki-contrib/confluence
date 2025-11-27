@@ -37,6 +37,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Supplier;
 
+import com.xpn.xwiki.XWiki;
 import com.xpn.xwiki.XWikiContext;
 
 /**
@@ -107,7 +108,10 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
         if (dl == null || dl == Locale.ROOT) {
             XWikiContext xcontext = contextProvider.get();
             if (xcontext != null) {
-                dl = xcontext.getWiki().getDefaultLocale(xcontext);
+                XWiki wiki = xcontext.getWiki();
+                if (wiki != null) {
+                    dl = wiki.getDefaultLocale(xcontext);
+                }
             }
         }
         if (dl == null || dl == Locale.ROOT) {
