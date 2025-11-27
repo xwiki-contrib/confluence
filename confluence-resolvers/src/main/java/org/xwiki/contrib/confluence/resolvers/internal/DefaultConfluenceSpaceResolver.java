@@ -65,10 +65,10 @@ public class DefaultConfluenceSpaceResolver extends AbstractConfluenceResolver i
     {
         for (ConfluenceSpaceKeyResolver r : getResolvers(componentManager, ConfluenceSpaceKeyResolver.class)) {
             if (r != this) {
-                EntityReference docRef = r.getSpaceByKey(spaceKey);
-                if (docRef != null) {
-                    logger.debug("Confluence space [{}] resolved to [{}] using [{}]", spaceKey, docRef, r);
-                    return docRef;
+                EntityReference spaceRef = r.getSpaceByKey(spaceKey);
+                if (spaceRef != null) {
+                    logger.debug("Confluence space [{}] resolved to [{}] using [{}]", spaceKey, spaceRef, r);
+                    return spaceRef;
                 }
             }
         }
