@@ -30,6 +30,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
 import org.xwiki.contrib.confluence.filter.ConfluenceFilterReferenceConverter;
+import org.xwiki.contrib.confluence.filter.ConversionException;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 
 /**
@@ -56,8 +57,6 @@ public class BlogPostsMacroConverter extends AbstractMacroConverter
         "entire", FULL
     );
 
-    private static final String KILLING_THE_CONVERSION = "Killing the conversion.";
-
     @Inject
     private ConfluenceInputContext context;
 
@@ -73,38 +72,31 @@ public class BlogPostsMacroConverter extends AbstractMacroConverter
 
     @Override
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
-        String content)
+        String content) throws ConversionException
     {
         Map<String, String> parameters = new HashMap<>();
 
         killConversionForSomeUnsupportedParameters(confluenceParameters);
         handleSpaces(confluenceParameters, parameters);
-        handleMax(confluenceParameters, parameters);
+        saveParameter(confluenceParameters, parameters, "max", "limit", true);
         handleLayout(confluenceParameters, parameters);
 
         return parameters;
     }
 
-    private static void handleMax(Map<String, String> confluenceParameters, Map<String, String> parameters)
-    {
-        String max = confluenceParameters.get("max");
-        if (StringUtils.isNotEmpty(max)) {
-            parameters.put("limit", max);
-        }
-    }
-
     private static void killConversionForSomeUnsupportedParameters(Map<String, String> confluenceParameters)
+        throws ConversionException
     {
         for (String k : UNSUPPORTED_PARAMETERS) {
             if (StringUtils.isNotEmpty(confluenceParameters.get(k))) {
-                throw new RuntimeException(
-                    "The blogpostlist macro converter doesn't currently support the " + k + "parameter."
-                        + KILLING_THE_CONVERSION);
+                throw new ConversionException(
+                    "The blogpostlist macro converter doesn't currently support the " + k + "parameter.");
             }
         }
     }
 
     private void handleSpaces(Map<String, String> confluenceParameters, Map<String, String> parameters)
+        throws ConversionException
     {
         String spaces = confluenceParameters.get("spaces");
         if (StringUtils.isEmpty(spaces)) {
@@ -113,9 +105,8 @@ public class BlogPostsMacroConverter extends AbstractMacroConverter
 
         for (String spaceVal : UNSUPPORTED_SPACES) {
             if (spaces.contains(spaceVal)) {
-                throw new RuntimeException(
-                    "The blogpostlist macro converter doesn't currently support this spaces parameter value:" + spaces
-                        + KILLING_THE_CONVERSION);
+                throw new ConversionException(
+                    "The blogpostlist macro converter doesn't currently support this spaces parameter value:" + spaces);
             }
         }
 

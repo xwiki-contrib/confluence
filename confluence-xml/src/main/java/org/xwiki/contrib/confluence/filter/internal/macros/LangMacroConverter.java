@@ -23,10 +23,12 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import org.apache.commons.lang3.LocaleUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 
 /**
@@ -127,6 +129,9 @@ public class LangMacroConverter extends AbstractTranslationMacroConverter
         LANGUAGE_NAME_TO_CODE.put("welsh", "cy");
     }
 
+    @Inject
+    private Logger logger;
+
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
@@ -159,7 +164,9 @@ public class LangMacroConverter extends AbstractTranslationMacroConverter
             return LocaleUtils.toLocale(l.split("_")[0]);
         } catch (IllegalArgumentException e) {
             // Should never happen
-            throw new RuntimeException("Failed to compute a Locale for language macro " + id, e);
+            logger.error("Failed to compute a Locale for language macro [{}]", id, e);
         }
+
+        return null;
     }
 }

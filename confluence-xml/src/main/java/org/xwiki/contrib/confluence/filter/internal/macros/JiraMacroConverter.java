@@ -26,6 +26,7 @@ import javax.inject.Singleton;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.confluence.filter.ConversionException;
 import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
 
 /**
@@ -101,19 +102,17 @@ public class JiraMacroConverter extends AbstractMacroConverter
 
     @Override
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
-        String content)
+        String content) throws ConversionException
     {
         Map<String, String> parameters = new LinkedHashMap<>(confluenceParameters.size());
-        parameters.put(XWIKI_PARAM_ID, confluenceParameters.get(CONFLUENCE_PARAM_SERVER));
-
-        if (StringUtils.isEmpty(confluenceParameters.get(CONFLUENCE_PARAM_SERVER))) {
-            throw new RuntimeException("The server parameter is required");
+        if (saveParameter(confluenceParameters, parameters, CONFLUENCE_PARAM_SERVER, XWIKI_PARAM_ID, true) == null) {
+            throw new ConversionException("The server parameter is required");
         }
         markHandledParameter(confluenceParameters, "serverId", false);
 
         switch (getMacroUsageType(confluenceParameters)) {
             case LIST:
-                parameters.put("maxCount", confluenceParameters.get("maximumIssues"));
+                saveParameter(confluenceParameters, parameters, "maximumIssues", "maxCount", false);
                 if (!StringUtils.isBlank(confluenceParameters.get(CONFLUENCE_JQL_PARAMETER_NAME))) {
                     parameters.put(XWIKI_PARAM_SOURCE, "jql");
                 }
@@ -133,7 +132,7 @@ public class JiraMacroConverter extends AbstractMacroConverter
                         confluenceParameters.get(CONFLUENCE_PARAM_COLUMNS)));
                 break;
             default:
-                throw new RuntimeException("Unsupported macro usage type");
+                throw new ConversionException("Unsupported macro usage type");
         }
         return parameters;
     }

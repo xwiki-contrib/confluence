@@ -21,6 +21,8 @@ package org.xwiki.contrib.confluence.filter.internal.macros;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import org.xwiki.contrib.confluence.filter.ConversionException;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
 
 /**
@@ -43,7 +45,7 @@ import org.xwiki.contrib.confluence.filter.MacroConverter;
 public abstract class AbstractMacroConverter extends org.xwiki.contrib.confluence.filter.AbstractMacroConverter
 {
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
-        String content)
+        String content) throws ConversionException
     {
         Map<String, String> parameters = new LinkedHashMap<>(confluenceParameters.size());
 

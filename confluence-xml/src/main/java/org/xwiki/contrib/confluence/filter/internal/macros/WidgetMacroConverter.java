@@ -19,12 +19,16 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
+
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
 
 /**
  * Convert Confluence widget macro to embed macro.
@@ -36,35 +40,35 @@ import org.xwiki.component.annotation.Component;
 @Named("widget")
 public class WidgetMacroConverter extends AbstractMacroConverter
 {
-    private static final String WIDTH = "width";
-    private static final String HEIGHT = "height";
+    private static final String[] PARAMS = { "width", "height" };
 
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
-        markHandledParameter(confluenceParameters, WIDTH, true);
-        markHandledParameter(confluenceParameters, HEIGHT, true);
         return "embed";
+    }
+
+    @Override
+    protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
+        String content)
+    {
+        Map<String, String> parameters = new LinkedHashMap<>(2);
+        saveParameter(confluenceParameters, parameters, "url", true);
+        for (String p : PARAMS) {
+            String v = confluenceParameters.get(p);
+            if (StringUtils.isNotEmpty(v)) {
+                // Remove everything which is not a number
+                // For example: 100px -> 100 OR 200 -> 200
+                parameters.put(p, v.replaceAll("\\D", ""));
+            }
+        }
+        return parameters;
     }
 
     @Override
     public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
     {
         return InlineSupport.NO;
-    }
-
-    @Override
-    protected String toXWikiParameterValue(String confluenceParameterName, String confluenceParameterValue,
-        String confluenceId, Map<String, String> parameters, String confluenceContent)
-    {
-        if (confluenceParameterValue != null
-            && (WIDTH.equals(confluenceParameterName) || HEIGHT.equals(confluenceParameterName)))
-        {
-            // Remove everything which is not a number
-            // For example: 100px -> 100 OR 200 -> 200
-            return confluenceParameterValue.replaceAll("\\D", "");
-        }
-        return confluenceParameterValue;
     }
 }

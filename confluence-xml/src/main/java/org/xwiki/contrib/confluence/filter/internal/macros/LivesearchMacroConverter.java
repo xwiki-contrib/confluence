@@ -51,15 +51,7 @@ public class LivesearchMacroConverter extends AbstractMacroConverter
     private static final String CLASS_NAME = "className";
     private static final String BLOG_POST_CLASS = "Blog.BlogPostClass";
     private static final String COMMENT = "comment";
-    private static final String SPACEDESC = "spacedesc";
-    private static final String BLOGPOST = "blogpost";
-    private static final String PAGE = "page";
-    private static final String TAGS = "tags";
     private static final String TYPE = "type";
-    private static final String EXCERPT = "excerpt";
-    private static final String LARGE = "large";
-    private static final String WIDTH = "width";
-    private static final String PLACEHOLDER = "placeholder";
 
     @Inject
     private ConfluenceFilterReferenceConverter converter;
@@ -84,31 +76,18 @@ public class LivesearchMacroConverter extends AbstractMacroConverter
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {
-        String space = confluenceParameters.get("spaceKey");
         Map<String, String> parameters = new HashMap<>();
-
-        if (space != null && !space.isEmpty()) {
-            parameters.put("reference", space);
-        }
 
         boolean excerpt = confluenceParameters.getOrDefault("additional", "").contains("none");
         parameters.put("showExcerpts", excerpt ? "true" : "false");
 
-        if (LARGE.equals(confluenceParameters.get("size"))) {
-            parameters.put(WIDTH, "100%");
+        if ("large".equals(confluenceParameters.get("size"))) {
+            parameters.put("width", "100%");
         }
 
-        String placeholder = confluenceParameters.get(PLACEHOLDER);
-        if (placeholder != null && !placeholder.isEmpty()) {
-            parameters.put(PLACEHOLDER, placeholder);
-        }
-
-        String labels = confluenceParameters.get("labels");
-        if (labels != null) {
-            // same format (comma-separated tags) between XWiki and Confluence, isn't it cute?
-            parameters.put(TAGS, labels);
-        }
-
+        saveParameter(confluenceParameters, parameters, "spaceKey", "reference", true);
+        saveParameter(confluenceParameters, parameters, "placeholder", true);
+        saveParameter(confluenceParameters, parameters, "labels", "tags", true);
         handleTypeParameter(confluenceParameters, parameters);
         return parameters;
     }
@@ -119,10 +98,10 @@ public class LivesearchMacroConverter extends AbstractMacroConverter
         switch (type) {
             case "":
                 break;
-            case PAGE:
+            case "page":
                 parameters.put(KIND, DOCUMENT);
                 break;
-            case BLOGPOST:
+            case "blogpost":
                 parameters.put(KIND, DOCUMENT);
                 parameters.put(CLASS_NAME, BLOG_POST_CLASS);
                 break;
@@ -130,7 +109,7 @@ public class LivesearchMacroConverter extends AbstractMacroConverter
                 parameters.put(KIND, COMMENT);
                 parameters.put(CLASS_NAME, BLOG_POST_CLASS);
                 break;
-            case SPACEDESC:
+            case "spacedesc":
                 // Type=spacedesc cannot be supported since Confluence space descriptions are currently not imported
                 markUnhandledParameterValue(confluenceParameters, TYPE);
                 break;

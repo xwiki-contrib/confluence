@@ -42,7 +42,7 @@
             </entry>
             <entry>
               <string>content</string>
-              <string>{{embed overlay="youtube" _template="com/atlassian/confluence/extra/widgetconnector/templates/youtube.vm" width="400" url="http://www.youtube.com/watch?v=Titn-yAh74A" height="300"/}}
+              <string>{{embed url="http://www.youtube.com/watch?v=Titn-yAh74A" width="400" height="300"/}}
 
 {{embed url="http://vimeo.com/30980990"/}}
 
@@ -52,7 +52,7 @@
 
 {{embed url="https://docs.google.com/document/d/e/2PACX-1vRqgAxT07IjOqjSgWZk0ZkQWZfcar7EOsb6UWBwUm1iQLDEejoERTT_Foi_b-H899OqKUv0Bebt8LHi/pub"/}}
 
-{{embed width="500" url="https://docs.google.com/spreadsheets/d/e/2PACX-1vSoZPW8a9r9g6aTjHZe_9t82iaNrl1YLTh8JxBXiqBKigtLBTwmhfsSCsQ-hf2z8LjbmQ4ytayrdfeR/pubhtml" height="500"/}}
+{{embed url="https://docs.google.com/spreadsheets/d/e/2PACX-1vSoZPW8a9r9g6aTjHZe_9t82iaNrl1YLTh8JxBXiqBKigtLBTwmhfsSCsQ-hf2z8LjbmQ4ytayrdfeR/pubhtml" width="500" height="500"/}}
 
 {{embed url="https://docs.google.com/presentation/d/e/2PACX-1vRRyfn5yCjQUTxw0Uwqf0FnshVL8lyq-zF96KmeKvwvg3q3sfYTclDvS2IXxwIJXAxHhxNbgm7B3WB6/pub?start=false&amp;loop=false&amp;delayms=3000"/}}
 

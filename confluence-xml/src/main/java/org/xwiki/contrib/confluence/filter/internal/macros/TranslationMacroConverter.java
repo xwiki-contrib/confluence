@@ -28,7 +28,9 @@ import javax.inject.Singleton;
 
 import org.apache.commons.lang3.LocaleUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.confluence.filter.ConversionException;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollTranslationResolver;
@@ -56,6 +58,9 @@ public class TranslationMacroConverter extends AbstractTranslationMacroConverter
     @Inject
     private ConfluenceScrollTranslationResolver confluenceScrollTranslationResolver;
 
+    @Inject
+    private Logger logger;
+
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
@@ -71,20 +76,20 @@ public class TranslationMacroConverter extends AbstractTranslationMacroConverter
 
     @Override
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
-        String content)
+        String content) throws ConversionException
     {
         Map<String, String> parameters;
         Long currentPageId = confluenceInputContext.getCurrentPage();
 
         String language = confluenceParameters.get(MACRO_PARAMETER_LANGUAGE);
         if (language == null) {
-            throw new RuntimeException(String.format("Could not get the language from macro [%s]", confluenceId), null);
+            throw new ConversionException("Could not get the language from macro [" + confluenceId + "]");
         }
 
         try {
             parameters = confluenceScrollTranslationResolver.getMacroParameters(currentPageId, language);
         } catch (ConfluenceResolverException e) {
-            throw new RuntimeException(String.format(
+            throw new ConversionException(String.format(
                 "Could not get the language parameters from macro [%s] with language [%s]", confluenceId, language), e);
         }
 
@@ -105,7 +110,9 @@ public class TranslationMacroConverter extends AbstractTranslationMacroConverter
             return LocaleUtils.toLocale(l.split("_")[0]);
         } catch (IllegalArgumentException e) {
             // Should never happen
-            throw new RuntimeException("Failed to compute a Locale for the sv-translation macro with language " + l, e);
+            logger.error("Failed to compute a Locale for the sv-translation macro's language [{}]", l, e);
         }
+
+        return null;
     }
 }

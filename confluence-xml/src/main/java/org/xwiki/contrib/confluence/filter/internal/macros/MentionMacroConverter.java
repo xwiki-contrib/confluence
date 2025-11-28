@@ -33,6 +33,7 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.ConfluenceFilterReferenceConverter;
 
 import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+import org.xwiki.contrib.confluence.filter.ConversionException;
 
 /**
  * Convert mention macro.
@@ -55,13 +56,12 @@ public class MentionMacroConverter extends AbstractMacroConverter
 
     @Override
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
-        String content)
+        String content) throws ConversionException
     {
         String userKey = confluenceParameters.get(REFERENCE_PARAMETER_KEY);
         String userRef = confluenceConverter.convertUserReference(userKey);
         if (StringUtils.isEmpty(userRef)) {
-            logger.error("Failed to resolve user [{}]", userKey);
-            return null;
+            throw new ConversionException("Failed to resolve user [" + userKey + "]");
         }
 
         Map<String, String> parameters = new LinkedHashMap<>(3);

@@ -28,6 +28,7 @@ import javax.inject.Singleton;
 import java.util.Map;
 
 import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+import org.xwiki.contrib.confluence.filter.ConversionException;
 
 /**
  * Convert Confluence include macro to XWiki display macro.
@@ -49,11 +50,11 @@ public class IncludeMacroConverter extends AbstractMacroConverter
 
     @Override
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
-        String content)
+        String content) throws ConversionException
     {
         String v = confluenceParameters.get("");
         if (StringUtils.isEmpty(v)) {
-            throw new RuntimeException("Missing parameter for the include macro, killing the macro conversion");
+            throw new ConversionException("Missing parameter for the include macro, killing the macro conversion");
         }
 
         return Map.of("reference", v);

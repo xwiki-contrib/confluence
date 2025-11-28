@@ -33,6 +33,7 @@ import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.confluence.filter.ConversionException;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceScrollVariantResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceResolverException;
 import org.xwiki.model.reference.EntityReferenceSerializer;
@@ -80,7 +81,7 @@ public class ConditionalContentMacroConverter extends AbstractMacroConverter
 
     @Override
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
-        String content)
+        String content) throws ConversionException
     {
         Throwable cause = null;
 
@@ -116,8 +117,7 @@ public class ConditionalContentMacroConverter extends AbstractMacroConverter
             // to convert it if we can't resolve the variant references. A post migration fix will then be possible
             // using
             // something like the "Replace macros using Macro Converters from XDOM" snippet.
-            throw new RuntimeException(String.format("Could not generate variant references for id [{}]", confluenceId),
-                cause);
+            throw new ConversionException("Could not generate variant references", cause);
         }
 
         return Map.of(MACRO_PARAMETER_NAME, variantReferences.stream()

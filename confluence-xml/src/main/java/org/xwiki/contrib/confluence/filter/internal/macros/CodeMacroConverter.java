@@ -42,11 +42,12 @@ public class CodeMacroConverter extends AbstractMacroConverter
 {
     static final String CODE = "code";
     private static final String LANGUAGE = "language";
+
+    private static final String[] LANGUAGE_PARAMETER_NAMES = { LANGUAGE, "", "lang" };
     private static final String LINENUMBERS = "linenumbers";
     private static final String FIRST_LINE = "firstLine";
     private static final String COLLAPSE = "collapse";
     private static final String FALSE = "false";
-    private static final String TITLE = "title";
 
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
@@ -60,7 +61,7 @@ public class CodeMacroConverter extends AbstractMacroConverter
         String content)
     {
         Map<String, String> parameters = new HashMap<>(1);
-        putLanguageParameter(confluenceParameters, parameters);
+        saveParameter(confluenceParameters, parameters, LANGUAGE_PARAMETER_NAMES, LANGUAGE, true);
 
         if (content != null && containsEndCode(content)) {
             parameters.put("source",  "string:" + content);
@@ -70,28 +71,11 @@ public class CodeMacroConverter extends AbstractMacroConverter
             parameters.put("layout", LINENUMBERS);
         }
 
-        String title = confluenceParameters.get(TITLE);
-        if (StringUtils.isNotEmpty(title)) {
-            parameters.put(TITLE, title);
-        }
+        saveParameter(confluenceParameters, parameters, "title", true);
 
         checkUnhandledParameterValues(confluenceParameters);
 
         return parameters;
-    }
-
-    private static void putLanguageParameter(Map<String, String> confluenceParameters, Map<String, String> parameters)
-    {
-        String language = confluenceParameters.get(LANGUAGE);
-        if (StringUtils.isEmpty(language)) {
-            language = confluenceParameters.get("");
-        }
-        if (StringUtils.isEmpty(language)) {
-            language = confluenceParameters.get("lang");
-        }
-        if (StringUtils.isNotEmpty(language)) {
-            parameters.put(LANGUAGE, language);
-        }
     }
 
     private void checkUnhandledParameterValues(Map<String, String> confluenceParameters)

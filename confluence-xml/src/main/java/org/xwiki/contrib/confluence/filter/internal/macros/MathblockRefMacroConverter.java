@@ -30,6 +30,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+import org.xwiki.contrib.confluence.filter.ConversionException;
 
 /**
  * Convert Mathblock-ref to mathjax.
@@ -62,13 +63,13 @@ public class MathblockRefMacroConverter extends AbstractMacroConverter
 
     @Override
     protected String toXWikiContent(String confluenceId, Map<String, String> parameters, String confluenceContent)
+        throws ConversionException
     {
         // based on https://tex.stackexchange.com/questions/18311/what-are-the-valid-names-as-labels
         // this also makes sure we don't allow XWiki syntax injection by forbidding '"', '{', '}' and '$'
         String anchor = parameters.get(ANCHOR);
         if (StringUtils.isEmpty(anchor)) {
-            throw new RuntimeException(
-                "The mathblock-ref macro is missing its anchor, killing the macro conversion");
+            throw new ConversionException("The mathblock-ref macro is missing its anchor");
         }
         anchor = anchor.replaceAll(
             "[^!&()*+,\\-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ\\[\\]`abcdefghijklmnopqrstuvwxyz|]",

@@ -29,6 +29,7 @@ import javax.inject.Singleton;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
+import org.xwiki.contrib.confluence.filter.ConversionException;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.rendering.listener.Listener;
@@ -55,7 +56,8 @@ public class MacroToContentConverter extends AbstractParseContentMacroConverter
     protected ConfluenceInputContext context;
 
     @Override
-    public void toXWiki(String id, Map<String, String> parameters, String content, boolean inline, Listener listener)
+    public void toXWiki(String id, Map<String, String> parameters, boolean inline, String content, Listener listener)
+        throws ConversionException
     {
         Map<String, String> divWrapperParams = toXWikiParameters(id, parameters, content);
         ConfluenceInputProperties inputProperties = context.getProperties();
@@ -67,21 +69,39 @@ public class MacroToContentConverter extends AbstractParseContentMacroConverter
         endEvent(id, divWrapperParams, newContent, inline, listener);
     }
 
+    /**
+     * The content is about to be processed (parseContent is about to be called).
+     * @param id the Confluence macro name
+     * @param parameters the Confluence parameters
+     * @param content the content of the macro
+     * @param inline whether the macro is parsed inline
+     * @param listener the listener
+     * @throws ConversionException if the conversion cannot continue
+     */
     protected void beginEvent(String id, Map<String, String> parameters, String content, boolean inline,
-        Listener listener)
+        Listener listener) throws ConversionException
     {
         listener.beginGroup(parameters);
     }
 
+    /**
+     * The content was just processed (parseContent just returned).
+     * @param id the Confluence macro name
+     * @param parameters the Confluence parameters
+     * @param content the content of the macro
+     * @param inline whether the macro is parsed inline
+     * @param listener the listener
+     * @throws ConversionException if the conversion cannot continue
+     */
     protected void endEvent(String id, Map<String, String> parameters, String content, boolean inline,
-        Listener listener)
+        Listener listener) throws ConversionException
     {
         listener.endGroup(parameters);
     }
 
     @Override
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
-        String content)
+        String content) throws ConversionException
     {
         Map<String, String> divWrapperParams = new HashMap<>();
 

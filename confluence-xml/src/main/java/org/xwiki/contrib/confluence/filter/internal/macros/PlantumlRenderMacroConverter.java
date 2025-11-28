@@ -69,12 +69,9 @@ public class PlantumlRenderMacroConverter extends AbstractMacroConverter
         String content)
     {
         Map<String, String> parameters = new LinkedHashMap<>();
-        for (String parameterName : new String[] { "server", "title" }) {
-            String value = confluenceParameters.get(parameterName);
-            if (StringUtils.isNotEmpty(value)) {
-                parameters.put(parameterName, value);
-            }
-        }
+
+        saveParameter(confluenceParameters, parameters, "server", true);
+        saveParameter(confluenceParameters, parameters, "title", true);
 
         for (String parameterName : new String[] { "type", "format" }) {
             String value = confluenceParameters.get(parameterName);

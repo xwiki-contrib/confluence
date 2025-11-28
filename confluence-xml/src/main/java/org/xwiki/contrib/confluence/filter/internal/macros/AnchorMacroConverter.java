@@ -27,6 +27,7 @@ import javax.inject.Singleton;
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+import org.xwiki.contrib.confluence.filter.ConversionException;
 
 /**
  * Convert Confluence anchor macro.
@@ -48,7 +49,7 @@ public class AnchorMacroConverter extends AbstractMacroConverter
 
     @Override
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
-        String content)
+        String content) throws ConversionException
     {
         // Sometimes, anchors use <ac:parameter ac:name="">the-anchor</ac:parameter>
         // Sometimes, they use <ac:default-parameter>the-anchor</ac:default-parameter>
@@ -58,7 +59,7 @@ public class AnchorMacroConverter extends AbstractMacroConverter
             anchor = confluenceParameters.get("0");
         }
         if (StringUtils.isEmpty(anchor)) {
-            throw new RuntimeException("The anchor macro is missing its main parameter, killing the macro conversion");
+            throw new ConversionException("The anchor macro is missing its main parameter");
         }
         return Map.of("name", anchor);
     }

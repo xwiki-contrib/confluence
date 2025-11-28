@@ -19,7 +19,6 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
-import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 
 import javax.inject.Named;
@@ -58,15 +57,8 @@ public class TocMacroConverter extends AbstractMacroConverter
         String confluenceContent)
     {
         Map<String, String> parameters = new HashMap<>();
-        String maxLevel = confluenceParameters.get("maxLevel");
-        if (StringUtils.isNotEmpty(maxLevel)) {
-            parameters.put("depth", maxLevel);
-        }
-        String minLevel = confluenceParameters.get("minLevel");
-        if (StringUtils.isNotEmpty(minLevel)) {
-            parameters.put("start", minLevel);
-        }
-
+        saveParameter(confluenceParameters, parameters, "maxLevel", "depth", true);
+        saveParameter(confluenceParameters, parameters, "minLevel", "start", true);
         if ("decimal".equals(confluenceParameters.get("style"))) {
             parameters.put("numbered", "true");
         }

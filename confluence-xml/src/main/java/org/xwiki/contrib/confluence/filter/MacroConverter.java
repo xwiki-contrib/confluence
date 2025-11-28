@@ -57,7 +57,7 @@ public interface MacroConverter
     }
 
     /**
-     * Convert passed macro to the XWiki equivalent.
+     * Convert the passed macro to the XWiki equivalent.
      * 
      * @param id the Confluence macro id (eg "toc" for the TOC macro)
      * @param parameters the macro parameters (which can be an unmodifiable map, so please don't attempt to modify it)
@@ -89,19 +89,23 @@ public interface MacroConverter
      */
     default String toXWikiId(String id, Map<String, String> parameters, String content, boolean inline)
     {
-        String[] mid = new String[1];
-        toXWiki(id, parameters, content, inline,
-            new WrappingListener()
-            {
-                @Override
-                public void onMacro(String id, Map<String, String> parameters, String content, boolean inline)
+        try {
+            String[] mid = new String[1];
+            toXWiki(id, parameters, content, inline,
+                new WrappingListener()
                 {
-                    if (mid[0] == null) {
-                        mid[0] = id;
+                    @Override
+                    public void onMacro(String id, Map<String, String> parameters, String content, boolean inline)
+                    {
+                        if (mid[0] == null) {
+                            mid[0] = id;
+                        }
                     }
-                }
-            });
-        return mid[0];
+                });
+            return mid[0];
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     /**

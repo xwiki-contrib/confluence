@@ -53,8 +53,29 @@ public abstract class AbstractMacroConverter implements MacroConverter
     private ConfluenceInputContext inputContext;
 
     @Override
-    public void toXWiki(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
+    public final void toXWiki(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline, Listener listener)
+    {
+        try {
+            toXWiki(confluenceId, confluenceParameters, inline, confluenceContent, listener);
+        } catch (ConversionException e) {
+            // This exception is caught in DefaultMacroConverter
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * Convert the passed macro to the XWiki equivalent.
+     *
+     * @param confluenceId the Confluence macro id (eg "toc" for the TOC macro)
+     * @param confluenceParameters the macro parameters (which can be an unmodifiable map, don't attempt to modify
+     *     it)
+     * @param inline if true the macro is located in an inline content (like paragraph, etc.)
+     * @param confluenceContent the macro content
+     * @param listener the listener to send events to
+     */
+    protected void toXWiki(String confluenceId, Map<String, String> confluenceParameters,
+        boolean inline, String confluenceContent, Listener listener) throws ConversionException
     {
         TracedMap<String, String> tracedParameters = new TracedMap<>(confluenceParameters);
         String id = toXWikiId(confluenceId, tracedParameters, confluenceContent, inline);
@@ -169,7 +190,7 @@ public abstract class AbstractMacroConverter implements MacroConverter
      */
     protected abstract Map<String, String> toXWikiParameters(String confluenceId,
         Map<String, String> confluenceParameters,
-        String content);
+        String content) throws ConversionException;
 
     /**
      * Convert the macro content.
@@ -177,8 +198,10 @@ public abstract class AbstractMacroConverter implements MacroConverter
      * @param parameters the parameters of the macro
      * @param confluenceContent the content in Confluence
      * @return the content in XWiki
+     * @throws ConversionException if the conversion cannot continue
      */
     protected String toXWikiContent(String confluenceId, Map<String, String> parameters, String confluenceContent)
+        throws ConversionException
     {
         return confluenceContent;
     }
@@ -216,6 +239,65 @@ public abstract class AbstractMacroConverter implements MacroConverter
         } else {
             logCantMarkError();
         }
+    }
+
+    /**
+     * Marks the given confluence parameter as handled and put it in the xwiki parameters map using the given xwiki
+     * parameter name.
+     * @param confluenceParameters the confluence parameters map
+     * @param xwikiParameters the xwiki parameters map
+     * @param confluenceName  the name of the parameter in Confluence
+     * @param xwikiName the name of the parameter in XWiki
+     * @param ignoreEmpty consider an empty parameter as if it were not there at all
+     * @return the parameter value, or null if the parameter is missing or if it is empty and ignoreEmpty is true
+     */
+    protected static String saveParameter(Map<String, String> confluenceParameters, Map<String, String> xwikiParameters,
+        String confluenceName, String xwikiName, boolean ignoreEmpty)
+    {
+        String v = confluenceParameters.get(confluenceName);
+        if (v != null && !(v.isEmpty() && ignoreEmpty)) {
+            xwikiParameters.put(xwikiName, v);
+            return v;
+        }
+
+        return null;
+    }
+
+    /**
+     * Marks the given confluence parameter as handled and put it in the xwiki parameters map using the given xwiki
+     * parameter name.
+     * @param confluenceParameters the confluence parameters map
+     * @param xwikiParameters the xwiki parameters map
+     * @param confluenceNames  the possible names of the parameter in Confluence
+     * @param xwikiName the name of the parameter in XWiki
+     * @param ignoreEmpty consider an empty parameter as if it were not there at all
+     * @return the parameter value, or null if the parameter is missing or if it is empty and ignoreEmpty is true
+     */
+    protected static String saveParameter(Map<String, String> confluenceParameters, Map<String, String> xwikiParameters,
+        String[] confluenceNames, String xwikiName, boolean ignoreEmpty)
+    {
+        for (String confluenceName : confluenceNames) {
+            String v = saveParameter(confluenceParameters, xwikiParameters, confluenceName, xwikiName, ignoreEmpty);
+            if (v != null) {
+                return v;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Marks the given confluence parameter as handled and put it in the xwiki parameters map using the given xwiki
+     * parameter name.
+     * @param confluenceParameters the confluence parameters map
+     * @param xwikiParameters the xwiki parameters map
+     * @param name  the name of the parameter in Confluence and XWiki
+     * @param ignoreEmpty consider an empty parameter as if it were not there at all
+     * @return the parameter value, or null if the parameter is missing or if it is empty and ignoreEmpty is true
+     */
+    protected static String saveParameter(Map<String, String> confluenceParameters, Map<String, String> xwikiParameters,
+        String name, boolean ignoreEmpty)
+    {
+        return saveParameter(confluenceParameters, xwikiParameters, name, name, ignoreEmpty);
     }
 
     private void logCantMarkError()

@@ -52,7 +52,7 @@ public class ClickableMacroConverter extends AbstractMacroConverter
         String content)
     {
         Map<String, String> parameters = new HashMap<>(1);
-        parameters.put("reference", confluenceParameters.get("link"));
+        saveParameter(confluenceParameters, parameters, "link", "reference", false);
         return parameters;
     }
 

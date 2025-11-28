@@ -31,6 +31,7 @@ import java.util.Collections;
 import java.util.Map;
 
 import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+import org.xwiki.contrib.confluence.filter.ConversionException;
 
 /**
  * Convert Mathinline to mathjax.
@@ -64,16 +65,15 @@ public class MathMacroConverter extends AbstractMacroConverter
 
     @Override
     protected String toXWikiContent(String confluenceId, Map<String, String> parameters, String confluenceContent)
+        throws ConversionException
     {
-
         String content = confluenceContent;
         if (StringUtils.isEmpty(content)) {
             content = parameters.get(BODY);
         }
 
         if (StringUtils.isEmpty(content)) {
-            throw new RuntimeException(
-                "The " + confluenceId + " macro is missing its body, killing the macro conversion");
+            throw new ConversionException("The " + confluenceId + " macro is missing its body");
         }
 
         if (content.startsWith("--uriencoded--")) {

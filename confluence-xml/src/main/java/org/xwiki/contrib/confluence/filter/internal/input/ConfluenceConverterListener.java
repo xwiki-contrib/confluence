@@ -175,7 +175,7 @@ public class ConfluenceConverterListener extends WrappingListener
         }
     }
 
-    private class NormalizedPlainFilter extends CompositeListener
+    private static class NormalizedPlainFilter extends CompositeListener
     {
         private final WikiPrinter printer = new DefaultWikiPrinter();
 
@@ -193,7 +193,7 @@ public class ConfluenceConverterListener extends WrappingListener
     }
 
     /**
-     * @param inlineComments
+     * @param inlineComments the inline comments
      * @since 9.79.0
      */
     public void setInlineComments(Map<String, String> inlineComments)

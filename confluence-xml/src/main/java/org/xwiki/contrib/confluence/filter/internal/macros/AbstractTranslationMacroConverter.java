@@ -24,6 +24,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import org.xwiki.contrib.confluence.filter.ConversionException;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.rendering.listener.Listener;
@@ -35,7 +36,8 @@ abstract class AbstractTranslationMacroConverter extends AbstractParseContentMac
     private ConfluenceInputContext context;
 
     @Override
-    public void toXWiki(String id, Map<String, String> parameters, String content, boolean inline, Listener listener)
+    public void toXWiki(String id, Map<String, String> parameters, boolean inline, String content, Listener listener)
+        throws ConversionException
     {
         if (context.getProperties().isTranslationsEnabled()) {
             toXWikiWithTranslationsEnabled(id, parameters, content, inline, listener);
@@ -45,9 +47,9 @@ abstract class AbstractTranslationMacroConverter extends AbstractParseContentMac
     }
 
     protected void toXWikiWithTranslationsDisabled(String id, Map<String, String> parameters, String content,
-        boolean inline, Listener listener)
+        boolean inline, Listener listener) throws ConversionException
     {
-        super.toXWiki(id, parameters, content, inline, listener);
+        super.toXWiki(id, parameters, inline, content, listener);
     }
 
     protected void toXWikiWithTranslationsEnabled(String id, Map<String, String> parameters, String content,
@@ -55,8 +57,9 @@ abstract class AbstractTranslationMacroConverter extends AbstractParseContentMac
     {
         // marks the language parameter as handled
         Locale language = getLanguage(id, parameters, content, inline);
-
-        context.addUsedLocale(language);
+        if (language != null) {
+            context.addUsedLocale(language);
+        }
 
         Locale currentLanguage = context.getCurrentLocale();
         if (currentLanguage == null) {

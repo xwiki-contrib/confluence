@@ -19,12 +19,15 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
+
+import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+import org.xwiki.contrib.confluence.filter.ConversionException;
 
 /**
  * Convert Confluence redirect macro to XWiki redirect macro.
@@ -32,11 +35,12 @@ import org.xwiki.component.annotation.Component;
  * @version $Id$
  * @since 9.59.0
  */
-@Component
+@Component(hints = { "redirect", "viewport-redirect", "viewport-url-redirect" })
 @Singleton
-@Named("redirect")
 public class RedirectMacroConverter extends AbstractMacroConverter
 {
+    private static final String[] REFERENCE_PARAMS = { "location", "redirectTo" };
+
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
@@ -45,18 +49,20 @@ public class RedirectMacroConverter extends AbstractMacroConverter
     }
 
     @Override
-    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
+    protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
+        String content) throws ConversionException
     {
-        return InlineSupport.NO;
+        Map<String, String> parameters = new LinkedHashMap<>(2);
+        saveParameter(confluenceParameters, parameters, "delay", true);
+        saveParameter(confluenceParameters, parameters, "visible", true);
+        saveParameter(confluenceParameters, parameters, REFERENCE_PARAMS, "reference", true);
+        saveParameter(confluenceParameters, parameters, "redirectMessage", true);
+        return parameters;
     }
 
     @Override
-    protected String toXWikiParameterName(String confluenceParameterName, String confluenceId,
-        Map<String, String> parameters, String confluenceContent)
+    public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
     {
-        if ("location".equals(confluenceParameterName)) {
-            return "reference";
-        }
-        return confluenceParameterName;
+        return InlineSupport.NO;
     }
 }

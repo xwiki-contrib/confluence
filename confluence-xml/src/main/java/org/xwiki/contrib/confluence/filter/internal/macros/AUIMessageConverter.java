@@ -23,11 +23,14 @@ package org.xwiki.contrib.confluence.filter.internal.macros;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+import org.xwiki.contrib.confluence.filter.ConversionException;
 
 /**
  * Converts auimessage to either info, success, warning or error macros.
@@ -41,31 +44,30 @@ import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
 @Singleton
 public class AUIMessageConverter extends AbstractMacroConverter
 {
-    private static final String PARAM_KEY_TITLE = "title";
-
-    private static final String PARAM_KEY_CLASS = "class";
-
-    private static final String PARAM_KEY_TYPE = "type";
-
     private static final String INFO = "info";
+    private static final String CONFLUENCE_AUIMESSAGE = "confluence_auimessage";
+    private static final String TYPE = "type";
+
+    @Inject
+    private Logger logger;
 
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
-        String type = confluenceParameters.getOrDefault(PARAM_KEY_TYPE, "");
+        String type = confluenceParameters.getOrDefault(TYPE, "");
         switch (type) {
+            case "error":
+            case "warning":
+            case "success":
+                return type;
             case "":
             case "generic":
             case "hint":
             case INFO:
                 return INFO;
-            case "error":
-            case "warning":
-            case "success":
-                return type;
             default:
-                throw new RuntimeException("Unhandled AUI message type [{" + type + "}], killing the macro conversion");
+                return CONFLUENCE_AUIMESSAGE;
         }
     }
 
@@ -77,18 +79,19 @@ public class AUIMessageConverter extends AbstractMacroConverter
 
     @Override
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
-        String content)
+        String content) throws ConversionException
     {
-        Map<String, String> newParams = new HashMap<>();
-
-        if (confluenceParameters.containsKey(PARAM_KEY_TITLE)) {
-            newParams.put(PARAM_KEY_TITLE, confluenceParameters.get(PARAM_KEY_TITLE));
+        if (CONFLUENCE_AUIMESSAGE.equals(toXWikiId(confluenceId, confluenceParameters, content, false))) {
+            if (logger.isErrorEnabled()) {
+                logger.error("Unhandled type [{}] for macro auimessage", confluenceParameters.get(TYPE));
+            }
+            throw new ConversionException("Unhandled type for macro auimessage");
         }
+        Map<String, String> xwikiParameters = new HashMap<>();
 
-        if (confluenceParameters.containsKey(PARAM_KEY_CLASS)) {
-            newParams.put("cssClass", confluenceParameters.get(PARAM_KEY_CLASS));
-        }
+        saveParameter(confluenceParameters, xwikiParameters, "title", false);
+        saveParameter(confluenceParameters, xwikiParameters, "class", "cssClass", false);
 
-        return newParams;
+        return xwikiParameters;
     }
 }

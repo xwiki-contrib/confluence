@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
+import org.xwiki.contrib.confluence.filter.ConversionException;
 import org.xwiki.contrib.confluence.filter.MacroConverter;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.rendering.listener.Listener;
@@ -38,8 +39,8 @@ import org.xwiki.rendering.macro.MacroManager;
 
 /**
  * Find converter for passed macro.
- * Note: the default parameter extends the deprecated internal AbstractMacroConverter for backward compatiblity reasons.
- * This should probably be changed after early 2027.
+ * Note: the default parameter extends the deprecated internal AbstractMacroConverter to use its default parameter
+ * handling.
  * @version $Id$
  * @since 9.1
  */
@@ -73,11 +74,12 @@ public class DefaultMacroConverter extends AbstractMacroConverter
     }
 
     @Override
-    public void toXWiki(String id, Map<String, String> parameters, String content, boolean inline, Listener listener)
+    public void toXWiki(String id, Map<String, String> parameters, boolean inline, String content, Listener listener)
+        throws ConversionException
     {
         MacroConverter converter = getMacroConverter(id);
         if (converter == this) {
-            super.toXWiki(id, parameters, content, inline, listener);
+            super.toXWiki(id, parameters, inline, content, listener);
             return;
         }
 
@@ -86,7 +88,7 @@ public class DefaultMacroConverter extends AbstractMacroConverter
                 converter.toXWiki(id, parameters, content, inline, listener);
             } catch (Exception e) {
                 this.logger.error("Failed to convert macro [{}] using converter [{}]", id, converter, e);
-                super.toXWiki(id, parameters, content, inline, listener);
+                super.toXWiki(id, parameters, inline, content, listener);
             }
         }
 

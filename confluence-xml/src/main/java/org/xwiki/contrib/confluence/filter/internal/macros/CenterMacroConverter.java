@@ -54,7 +54,7 @@ public class CenterMacroConverter extends AbstractMacroConverter
         String content)
     {
         Map<String, String> parameters = new HashMap<>(1);
-        parameters.put(CLASS, confluenceParameters.get(CLASS));
+        saveParameter(confluenceParameters, parameters, CLASS, false);
         return parameters;
     }
 

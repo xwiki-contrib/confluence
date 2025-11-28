@@ -50,8 +50,8 @@ public class ImgMacroConverter extends AbstractMacroConverter
     private ConfluenceURLConverter urlConverter;
 
     @Override
-    public void toXWiki(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
-        boolean inline, Listener listener)
+    public void toXWiki(String confluenceId, Map<String, String> confluenceParameters, boolean inline,
+        String confluenceContent, Listener listener)
     {
         String url = confluenceParameters.get(SRC);
         ResourceReference reference = urlConverter.convertURL(url);
