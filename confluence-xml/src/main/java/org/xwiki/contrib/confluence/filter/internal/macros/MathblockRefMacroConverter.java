@@ -69,7 +69,7 @@ public class MathblockRefMacroConverter extends AbstractMacroConverter
                 "The mathblock-ref macro is missing its anchor, killing the macro conversion");
         }
         anchor = anchor.replaceAll(
-            "[^!%&amp;()*+,\\-./0123456789:;&lt;=&gt;?@ABCDEFGHIJKLMNOPQRSTUVWXYZ\\[\\]`abcdefghijklmnopqrstuvwxyz|]",
+            "[^!&()*+,\\-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ\\[\\]`abcdefghijklmnopqrstuvwxyz|]",
             ""
         );
 
