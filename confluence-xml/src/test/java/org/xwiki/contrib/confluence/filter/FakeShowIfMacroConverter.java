@@ -40,6 +40,13 @@ public class FakeShowIfMacroConverter extends AbstractMacroConverter
     private ConfluenceFilterReferenceConverter converter;
 
     @Override
+    public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
+        boolean inline)
+    {
+        return confluenceId;
+    }
+
+    @Override
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content)
     {

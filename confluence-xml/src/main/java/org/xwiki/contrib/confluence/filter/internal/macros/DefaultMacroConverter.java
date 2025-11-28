@@ -114,7 +114,7 @@ public class DefaultMacroConverter extends AbstractMacroConverter
             return this.context.getProperties().getUnknownMacroPrefix() + confluenceId;
         }
 
-        // By default macros are not prefixed
+        // By default, macros are not prefixed
         return confluenceId;
     }
 

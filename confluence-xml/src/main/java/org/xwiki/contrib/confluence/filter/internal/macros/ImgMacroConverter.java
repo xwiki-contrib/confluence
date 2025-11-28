@@ -50,6 +50,13 @@ public class ImgMacroConverter extends AbstractMacroConverter
     private ConfluenceURLConverter urlConverter;
 
     @Override
+    public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
+        boolean inline)
+    {
+        return null;
+    }
+
+    @Override
     public void toXWiki(String confluenceId, Map<String, String> confluenceParameters, boolean inline,
         String confluenceContent, Listener listener)
     {

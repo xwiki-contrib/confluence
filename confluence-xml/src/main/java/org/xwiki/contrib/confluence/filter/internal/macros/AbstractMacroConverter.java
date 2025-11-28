@@ -44,6 +44,13 @@ import org.xwiki.contrib.confluence.filter.MacroConverter;
 @Deprecated (since = "9.89.0")
 public abstract class AbstractMacroConverter extends org.xwiki.contrib.confluence.filter.AbstractMacroConverter
 {
+    @Override
+    public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
+        boolean inline)
+    {
+        return confluenceId;
+    }
+
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content) throws ConversionException
     {

@@ -56,6 +56,13 @@ public class MacroToContentConverter extends AbstractParseContentMacroConverter
     protected ConfluenceInputContext context;
 
     @Override
+    public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
+        boolean inline)
+    {
+        return confluenceId;
+    }
+
+    @Override
     public void toXWiki(String id, Map<String, String> parameters, boolean inline, String content, Listener listener)
         throws ConversionException
     {

@@ -55,6 +55,13 @@ public class MentionMacroConverter extends AbstractMacroConverter
     private Logger logger;
 
     @Override
+    public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
+        boolean inline)
+    {
+        return "mention";
+    }
+
+    @Override
     protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
         String content) throws ConversionException
     {

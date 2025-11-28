@@ -52,6 +52,13 @@ public abstract class AbstractMacroConverter implements MacroConverter
     @Inject
     private ConfluenceInputContext inputContext;
 
+    // Code editors might suggest that toXWikiId already exists in MacroConverter and can be removed here, but
+    // one should not remove it: we want subclasses to explicitly implement toXWikiId. The default
+    // implementation in the interface is there for backward-compatibility but this stuff should not be implicit.
+    @Override
+    public abstract String toXWikiId(String confluenceId, Map<String, String> confluenceParameters,
+        String confluenceContent, boolean inline);
+
     @Override
     public final void toXWiki(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline, Listener listener)
@@ -171,13 +178,6 @@ public abstract class AbstractMacroConverter implements MacroConverter
             logger.info(UNHANDLED_PARAMETER_VALUE_MARKER, "Unhandled value [{}] for parameter [{}] in macro [{}]",
                 confluenceParameters.get(p), p, confluenceId);
         }
-    }
-
-    @Override
-    public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
-        boolean inline)
-    {
-        return confluenceId;
     }
 
     /**
@@ -307,7 +307,7 @@ public abstract class AbstractMacroConverter implements MacroConverter
     }
 
     // Code editors might suggest that supportsInlineMode already exists in MacroConverter and can be removed here, but
-    // one should not remove it: we want subclass to explicitly implement supportsInlineMode. The default
+    // one should not remove it: we want subclasses to explicitly implement supportsInlineMode. The default
     // implementation in the interface is there for backward-compatibility but this stuff should not be implicit.
     @Override
     public abstract InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content);

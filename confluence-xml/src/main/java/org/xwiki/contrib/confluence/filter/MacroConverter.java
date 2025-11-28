@@ -79,8 +79,7 @@ public interface MacroConverter
     }
 
     /**
-     * @return the id of the macro after conversion given the parameters, the content and whether the context is inline.
-     *         The default implementation uses toXWiki to return the converted id.
+     * @return the id of the macro after conversion, or null if no macro is produced by this macro converter
      * @param id the Confluence macro id
      * @param parameters the macro parameters
      * @param content the macro content
