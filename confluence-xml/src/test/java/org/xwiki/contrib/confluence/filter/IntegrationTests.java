@@ -32,6 +32,7 @@ import org.xwiki.contrib.confluence.resolvers.ConfluencePageIdResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluencePageTitleResolver;
 import org.xwiki.contrib.confluence.resolvers.ConfluenceSpaceKeyResolver;
 import org.xwiki.environment.Environment;
+import org.xwiki.filter.FilterException;
 import org.xwiki.filter.input.InputFilterStreamFactory;
 import org.xwiki.filter.test.integration.FilterTestSuite;
 import org.xwiki.model.EntityType;
@@ -183,7 +184,7 @@ public class IntegrationTests
         logger.setLevel(Level.WARN);
     }
 
-    private void handleSpaceHelpersMocks(ConfluenceSpaceHelpers spaceHelpers)
+    private void handleSpaceHelpersMocks(ConfluenceSpaceHelpers spaceHelpers) throws FilterException
     {
         SpaceReference rootReference = new SpaceReference("RootSpace", WIKI_REFERENCE);
         SpaceReference overwriteSpace1Ref = new SpaceReference("OverwriteSpace1", WIKI_REFERENCE);

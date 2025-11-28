@@ -27,6 +27,7 @@ import javax.inject.Provider;
 import javax.inject.Singleton;
 
 import org.xwiki.component.annotation.Component;
+import org.xwiki.filter.FilterException;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.EntityReference;
 import org.xwiki.model.reference.EntityReferenceResolver;
@@ -92,8 +93,7 @@ public class ConfluenceSpaceHelpers
      * @since 9.89.0
      */
     public boolean isCollidingWithAProtectedSpace(
-        SpaceReference spaceReference,
-        boolean confluenceSpacesAreProtected)
+        SpaceReference spaceReference, boolean confluenceSpacesAreProtected) throws FilterException
     {
         String spaceTargetName = entityReferenceSerializer.serialize(spaceReference);
         String wikiName = spaceReference.getWikiReference().getName();
@@ -117,7 +117,7 @@ public class ConfluenceSpaceHelpers
                 .execute()
                 .isEmpty();
         } catch (QueryException e) {
-            throw new RuntimeException("An exception occurred while checking if a space already exists", e);
+            throw new FilterException("An exception occurred while checking if a space already exists", e);
         }
     }
 

@@ -450,6 +450,11 @@ public class ConfluenceInputFilterStream
 
         getJobStatus();
 
+        return handleFilteringEvent();
+    }
+
+    private ConfluenceFilteringEvent handleFilteringEvent() throws FilterException
+    {
         ConfluenceFilteringEvent filteringEvent = new ConfluenceFilteringEvent();
         maybeRemoveArchivedSpaces(filteringEvent);
         computeSpaceTargets(filteringEvent);
@@ -718,7 +723,7 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void computeSpaceTargets(ConfluenceFilteringEvent event)
+    private void computeSpaceTargets(ConfluenceFilteringEvent event) throws FilterException
     {
         for (String spaceKey : confluencePackage.getSpaceKeys(false)) {
             String target = this.confluenceConverter.toEntityName(spaceKey);
@@ -735,7 +740,7 @@ public class ConfluenceInputFilterStream
         event.setSpaceTargets(spaceTargets);
     }
 
-    private String renameIfMoreRenamingIsRequired(String target)
+    private String renameIfMoreRenamingIsRequired(String target) throws FilterException
     {
         return shouldSpaceTargetBeRenamed(target)
             ? renameIfMoreRenamingIsRequired(this.confluenceConverter.toEntityName(target + "_")) : target;
@@ -3075,7 +3080,7 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private boolean shouldSpaceTargetBeRenamed(String target)
+    private boolean shouldSpaceTargetBeRenamed(String target) throws FilterException
     {
         SpaceReference spaceReference = spaceHelpers.getSpaceReferenceWithRoot(target, this.properties.getRoot());
 
