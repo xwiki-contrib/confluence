@@ -33,8 +33,8 @@ import java.util.Map;
  * Livesearch Macro Converter - converts livesearch to the Location Search Macro.
  *
  * See:
- * - https://confluence.atlassian.com/doc/livesearch-macro-163415902.html
- * - https://extensions.xwiki.org/xwiki/bin/view/Extension/Location%20Search%20Macro
+ * - <a href="https://confluence.atlassian.com/doc/livesearch-macro-163415902.html">Confluence doc</a>
+ * - <a href="https://extensions.xwiki.org/xwiki/bin/view/Extension/Location%20Search%20Macro">XWiki doc</a>
  *
  * @version $Id$
  * @since 9.80.O

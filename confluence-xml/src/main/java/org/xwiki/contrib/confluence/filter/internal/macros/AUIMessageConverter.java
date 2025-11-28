@@ -30,7 +30,7 @@ import org.xwiki.component.annotation.Component;
 
 /**
  * Converts auimessage to either info, success, warning or error macros.
- * https://aui.atlassian.com/aui/7.9/docs/messages.html
+ * <a href="https://aui.atlassian.com/aui/7.9/docs/messages.html">documentation of the macro</a>
  *
  * @version $Id$
  * @since 9.51.1

@@ -119,7 +119,7 @@ public class ConditionalContentMacroConverter extends AbstractMacroConverter
         }
 
         return Map.of(MACRO_PARAMETER_NAME, variantReferences.stream()
-            .filter(reference -> Objects.nonNull(reference)).collect(Collectors.joining(",")));
+            .filter(Objects::nonNull).collect(Collectors.joining(",")));
     }
 
 }
