@@ -232,7 +232,7 @@ Line 8</string>
             <wikiObjectProperty name="replyto"/>
             <wikiObjectProperty name="selection" value="Line 2"/>
             <wikiObjectProperty name="state" value="SAFE"/>
-            <wikiObjectProperty name="target" value="Remove1.WebHome"/>
+            <wikiObjectProperty name="target" value="Remove1.PageWithInlineComments.WebHome"/>
           </wikiObject>
           <wikiObject name="XWiki.XWikiComments">
             <p>
@@ -297,7 +297,7 @@ Line 8</string>
             <wikiObjectProperty name="replyto"/>
             <wikiObjectProperty name="selection" value="Line 4"/>
             <wikiObjectProperty name="state" value="SAFE"/>
-            <wikiObjectProperty name="target" value="Remove1.WebHome"/>
+            <wikiObjectProperty name="target" value="Remove1.PageWithInlineComments.WebHome"/>
           </wikiObject>
           <wikiObject name="XWiki.XWikiComments">
             <p>

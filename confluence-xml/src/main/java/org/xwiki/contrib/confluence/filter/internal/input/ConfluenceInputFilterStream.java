@@ -1665,7 +1665,11 @@ public class ConfluenceInputFilterStream
 
         Collection<ConfluenceRight> homePageInheritedRights = null;
 
-        EntityReference docRef = new EntityReference(documentName, EntityType.DOCUMENT, spaceRef);
+        EntityReference subSpaceRef = isHomePage
+            ? spaceRef
+            : new EntityReference(spaceName, EntityType.SPACE, spaceRef);
+
+        EntityReference docRef = new EntityReference(documentName, EntityType.DOCUMENT, subSpaceRef);
         try {
             Collection<ConfluenceRight> inheritedRights = sendTerminalDoc(blog, filter, proxyFilter, docRef,
                 documentParameters, pageProperties, spaceKey, isHomePage, children, hide, pageId);
@@ -1676,7 +1680,7 @@ public class ConfluenceInputFilterStream
             }
 
             if (!children.isEmpty()) {
-                sendPages(spaceKey, false, children, filter, proxyFilter, hide, spaceRef);
+                sendPages(spaceKey, false, children, filter, proxyFilter, hide, subSpaceRef);
             }
         } finally {
             if (!blog && !isHomePage) {
