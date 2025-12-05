@@ -122,6 +122,12 @@ project starts 2022-06-01
 -- Snip --
 @endgannt   ]] ></ac:plain-text-body></ac:structured-macro><p><br /></p>
 <p><ac:structured-macro><ac:parameter ac:name="displayName">My name</ac:parameter><ac:parameter ac:name="name">My name</ac:parameter><ac:parameter ac:name="pagePin">6</ac:parameter></ac:structured-macro></p>
+<ac:structured-macro ac:name="ui-text-box" ac:schema-version="1" ac:macro-id="4c5f289a-fb51-442c-b43a-532f7f94994c">
+  <ac:parameter ac:name="size">medium</ac:parameter>
+  <ac:rich-text-body>
+    <p>Hello</p>
+  </ac:rich-text-body>
+</ac:structured-macro>
 <p><ac:structured-macro ac:name="popular-labels"><ac:parameter ac:name="spaceKey">MySpace</ac:parameter></ac:structured-macro></p>]]></property>
         <property name="bodyType">2</property>
         <property name="content" class="ContentEntityObject" package="com.atlassian.confluence.core">

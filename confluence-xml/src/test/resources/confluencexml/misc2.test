@@ -120,6 +120,10 @@ project starts 2022-06-01
 
 {{confluence_ displayName="My name" name="My name" pagePin="6"/}}
 
+{{box}}
+Hello
+{{/box}}
+
 {{tagcloud space="MySpace"/}}</string>
               </entry>
               <entry>
