@@ -23,7 +23,7 @@
   <parent>
     <groupId>org.xwiki.contrib.confluence</groupId>
     <artifactId>confluence</artifactId>
-    <version>9.89.1-SNAPSHOT</version>
+    <version>9.89.1</version>
   </parent>
   <artifactId>confluence-resource-reference-type-parsers</artifactId>
   <name>Confluence Resource Reference Type Parsers</name>
