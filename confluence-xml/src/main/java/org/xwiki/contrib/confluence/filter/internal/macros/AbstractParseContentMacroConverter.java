@@ -28,6 +28,8 @@ import javax.inject.Provider;
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.rendering.block.MacroBlock;
 import org.xwiki.rendering.block.XDOM;
 import org.xwiki.rendering.listener.Listener;
@@ -35,14 +37,22 @@ import org.xwiki.rendering.parser.ParseException;
 import org.xwiki.rendering.parser.Parser;
 
 import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+import org.xwiki.rendering.syntax.Syntax;
 
 abstract class AbstractParseContentMacroConverter extends AbstractMacroConverter
 {
     @Inject
     private Provider<ComponentManager> componentManagerProvider;
 
-    protected void parseContent(String id, Listener listener, String syntaxId, String newContent)
+    @Inject
+    private ConfluenceInputContext inputContext;
+
+    protected void parseContent(String id, Listener listener, String newContent)
     {
+        ConfluenceInputProperties inputProperties = inputContext.getProperties();
+        Syntax macroContentSyntax = inputProperties == null ? null : inputProperties.getMacroContentSyntax();
+        String syntaxId = macroContentSyntax != null ? macroContentSyntax.toIdString() : Syntax.XWIKI_2_1.toIdString();
+
         if (StringUtils.isEmpty(newContent)) {
             return;
         }

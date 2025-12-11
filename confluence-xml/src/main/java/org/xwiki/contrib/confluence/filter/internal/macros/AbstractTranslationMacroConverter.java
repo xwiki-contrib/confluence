@@ -26,9 +26,7 @@ import javax.inject.Inject;
 
 import org.xwiki.contrib.confluence.filter.ConversionException;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
-import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.rendering.listener.Listener;
-import org.xwiki.rendering.syntax.Syntax;
 
 abstract class AbstractTranslationMacroConverter extends AbstractParseContentMacroConverter
 {
@@ -78,9 +76,6 @@ abstract class AbstractTranslationMacroConverter extends AbstractParseContentMac
     protected void sendContent(String id, String content, Listener listener)
     {
         // We import the content without any macro
-        ConfluenceInputProperties inputProperties = context.getProperties();
-        Syntax macroContentSyntax = inputProperties == null ? null : inputProperties.getMacroContentSyntax();
-        String syntaxId = macroContentSyntax != null ? macroContentSyntax.toIdString() : Syntax.XWIKI_2_1.toIdString();
-        parseContent(id, listener, syntaxId, content);
+        parseContent(id, listener, content);
     }
 }

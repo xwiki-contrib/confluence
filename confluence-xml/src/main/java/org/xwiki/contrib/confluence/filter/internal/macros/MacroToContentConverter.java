@@ -24,16 +24,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.ConversionException;
-import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
-import org.xwiki.contrib.confluence.filter.input.ConfluenceInputProperties;
 import org.xwiki.rendering.listener.Listener;
-import org.xwiki.rendering.syntax.Syntax;
 
 /**
  * Converts a macro call to a group, retaining the id, class and content.
@@ -52,9 +48,6 @@ public class MacroToContentConverter extends AbstractParseContentMacroConverter
 
     private static final String HTML_ATTRIBUTE_CLASS = "class";
 
-    @Inject
-    protected ConfluenceInputContext context;
-
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
@@ -67,12 +60,9 @@ public class MacroToContentConverter extends AbstractParseContentMacroConverter
         throws ConversionException
     {
         Map<String, String> divWrapperParams = toXWikiParameters(id, parameters, content);
-        ConfluenceInputProperties inputProperties = context.getProperties();
-        Syntax macroContentSyntax = inputProperties == null ? null : inputProperties.getMacroContentSyntax();
-        String syntaxId = macroContentSyntax != null ? macroContentSyntax.toIdString() : Syntax.XWIKI_2_1.toIdString();
         String newContent = toXWikiContent(id, parameters, content);
         beginEvent(id, divWrapperParams, newContent, inline, listener);
-        parseContent(id, listener, syntaxId, newContent);
+        parseContent(id, listener, newContent);
         endEvent(id, divWrapperParams, newContent, inline, listener);
     }
 
