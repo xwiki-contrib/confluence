@@ -38,13 +38,30 @@ import org.xwiki.contrib.confluence.filter.ConversionException;
 @Named("ui-steps")
 public class UIStepsMacroConverter extends MacroToContentConverter
 {
+    private static final String NL = "\n";
+
     @Override
     protected String toXWikiContent(String confluenceId, Map<String, String> parameters, String confluenceContent)
         throws ConversionException
     {
-        return super.toXWikiContent(confluenceId, parameters,
-            StringUtils.defaultString(confluenceContent).replaceAll(
-                "\n*\\{\\{confluence_betwwen_ui_step}}\\{\\{/confluence_betwwen_ui_step}}\n*",
-                "\n"));
+        String[] parts = StringUtils.splitByWholeSeparator(StringUtils.defaultString(confluenceContent),
+                "{{confluence_betwwen_ui_step}}{{/confluence_betwwen_ui_step}}");
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < parts.length; i++) {
+            String part = parts[i];
+            if (i == 0) {
+                part = StringUtils.stripEnd(part, NL);
+            } else if (i + 1 == parts.length) {
+                part = StringUtils.stripStart(part, NL);
+            } else {
+                part = StringUtils.strip(part, NL);
+            }
+            result.append(part);
+
+            if (i + 1 < parts.length) {
+                result.append(NL);
+            }
+        }
+        return super.toXWikiContent(confluenceId, parameters, result.toString());
     }
 }
