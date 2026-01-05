@@ -2907,7 +2907,7 @@ public class ConfluenceInputFilterStream
                     proxyFilter.onUserFavorite(userRef, FilterEventParameters.EMPTY);
                 } catch (FilterException e) {
                     logger.error("Failed to send favorite for user [{}] on document [{}]", userRef,
-                        createPageIdentifier(pageProperties));
+                        createPageIdentifier(pageProperties), e);
                 }
             }
         }
