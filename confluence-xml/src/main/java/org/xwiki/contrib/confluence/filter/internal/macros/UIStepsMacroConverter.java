@@ -45,7 +45,7 @@ public class UIStepsMacroConverter extends MacroToContentConverter
         throws ConversionException
     {
         String[] parts = StringUtils.splitByWholeSeparator(StringUtils.defaultString(confluenceContent),
-                "{{confluence_betwwen_ui_step}}{{/confluence_betwwen_ui_step}}");
+                "{{CONFLUENCE_xwiki-between_ui_step}}{{/CONFLUENCE_xwiki-between_ui_step}}");
         StringBuilder result = new StringBuilder();
         for (int i = 0; i < parts.length; i++) {
             String part = parts[i];

@@ -61,8 +61,8 @@ public class UIStepMacroConverter extends AbstractParseContentMacroConverter
             // horrible hack. We need the list items to be inside a list (or the xwiki syntax horribly breaks with
             // NPEs), but we apparently don't really have a good means to start and end the list at the right place
             // due to how we browse and recurse macros. We surround each list item in its own list and we will merge
-            // the lists in ui-steps by looking for those fake confluence_betwwen_ui_step empty block macros
-            listener.onMacro("confluence_betwwen_ui_step", Collections.emptyMap(), "", false);
+            // the lists in ui-steps by looking for those fake CONFLUENCE_xwiki-between_ui_step empty block macros
+            listener.onMacro("CONFLUENCE_xwiki-between_ui_step", Collections.emptyMap(), "", false);
         } catch (Exception e) {
             throw new ConversionException("Failed to convert a ui-step macro", e);
         }
