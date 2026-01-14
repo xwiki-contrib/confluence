@@ -100,6 +100,8 @@ import org.xwiki.model.reference.SpaceReference;
 import org.xwiki.model.reference.EntityReferenceSerializer;
 import org.xwiki.observation.ObservationManager;
 import org.xwiki.rendering.listener.Listener;
+import org.xwiki.rendering.listener.reference.AttachmentResourceReference;
+import org.xwiki.rendering.listener.reference.ResourceReference;
 import org.xwiki.rendering.parser.ParseException;
 import org.xwiki.rendering.parser.StreamParser;
 import org.xwiki.rendering.renderer.PrintRenderer;
@@ -182,6 +184,8 @@ public class ConfluenceInputFilterStream
 
     private static final String ONE = "1";
 
+    private static final String IMAGE = "image";
+
     @Inject
     @Named(ConfluenceInputStreamParser.COMPONENT_NAME)
     private StreamParser confluenceWIKIParser;
@@ -234,6 +238,8 @@ public class ConfluenceInputFilterStream
     private final Map<String, Integer> macrosIds = new HashMap<>();
 
     private final Map<String, String> inlineComments = new HashMap<>();
+
+    private final List<ResourceReference> teasers = new ArrayList<>();
 
     private final Map<String, String> spaceTargets = new HashMap<>();
 
@@ -2127,6 +2133,7 @@ public class ConfluenceInputFilterStream
 
         macrosIds.clear();
         inlineComments.clear();
+        teasers.clear();
 
         // pageId is used as a fallback, an empty revision would prevent the revision from going through.
         String revision = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION, null);
@@ -2681,6 +2688,7 @@ public class ConfluenceInputFilterStream
         converterListener.setWrappedListener(listener);
         converterListener.setMacroIds(macrosIds);
         converterListener.setInlineComments(inlineComments);
+        converterListener.setTeasers(teasers);
 
         return converterListener;
     }
@@ -3068,7 +3076,7 @@ public class ConfluenceInputFilterStream
             try {
                 // Object properties
                 proxyFilter.onWikiObjectProperty(TITLE, blogSpaceName, FilterEventParameters.EMPTY);
-                proxyFilter.onWikiObjectProperty("postsLayout", "image", FilterEventParameters.EMPTY);
+                proxyFilter.onWikiObjectProperty("postsLayout", IMAGE, FilterEventParameters.EMPTY);
                 proxyFilter.onWikiObjectProperty("displayType", "paginated", FilterEventParameters.EMPTY);
             } finally {
                 proxyFilter.endWikiObject(BLOG_CLASSNAME, blogParameters);
@@ -3098,6 +3106,14 @@ public class ConfluenceInputFilterStream
             // and draft pages are skipped during the import.
             proxyFilter.onWikiObjectProperty("published", 1, FilterEventParameters.EMPTY);
             proxyFilter.onWikiObjectProperty("hidden", 0, FilterEventParameters.EMPTY);
+            if (!teasers.isEmpty()) {
+                for (ResourceReference teaser : teasers) {
+                    if (teaser instanceof AttachmentResourceReference) {
+                        proxyFilter.onWikiObjectProperty(IMAGE, teaser.getReference(), FilterEventParameters.EMPTY);
+                        break;
+                    }
+                }
+            }
         } finally {
             proxyFilter.endWikiObject(BLOG_POST_CLASSNAME, blogPostParameters);
         }

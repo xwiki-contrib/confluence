@@ -20,6 +20,7 @@
 package org.xwiki.contrib.confluence.filter.internal.input;
 
 import java.util.ArrayDeque;
+import java.util.Collection;
 import java.util.Deque;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -122,6 +123,12 @@ public class ConfluenceConverterListener extends WrappingListener
     private final Deque<Listener> previousListenerStack = new ArrayDeque<>();
 
     private Map<String, Integer> macroIds;
+
+    /**
+     * The images put as trailers in blog posts.
+     */
+    private Collection<ResourceReference> teasers;
+
     private final WrappingListener wrappingListener = new WrappingListener() {
         @Override
         public void onMacro(String id, Map<String, String> parameters, String content, boolean inline)
@@ -175,6 +182,14 @@ public class ConfluenceConverterListener extends WrappingListener
         }
     }
 
+    private void addTeaser(ResourceReference ref)
+    {
+        if (teasers != null && !isQueuingEvents()) {
+            // Don't save trailers if we are recording events
+            teasers.add(ref);
+        }
+    }
+
     private static class NormalizedPlainFilter extends CompositeListener
     {
         private final WikiPrinter printer = new DefaultWikiPrinter();
@@ -222,6 +237,16 @@ public class ConfluenceConverterListener extends WrappingListener
     public void setMacroIds(Map<String, Integer> macroIds)
     {
         this.macroIds = macroIds;
+    }
+
+    /**
+     * @param teasers a list that will be filled with trailer images
+     *
+     * @since 9.91.0
+     */
+    public void setTeasers(Collection<ResourceReference> teasers)
+    {
+        this.teasers = teasers;
     }
 
     @Override
@@ -438,15 +463,30 @@ public class ConfluenceConverterListener extends WrappingListener
     @Override
     public void onImage(ResourceReference reference, boolean freestanding, Map<String, String> parameters)
     {
-        // Fix and optimize the link reference according to various rules
-        super.onImage(convert(reference), freestanding, parameters);
+        ResourceReference ref = convert(reference);
+        maybeAddTeaser(ref, parameters);
+        super.onImage(ref, freestanding, parameters);
     }
 
     @Override
     public void onImage(ResourceReference reference, boolean freestanding, String id, Map<String, String> parameters)
     {
-        // Fix and optimize the link reference according to various rules
-        super.onImage(convert(reference), freestanding, id, parameters);
+        ResourceReference ref = convert(reference);
+        maybeAddTeaser(ref, parameters);
+        super.onImage(ref, freestanding, id, parameters);
+    }
+
+    private void maybeAddTeaser(ResourceReference ref, Map<String, String> parameters)
+    {
+        String classAttr = parameters.get(CLASS_ATTRIBUTE);
+        if (StringUtils.isNotEmpty(classAttr)) {
+            for (String className : StringUtils.split(classAttr, " ,")) {
+                if ("teaser".equals(className.trim())) {
+                    addTeaser(ref);
+                    break;
+                }
+            }
+        }
     }
 
     private Map<String, String> removeInlineCommentParameter(Map<String, String> parameters)

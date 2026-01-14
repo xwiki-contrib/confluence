@@ -69,7 +69,9 @@
                   <wikiObjectProperty name="title" value="Blog post"/>
                   <wikiObjectProperty name="content">
                     <p>
-                      <value>Content of the blog post
+                      <value>[[image:attach:MyTeaser.png||width="700" class="teaser"]]
+
+Content of the blog post
 
 [[this page>>doc:Composed.Root.SpaceA.Blog.Blog post]]</value>
                     </p>
@@ -89,6 +91,7 @@
                       <value t="java.lang.Integer">0</value>
                     </p>
                   </wikiObjectProperty>
+                  <wikiObjectProperty name="image" value="MyTeaser.png"/>
                 </wikiObject>
                 <wikiObject name="XWiki.XWikiRights">
                   <p>

@@ -653,7 +653,7 @@
 </object>
 <object class="BodyContent" package="com.atlassian.confluence.core">
 <id name="id">2616393729</id>
-<property name="body"><![CDATA[<p>Content of the blog post</p><p><ac:link ac:tooltip="an empty link"><ac:plain-text-link-body><![CDATA[this page]] ></ac:plain-text-link-body></ac:link></p>]]></property>
+<property name="body"><![CDATA[<p><ac:image ac:class="teaser" ac:width="700"><ri:attachment ri:filename="MyTeaser.png" /></ac:image></p><p>Content of the blog post</p><p><ac:link ac:tooltip="an empty link"><ac:plain-text-link-body><![CDATA[this page]] ></ac:plain-text-link-body></ac:link></p>]]></property>
 <property name="content" class="BlogPost" package="com.atlassian.confluence.pages"><id name="id">2616164357</id>
 </property>
 <property name="bodyType">2</property>
