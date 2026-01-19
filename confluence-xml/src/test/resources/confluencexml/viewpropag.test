@@ -117,68 +117,6 @@
         </wikiDocumentRevision>
       </wikiDocumentLocale>
     </wikiDocument>
-    <wikiDocument name="WebPreferences">
-      <p>
-        <parameters>
-          <entry>
-            <string>hidden</string>
-            <boolean>true</boolean>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObject name="XWiki.XWikiPreferences">
-        <p>
-          <parameters>
-            <entry>
-              <string>class_reference</string>
-              <string>XWiki.XWikiPreferences</string>
-            </entry>
-          </parameters>
-        </p>
-      </wikiObject>
-      <wikiObject name="XWiki.XWikiGlobalRights">
-        <p>
-          <parameters>
-            <entry>
-              <string>class_reference</string>
-              <string>XWiki.XWikiGlobalRights</string>
-            </entry>
-          </parameters>
-        </p>
-        <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value="XWiki.groupa"/>
-        <wikiObjectProperty name="levels" value="view"/>
-        <wikiObjectProperty name="users" value=""/>
-      </wikiObject>
-      <wikiObject name="XWiki.XWikiGlobalRights">
-        <p>
-          <parameters>
-            <entry>
-              <string>class_reference</string>
-              <string>XWiki.XWikiGlobalRights</string>
-            </entry>
-          </parameters>
-        </p>
-        <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value=""/>
-        <wikiObjectProperty name="levels" value="view"/>
-        <wikiObjectProperty name="users" value="XWiki.user1"/>
-      </wikiObject>
-      <wikiObject name="XWiki.XWikiGlobalRights">
-        <p>
-          <parameters>
-            <entry>
-              <string>class_reference</string>
-              <string>XWiki.XWikiGlobalRights</string>
-            </entry>
-          </parameters>
-        </p>
-        <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value=""/>
-        <wikiObjectProperty name="levels" value="view"/>
-        <wikiObjectProperty name="users" value="XWiki.owneruser"/>
-      </wikiObject>
-    </wikiDocument>
     <wikiSpace name="WithEditRights">
       <wikiDocument name="WebHome">
         <wikiDocumentLocale>
@@ -264,6 +202,50 @@
           </wikiDocumentRevision>
         </wikiDocumentLocale>
       </wikiDocument>
+      <wikiSpace name="NoParticularRights">
+        <wikiDocument name="WebHome">
+          <wikiDocumentLocale>
+            <p>
+              <parameters>
+                <entry>
+                  <string>creation_author</string>
+                  <string>XWiki.owneruser</string>
+                </entry>
+                <entry>
+                  <string>creation_date</string>
+                  <date>2024-03-20 14:30:35.862 UTC</date>
+                </entry>
+                <entry>
+                  <string>lastrevision</string>
+                  <string>1</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiDocumentRevision revision="1">
+              <p>
+                <parameters>
+                  <entry>
+                    <string>revision_author</string>
+                    <string>XWiki.owneruser</string>
+                  </entry>
+                  <entry>
+                    <string>revision_date</string>
+                    <date>2024-03-20 14:30:47.245 UTC</date>
+                  </entry>
+                  <entry>
+                    <string>revision_comment</string>
+                    <string></string>
+                  </entry>
+                  <entry>
+                    <string>title</string>
+                    <string>NoParticularRights</string>
+                  </entry>
+                </parameters>
+              </p>
+            </wikiDocumentRevision>
+          </wikiDocumentLocale>
+        </wikiDocument>
+      </wikiSpace>
       <wikiDocument name="WebPreferences">
         <p>
           <parameters>
@@ -326,51 +308,69 @@
           <wikiObjectProperty name="users" value="XWiki.owneruser"/>
         </wikiObject>
       </wikiDocument>
-      <wikiSpace name="NoParticularRights">
-        <wikiDocument name="WebHome">
-          <wikiDocumentLocale>
-            <p>
-              <parameters>
-                <entry>
-                  <string>creation_author</string>
-                  <string>XWiki.owneruser</string>
-                </entry>
-                <entry>
-                  <string>creation_date</string>
-                  <date>2024-03-20 14:30:35.862 UTC</date>
-                </entry>
-                <entry>
-                  <string>lastrevision</string>
-                  <string>1</string>
-                </entry>
-              </parameters>
-            </p>
-            <wikiDocumentRevision revision="1">
-              <p>
-                <parameters>
-                  <entry>
-                    <string>revision_author</string>
-                    <string>XWiki.owneruser</string>
-                  </entry>
-                  <entry>
-                    <string>revision_date</string>
-                    <date>2024-03-20 14:30:47.245 UTC</date>
-                  </entry>
-                  <entry>
-                    <string>revision_comment</string>
-                    <string></string>
-                  </entry>
-                  <entry>
-                    <string>title</string>
-                    <string>NoParticularRights</string>
-                  </entry>
-                </parameters>
-              </p>
-            </wikiDocumentRevision>
-          </wikiDocumentLocale>
-        </wikiDocument>
-      </wikiSpace>
     </wikiSpace>
+    <wikiDocument name="WebPreferences">
+      <p>
+        <parameters>
+          <entry>
+            <string>hidden</string>
+            <boolean>true</boolean>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObject name="XWiki.XWikiPreferences">
+        <p>
+          <parameters>
+            <entry>
+              <string>class_reference</string>
+              <string>XWiki.XWikiPreferences</string>
+            </entry>
+          </parameters>
+        </p>
+      </wikiObject>
+      <wikiObject name="XWiki.XWikiGlobalRights">
+        <p>
+          <parameters>
+            <entry>
+              <string>class_reference</string>
+              <string>XWiki.XWikiGlobalRights</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObjectProperty name="allow" value="1"/>
+        <wikiObjectProperty name="groups" value="XWiki.groupa"/>
+        <wikiObjectProperty name="levels" value="view"/>
+        <wikiObjectProperty name="users" value=""/>
+      </wikiObject>
+      <wikiObject name="XWiki.XWikiGlobalRights">
+        <p>
+          <parameters>
+            <entry>
+              <string>class_reference</string>
+              <string>XWiki.XWikiGlobalRights</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObjectProperty name="allow" value="1"/>
+        <wikiObjectProperty name="groups" value=""/>
+        <wikiObjectProperty name="levels" value="view"/>
+        <wikiObjectProperty name="users" value="XWiki.user1"/>
+      </wikiObject>
+      <wikiObject name="XWiki.XWikiGlobalRights">
+        <p>
+          <parameters>
+            <entry>
+              <string>class_reference</string>
+              <string>XWiki.XWikiGlobalRights</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObjectProperty name="allow" value="1"/>
+        <wikiObjectProperty name="groups" value=""/>
+        <wikiObjectProperty name="levels" value="view"/>
+        <wikiObjectProperty name="users" value="XWiki.owneruser"/>
+      </wikiObject>
+    </wikiDocument>
   </wikiSpace>
   <wikiDocument name="WebPreferences">
     <p>

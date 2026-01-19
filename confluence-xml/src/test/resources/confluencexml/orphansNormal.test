@@ -147,44 +147,6 @@
         </wikiDocumentRevision>
       </wikiDocumentLocale>
     </wikiDocument>
-    <wikiDocument name="WebPreferences">
-      <p>
-        <parameters>
-          <entry>
-            <string>hidden</string>
-            <boolean>true</boolean>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObject name="XWiki.XWikiPreferences">
-        <p>
-          <parameters>
-            <entry>
-              <string>class_reference</string>
-              <string>XWiki.XWikiPreferences</string>
-            </entry>
-          </parameters>
-        </p>
-      </wikiObject>
-      <wikiObject name="XWiki.PinnedChildPagesClass">
-        <p>
-          <parameters>
-            <entry>
-              <string>class_reference</string>
-              <string>XWiki.PinnedChildPagesClass</string>
-            </entry>
-          </parameters>
-        </p>
-        <wikiObjectProperty name="pinnedChildPages">
-          <p>
-            <value t="java.util.ArrayList">
-              <string>Orphan/</string>
-              <string>Parent of new home/</string>
-            </value>
-          </p>
-        </wikiObjectProperty>
-      </wikiObject>
-    </wikiDocument>
     <wikiSpace name="Orphan">
       <wikiDocument name="WebHome">
         <wikiDocumentLocale>
@@ -362,23 +324,84 @@
         </wikiDocumentLocale>
       </wikiDocument>
     </wikiSpace>
-  </wikiSpace>
-  <wikiSpace name="Blog">
-    <wikiDocument name="WebHome">
-      <wikiObject name="Blog.BlogClass">
+    <wikiDocument name="WebPreferences">
+      <p>
+        <parameters>
+          <entry>
+            <string>hidden</string>
+            <boolean>true</boolean>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObject name="XWiki.XWikiPreferences">
         <p>
           <parameters>
             <entry>
               <string>class_reference</string>
-              <string>Blog.BlogClass</string>
+              <string>XWiki.XWikiPreferences</string>
             </entry>
           </parameters>
         </p>
-        <wikiObjectProperty name="title" value="Blog"/>
-        <wikiObjectProperty name="postsLayout" value="image"/>
-        <wikiObjectProperty name="displayType" value="paginated"/>
+      </wikiObject>
+      <wikiObject name="XWiki.PinnedChildPagesClass">
+        <p>
+          <parameters>
+            <entry>
+              <string>class_reference</string>
+              <string>XWiki.PinnedChildPagesClass</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObjectProperty name="pinnedChildPages">
+          <p>
+            <value t="java.util.ArrayList">
+              <string>Orphan/</string>
+              <string>Parent of new home/</string>
+            </value>
+          </p>
+        </wikiObjectProperty>
       </wikiObject>
     </wikiDocument>
+  </wikiSpace>
+  <wikiDocument name="WebPreferences">
+    <p>
+      <parameters>
+        <entry>
+          <string>hidden</string>
+          <boolean>true</boolean>
+        </entry>
+      </parameters>
+    </p>
+    <wikiObject name="XWiki.XWikiPreferences">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiPreferences</string>
+          </entry>
+        </parameters>
+      </p>
+    </wikiObject>
+    <wikiObject name="XWiki.PinnedChildPagesClass">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.PinnedChildPagesClass</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="pinnedChildPages">
+        <p>
+          <value t="java.util.ArrayList">
+            <string>Under Home/</string>
+            <string>Old home/</string>
+          </value>
+        </p>
+      </wikiObjectProperty>
+    </wikiObject>
+  </wikiDocument>
+  <wikiSpace name="Blog">
     <wikiDocument name="Post 1">
       <wikiDocumentLocale>
         <p>
@@ -516,6 +539,21 @@
           </wikiObject>
         </wikiDocumentRevision>
       </wikiDocumentLocale>
+    </wikiDocument>
+    <wikiDocument name="WebHome">
+      <wikiObject name="Blog.BlogClass">
+        <p>
+          <parameters>
+            <entry>
+              <string>class_reference</string>
+              <string>Blog.BlogClass</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObjectProperty name="title" value="Blog"/>
+        <wikiObjectProperty name="postsLayout" value="image"/>
+        <wikiObjectProperty name="displayType" value="paginated"/>
+      </wikiObject>
     </wikiDocument>
   </wikiSpace>
 </wikiSpace>

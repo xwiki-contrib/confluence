@@ -2,6 +2,10 @@
 .expect|filter+xml
 .#------------------------------------------------------------------------------
 <wikiSpace name="TestNavOrder">
+  <wikiSpace name="Page 3"/>
+  <wikiSpace name="Page 2"/>
+  <wikiSpace name="Page 1"/>
+  <wikiSpace name="Page / %"/>
   <wikiDocument name="WebPreferences">
     <p>
       <parameters>

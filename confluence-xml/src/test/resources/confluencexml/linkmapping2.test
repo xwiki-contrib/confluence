@@ -226,44 +226,6 @@
             </wikiDocumentRevision>
           </wikiDocumentLocale>
         </wikiDocument>
-        <wikiDocument name="WebPreferences">
-          <p>
-            <parameters>
-              <entry>
-                <string>hidden</string>
-                <boolean>true</boolean>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObject name="XWiki.XWikiPreferences">
-            <p>
-              <parameters>
-                <entry>
-                  <string>class_reference</string>
-                  <string>XWiki.XWikiPreferences</string>
-                </entry>
-              </parameters>
-            </p>
-          </wikiObject>
-          <wikiObject name="XWiki.PinnedChildPagesClass">
-            <p>
-              <parameters>
-                <entry>
-                  <string>class_reference</string>
-                  <string>XWiki.PinnedChildPagesClass</string>
-                </entry>
-              </parameters>
-            </p>
-            <wikiObjectProperty name="pinnedChildPages">
-              <p>
-                <value t="java.util.ArrayList">
-                  <string>long 1/</string>
-                  <string>short 1/</string>
-                </value>
-              </p>
-            </wikiObjectProperty>
-          </wikiObject>
-        </wikiDocument>
         <wikiSpace name="short 1">
           <wikiDocument name="WebHome">
             <wikiDocumentLocale>
@@ -352,6 +314,44 @@
             </wikiDocumentLocale>
           </wikiDocument>
         </wikiSpace>
+        <wikiDocument name="WebPreferences">
+          <p>
+            <parameters>
+              <entry>
+                <string>hidden</string>
+                <boolean>true</boolean>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="XWiki.XWikiPreferences">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.XWikiPreferences</string>
+                </entry>
+              </parameters>
+            </p>
+          </wikiObject>
+          <wikiObject name="XWiki.PinnedChildPagesClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.PinnedChildPagesClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="pinnedChildPages">
+              <p>
+                <value t="java.util.ArrayList">
+                  <string>long 1/</string>
+                  <string>short 1/</string>
+                </value>
+              </p>
+            </wikiObjectProperty>
+          </wikiObject>
+        </wikiDocument>
       </wikiSpace>
       <wikiSpace name="hello">
         <wikiDocument name="WebHome">
@@ -411,44 +411,6 @@
             </wikiDocumentRevision>
           </wikiDocumentLocale>
         </wikiDocument>
-        <wikiDocument name="WebPreferences">
-          <p>
-            <parameters>
-              <entry>
-                <string>hidden</string>
-                <boolean>true</boolean>
-              </entry>
-            </parameters>
-          </p>
-          <wikiObject name="XWiki.XWikiPreferences">
-            <p>
-              <parameters>
-                <entry>
-                  <string>class_reference</string>
-                  <string>XWiki.XWikiPreferences</string>
-                </entry>
-              </parameters>
-            </p>
-          </wikiObject>
-          <wikiObject name="XWiki.PinnedChildPagesClass">
-            <p>
-              <parameters>
-                <entry>
-                  <string>class_reference</string>
-                  <string>XWiki.PinnedChildPagesClass</string>
-                </entry>
-              </parameters>
-            </p>
-            <wikiObjectProperty name="pinnedChildPages">
-              <p>
-                <value t="java.util.ArrayList">
-                  <string>long 1/</string>
-                  <string>short 1/</string>
-                </value>
-              </p>
-            </wikiObjectProperty>
-          </wikiObject>
-        </wikiDocument>
         <wikiSpace name="short 1">
           <wikiDocument name="WebHome">
             <wikiDocumentLocale>
@@ -537,7 +499,83 @@
             </wikiDocumentLocale>
           </wikiDocument>
         </wikiSpace>
+        <wikiDocument name="WebPreferences">
+          <p>
+            <parameters>
+              <entry>
+                <string>hidden</string>
+                <boolean>true</boolean>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="XWiki.XWikiPreferences">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.XWikiPreferences</string>
+                </entry>
+              </parameters>
+            </p>
+          </wikiObject>
+          <wikiObject name="XWiki.PinnedChildPagesClass">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.PinnedChildPagesClass</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="pinnedChildPages">
+              <p>
+                <value t="java.util.ArrayList">
+                  <string>long 1/</string>
+                  <string>short 1/</string>
+                </value>
+              </p>
+            </wikiObjectProperty>
+          </wikiObject>
+        </wikiDocument>
       </wikiSpace>
+      <wikiDocument name="WebPreferences">
+        <p>
+          <parameters>
+            <entry>
+              <string>hidden</string>
+              <boolean>true</boolean>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObject name="XWiki.XWikiPreferences">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.XWikiPreferences</string>
+              </entry>
+            </parameters>
+          </p>
+        </wikiObject>
+        <wikiObject name="XWiki.PinnedChildPagesClass">
+          <p>
+            <parameters>
+              <entry>
+                <string>class_reference</string>
+                <string>XWiki.PinnedChildPagesClass</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObjectProperty name="pinnedChildPages">
+            <p>
+              <value t="java.util.ArrayList">
+                <string>Test Page/</string>
+                <string>hello/</string>
+              </value>
+            </p>
+          </wikiObjectProperty>
+        </wikiObject>
+      </wikiDocument>
     </wikiSpace>
   </wikiSpace>
 </wikiSpace>

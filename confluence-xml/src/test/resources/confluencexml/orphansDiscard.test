@@ -90,21 +90,6 @@
     </wikiDocument>
   </wikiSpace>
   <wikiSpace name="Blog">
-    <wikiDocument name="WebHome">
-      <wikiObject name="Blog.BlogClass">
-        <p>
-          <parameters>
-            <entry>
-              <string>class_reference</string>
-              <string>Blog.BlogClass</string>
-            </entry>
-          </parameters>
-        </p>
-        <wikiObjectProperty name="title" value="Blog"/>
-        <wikiObjectProperty name="postsLayout" value="image"/>
-        <wikiObjectProperty name="displayType" value="paginated"/>
-      </wikiObject>
-    </wikiDocument>
     <wikiDocument name="Post 1">
       <wikiDocumentLocale>
         <p>
@@ -242,6 +227,21 @@
           </wikiObject>
         </wikiDocumentRevision>
       </wikiDocumentLocale>
+    </wikiDocument>
+    <wikiDocument name="WebHome">
+      <wikiObject name="Blog.BlogClass">
+        <p>
+          <parameters>
+            <entry>
+              <string>class_reference</string>
+              <string>Blog.BlogClass</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObjectProperty name="title" value="Blog"/>
+        <wikiObjectProperty name="postsLayout" value="image"/>
+        <wikiObjectProperty name="displayType" value="paginated"/>
+      </wikiObject>
     </wikiDocument>
   </wikiSpace>
 </wikiSpace>

@@ -24,7 +24,7 @@ package org.xwiki.contrib.confluence.filter.internal.input;
  * @since 9.44.0
  * @version $Id$
  */
-public class ConfluenceCanceledException extends ConfluenceInterruptedException
+public class ConfluenceCanceledException extends Exception
 {
 
 }

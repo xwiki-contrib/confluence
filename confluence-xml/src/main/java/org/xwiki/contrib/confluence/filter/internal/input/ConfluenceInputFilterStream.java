@@ -48,7 +48,6 @@ import javax.inject.Named;
 import javax.inject.Provider;
 
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -253,11 +252,6 @@ public class ConfluenceInputFilterStream
 
     private FilterEventParameters webPreferenceParameters;
 
-    private static final class MaxPageCountReachedException extends ConfluenceInterruptedException
-    {
-        private static final long serialVersionUID = 1L;
-    }
-
     private static final class AttachmentInfo
     {
         private final long attachmentId;
@@ -400,17 +394,13 @@ public class ConfluenceInputFilterStream
 
         this.progress.pushLevelProgress(progressCount, this);
         try {
-            sendUsersAndGroups(users, groups, proxyFilter);
-            if (this.properties.isContentsEnabled()
+            boolean stop = sendUsersAndGroups(users, groups, proxyFilter);
+            if (!stop && (this.properties.isContentsEnabled()
                 || this.properties.isRightsEnabled()
-                || this.properties.isPageOrderEnabled()
+                || this.properties.isPageOrderEnabled())
             ) {
                 sendSpaces(filter, proxyFilter, pages, blogPages, disabledSpaces);
             }
-        } catch (MaxPageCountReachedException e) {
-            logger.info("The maximum of pages to read has been reached.");
-        } catch (ConfluenceInterruptedException e) {
-            logger.warn("The job was canceled.");
         } finally {
             this.progress.popLevelProgress(this);
             observationManager.notify(new ConfluenceFilteredEvent(), this, this.confluencePackage);
@@ -503,7 +493,7 @@ public class ConfluenceInputFilterStream
 
     private void sendSpaces(Object filter, ConfluenceFilter proxyFilter, Map<Long, List<Long>> pages,
         Map<Long, List<Long>> blogPages, Collection<Long> disabledSpaces)
-        throws FilterException, ConfluenceInterruptedException
+        throws FilterException
     {
         EntityReference root = properties.getRoot();
         String wiki = null;
@@ -534,7 +524,10 @@ public class ConfluenceInputFilterStream
                 List<Long> regularPageIds = pages.getOrDefault(spaceId, Collections.emptyList());
                 List<Long> blogPageIds = blogPages.getOrDefault(spaceId, Collections.emptyList());
                 if (!regularPageIds.isEmpty() || !blogPageIds.isEmpty()) {
-                    sendConfluenceRootSpace(spaceId, filter, proxyFilter, blogPageIds, root);
+                    boolean stop = sendConfluenceRootSpace(spaceId, filter, proxyFilter, blogPageIds, root);
+                    if (stop) {
+                        return;
+                    }
                 }
             }
         } finally {
@@ -578,11 +571,14 @@ public class ConfluenceInputFilterStream
      * @return the titles of the documents sorted by position
      * @param pages the pages to order
      */
-    private Collection<String> getOrderedDocumentTitles(Iterable<Long> pages)
+    private Collection<String> getOrderedTitlesOfIncludedDocuments(Iterable<Long> pages)
     {
         // TreeMap makes sure the elements are sorted by key at insertion time
         Map<Long, String> titleByPosition = new TreeMap<>();
         for (long page : pages) {
+            if (!properties.isIncluded(page)) {
+                continue;
+            }
             try {
                 ConfluenceProperties pageProperties = confluencePackage.getPageProperties(page, false);
                 String pos = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_POSITION, "");
@@ -615,8 +611,13 @@ public class ConfluenceInputFilterStream
     private void sendPinnedPages(ConfluenceFilter proxyFilter, Collection<String> orderedTitles)
         throws FilterException
     {
-        if (orderedTitles == null || orderedTitles.size() < 2) {
-            // Nothing to send if there's no titles.
+
+        if (CollectionUtils.isNotEmpty(properties.getIncludedPages()) || !this.properties.isPageOrderEnabled()
+                || orderedTitles == null || orderedTitles.size() < 2) {
+            // We don't send pinned pages:
+            // - if we only send specific ("included") pages
+            // - if page order is disabled
+            // - if there's no titles.
             // if there's only one title, it doesn't seem worth sending an order.
             return;
         }
@@ -637,8 +638,11 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void sendConfluenceRootSpace(long spaceId, Object filter, ConfluenceFilter proxyFilter,
-        List<Long> blogPages, EntityReference rootSpace) throws FilterException, ConfluenceInterruptedException
+    /**
+     * @return whether the import should stop
+     */
+    private boolean sendConfluenceRootSpace(long spaceId, Object filter, ConfluenceFilter proxyFilter,
+        List<Long> blogPages, EntityReference rootSpace) throws FilterException
     {
         ConfluenceProperties spaceProperties;
         try {
@@ -649,12 +653,12 @@ public class ConfluenceInputFilterStream
 
         if (spaceProperties == null) {
             this.logger.error("Could not get the properties of space id=[{}]. Skipping.", spaceId);
-            return;
+            return false;
         }
         String spaceKey = ConfluenceXMLPackage.getSpaceKey(spaceProperties);
         if (StringUtils.isEmpty(spaceKey)) {
             this.logger.error("Could not determine the key of space id=[{}]. Skipping.", spaceId);
-            return;
+            return false;
         }
         ((DefaultConfluenceInputContext) this.context).setCurrentSpace(spaceKey);
 
@@ -662,63 +666,50 @@ public class ConfluenceInputFilterStream
             this.logger.info("Sending Confluence space [{}], id=[{}]", spaceKey, spaceId);
         }
 
-        sendSpace(spaceId, filter, proxyFilter, blogPages, spaceKey, spaceProperties, rootSpace);
+        return sendSpace(spaceId, filter, proxyFilter, blogPages, spaceKey, spaceProperties, rootSpace);
     }
 
-    private void sendSpace(long spaceId, Object filter, ConfluenceFilter proxyFilter, List<Long> blogPages,
+    /**
+     * @return whether the import should stop
+     */
+    private boolean sendSpace(long spaceId, Object filter, ConfluenceFilter proxyFilter, List<Long> blogPages,
         String spaceKey, ConfluenceProperties spaceProperties, EntityReference rootSpace)
-        throws FilterException, ConfluenceInterruptedException
+        throws FilterException
     {
+        boolean stop = false;
         String spaceEntityName = this.spaceTargets.get(spaceKey);
         proxyFilter.beginWikiSpace(spaceEntityName, FilterEventParameters.EMPTY);
         try {
             Collection<ConfluenceRight> inheritedRights = null;
             ConfluenceProperties homePageProperties = null;
             Long homePageId = confluencePackage.getHomePage(spaceId);
+            EntityReference spaceRef = new EntityReference(spaceEntityName, EntityType.SPACE, rootSpace);
+            boolean send = this.properties.isContentsEnabled() || this.properties.isRightsEnabled()
+                    || this.properties.isPageOrderEnabled();
             try {
-                EntityReference spaceRef = new EntityReference(spaceEntityName, EntityType.SPACE, rootSpace);
-                List<Long> orphans = confluencePackage.getOrphans(spaceId);
-                if (this.properties.isContentsEnabled() || this.properties.isRightsEnabled()) {
-
-                    if (homePageId == null) {
-                        if (CollectionUtils.isEmpty(properties.getIncludedPages())) {
-                            // no home page, we send a minimal one to avoid overly confusing space trees
-                            // but only if we are not sending a specific list of pages
-                            sendSyntheticWebHomePageListingChildren(spaceKey, spaceKey, proxyFilter);
-                        }
+                if (send) {
+                    ConfluencePageSending cps = sendPage(homePageId, spaceKey, false, filter, proxyFilter, false,
+                            spaceRef, true);
+                    if (cps == null) {
+                        stop = true;
                     } else {
-                        inheritedRights = sendPage(homePageId, spaceKey, false, filter, proxyFilter, false,
-                            spaceRef);
-                        homePageProperties = getPageProperties(homePageId);
+                        inheritedRights = cps.inheritedRights;
+                        stop = cps.stop;
                     }
-
-                    String orphanMode = properties.getOrphanMode();
-                    if (!"discard".equalsIgnoreCase(orphanMode)) {
-                        boolean hide = "hide".equalsIgnoreCase(orphanMode);
-                        sendPages(spaceKey, false, orphans, filter, proxyFilter, hide, spaceRef);
-                    }
-                    sendBlogs(spaceKey, blogPages, spaceRef, filter, proxyFilter);
                 }
 
                 sendSpaceTemplates(spaceProperties, spaceKey, spaceId, filter, proxyFilter);
-                if (CollectionUtils.isEmpty(properties.getIncludedPages()) && this.properties.isPageOrderEnabled()) {
-                    // We don't send templates and pinned pages if we are sending a specific list of pages
-                    List<Long> children = confluencePackage.getPageChildren(homePageId);
-                    Collection<String> orderedTitles = getOrderedDocumentTitles(
-                        IterableUtils.chainedIterable(children, blogPages));
-                    sendPinnedPages(proxyFilter, orderedTitles);
-                }
-            } catch (ConfluenceInterruptedException e) {
-                // Even if we reached the maximum page count, we want to send the space rights.
+            } finally {
                 if (shouldSendSpaceRights(homePageId)) {
+                    homePageProperties = getPageProperties(homePageId);
                     sendSpaceRights(proxyFilter, spaceProperties, spaceKey, spaceId,
                         inheritedRights, homePageProperties);
                 }
-                throw e;
+                endWebPreferences(proxyFilter);
             }
-            if (shouldSendSpaceRights(homePageId)) {
-                sendSpaceRights(proxyFilter, spaceProperties, spaceKey, spaceId,
-                    inheritedRights, homePageProperties);
+
+            if (send && !stop) {
+                stop = sendBlog(spaceKey, blogPages, spaceRef, filter, proxyFilter);
             }
         } finally {
             endWebPreferences(proxyFilter);
@@ -728,6 +719,24 @@ public class ConfluenceInputFilterStream
                 this.logger.info("Finished sending Confluence space [{}], id=[{}]", spaceKey, spaceId);
             }
         }
+
+        return stop;
+    }
+
+    /**
+     * @return whether the import should stop
+     */
+    private boolean sendOrphans(Object filter, ConfluenceFilter proxyFilter, String spaceKey,
+            EntityReference spaceRef, Collection<Long> sentChildren)
+    {
+        String orphanMode = properties.getOrphanMode();
+        if (!"discard".equalsIgnoreCase(orphanMode)) {
+            boolean hide = "hide".equalsIgnoreCase(orphanMode);
+            List<Long> orphans = confluencePackage.getOrphans(confluencePackage.getSpaceId(spaceKey));
+            return sendPages(spaceKey, false, orphans, filter, proxyFilter, hide, spaceRef, sentChildren);
+        }
+
+        return false;
     }
 
     private void computeSpaceTargets(ConfluenceFilteringEvent event) throws FilterException
@@ -906,68 +915,76 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void checkCanceled() throws ConfluenceCanceledException
+    private boolean isCanceled()
     {
         if (jobStatus != null && jobStatus.isCanceled()) {
-            throw new ConfluenceCanceledException();
+            logger.warn("The job was canceled.");
+            return true;
         }
+
+        return false;
     }
 
-    private Collection<ConfluenceRight> sendPage(long pageId, String spaceKey, boolean blog, Object filter,
-        ConfluenceFilter proxyFilter, boolean hide, EntityReference spaceRef) throws ConfluenceInterruptedException
+    private ConfluencePageSending sendPage(Long pageId, String spaceKey, boolean blog, Object filter,
+        ConfluenceFilter proxyFilter, boolean hide, EntityReference spaceRef, boolean isHomePage)
     {
-        if (this.remainingPages == 0) {
-            throw new MaxPageCountReachedException();
+        if (this.remainingPages == 0 || isCanceled()) {
+            return new ConfluencePageSending(null, false, true);
         }
 
-        checkCanceled();
+        ConfluencePageSending cps = null;
 
-        Collection<ConfluenceRight> inheritedRights = null;
-
-        ((DefaultConfluenceInputContext) this.context).setCurrentPage(pageId);
+        if (pageId != null) {
+            ((DefaultConfluenceInputContext) this.context).setCurrentPage(pageId);
+        }
         try {
-            inheritedRights = readPage(pageId, spaceKey, blog, filter, proxyFilter, hide, spaceRef);
-        } catch (MaxPageCountReachedException e) {
-            // ignore
-        } catch (ConfluenceCanceledException e) {
-            throw e;
+            cps = readPageAndChildren(pageId, spaceKey, blog, filter, proxyFilter, hide, spaceRef, isHomePage);
         } catch (Exception e) {
             logger.error("Failed to filter the page with id [{}]", createPageIdentifier(pageId, spaceKey), e);
         }
 
-        return inheritedRights;
+        return cps;
     }
 
-    private void sendBlogs(String spaceKey, List<Long> blogPages, EntityReference spaceRef, Object filter,
-        ConfluenceFilter proxyFilter) throws FilterException, ConfluenceInterruptedException
+    /**
+     * @return whether the import should stop
+     */
+    private boolean sendBlog(String spaceKey, List<Long> blogPages, EntityReference spaceRef, Object filter,
+        ConfluenceFilter proxyFilter) throws FilterException
     {
         if (!this.properties.isBlogsEnabled() || blogPages == null || blogPages.isEmpty()) {
-            return;
+            return false;
         }
 
         String blogSpaceKey = confluenceConverter.toEntityName(this.properties.getBlogSpaceName());
         EntityReference blogSpaceRef = new EntityReference(blogSpaceKey, EntityType.SPACE, spaceRef);
-
-        // > WikiSpace
+        Collection<Long> sentChildren = new ArrayList<>(blogPages.size());
         proxyFilter.beginWikiSpace(blogSpaceKey, FilterEventParameters.EMPTY);
+        boolean stop = false;
         try {
+            stop = sendPages(spaceKey, true, blogPages, filter, proxyFilter, false, blogSpaceRef, sentChildren);
+            if (!sentChildren.isEmpty()) {
+                addBlogDescriptorPage(proxyFilter);
+            }
+        } finally {
             if (CollectionUtils.isEmpty(this.properties.getIncludedPages()) && this.properties.isPageOrderEnabled()) {
                 // we only send the pinned pages and the pinned pages, the WebPreferences document and the blog
                 // descriptor if we are not sending a specific list of pages.
-                Collection<String> orderedTitles = getOrderedDocumentTitles(blogPages);
+                Collection<String> orderedTitles = getOrderedTitlesOfIncludedDocuments(sentChildren);
                 sendPinnedPages(proxyFilter, orderedTitles);
                 endWebPreferences(proxyFilter);
-                addBlogDescriptorPage(proxyFilter);
             }
-            // Blog post pages
-            sendPages(spaceKey, true, blogPages, filter, proxyFilter, false, blogSpaceRef);
-        } finally {
             proxyFilter.endWikiSpace(blogSpaceKey, FilterEventParameters.EMPTY);
         }
+
+        return stop;
     }
 
-    private void sendPages(String spaceKey, boolean blog, List<Long> pages, Object filter, ConfluenceFilter proxyFilter,
-        boolean hide, EntityReference spaceRef) throws ConfluenceInterruptedException
+    /**
+     * @return whether the import should stop
+     */
+    private boolean sendPages(String spaceKey, boolean blog, List<Long> pages, Object filter,
+        ConfluenceFilter proxyFilter,  boolean hide, EntityReference spaceRef, Collection<Long> sentChildren)
     {
         Long homePageId = confluencePackage.getHomePage(confluencePackage.getSpaceId(spaceKey));
         for (Long pageId : pages) {
@@ -976,8 +993,18 @@ public class ConfluenceInputFilterStream
                         + "not sending it a second time", pageId, spaceKey);
                 continue;
             }
-            sendPage(pageId, spaceKey, blog, filter, proxyFilter, hide, spaceRef);
+            ConfluencePageSending cps = sendPage(pageId, spaceKey, blog, filter, proxyFilter, hide, spaceRef, false);
+
+            if (cps != null && cps.sent && sentChildren != null) {
+                sentChildren.add(pageId);
+            }
+
+            if (cps == null || cps.stop) {
+                return true;
+            }
         }
+
+        return false;
     }
 
     private void sendSpaceRights(ConfluenceFilter proxyFilter, ConfluenceProperties spaceProperties,
@@ -1154,7 +1181,6 @@ public class ConfluenceInputFilterStream
 
     private String getPermissionUserRef(ConfluenceProperties permProperties)
     {
-        String userRef = null;
         String userName = permProperties.getString(ConfluenceXMLPackage.KEY_SPACEPERMISSION_USERNAME, null);
         if (StringUtils.isEmpty(userName)) {
             String userKey = permProperties.getString(ConfluenceXMLPackage.KEY_PERMISSION_USERSUBJECT, null);
@@ -1180,15 +1206,29 @@ public class ConfluenceInputFilterStream
 
     private static class ConfluenceRight
     {
-        public final String type;
-        public final String group;
-        public final String users;
+        private final String type;
+        private final String group;
+        private final String users;
 
         ConfluenceRight(String type, String group, String users)
         {
             this.type = type;
             this.group = group;
             this.users = users;
+        }
+    }
+
+    private static class ConfluencePageSending
+    {
+        private final Collection<ConfluenceRight> inheritedRights;
+        private final boolean sent;
+        private final boolean stop;
+
+        ConfluencePageSending(Collection<ConfluenceRight> inheritedRights, boolean sent, boolean stop)
+        {
+            this.inheritedRights = inheritedRights;
+            this.sent = sent;
+            this.stop = stop;
         }
     }
 
@@ -1369,12 +1409,14 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void sendUsersAndGroups(Collection<Long> users, Collection<Long> groups, ConfluenceFilter proxyFilter)
-        throws FilterException, ConfluenceCanceledException
+    private boolean sendUsersAndGroups(Collection<Long> users, Collection<Long> groups, ConfluenceFilter proxyFilter)
+        throws FilterException
     {
         if ((users == null || users.isEmpty()) && (groups == null || groups.isEmpty())) {
-            return;
+            return false;
         }
+
+        boolean stop = false;
 
         // Switch the wiki if a specific one is forced
         if (this.properties.getUsersWiki() != null) {
@@ -1382,28 +1424,35 @@ public class ConfluenceInputFilterStream
         }
 
         if (users != null) {
-            sendUsers(users, proxyFilter);
+            stop = sendUsers(users, proxyFilter);
         }
 
-        if (groups != null) {
-            sendGroups(groups, proxyFilter);
+        if (!stop && groups != null) {
+            stop = sendGroups(groups, proxyFilter);
         }
 
         // Get back to default wiki
         if (this.properties.getUsersWiki() != null) {
             proxyFilter.endWiki(this.properties.getUsersWiki(), FilterEventParameters.EMPTY);
         }
+
+        return stop;
     }
 
-    private void sendGroups(Collection<Long> groupIds, ConfluenceFilter proxyFilter)
-        throws FilterException, ConfluenceCanceledException
+    /**
+     * @return whether the import should stop
+     */
+    private boolean sendGroups(Collection<Long> groupIds, ConfluenceFilter proxyFilter) throws FilterException
     {
         // Group groups by XWiki group name. There can be several Confluence groups mapping to a unique XWiki group.
         Map<String, Collection<ConfluenceProperties>> groupsByXWikiName = getGroupsByXWikiName(groupIds);
 
+        boolean stop = false;
         // Loop over the XWiki groups
         for (Map.Entry<String, Collection<ConfluenceProperties>> groupEntry: groupsByXWikiName.entrySet()) {
-            checkCanceled();
+            if (stop || isCanceled()) {
+                return true;
+            }
             String groupName = groupEntry.getKey();
             if ("XWikiAllGroup".equals(groupName)) {
                 continue;
@@ -1434,28 +1483,47 @@ public class ConfluenceInputFilterStream
 
             proxyFilter.beginGroupContainer(groupName, groupParameters);
             try {
-                // We add members of all the Confluence groups mapped to this XWiki group to the XWiki group.
-                Collection<String> alreadyAddedMembers = new HashSet<>();
-                for (ConfluenceProperties groupProperties : groups) {
-                    sendUserMembers(proxyFilter, groupProperties, alreadyAddedMembers);
-                    sendGroupMembers(proxyFilter, groupProperties, alreadyAddedMembers);
-                }
+                stop = sendMembers(proxyFilter, groups);
             } finally {
                 proxyFilter.endGroupContainer(groupName, groupParameters);
             }
 
             this.progress.endStep(this);
         }
+
+        return stop;
     }
 
-    private void sendGroupMembers(ConfluenceFilter proxyFilter, ConfluenceProperties groupProperties,
-        Collection<String> alreadyAddedMembers) throws ConfluenceCanceledException
+    /**
+     * @return whether the import should stop
+     */
+    private boolean sendMembers(ConfluenceFilter proxyFilter, Collection<ConfluenceProperties> groups)
+    {
+        // We add members of all the Confluence groups mapped to this XWiki group to the XWiki group.
+        Collection<String> alreadyAddedMembers = new HashSet<>();
+        for (ConfluenceProperties groupProperties : groups) {
+            boolean stop = sendUserMembers(proxyFilter, groupProperties, alreadyAddedMembers)
+                || sendGroupMembers(proxyFilter, groupProperties, alreadyAddedMembers);
+            if (stop) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * @return whether the import should stop
+     */
+    private boolean sendGroupMembers(ConfluenceFilter proxyFilter, ConfluenceProperties groupProperties,
+        Collection<String> alreadyAddedMembers)
     {
         if (groupProperties.containsKey(ConfluenceXMLPackage.KEY_GROUP_MEMBERGROUPS)) {
             List<Long> groupMembers = this.confluencePackage.getLongList(groupProperties,
                 ConfluenceXMLPackage.KEY_GROUP_MEMBERGROUPS);
             for (Long memberInt : groupMembers) {
-                checkCanceled();
+                if (isCanceled()) {
+                    return true;
+                }
                 FilterEventParameters memberParameters = new FilterEventParameters();
 
                 try {
@@ -1472,16 +1540,22 @@ public class ConfluenceInputFilterStream
                 }
             }
         }
+        return false;
     }
 
-    private void sendUserMembers(ConfluenceFilter proxyFilter, ConfluenceProperties groupProperties,
-        Collection<String> alreadyAddedMembers) throws ConfluenceCanceledException
+    /**
+     * @return whether the import should stop
+     */
+    private boolean sendUserMembers(ConfluenceFilter proxyFilter, ConfluenceProperties groupProperties,
+        Collection<String> alreadyAddedMembers)
     {
         if (groupProperties.containsKey(ConfluenceXMLPackage.KEY_GROUP_MEMBERUSERS)) {
             List<Long> groupMembers =
                 this.confluencePackage.getLongList(groupProperties, ConfluenceXMLPackage.KEY_GROUP_MEMBERUSERS);
             for (Long memberInt : groupMembers) {
-                checkCanceled();
+                if (isCanceled()) {
+                    return true;
+                }
                 FilterEventParameters memberParameters = new FilterEventParameters();
 
                 try {
@@ -1498,6 +1572,8 @@ public class ConfluenceInputFilterStream
                 }
             }
         }
+
+        return false;
     }
 
     private Map<String, Collection<ConfluenceProperties>> getGroupsByXWikiName(Collection<Long> groups)
@@ -1529,11 +1605,15 @@ public class ConfluenceInputFilterStream
         return groupsByXWikiName;
     }
 
-    private void sendUsers(Collection<Long> users, ConfluenceFilter proxyFilter)
-        throws FilterException, ConfluenceCanceledException
+    /**
+     * @return whether the import should stop
+     */
+    private boolean sendUsers(Collection<Long> users, ConfluenceFilter proxyFilter)  throws FilterException
     {
         for (Long userId : users) {
-            checkCanceled();
+            if (isCanceled()) {
+                return true;
+            }
             this.progress.startStep(this);
 
             if (shouldSendObject(userId)) {
@@ -1542,6 +1622,7 @@ public class ConfluenceInputFilterStream
 
             this.progress.endStep(this);
         }
+        return false;
     }
 
     private void sendUser(ConfluenceFilter proxyFilter, Long userId) throws FilterException
@@ -1627,74 +1708,96 @@ public class ConfluenceInputFilterStream
         return pageProperties;
     }
 
-    private Collection<ConfluenceRight> readPage(long pageId, String spaceKey, boolean blog, Object filter,
-        ConfluenceFilter proxyFilter, boolean hide, EntityReference spaceRef)
-        throws FilterException, ConfluenceInterruptedException
+    private ConfluencePageSending readPageAndChildren(Long pageId, String spaceKey, boolean blog, Object filter,
+        ConfluenceFilter proxyFilter, boolean hide, EntityReference spaceRef, boolean isHome) throws FilterException
     {
-        ConfluenceProperties pageProperties = readPageGetPageProperties(pageId, spaceKey);
-        if (pageProperties == null) {
-            emptyStep();
-            return Collections.emptyList();
-        }
+        ConfluenceProperties pageProperties = pageId == null ? null : readPageGetPageProperties(pageId, spaceKey);
+        String title = pageProperties == null ? null : pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
 
-        String title = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE);
-
-        boolean isHomePage = pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE);
-        String documentName = isHomePage ? WEB_HOME : title;
-
-        // Skip pages with empty title
-        if (StringUtils.isEmpty(documentName)) {
-            this.logger.warn("Found a page without a name or title (id={}). Skipping it.",
-                createPageIdentifier(pageId, spaceKey));
-
-            emptyStep();
-            return Collections.emptyList();
-        }
-
-        FilterEventParameters documentParameters = new FilterEventParameters();
-        if (this.properties.getDefaultLocale() != null) {
-            documentParameters.put(WikiDocumentFilter.PARAMETER_LOCALE, this.properties.getDefaultLocale());
-        }
-
-        String spaceName = confluenceConverter.toEntityName(title);
-
-        List<Long> children = blog ? Collections.emptyList() : confluencePackage.getPageChildren(pageId);
-        if (blog) {
-            // Apply the standard entity name validator
-            documentName = confluenceConverter.toEntityName(documentName);
-        } else {
-            if (!isHomePage) {
-                proxyFilter.beginWikiSpace(spaceName, FilterEventParameters.EMPTY);
-            }
-            documentName = WEB_HOME;
-        }
-
+        Collection<Long> sentChildren = new ArrayList<>();
         Collection<ConfluenceRight> homePageInheritedRights = null;
+        ConfluencePageSending cps = null;
+        String spaceName = null;
+        boolean stop = false;
+        boolean blogOrHome = blog || isHome;
 
-        EntityReference subSpaceRef = isHomePage
-            ? spaceRef
-            : new EntityReference(spaceName, EntityType.SPACE, spaceRef);
-
-        EntityReference docRef = new EntityReference(documentName, EntityType.DOCUMENT, subSpaceRef);
         try {
-            Collection<ConfluenceRight> inheritedRights = sendTerminalDoc(blog, filter, proxyFilter, docRef,
-                documentParameters, pageProperties, spaceKey, isHomePage, children, hide, pageId);
+            if (pageProperties == null) {
+                emptyStep();
+                if (isHome && CollectionUtils.isEmpty(properties.getIncludedPages())) {
+                    // no home page, we send a minimal one to avoid overly confusing space trees
+                    // but only if we are not sending a specific list of pages
+                    sendSyntheticWebHomePageListingChildren(spaceKey, spaceKey, proxyFilter);
+                }
+            } else if (StringUtils.isEmpty(title)) {
+                this.logger.warn("Found a page without a title (id={}). Skipping it.",
+                        createPageIdentifier(pageId, spaceKey));
 
-            if (isHomePage) {
-                // We only send inherited rights of the home page so they are added to the space's WebPreference page
-                homePageInheritedRights = inheritedRights;
+                emptyStep();
+            } else {
+                spaceName = confluenceConverter.toEntityName(title);
+                if (!blogOrHome) {
+                    proxyFilter.beginWikiSpace(spaceName, FilterEventParameters.EMPTY);
+                }
+
+                List<Long> children = blog ? Collections.emptyList() : confluencePackage.getPageChildren(pageId);
+                String documentName = blog ? spaceName : WEB_HOME;
+
+                EntityReference subSpaceRef = blogOrHome
+                        ? spaceRef
+                        : new EntityReference(spaceName, EntityType.SPACE, spaceRef);
+
+                EntityReference docRef = new EntityReference(documentName, EntityType.DOCUMENT, subSpaceRef);
+                cps = sendTerminalDoc(blog, filter, proxyFilter, docRef, pageProperties, spaceKey, hide, pageId);
+
+                stop = cps.stop;
+
+                if (isHome) {
+                    // Only the inherited rights of the home page are added to the space's WebPreferences
+                    homePageInheritedRights = cps.inheritedRights;
+                }
+
+                if (!children.isEmpty() && !stop) {
+                    stop = sendPages(spaceKey, false, children, filter, proxyFilter, hide, subSpaceRef,
+                        sentChildren);
+                }
             }
 
-            if (!children.isEmpty()) {
-                sendPages(spaceKey, false, children, filter, proxyFilter, hide, subSpaceRef);
+            if (isHome && !stop) {
+                stop = sendOrphans(filter, proxyFilter, spaceKey, spaceRef, sentChildren);
             }
         } finally {
-            if (!blog && !isHomePage) {
+            Collection<ConfluenceRight> inheritedRights = cps == null ? null : cps.inheritedRights;
+            sendWebPreferencesAndEndSpace(blogOrHome, proxyFilter, inheritedRights, pageProperties, sentChildren,
+                    spaceName);
+        }
+
+        return new ConfluencePageSending(homePageInheritedRights, cps != null && cps.sent, stop);
+    }
+
+    private void sendWebPreferencesAndEndSpace(boolean blogOrHome, ConfluenceFilter proxyFilter,
+        Collection<ConfluenceRight> inheritedRights, ConfluenceProperties pageProperties, Collection<Long> sentChildren,
+        String spaceName) throws FilterException
+    {
+        try {
+            if (!blogOrHome && CollectionUtils.isNotEmpty(inheritedRights)) {
+                // inherited rights from the home page are put in the space WebPreferences page
+                beginWebPreferences(proxyFilter);
+                for (ConfluenceRight right : inheritedRights) {
+                    sendInheritedPageRight(pageProperties, proxyFilter, right);
+                }
+            }
+
+            if (CollectionUtils.isNotEmpty(sentChildren)) {
+                Collection<String> orderedTitles = getOrderedTitlesOfIncludedDocuments(sentChildren);
+                sendPinnedPages(proxyFilter, orderedTitles);
+            }
+        } finally {
+            if (!blogOrHome && StringUtils.isNotEmpty(spaceName)) {
+                endWebPreferences(proxyFilter);
                 proxyFilter.endWikiSpace(spaceName, FilterEventParameters.EMPTY);
             }
         }
-
-        return homePageInheritedRights;
     }
 
     private void emptyStep()
@@ -1703,30 +1806,39 @@ public class ConfluenceInputFilterStream
         this.progress.endStep(this);
     }
 
-    private Collection<ConfluenceRight> sendTerminalDoc(boolean blog, Object filter, ConfluenceFilter proxyFilter,
-        EntityReference docRef, FilterEventParameters documentParameters, ConfluenceProperties pageProperties,
-        String spaceKey, boolean isHomePage, List<Long> children, boolean hide, long pageId)
-            throws FilterException, ConfluenceCanceledException
+    private ConfluencePageSending sendTerminalDoc(boolean blog, Object filter, ConfluenceFilter proxyFilter,
+        EntityReference docRef, ConfluenceProperties pageProperties,
+        String spaceKey, boolean hide, long pageId)
+            throws FilterException
     {
         Collection<ConfluenceRight> inheritedRights = blog ? null : new ArrayList<>();
         this.progress.startStep(this);
+        boolean sent = false;
+        boolean stop = false;
         try {
             if (properties.isIncluded(pageId)) {
                 String documentName = docRef.getName();
-                proxyFilter.beginWikiDocument(documentName, documentParameters);
-
+                FilterEventParameters documentParameters = new FilterEventParameters();
+                if (this.properties.getDefaultLocale() != null) {
+                    documentParameters.put(WikiDocumentFilter.PARAMETER_LOCALE, this.properties.getDefaultLocale());
+                }
+                boolean send = this.properties.isContentsEnabled() || this.properties.isRightsEnabled();
+                if (send) {
+                    proxyFilter.beginWikiDocument(documentName, documentParameters);
+                }
                 try {
-                    if (this.properties.isContentsEnabled() || this.properties.isRightsEnabled()) {
-                        sendRevisions(blog, filter, proxyFilter, pageProperties, spaceKey, inheritedRights, hide,
+                    if (send) {
+                        stop = sendRevisions(blog, filter, proxyFilter, pageProperties, spaceKey, inheritedRights, hide,
                             Locale.ROOT, docRef);
                     }
+                    sent = true;
                 } finally {
-                    sendTranslations(blog, filter, proxyFilter, pageProperties, spaceKey, hide, docRef,
-                        inheritedRights);
-                    proxyFilter.endWikiDocument(documentName, documentParameters);
-
-                    if (!blog && !isHomePage) {
-                        sendWebPreferences(proxyFilter, pageProperties, children, inheritedRights);
+                    if (send) {
+                        if (!stop) {
+                            stop = sendTranslations(blog, filter, proxyFilter, pageProperties, spaceKey, hide, docRef,
+                                inheritedRights);
+                        }
+                        proxyFilter.endWikiDocument(documentName, documentParameters);
                     }
 
                     if (this.remainingPages > 0) {
@@ -1738,7 +1850,7 @@ public class ConfluenceInputFilterStream
             this.progress.endStep(this);
         }
 
-        return isHomePage ? inheritedRights : null;
+        return new ConfluencePageSending(inheritedRights, sent, stop);
     }
 
     private void maybeLogMacroUsage(ConfluenceProperties pageProperties, Locale locale)
@@ -1750,9 +1862,12 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void sendTranslations(boolean blog, Object filter, ConfluenceFilter proxyFilter,
+    /**
+     * @return whether the import should stop
+     */
+    private boolean sendTranslations(boolean blog, Object filter, ConfluenceFilter proxyFilter,
         ConfluenceProperties pageProperties, String spaceKey, boolean hide, EntityReference docRef,
-        Collection<ConfluenceRight> inheritedRights) throws FilterException, ConfluenceCanceledException
+        Collection<ConfluenceRight> inheritedRights) throws FilterException
     {
         Collection<Locale> usedLocales = context.getCurrentlyUsedLocales();
         if (!CollectionUtils.isEmpty(usedLocales)) {
@@ -1762,37 +1877,22 @@ public class ConfluenceInputFilterStream
                     continue;
                 }
                 context.setCurrentLocale(locale);
-                sendRevisions(blog, filter, proxyFilter, pageProperties, spaceKey, inheritedRights, hide, locale,
-                    docRef);
-            }
-        }
-    }
-
-    private void sendWebPreferences(ConfluenceFilter proxyFilter, ConfluenceProperties pageProperties,
-        List<Long> children, Collection<ConfluenceRight> inheritedRights) throws FilterException
-    {
-        try {
-            if (inheritedRights != null && !inheritedRights.isEmpty()) {
-                // inherited rights from the home page are put in the space WebPreferences page
-                beginWebPreferences(proxyFilter);
-                for (ConfluenceRight right : inheritedRights) {
-                    sendInheritedPageRight(pageProperties, proxyFilter, right);
+                if (sendRevisions(blog, filter, proxyFilter, pageProperties, spaceKey, inheritedRights, hide, locale,
+                    docRef)) {
+                    return true;
                 }
             }
-
-            if (this.properties.isPageOrderEnabled()) {
-                Collection<String> orderedTitles = getOrderedDocumentTitles(children);
-                sendPinnedPages(proxyFilter, orderedTitles);
-            }
-        } finally {
-            endWebPreferences(proxyFilter);
         }
+        return false;
     }
 
-    private void sendRevisions(boolean blog, Object filter, ConfluenceFilter proxyFilter,
+    /**
+     * @return whether the import should stop
+     */
+    private boolean sendRevisions(boolean blog, Object filter, ConfluenceFilter proxyFilter,
         ConfluenceProperties pageProperties, String spaceKey, Collection<ConfluenceRight> inheritedRights,
         boolean hide, Locale locale, EntityReference docRef)
-        throws FilterException, ConfluenceCanceledException
+        throws FilterException
     {
         FilterEventParameters documentLocaleParameters = getDocumentLocaleParameters(pageProperties);
         proxyFilter.beginWikiDocumentLocale(locale, documentLocaleParameters);
@@ -1805,7 +1905,7 @@ public class ConfluenceInputFilterStream
                 } catch (ConfigurationException e) {
                     logger.error("Failed to get revisions of page [{}]. This should not happen.",
                         createPageIdentifier(pageProperties), e);
-                    return;
+                    return false;
                 }
 
                 boolean buggyVersions = areThereBuggyVersions(pageProperties, revisionsById);
@@ -1835,7 +1935,9 @@ public class ConfluenceInputFilterStream
                         logger.error("Failed to filter the page revision with id [{}]",
                             createPageIdentifier(revisionId, spaceKey), e);
                     }
-                    checkCanceled();
+                    if (isCanceled()) {
+                        return true;
+                    }
                 }
             }
 
@@ -1849,6 +1951,8 @@ public class ConfluenceInputFilterStream
         } finally {
             proxyFilter.endWikiDocumentLocale(locale, documentLocaleParameters);
         }
+
+        return false;
     }
 
     private boolean areThereBuggyVersions(ConfluenceProperties pageProperties,
@@ -2108,6 +2212,10 @@ public class ConfluenceInputFilterStream
 
     private ConfluenceProperties getPageProperties(Long pageId) throws FilterException
     {
+        if (pageId == null) {
+            return null;
+        }
+
         try {
             return this.confluencePackage.getPageProperties(pageId, false);
         } catch (ConfigurationException e) {

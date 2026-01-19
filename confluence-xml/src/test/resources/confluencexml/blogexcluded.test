@@ -73,23 +73,6 @@
             </wikiDocumentRevision>
           </wikiDocumentLocale>
         </wikiDocument>
-        <wikiSpace name="Blog">
-          <wikiDocument name="WebHome">
-            <wikiObject name="Blog.BlogClass">
-              <p>
-                <parameters>
-                  <entry>
-                    <string>class_reference</string>
-                    <string>Blog.BlogClass</string>
-                  </entry>
-                </parameters>
-              </p>
-              <wikiObjectProperty name="title" value="Blog"/>
-              <wikiObjectProperty name="postsLayout" value="image"/>
-              <wikiObjectProperty name="displayType" value="paginated"/>
-            </wikiObject>
-          </wikiDocument>
-        </wikiSpace>
         <wikiDocument name="WebPreferences">
           <p>
             <parameters>
@@ -572,6 +555,7 @@
             <wikiObjectProperty name="users" value="XWiki.34169017-dfe4-41cb-a8ae-6c3644475fb8@connect_atlassian_com"/>
           </wikiObject>
         </wikiDocument>
+        <wikiSpace name="Blog"/>
       </wikiSpace>
     </wikiSpace>
   </wikiSpace>
