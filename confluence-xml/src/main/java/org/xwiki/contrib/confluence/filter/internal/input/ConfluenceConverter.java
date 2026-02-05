@@ -228,7 +228,7 @@ public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
             }
         }
 
-        // Translate the usual default admin user in Confluence to it's XWiki counterpart
+        // Translate the usual default admin user in Confluence to its XWiki counterpart
         if (userName.equals("admin")) {
             return "Admin";
         }
