@@ -363,8 +363,16 @@ public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
     private EntityReference fromSpaceKey(String ciSpaceKey)
     {
         String space = ensureNonEmptySpaceKey(ciSpaceKey);
-        if (context.getConfluencePackage().getSpaceId(space) != null) {
-            String convertedSpace = toEntityName(space);
+        ConfluenceXMLPackage confluencePackage = context.getConfluencePackage();
+        Long spaceId = confluencePackage.getSpaceId(space);
+        if (spaceId != null) {
+            String spaceWithCorrectCase = space;
+            try {
+                spaceWithCorrectCase = confluencePackage.getSpaceKey(spaceId);
+            } catch (ConfigurationException e) {
+                logger.warn("Could not find the correct case of space [{}]", space);
+            }
+            String convertedSpace = toEntityName(spaceWithCorrectCase);
             EntityReference root = getRoot();
             return newEntityReference(convertedSpace, EntityType.SPACE, root);
         }

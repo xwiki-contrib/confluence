@@ -59,6 +59,9 @@
             <ac:parameter ac:name="size">large</ac:parameter>
             <ac:parameter ac:name="additional">none</ac:parameter>
         </ac:structured-macro></p>
+        <p><ac:structured-macro ac:name="livesearch">
+            <ac:parameter ac:name="spaceKey"><ri:space ri:space-key="myspace" /></ac:parameter>
+        </ac:structured-macro></p>
         <p>Format = space name</p>
         <p><ac:structured-macro ac:name="livesearch" ac:schema-version="1" ac:local-id="0c8aaa9d-8bb1-49b4-a92f-1162c720bffd" ac:macro-id="9cfd2880c82785d3cd9eb355e396875639e2429bdf091ad84b710be98f0e1b4e">
             <ac:parameter ac:name="size">large</ac:parameter>

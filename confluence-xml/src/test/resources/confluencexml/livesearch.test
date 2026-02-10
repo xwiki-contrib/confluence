@@ -49,6 +49,8 @@ Format = none, space = Demo
 
 {{locationSearch reference="OutsideSpace.DEMO" showExcerpts="true" width="100%"/}}
 
+{{locationSearch reference="MySpace" showExcerpts="false"/}}
+
 Format = space name
 
 {{locationSearch showExcerpts="false" width="100%"/}}
