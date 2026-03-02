@@ -19,9 +19,7 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.input;
 
-import java.util.ArrayDeque;
 import java.util.Collection;
-import java.util.Deque;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -42,7 +40,6 @@ import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.parser.confluence.internal.wikimodel.ConfluenceResourceReference;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceURLConverter;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceInlineCommentTagHandler;
-import org.xwiki.rendering.listener.CompositeListener;
 import org.xwiki.rendering.listener.Format;
 import org.xwiki.rendering.listener.HeaderLevel;
 import org.xwiki.rendering.listener.Listener;
@@ -54,10 +51,6 @@ import org.xwiki.rendering.listener.reference.ResourceType;
 import org.xwiki.rendering.listener.reference.UserResourceReference;
 import org.xwiki.rendering.renderer.PrintRenderer;
 import org.xwiki.rendering.renderer.printer.DefaultWikiPrinter;
-import org.xwiki.rendering.renderer.printer.WikiPrinter;
-
-import static org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter.getConfluenceServerAnchor;
-import static org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter.spacesToDash;
 
 /**
  * Convert various Confluence content elements to their XWiki equivalent.
@@ -69,6 +62,9 @@ import static org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConve
 @InstantiationStrategy(ComponentInstantiationStrategy.PER_LOOKUP)
 public class ConfluenceConverterListener extends WrappingListener
 {
+    static final String ID_MACRO_NAME_PARAMETER = "name";
+    static final String ID_MACRO_NAME = "id";
+
     /**
      * The auto-cursor-target class that appears on some paragraphs and headings in Confluence, most of the
      * paragraphs are empty and should be removed, but not all.
@@ -76,9 +72,6 @@ public class ConfluenceConverterListener extends WrappingListener
     private static final String AUTO_CURSOR_TARGET_CLASS = "auto-cursor-target";
 
     private static final String CLASS_ATTRIBUTE = "class";
-
-    private static final String ID_MACRO_NAME = "id";
-    private static final String ID_MACRO_NAME_PARAMETER = "name";
 
     @Inject
     private MacroConverter macroConverter;
@@ -108,103 +101,17 @@ public class ConfluenceConverterListener extends WrappingListener
     private Map<String, String> inlineComments = new LinkedHashMap<>();
 
     /**
-     * A stack of queues that are used to record the content of a paragraph with the auto-cursor-target class. For
-     * the unlikely case that paragraphs are nested (e.g., because there is a paragraph in a nested macro), a stack
-     * is used instead of a single listener.
-     */
-    private final Deque<QueueListener> contentListenerStack = new ArrayDeque<>();
-
-    /**
-     * A stack of previous listeners that is used to record the previous wrapped listener when a new listener is set
-     * while examining the content of a paragraph with the auto-cursor-target class. This is used to restore the
-     * previous listener at the end of the paragraph. Again, a stack is used instead of a single listener to handle
-     * the unlikely case of nested paragraphs.
-     */
-    private final Deque<Listener> previousListenerStack = new ArrayDeque<>();
-
-    private Map<String, Integer> macroIds;
-
-    /**
      * The images put as trailers in blog posts.
      */
     private Collection<ResourceReference> teasers;
 
-    private final WrappingListener wrappingListener = new WrappingListener() {
-        @Override
-        public void onMacro(String id, Map<String, String> parameters, String content, boolean inline)
-        {
-            countMacro(id);
-
-            if (ID_MACRO_NAME.equals(id)) {
-                handleIdMacro(parameters, content, inline);
-            } else {
-                super.onMacro(id, parameters, content, inline);
-            }
-        }
-
-        private void handleIdMacro(Map<String, String> parameters, String content, boolean inline)
-        {
-            String name = parameters.get(ID_MACRO_NAME_PARAMETER);
-            if (name == null || name.isEmpty()) {
-                return;
-            }
-
-            String currentPageTitle = ((ConfluenceConverter) confluenceConverter).getCurrentPageTitleForAnchor();
-
-            if (context.isConfluenceCloud()) {
-                String dashedName = spacesToDash(name);
-                getWrappedListener().onMacro(
-                    ID_MACRO_NAME,
-                    Map.of(ID_MACRO_NAME_PARAMETER, dashedName),
-                    content,
-                    inline
-                );
-
-                if (currentPageTitle != null) {
-                    getWrappedListener().onId(spacesToDash(currentPageTitle) + '-' + dashedName);
-                }
-            } else if (currentPageTitle != null) {
-                getWrappedListener().onMacro(
-                    ID_MACRO_NAME,
-                    Map.of(ID_MACRO_NAME_PARAMETER, getConfluenceServerAnchor(currentPageTitle, name)),
-                    content,
-                    inline
-                );
-            }
-        }
-    };
-
-    private void countMacro(String id)
-    {
-        if (!id.startsWith("CONFLUENCE_xwiki-") && macroIds != null && !isQueuingEvents()) {
-            // Don't count the macros if we are recording events, we only count them when actually rendering.
-            // Don't count macros that start with CONFLUENCE_xwiki-, they are hacks generated by macro converters.
-            macroIds.put(id, macroIds.getOrDefault(id, 0) + 1);
-        }
-    }
+    private final ConfluenceWrappingListener wrappingListener = new ConfluenceWrappingListener();
 
     private void addTeaser(ResourceReference ref)
     {
-        if (teasers != null && !isQueuingEvents()) {
+        if (teasers != null && !wrappingListener.isQueuingEvents()) {
             // Don't save trailers if we are recording events
             teasers.add(ref);
-        }
-    }
-
-    private static class NormalizedPlainFilter extends CompositeListener
-    {
-        private final WikiPrinter printer = new DefaultWikiPrinter();
-
-        private final Listener wrappedListener;
-
-        NormalizedPlainFilter(PrintRenderer plainRenderer, Listener wrappedListener)
-        {
-            this.wrappedListener = wrappedListener;
-
-            plainRenderer.setPrinter(this.printer);
-
-            addListener(plainRenderer);
-            addListener(wrappedListener);
         }
     }
 
@@ -226,6 +133,8 @@ public class ConfluenceConverterListener extends WrappingListener
     @Override
     public void setWrappedListener(Listener listener)
     {
+        wrappingListener.setConfluenceConverter(confluenceConverter);
+        wrappingListener.setConfluenceCloud(context.isConfluenceCloud());
         wrappingListener.setWrappedListener(listener);
         super.setWrappedListener(wrappingListener);
     }
@@ -241,7 +150,7 @@ public class ConfluenceConverterListener extends WrappingListener
      */
     public void setMacroIds(Map<String, Integer> macroIds)
     {
-        this.macroIds = macroIds;
+        wrappingListener.setMacroIds(macroIds);
     }
 
     /**
@@ -260,7 +169,7 @@ public class ConfluenceConverterListener extends WrappingListener
         if (hasAutoCursorTargetClass(parameters)) {
             // Record the content of the paragraph to check if it is empty and should be removed, or if we should just
             // remove the class parameter.
-            this.queueEvents();
+            wrappingListener.queueEvents();
 
             super.beginParagraph(removeClassParameter(parameters));
         } else {
@@ -268,34 +177,13 @@ public class ConfluenceConverterListener extends WrappingListener
         }
     }
 
-    private void queueEvents()
-    {
-        this.contentListenerStack.push(new QueueListener());
-        // We need to get the actual wrapped listener, not the wrappingListener instance, to be able to restore it
-        // later.
-        this.previousListenerStack.push(wrappingListener.getWrappedListener());
-        setWrappedListener(this.contentListenerStack.element());
-    }
-
-    private QueueListener dequeueEvents()
-    {
-        Listener previousListener = this.previousListenerStack.pop();
-        setWrappedListener(previousListener);
-        return this.contentListenerStack.pop();
-    }
-
-    private boolean isQueuingEvents()
-    {
-        return !this.contentListenerStack.isEmpty();
-    }
-
     @Override
     public void endParagraph(Map<String, String> parameters)
     {
         // Check if we reached the end of a paragraph with the auto-cursor-target class.
-        if (hasAutoCursorTargetClass(parameters) && this.isQueuingEvents()) {
+        if (hasAutoCursorTargetClass(parameters) && wrappingListener.isQueuingEvents()) {
             // Restore the previous listener and get the recorded events.
-            QueueListener contentListener = this.dequeueEvents();
+            QueueListener contentListener = wrappingListener.dequeueEvents();
 
             // Check if the content of the paragraph is empty.
             boolean isEmpty = contentListener.stream()
@@ -305,7 +193,7 @@ public class ConfluenceConverterListener extends WrappingListener
                     || event.eventType == EventType.ON_SPACE);
             if (!isEmpty) {
                 // Relay the recorded events
-                contentListener.consumeEvents(this.getWrappedListener());
+                contentListener.consumeEvents(wrappingListener);
                 super.endParagraph(removeClassParameter(parameters));
             }
         } else {
@@ -325,18 +213,18 @@ public class ConfluenceConverterListener extends WrappingListener
         if (context.getProperties().isTitleAnchorGenerationEnabled()) {
             // To generate an automatic anchor compatible with anchors generated by Confluence, we record the content
             // from which we will build the anchor name.
-            this.queueEvents();
+            wrappingListener.queueEvents();
         }
     }
 
     @Override
     public void endHeader(HeaderLevel level, String id, Map<String, String> parameters)
     {
-        if (context.getProperties().isTitleAnchorGenerationEnabled() && this.isQueuingEvents()) {
+        if (context.getProperties().isTitleAnchorGenerationEnabled() && wrappingListener.isQueuingEvents()) {
             // We generate the anchor (get the text content of generated events, produce an id macro), and then consume
             // events so the title content is correctly rendered.
 
-            QueueListener contentListener = this.dequeueEvents();
+            QueueListener contentListener = wrappingListener.dequeueEvents();
 
             DefaultWikiPrinter printer = new DefaultWikiPrinter();
             plainTextRenderer.setPrinter(printer);
@@ -344,15 +232,16 @@ public class ConfluenceConverterListener extends WrappingListener
             String titleText = printer.toString();
             String anchor = confluenceConverter.convertAnchor("", "", titleText);
 
+            Listener wrappedListener = wrappingListener.getWrappedListener();
             if (!anchor.isEmpty()) {
-                wrappingListener.getWrappedListener().onMacro(
+                wrappedListener.onMacro(
                     ID_MACRO_NAME,
                     Map.of(ID_MACRO_NAME_PARAMETER, anchor),
                     null,
                     true);
             }
 
-            contentListener.consumeEvents(wrappingListener.getWrappedListener());
+            contentListener.consumeEvents(wrappedListener);
         }
 
         if (hasAutoCursorTargetClass(parameters)) {
@@ -366,7 +255,7 @@ public class ConfluenceConverterListener extends WrappingListener
     {
         event.eventType.fireEvent(plainTextRenderer, event.eventParameters);
         if (event.eventType.equals(EventType.ON_MACRO)) {
-            countMacro((String) event.eventParameters[0]);
+            wrappingListener.countMacro((String) event.eventParameters[0]);
         }
     }
 
@@ -555,7 +444,7 @@ public class ConfluenceConverterListener extends WrappingListener
                 this.inlineComments.put(ref, currentAnnotation + normalizedFilter.getPrinter());
 
                 // Restore previous wrapped listener
-                this.wrappingListener.setWrappedListener(normalizedFilter.wrappedListener);
+                this.wrappingListener.setWrappedListener(normalizedFilter.getWrappedListener());
             }
         }
 
