@@ -98,11 +98,12 @@ final class ConfluenceWrappingListener extends WrappingListener
 
     void queueEvents()
     {
-        this.contentListenerStack.push(new QueueListener());
         // We need to get the actual wrapped listener, not the wrappingListener instance, to be able to restore it
         // later.
         this.previousListenerStack.push(getWrappedListener());
-        this.setWrappedListener(this.contentListenerStack.element());
+        QueueListener q = new QueueListener();
+        this.contentListenerStack.push(q);
+        this.setWrappedListener(q);
     }
 
     QueueListener dequeueEvents()
