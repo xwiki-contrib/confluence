@@ -547,9 +547,8 @@ public class ConfluenceConverterListener extends WrappingListener
             if (listener instanceof NormalizedPlainFilter) {
                 NormalizedPlainFilter normalizedFilter = (NormalizedPlainFilter) listener;
 
-                String currentAnnotation = this.inlineComments.get(ref);
-                this.inlineComments.put(ref, currentAnnotation != null
-                    ? currentAnnotation + normalizedFilter.printer.toString() : normalizedFilter.printer.toString());
+                String currentAnnotation = this.inlineComments.getOrDefault(ref, "");
+                this.inlineComments.put(ref, currentAnnotation + normalizedFilter.getPrinter());
 
                 // Restore previous wrapped listener
                 this.wrappingListener.setWrappedListener(normalizedFilter.wrappedListener);
