@@ -121,6 +121,6 @@ public abstract class AbstractRichContentTagHandler extends PreserveTagHandler i
 
     protected Listener getActualWrappedListener()
     {
-        return ((WrappingListener) this.parser.getConverter().getWrappedListener()).getWrappedListener();
+        return this.parser.getConverter().getWrappedListener();
     }
 }

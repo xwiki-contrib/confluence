@@ -139,9 +139,11 @@ public class ConfluenceConverterListener extends WrappingListener
         super.setWrappedListener(wrappingListener);
     }
 
-    // FIXME we should probably override getWrappedListener and make it return wrappingListener.getWrappedListener();
-    //       For now, the behavior is not symetrical, which might make things more difficult to understand than
-    //       necessary. For now, doing this without adjustments breaks everything.
+    @Override
+    public Listener getWrappedListener()
+    {
+        return wrappingListener.getWrappedListener();
+    }
 
     /**
      * @param macroIds a set of macro ids that will be updated whenever a new macro event will be called.
