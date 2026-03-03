@@ -38,7 +38,7 @@ final class ConfluenceWrappingListener extends WrappingListener
      * the unlikely case that paragraphs are nested (e.g., because there is a paragraph in a nested macro), a stack
      * is used instead of a single listener.
      */
-    private final Deque<QueueListener> contentListenerStack = new ArrayDeque<>();
+    private final Deque<Listener> contentListenerStack = new ArrayDeque<>();
 
     /**
      * A stack of previous listeners that is used to record the previous wrapped listener when a new listener is set
@@ -98,19 +98,42 @@ final class ConfluenceWrappingListener extends WrappingListener
 
     void queueEvents()
     {
-        // We need to get the actual wrapped listener, not the wrappingListener instance, to be able to restore it
-        // later.
-        this.previousListenerStack.push(getWrappedListener());
-        QueueListener q = new QueueListener();
-        this.contentListenerStack.push(q);
-        this.setWrappedListener(q);
+        queueEvents(new QueueListener());
     }
 
-    QueueListener dequeueEvents()
+    void queueEvents(Listener listener)
+    {
+        this.previousListenerStack.push(getWrappedListener());
+        this.contentListenerStack.push(listener);
+        super.setWrappedListener(listener);
+    }
+
+    Listener dequeueEvents()
     {
         Listener previousListener = this.previousListenerStack.pop();
-        this.setWrappedListener(previousListener);
+        super.setWrappedListener(previousListener);
         return this.contentListenerStack.pop();
+    }
+
+    <T> T dequeueEvents(Class<T> clazz)
+    {
+        if (clazz.isInstance(this.contentListenerStack.peek())) {
+            return (T) dequeueEvents();
+        }
+
+        return null;
+    }
+
+    @Override
+    public void setWrappedListener(Listener listener)
+    {
+        if (getWrappedListener() != null) {
+            throw new UnsupportedOperationException(
+                    "BUG: setWrappedListener was called a second time on ConfluenceWrappingListener. "
+                            + "This should not happen. Please report a bug.");
+        }
+
+        super.setWrappedListener(listener);
     }
 
     boolean isQueuingEvents()

@@ -21,6 +21,7 @@ package org.xwiki.contrib.confluence.parser.xhtml.internal;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.function.UnaryOperator;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -34,7 +35,6 @@ import org.xwiki.filter.FilterException;
 import org.xwiki.filter.input.AbstractBeanInputFilterStream;
 import org.xwiki.filter.input.ReaderInputSource;
 import org.xwiki.rendering.listener.Listener;
-import org.xwiki.rendering.listener.WrappingListener;
 import org.xwiki.rendering.parser.ParseException;
 import org.xwiki.rendering.parser.StreamParser;
 import org.xwiki.rendering.syntax.Syntax;
@@ -87,8 +87,6 @@ public class ConfluenceXHTMLInputFilterStream
     @Override
     protected void read(Object filter, Listener proxyFilter) throws FilterException
     {
-        Listener listener = (Listener) filter;
-
         if (this.confluenceXHTMLParser instanceof ConfluenceXHTMLParser) {
             ConfluenceXHTMLParser parser = (ConfluenceXHTMLParser) this.confluenceXHTMLParser;
             Syntax targetSyntax = getSyntax();
@@ -106,19 +104,18 @@ public class ConfluenceXHTMLInputFilterStream
                 this.renderingContext.getTargetSyntax();
             }
 
-            if (this.properties instanceof InternalConfluenceXHTMLInputProperties) {
-                WrappingListener converter = ((InternalConfluenceXHTMLInputProperties) this.properties).getConverter();
-                parser.setConverter(converter);
-                converter.setWrappedListener(listener);
-
-                listener = converter;
+            try {
+                if (this.properties instanceof InternalConfluenceXHTMLInputProperties) {
+                    InternalConfluenceXHTMLInputProperties p = (InternalConfluenceXHTMLInputProperties) this.properties;
+                    UnaryOperator<Listener> converterProvider = p.getConverterProvider();
+                    parser.setConverterProvider(converterProvider);
+                    parser.parse(getSource(), converterProvider.apply((Listener) filter));
+                } else {
+                    this.confluenceXHTMLParser.parse(getSource(), (Listener) filter);
+                }
+            } catch (ParseException e) {
+                throw new FilterException("Failed to parse Confluence XHTML content", e);
             }
-        }
-
-        try {
-            this.confluenceXHTMLParser.parse(getSource(), listener);
-        } catch (ParseException e) {
-            throw new FilterException("Failed to parse Confluence XHTML content", e);
         }
     }
 }

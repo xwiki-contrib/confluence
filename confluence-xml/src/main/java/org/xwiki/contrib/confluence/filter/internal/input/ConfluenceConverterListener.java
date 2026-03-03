@@ -133,6 +133,12 @@ public class ConfluenceConverterListener extends WrappingListener
     @Override
     public void setWrappedListener(Listener listener)
     {
+        if (super.getWrappedListener() != null) {
+            throw new UnsupportedOperationException(
+                    "setWrappedListener cannot be called a second time on ConfluenceConverterListener. "
+                            + "Please use a new instance of ConfluenceConverterListener. "
+                            + "You can use converterProvider.apply to do so.");
+        }
         wrappingListener.setConfluenceConverter(confluenceConverter);
         wrappingListener.setConfluenceCloud(context.isConfluenceCloud());
         wrappingListener.setWrappedListener(listener);
@@ -185,7 +191,7 @@ public class ConfluenceConverterListener extends WrappingListener
         // Check if we reached the end of a paragraph with the auto-cursor-target class.
         if (hasAutoCursorTargetClass(parameters) && wrappingListener.isQueuingEvents()) {
             // Restore the previous listener and get the recorded events.
-            QueueListener contentListener = wrappingListener.dequeueEvents();
+            QueueListener contentListener = (QueueListener) wrappingListener.dequeueEvents();
 
             // Check if the content of the paragraph is empty.
             boolean isEmpty = contentListener.stream()
@@ -226,7 +232,7 @@ public class ConfluenceConverterListener extends WrappingListener
             // We generate the anchor (get the text content of generated events, produce an id macro), and then consume
             // events so the title content is correctly rendered.
 
-            QueueListener contentListener = wrappingListener.dequeueEvents();
+            QueueListener contentListener = (QueueListener) wrappingListener.dequeueEvents();
 
             DefaultWikiPrinter printer = new DefaultWikiPrinter();
             plainTextRenderer.setPrinter(printer);
@@ -417,7 +423,7 @@ public class ConfluenceConverterListener extends WrappingListener
                 PrintRenderer renderer = this.componentManager.getInstance(PrintRenderer.class, "normalizer-plain/1.0");
 
                 // Add the normalizer renderer to the receiving renders
-                this.wrappingListener.setWrappedListener(
+                this.wrappingListener.queueEvents(
                     new NormalizedPlainFilter(renderer, this.wrappingListener.getWrappedListener()));
             } catch (ComponentLookupException e) {
                 this.logger.error("Failed to get the [normalizer-plain/1.0] renderer, annotations won't be exteracted");
@@ -435,15 +441,11 @@ public class ConfluenceConverterListener extends WrappingListener
             // This is an inline comment marker
             finalParameters = removeInlineCommentParameter(finalParameters);
 
-            Listener listener = this.wrappingListener.getWrappedListener();
-            if (listener instanceof NormalizedPlainFilter) {
-                NormalizedPlainFilter normalizedFilter = (NormalizedPlainFilter) listener;
-
+            NormalizedPlainFilter normalizedFilter = this.wrappingListener.dequeueEvents(NormalizedPlainFilter.class);
+            // FIXME in lists.test, endFormat gets called twice for the same annotation, hence the null check
+            if (normalizedFilter != null) {
                 String currentAnnotation = this.inlineComments.getOrDefault(ref, "");
                 this.inlineComments.put(ref, currentAnnotation + normalizedFilter.getPrinter());
-
-                // Restore previous wrapped listener
-                this.wrappingListener.setWrappedListener(normalizedFilter.getWrappedListener());
             }
         }
 

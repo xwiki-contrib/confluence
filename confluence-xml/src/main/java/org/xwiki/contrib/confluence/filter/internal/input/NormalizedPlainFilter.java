@@ -32,21 +32,13 @@ import org.xwiki.rendering.renderer.printer.WikiPrinter;
 class NormalizedPlainFilter extends CompositeListener
 {
     private final WikiPrinter printer = new DefaultWikiPrinter();
-    private final Listener wrappedListener;
 
     NormalizedPlainFilter(PrintRenderer plainRenderer, Listener wrappedListener)
     {
-        this.wrappedListener = wrappedListener;
-
         plainRenderer.setPrinter(this.printer);
 
         addListener(plainRenderer);
         addListener(wrappedListener);
-    }
-
-    Listener getWrappedListener()
-    {
-        return wrappedListener;
     }
 
     public WikiPrinter getPrinter()

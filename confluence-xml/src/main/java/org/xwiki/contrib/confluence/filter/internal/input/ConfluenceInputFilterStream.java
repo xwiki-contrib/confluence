@@ -2840,7 +2840,7 @@ public class ConfluenceInputFilterStream
         filterProperties.setMacroSupport(macroSupport);
 
         if (this.properties.isConvertToXWiki()) {
-            filterProperties.setConverter(createConverter(null));
+            filterProperties.setConverterProvider(this::createConverter);
         }
 
         BeanInputFilterStreamFactory<ConfluenceXHTMLInputProperties> syntaxFilterFactory =

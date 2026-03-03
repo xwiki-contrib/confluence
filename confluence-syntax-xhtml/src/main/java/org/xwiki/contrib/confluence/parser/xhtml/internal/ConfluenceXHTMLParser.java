@@ -25,6 +25,7 @@ import java.io.StringReader;
 import java.lang.reflect.Constructor;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.UnaryOperator;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -100,7 +101,6 @@ import org.xwiki.rendering.internal.parser.wikimodel.XWikiGeneratorListener;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XWikiHeaderTagHandler;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XWikiReferenceTagHandler;
 import org.xwiki.rendering.listener.Listener;
-import org.xwiki.rendering.listener.WrappingListener;
 import org.xwiki.rendering.parser.ParseException;
 import org.xwiki.rendering.parser.ResourceReferenceParser;
 import org.xwiki.rendering.parser.StreamParser;
@@ -153,7 +153,7 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
 
     private PrintRendererFactory macroContentRendererFactory;
 
-    private WrappingListener converter;
+    private UnaryOperator<Listener> converterProvider;
 
     private ConfluenceReferenceConverter referenceConverter;
 
@@ -422,20 +422,20 @@ public class ConfluenceXHTMLParser extends AbstractWikiModelParser
     }
 
     /**
-     * @return a filter to use between the parser and the renderer
-     * @since 9.10
+     * @return a provider to get a filter to use between the parser and the renderer
+     * @since 9.92.0
      */
-    public WrappingListener getConverter()
+    public UnaryOperator<Listener> getConverterProvider()
     {
-        return this.converter;
+        return converterProvider;
     }
 
     /**
-     * @param converter a filter to use between the parser and the renderer
-     * @since 9.10
+     * @param converterProvider provides a filter to use between the parser and the renderer
+     * @since 9.92.0
      */
-    public void setConverter(WrappingListener converter)
+    public void setConverterProvider(UnaryOperator<Listener> converterProvider)
     {
-        this.converter = converter;
+        this.converterProvider = converterProvider;
     }
 }

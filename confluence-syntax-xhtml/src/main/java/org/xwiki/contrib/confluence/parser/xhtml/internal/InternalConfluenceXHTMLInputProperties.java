@@ -20,7 +20,9 @@
 package org.xwiki.contrib.confluence.parser.xhtml.internal;
 
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceXHTMLInputProperties;
-import org.xwiki.rendering.listener.WrappingListener;
+import org.xwiki.rendering.listener.Listener;
+
+import java.util.function.UnaryOperator;
 
 /**
  * Extends {@link ConfluenceXHTMLInputProperties} with internal properties (mostly used by the XML module).
@@ -30,21 +32,23 @@ import org.xwiki.rendering.listener.WrappingListener;
  */
 public class InternalConfluenceXHTMLInputProperties extends ConfluenceXHTMLInputProperties
 {
-    private WrappingListener converter;
+    private UnaryOperator<Listener> converterProvider;
 
     /**
-     * @return a filter to use between the parser and the renderer
+     * @param converterProvider provides a filter to use between the parser and the renderer
+     * @since 9.92.0
      */
-    public WrappingListener getConverter()
+    public void setConverterProvider(UnaryOperator<Listener> converterProvider)
     {
-        return this.converter;
+        this.converterProvider = converterProvider;
     }
 
     /**
-     * @param converter a filter to use between the parser and the renderer
-     */
-    public void setConverter(WrappingListener converter)
+     * @return a provider for a filter to use between the parser and the renderer
+     * @since 9.92.0
+    */
+    public UnaryOperator<Listener> getConverterProvider()
     {
-        this.converter = converter;
+        return converterProvider;
     }
 }

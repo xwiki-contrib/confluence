@@ -22,13 +22,14 @@ package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 import org.xwiki.contrib.confluence.parser.xhtml.internal.ConfluenceXHTMLParser;
 import org.xwiki.rendering.internal.parser.wikimodel.XWikiGeneratorListener;
 import org.xwiki.rendering.listener.Listener;
-import org.xwiki.rendering.listener.WrappingListener;
 import org.xwiki.rendering.renderer.PrintRenderer;
 import org.xwiki.rendering.renderer.PrintRendererFactory;
 import org.xwiki.rendering.renderer.printer.DefaultWikiPrinter;
 import org.xwiki.rendering.wikimodel.impl.WikiScannerContext;
 import org.xwiki.rendering.wikimodel.xhtml.handler.PreserveTagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
+
+import java.util.function.UnaryOperator;
 
 /**
  * Handles an element containing other elements which need to be converted to a single text content.
@@ -38,7 +39,7 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public abstract class AbstractRichContentTagHandler extends PreserveTagHandler implements ConfluenceTagHandler
 {
-    private static final String CURRENT_LISTENER = "rich_current_listener";
+    private static final String RENDERER = "rich_current_listener";
 
     private final ConfluenceXHTMLParser parser;
 
@@ -57,52 +58,39 @@ public abstract class AbstractRichContentTagHandler extends PreserveTagHandler i
 
         if (rendererFactory != null) {
             Listener contentRenderer = rendererFactory.createRenderer(new DefaultWikiPrinter());
-
-            WrappingListener converter = this.parser.getConverter();
-            if (converter != null) {
-                // Remember the current listener to put it back
-                context.getTagStack().setStackParameter(CURRENT_LISTENER, getActualWrappedListener());
-
-                // Put a converter in front of the renderer if one is provided
-                converter.setWrappedListener(contentRenderer);
-                contentRenderer = converter;
+            Listener converter = contentRenderer;
+            UnaryOperator<Listener> converterProvider = this.parser.getConverterProvider();
+            if (converterProvider != null) {
+                Listener confluenceConverter = converterProvider.apply(contentRenderer);
+                if (confluenceConverter != null) {
+                    converter = confluenceConverter;
+                }
             }
 
-            XWikiGeneratorListener xwikiListener = this.parser.createXWikiGeneratorListener(contentRenderer, null);
+            XWikiGeneratorListener xwikiListener = this.parser.createXWikiGeneratorListener(converter, null);
             context.getTagStack().pushScannerContext(new WikiScannerContext(xwikiListener));
             context.getTagStack().pushStackParameters();
+            context.getTagStack().setStackParameter(RENDERER, contentRenderer);
 
             // Ensure we simulate a new document being parsed
             context.getScannerContext().beginDocument();
-        } else {
-            // TODO keep the content as is and not just the words
-            super.begin(context);
+            return;
         }
+
+        super.begin(context);
     }
 
     @Override
     protected void end(TagContext context)
     {
-        if (this.parser.getMacroContentRendererFactory() != null) {
+        PrintRenderer contentRenderer = (PrintRenderer) context.getTagStack().getStackParameter(RENDERER);
+        if (contentRenderer != null) {
             // Ensure we simulate a document parsing end
             context.getScannerContext().endDocument();
 
-            WikiScannerContext scannerContext = context.getTagStack().popScannerContext();
+            context.getTagStack().popScannerContext();
             context.getTagStack().popStackParameters();
 
-            XWikiGeneratorListener xwikiListener = (XWikiGeneratorListener) scannerContext.getfListener();
-
-            PrintRenderer contentRenderer;
-            WrappingListener converter = this.parser.getConverter();
-            if (converter != null) {
-                // Get the wrapped renderer
-                contentRenderer = (PrintRenderer) getActualWrappedListener();
-
-                // Put back the current listener
-                converter.setWrappedListener((Listener) context.getTagStack().getStackParameter(CURRENT_LISTENER));
-            } else {
-                contentRenderer = (PrintRenderer) xwikiListener.getListener();
-            }
 
             endContent(contentRenderer.getPrinter().toString(), context);
         } else {
@@ -117,10 +105,5 @@ public abstract class AbstractRichContentTagHandler extends PreserveTagHandler i
     protected void handlePreservedContent(TagContext context, String preservedContent)
     {
         endContent(preservedContent, context);
-    }
-
-    protected Listener getActualWrappedListener()
-    {
-        return this.parser.getConverter().getWrappedListener();
     }
 }
