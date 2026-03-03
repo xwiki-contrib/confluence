@@ -2503,10 +2503,14 @@ public class ConfluenceInputFilterStream
                 // readPageComment. We are assuming comments only reply to older comments, and so that readPageComment
                 // will always ever only need to access indexes of older comments. Which feels quite reasonable an
                 // assumption.
-                commentIndices.put(commentId, i.getAndIncrement());
+                ConfluenceProperties commentProperties = commentsById.get(commentId);
                 try {
-                    readPageComment(pageProperties, proxyFilter, commentId, commentsById, commentIndices,
-                        resolvedComments, docRef);
+                    if (shouldSkipComment(commentProperties, resolvedComments)) {
+                        resolvedComments.add(commentId.toString());
+                        return;
+                    }
+                    commentIndices.put(commentId, i.getAndIncrement());
+                    readPageComment(pageProperties, proxyFilter, commentId, commentProperties, commentIndices, docRef);
                 } catch (FilterException e) {
                     logger.error("Failed to read comment [{}] in page [{}]",
                         commentId, createPageIdentifier(pageProperties), e);
@@ -3040,20 +3044,10 @@ public class ConfluenceInputFilterStream
     }
 
     private void readPageComment(ConfluenceProperties pageProperties, ConfluenceFilter proxyFilter, Long commentId,
-        Map<Long, ConfluenceProperties> pageComments, Map<Long, Integer> commentIndices, Set<String> resolvedComments,
-        EntityReference docRef)
+        ConfluenceProperties commentProperties, Map<Long, Integer> commentIndices, EntityReference docRef)
         throws FilterException
     {
         FilterEventParameters commentParameters = new FilterEventParameters();
-        // object properties
-        ConfluenceProperties commentProperties = pageComments.get(commentId);
-
-        if (shouldSkipComment(commentProperties, resolvedComments)) {
-            resolvedComments.add(commentId.toString());
-            return;
-        }
-
-        // Comment object
         commentParameters.put(WikiObjectFilter.PARAMETER_CLASS_REFERENCE, COMMENTS_CLASSNAME);
         proxyFilter.beginWikiObject(COMMENTS_CLASSNAME, commentParameters);
 

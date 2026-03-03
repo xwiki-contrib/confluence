@@ -379,7 +379,7 @@ Line 8</string>
             </wikiObjectProperty>
             <wikiObjectProperty name="replyto">
               <p>
-                <value t="java.lang.Integer">10</value>
+                <value t="java.lang.Integer">6</value>
               </p>
             </wikiObjectProperty>
           </wikiObject>
