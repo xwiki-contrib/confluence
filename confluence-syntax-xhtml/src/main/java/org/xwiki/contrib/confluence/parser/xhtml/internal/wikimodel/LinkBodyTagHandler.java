@@ -40,7 +40,7 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public class LinkBodyTagHandler extends AbstractConfluenceTagHandler implements ConfluenceTagHandler
 {
-    private ConfluenceXHTMLParser parser;
+    private final ConfluenceXHTMLParser parser;
 
     /**
      * @param parser the Confluence parser

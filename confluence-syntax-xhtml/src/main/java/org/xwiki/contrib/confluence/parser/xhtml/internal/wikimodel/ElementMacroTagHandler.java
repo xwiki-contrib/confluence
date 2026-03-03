@@ -32,11 +32,10 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public class ElementMacroTagHandler extends AbstractRichContentTagHandler
 {
-    class UnknownMacro
+    static class UnknownMacro
     {
-        private String name;
-
-        private WikiParameters parameters = new WikiParameters();
+        private final String name;
+        private final WikiParameters parameters;
 
         UnknownMacro(String name, WikiParameters parameters)
         {

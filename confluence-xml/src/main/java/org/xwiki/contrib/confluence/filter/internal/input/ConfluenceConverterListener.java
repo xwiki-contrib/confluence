@@ -387,16 +387,13 @@ public class ConfluenceConverterListener extends WrappingListener
 
     private Map<String, String> removeInlineCommentParameter(Map<String, String> parameters)
     {
-        Map<String, String> cleanedParameters;
-
         // There is no point transmitting this marker to the final listener, it would just be noise
         if (parameters.size() == 1) {
-            cleanedParameters = Listener.EMPTY_PARAMETERS;
-        } else {
-            cleanedParameters = new LinkedHashMap<>(parameters);
-            cleanedParameters.remove(ConfluenceInlineCommentTagHandler.PARAMETER_REF);
+            return Listener.EMPTY_PARAMETERS;
         }
 
+        Map<String, String> cleanedParameters = new LinkedHashMap<>(parameters);
+        cleanedParameters.remove(ConfluenceInlineCommentTagHandler.PARAMETER_REF);
         return cleanedParameters;
     }
 
@@ -408,7 +405,7 @@ public class ConfluenceConverterListener extends WrappingListener
         boolean annotation = finalParameters.containsKey(ConfluenceInlineCommentTagHandler.PARAMETER_REF);
         if (annotation) {
             // This is an inline comment marker
-            finalParameters = removeInlineCommentParameter(parameters);
+            finalParameters = removeInlineCommentParameter(finalParameters);
         }
 
         super.beginFormat(format, finalParameters);
