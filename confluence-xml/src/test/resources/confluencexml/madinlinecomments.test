@@ -1,0 +1,443 @@
+.#------------------------------------------------------------------------------
+.expect|filter+xml
+.# Make sure the way we store the index does not trigger bugs
+.#------------------------------------------------------------------------------
+<wikiSpace name="RJTest">
+  <wikiDocument name="WebHome">
+    <wikiDocumentLocale>
+      <wikiDocumentRevision revision="1">
+        <p>
+          <parameters>
+            <entry>
+              <string>title</string>
+              <string>RJTest</string>
+            </entry>
+            <entry>
+              <string>syntax</string>
+              <org.xwiki.rendering.syntax.Syntax>
+                <type>
+                  <name>XWiki</name>
+                  <id>xwiki</id>
+                  <variants class="empty-list"/>
+                </type>
+                <version>2.1</version>
+              </org.xwiki.rendering.syntax.Syntax>
+            </entry>
+            <entry>
+              <string>content</string>
+              <string>{{children/}}</string>
+            </entry>
+          </parameters>
+        </p>
+      </wikiDocumentRevision>
+    </wikiDocumentLocale>
+  </wikiDocument>
+  <wikiSpace name="Inline comment context">
+    <wikiDocument name="WebHome">
+      <wikiDocumentLocale>
+        <p>
+          <parameters>
+            <entry>
+              <string>creation_date</string>
+              <date>2026-03-04 09:41:29.957 UTC</date>
+            </entry>
+            <entry>
+              <string>lastrevision</string>
+              <string>1</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiDocumentRevision revision="1">
+          <p>
+            <parameters>
+              <entry>
+                <string>revision_date</string>
+                <date>2026-03-04 09:55:57.645 UTC</date>
+              </entry>
+              <entry>
+                <string>revision_comment</string>
+                <string></string>
+              </entry>
+              <entry>
+                <string>title</string>
+                <string>Inline comment context</string>
+              </entry>
+              <entry>
+                <string>content</string>
+                <string>Hello normal line not in context.
+
+This sentence contains an annotated part and is followed with random words that are not annotated.
+
+This is another normal line not in context.
+
+(% data-table-width="760" data-layout="default" %)
+|=(((
+**in th before annotated after in th**
+)))|=(((
+**annotated in th**
+)))
+|(((
+in td before annotated after in td
+)))|(((
+annotated in td
+)))
+|(((
+this should never be in selection context
+)))|(((
+this neither
+)))
+
+Random sentence without annotation
+
+= {{id name="Inlinecommentcontext-Randomtitlewithannotatedpartandwordsafter"/}}Random title with annotated part and words after =
+
+This is a random sentence that should not be in context
+
+== {{id name="Inlinecommentcontext-Completelyannotatedtitle"/}}Completely annotated title ==
+
+(% start="1" %)
+1. This item is not annotated
+1. This item is partly annotated and has words after
+1. This item is completely annotated
+1. This item is not annotated neither
+
+This is a random sentence that should not be in context
+
+>This is an annotated citation
+
+This is a random sentence that should not be in context
+
+>This is a partly annotated citation
+
+This is a random sentence that should not be in context
+
+>This is a paragraph in a citationThis paragraph is annotatedThis paragraph is not annotated
+
+In this sentence, there are two annotations that are nested and some words after.</string>
+              </entry>
+              <entry>
+                <string>syntax</string>
+                <org.xwiki.rendering.syntax.Syntax>
+                  <type>
+                    <name>XWiki</name>
+                    <id>xwiki</id>
+                    <variants class="empty-list"/>
+                  </type>
+                  <version>2.1</version>
+                </org.xwiki.rendering.syntax.Syntax>
+              </entry>
+            </parameters>
+          </p>
+          <wikiObject name="XWiki.XWikiComments">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.XWikiComments</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="author"/>
+            <wikiObjectProperty name="comment" value="This comment annotates “annotated part” in a paragraph at the beginning"/>
+            <wikiObjectProperty name="date">
+              <p>
+                <value t="java.util.Date">2026-03-04 09:50:13.631 UTC</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="replyto"/>
+            <wikiObjectProperty name="selection" value="annotated part"/>
+            <wikiObjectProperty name="state" value="SAFE"/>
+            <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
+            <wikiObjectProperty name="selectionLeftContext" value="This sentence contains an "/>
+          </wikiObject>
+          <wikiObject name="XWiki.XWikiComments">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.XWikiComments</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="author"/>
+            <wikiObjectProperty name="comment" value="This annotates “annotated” in a th cell"/>
+            <wikiObjectProperty name="date">
+              <p>
+                <value t="java.util.Date">2026-03-04 09:50:38.213 UTC</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="replyto"/>
+            <wikiObjectProperty name="selection" value="annotated"/>
+            <wikiObjectProperty name="state" value="SAFE"/>
+            <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
+            <wikiObjectProperty name="selectionLeftContext" value="in th before "/>
+          </wikiObject>
+          <wikiObject name="XWiki.XWikiComments">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.XWikiComments</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="author"/>
+            <wikiObjectProperty name="comment" value="This annotates “annotated in th”"/>
+            <wikiObjectProperty name="date">
+              <p>
+                <value t="java.util.Date">2026-03-04 09:50:56.937 UTC</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="replyto"/>
+            <wikiObjectProperty name="selection" value="annotated in th"/>
+            <wikiObjectProperty name="state" value="SAFE"/>
+            <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
+          </wikiObject>
+          <wikiObject name="XWiki.XWikiComments">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.XWikiComments</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="author"/>
+            <wikiObjectProperty name="comment" value="This annotates “annotated” in a td cell"/>
+            <wikiObjectProperty name="date">
+              <p>
+                <value t="java.util.Date">2026-03-04 09:51:28.279 UTC</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="replyto"/>
+            <wikiObjectProperty name="selection" value="annotated"/>
+            <wikiObjectProperty name="state" value="SAFE"/>
+            <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
+            <wikiObjectProperty name="selectionLeftContext" value="in td before "/>
+          </wikiObject>
+          <wikiObject name="XWiki.XWikiComments">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.XWikiComments</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="author"/>
+            <wikiObjectProperty name="comment" value="This annotates “annotated in td”"/>
+            <wikiObjectProperty name="date">
+              <p>
+                <value t="java.util.Date">2026-03-04 09:51:39.349 UTC</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="replyto"/>
+            <wikiObjectProperty name="selection" value="annotated in td"/>
+            <wikiObjectProperty name="state" value="SAFE"/>
+            <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
+          </wikiObject>
+          <wikiObject name="XWiki.XWikiComments">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.XWikiComments</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="author"/>
+            <wikiObjectProperty name="comment" value="= {{id name=&quot;Inlinecommentcontext-Thisannotates“annotatedpart”inah1&quot;/}}This annotates “annotated part” in a h1 ="/>
+            <wikiObjectProperty name="date">
+              <p>
+                <value t="java.util.Date">2026-03-04 09:52:07.974 UTC</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="replyto"/>
+            <wikiObjectProperty name="selection" value="annotated part"/>
+            <wikiObjectProperty name="state" value="SAFE"/>
+            <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
+            <wikiObjectProperty name="selectionLeftContext" value="Random title with "/>
+          </wikiObject>
+          <wikiObject name="XWiki.XWikiComments">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.XWikiComments</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="author"/>
+            <wikiObjectProperty name="comment" value="This annotates “Completely annotated title” in a h2"/>
+            <wikiObjectProperty name="date">
+              <p>
+                <value t="java.util.Date">2026-03-04 09:53:04.483 UTC</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="replyto"/>
+            <wikiObjectProperty name="selection" value="Completely annotated title"/>
+            <wikiObjectProperty name="state" value="SAFE"/>
+            <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
+          </wikiObject>
+          <wikiObject name="XWiki.XWikiComments">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.XWikiComments</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="author"/>
+            <wikiObjectProperty name="comment" value="This annotates “partly annotated” in a second item of an ordered list"/>
+            <wikiObjectProperty name="date">
+              <p>
+                <value t="java.util.Date">2026-03-04 09:53:25.185 UTC</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="replyto"/>
+            <wikiObjectProperty name="selection" value="partly annotated"/>
+            <wikiObjectProperty name="state" value="SAFE"/>
+            <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
+            <wikiObjectProperty name="selectionLeftContext" value="This item is "/>
+          </wikiObject>
+          <wikiObject name="XWiki.XWikiComments">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.XWikiComments</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="author"/>
+            <wikiObjectProperty name="comment" value="This annotates “This item is completely annotated”"/>
+            <wikiObjectProperty name="date">
+              <p>
+                <value t="java.util.Date">2026-03-04 09:53:48.290 UTC</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="replyto"/>
+            <wikiObjectProperty name="selection" value="This item is completely annotated"/>
+            <wikiObjectProperty name="state" value="SAFE"/>
+            <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
+          </wikiObject>
+          <wikiObject name="XWiki.XWikiComments">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.XWikiComments</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="author"/>
+            <wikiObjectProperty name="comment" value="This annotates “This is an annotated citation”"/>
+            <wikiObjectProperty name="date">
+              <p>
+                <value t="java.util.Date">2026-03-04 09:54:15.605 UTC</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="replyto"/>
+            <wikiObjectProperty name="selection" value="This is an annotated citation"/>
+            <wikiObjectProperty name="state" value="SAFE"/>
+            <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
+          </wikiObject>
+          <wikiObject name="XWiki.XWikiComments">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.XWikiComments</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="author"/>
+            <wikiObjectProperty name="comment" value="This annotates “partly annotated” in a citation"/>
+            <wikiObjectProperty name="date">
+              <p>
+                <value t="java.util.Date">2026-03-04 09:54:26.245 UTC</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="replyto"/>
+            <wikiObjectProperty name="selection" value="partly annotated"/>
+            <wikiObjectProperty name="state" value="SAFE"/>
+            <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
+            <wikiObjectProperty name="selectionLeftContext" value="This is a "/>
+          </wikiObject>
+          <wikiObject name="XWiki.XWikiComments">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.XWikiComments</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="author"/>
+            <wikiObjectProperty name="comment" value="This annotates “This paragraph is annotated” in a citation"/>
+            <wikiObjectProperty name="date">
+              <p>
+                <value t="java.util.Date">2026-03-04 09:54:53.159 UTC</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="replyto"/>
+            <wikiObjectProperty name="selection" value="This paragraph is annotated"/>
+            <wikiObjectProperty name="state" value="SAFE"/>
+            <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
+            <wikiObjectProperty name="selectionLeftContext" value="This is a paragraph in a citation"/>
+          </wikiObject>
+          <wikiObject name="XWiki.XWikiComments">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.XWikiComments</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="author"/>
+            <wikiObjectProperty name="comment" value="This annotates “two annotations”"/>
+            <wikiObjectProperty name="date">
+              <p>
+                <value t="java.util.Date">2026-03-04 09:55:34.998 UTC</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="replyto"/>
+            <wikiObjectProperty name="selection" value="two annotations"/>
+            <wikiObjectProperty name="state" value="SAFE"/>
+            <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
+            <wikiObjectProperty name="selectionLeftContext" value="In this sentence, there are "/>
+          </wikiObject>
+          <wikiObject name="XWiki.XWikiComments">
+            <p>
+              <parameters>
+                <entry>
+                  <string>class_reference</string>
+                  <string>XWiki.XWikiComments</string>
+                </entry>
+              </parameters>
+            </p>
+            <wikiObjectProperty name="author"/>
+            <wikiObjectProperty name="comment" value="This annotates “there are two annotations that are nested”"/>
+            <wikiObjectProperty name="date">
+              <p>
+                <value t="java.util.Date">2026-03-04 09:55:46.48 UTC</value>
+              </p>
+            </wikiObjectProperty>
+            <wikiObjectProperty name="replyto"/>
+            <wikiObjectProperty name="selection" value="there are two annotations that are nested"/>
+            <wikiObjectProperty name="state" value="SAFE"/>
+            <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
+            <wikiObjectProperty name="selectionLeftContext" value="In this sentence, "/>
+          </wikiObject>
+        </wikiDocumentRevision>
+      </wikiDocumentLocale>
+    </wikiDocument>
+  </wikiSpace>
+</wikiSpace>
+.#------------------------------------------------------------------------------
+.input|confluence+xml
+.configuration.storeConfluenceDetailsEnabled=false
+.configuration.source=madinlinecomments
+.#------------------------------------------------------------------------------

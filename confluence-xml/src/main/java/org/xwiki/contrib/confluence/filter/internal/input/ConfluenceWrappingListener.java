@@ -19,17 +19,19 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.input;
 
-import org.xwiki.contrib.confluence.filter.ConfluenceFilterReferenceConverter;
+import org.xwiki.component.manager.ComponentLookupException;
+import org.xwiki.component.manager.ComponentManager;
+import org.xwiki.rendering.listener.CompositeListener;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.listener.QueueListener;
 import org.xwiki.rendering.listener.WrappingListener;
+import org.xwiki.rendering.listener.chaining.EventType;
+import org.xwiki.rendering.renderer.PrintRenderer;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.Iterator;
 import java.util.Map;
-
-import static org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter.getConfluenceServerAnchor;
-import static org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter.spacesToDash;
 
 final class ConfluenceWrappingListener extends WrappingListener
 {
@@ -48,52 +50,82 @@ final class ConfluenceWrappingListener extends WrappingListener
      */
     private final Deque<Listener> previousListenerStack = new ArrayDeque<>();
 
-    private ConfluenceFilterReferenceConverter confluenceConverter;
     private Map<String, Integer> macroIds;
-    private boolean isConfluenceCloud;
+    private final QueueListener queueListener = new QueueListener();
+    private final WrappingListener wrappingListener = new WrappingListener();
+    private ComponentManager componentManager;
+
+    ConfluenceWrappingListener()
+    {
+        CompositeListener compositeListener = new CompositeListener();
+        compositeListener.addListener(wrappingListener);
+        compositeListener.addListener(queueListener);
+        super.setWrappedListener(compositeListener);
+    }
 
     @Override
     public void onMacro(String id, Map<String, String> parameters, String content, boolean inline)
     {
         countMacro(id);
+        if (inline) {
+            addEmptyLineIfRightAfterBlockMacro();
+        }
+        super.onMacro(id, parameters, content, inline);
+    }
 
-        if (ConfluenceConverterListener.ID_MACRO_NAME.equals(id)) {
-            handleIdMacro(parameters, content, inline);
-        } else {
-            super.onMacro(id, parameters, content, inline);
+    @Override
+    public void onId(String name)
+    {
+        addEmptyLineIfRightAfterBlockMacro();
+        super.onId(name);
+    }
+
+    private void addEmptyLineIfRightAfterBlockMacro()
+    {
+        // works around a bad interaction with preceding block macros (the generated id macro is stuck next to the block
+        // macro if we issue an id instead of a macro)
+        QueueListener.Event event = peekLast();
+        if (event != null && event.eventType == EventType.ON_MACRO && !((boolean) event.eventParameters[3])) {
+            super.onEmptyLines(2);
         }
     }
 
-    private void handleIdMacro(Map<String, String> parameters, String content, boolean inline)
+    private QueueListener.Event peekLast()
     {
-        String name = parameters.get(ConfluenceConverterListener.ID_MACRO_NAME_PARAMETER);
-        if (name == null || name.isEmpty()) {
-            return;
-        }
-
-        String currentPageTitle = ((ConfluenceConverter) confluenceConverter).getCurrentPageTitleForAnchor();
-
-        if (isConfluenceCloud) {
-            String dashedName = spacesToDash(name);
-            getWrappedListener().onMacro(
-                    ConfluenceConverterListener.ID_MACRO_NAME,
-                    Map.of(ConfluenceConverterListener.ID_MACRO_NAME_PARAMETER, dashedName),
-                    content,
-                    inline
-            );
-
-            if (currentPageTitle != null) {
-                getWrappedListener().onId(spacesToDash(currentPageTitle) + '-' + dashedName);
+        Iterator<Listener> listenerIterator = contentListenerStack.descendingIterator();
+        while (listenerIterator.hasNext()) {
+            Listener maybeQueueListener = listenerIterator.next();
+            if (maybeQueueListener instanceof QueueListener) {
+                QueueListener q = (QueueListener) maybeQueueListener;
+                if (!q.isEmpty()) {
+                    return q.peekLast();
+                }
             }
-        } else if (currentPageTitle != null) {
-            String confluenceServerAnchor = getConfluenceServerAnchor(currentPageTitle, name);
-            getWrappedListener().onMacro(
-                    ConfluenceConverterListener.ID_MACRO_NAME,
-                    Map.of(ConfluenceConverterListener.ID_MACRO_NAME_PARAMETER, confluenceServerAnchor),
-                    content,
-                    inline
-            );
         }
+
+        if (!queueListener.isEmpty()) {
+            return queueListener.peekLast();
+        }
+
+        return null;
+    }
+
+    void recordPlainTextEvents() throws ComponentLookupException
+    {
+        // Get the renderer in charge of normalizing the coming text content
+        PrintRenderer renderer = this.componentManager.getInstance(PrintRenderer.class, "normalizer-plain/1.0");
+
+        // Add the normalizer renderer to the receiving renders
+        queueEvents(new NormalizedPlainFilter(renderer, super.getWrappedListener()));
+    }
+
+    NormalizedPlainFilter stopRecordingPlainTextEvents()
+    {
+        if (this.contentListenerStack.peek() instanceof NormalizedPlainFilter) {
+            return (NormalizedPlainFilter) dequeueEvents();
+        }
+
+        return null;
     }
 
     void queueEvents()
@@ -103,7 +135,7 @@ final class ConfluenceWrappingListener extends WrappingListener
 
     void queueEvents(Listener listener)
     {
-        this.previousListenerStack.push(getWrappedListener());
+        this.previousListenerStack.push(super.getWrappedListener());
         this.contentListenerStack.push(listener);
         super.setWrappedListener(listener);
     }
@@ -115,30 +147,32 @@ final class ConfluenceWrappingListener extends WrappingListener
         return this.contentListenerStack.pop();
     }
 
-    <T> T dequeueEvents(Class<T> clazz)
-    {
-        if (clazz.isInstance(this.contentListenerStack.peek())) {
-            return (T) dequeueEvents();
-        }
-
-        return null;
-    }
-
     @Override
     public void setWrappedListener(Listener listener)
     {
-        if (getWrappedListener() != null) {
+        if (wrappingListener.getWrappedListener() != null) {
             throw new UnsupportedOperationException(
                     "BUG: setWrappedListener was called a second time on ConfluenceWrappingListener. "
                             + "This should not happen. Please report a bug.");
         }
 
-        super.setWrappedListener(listener);
+        wrappingListener.setWrappedListener(listener);
+    }
+
+    @Override
+    public Listener getWrappedListener()
+    {
+        return wrappingListener.getWrappedListener();
     }
 
     boolean isQueuingEvents()
     {
         return !this.contentListenerStack.isEmpty();
+    }
+
+    String getSelectionLeftContext()
+    {
+        return AnnotationUtils.getSelectionLeftContext(componentManager, contentListenerStack, queueListener);
     }
 
     void countMacro(String id)
@@ -155,13 +189,8 @@ final class ConfluenceWrappingListener extends WrappingListener
         this.macroIds = macroIds;
     }
 
-    void setConfluenceConverter(ConfluenceFilterReferenceConverter confluenceConverter)
+    public void setComponentManager(ComponentManager componentManager)
     {
-        this.confluenceConverter = confluenceConverter;
-    }
-
-    void setConfluenceCloud(boolean confluenceCloud)
-    {
-        this.isConfluenceCloud = confluenceCloud;
+        this.componentManager = componentManager;
     }
 }

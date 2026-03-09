@@ -19,6 +19,8 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.input;
 
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.LoggerFactory;
 import org.xwiki.rendering.listener.CompositeListener;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.renderer.PrintRenderer;
@@ -32,17 +34,37 @@ import org.xwiki.rendering.renderer.printer.WikiPrinter;
 class NormalizedPlainFilter extends CompositeListener
 {
     private final WikiPrinter printer = new DefaultWikiPrinter();
+    private PrintRenderer plainRenderer;
 
     NormalizedPlainFilter(PrintRenderer plainRenderer, Listener wrappedListener)
     {
+        this.plainRenderer = plainRenderer;
         plainRenderer.setPrinter(this.printer);
 
+        // the special symbol is a hack to keep the leading whitespaces
+        plainRenderer.onSpecialSymbol('!');
+
         addListener(plainRenderer);
-        addListener(wrappedListener);
+        if (wrappedListener != null) {
+            addListener(wrappedListener);
+        }
     }
 
-    public WikiPrinter getPrinter()
+    String consumeString()
     {
-        return printer;
+        if (plainRenderer == null) {
+            LoggerFactory.getLogger(this.getClass()).error(
+                    "There was an attempt to render an annotation twice. This should not happen. Please report a bug.");
+            return "";
+        }
+        // the special symbol followed is a hack to keep the trailing whitespaces
+        plainRenderer.onSpecialSymbol('!');
+
+        String content = printer.toString();
+
+        plainRenderer = null;
+
+        // with the substring, we remove the leading and trailing hack special symbols
+        return StringUtils.substring(content, 1, -1);
     }
 }

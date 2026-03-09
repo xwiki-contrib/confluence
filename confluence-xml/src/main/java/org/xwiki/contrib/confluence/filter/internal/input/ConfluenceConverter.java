@@ -802,7 +802,12 @@ public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
         return serialize(getResourceReference(ciSpaceKey, ciPageTitle, filename, null));
     }
 
-    static String spacesToDash(String name)
+    /**
+     * @param name the anchor to dash
+     * @return dashed anchor
+     * @since 9.92.0
+     */
+    public static String spacesToDash(String name)
     {
         return clean(name, false).replaceAll("\\s+", "-");
     }
@@ -826,7 +831,11 @@ public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
         return title;
     }
 
-    String getCurrentPageTitleForAnchor()
+    /**
+     * @return the current page title to format an anchor.
+     * @since 9.92.0
+     */
+    public String getCurrentPageTitleForAnchor()
     {
         return getPageTitleForAnchor(context.getCurrentPage());
     }
@@ -836,7 +845,13 @@ public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
         return (name == null ? "" : name).replaceAll("\\p{Z}+", removeWhitespace ? "" : " ").strip();
     }
 
-    static String getConfluenceServerAnchor(String pageTitle, String name)
+    /**
+     * @param pageTitle the page title
+     * @param name the anchor name
+     * @return the anchor for the given page title and anchor name for confluence Server.
+     * @since 9.92.0
+     */
+    public static String getConfluenceServerAnchor(String pageTitle, String name)
     {
         String convertedAnchor = clean(name, true);
         if (!StringUtils.isEmpty(pageTitle)) {

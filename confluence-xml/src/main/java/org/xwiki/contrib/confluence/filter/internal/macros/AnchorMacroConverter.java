@@ -21,13 +21,21 @@ package org.xwiki.contrib.confluence.filter.internal.macros;
 
 import java.util.Map;
 
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
+import org.xwiki.contrib.confluence.filter.ConfluenceFilterReferenceConverter;
 import org.xwiki.contrib.confluence.filter.ConversionException;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
+import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter;
+import org.xwiki.rendering.listener.Listener;
+
+import static org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter.getConfluenceServerAnchor;
+import static org.xwiki.contrib.confluence.filter.internal.input.ConfluenceConverter.spacesToDash;
 
 /**
  * Convert Confluence anchor macro.
@@ -40,16 +48,23 @@ import org.xwiki.contrib.confluence.filter.ConversionException;
 @Named("anchor")
 public class AnchorMacroConverter extends AbstractMacroConverter
 {
+    @Inject
+    private ConfluenceInputContext context;
+
+    @Inject
+    private ConfluenceFilterReferenceConverter confluenceConverter;
+
+
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
         boolean inline)
     {
-        return "id";
+        return null;
     }
 
     @Override
-    protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
-        String content) throws ConversionException
+    protected void toXWiki(String confluenceId, Map<String, String> confluenceParameters,
+        boolean inline, String confluenceContent, Listener listener) throws ConversionException
     {
         // Sometimes, anchors use <ac:parameter ac:name="">the-anchor</ac:parameter>
         // Sometimes, they use <ac:default-parameter>the-anchor</ac:default-parameter>
@@ -61,7 +76,28 @@ public class AnchorMacroConverter extends AbstractMacroConverter
         if (StringUtils.isEmpty(anchor)) {
             throw new ConversionException("The anchor macro is missing its main parameter");
         }
-        return Map.of("name", anchor);
+
+        // FIXME find a way to expose cleanly these deprecated methods
+        String currentPageTitle = ((ConfluenceConverter) confluenceConverter).getCurrentPageTitleForAnchor();
+
+        if (context.isConfluenceCloud()) {
+            String dashedName = spacesToDash(anchor);
+            listener.onId(dashedName);
+
+            if (currentPageTitle != null) {
+                listener.onId(spacesToDash(currentPageTitle) + '-' + dashedName);
+            }
+        } else if (currentPageTitle != null) {
+            String confluenceServerAnchor = getConfluenceServerAnchor(currentPageTitle, anchor);
+            listener.onId(confluenceServerAnchor);
+        }
+    }
+
+    @Override
+    protected Map<String, String> toXWikiParameters(String confluenceId, Map<String, String> confluenceParameters,
+        String content) throws ConversionException
+    {
+        return null;
     }
 
     @Override

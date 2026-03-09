@@ -19,7 +19,13 @@
  */
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
-import org.xwiki.rendering.wikimodel.xhtml.handler.AbstractFormatTagHandler;
+import org.apache.commons.lang3.StringUtils;
+import org.xwiki.rendering.wikimodel.WikiParameter;
+import org.xwiki.rendering.wikimodel.WikiParameters;
+import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
+import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
+
+import java.util.Collections;
 
 /**
  * Handles inline comments. The goal is not so much to convert it to some XWiki equivalent but to make easier to extract
@@ -38,10 +44,49 @@ import org.xwiki.rendering.wikimodel.xhtml.handler.AbstractFormatTagHandler;
  * @version $Id$
  * @since 9.79.0
  */
-public class ConfluenceInlineCommentTagHandler extends AbstractFormatTagHandler
+public class ConfluenceInlineCommentTagHandler extends TagHandler
 {
     /**
      * The name of the parameter holding the reference of the inline comment.
      */
     public static final String PARAMETER_REF = "ac:ref";
+
+    /**
+     * Constructor.
+     */
+    public ConfluenceInlineCommentTagHandler()
+    {
+        super(true);
+    }
+
+    @Override
+    protected void begin(TagContext context)
+    {
+        String current = getACParam(context);
+        context.getScannerContext().onMacroInline("confluence_inline_comment_marker_start",
+                new WikiParameters(Collections.singletonList(new WikiParameter(PARAMETER_REF, current))), "");
+    }
+
+    @Override
+    protected void end(TagContext context)
+    {
+        String current = getACParam(context);
+        context.getScannerContext().onMacroInline("confluence_inline_comment_marker_end",
+                new WikiParameters(Collections.singletonList(new WikiParameter(PARAMETER_REF, current))), "");
+    }
+
+    private static String getACParam(TagContext context)
+    {
+        if (!"ac:inline-comment-marker".equals(context.getName())) {
+            return "";
+        }
+
+        WikiParameters params = context.getParams();
+        if (params == null) {
+            return "";
+        }
+
+        WikiParameter parameter = params.getParameter(PARAMETER_REF);
+        return parameter == null ? "" : StringUtils.defaultString(parameter.getValue());
+    }
 }

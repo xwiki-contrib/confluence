@@ -3129,8 +3129,17 @@ public class ConfluenceInputFilterStream
                     proxyFilter.onWikiObjectProperty("state", "SAFE", FilterEventParameters.EMPTY);
                     proxyFilter.onWikiObjectProperty("target", localSerializer.serialize(docRef),
                         FilterEventParameters.EMPTY);
+                    readPageCommentSelectionContext(proxyFilter, annotationRef);
                 }
             }
+        }
+    }
+
+    private void readPageCommentSelectionContext(ConfluenceFilter proxyFilter, String ref) throws FilterException
+    {
+        String l = inlineComments.get("selectionLeftContext--" + ref);
+        if (StringUtils.isNotEmpty(l)) {
+            proxyFilter.onWikiObjectProperty("selectionLeftContext", l, FilterEventParameters.EMPTY);
         }
     }
 

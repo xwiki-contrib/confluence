@@ -195,9 +195,10 @@ Other paragraph.</string>
                       </p>
                     </wikiObjectProperty>
                     <wikiObjectProperty name="replyto"/>
-                    <wikiObjectProperty name="selection" value="annotation"/>
+                    <wikiObjectProperty name="selection" value="annotation "/>
                     <wikiObjectProperty name="state" value="SAFE"/>
                     <wikiObjectProperty name="target" value="Sub.Space.AnnotationSpace.Parent page.Annotations.WebHome"/>
+                    <wikiObjectProperty name="selectionLeftContext" value="before "/>
                   </wikiObject>
                   <wikiObject name="XWiki.XWikiComments">
                     <p>

@@ -24,7 +24,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -39,8 +38,6 @@ import org.xwiki.contrib.confluence.filter.input.ConfluenceInputContext;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.parser.confluence.internal.wikimodel.ConfluenceResourceReference;
 import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceURLConverter;
-import org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel.ConfluenceInlineCommentTagHandler;
-import org.xwiki.rendering.listener.Format;
 import org.xwiki.rendering.listener.HeaderLevel;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.listener.QueueListener;
@@ -50,7 +47,6 @@ import org.xwiki.rendering.listener.reference.ResourceReference;
 import org.xwiki.rendering.listener.reference.ResourceType;
 import org.xwiki.rendering.listener.reference.UserResourceReference;
 import org.xwiki.rendering.renderer.PrintRenderer;
-import org.xwiki.rendering.renderer.printer.DefaultWikiPrinter;
 
 /**
  * Convert various Confluence content elements to their XWiki equivalent.
@@ -62,9 +58,6 @@ import org.xwiki.rendering.renderer.printer.DefaultWikiPrinter;
 @InstantiationStrategy(ComponentInstantiationStrategy.PER_LOOKUP)
 public class ConfluenceConverterListener extends WrappingListener
 {
-    static final String ID_MACRO_NAME_PARAMETER = "name";
-    static final String ID_MACRO_NAME = "id";
-
     /**
      * The auto-cursor-target class that appears on some paragraphs and headings in Confluence, most of the
      * paragraphs are empty and should be removed, but not all.
@@ -72,6 +65,7 @@ public class ConfluenceConverterListener extends WrappingListener
     private static final String AUTO_CURSOR_TARGET_CLASS = "auto-cursor-target";
 
     private static final String CLASS_ATTRIBUTE = "class";
+    private static final String AC_REF = "ac:ref";
 
     @Inject
     private MacroConverter macroConverter;
@@ -87,10 +81,6 @@ public class ConfluenceConverterListener extends WrappingListener
 
     @Inject
     private ConfluenceXMLPackage confluencePackage;
-
-    @Inject
-    @Named("plain/1.0")
-    private PrintRenderer plainTextRenderer;
 
     @Inject
     private ConfluenceURLConverter urlConverter;
@@ -127,7 +117,18 @@ public class ConfluenceConverterListener extends WrappingListener
     @Override
     public void onMacro(String id, Map<String, String> parameters, String content, boolean inline)
     {
-        this.macroConverter.toXWiki(id, parameters, content, inline, wrappingListener);
+        switch (id) {
+            case "confluence_inline_comment_marker_start":
+                beginInlineCommentMarker(parameters.get(AC_REF));
+                return;
+
+            case "confluence_inline_comment_marker_end":
+                endInlineCommentMarker(parameters.get(AC_REF));
+                return;
+
+            default:
+                this.macroConverter.toXWiki(id, parameters, content, inline, wrappingListener);
+        }
     }
 
     @Override
@@ -139,8 +140,7 @@ public class ConfluenceConverterListener extends WrappingListener
                             + "Please use a new instance of ConfluenceConverterListener. "
                             + "You can use converterProvider.apply to do so.");
         }
-        wrappingListener.setConfluenceConverter(confluenceConverter);
-        wrappingListener.setConfluenceCloud(context.isConfluenceCloud());
+        wrappingListener.setComponentManager(this.componentManager);
         wrappingListener.setWrappedListener(listener);
         super.setWrappedListener(wrappingListener);
     }
@@ -234,36 +234,26 @@ public class ConfluenceConverterListener extends WrappingListener
 
             QueueListener contentListener = (QueueListener) wrappingListener.dequeueEvents();
 
-            DefaultWikiPrinter printer = new DefaultWikiPrinter();
-            plainTextRenderer.setPrinter(printer);
-            contentListener.forEach(this::fireEvent);
-            String titleText = printer.toString();
-            String anchor = confluenceConverter.convertAnchor("", "", titleText);
-
-            Listener wrappedListener = wrappingListener.getWrappedListener();
-            if (!anchor.isEmpty()) {
-                wrappedListener.onMacro(
-                    ID_MACRO_NAME,
-                    Map.of(ID_MACRO_NAME_PARAMETER, anchor),
-                    null,
-                    true);
+            try {
+                PrintRenderer renderer = componentManager.getInstance(PrintRenderer.class, "normalizer-plain/1.0");
+                NormalizedPlainFilter normalizedPlainFilter = new NormalizedPlainFilter(renderer, null);
+                contentListener.forEach(e -> e.eventType.fireEvent(normalizedPlainFilter, e.eventParameters));
+                String titleText = normalizedPlainFilter.consumeString();
+                String anchor = confluenceConverter.convertAnchor("", "", titleText);
+                if (!anchor.isEmpty()) {
+                    wrappingListener.onId(anchor);
+                }
+            } catch (ComponentLookupException e) {
+                logger.error("Failed to get the [normalizer-plain/1.0] renderer, a header will be missing an anchor");
             }
 
-            contentListener.consumeEvents(wrappedListener);
+            contentListener.forEach(e -> e.eventType.fireEvent(wrappingListener, e.eventParameters));
         }
 
         if (hasAutoCursorTargetClass(parameters)) {
             super.endHeader(level, id, removeClassParameter(parameters));
         } else {
             super.endHeader(level, id, parameters);
-        }
-    }
-
-    private void fireEvent(QueueListener.Event event)
-    {
-        event.eventType.fireEvent(plainTextRenderer, event.eventParameters);
-        if (event.eventType.equals(EventType.ON_MACRO)) {
-            wrappingListener.countMacro((String) event.eventParameters[0]);
         }
     }
 
@@ -391,64 +381,36 @@ public class ConfluenceConverterListener extends WrappingListener
         }
     }
 
-    private Map<String, String> removeInlineCommentParameter(Map<String, String> parameters)
+    private void beginInlineCommentMarker(String ref)
     {
-        // There is no point transmitting this marker to the final listener, it would just be noise
-        if (parameters.size() == 1) {
-            return Listener.EMPTY_PARAMETERS;
+        if (StringUtils.isEmpty(ref)) {
+            return;
         }
 
-        Map<String, String> cleanedParameters = new LinkedHashMap<>(parameters);
-        cleanedParameters.remove(ConfluenceInlineCommentTagHandler.PARAMETER_REF);
-        return cleanedParameters;
-    }
+        // Save the before annotation context (but only if we haven't done it already)
+        String selectionLeftContext = wrappingListener.getSelectionLeftContext();
+        this.inlineComments.computeIfAbsent("selectionLeftContext--" + ref, k -> selectionLeftContext);
 
-    @Override
-    public void beginFormat(Format format, Map<String, String> parameters)
-    {
-        Map<String, String> finalParameters = parameters;
-
-        boolean annotation = finalParameters.containsKey(ConfluenceInlineCommentTagHandler.PARAMETER_REF);
-        if (annotation) {
-            // This is an inline comment marker
-            finalParameters = removeInlineCommentParameter(finalParameters);
-        }
-
-        super.beginFormat(format, finalParameters);
-
-        if (annotation) {
-            // Catch the plain version of the annotated content
-            try {
-                // Get the renderer in charge of normalizing the annotation content
-                PrintRenderer renderer = this.componentManager.getInstance(PrintRenderer.class, "normalizer-plain/1.0");
-
-                // Add the normalizer renderer to the receiving renders
-                this.wrappingListener.queueEvents(
-                    new NormalizedPlainFilter(renderer, this.wrappingListener.getWrappedListener()));
-            } catch (ComponentLookupException e) {
-                this.logger.error("Failed to get the [normalizer-plain/1.0] renderer, annotations won't be exteracted");
-            }
+        // Catch the plain version of the annotated content
+        try {
+            this.wrappingListener.recordPlainTextEvents();
+        } catch (ComponentLookupException e) {
+            this.logger.error("Failed to get the [normalizer-plain/1.0] renderer, annotations won't be extracted");
         }
     }
 
-    @Override
-    public void endFormat(Format format, Map<String, String> parameters)
+    private void endInlineCommentMarker(String ref)
     {
-        Map<String, String> finalParameters = parameters;
-
-        String ref = finalParameters.get(ConfluenceInlineCommentTagHandler.PARAMETER_REF);
-        if (ref != null) {
-            // This is an inline comment marker
-            finalParameters = removeInlineCommentParameter(finalParameters);
-
-            NormalizedPlainFilter normalizedFilter = this.wrappingListener.dequeueEvents(NormalizedPlainFilter.class);
-            // FIXME in lists.test, endFormat gets called twice for the same annotation, hence the null check
-            if (normalizedFilter != null) {
-                String currentAnnotation = this.inlineComments.getOrDefault(ref, "");
-                this.inlineComments.put(ref, currentAnnotation + normalizedFilter.getPrinter());
-            }
+        if (StringUtils.isEmpty(ref)) {
+            // should not happen
+            return;
         }
 
-        super.endFormat(format, finalParameters);
+        NormalizedPlainFilter normalizedFilter = wrappingListener.stopRecordingPlainTextEvents();
+        if (normalizedFilter != null) {
+            String annotationPart = normalizedFilter.consumeString();
+            String currentAnnotation = this.inlineComments.getOrDefault(ref, "");
+            this.inlineComments.put(ref, currentAnnotation + annotationPart);
+        }
     }
 }
