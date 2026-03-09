@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.input;
 
+import org.slf4j.LoggerFactory;
 import org.xwiki.component.manager.ComponentLookupException;
 import org.xwiki.component.manager.ComponentManager;
 import org.xwiki.rendering.listener.CompositeListener;
@@ -30,34 +31,27 @@ import org.xwiki.rendering.renderer.PrintRenderer;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.function.Consumer;
 
 final class ConfluenceWrappingListener extends WrappingListener
 {
-    /**
-     * A stack of queues that are used to record the content of a paragraph with the auto-cursor-target class. For
-     * the unlikely case that paragraphs are nested (e.g., because there is a paragraph in a nested macro), a stack
-     * is used instead of a single listener.
-     */
-    private final Deque<Listener> contentListenerStack = new ArrayDeque<>();
-
-    /**
-     * A stack of previous listeners that is used to record the previous wrapped listener when a new listener is set
-     * while examining the content of a paragraph with the auto-cursor-target class. This is used to restore the
-     * previous listener at the end of the paragraph. Again, a stack is used instead of a single listener to handle
-     * the unlikely case of nested paragraphs.
-     */
-    private final Deque<Listener> previousListenerStack = new ArrayDeque<>();
+    private static final String NORMALIZER_PLAIN_1_0 = "normalizer-plain/1.0";
 
     private Map<String, Integer> macroIds;
+    private ComponentManager componentManager;
+
+    private final Deque<Listener> queuedListeners = new ArrayDeque<>();
+    private final Deque<NormalizedPlainFilter> recorders = new ArrayDeque<>();
+    private final CompositeListener compositeListener = new CompositeListener();
     private final QueueListener queueListener = new QueueListener();
     private final WrappingListener wrappingListener = new WrappingListener();
-    private ComponentManager componentManager;
+    private final Map<String, RightContextAnnotationFilter> rightSelectionHandlers = new HashMap<>();
 
     ConfluenceWrappingListener()
     {
-        CompositeListener compositeListener = new CompositeListener();
         compositeListener.addListener(wrappingListener);
         compositeListener.addListener(queueListener);
         super.setWrappedListener(compositeListener);
@@ -92,7 +86,7 @@ final class ConfluenceWrappingListener extends WrappingListener
 
     private QueueListener.Event peekLast()
     {
-        Iterator<Listener> listenerIterator = contentListenerStack.descendingIterator();
+        Iterator<Listener> listenerIterator = queuedListeners.descendingIterator();
         while (listenerIterator.hasNext()) {
             Listener maybeQueueListener = listenerIterator.next();
             if (maybeQueueListener instanceof QueueListener) {
@@ -113,38 +107,62 @@ final class ConfluenceWrappingListener extends WrappingListener
     void recordPlainTextEvents() throws ComponentLookupException
     {
         // Get the renderer in charge of normalizing the coming text content
-        PrintRenderer renderer = this.componentManager.getInstance(PrintRenderer.class, "normalizer-plain/1.0");
+        PrintRenderer renderer = this.componentManager.getInstance(PrintRenderer.class, NORMALIZER_PLAIN_1_0);
 
         // Add the normalizer renderer to the receiving renders
-        queueEvents(new NormalizedPlainFilter(renderer, super.getWrappedListener()));
+        NormalizedPlainFilter recorder = new NormalizedPlainFilter(renderer, super.getWrappedListener());
+        recorders.push(recorder);
+        queueEvents(recorder);
     }
 
     NormalizedPlainFilter stopRecordingPlainTextEvents()
     {
-        if (this.contentListenerStack.peek() instanceof NormalizedPlainFilter) {
-            return (NormalizedPlainFilter) dequeueEvents();
+        if (this.queuedListeners.peek() instanceof NormalizedPlainFilter) {
+            NormalizedPlainFilter recorder = recorders.pop();
+            dequeueEvents(recorder);
+            return recorder;
         }
 
         return null;
     }
 
-    void queueEvents()
-    {
-        queueEvents(new QueueListener());
-    }
-
     void queueEvents(Listener listener)
     {
-        this.previousListenerStack.push(super.getWrappedListener());
-        this.contentListenerStack.push(listener);
+        queuedListeners.push(listener);
         super.setWrappedListener(listener);
     }
 
-    Listener dequeueEvents()
+    /**
+     * Remove the given listener from the queue. When there are wrapping listeners around, rewire so that the removed
+     * listener doesn't receive events anymore.
+     * @param listenerToRemove the listener to remove
+     */
+    void dequeueEvents(Listener listenerToRemove)
     {
-        Listener previousListener = this.previousListenerStack.pop();
-        super.setWrappedListener(previousListener);
-        return this.contentListenerStack.pop();
+        Listener prev = null;
+        Iterator<Listener> it = queuedListeners.iterator();
+        while (it.hasNext()) {
+            Listener cur = it.next();
+            if (cur == listenerToRemove) {
+                it.remove();
+                if (prev instanceof WrappingListener) {
+                    Listener next = it.hasNext() ? it.next() : compositeListener;
+                    ((WrappingListener) prev).setWrappedListener(next);
+                }
+                break;
+            } else if (cur instanceof RightContextAnnotationFilter) {
+                /* FIXME: Calling stop for RightContextAnnotationFilter specifically doesn't feel completely right,
+                           a more generic way of handling this would be nice.
+                           This complexity mostly comes from the titles being replayed to generate their Confluence
+                           anchors in ConfluenceConverterListener.
+                */
+                ((RightContextAnnotationFilter) cur).stop();
+            }
+            prev = cur;
+        }
+        if (queuedListeners.isEmpty()) {
+            super.setWrappedListener(compositeListener);
+        }
     }
 
     @Override
@@ -165,19 +183,42 @@ final class ConfluenceWrappingListener extends WrappingListener
         return wrappingListener.getWrappedListener();
     }
 
-    boolean isQueuingEvents()
-    {
-        return !this.contentListenerStack.isEmpty();
-    }
-
     String getSelectionLeftContext()
     {
-        return AnnotationUtils.getSelectionLeftContext(componentManager, contentListenerStack, queueListener);
+        return AnnotationUtils.getSelectionLeftContext(componentManager, queuedListeners, queueListener);
+    }
+
+    void getSelectionRightContext(String ref, Consumer<String> callback)
+    {
+        RightContextAnnotationFilter existingFilter = rightSelectionHandlers.remove(ref);
+        if (existingFilter != null) {
+            dequeueEvents(existingFilter);
+        }
+
+        PrintRenderer renderer;
+        try {
+            renderer = this.componentManager.getInstance(PrintRenderer.class, NORMALIZER_PLAIN_1_0);
+        } catch (ComponentLookupException e) {
+            LoggerFactory.getLogger(getClass()).error("Failed to get the normalizer printer. "
+                + "Right selection contexts of annotations will be missing.");
+            return;
+        }
+
+        RightContextAnnotationFilter rightContextAnnotationFilter = new RightContextAnnotationFilter(
+                renderer,
+                super.getWrappedListener(),
+                rightSelectionContext -> {
+                    dequeueEvents(rightSelectionHandlers.remove(ref));
+                    callback.accept(rightSelectionContext);
+                }
+        );
+        rightSelectionHandlers.put(ref, rightContextAnnotationFilter);
+        queueEvents(rightContextAnnotationFilter);
     }
 
     void countMacro(String id)
     {
-        if (!id.startsWith("CONFLUENCE_xwiki-") && macroIds != null && !isQueuingEvents()) {
+        if (!id.startsWith("CONFLUENCE_xwiki-") && macroIds != null && this.queuedListeners.isEmpty()) {
             // Don't count the macros if we are recording events, we only count them when actually rendering.
             // Don't count macros that start with CONFLUENCE_xwiki-, they are hacks generated by macro converters.
             macroIds.put(id, macroIds.getOrDefault(id, 0) + 1);

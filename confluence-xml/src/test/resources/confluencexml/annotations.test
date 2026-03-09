@@ -199,6 +199,7 @@ Other paragraph.</string>
                     <wikiObjectProperty name="state" value="SAFE"/>
                     <wikiObjectProperty name="target" value="Sub.Space.AnnotationSpace.Parent page.Annotations.WebHome"/>
                     <wikiObjectProperty name="selectionLeftContext" value="before "/>
+                    <wikiObjectProperty name="selectionRightContext" value="after"/>
                   </wikiObject>
                   <wikiObject name="XWiki.XWikiComments">
                     <p>

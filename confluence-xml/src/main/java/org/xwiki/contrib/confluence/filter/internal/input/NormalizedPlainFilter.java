@@ -23,6 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.xwiki.rendering.listener.CompositeListener;
 import org.xwiki.rendering.listener.Listener;
+import org.xwiki.rendering.listener.WrappingListener;
 import org.xwiki.rendering.renderer.PrintRenderer;
 import org.xwiki.rendering.renderer.printer.DefaultWikiPrinter;
 import org.xwiki.rendering.renderer.printer.WikiPrinter;
@@ -31,8 +32,10 @@ import org.xwiki.rendering.renderer.printer.WikiPrinter;
  * Normalized Plain Filter.
  * @since 9.92.0
  */
-class NormalizedPlainFilter extends CompositeListener
+class NormalizedPlainFilter extends WrappingListener
 {
+    private Listener wrappedListener;
+
     private final WikiPrinter printer = new DefaultWikiPrinter();
     private PrintRenderer plainRenderer;
 
@@ -43,11 +46,30 @@ class NormalizedPlainFilter extends CompositeListener
 
         // the special symbol is a hack to keep the leading whitespaces
         plainRenderer.onSpecialSymbol('!');
+        setWrappedListener(wrappedListener);
+    }
 
-        addListener(plainRenderer);
-        if (wrappedListener != null) {
-            addListener(wrappedListener);
+    @Override
+    public void setWrappedListener(Listener listener)
+    {
+        if (plainRenderer == null) {
+            super.setWrappedListener(listener);
+            return;
         }
+
+        wrappedListener = listener;
+        CompositeListener compositeListener = new CompositeListener();
+        compositeListener.addListener(plainRenderer);
+        if (wrappedListener != null) {
+            compositeListener.addListener(listener);
+        }
+        super.setWrappedListener(compositeListener);
+    }
+
+    @Override
+    public Listener getWrappedListener()
+    {
+        return wrappedListener;
     }
 
     String consumeString()
@@ -63,6 +85,7 @@ class NormalizedPlainFilter extends CompositeListener
         String content = printer.toString();
 
         plainRenderer = null;
+        super.setWrappedListener(wrappedListener);
 
         // with the substring, we remove the leading and trailing hack special symbols
         return StringUtils.substring(content, 1, -1);

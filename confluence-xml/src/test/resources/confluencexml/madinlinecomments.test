@@ -149,6 +149,7 @@ In this sentence, there are two annotations that are nested and some words after
             <wikiObjectProperty name="state" value="SAFE"/>
             <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
             <wikiObjectProperty name="selectionLeftContext" value="This sentence contains an "/>
+            <wikiObjectProperty name="selectionRightContext" value=" and is followed with random words that are not annotated."/>
           </wikiObject>
           <wikiObject name="XWiki.XWikiComments">
             <p>
@@ -171,6 +172,7 @@ In this sentence, there are two annotations that are nested and some words after
             <wikiObjectProperty name="state" value="SAFE"/>
             <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
             <wikiObjectProperty name="selectionLeftContext" value="in th before "/>
+            <wikiObjectProperty name="selectionRightContext" value=" after in th"/>
           </wikiObject>
           <wikiObject name="XWiki.XWikiComments">
             <p>
@@ -214,6 +216,7 @@ In this sentence, there are two annotations that are nested and some words after
             <wikiObjectProperty name="state" value="SAFE"/>
             <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
             <wikiObjectProperty name="selectionLeftContext" value="in td before "/>
+            <wikiObjectProperty name="selectionRightContext" value=" after in td"/>
           </wikiObject>
           <wikiObject name="XWiki.XWikiComments">
             <p>
@@ -257,6 +260,7 @@ In this sentence, there are two annotations that are nested and some words after
             <wikiObjectProperty name="state" value="SAFE"/>
             <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
             <wikiObjectProperty name="selectionLeftContext" value="Random title with "/>
+            <wikiObjectProperty name="selectionRightContext" value=" and words after"/>
           </wikiObject>
           <wikiObject name="XWiki.XWikiComments">
             <p>
@@ -300,6 +304,7 @@ In this sentence, there are two annotations that are nested and some words after
             <wikiObjectProperty name="state" value="SAFE"/>
             <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
             <wikiObjectProperty name="selectionLeftContext" value="This item is "/>
+            <wikiObjectProperty name="selectionRightContext" value=" and has words after"/>
           </wikiObject>
           <wikiObject name="XWiki.XWikiComments">
             <p>
@@ -364,6 +369,7 @@ In this sentence, there are two annotations that are nested and some words after
             <wikiObjectProperty name="state" value="SAFE"/>
             <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
             <wikiObjectProperty name="selectionLeftContext" value="This is a "/>
+            <wikiObjectProperty name="selectionRightContext" value=" citation"/>
           </wikiObject>
           <wikiObject name="XWiki.XWikiComments">
             <p>
@@ -386,6 +392,7 @@ In this sentence, there are two annotations that are nested and some words after
             <wikiObjectProperty name="state" value="SAFE"/>
             <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
             <wikiObjectProperty name="selectionLeftContext" value="This is a paragraph in a citation"/>
+            <wikiObjectProperty name="selectionRightContext" value="This paragraph is not annotated"/>
           </wikiObject>
           <wikiObject name="XWiki.XWikiComments">
             <p>
@@ -408,6 +415,7 @@ In this sentence, there are two annotations that are nested and some words after
             <wikiObjectProperty name="state" value="SAFE"/>
             <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
             <wikiObjectProperty name="selectionLeftContext" value="In this sentence, there are "/>
+            <wikiObjectProperty name="selectionRightContext" value=" that are nested and some words after."/>
           </wikiObject>
           <wikiObject name="XWiki.XWikiComments">
             <p>
@@ -430,6 +438,7 @@ In this sentence, there are two annotations that are nested and some words after
             <wikiObjectProperty name="state" value="SAFE"/>
             <wikiObjectProperty name="target" value="RJTest.Inline comment context.WebHome"/>
             <wikiObjectProperty name="selectionLeftContext" value="In this sentence, "/>
+            <wikiObjectProperty name="selectionRightContext" value=" and some words after."/>
           </wikiObject>
         </wikiDocumentRevision>
       </wikiDocumentLocale>

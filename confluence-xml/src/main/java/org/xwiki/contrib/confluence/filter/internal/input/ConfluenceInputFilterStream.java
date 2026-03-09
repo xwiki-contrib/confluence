@@ -3141,6 +3141,11 @@ public class ConfluenceInputFilterStream
         if (StringUtils.isNotEmpty(l)) {
             proxyFilter.onWikiObjectProperty("selectionLeftContext", l, FilterEventParameters.EMPTY);
         }
+
+        String r = inlineComments.get("selectionRightContext--" + ref);
+        if (StringUtils.isNotEmpty(r)) {
+            proxyFilter.onWikiObjectProperty("selectionRightContext", r, FilterEventParameters.EMPTY);
+        }
     }
 
     private boolean shouldSkipComment(ConfluenceProperties commentProperties, Set<String> resolvedComments)
