@@ -69,7 +69,24 @@ public class ConfluenceAttributeXMLFilter extends DefaultXMLFilter
 
     private Attributes convert(Attributes atts)
     {
-        return cleanupRowspanColspan(handleHighlightColour(atts));
+        return cleanupLocalId(cleanupRowspanColspan(handleHighlightColour(atts)));
+    }
+
+    private Attributes cleanupLocalId(Attributes atts)
+    {
+        int i = atts.getIndex("local-id");
+        if (i == -1) {
+            i = atts.getIndex("ac:local-id");
+        }
+        if (i == -1) {
+            return atts;
+        }
+
+        AttributesImpl convertedAtts = atts instanceof AttributesImpl
+            ? (AttributesImpl) atts
+            : new AttributesImpl(atts);
+        convertedAtts.removeAttribute(i);
+        return convertedAtts;
     }
 
     private static Attributes handleHighlightColour(Attributes atts)
