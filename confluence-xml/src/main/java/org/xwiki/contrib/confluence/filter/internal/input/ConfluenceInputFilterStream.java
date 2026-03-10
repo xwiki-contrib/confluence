@@ -697,8 +697,6 @@ public class ConfluenceInputFilterStream
                         stop = cps.stop;
                     }
                 }
-
-                sendSpaceTemplates(spaceProperties, spaceKey, spaceId, filter, proxyFilter);
             } finally {
                 if (shouldSendSpaceRights(homePageId)) {
                     homePageProperties = getPageProperties(homePageId);
@@ -707,6 +705,7 @@ public class ConfluenceInputFilterStream
                 }
                 endWebPreferences(proxyFilter);
             }
+            sendSpaceTemplates(spaceProperties, spaceKey, spaceId, filter, proxyFilter);
 
             if (send && !stop) {
                 stop = sendBlog(spaceKey, blogPages, spaceRef, filter, proxyFilter);
