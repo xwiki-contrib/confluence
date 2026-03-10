@@ -36,6 +36,46 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.function.Consumer;
 
+/**
+ * <p>
+ * This is the listener between ConfluenceConverterListener and the actual xwiki syntax production.
+ * Macro converters are called by the ConfluenceConverterListener and are given this listener.
+ * This listener is able to queue and record events for complex handling in ConfluenceConverterListener.
+ * ConfluenceWrappingListener is also in charge of producing the selection contexts, which requires this recording
+ * mechanism as well (which is the biggest reason why the queueing is done here and not in ConfluenceConverterListener).
+ * <p>
+ * This listener is architectured as follows (when not queueing events):
+ * <pre><code>
+ * (input) -> this (WrappingListener) -> compositeListener -> queueListener
+ *                                                         -> wrapped listener, provided by ConfluenceConverterListener
+ * </code></pre>
+ * <p>
+ * #setWrappedListener(Listener) doesn't replace compositeListener. It sets the wrapped listener as depicted in the
+ * schema. It can be called only once: the actual listener can never be replaced.
+ * #getWrappedListener() returns this wrapped listener.
+ * <p>
+ * queueListener is for replaying events that were sent to the actual listener. This is useful for generating left
+ * selection contexts.
+ * <p>
+ * When queueing events, the architecture is as follows:
+ * <pre><code>
+ * (input) -> this (WrappingListener) -> ...queued listeners and filters...
+ * </code></pre>
+ * <p>
+ * A queued filter is wired to the previously queued listener, or to compositeListener if there weren't any.
+ * Queue listeners are used to catch events as they would be sent to the actual listener, but to not send them directly.
+ * It's useful to generate header anchors, in which case the events are delayed (the events are recorded, then the
+ * anchor is produced and sent using #onId(String), then the events are replayed without the queue).
+ * It's also useful to alter the stream of events to suppress some unwanted stuff, for instance:
+ * - block macros that are alone in their paragraph
+ * - auto-cursor-target classes
+ * <p>
+ * Filters are used to produce a plain text versions of the events that we otherwise don't need to delay.
+ * <p>
+ * All this complexity is unfortunate and ought to be reduced as soon as someone comes up with neat and clean ideas.
+ * For now, it helps deal with all these features, that can be nested (header anchors, annotations, lone macros in
+ * paragraphs, auto-cursor-target classes...)
+ */
 final class ConfluenceWrappingListener extends WrappingListener
 {
     private static final String NORMALIZER_PLAIN_1_0 = "normalizer-plain/1.0";

@@ -51,7 +51,38 @@ import org.xwiki.rendering.listener.reference.UserResourceReference;
 import org.xwiki.rendering.renderer.PrintRenderer;
 
 /**
- * Convert various Confluence content elements to their XWiki equivalent.
+ * <p>
+ * This listener takes Confluence-y events and "fixes them up" so they have a better shape to produce clean XWiki
+ * syntax:
+ * - removes auto-cursor-target classes still hanging around;
+ * - removes paragraph wrapping lone block macros;
+ * - converts inline comment markers to annotations (selection and selection contexts);
+ * - produces header anchors that Confluence automatically renders when pages are rendered;
+ * - handles blog post teasers
+ * - calls macro converters to convert Confluence macros to xwiki syntax (often XWiki macros).
+ * <p>
+ * Some of these features require queueing, recording and replaying events and filter listener producing plain text
+ * versions of what's coming up. All this is currently based on the event queue provided by ConfluenceWrappingListener,
+ * which lives between ConfluenceConverterListener and the actual listener.
+ * <p>
+ * We have the following architecture:
+ * <pre><code>
+ *   ConfluenceXWikiGeneratorListener -|
+ *                                     +-> ConfluenceConverterListener -> ConfluenceWrappingListener -> actual listener
+ *      Legacy Confluence Syntax      -|                      \-> Macro converters ->/
+ * </code></pre>
+ * - ConfluenceXWikiGeneratorListener takes events produced by parsing the Confluence XHTML syntax
+ * - ConfluenceConverterListener fixes up these events and calls macro converters
+ * - ConfluenceWrappingListener receives events from the macro converters and the fixed up events from
+ *   ConfluenceConverterListener. It can queue events for complex handling and generate selection contexts
+ * - the actual listener receives the final XWiki syntax event stream.
+ * <p>
+ * This is a complex architecture that would benefit from neat and clean ideas to simplify it. It is possible that some
+ * handling in ConfluenceConverterListener could be moved to ConfluenceXWikiGeneratorListener or
+ * ConfluenceWrappingListener. However, only ConfluenceConverterListener and ConfluenceWrappingListener are common
+ * between all the Confluence syntaxes (the legacy one and the XHTML one), so some stuff can't really be pushed there
+ * without duplication. Some handling cannot be done in ConfluenceWrappingListener because that's what comes after macro
+ * conversion and events shouldn't really be messed with after macro conversion.
  *
  * @version $Id$
  * @since 9.1
