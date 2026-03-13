@@ -20,8 +20,6 @@
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
 import java.io.StringReader;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -36,7 +34,6 @@ import org.xwiki.contrib.confluence.parser.xhtml.ConfluenceURLConverter;
 import org.xwiki.rendering.block.Block;
 import org.xwiki.rendering.block.MacroBlock;
 import org.xwiki.rendering.block.XDOM;
-import org.xwiki.rendering.internal.parser.wikimodel.DefaultXWikiGeneratorListener;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XHTMLXWikiGeneratorListener;
 import org.xwiki.rendering.internal.parser.xhtml.wikimodel.XWikiWikiReference;
 import org.xwiki.rendering.listener.Format;
@@ -86,10 +83,6 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
     private static final String STYLE = "style";
     private static final String CODE = "code";
 
-    private final Method pushListenerMethod;
-
-    private final Method popListenerMethod;
-
     private final StreamParser plainParser;
 
     private final StreamParser xwikiParser;
@@ -131,23 +124,6 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         this.plainRendererFactory = plainRendererFactory;
         this.confluenceConverter = confluenceConverter;
         this.urlConverter = urlConverter;
-
-        // We need pushListener and popListener but they are private. For a lack of better solution, we use reflection
-        // to access them. When we stop supporting 14.10, we should remove these reflection tricks as these methods are
-        // now protected.
-        Method push;
-        Method pop;
-        try {
-            push = DefaultXWikiGeneratorListener.class.getDeclaredMethod("pushListener", Listener.class);
-            pop = DefaultXWikiGeneratorListener.class.getDeclaredMethod("popListener");
-            push.setAccessible(true);
-            pop.setAccessible(true);
-        } catch (NoSuchMethodException e) {
-            push = null;
-            pop = null;
-        }
-        this.pushListenerMethod = push;
-        this.popListenerMethod = pop;
     }
 
     @Override
@@ -294,39 +270,26 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
     @Override
     public void beginParagraph(WikiParameters params)
     {
-        maybePushListener();
+        pushQueueListener();
         super.beginParagraph(params);
     }
 
-    private void maybePushListener()
+    private void pushQueueListener()
     {
-        if (this.pushListenerMethod == null) {
-            return;
-        }
-
         this.mustCallPopListener++;
 
-        try {
-            this.pushListenerMethod.invoke(this, new QueueListener());
-        } catch (InvocationTargetException | IllegalAccessException e) {
-            // ignore
-        }
+        pushListener(new QueueListener());
     }
 
-    private QueueListener maybePopListener()
+    private QueueListener popQueueListener()
     {
         Listener l = getListener();
-        if (this.mustCallPopListener < 1 || this.popListenerMethod == null || !(l instanceof QueueListener)) {
+        if (this.mustCallPopListener < 1 || !(l instanceof QueueListener)) {
             return null;
         }
-        try {
-            this.popListenerMethod.invoke(this);
-            mustCallPopListener--;
-            return (QueueListener) l;
-        } catch (InvocationTargetException | IllegalAccessException e) {
-            // ignore
-        }
-        return null;
+        this.popListener();
+        mustCallPopListener--;
+        return (QueueListener) l;
     }
 
     @Override
@@ -376,7 +339,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
                 // that will avoid clunky syntax and broken rendering. See handleListItem().
                 listItemDepth++;
                 getListener().beginListItem(this.convertParameters(params));
-                maybePushListener();
+                pushQueueListener();
                 break;
 
             case "confluence_li_end":
@@ -475,7 +438,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
          *    to unnecessary vertical spacing and allow the cleaner nested list syntax as well.
          */
 
-        QueueListener queueListener = maybePopListener();
+        QueueListener queueListener = popQueueListener();
         if (queueListener != null) {
             removeAutoCursorTargetBR(queueListener);
             removeParagraphImmediatelyFollowedByList(queueListener);
@@ -502,6 +465,13 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
             return;
         }
 
+        // Note: since XWiki 15.10, a paragraph is automatically begun by inline things (like macros) in a list item
+        // if an auto-cursor-target paragraph is open following this automatic begin paragraph insertion, it will be
+        // ignored, making this code useless
+        // It is tempting to just remove any trailing <br> in any paragraph or list item since they are ignored in HTML
+        // but these new lines are also ignored in XWiki. This would cause regression for content with two trailing <br>
+        // tags at the end of list items or paragraph.
+        // FIXME: how could we ignore such ignored auto-cursor-target paragraphs?
         if (queueListener.get(0).eventType.equals(EventType.BEGIN_PARAGRAPH)
             && hasAutoCursorTargetClass(queueListener.get(0).eventParameters)
             && queueListener.get(s - 1).eventType.equals(EventType.END_PARAGRAPH)
@@ -707,7 +677,7 @@ public class ConfluenceXWikiGeneratorListener extends XHTMLXWikiGeneratorListene
         // can be a block macro. We detect this pattern and remove the paragraphs in this case.
         // If macro was inline, it doesn't hurt because the macro will be in its own line in the XWiki syntax anyway.
 
-        QueueListener queueListener = maybePopListener();
+        QueueListener queueListener = popQueueListener();
         if (queueListener == null) {
             // reflection failed, fall back to the default behavior
             return;

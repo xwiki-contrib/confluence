@@ -50,9 +50,14 @@
 
 XWiki is a wiki software
 
-1. {{expand title="Sample Output (Click here to expand...)"}}{{code language="none"}}
+1. {{mathjax}}\(42\){{/mathjax}}\\
+1. (((
+{{expand title="Sample Output (Click here to expand...)"}}
+{{code language="none"}}
 long code
-{{/code}}{{/expand}}</string>
+{{/code}}
+{{/expand}}
+)))</string>
               </entry>
               <entry>
                 <string>syntax</string>

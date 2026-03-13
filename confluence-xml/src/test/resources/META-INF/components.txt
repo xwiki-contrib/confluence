@@ -1,5 +1,6 @@
 500:org.xwiki.contrib.confluence.filter.DeterministicMentionMacroConverter
 500:org.xwiki.contrib.confluence.filter.FakeBlockMacroConverter
 500:org.xwiki.contrib.confluence.filter.FakeShowIfMacroConverter
+500:org.xwiki.contrib.confluence.filter.TestExpandMacroConverter
 500:org.xwiki.contrib.confluence.filter.ViewFileMacro
 500:org.xwiki.contrib.confluence.filter.url.internal.FakeConfluenceURLConverter
