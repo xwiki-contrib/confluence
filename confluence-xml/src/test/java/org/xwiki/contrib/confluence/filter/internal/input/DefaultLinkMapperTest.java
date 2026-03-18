@@ -22,6 +22,9 @@ package org.xwiki.contrib.confluence.filter.internal.input;
 import com.xpn.xwiki.XWiki;
 import com.xpn.xwiki.XWikiContext;
 import com.xpn.xwiki.test.reference.ReferenceComponentList;
+
+import org.contrib.xwiki.usercommon.formatter.internal.DefaultUserFormatter;
+import org.contrib.xwiki.usercommon.formatter.internal.DefaultUserFormatterFactory;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -70,6 +73,8 @@ import static org.mockito.Mockito.when;
 @ComponentList({
     DefaultConfluenceInputContext.class,
     ConfluenceXMLPackage.class,
+    DefaultUserFormatter.class,
+    DefaultUserFormatterFactory.class,
     ConfluenceConverter.class
 })
 @ComponentTest

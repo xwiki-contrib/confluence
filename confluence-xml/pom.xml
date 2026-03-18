@@ -53,6 +53,11 @@
   <dependencies>
     <dependency>
       <groupId>org.apache.commons</groupId>
+      <artifactId>commons-lang3</artifactId>
+      <version>3.20.0</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
       <artifactId>commons-compress</artifactId>
     </dependency>
     <dependency>
@@ -170,6 +175,11 @@
           <artifactId>xwiki-platform-user-api</artifactId>
         </exclusion>
       </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.xwiki.contrib.user-common</groupId>
+      <artifactId>user-common-formatter</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
     </dependency>
   </dependencies>
   <build>
