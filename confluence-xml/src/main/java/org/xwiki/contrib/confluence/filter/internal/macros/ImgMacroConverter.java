@@ -21,6 +21,7 @@ package org.xwiki.contrib.confluence.filter.internal.macros;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -65,7 +66,7 @@ public class ImgMacroConverter extends AbstractMacroConverter
         if (reference == null) {
             reference = new ResourceReference(url, ResourceType.URL);
         }
-        Map<String, String> parameters = new HashMap<>(confluenceParameters);
+        Map<String, String> parameters = new TreeMap<>(confluenceParameters);
         parameters.remove(SRC);
         listener.onImage(reference, false, parameters);
     }
