@@ -31,6 +31,7 @@ import javax.inject.Singleton;
 
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.StringUtils;
+import org.xwiki.contrib.usercommon.formatter.UserFormatterFactory;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
@@ -135,6 +136,9 @@ public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
     @Inject
     private Provider<ComponentManager> componentManagerProvider;
 
+    @Inject
+    private UserFormatterFactory userFormatterFactory;
+
     /**
      * @param name the name to validate
      * @return the validated name
@@ -198,7 +202,7 @@ public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
             return groupName;
         }
 
-        return UsernameCleaner.format(format, Map.of("group", groupName));
+        return userFormatterFactory.create(Map.of("group", groupName)).format(format);
     }
 
     /**
@@ -240,7 +244,7 @@ public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
             return FORBIDDEN_USER_CHARACTERS.matcher(userName).replaceAll("_");
         }
 
-        return UsernameCleaner.format(userFormat, Map.of("username", userName));
+        return userFormatterFactory.create(Map.of("username", userName)).format(userFormat);
     }
 
     /**
