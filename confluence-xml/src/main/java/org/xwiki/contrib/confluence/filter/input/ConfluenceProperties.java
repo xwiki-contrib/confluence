@@ -37,6 +37,11 @@ public class ConfluenceProperties extends PropertiesConfiguration
 {
     private FileBasedConfigurationBuilder<ConfluenceProperties> builder;
 
+    public ConfluenceProperties()
+    {
+        setInterpolator(null);
+    }
+
     /**
      * @param file the file to load/save
      * @return the new {@link ConfluenceProperties}
@@ -62,9 +67,6 @@ public class ConfluenceProperties extends PropertiesConfiguration
 
         ConfluenceProperties properties = builder.getConfiguration();
         properties.builder = builder;
-
-        // Disable interpolation
-        properties.setInterpolator(null);
 
         return properties;
     }
