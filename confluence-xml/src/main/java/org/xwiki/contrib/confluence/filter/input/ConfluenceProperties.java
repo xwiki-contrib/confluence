@@ -37,6 +37,9 @@ public class ConfluenceProperties extends PropertiesConfiguration
 {
     private FileBasedConfigurationBuilder<ConfluenceProperties> builder;
 
+    /**
+     * Default constructor.
+     */
     public ConfluenceProperties()
     {
         setInterpolator(null);

@@ -1697,7 +1697,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
         if (parentId == null) {
             return;
         }
-        ConfluenceProperties parentProperties = getParentObjectByType(parentType, parentId);
+        ConfluenceProperties parentProperties = getParentObjectByType(parentType, parentId, false);
         if (parentProperties == null) {
             return;
         }
@@ -1712,7 +1712,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
         }
     }
 
-    private ConfluenceProperties getParentObjectByType(String type, long id) throws ConfigurationException
+    private ConfluenceProperties getParentObjectByType(String type, long id, boolean emptyBody)
+            throws ConfigurationException
     {
         ConfluenceProperties properties = null;
 
@@ -1743,9 +1744,13 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 properties = getSpacePageTemplateProperties(id, false);
                 break;
             default:
-                logger.error(
-                    "Unexpected type [{}] for parent object id [{}]. This is a bug in confluence-xml, please report.",
-                    type, id);
+                if (!emptyBody) {
+                    // We don't complain about unexpected parent types for empty body that we can just discard
+                    logger.error(
+                        "Unexpected type [{}] for parent object id [{}]."
+                        + "This is a bug in confluence-xml, please report.",
+                        type, id);
+                }
         }
 
         return properties;
@@ -1962,7 +1967,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 // Nothing to lose at this point... should not happen.
                 className = OBJECT_TYPE_PAGE;
             }
-            ConfluenceProperties parent = getParentObjectByType(className, parentId);
+            String body = properties.getString(KEY_PAGE_BODY);
+            ConfluenceProperties parent = getParentObjectByType(className, parentId, StringUtils.isEmpty(body));
             if (parent == null) {
                 return;
             }
@@ -2134,7 +2140,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 return;
             }
 
-            ConfluenceProperties parent = getParentObjectByType(parentClass, parentId);
+            ConfluenceProperties parent = getParentObjectByType(parentClass, parentId, false);
 
             if (parent != null && !parent.getList(KEY_LABELLINGS).contains(labellingId)) {
                 parent.addProperty(KEY_LABELLINGS, labellingId);
