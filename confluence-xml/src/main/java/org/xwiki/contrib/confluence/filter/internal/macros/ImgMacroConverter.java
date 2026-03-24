@@ -19,7 +19,6 @@
  */
 package org.xwiki.contrib.confluence.filter.internal.macros;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
