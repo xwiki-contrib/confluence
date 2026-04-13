@@ -55,8 +55,6 @@ import org.xwiki.rendering.syntax.Syntax;
  */
 public class ConfluenceInputProperties extends DefaultFilterStreamProperties
 {
-    private static final String XWIKI_ADMIN_GROUP_NAME = "XWikiAdminGroup";
-    private static final String XWIKI_ALL_GROUP_NAME = "XWikiAllGroup";
     private static final String CLEANUP_SYNC = "SYNC";
     private static final String WEB_HOME = "WebHome";
     private static final OverwriteProtectionMode DEFAULT_OVERWRITE_PROTECTION_MODE =
@@ -157,15 +155,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
 
     private boolean useConfluenceResolvers = true;
 
-    private Mapping groupMapping = new Mapping(Map.of(
-        "confluence-administrators", XWIKI_ADMIN_GROUP_NAME,
-        "administrators", XWIKI_ADMIN_GROUP_NAME,
-        "site-admins", XWIKI_ADMIN_GROUP_NAME,
-        "system-administrators", XWIKI_ADMIN_GROUP_NAME,
-        "confluence-users", XWIKI_ALL_GROUP_NAME,
-        "users", XWIKI_ALL_GROUP_NAME,
-        "_licensed-confluence", ""
-    ));
+    private Mapping groupMapping = new Mapping();
 
     private Mapping groupIdMapping = new Mapping();
 

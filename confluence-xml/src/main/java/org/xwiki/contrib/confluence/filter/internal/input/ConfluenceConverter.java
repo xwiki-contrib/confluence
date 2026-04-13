@@ -31,7 +31,9 @@ import javax.inject.Singleton;
 
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.StringUtils;
-import org.contrib.xwiki.usercommon.formatter.UserFormatterFactory;
+import org.xwiki.contrib.confluence.filter.internal.UserGroupConverter;
+import org.xwiki.contrib.confluence.filter.internal.UserGroupConverterFactory;
+import org.xwiki.contrib.usercommon.formatter.UserFormatterFactory;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
 import org.slf4j.MarkerFactory;
@@ -139,6 +141,9 @@ public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
     @Inject
     private UserFormatterFactory userFormatterFactory;
 
+    @Inject
+    private UserGroupConverterFactory userGroupConverterFactory;
+
     /**
      * @param name the name to validate
      * @return the validated name
@@ -189,20 +194,11 @@ public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
             return groupName;
         }
 
-        Mapping groupMapping = properties.getGroupMapping();
-        if (groupMapping != null) {
-            String group = groupMapping.get(groupName);
-            if (group != null) {
-                return group;
-            }
-        }
+        UserGroupConverter userGroupConverter = userGroupConverterFactory.create(
+            properties.getUserFormat(), properties.getGroupFormat(),
+            properties.getUserIdMapping(), properties.getGroupMapping());
 
-        String format = properties.getGroupFormat();
-        if (StringUtils.isEmpty(format)) {
-            return groupName;
-        }
-
-        return userFormatterFactory.create(Map.of("group", groupName)).format(format);
+        return userGroupConverter.toGroupReferenceName(groupName);
     }
 
     /**
@@ -219,32 +215,16 @@ public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
     @Override
     public String convertUserNameToReferenceName(String userName)
     {
-        if (StringUtils.isEmpty(userName) || !context.getProperties().isConvertToXWiki()) {
+        ConfluenceInputProperties properties = context.getProperties();
+        if (StringUtils.isEmpty(userName) || !properties.isConvertToXWiki()) {
             return userName;
         }
 
-        // Apply the configured mapping
-        Mapping userIdMapping = context.getProperties().getUserIdMapping();
-        if (userIdMapping != null) {
-            String mappedName = userIdMapping.getOrDefault(userName, "").trim();
-            if (!mappedName.isEmpty()) {
-                return mappedName;
-            }
-        }
+        UserGroupConverter userGroupConverter = userGroupConverterFactory.create(
+            properties.getUserFormat(), properties.getGroupFormat(),
+            properties.getUserIdMapping(), properties.getGroupMapping());
 
-        // Translate the usual default admin user in Confluence to its XWiki counterpart
-        if (userName.equals("admin")) {
-            return "Admin";
-        }
-
-        // Apply the user format
-        String userFormat = context.getProperties().getUserFormat();
-        if (StringUtils.isEmpty(userFormat)) {
-            // Do some minimal cleanup which is backward compatible with older versions of the filter.
-            return FORBIDDEN_USER_CHARACTERS.matcher(userName).replaceAll("_");
-        }
-
-        return userFormatterFactory.create(Map.of("username", userName)).format(userFormat);
+        return userGroupConverter.convertUserNameToReferenceName(userName);
     }
 
     /**
