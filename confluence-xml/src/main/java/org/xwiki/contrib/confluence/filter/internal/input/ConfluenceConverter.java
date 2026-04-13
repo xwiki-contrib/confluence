@@ -31,8 +31,7 @@ import javax.inject.Singleton;
 
 import org.apache.commons.configuration2.ex.ConfigurationException;
 import org.apache.commons.lang3.StringUtils;
-import org.xwiki.contrib.confluence.filter.internal.UserGroupConverter;
-import org.xwiki.contrib.confluence.filter.internal.UserGroupConverterFactory;
+import org.xwiki.contrib.confluence.filter.UserGroupConverter;
 import org.xwiki.contrib.usercommon.formatter.UserFormatterFactory;
 import org.slf4j.Logger;
 import org.slf4j.Marker;
@@ -141,9 +140,6 @@ public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
     @Inject
     private UserFormatterFactory userFormatterFactory;
 
-    @Inject
-    private UserGroupConverterFactory userGroupConverterFactory;
-
     /**
      * @param name the name to validate
      * @return the validated name
@@ -193,12 +189,7 @@ public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
         if (StringUtils.isEmpty(groupName) || !properties.isConvertToXWiki()) {
             return groupName;
         }
-
-        UserGroupConverter userGroupConverter = userGroupConverterFactory.create(
-            properties.getUserFormat(), properties.getGroupFormat(),
-            properties.getUserIdMapping(), properties.getGroupMapping());
-
-        return userGroupConverter.toGroupReferenceName(groupName);
+        return getUserGroupConverter().toGroupReferenceName(groupName);
     }
 
     /**
@@ -219,12 +210,17 @@ public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
         if (StringUtils.isEmpty(userName) || !properties.isConvertToXWiki()) {
             return userName;
         }
+        return getUserGroupConverter().convertUserNameToReferenceName(userName);
+    }
 
-        UserGroupConverter userGroupConverter = userGroupConverterFactory.create(
-            properties.getUserFormat(), properties.getGroupFormat(),
-            properties.getUserIdMapping(), properties.getGroupMapping());
-
-        return userGroupConverter.convertUserNameToReferenceName(userName);
+    private UserGroupConverter getUserGroupConverter()
+    {
+        ConfluenceInputProperties properties = context.getProperties();
+        UserGroupConverter userGroupConverter =
+            new UserGroupConverter(userFormatterFactory,
+                properties.getUserFormat(), properties.getGroupFormat(),
+                properties.getUserIdMapping(), properties.getGroupMapping());
+        return userGroupConverter;
     }
 
     /**

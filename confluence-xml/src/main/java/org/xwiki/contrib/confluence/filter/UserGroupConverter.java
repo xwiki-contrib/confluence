@@ -17,13 +17,12 @@
  * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
  * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
  */
-package org.xwiki.contrib.confluence.filter.internal;
+package org.xwiki.contrib.confluence.filter;
 
 import java.util.Map;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
-import org.xwiki.contrib.confluence.filter.Mapping;
 import org.xwiki.contrib.usercommon.formatter.UserFormatterFactory;
 
 /**

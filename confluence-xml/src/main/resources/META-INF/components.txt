@@ -51,6 +51,5 @@ org.xwiki.contrib.confluence.filter.internal.macros.UIStepMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.UIStepsMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.WarningMacroConverter
 org.xwiki.contrib.confluence.filter.internal.macros.WidgetMacroConverter
-org.xwiki.contrib.confluence.filter.internal.UserGroupConverterFactory
 org.xwiki.contrib.confluence.filter.url.internal.BaseConfluenceURLConverter
 org.xwiki.contrib.confluence.filter.url.internal.DefaultConfluenceURLConverter
