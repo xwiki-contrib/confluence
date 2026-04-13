@@ -210,7 +210,7 @@ public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
         if (StringUtils.isEmpty(userName) || !properties.isConvertToXWiki()) {
             return userName;
         }
-        return getUserGroupConverter().convertUserNameToReferenceName(userName);
+        return getUserGroupConverter().toUserReferenceName(userName);
     }
 
     private UserGroupConverter getUserGroupConverter()

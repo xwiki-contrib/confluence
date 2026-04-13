@@ -104,7 +104,7 @@ public class UserGroupConverter
      * @param userName the Confluence username
      * @return the corresponding XWiki username, without forbidden characters
      */
-    public String convertUserNameToReferenceName(String userName)
+    public String toUserReferenceName(String userName)
     {
         // Apply the configured mapping
         if (userIdMapping != null) {
