@@ -808,7 +808,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      */
     public void setGroupMapping(Mapping existingGroups)
     {
-        this.groupMapping = existingGroups;
+        this.groupMapping.putAll(existingGroups);
     }
 
     /**
