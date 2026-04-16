@@ -1302,10 +1302,10 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @since 9.37.0
      */
     @PropertyName("Group format")
-    @PropertyDescription("The format to use to transform a Confluence group name to a XWiki group name for groups"
-        + "that are not in the group mapping."
+    @PropertyDescription("The format to use to transform a Confluence group name to a XWiki group name for groups "
+        + "that are not in the group mapping. "
         + "String ${group} will be replaced with the Confluence group name; "
-        + "String ${group._clean} same with the special characters removed."
+        + "String ${group._clean} same with the special characters removed; "
         + "String ${group._lowerCase} will be replaced with the lowercased Confluence group name; "
         + "String ${group._upperCase} will be replaced with the uppercased Confluence group name; "
         + "String ${group._clean._lowerCase} will be replaced with the cleaned, lowercased Confluence group name; "
@@ -1331,16 +1331,15 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @since 9.65.0
      */
     @PropertyName("User format")
-    @PropertyDescription("The format to use to transform a Confluence user name to a XWiki user name for users"
-        + "that are not in the user id mapping."
+    @PropertyDescription("The format to use to transform a Confluence user name to a XWiki user name for users "
+        + "that are not in the user id mapping. "
         + "String ${username} will be replaced with the Confluence user name; "
-        + "String ${username._clean} same with the special characters removed (recommended)."
+        + "String ${username._clean} same with the special characters removed (recommended); "
         + "String ${username._lowerCase} will be replaced with the lowercased Confluence user name; "
         + "String ${username._upperCase} will be replaced with the uppercased Confluence user name; "
         + "String ${username._clean._lowerCase} will be replaced with the cleaned, lowercased Confluence user name; "
         + "String ${username._clean._upperCase} will be replaced with the uppercased Confluence user name. "
-        + "By default, for backward compatibility reasons, special characters are replaced with underscores and spaces "
-        + "are kept.")
+        + "By default, for backward compatibility reasons, dots, spaces and slashes are replaced with underscores.")
     public String getUserFormat()
     {
         return userFormat;
