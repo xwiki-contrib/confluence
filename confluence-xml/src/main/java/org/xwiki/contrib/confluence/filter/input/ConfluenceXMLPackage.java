@@ -20,6 +20,7 @@
 package org.xwiki.contrib.confluence.filter.input;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -31,6 +32,7 @@ import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.net.URI;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -64,6 +66,9 @@ import javax.xml.stream.XMLStreamReader;
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.configuration2.ex.ConfigurationException;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.FileSystem;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.CloseShieldInputStream;
@@ -77,6 +82,8 @@ import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
 import org.xwiki.contrib.confluence.filter.internal.WithoutControlCharactersReader;
 import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceCanceledException;
+import org.xwiki.contrib.confluence.filter.internal.input.PropertiesConfluenceTask;
+import org.xwiki.contrib.confluence.filter.task.ConfluenceTask;
 import org.xwiki.environment.Environment;
 import org.xwiki.filter.FilterException;
 import org.xwiki.filter.input.FileInputSource;
@@ -111,6 +118,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
      * The name of the file containing information about the instance.
      */
     public static final String FILE_DESCRIPTOR = "exportDescriptor.properties";
+
+    /**
+     * The name of the file containing the tasks.
+     */
+    public static final String FILE_TASKS = "AO_BAF3AA_AOINLINE_TASK.csv";
 
     /**
      * The property key to access the object class.
@@ -758,6 +770,26 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private static final String DATE_VALUE = "dateValue";
     private static final String STRING_VALUE = "stringValue";
     private static final String ATTACHMENTS = "attachments";
+    private static final String CONTENT_ID = "CONTENT_ID";
+    private static final String ID = "ID";
+    private static final String[] TASK_FIELDS = {
+        CONTENT_ID,
+        ID,
+        "CREATOR_USER_KEY",
+        "COMPLETE_DATE",
+        "CREATE_DATE",
+        "UPDATE_DATE",
+        "COMPLETE_USER_KEY",
+        "GLOBAL_ID",
+        "TASK_STATUS",
+        "BODY",
+        "CONTENT_VISIBLE",
+        "SPACE_VISIBLE",
+        "ASSIGNEE_USER_KEY",
+        "DUE_DATE",
+        "PAGE_TITLE",
+        "SPACE_ID"
+    };
 
     @Inject
     private Environment environment;
@@ -787,6 +819,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private File tree;
 
     private String workingDirectory;
+
+    private File tasks;
 
     // Maps a space id to all the pages in this space
     private final Map<Long, List<Long>> pages = new LinkedHashMap<>();
@@ -946,6 +980,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         this.entities = new File(this.directory, FILE_ENTITIES);
         this.descriptor = new File(this.directory, FILE_DESCRIPTOR);
+        this.tasks = new File(this.directory, FILE_TASKS);
     }
 
     /**
@@ -2432,6 +2467,13 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return new File(folder, PROPERTIES_FILENAME);
     }
 
+    private File getTaskPropertiesFile(long pageId, long taskId)
+    {
+        File folder = getPageFolder(pageId);
+
+        return new File(new File(folder, "tasks"), String.valueOf(taskId));
+    }
+
     private File getObjectPropertiesFile(File folder, String propertyId)
     {
         return new File(getObjectFolder(folder, propertyId), PROPERTIES_FILENAME);
@@ -2583,6 +2625,20 @@ public class ConfluenceXMLPackage implements AutoCloseable
             return null;
         }
         return props;
+    }
+
+    /**
+     * @param pageId the identifier of the page
+     * @param taskId the local identifier of the task
+     * @param create true of the properties should be created when they don't exist
+     * @return the properties containing information about the task
+     * @throws ConfigurationException when failing to create the properties
+     */
+    private ConfluenceProperties getTaskProperties(long pageId, long taskId, boolean create)
+            throws ConfigurationException
+    {
+        File file = getTaskPropertiesFile(pageId, taskId);
+        return (create || file.exists()) ? ConfluenceProperties.create(file) : null;
     }
 
     /**
@@ -3108,6 +3164,65 @@ public class ConfluenceXMLPackage implements AutoCloseable
             // ignore
         }
         return null;
+    }
+
+    /**
+     * Read the tasks for being able to get them later.
+     *
+     * @throws IOException if there's an issue reading the tasks
+     *
+     * NOTE: the tasks are currently found in the AO_BAF3AA_AOINLINE_TASK.csv file. This method could evolve to return
+     *       tasks from other places as well in the future if we find out other places listing tasks)
+     */
+    public void readTasks() throws IOException, ConfigurationException
+    {
+        if (!this.tasks.exists()) {
+            this.tasks = null;
+        }
+
+        if (this.tasks == null) {
+            return;
+        }
+
+        mkdirTree();
+        BufferedReader reader = Files.newBufferedReader(this.tasks.toPath(), StandardCharsets.UTF_8);
+        CSVParser p = CSVFormat.DEFAULT.builder().setHeader().setSkipHeaderRecord(true).build().parse(reader);
+        logger.info("Reading tasks...");
+        for (CSVRecord r : p) {
+            try {
+                long contentId = Long.parseLong(r.get(CONTENT_ID));
+                long id = Long.parseLong(r.get(ID));
+                ConfluenceProperties taskProperties = getTaskProperties(contentId, id, true);
+                if (taskProperties == null) {
+                    logger.error("Task properties are unexpectedly null. This should not happen.");
+                    return;
+                }
+                for (String field : TASK_FIELDS) {
+                    taskProperties.setProperty(field, r.get(field));
+                }
+                taskProperties.save();
+            } catch (NumberFormatException e) {
+                logger.error("Failed to parse task [{}], some details may be missing when importing it", r);
+            }
+        }
+        logger.info("Finished reading tasks.");
+        this.tasks = null;
+    }
+
+    /**
+     * @return the requested task from the AO_BAF3AA_AOINLINE_TASK.csv file or possibly from elsewhere in the future
+     * @param pageId the id of the page in which the task is
+     * @param taskId the local id of the task
+     * @throws ConfigurationException if something wrong happens while reading the task properties file
+     */
+    public ConfluenceTask getTask(long pageId, int taskId) throws ConfigurationException
+    {
+        ConfluenceProperties taskProperties = getTaskProperties(pageId, taskId, false);
+        if (taskProperties == null) {
+            return null;
+        }
+
+        return new PropertiesConfluenceTask(taskProperties);
     }
 
     /**
