@@ -426,7 +426,8 @@ public class ConfluenceInputFilterStream
             int steps = restored ? 1 : 2;
             this.progress.pushLevelProgress(steps, this);
             if (!restored) {
-                this.confluencePackage.read(wd);
+                this.confluencePackage.setWorkingDirectory(wd);
+                this.confluencePackage.read();
             }
         } catch (Exception e) {
             if (e.getCause() instanceof ConfluenceCanceledException) {

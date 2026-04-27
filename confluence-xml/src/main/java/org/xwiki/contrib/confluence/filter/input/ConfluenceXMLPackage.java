@@ -786,6 +786,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private File tree;
 
+    private String workingDirectory;
+
     // Maps a space id to all the pages in this space
     private final Map<Long, List<Long>> pages = new LinkedHashMap<>();
 
@@ -951,11 +953,24 @@ public class ConfluenceXMLPackage implements AutoCloseable
      * @throws IOException when failing to access the package content
      * @throws FilterException when any error happen during the reading of the package
      * @since 9.60.0
+     * @deprecated use ConfluenceXMLPackage#setWorkingDirectory() and then read() instead
      */
+    @Deprecated(since = "9.94.0")
     public void read(String workingDirectory) throws IOException, FilterException
     {
+        setWorkingDirectory(workingDirectory);
+        read();
+    }
+
+    /**
+     * @throws IOException when failing to access the package content
+     * @throws FilterException when any error happen during the reading of the package
+     * @since 9.94.0
+     */
+    public void read() throws IOException, FilterException
+    {
         try {
-            createTree(workingDirectory);
+            createTree();
         } catch (FilterException e) {
             throw e;
         } catch (Exception e) {
@@ -969,10 +984,13 @@ public class ConfluenceXMLPackage implements AutoCloseable
      * @throws IOException when failing to access the package content
      * @throws FilterException when any error happen during the reading of the package
      * @since 9.37.0
+     * @deprecated use #setSource(InputSource), #setWorkingDirectory(String) and #read()
      */
+    @Deprecated (since = "9.94.0")
     public void read(InputSource source, String workingDirectory) throws IOException, FilterException
     {
         this.setSource(source);
+        this.setWorkingDirectory(workingDirectory);
         this.read(workingDirectory);
     }
 
@@ -980,10 +998,13 @@ public class ConfluenceXMLPackage implements AutoCloseable
      * @param source the source where to find the package to parse
      * @throws IOException when failing to access the package content
      * @throws FilterException when any error happen during the reading of the package
+     * @deprecated use #setSource(InputSource) and #read()
      */
+    @Deprecated (since = "9.94.0")
     public void read(InputSource source) throws IOException, FilterException
     {
-        read(source, null);
+        setSource(source);
+        read();
     }
 
     private void saveState() throws IllegalAccessException, IOException, FilterException
@@ -1394,15 +1415,19 @@ public class ConfluenceXMLPackage implements AutoCloseable
         spaceKeyToImport = getDescriptorField("spaceKey");
     }
 
-    private void createTree(String workingDirectory)
+    /**
+     * @param workingDirectory the working directory to set
+     * @since 9.94.0
+     */
+    public void setWorkingDirectory(String workingDirectory)
+    {
+        this.workingDirectory = workingDirectory;
+    }
+
+    private void createTree()
         throws XMLStreamException, FactoryConfigurationError, IOException, ConfigurationException, FilterException,
         ConfluenceCanceledException
     {
-        this.tree = workingDirectory == null
-            ? Files.createTempDirectory(this.environment.getTemporaryDirectory().toPath(),
-                "confluencexml-tree").toFile()
-            : new File(workingDirectory);
-
         mkdirTree();
 
         getJobStatus();
@@ -1485,10 +1510,17 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return revisionsById;
     }
 
-    private void mkdirTree() throws FilterException
+    private void mkdirTree() throws IOException
     {
+        if (this.tree == null) {
+            this.tree = workingDirectory == null
+                ? Files.createTempDirectory(this.environment.getTemporaryDirectory().toPath(),
+    "confluencexml-tree").toFile()
+                : new File(workingDirectory);
+        }
+
         if (!this.tree.isDirectory() && !this.tree.mkdir()) {
-            throw new FilterException("Could not create the working directory to extract the Confluence package");
+            throw new IOException("Could not create the working directory to extract the Confluence package");
         }
     }
 
