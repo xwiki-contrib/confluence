@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic>
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">534937605</id>
+    <property name="name"><![CDATA[TestTasks]]></property>
+    <property name="key"><![CDATA[TestTasks]]></property>
+  </object>
+</hibernate-generic>
