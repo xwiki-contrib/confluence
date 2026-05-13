@@ -390,6 +390,7 @@
     <collection name="bodyContents" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.bodyContents)"><element class="BodyContent" package="com.atlassian.confluence.core"><id name="id">917700832</id>
     </element>
     </collection>
+    <collection name="comments" class="java.util.Set(com.atlassian.confluence.core.ContentEntityObject.comments)"><element class="Comment" package="com.atlassian.confluence.pages"><id name="id">20</id></element></collection>
     <collection name="adfContentBodies" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.adfContentBodies)"/>
     <collection name="outgoingLinks" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.outgoingLinks)"><element class="OutgoingLink" package="com.atlassian.confluence.links"><id name="id">917700837</id>
     </element>
@@ -1255,57 +1256,70 @@
   </object>
   <object class="BodyContent" package="com.atlassian.confluence.core">
     <id name="id">917700832</id>
-    <property name="body"><![CDATA[<ac:structured-macro ac:name="panel" ac:schema-version="1" ac:macro-id="bc82cb0f-6564-4928-a24c-f325fc29da0f"><ac:parameter ac:name="bgColor">#E3FCEF</ac:parameter><ac:rich-text-body>
-        <h2><strong>Welcome to your new space!</strong></h2>
-        <p>Spaces help your team structure, organize, and share work, so every team member has visibility into institutional knowledge and access to the information they need to do their best work.</p>
-    </ac:rich-text-body></ac:structured-macro>
-<p />
-<h2><strong>Get started with the basics</strong></h2>
-<fieldset>
-    <p><strong>Start editing this page:</strong></p>
-    <ac:task-list>
-<ac:task>
-<ac:task-id>11</ac:task-id>
-<ac:task-status>incomplete</ac:task-status>
-<ac:task-body><span class="placeholder-inline-tasks">Click the pencil icon ✏️ or <code>e</code> on your keyboard to edit and start typing. You can edit anywhere.</span></ac:task-body>
-</ac:task>
-<ac:task>
-<ac:task-id>13</ac:task-id>
-<ac:task-status>incomplete</ac:task-status>
-<ac:task-body><span class="placeholder-inline-tasks">Hit <code>/</code> to see all the types of content you can add to your page. Try <code>/image</code> or <code>/table</code></span></ac:task-body>
-</ac:task>
-<ac:task>
-<ac:task-id>14</ac:task-id>
-<ac:task-status>incomplete</ac:task-status>
-<ac:task-body><span class="placeholder-inline-tasks">Use the toolbar at the top to play around with <em><u>font</u></em>, <strong><span style="color: rgb(54,179,126);">c</span><span style="color: rgb(255,196,0);">o</span><span style="color: rgb(101,84,192);">l</span><span style="color: rgb(191,38,0);">o</span><span style="color: rgb(76,154,255);">r</span><span style="color: rgb(101,84,192);">s</span></strong>, <sup>formatt</sup><sub>ing</sub>, and more</span></ac:task-body>
-</ac:task>
-<ac:task>
-<ac:task-id>15</ac:task-id>
-<ac:task-status>incomplete</ac:task-status>
-<ac:task-body><span class="placeholder-inline-tasks">Click <code>close</code> to save your draft or <code>publish</code> when your page is ready to be shared</span></ac:task-body>
-</ac:task>
-</ac:task-list>
-</fieldset>
-<h3>
-    🪄 Need some inspiration?
-</h3>
-<ul>
-    <li>
-        <p>Check out our <a href="https://www.atlassian.com/software/confluence/guides/get-started/best-practices">Confluence best practices guide</a>.</p>
-    </li>
-    <li>
-        <p>Get a quick intro into what spaces are and how to best use them at <a href="https://www.atlassian.com/software/confluence/guides/get-started/set-up">Set up your site and spaces</a>.</p>
-    </li>
-    <li>
-        <p>Check out our guide for ideas on how to <a href="https://confluence.atlassian.com/confcloud/set-up-your-space-homepage-827106219.html">set up your space overview</a>.</p>
-    </li>
-    <li>
-        <p>If starting from a blank space is daunting, try using one of the <a href="https://confluence.atlassian.com/display/ConfCloud/Create+a+Space+From+a+Template">space templates</a> instead.</p>
-    </li>
-</ul>]]></property>
+    <property name="body"><![CDATA[<p class="Instruction">
+<span style="color: rgb(255,153,0);">
+<ac:inline-comment-marker ac:ref="334b65de-2d41-4b78-ac2e-1bab640f5b98">
+<span style="color: rgb(255,153,0);">hi</span>
+</ac:inline-comment-marker>
+</span>
+</p>]]></property>
     <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">917700831</id>
     </property>
     <property name="bodyType">2</property>
+  </object>
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">10</id>
+    <property name="name"><![CDATA[inline-marker-ref]]></property>
+    <property name="stringValue"><![CDATA[334b65de-2d41-4b78-ac2e-1bab640f5b98]]></property>
+    <property name="longValue"/><property name="dateValue"/></object>
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">11</id>
+    <property name="name"><![CDATA[actualCommentType]]></property>
+    <property name="stringValue"><![CDATA[inline]]></property>
+    <property name="longValue"/><property name="dateValue"/></object>
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">12</id>
+    <property name="name"><![CDATA[inline-comment]]></property>
+    <property name="stringValue"><![CDATA[true]]></property>
+    <property name="longValue"/><property name="dateValue"/></object>
+  <object class="ContentProperty" package="com.atlassian.confluence.content">
+    <id name="id">13</id>
+    <property name="name"><![CDATA[comment-uuid]]></property>
+    <property name="stringValue"><![CDATA[334b65de-2d41-4b78-ac2e-1bab640f5b99]]></property>
+    <property name="longValue"/><property name="dateValue"/>
+  </object>
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">21</id>
+    <property name="body"><![CDATA[<p>My comment</p>]]></property>
+    <property name="content" class="Comment" package="com.atlassian.confluence.pages"><id name="id">20</id>
+    </property>
+    <property name="bodyType">2</property>
+  </object>
+  <object class="Comment" package="com.atlassian.confluence.pages">
+    <id name="id">20</id>
+    <property name="hibernateVersion">3</property>
+    <property name="title"/><property name="lowerTitle"/>
+    <collection name="bodyContents" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.bodyContents)">
+      <element class="BodyContent" package="com.atlassian.confluence.core"><id name="id">21</id></element>
+    </collection>
+    <collection name="contentProperties" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.contentProperties)">
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">10</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">11</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">12</id></element>
+      <element class="ContentProperty" package="com.atlassian.confluence.content"><id name="id">13</id></element>
+    </collection>
+    <property name="version">1</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[6321bed3051efc6985671eed]]></id>
+    </property>
+    <property name="creationDate">2026-01-14 13:08:35.072</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[6321bed3051efc6985671eed]]></id>
+    </property>
+    <property name="lastModificationDate">2026-01-14 13:08:35.072</property>
+    <property name="versionComment"><![CDATA[]]></property>
+    <property name="originalVersionId"/><property name="contentStatus"><![CDATA[current]]></property>
+    <property name="navigationType">0</property>
+    <property name="containerContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">917700831</id>
+    </property>
   </object>
   <object class="ContentProperty" package="com.atlassian.confluence.content">
     <id name="id">918552580</id>

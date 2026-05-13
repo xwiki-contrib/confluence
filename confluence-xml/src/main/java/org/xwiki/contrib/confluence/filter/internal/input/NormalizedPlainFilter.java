@@ -22,11 +22,14 @@ package org.xwiki.contrib.confluence.filter.internal.input;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.xwiki.rendering.listener.CompositeListener;
+import org.xwiki.rendering.listener.Format;
 import org.xwiki.rendering.listener.Listener;
 import org.xwiki.rendering.listener.WrappingListener;
 import org.xwiki.rendering.renderer.PrintRenderer;
 import org.xwiki.rendering.renderer.printer.DefaultWikiPrinter;
 import org.xwiki.rendering.renderer.printer.WikiPrinter;
+
+import java.util.Map;
 
 /**
  * Normalized Plain Filter.
@@ -89,5 +92,40 @@ class NormalizedPlainFilter extends WrappingListener
 
         // with the substring, we remove the leading and trailing hack special symbols
         return StringUtils.substring(content, 1, -1);
+    }
+
+    // We ignore a few events that should not produce text but can be unmatched because we are potentially recording
+    // events from the middle of a line.
+
+    @Override
+    public void beginParagraph(Map<String, String> parameters)
+    {
+        if (wrappedListener != null) {
+            wrappedListener.beginParagraph(parameters);
+        }
+    }
+
+    @Override
+    public void endParagraph(Map<String, String> parameters)
+    {
+        if (wrappedListener != null) {
+            wrappedListener.endParagraph(parameters);
+        }
+    }
+
+    @Override
+    public void beginFormat(Format format, Map<String, String> parameters)
+    {
+        if (wrappedListener != null) {
+            wrappedListener.beginFormat(format, parameters);
+        }
+    }
+
+    @Override
+    public void endFormat(Format format, Map<String, String> parameters)
+    {
+        if (wrappedListener != null) {
+            wrappedListener.endFormat(format, parameters);
+        }
     }
 }
