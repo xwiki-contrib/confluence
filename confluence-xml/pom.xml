@@ -167,7 +167,7 @@
     <dependency>
       <groupId>org.xwiki.contrib</groupId>
       <artifactId>application-favorites-filter-api</artifactId>
-      <version>1.4.1</version>
+      <version>1.4.2</version>
       <exclusions>
         <exclusion>
           <groupId>org.xwiki.platform</groupId>
