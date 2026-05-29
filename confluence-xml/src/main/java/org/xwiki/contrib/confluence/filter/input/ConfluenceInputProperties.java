@@ -59,8 +59,6 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     private static final String XWIKI_ALL_GROUP_NAME = "XWikiAllGroup";
     private static final String CLEANUP_SYNC = "SYNC";
     private static final String WEB_HOME = "WebHome";
-    private static final OverwriteProtectionMode DEFAULT_OVERWRITE_PROTECTION_MODE =
-        OverwriteProtectionMode.NONCONFLUENCE;
     private static final String CONFLUENCE_UNDERSCORE = "confluence_";
     private static final String DEFAULT_GROUP_FORMAT = "${group._clean}";
     private static final String DEFAULT_SPACE_RENAMING_FORMAT = "${spaceKey}_";
