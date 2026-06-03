@@ -30,7 +30,8 @@ import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
  */
 public class ADFNodeHandler extends MacroTagHandler
 {
-    protected static final String CONFLUENCE_ADF_MACRO_PREFIX = "confluence-adf-";
+    static final String CONFLUENCE_ADF_MACRO_PREFIX = "confluence-adf-";
+    static final String ADF_EXTENSION_TYPE = "confluence-adf-type";
 
     /**
      * Default constructor.
@@ -48,7 +49,16 @@ public class ADFNodeHandler extends MacroTagHandler
     {
         ConfluenceMacro macro = new ConfluenceMacro();
 
-        macro.name = CONFLUENCE_ADF_MACRO_PREFIX + context.getParams().getParameter("type").getValue();
+        String type = context.getParams().getParameter("type").getValue();
+        macro.name = CONFLUENCE_ADF_MACRO_PREFIX + type;
         context.getTagStack().pushStackParameter(CONFLUENCE_CONTAINER, macro);
+        context.getTagStack().pushStackParameter(ADF_EXTENSION_TYPE, type);
+    }
+
+    @Override
+    protected void end(TagContext context)
+    {
+        context.getTagStack().popStackParameter(ADF_EXTENSION_TYPE);
+        super.end(context);
     }
 }

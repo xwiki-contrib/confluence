@@ -16,6 +16,7 @@
 
 <p>This is a note (woaw) 😯</p>
 </div></div></ac:adf-fallback></ac:adf-extension>
+<ac:adf-extension><ac:adf-node type="panel"><ac:adf-attribute key="panel-type">note</ac:adf-attribute><ac:adf-attribute key="local-id">f75aadf4-101b-4145-b833-53fe3c903811</ac:adf-attribute><ac:adf-content><p local-id="ac61e9f1-a8ef-4345-b118-7a071179cba5">hello</p></ac:adf-content></ac:adf-node><ac:adf-fallback><div class="panel conf-macro output-block" style="background-color: rgb(234,230,255);border-color: rgb(153,141,217);border-width: 1.0px;"><div class="panelContent" style="background-color: rgb(234,230,255);"><p local-id="ac61e9f1-a8ef-4345-b118-7a071179cba5">hello</p></div></div></ac:adf-fallback></ac:adf-extension>
 .#-----------------------------------------------------
 .expect|event/1.0
 .#-----------------------------------------------------
@@ -25,4 +26,5 @@ onWord [Default]
 endParagraph
 onMacroStandalone [note] [] [This is a note (woaw) 😯]
 onMacroStandalone [confluence-adf-imaginarytypeforthetest] [type=note] [This is a note (woaw) 😯]
+onMacroStandalone [note] [local-id=f75aadf4-101b-4145-b833-53fe3c903811] [hello]
 endDocument

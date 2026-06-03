@@ -41,7 +41,7 @@ public class ADFAttributeHandler extends AbstractMacroParameterTagHandler
     @Override
     protected void setParameter(MacroTagHandler.ConfluenceMacro macro, TagContext context)
     {
-        String nodeType = macro.name.substring(ADFNodeHandler.CONFLUENCE_ADF_MACRO_PREFIX.length());
+        String nodeType = (String) context.getTagStack().getStackParameter(ADFNodeHandler.ADF_EXTENSION_TYPE);
         String attrName = (String) context.getTagStack().popStackParameter(ADF_ATTRIBUTE_NAME);
         if (attrName.startsWith(nodeType + "-")) {
             attrName = attrName.substring(nodeType.length() + 1);
