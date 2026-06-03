@@ -1357,11 +1357,14 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @since 9.38.0
      */
     @PropertyName("Working directory")
-    @PropertyDescription("The directory used to extract the Confluence package for processing. "
-        + "If an extracted package is found, the analyze will be sped up, "
-        + "but this is only supported when using the same version of Confluence XML. Mixing versions is not supported "
-        + "and should not be attempted. To use this feature, set the Cleanup mode to NO."
-    )
+    @PropertyDescription("The directory in which the temporary files are created when parsing the Confluence package. "
+        + "By default, temporary files are extracted in a random directory of XWiki's working folder. "
+        + "Setting this is useful if you want to control where these temporary files are created. "
+        + "If a package was already imported using this working directory and the temporary files were not cleaned up "
+        + "(the Cleanup mode was set to NO during that first import), these temporary files will be re-used and the "
+        + "analysis will be sped up, but note that this is only supported when using the same version of "
+        + "Confluence XML; Mixing versions is not supported and should not be attempted. Note: this is not related to "
+        + "where the zip package is extracted.")
     public String getWorkingDirectory()
     {
         return workingDirectory;
