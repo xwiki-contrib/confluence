@@ -35,8 +35,7 @@ import org.xwiki.contrib.confluence.filter.AbstractMacroConverter;
  * @since 9.74.0
  * @version $Id$
  */
-@Component
-@Named(CodeMacroConverter.CODE)
+@Component(hints = {CodeMacroConverter.CODE, "paste-code-macro"})
 @Singleton
 public class CodeMacroConverter extends AbstractMacroConverter
 {

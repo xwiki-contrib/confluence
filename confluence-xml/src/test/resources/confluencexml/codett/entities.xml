@@ -46,6 +46,11 @@
           </ul>
           <p><code># ------- START</code><br /><code>/^name.surname@<a href="http://perdu.com">perdu.com</a>$/ REJECT intra sender_access</code><br /><code>/^hamed.<a href="mailto:mail@perdu.com">mail@perdu.com</a>$/ REJECT intra sender_access</code><br /><code>/^anothermail@<a href="http://perdu.com">perdu.com</a>$/ REJECT intra sender_access</code><br /><code># ------- END</code></p><p><br /></p><p><code># postfix -c /etc/postfix-incoming reload</code></p><p><br /></p>
           <ac:structured-macro ac:name="code" ac:schema-version="1" ac:macro-id="80282b94-f043-49dd-becd-a1c2b1202964"><ac:parameter ac:name="">SQL</ac:parameter><ac:plain-text-body><![CDATA[select 1]] ></ac:plain-text-body></ac:structured-macro>
+          <ac:structured-macro ac:name="paste-code-macro" ac:schema-version="1" ac:macro-id="80282b94-f043-49dd-becd-a1c2b1202964"><ac:parameter ac:name="title">Hello World Example</ac:parameter><ac:parameter ac:name="language">java</ac:parameter><ac:plain-text-body><![CDATA[class Simple{
+    public static void main(String args[]){
+        System.out.println("Hello World !");
+    }
+}]] ></ac:plain-text-body></ac:structured-macro>
           <p><code>{{/code}}</code></p>]]></property>
         <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809846</id></property>
         <property name="bodyType">2</property>

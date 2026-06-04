@@ -85,6 +85,16 @@ paragraph after
 select 1
 {{/code}}
 
+ 
+
+{{code title="Hello World Example" language="java"}}
+class Simple{
+    public static void main(String args[]){
+        System.out.println("Hello World !");
+    }
+}
+{{/code}}
+
 {{code language="none" source="string:{{/code~}~}"/}}</string>
             </entry>
             <entry>
