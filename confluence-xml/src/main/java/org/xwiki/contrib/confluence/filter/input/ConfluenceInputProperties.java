@@ -688,7 +688,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     @PropertyName("Macro parameter keeping mode")
     @PropertyDescription("Which macro parameter to keep as is with the specified prefix. NONE: don't keep Confluence "
         + "macro parameters. UNHANDLED: keep macro parameters that are not handled and normally kept during macro "
-        + "conversion. ALL: keep all the parameters, even those ")
+        + "conversion. ALL: keep all the parameters, even those that are handled")
     public String getMacroParameterKeepingMode()
     {
         return this.macroParameterKeepingMode;
@@ -1452,7 +1452,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
         + "There are some differences in how content is managed, anchors for example are not the same. "
         + "Knowing the right Confluence instance will improve the fidelity of the import. "
         + "Detecting the right type of instance will be attempted if an empty value is provided. "
-        + "Possible values: SERVER, CLOUD."
+        + "Possible values: SERVER, CLOUD. Normally the automatic detection works well enough and you don't "
+        + "need to provide anything here."
     )
     public String getConfluenceInstanceType()
     {
@@ -1595,10 +1596,10 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
     }
 
     /**
-     * @return whether pages containing different languages should be converted to translated XWiki documents.
+     * @return whether favorites are imported.
      * @since 9.88.0
      */
-    @PropertyName("Favorites")
+    @PropertyName("Import Favorites")
     @PropertyDescription("Import favorites (requires the Favorites Application)")
     public boolean isFavoritesEnabled()
     {
