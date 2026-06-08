@@ -22,7 +22,6 @@ package org.xwiki.contrib.confluence.filter.internal.macros;
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.component.annotation.Component;
 
-import javax.inject.Named;
 import javax.inject.Singleton;
 
 import java.util.HashMap;
