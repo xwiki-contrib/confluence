@@ -46,11 +46,20 @@ public class ADFMarkHandler extends TagHandler implements ConfluenceTagHandler
     @Override
     protected void begin(TagContext context)
     {
-        ConfluenceImageWikiReference image =
-            (ConfluenceImageWikiReference) context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
-        WikiParameter keyParam = context.getParams().getParameter("key");
-        if (image != null && keyParam != null && "border".equals(keyParam.getValue())) {
-            image.getImageParameters().put("data-xwiki-image-style-border", "true");
+        Object macro = context.getTagStack().getStackParameter(CONFLUENCE_CONTAINER);
+        for (WikiParameter param : context.getParams()) {
+            String key = param.getKey();
+            String value = param.getValue();
+            if (macro instanceof ConfluenceImageWikiReference) {
+                ConfluenceImageWikiReference image = (ConfluenceImageWikiReference) macro;
+                if ("key".equals(key) && "border".equals(value)) {
+                    image.getImageParameters().put("data-xwiki-image-style-border", "true");
+                }
+                // We drop anything else like "color" or "size"
+            } else if (macro instanceof MacroTagHandler.ConfluenceMacro) {
+                ((MacroTagHandler.ConfluenceMacro) macro).parameters.addParameter(key, value);
+            }
+            // Anything else should not happen
         }
     }
 }
