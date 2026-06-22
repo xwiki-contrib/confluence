@@ -16,6 +16,7 @@
 
   <object class="Page" package="com.atlassian.confluence.pages">
     <id name="id">3</id>
+    <property name="title"><![CDATA[Page 1]]></property>
     <property name="space" class="Space" package="com.atlassian.confluence.spaces">
       <id name="id">1</id>
     </property>
@@ -29,9 +30,32 @@
 
   <object class="Page" package="com.atlassian.confluence.pages">
     <id name="id">5</id>
+    <property name="title"><![CDATA[Page 2]]></property>
     <property name="space" class="Space" package="com.atlassian.confluence.spaces">
       <id name="id">4</id>
     </property>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">10</id>
+    <property name="body"><![CDATA[
+      <p><ac:link><ri:page ri:content-title="Page 2" ri:space-key="OverwriteSpace2" /></ac:link></p>
+      <p><ac:link><ri:page ri:content-title="Page 1" ri:space-key="OverwriteSpace1" /></ac:link></p>
+      ]]></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">5</id>
+    </property>
+    <property name="bodyType">2</property>
+  </object>
+
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">11</id>
+    <property name="body"><![CDATA[
+      <p><ac:link><ri:page ri:content-title="Page 2" ri:space-key="OverwriteSpace2" /></ac:link></p>
+      <p><ac:link><ri:page ri:content-title="Page 1" ri:space-key="OverwriteSpace1" /></ac:link></p>
+      ]]></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">3</id>
+    </property>
+    <property name="bodyType">2</property>
   </object>
 
 </hibernate-generic>

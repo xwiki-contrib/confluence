@@ -62,6 +62,8 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
 
     private final ThreadLocal<Map<Long, EntityReference>> idReferenceCache = new ThreadLocal<>();
 
+    private final ThreadLocal<Map<String, String>> spaceTargets = new ThreadLocal<>();
+
     private final ThreadLocal<Locale> currentLocale = new ThreadLocal<>();
 
     private final ThreadLocal<Locale> defaultLocale = new ThreadLocal<>();
@@ -74,13 +76,16 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
     /**
      * @param confluencePackage the Confluence input package
      * @param properties the Confluence input properties
+     * @param spaceTargets where the spaces are migrated
      */
-    public void set(ConfluenceXMLPackage confluencePackage, ConfluenceInputProperties properties)
+    public void set(ConfluenceXMLPackage confluencePackage, ConfluenceInputProperties properties,
+            Map<String, String> spaceTargets)
     {
         this.confluencePackage.set(confluencePackage);
         this.properties.set(properties);
         this.titleReferenceCache.set(new HashMap<>());
         this.idReferenceCache.set(new HashMap<>());
+        this.spaceTargets.set(spaceTargets);
         initializeDefaultLocale();
     }
 
@@ -160,6 +165,7 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
         this.currentLocale.remove();
         this.currentlyUsedLocales.remove();
         this.defaultLocale.remove();
+        this.spaceTargets.remove();
     }
 
     @Override
@@ -217,5 +223,11 @@ public class DefaultConfluenceInputContext implements ConfluenceInputContext
     public Locale getCurrentLocale()
     {
         return currentLocale.get();
+    }
+
+    @Override
+    public Map<String, String> getSpaceTargets()
+    {
+        return spaceTargets.get();
     }
 }

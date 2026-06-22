@@ -281,7 +281,7 @@ public class ConfluenceInputFilterStream
     protected void read(Object filter, ConfluenceFilter proxyFilter) throws FilterException
     {
         if (this.context instanceof DefaultConfluenceInputContext) {
-            ((DefaultConfluenceInputContext) this.context).set(this.confluencePackage, this.properties);
+            ((DefaultConfluenceInputContext) context).set(confluencePackage, properties, spaceTargets);
         }
 
         try {

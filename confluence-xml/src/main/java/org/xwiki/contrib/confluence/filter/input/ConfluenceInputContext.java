@@ -24,6 +24,7 @@ import org.xwiki.model.reference.EntityReference;
 
 import java.util.Collection;
 import java.util.Locale;
+import java.util.Map;
 import java.util.function.Supplier;
 
 /**
@@ -144,5 +145,14 @@ public interface ConfluenceInputContext
     default Locale getDefaultLocale()
     {
         return Locale.ROOT;
+    }
+
+    /**
+     * @return the space targets
+     * @since 9.95.0
+     */
+    default Map<String, String> getSpaceTargets()
+    {
+        return null;
     }
 }

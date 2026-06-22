@@ -373,6 +373,14 @@ public class ConfluenceConverter implements ConfluenceFilterReferenceConverter
             String spaceWithCorrectCase = space;
             try {
                 spaceWithCorrectCase = confluencePackage.getSpaceKey(spaceId);
+                Map<String, String> spaceTargets = context.getSpaceTargets();
+                if (spaceTargets != null) {
+                    // check whether the space has been renamed
+                    String renamedSpace = spaceTargets.get(spaceWithCorrectCase);
+                    if (StringUtils.isNotEmpty(renamedSpace)) {
+                        spaceWithCorrectCase = renamedSpace;
+                    }
+                }
             } catch (ConfigurationException e) {
                 logger.warn("Could not find the correct case of space [{}]", space);
             }

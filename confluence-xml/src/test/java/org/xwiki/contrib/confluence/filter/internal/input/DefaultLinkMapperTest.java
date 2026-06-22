@@ -150,7 +150,7 @@ class DefaultLinkMapperTest
         ConfluenceInputProperties properties = new ConfluenceInputProperties();
         properties.setRoot(new SpaceReference("xwiki", "Root"));
         ConfluenceXMLPackage confluencePackage = componentManager.getInstance(ConfluenceXMLPackage.class);
-        context.set(confluencePackage, properties);
+        context.set(confluencePackage, properties, Map.of());
 
         URL p = getClass().getClassLoader().getResource("confluencexml/" + testPackage);
         assert p != null;
