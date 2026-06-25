@@ -1672,7 +1672,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
         + " Possible values: "
         + "NONE - no overwrite protection: don't rename any space; "
         + "NONCONFLUENCE - only rename spaces conflicting with existing XWiki spaces not imported from Confluence; "
-        + "ANY - rename any space conflicting with an existing XWiki space.")
+        + "ANY - rename any space conflicting with an existing XWiki space. "
+        + "Default: NONCONFLUENCE.")
     public OverwriteProtectionMode getOverwriteProtectionMode()
     {
         return overwriteProtectionMode;
