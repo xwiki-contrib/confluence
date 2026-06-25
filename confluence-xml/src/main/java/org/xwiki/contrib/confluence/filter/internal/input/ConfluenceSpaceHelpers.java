@@ -87,7 +87,7 @@ public class ConfluenceSpaceHelpers
 
     /**
      * @param spaceReference the spaceKey of the space that is checked
-     * @param confluenceSpacesAreProtected flag that specifies whether to check if another space imported from
+     * @param confluenceSpacesAreProtected whether to check if another space imported from
      *     Confluence already exists, or to simply search for any space.
      * @return a user reference.
      * @since 9.89.0
@@ -97,22 +97,39 @@ public class ConfluenceSpaceHelpers
     {
         String spaceTargetName = entityReferenceSerializer.serialize(spaceReference);
         String wikiName = spaceReference.getWikiReference().getName();
-
-        String queryString =
-            "select 1 from XWikiDocument as doc"
-                + " where (doc.space = :spaceName or doc.space like :spacePrefix) "
-                + "and (:confluenceSpacesAreProtected = true "
-                + "or not exists "
-                + "( select 1 from BaseObject as obj"
-                + " where obj.className = 'Confluence.Code.ConfluencePageClass' "
-                + "))";
-
         try {
-            return !queryManager.createQuery(queryString, Query.HQL)
+            String q = "select 1 from XWikiDocument doc where doc.space = :spaceName or doc.space like :spacePrefix";
+            boolean nothingThere = queryManager.createQuery(q, Query.HQL)
                 .setWiki(wikiName)
                 .bindValue("spaceName", spaceTargetName)
                 .bindValue("spacePrefix", spaceTargetName + ".%")
-                .bindValue("confluenceSpacesAreProtected", confluenceSpacesAreProtected)
+                .setLimit(1)
+                .execute()
+                .isEmpty();
+
+            if (nothingThere) {
+                // nothing to collide with
+                return false;
+            }
+
+            if (confluenceSpacesAreProtected) {
+                // if Confluence spaces are also protected, we don't need to determine whether the content there is
+                // a Confluence space
+                return true;
+            }
+
+            // We are willing to overwrite confluence spaces.
+            // To detect whether a space is (in) a Confluence space, we check whether the root WebHome page has a
+            // ConfluencePageClass object.
+            // Checking if a ConfluencePageClass object is present in the whole subtree would be too broad, we don't
+            // want to overwrite a normal space under in which a Confluence space was imported deeper in the
+            // hierarchy.
+            // if we don't find a ConfluencePageClass object, this is not a Confluence space: collision.
+            q = "select 1 from BaseObject obj where obj.className = 'Confluence.Code.ConfluencePageClass' "
+                        + "and obj.name = :candidateSpaceHome";
+            return queryManager.createQuery(q, Query.HQL)
+                .setWiki(wikiName)
+                .bindValue("candidateSpaceHome", spaceTargetName + ".WebHome")
                 .setLimit(1)
                 .execute()
                 .isEmpty();
