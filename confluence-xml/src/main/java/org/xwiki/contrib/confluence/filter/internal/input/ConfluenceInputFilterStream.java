@@ -431,7 +431,7 @@ public class ConfluenceInputFilterStream
             }
         } catch (Exception e) {
             if (e.getCause() instanceof ConfluenceCanceledException) {
-                this.logger.warn("The job was canceled", e);
+                this.logger.warn("The job was canceled");
                 closeConfluencePackage();
             } else {
                 this.logger.error(FAILED_TO_READ_PACKAGE, e);
