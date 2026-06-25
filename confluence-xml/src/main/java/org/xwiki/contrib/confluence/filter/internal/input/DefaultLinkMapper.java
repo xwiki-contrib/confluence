@@ -101,6 +101,10 @@ public class DefaultLinkMapper implements LinkMapper
         for (Long pageId : pages) {
             try {
                 ConfluenceProperties pageProperties = confluencePackage.getPageProperties(pageId, false);
+                if (pageProperties == null) {
+                    this.logger.error("Can't find page with id [{}]", pageId);
+                    continue;
+                }
                 String pageTitle = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE, null);
                 if (pageTitle == null) {
                     continue;
