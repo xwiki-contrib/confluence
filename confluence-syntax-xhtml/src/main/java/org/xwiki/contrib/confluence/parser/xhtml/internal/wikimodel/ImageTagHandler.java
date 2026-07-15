@@ -136,7 +136,6 @@ public class ImageTagHandler extends TagHandler implements ConfluenceTagHandler
 
     private static boolean isInline(TagContext context, IWikiScannerContext scannerContext)
     {
-        scannerContext.isInInlineProperty();
         return scannerContext.isInHeader() || isInParagraph(context) || hasInlineParent(context);
     }
 
