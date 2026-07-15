@@ -20,10 +20,12 @@
 package org.xwiki.contrib.confluence.parser.xhtml.internal.wikimodel;
 
 import org.xwiki.rendering.wikimodel.WikiParameter;
+import org.xwiki.rendering.wikimodel.impl.IWikiScannerContext;
 import org.xwiki.rendering.wikimodel.xhtml.handler.TagHandler;
 import org.xwiki.rendering.wikimodel.xhtml.impl.TagContext;
 
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Handles images.
@@ -65,6 +67,9 @@ public class ImageTagHandler extends TagHandler implements ConfluenceTagHandler
     );
 
     private static final String AC_CLASS = "ac:class";
+
+    // Parent XHTML tags in which an image is an inline element and must not be wrapped in its own paragraph.
+    private static final Set<String> INLINE_PARENT_TAGS = Set.of("span", "a", "ac:task-body", "li");
 
     /**
      * Default constructor.
@@ -113,6 +118,35 @@ public class ImageTagHandler extends TagHandler implements ConfluenceTagHandler
         ConfluenceImageWikiReference image =
             (ConfluenceImageWikiReference) context.getTagStack().popStackParameter(CONFLUENCE_CONTAINER);
 
-        context.getScannerContext().onImage(image);
+        // An image is an inline element. Confluence sometimes exports images as loose elements sitting directly
+        // between block elements (not wrapped in a paragraph). In that case WikiModel would open an implicit
+        // paragraph for the image and then merge the following block into it, gluing the image to the next block's
+        // text. To keep such a standalone image on its own line, we wrap it in its own paragraph when it is not
+        // already in an inline context. This mirrors how MacroTagHandler decides whether a macro is inline.
+        IWikiScannerContext scannerContext = context.getScannerContext();
+        boolean standalone = !isInline(context, scannerContext);
+        if (standalone) {
+            scannerContext.beginParagraph();
+        }
+        scannerContext.onImage(image);
+        if (standalone) {
+            scannerContext.endParagraph();
+        }
+    }
+
+    private static boolean isInline(TagContext context, IWikiScannerContext scannerContext)
+    {
+        return scannerContext.isInHeader() || isInParagraph(context) || hasInlineParent(context);
+    }
+
+    private static boolean isInParagraph(TagContext context)
+    {
+        return context.getTagStack().getStackParameter(CONFLUENCE_IN_PARAGRAPH) != null;
+    }
+
+    private static boolean hasInlineParent(TagContext context)
+    {
+        TagContext parent = context.getParent();
+        return parent != null && INLINE_PARENT_TAGS.contains(parent.getName());
     }
 }

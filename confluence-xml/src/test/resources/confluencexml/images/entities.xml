@@ -66,6 +66,11 @@
             </ac:caption>
           </ac:image>
         </p>
+        <p> This is some test to make sure that some images that are not wrapped in a paragraph, but are block level are actually displayed correctly </p>
+        <ac:image ac:align="left" ac:layout="align-start" ac:original-height="397" ac:original-width="480" ac:width="476">
+          <ri:attachment ri:filename="rock.jpg" ri:version-at-save="1" />
+         </ac:image>
+        <p>Another paragraph</p>
       ]]>
     </property>
     <property name="content" class="Page" package="com.atlassian.confluence.pages">
