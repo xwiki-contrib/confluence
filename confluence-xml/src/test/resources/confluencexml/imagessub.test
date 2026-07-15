@@ -25,7 +25,13 @@
 
 [[some caption3>>image:attach:rock.jpg||custom-width="true" original-height="1200" data-xwiki-image-style-alignment="start" alt="some alt text" width="50" data-xwiki-image-style-text-wrap="true" original-width="1200"]]
 
-[[some caption4>>image:attach:rock.jpg||custom-width="true" original-height="1200" data-xwiki-image-style-alignment="end" alt="some alt text" width="50" data-xwiki-image-style-text-wrap="true" original-width="1200"]]</string>
+[[some caption4>>image:attach:rock.jpg||custom-width="true" original-height="1200" data-xwiki-image-style-alignment="end" alt="some alt text" width="50" data-xwiki-image-style-text-wrap="true" original-width="1200"]]
+
+This is some test to make sure that some images that are not wrapped in a paragraph, but are block level are actually displayed correctly
+
+[[image:attach:rock.jpg||original-height="397" data-xwiki-image-style-alignment="start" width="476" original-width="480"]]
+
+Another paragraph</string>
               </entry>
               <entry>
                 <string>syntax</string>
