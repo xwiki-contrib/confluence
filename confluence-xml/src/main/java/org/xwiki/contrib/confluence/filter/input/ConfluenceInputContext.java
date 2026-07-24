@@ -70,7 +70,7 @@ public interface ConfluenceInputContext
      */
     default boolean isConfluenceCloud()
     {
-        return "cloud".equals(getProperties().getConfluenceInstanceType());
+        return "cloud".equalsIgnoreCase(getProperties().getConfluenceInstanceType());
     }
 
     /**

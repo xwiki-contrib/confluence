@@ -54,6 +54,64 @@ public enum SpacePermissionType
     REMOVEOWNCONTENT(Right.ILLEGAL),
 
     /**
+     * Delete own content.
+     * Seen in a Confluence Cloud CSV export.
+     */
+    DELETE_OWN_COMMENT(Right.ILLEGAL),
+
+    /**
+     * Delete space.
+     * Seen in a Confluence Cloud CSV export.
+     */
+    DELETE_SPACE(Right.DELETE),
+
+    /**
+     * Edit native content.
+     * Seen in a Confluence Cloud CSV export.
+     * NOTE: could not find a corresponding checkbox in Confluence's UI, nor
+     *       any documentation on this permission.
+     */
+    EDIT_NATIVE_CONTENT(Right.EDIT),
+
+    /**
+     * Export content.
+     * Seen in a Confluence Cloud CSV export.
+     */
+    EXPORT_CONTENT(Right.ILLEGAL),
+
+    /**
+     * Guest user management.
+     * Seen in a Confluence Cloud CSV export.
+     */
+    GUEST_USER_MANAGEMENT(Right.ILLEGAL),
+
+    /**
+     * Manage content.
+     * Seen in a Confluence Cloud CSV export.
+     * NOTE: could not find a corresponding checkbox in Confluence's UI, nor
+     *       any documentation on this permission.
+     */
+    MANAGE_CONTENT(Right.EDIT, Right.DELETE),
+
+    /**
+     * Manage look and feel.
+     * Seen in a Confluence Cloud CSV export.
+     */
+    MANAGE_LOOK_AND_FEEL(Right.ILLEGAL),
+
+    /**
+     * Manage public links.
+     * Seen in a Confluence Cloud CSV export.
+     */
+    MANAGE_PUBLIC_LINKS(Right.ILLEGAL),
+
+    /**
+     * Non-licensed user management.
+     * Seen in a Confluence Cloud CSV export.
+     */
+    NONLICENSED_USER_MANAGEMENT(Right.ILLEGAL),
+
+    /**
      * Add and/or edit pages in the space.
      */
     EDITSPACE(Right.EDIT),
@@ -72,16 +130,6 @@ public enum SpacePermissionType
      * Remove pages in the space.
      */
     REMOVEPAGE(Right.DELETE),
-
-    /**
-     * Add and/or edit blogs in the space.
-     */
-    EDITBLOG(Right.EDIT),
-
-    /**
-     * Remove blogs in the space.
-     */
-    REMOVEBLOG(Right.DELETE),
 
     /**
      * Add attachments to pages in the space.
@@ -131,6 +179,24 @@ public enum SpacePermissionType
     ARCHIVEPAGE(Right.ILLEGAL),
 
     /**
+     * Archive space.
+     * Seen in a Confluence Cloud CSV export
+      */
+    ARCHIVE_SPACE(Right.ILLEGAL),
+
+    /**
+     * Access analytics.
+     * Seen in a Confluence Cloud CSV export
+     */
+    ACCESSANALYTICS(Right.ILLEGAL),
+
+    /**
+     * Create blog.
+     * Seen in a Confluence Cloud CSV export
+     */
+    CREATE_BLOG(Right.ILLEGAL),
+
+    /**
      * To be confirmed.
      */
     ADMINISTRATECONFLUENCE(Right.ADMIN),
@@ -156,6 +222,12 @@ public enum SpacePermissionType
     USECONFLUENCE(Right.ILLEGAL),
 
     /**
+     * User management.
+     * Seen in Confluence Cloud CSV export.
+     */
+    USER_MANAGEMENT(Right.ADMIN),
+
+    /**
      * Legacy permission.
      */
     REMOVEMAIL(Right.ILLEGAL);
@@ -166,9 +238,9 @@ public enum SpacePermissionType
     public static final EnumSet<SpacePermissionType> DEFAULT = EnumSet.of(
             EDITSPACE, VIEWSPACE, REMOVEOWNCONTENT, CREATEATTACHMENT, COMMENT);
 
-    private final Right convertedTo;
+    private final Right[] convertedTo;
 
-    SpacePermissionType(Right convertedTo)
+    SpacePermissionType(Right... convertedTo)
     {
         this.convertedTo = convertedTo;
     }
@@ -177,9 +249,13 @@ public enum SpacePermissionType
      * @return the corresponding XWiki right. Right.ILLEGAL means the permission should be converted to nothing.
      *         null means the conversion should raise a warning.
      * @since 9.60
+     * @deprecated since 9.96.0
      */
+    @Deprecated(since = "9.96.0")
     public Right toXWikiRight()
     {
-        return this.convertedTo;
+        return this.convertedTo[0];
     }
+
+    public Right[] toXWikiRights() { return this.convertedTo; }
 }
