@@ -185,6 +185,11 @@ public class ConfluenceInputFilterStream
 
     private static final String IMAGE = "image";
 
+    private static final String MANAGE_TEMPLATES = "MANAGE_TEMPLATES";
+    private static final String REMOVEBLOG = "REMOVEBLOG";
+    private static final String EDITBLOG = "EDITBLOG";
+    private static final List<String> BLOG_PERMISSIONS = List.of(EDITBLOG, REMOVEBLOG);
+
     @Inject
     @Named(ConfluenceInputStreamParser.COMPONENT_NAME)
     private StreamParser confluenceWIKIParser;
@@ -687,6 +692,7 @@ public class ConfluenceInputFilterStream
             EntityReference spaceRef = new EntityReference(spaceEntityName, EntityType.SPACE, rootSpace);
             boolean send = this.properties.isContentsEnabled() || this.properties.isRightsEnabled()
                     || this.properties.isPageOrderEnabled();
+            SpecificSpaceRights ssr = new SpecificSpaceRights();
             try {
                 if (send) {
                     ConfluencePageSending cps = sendPage(homePageId, spaceKey, false, filter, proxyFilter, false,
@@ -701,15 +707,15 @@ public class ConfluenceInputFilterStream
             } finally {
                 if (shouldSendSpaceRights(homePageId)) {
                     homePageProperties = getPageProperties(homePageId);
-                    sendSpaceRights(proxyFilter, spaceProperties, spaceKey, spaceId,
-                        inheritedRights, homePageProperties);
+                    sendSpaceRights(proxyFilter, spaceProperties, spaceKey, spaceId, inheritedRights, ssr,
+                            homePageProperties);
                 }
                 endWebPreferences(proxyFilter);
             }
-            sendSpaceTemplates(spaceProperties, spaceKey, spaceId, filter, proxyFilter);
+            sendSpaceTemplates(spaceProperties, spaceKey, spaceId, filter, proxyFilter, ssr.templateAdminRights);
 
             if (send && !stop) {
-                stop = sendBlog(spaceKey, blogPages, spaceRef, filter, proxyFilter);
+                stop = sendBlog(spaceKey, blogPages, spaceRef, filter, proxyFilter, ssr.blogRights);
             }
         } finally {
             endWebPreferences(proxyFilter);
@@ -819,7 +825,7 @@ public class ConfluenceInputFilterStream
     }
 
     private void sendSpaceTemplates(ConfluenceProperties spaceProperties, String spaceKey, long spaceId, Object filter,
-        ConfluenceFilter proxyFilter) throws FilterException
+        ConfluenceFilter proxyFilter, Collection<ConfluenceRight> templateAdminRights) throws FilterException
     {
         String templateSpaceName = this.properties.getTemplateSpaceName();
         if (StringUtils.isEmpty(templateSpaceName)) {
@@ -836,6 +842,8 @@ public class ConfluenceInputFilterStream
         if (CollectionUtils.isEmpty(properties.getIncludedPages())) {
             sendSyntheticWebHomePageListingChildren(null, null, proxyFilter);
         }
+        sendTemplateRights(templateAdminRights, proxyFilter);
+        endWebPreferences(proxyFilter);
         try {
             for (Object templateObject : templates) {
                 long templateId = toLong(templateObject);
@@ -857,6 +865,19 @@ public class ConfluenceInputFilterStream
             }
         } finally {
             proxyFilter.endWikiSpace(templateSpaceName, FilterEventParameters.EMPTY);
+        }
+    }
+
+    private void sendTemplateRights(Collection<ConfluenceRight> templateAdminRights, ConfluenceFilter proxyFilter)
+        throws FilterException
+    {
+        if (templateAdminRights.isEmpty()) {
+            return;
+        }
+        Set<String> addedRights = new HashSet<>();
+        for (ConfluenceRight r : templateAdminRights) {
+            sendSpaceRight(proxyFilter, Right.EDIT, r, addedRights);
+            sendSpaceRight(proxyFilter, Right.DELETE, r, addedRights);
         }
     }
 
@@ -950,7 +971,7 @@ public class ConfluenceInputFilterStream
      * @return whether the import should stop
      */
     private boolean sendBlog(String spaceKey, List<Long> blogPages, EntityReference spaceRef, Object filter,
-        ConfluenceFilter proxyFilter) throws FilterException
+        ConfluenceFilter proxyFilter, Collection<ConfluenceRight> blogRights) throws FilterException
     {
         if (!this.properties.isBlogsEnabled() || blogPages == null || blogPages.isEmpty()) {
             return false;
@@ -967,17 +988,38 @@ public class ConfluenceInputFilterStream
                 addBlogDescriptorPage(proxyFilter);
             }
         } finally {
-            if (CollectionUtils.isEmpty(this.properties.getIncludedPages()) && this.properties.isPageOrderEnabled()) {
-                // we only send the pinned pages and the pinned pages, the WebPreferences document and the blog
-                // descriptor if we are not sending a specific list of pages.
-                Collection<String> orderedTitles = getOrderedTitlesOfIncludedDocuments(sentChildren);
-                sendPinnedPages(proxyFilter, orderedTitles);
-                endWebPreferences(proxyFilter);
-            }
+            sendBlogRights(proxyFilter, blogRights);
+            sendBlogPinnedPages(proxyFilter, sentChildren);
+            endWebPreferences(proxyFilter);
             proxyFilter.endWikiSpace(blogSpaceKey, FilterEventParameters.EMPTY);
         }
 
         return stop;
+    }
+
+    private void sendBlogPinnedPages(ConfluenceFilter proxyFilter, Collection<Long> sentChildren) throws FilterException
+    {
+        if (CollectionUtils.isEmpty(this.properties.getIncludedPages()) && this.properties.isPageOrderEnabled()) {
+            // we only send the pinned pages and the pinned pages, the WebPreferences document and the blog
+            // descriptor if we are not sending a specific list of pages.
+            Collection<String> orderedTitles = getOrderedTitlesOfIncludedDocuments(sentChildren);
+            sendPinnedPages(proxyFilter, orderedTitles);
+        }
+    }
+
+    private void sendBlogRights(ConfluenceFilter proxyFilter, Collection<ConfluenceRight> blogRights)
+            throws FilterException
+    {
+        if (!blogRights.isEmpty()) {
+            Set<String> addedRights = new HashSet<>();
+            for (ConfluenceRight confluenceRight : blogRights) {
+                if (EDITBLOG.equals(confluenceRight.type)) {
+                    sendSpaceRight(proxyFilter, Right.EDIT, confluenceRight, addedRights);
+                } else if (REMOVEBLOG.equals(confluenceRight.type)) {
+                    sendSpaceRight(proxyFilter, Right.DELETE, confluenceRight, addedRights);
+                }
+            }
+        }
     }
 
     /**
@@ -1008,7 +1050,7 @@ public class ConfluenceInputFilterStream
     }
 
     private void sendSpaceRights(ConfluenceFilter proxyFilter, ConfluenceProperties spaceProperties,
-        String spaceKey, long spaceId, Collection<ConfluenceRight> inheritedRights,
+        String spaceKey, long spaceId, Collection<ConfluenceRight> inheritedRights, SpecificSpaceRights ssr,
         ConfluenceProperties homePageProperties) throws FilterException
     {
         Collection<Object> spacePermissions = spaceProperties.getList(ConfluenceXMLPackage.KEY_SPACE_PERMISSIONS);
@@ -1038,7 +1080,11 @@ public class ConfluenceInputFilterStream
             }
 
             if (spacePermissionProperties != null) {
-                sendPageRight(proxyFilter, spaceKey, spacePermissionProperties, spacePermissionId, addedRights);
+                ConfluenceRight confluenceRight = getConfluenceRightData(spacePermissionProperties);
+                if (!ssr.add(confluenceRight)) {
+                    // if the right is not handled somewhere specific, we send it as a global right
+                    sendSpaceRight(proxyFilter, spaceKey, confluenceRight, spacePermissionId, addedRights);
+                }
             }
         }
 
@@ -1049,12 +1095,10 @@ public class ConfluenceInputFilterStream
         }
     }
 
-    private void sendPageRight(ConfluenceFilter proxyFilter, String spaceKey,
-        ConfluenceProperties spacePermissionProperties, long spacePermissionId, Set<String> addedRights)
+    private void sendSpaceRight(ConfluenceFilter proxyFilter, String spaceKey,
+        ConfluenceRight confluenceRight, long spacePermissionId, Set<String> addedRights)
         throws FilterException
     {
-        ConfluenceRight confluenceRight = getConfluenceRightData(spacePermissionProperties);
-
         SpacePermissionType type = null;
         try {
             type = SpacePermissionType.valueOf(confluenceRight.type);
@@ -3264,6 +3308,27 @@ public class ConfluenceInputFilterStream
             case NONE:
             default:
                 return false;
+        }
+    }
+
+    private class SpecificSpaceRights
+    {
+        Collection<ConfluenceRight> templateAdminRights = new LinkedHashSet<>();
+        Collection<ConfluenceRight> blogRights = new LinkedHashSet<>();
+
+        private boolean add(ConfluenceRight r)
+        {
+            if (MANAGE_TEMPLATES.equals(r.type)) {
+                templateAdminRights.add(r);
+                return true;
+            }
+
+            if (BLOG_PERMISSIONS.contains(r.type)) {
+                blogRights.add(r);
+                return true;
+            }
+
+            return false;
         }
     }
 }

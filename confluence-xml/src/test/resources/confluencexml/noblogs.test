@@ -195,9 +195,9 @@
         </parameters>
       </p>
       <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="groups" value="XWiki.XWikiAllGroup"/>
       <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.testuser@mail_com"/>
+      <wikiObjectProperty name="users" value=""/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
@@ -209,9 +209,9 @@
         </parameters>
       </p>
       <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value="XWiki.XWikiAllGroup"/>
+      <wikiObjectProperty name="groups" value=""/>
       <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value=""/>
+      <wikiObjectProperty name="users" value="XWiki.testuser@mail_com"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>

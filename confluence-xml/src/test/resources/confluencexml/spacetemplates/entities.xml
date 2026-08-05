@@ -25,6 +25,25 @@
 <property name="lastModificationDate">2023-12-06 12:48:09.828</property>
 <property name="spaceType">global</property>
 <property name="spaceStatus" enum-class="SpaceStatus" package="com.atlassian.confluence.spaces">CURRENT</property>
+<collection name="permissions" class="java.util.Collection(com.atlassian.confluence.spaces.Space.permissions)"><element class="SpacePermission" package="com.atlassian.confluence.security"><id name="id">2616328225</id>
+</element>
+</collection>
+</object>
+
+<!-- Permission added manually to test the right handling of the MANAGE_TEMPLATES permission -->
+<object class="SpacePermission" package="com.atlassian.confluence.security">
+<id name="id">2616328225</id>
+<property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">25657345</id>
+</property>
+<property name="type"><![CDATA[MANAGE_TEMPLATES]]></property>
+<property name="group"/><property name="userSubject" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[ff8080814ad3e003014ad3e4849407e8]]></id>
+</property>
+<property name="allUsersSubject"/><property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[ff8080814ad3e003014ad3e4849407e8]]></id>
+</property>
+<property name="creationDate">2023-09-27 17:02:25.887</property>
+<property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[ff8080814ad3e003014ad3e4849407e8]]></id>
+</property>
+<property name="lastModificationDate">2023-09-27 17:02:25.887</property>
 </object>
 
 <object class="PageTemplate" package="com.atlassian.confluence.pages.templates">
