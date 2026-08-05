@@ -1453,7 +1453,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
         + "Knowing the right Confluence instance will improve the fidelity of the import. "
         + "Detecting the right type of instance will be attempted if an empty value is provided. "
         + "Possible values: SERVER, CLOUD. Normally the automatic detection works well enough and you don't "
-        + "need to provide anything here."
+        + "need to provide anything here. Only fill this if you know what you are doing."
     )
     public String getConfluenceInstanceType()
     {
