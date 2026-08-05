@@ -19,8 +19,6 @@
  */
 package org.xwiki.contrib.confluence.filter.input;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -32,19 +30,16 @@ import java.io.ObjectOutputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -55,32 +50,29 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
-import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
-import javax.xml.stream.FactoryConfigurationError;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
 
 import org.apache.commons.compress.archivers.zip.ZipArchiveEntry;
 import org.apache.commons.compress.archivers.zip.ZipArchiveInputStream;
 import org.apache.commons.configuration2.ex.ConfigurationException;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.FileSystem;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.input.CloseShieldInputStream;
-import org.apache.commons.io.input.CountingInputStream;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.component.annotation.InstantiationStrategy;
 import org.xwiki.component.descriptor.ComponentInstantiationStrategy;
-import org.xwiki.contrib.confluence.filter.internal.WithoutControlCharactersReader;
+import org.xwiki.contrib.confluence.filter.internal.ConfluenceCSVFile;
+import org.xwiki.contrib.confluence.filter.internal.ConfluenceCSVTable;
+import org.xwiki.contrib.confluence.filter.internal.ConfluenceConsumer;
+import org.xwiki.contrib.confluence.filter.internal.ConfluenceRecordReader;
+import org.xwiki.contrib.confluence.filter.internal.ConfluenceXMLStreamReader;
 import org.xwiki.contrib.confluence.filter.internal.input.ConfluenceCanceledException;
 import org.xwiki.contrib.confluence.filter.internal.input.PropertiesConfluenceTask;
 import org.xwiki.contrib.confluence.filter.task.ConfluenceTask;
@@ -95,12 +87,15 @@ import org.xwiki.job.JobContext;
 import org.xwiki.job.event.status.CancelableJobStatus;
 import org.xwiki.job.event.status.JobProgressManager;
 import org.xwiki.job.event.status.JobStatus;
-import org.xwiki.xml.stax.StAXUtils;
 
 import com.google.common.base.Strings;
 
 /**
  * Prepare a Confluence package to make it easier to import.
+ * Supports both space and site exports, both XML and CSV exports.
+ * The name of this class (and of the whole module, actually) is a misnomer as it doesn't only handle XML exports.
+ * Support for CSV exports came later, and changing its name would cause compatibility breakage and code churn that's
+ * not worth it.
  *
  * @version $Id$
  * @since 9.16
@@ -123,6 +118,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
      * The name of the file containing the tasks.
      */
     public static final String FILE_TASKS = "AO_BAF3AA_AOINLINE_TASK.csv";
+
+    /**
+     * The name of the active field.
+     * @since 9.96.0
+     */
+    public static final String KEY_ACTIVE = "active";
 
     /**
      * The property key to access the object class.
@@ -407,7 +408,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String KEY_ATTACHMENT_CONTENTTYPE = "contentType";
 
     /**
-     * The property key to access the owning user of a label.
+     * The property key to access the owning user key of a label.
      * @since 9.88.0
      */
     public static final String KEY_LABEL_OWNINGUSER = "owningUser";
@@ -527,8 +528,10 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * The property key to access the group active status.
+     * @deprecated since 9.96.0
      */
-    public static final String KEY_GROUP_ACTIVE = "active";
+    @Deprecated (since = "9.96.0")
+    public static final String KEY_GROUP_ACTIVE = KEY_ACTIVE;
 
     /**
      * The property key to access the group local status.
@@ -572,8 +575,10 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     /**
      * The property key to access the user active status.
+     * @deprecated since 9.96.0
      */
-    public static final String KEY_USER_ACTIVE = KEY_GROUP_ACTIVE;
+    @Deprecated (since = "9.96.0")
+    public static final String KEY_USER_ACTIVE = KEY_ACTIVE;
 
     /**
      * The property key to access the user creation date.
@@ -635,6 +640,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     /**
      * The date format in a Confluence package (2012-03-07 17:16:48.158).
      */
+    @Deprecated (since = "9.96.0")
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss.SSS";
 
     /**
@@ -656,17 +662,22 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public static final String KEY_CONTENT_PERMISSION_SET_CONTENT_PERMISSIONS = "contentPermissions";
 
     /**
-     * Pattern to find the end of "intentionally damaged" CDATA end sections. Confluence does this to nest CDATA
-     * sections inside CDATA sections. Interestingly it does not care if there is a &gt; after the ]].
+     * The key in which a long value is found in content properties.
+     * @since 9.96.0
      */
-    private static final Pattern FIND_BROKEN_CDATA_PATTERN = Pattern.compile("]] ");
+    public static final String KEY_LONG_VALUE = "longValue";
 
     /**
-     * Replacement to repair the CDATA.
+     * The key in which a date value is found in content properties.
+     * @since 9.96.0
      */
-    private static final String REPAIRED_CDATA_END = "]]";
+    public static final String KEY_DATE_VALUE = "dateValue";
 
-    private static final XMLInputFactory XML_INPUT_FACTORY = XMLInputFactory.newInstance();
+    /**
+     * The key in which a string value is found in content properties.
+     * @since 9.96.0
+     */
+    public static final String KEY_STRING_VALUE = "stringValue";
 
     private static final String FOLDER_INTERNALUSER = "internalusers";
 
@@ -724,26 +735,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private static final String OBJECT_TYPE_PAGE_TEMPLATE = "PageTemplate";
 
-    private static final Collection<String> SUPPORTED_OBJECTS = new HashSet<>(Arrays.asList(
-        OBJECT_TYPE_ATTACHMENT,
-        OBJECT_TYPE_BLOG_POST,
-        OBJECT_TYPE_BODY_CONTENT,
-        OBJECT_TYPE_COMMENT,
-        OBJECT_TYPE_CONTENT_ENTITY_OBJECT,
-        OBJECT_TYPE_CONTENT_PERMISSION,
-        OBJECT_TYPE_CONTENT_PERMISSION_SET,
-        OBJECT_TYPE_CONTENT_PROPERTY,
-        OBJECT_TYPE_INTERNAL_GROUP,
-        OBJECT_TYPE_INTERNAL_USER,
-        OBJECT_TYPE_LABEL,
-        OBJECT_TYPE_LABELLING,
-        OBJECT_TYPE_PAGE,
-        OBJECT_TYPE_PAGE_TEMPLATE,
-        OBJECT_TYPE_SPACE,
-        OBJECT_TYPE_SPACE_DESCRIPTION,
-        OBJECT_TYPE_SPACE_PERMISSION
-    ));
-
     private static final String[] PARENT_PROPERTIES = new String[] {
         KEY_CONTENT_PERMISSION_OWNING_SET,
         KEY_CONTENT_PERMISSION_SET_OWNING_CONTENT,
@@ -758,18 +749,10 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private static final String RESTORING_FROM_ANOTHER_VERSION_UNSUPPORTED_WARNING =
         "Restoring from a different version is unsupported and may lead to unexpected results.";
 
-    private static final String PROPERTY_CLASS_SUFFIX = "--class";
-
-    private static final String ATTRIBUTE_CLASS = KEY_CLASS;
-    private static final String COLLECTION = "collection";
-    private static final String PROPERTY = "property";
-    private static final String KEY = KEY_SPACE_KEY;
     private static final String KEY_NAME = KEY_SPACE_NAME;
     private static final String STATE = "state";
-    private static final String LONG_VALUE = "longValue";
-    private static final String DATE_VALUE = "dateValue";
-    private static final String STRING_VALUE = "stringValue";
     private static final String ATTACHMENTS = "attachments";
+    private static final String PROPERTIES = "properties";
     private static final String CONTENT_ID = "CONTENT_ID";
     private static final String ID = "ID";
     private static final String[] TASK_FIELDS = {
@@ -790,6 +773,14 @@ public class ConfluenceXMLPackage implements AutoCloseable
         "PAGE_TITLE",
         "SPACE_ID"
     };
+
+    private static final String[] DATE_FORMATS = {
+        DATE_FORMAT,
+        DATE_FORMAT + 'X',
+        "yyyy-MM-dd HH:mm:ssX"
+    };
+
+    private static final String SPACES = "spaces";
 
     @Inject
     private Environment environment;
@@ -820,7 +811,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private String workingDirectory;
 
-    private File tasks;
+    private ConfluenceCSVFile tasks;
 
     // Maps a space id to all the pages in this space
     private final Map<Long, List<Long>> pages = new LinkedHashMap<>();
@@ -980,7 +971,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         this.entities = new File(this.directory, FILE_ENTITIES);
         this.descriptor = new File(this.directory, FILE_DESCRIPTOR);
-        this.tasks = new File(this.directory, FILE_TASKS);
+        this.tasks = new ConfluenceCSVFile(this.directory, FILE_TASKS);
     }
 
     /**
@@ -1229,7 +1220,18 @@ public class ConfluenceXMLPackage implements AutoCloseable
             return null;
         }
 
-        return new SimpleDateFormat(DATE_FORMAT).parse(str);
+        return parseDate(str);
+    }
+
+    /**
+     * @return the date corresponding to this str
+     * @param str the date to parse according to the various formats of dates we've seen in Confluence exports
+     * @throws ParseException if the date couldn't be understood
+     * @since 9.96.0
+     */
+    public static Date parseDate(String str) throws ParseException
+    {
+        return DateUtils.parseDateStrictly(str, DATE_FORMATS);
     }
 
     /**
@@ -1280,33 +1282,67 @@ public class ConfluenceXMLPackage implements AutoCloseable
         List<Long> elements = getLongList(properties, key);
 
         if (elements == null) {
+            if (KEY_CONTENTPROPERTIES.equals(key)) {
+                // Content properties are not listed in content objects in CSV backups
+                Long contentId = properties.getLong(KEY_ID, null);
+                if (contentId != null) {
+                    return getContentPropertiesForCSVBackup(contentId);
+                }
+            }
+
             return null;
         }
 
+        // This is for XML backups
         ConfluenceProperties contentProperties = new ConfluenceProperties();
         for (Long element : elements) {
-            ConfluenceProperties contentProperty = getObjectProperties(element);
-            String name = contentProperty == null ? null : contentProperty.getString(KEY_NAME);
-            if (name == null) {
-                logger.warn("ContentProperty [{}] was not found", element);
-                continue;
-            }
-
-            Object value = contentProperty.getString(LONG_VALUE, null);
-            if (Strings.isNullOrEmpty((String) value)) {
-                value = contentProperty.getString(DATE_VALUE, null);
-                if (Strings.isNullOrEmpty((String) value)) {
-                    value = contentProperty.getString(STRING_VALUE, null);
-                }
-            } else {
-                value = contentProperty.getLong(LONG_VALUE, null);
-            }
-
-            contentProperties.setProperty(name, value);
+            ConfluenceProperties contentProperty = getContentProperties(-1, element, false);
+            addContentProperty(element, contentProperty, contentProperties);
         }
 
         return contentProperties;
+    }
 
+    private void addContentProperty(Object propId, ConfluenceProperties p, ConfluenceProperties contentProperties)
+    {
+        String name = p == null ? null : p.getString(KEY_NAME);
+        if (name == null) {
+            logger.warn("ContentProperty [{}] was not found", propId);
+            return;
+        }
+
+        Object value = p.getString(KEY_LONG_VALUE, null);
+        if (Strings.isNullOrEmpty((String) value)) {
+            value = p.getString(KEY_DATE_VALUE, null);
+            if (Strings.isNullOrEmpty((String) value)) {
+                value = p.getString(KEY_STRING_VALUE, null);
+            }
+        } else {
+            value = p.getLong(KEY_LONG_VALUE, null);
+        }
+
+        contentProperties.setProperty(name, value);
+    }
+
+    private ConfluenceProperties getContentPropertiesForCSVBackup(long contentId) throws ConfigurationException
+    {
+        ConfluenceProperties gatheredProperties = new ConfluenceProperties();
+        File contentPropertiesFolder = getContentPropertiesFolder(contentId);
+        if (!contentPropertiesFolder.exists()) {
+            return null;
+        }
+
+        File[] files = contentPropertiesFolder.listFiles();
+        if (files == null) {
+            return null;
+        }
+
+        for (File child : files) {
+            ConfluenceProperties contentProperty = ConfluenceProperties.create(new File(child, PROPERTIES_FILENAME));
+            addContentProperty(child.getName(), contentProperty, gatheredProperties);
+        }
+
+        return gatheredProperties;
     }
 
     /**
@@ -1459,54 +1495,81 @@ public class ConfluenceXMLPackage implements AutoCloseable
         this.workingDirectory = workingDirectory;
     }
 
-    private void createTree()
-        throws XMLStreamException, FactoryConfigurationError, IOException, ConfigurationException, FilterException,
-        ConfluenceCanceledException
+    private void createTree() throws IOException, FilterException, ConfluenceCanceledException
     {
         mkdirTree();
-
         getJobStatus();
+        readObjects();
+    }
 
-        try (CountingInputStream s = new CountingInputStream(new BufferedInputStream(new FileInputStream(entities)))) {
-            XMLStreamReader xmlReader = XML_INPUT_FACTORY.createXMLStreamReader(new WithoutControlCharactersReader(s));
+    private void readObjects() throws FilterException, ConfluenceCanceledException
+    {
+        if (isCSV()) {
+            readCSVObjects();
+        } else {
+            ConfluenceXMLStreamReader.readRecords(progress, entities, this::readXMLObject);
+        }
+        cleanUpUnwantedSpaces();
+        try {
+            saveState();
+        } catch (IllegalAccessException | IOException e) {
+            logger.warn("Unable to save the package state, restoring for later migrations won't work", e);
+        }
+    }
 
-            xmlReader.nextTag();
-
-            long size = entities.length();
-            int steps = 100;
-            progress.pushLevelProgress(steps, this);
-            boolean inStep = false;
-            long stepSize = size / steps;
-            long nextStepPos = stepSize;
-            for (xmlReader.nextTag(); xmlReader.isStartElement(); xmlReader.nextTag()) {
-                if (!inStep) {
-                    progress.startStep(this);
-                    inStep = true;
-                }
-                String elementName = xmlReader.getLocalName();
-
-                if (elementName.equals("object")) {
-                    readObject(xmlReader);
-                } else {
-                    StAXUtils.skipElement(xmlReader);
-                }
-                long pos = s.getByteCount();
-                if (pos >= nextStepPos) {
-                    progress.endStep(this);
-                    nextStepPos += stepSize;
-                    inStep = false;
-                }
-            }
-            cleanUpUnwantedSpaces();
-            if (inStep) {
-                progress.endStep(this);
-            }
-            try {
-                saveState();
-            } catch (IllegalAccessException | IOException e) {
-                logger.warn("Unable to save the package state, restoring for later migrations won't work", e);
-            }
+    private void readCSVObjects() throws FilterException, ConfluenceCanceledException
+    {
+        progress.pushLevelProgress(ConfluenceCSVTable.values().length, this);
+        try {
+            readCSVTable(ConfluenceCSVTable.bodycontent.name(), this::readBodyContentObject);
+            readCSVTable(ConfluenceCSVTable.content.name(), this::readContentObject);
+            readCSVTable(ConfluenceCSVTable.content_label.name(), this::readLabellingObject);
+            readCSVTable(ConfluenceCSVTable.content_perm.name(), this::readContentPermissionObject);
+            readCSVTable(ConfluenceCSVTable.content_perm_set.name(), this::readContentPermissionSetObject);
+            readCSVTable(ConfluenceCSVTable.contentproperties.name(), this::readContentPropertyObject);
+            readCSVTable(ConfluenceCSVTable.label.name(), this::readLabelObject);
+            readCSVTable(ConfluenceCSVTable.pagetemplates.name(), this::readPageTemplateObject);
+            readCSVTable(ConfluenceCSVTable.spacepermissions.name(), this::readSpacePermissionObject);
+            readCSVTable(ConfluenceCSVTable.spaces.name(), this::readSpaceObject);
+            readCSVTable(ConfluenceCSVTable.user_mapping.name(), this::readUserImplObject);
+        } catch (IOException | ConfigurationException e) {
+            throw new FilterException(e);
+        } finally {
             progress.popLevelProgress(this);
+        }
+    }
+
+    private void readCSVTable(String basename, ConfluenceConsumer reader)
+            throws ConfigurationException, ConfluenceCanceledException, FilterException, IOException
+    {
+        logger.info("Reading CSV table [{}]...", basename);
+        ConfluenceCSVFile.readRecords(progress, directory, basename, r -> {
+            getCancelledJob();
+            reader.accept(r);
+        });
+    }
+
+    private void readContentPropertyObject(ConfluenceRecordReader objectReader)
+            throws ConfigurationException, FilterException
+    {
+        ConfluenceProperties properties = new ConfluenceProperties();
+
+        Long id = asLong(objectReader.readRecord(properties));
+        if (id != null) {
+            // contentId is available in CSV exports but not XML exports.
+            // When we don't know, we store in the content with id -1
+            long contentId = properties.getLong("contentid", -1L);
+            saveContentPropertyProperties(properties, contentId, id);
+        }
+    }
+
+    private void readLabelObject(ConfluenceRecordReader objectReader) throws ConfigurationException, FilterException
+    {
+        ConfluenceProperties properties = new ConfluenceProperties();
+
+        Object id = objectReader.readRecord(properties);
+        if (id != null) {
+            saveObjectProperties(properties, id.toString());
         }
     }
 
@@ -1523,6 +1586,10 @@ public class ConfluenceXMLPackage implements AutoCloseable
     {
         // Note: revisions can appear several times in the list
         List<Long> revisionIds = getLongList(pageProperties, ConfluenceXMLPackage.KEY_PAGE_REVISIONS);
+        if (revisionIds == null) {
+            // Not expected to happen
+            return Map.of();
+        }
         Map<Long, ConfluenceProperties> revisionsById = new HashMap<>(revisionIds.size());
         for (Long revisionId : revisionIds) {
             ConfluenceProperties revisionProperties = null;
@@ -1605,65 +1672,68 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_HOMEPAGE);
     }
 
-    private void readObject(XMLStreamReader xmlReader)
-        throws XMLStreamException, ConfigurationException, FilterException, ConfluenceCanceledException
+    private void readXMLObject(ConfluenceRecordReader objectReader)
+        throws ConfigurationException, FilterException, ConfluenceCanceledException
     {
         getCancelledJob();
 
-        String type = xmlReader.getAttributeValue(null, ATTRIBUTE_CLASS);
+        String type = objectReader.getType();
 
         if (type != null) {
             switch (type) {
                 case OBJECT_TYPE_PAGE:
-                    readPageObject(xmlReader);
+                    readPageObject(objectReader, false);
                     break;
                 case OBJECT_TYPE_SPACE:
-                    readSpaceObject(xmlReader);
+                    readSpaceObject(objectReader);
                     break;
                 case OBJECT_TYPE_SPACE_DESCRIPTION:
-                    readSpaceDescriptorObject(xmlReader);
+                    readSpaceDescriptionObject(objectReader);
                     break;
                 case OBJECT_TYPE_INTERNAL_USER:
-                    readInternalUserObject(xmlReader);
+                    readInternalUserObject(objectReader);
                     break;
                 case OBJECT_TYPE_CONFLUENCE_USER_IMPL:
-                    readUserImplObject(xmlReader);
+                    readUserImplObject(objectReader);
                     break;
                 case OBJECT_TYPE_INTERNAL_GROUP:
-                    readGroupObject(xmlReader);
+                    readGroupObject(objectReader);
                     break;
                 case OBJECT_TYPE_HIBERNATE_MEMBERSHIP:
-                    readMembershipObject(xmlReader);
+                    readMembershipObject(objectReader);
                     break;
                 case OBJECT_TYPE_BODY_CONTENT:
-                    readBodyContentObject(xmlReader);
+                    readBodyContentObject(objectReader);
                     break;
                 case OBJECT_TYPE_PAGE_TEMPLATE:
-                    readPageTemplateObject(xmlReader);
+                    readPageTemplateObject(objectReader);
                     break;
                 case OBJECT_TYPE_SPACE_PERMISSION:
-                    readSpacePermissionObject(xmlReader);
+                    readSpacePermissionObject(objectReader);
                     break;
                 case OBJECT_TYPE_CONTENT_PERMISSION:
-                    readContentPermissionObject(xmlReader);
+                    readContentPermissionObject(objectReader);
                     break;
                 case OBJECT_TYPE_CONTENT_PERMISSION_SET:
-                    readContentPermissionSetObject(xmlReader);
+                    readContentPermissionSetObject(objectReader);
                     break;
                 case OBJECT_TYPE_ATTACHMENT:
-                    readAttachmentObject(xmlReader);
+                    readAttachmentObject(objectReader);
                     break;
                 case OBJECT_TYPE_COMMENT:
-                    readCommentObject(xmlReader);
+                    readCommentObject(objectReader);
                     break;
                 case OBJECT_TYPE_BLOG_POST:
-                    readBlogPostObject(xmlReader);
+                    readPageObject(objectReader, true);
                     break;
                 case OBJECT_TYPE_LABELLING:
-                    readLabellingObject(xmlReader);
+                    readLabellingObject(objectReader);
+                    break;
+                case OBJECT_TYPE_CONTENT_PROPERTY:
+                    readContentPropertyObject(objectReader);
                     break;
                 default:
-                    readGenericObject(xmlReader);
+                    readGenericObject(objectReader);
             }
         }
     }
@@ -1675,69 +1745,29 @@ public class ConfluenceXMLPackage implements AutoCloseable
         }
     }
 
-    private void readGenericObject(XMLStreamReader xmlReader)
-        throws XMLStreamException, FilterException, ConfigurationException
+    private void readGenericObject(ConfluenceRecordReader r)
+        throws FilterException, ConfigurationException
     {
         ConfluenceProperties properties = new ConfluenceProperties();
-        long id = readObjectProperties(xmlReader, properties);
-        saveObjectProperties(properties, Long.toString(id));
-    }
-
-    private long readObjectProperties(XMLStreamReader xmlReader, ConfluenceProperties properties)
-        throws XMLStreamException, FilterException
-    {
-        return Long.parseLong(readObjectProperties(xmlReader, properties, KEY_ID));
-    }
-
-    private String readImplObjectProperties(XMLStreamReader xmlReader, ConfluenceProperties properties)
-        throws XMLStreamException, FilterException
-    {
-        return readObjectProperties(xmlReader, properties, KEY);
-    }
-
-    private String readObjectProperties(XMLStreamReader xmlReader, ConfluenceProperties properties, String idProperty)
-        throws XMLStreamException, FilterException
-    {
-        String id = "-1";
-
-        for (xmlReader.nextTag(); xmlReader.isStartElement(); xmlReader.nextTag()) {
-            String localName = xmlReader.getLocalName();
-            if (KEY_ID.equals(localName)) {
-                String idName = xmlReader.getAttributeValue(null, KEY_NAME);
-
-                if (idName.equals(idProperty)) {
-                    id = fixCDataAndNL(xmlReader.getElementText());
-
-                    properties.setProperty(KEY_ID, id);
-                } else {
-                    StAXUtils.skipElement(xmlReader);
-                }
-            } else if (COLLECTION.equals(localName) || PROPERTY.equals(localName)) {
-                String attributeName = xmlReader.getAttributeValue(null, KEY_NAME);
-                String className = xmlReader.getAttributeValue(null, ATTRIBUTE_CLASS);
-                setPropertyClass(properties, attributeName, className);
-                if (COLLECTION.equals(localName)) {
-                    properties.setProperty(attributeName, readListProperty(xmlReader));
-                } else {
-                    properties.setProperty(attributeName, readProperty(xmlReader));
-                }
-            } else if (KEY_PAGE_POSITION.equals(localName)) {
-                properties.setProperty(KEY_PAGE_POSITION, xmlReader.getElementText());
-            } else {
-                StAXUtils.skipElement(xmlReader);
-            }
+        Object key = r.readRecord(properties);
+        if (key != null) {
+            saveObjectProperties(properties, key.toString());
         }
-
-        return id;
     }
 
-    private void readAttachmentObject(XMLStreamReader xmlReader)
-        throws XMLStreamException, FilterException, ConfigurationException
+    private void readAttachmentObject(ConfluenceRecordReader r)
+        throws FilterException, ConfigurationException
     {
         ConfluenceProperties properties = new ConfluenceProperties();
 
-        long attachmentId = readObjectProperties(xmlReader, properties);
+        Long attachmentId = asLong(r.readRecord(properties));
+        if (attachmentId != null) {
+            readAttachmentObject(properties, attachmentId);
+        }
+    }
 
+    private void readAttachmentObject(ConfluenceProperties properties, long attachmentId) throws ConfigurationException
+    {
         Long pageId = getAttachmentPageId(properties);
 
         if (pageId != null) {
@@ -1745,13 +1775,30 @@ public class ConfluenceXMLPackage implements AutoCloseable
         }
     }
 
-    private void readCommentObject(XMLStreamReader xmlReader)
-        throws XMLStreamException, FilterException, ConfigurationException
+    private void readCommentObject(ConfluenceRecordReader r) throws FilterException, ConfigurationException
     {
         ConfluenceProperties properties = new ConfluenceProperties();
 
-        long commentId = readObjectProperties(xmlReader, properties);
+        Long commentId = asLong(r.readRecord(properties));
+        if (commentId != null) {
+            readCommentObject(properties, commentId);
+            Long parent = properties.getLong("parentcommentid", null);
+            if (parent == null) {
+                parent = properties.getLong("parentid", null);
+            }
+            if (parent != null) {
+                properties.addProperty(KEY_PAGE_PARENT, parent);
+            }
 
+            Long pageid = properties.getLong("pageid", null);
+            if (pageid != null) {
+                properties.addProperty(KEY_COMMENT_CONTAINERCONTENT, pageid);
+            }
+        }
+    }
+
+    private void readCommentObject(ConfluenceProperties properties, long commentId) throws ConfigurationException
+    {
         saveObjectProperties(properties, Long.toString(commentId));
 
         saveInParent(properties, KEY_COMMENT_CONTAINERCONTENT, OBJECT_TYPE_PAGE, KEY_PAGE_COMMENTS, commentId);
@@ -1764,6 +1811,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
         if (parentId == null) {
             return;
         }
+        saveInParent(parentId, parentType, childrenInParentField, childId);
+    }
+
+    private void saveInParent(long parentId, String parentType, String childrenInParentField, long childId)
+        throws ConfigurationException
+    {
         ConfluenceProperties parentProperties = getParentObjectByType(parentType, parentId, false);
         if (parentProperties == null) {
             return;
@@ -1869,7 +1922,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private Long getAttachmentPageId(ConfluenceProperties properties)
     {
-        Long pageId = getLong(properties, KEY_ATTACHMENT_CONTAINERCONTENT, null);
+        Long pageId = properties.getLong(KEY_ATTACHMENT_CONTAINERCONTENT, null);
 
         if (pageId == null) {
             pageId = properties.getLong(KEY_ATTACHMENT_CONTENT, null);
@@ -1908,34 +1961,33 @@ public class ConfluenceXMLPackage implements AutoCloseable
         lowerSpacesByKey.keySet().removeIf(spaceKey -> !spaceKey.equalsIgnoreCase(spaceKeyToImport));
     }
 
-    private void readSpaceObject(XMLStreamReader xmlReader)
-        throws XMLStreamException, FilterException, ConfigurationException
+    private void readSpaceObject(ConfluenceRecordReader r) throws FilterException, ConfigurationException
     {
         ConfluenceProperties properties = new ConfluenceProperties();
 
         setClass(OBJECT_TYPE_SPACE, properties);
 
-        long spaceId = readObjectProperties(xmlReader, properties);
-        String spaceKey = properties.getString(KEY_SPACE_KEY);
-        if (spaceKeyToImport != null) {
-            if (spaceKeyToImport.equals(spaceKey)) {
-                spaceIdToImport = spaceId;
-                cleanUpUnwantedSpaces();
-            } else {
-                return;
+        Long spaceId = asLong(r.readRecord(properties));
+        if (spaceId != null) {
+            String spaceKey = properties.getString(KEY_SPACE_KEY);
+            if (spaceKeyToImport != null) {
+                if (spaceKeyToImport.equals(spaceKey)) {
+                    spaceIdToImport = spaceId;
+                    cleanUpUnwantedSpaces();
+                } else {
+                    return;
+                }
             }
+
+            if (spaceKey != null) {
+                this.casePreservingSpacesByKey.put(spaceKey, spaceId);
+                this.lowerSpacesByKey.put(spaceKey.toLowerCase(), spaceId);
+            }
+
+            saveSpaceProperties(properties, spaceId);
+            maybeUpdateHomePage(properties, spaceId);
+            this.pages.computeIfAbsent(spaceId, k -> new LinkedList<>());
         }
-
-        if (spaceKey != null) {
-            this.casePreservingSpacesByKey.put(spaceKey, spaceId);
-            this.lowerSpacesByKey.put(spaceKey.toLowerCase(), spaceId);
-        }
-
-        saveSpaceProperties(properties, spaceId);
-
-        maybeUpdateHomePage(properties, spaceId);
-
-        this.pages.computeIfAbsent(spaceId, k -> new LinkedList<>());
     }
 
     private void maybeUpdateHomePage(ConfluenceProperties properties, long spaceId) throws ConfigurationException
@@ -1961,74 +2013,77 @@ public class ConfluenceXMLPackage implements AutoCloseable
         }
     }
 
-    private void readPageTemplateObject(XMLStreamReader xmlReader)
-        throws XMLStreamException, ConfigurationException, FilterException
+    private void readPageTemplateObject(ConfluenceRecordReader r)
+        throws ConfigurationException, FilterException
     {
         ConfluenceProperties properties = new ConfluenceProperties();
 
-        long templateId = readObjectProperties(xmlReader, properties);
+        Long templateId = asLong(r.readRecord(properties));
 
         Long spaceId = properties.getLong(KEY_PAGE_SPACE, null);
-        if (spaceId != null && !shouldIgnoreSpace(spaceId)) {
+        if (templateId != null && spaceId != null && !shouldIgnoreSpace(spaceId)) {
             saveSpacePageTemplateProperties(properties, spaceId, templateId);
             saveInParent(properties, KEY_PAGE_SPACE, OBJECT_TYPE_SPACE,
                 KEY_SPACE_PAGE_TEMPLATES, templateId);
         }
     }
 
-    private void readSpacePermissionObject(XMLStreamReader xmlReader)
-        throws XMLStreamException, ConfigurationException, FilterException
+    private void readSpacePermissionObject(ConfluenceRecordReader r)
+        throws ConfigurationException, FilterException
     {
         ConfluenceProperties properties = new ConfluenceProperties();
 
-        long permissionId = readObjectProperties(xmlReader, properties);
-
-        Long spaceId = properties.getLong(KEY_PAGE_SPACE, null);
-        if (spaceId != null && !shouldIgnoreSpace(spaceId)) {
-            saveSpacePermissionProperties(properties, spaceId, permissionId);
-            saveInParent(properties, KEY_SPACE_PERMISSION_SPACE, OBJECT_TYPE_SPACE,
-                KEY_SPACE_PERMISSIONS, permissionId);
+        Long permissionId = asLong(r.readRecord(properties));
+        if (permissionId != null && properties.getBoolean(KEY_ACTIVE, true)) {
+            Long spaceId = properties.getLong(KEY_PAGE_SPACE, null);
+            if (spaceId != null && !shouldIgnoreSpace(spaceId)) {
+                saveSpacePermissionProperties(properties, spaceId, permissionId);
+                saveInParent(properties, KEY_SPACE_PERMISSION_SPACE, OBJECT_TYPE_SPACE,
+                        KEY_SPACE_PERMISSIONS, permissionId);
+            }
         }
     }
 
-    private void readContentPermissionObject(XMLStreamReader xmlReader)
-        throws XMLStreamException, FilterException, ConfigurationException
+    private void readContentPermissionObject(ConfluenceRecordReader r)
+        throws FilterException, ConfigurationException
     {
         ConfluenceProperties properties = new ConfluenceProperties();
 
-        long permissionId = readObjectProperties(xmlReader, properties);
-
-        Long contentPermissionSetId = properties.getLong(KEY_CONTENT_PERMISSION_OWNING_SET, null);
-        if (contentPermissionSetId != null) {
-            saveContentPermissionProperties(properties, contentPermissionSetId, permissionId);
-            saveInParent(properties, KEY_CONTENT_PERMISSION_OWNING_SET, OBJECT_TYPE_CONTENT_PERMISSION_SET,
-                KEY_CONTENT_PERMISSION_SET_CONTENT_PERMISSIONS, permissionId);
+        Long permissionId = asLong(r.readRecord(properties));
+        if (permissionId != null) {
+            Long contentPermissionSetId = properties.getLong(KEY_CONTENT_PERMISSION_OWNING_SET, null);
+            if (contentPermissionSetId != null) {
+                saveContentPermissionProperties(properties, contentPermissionSetId, permissionId);
+                saveInParent(properties, KEY_CONTENT_PERMISSION_OWNING_SET, OBJECT_TYPE_CONTENT_PERMISSION_SET,
+                        KEY_CONTENT_PERMISSION_SET_CONTENT_PERMISSIONS, permissionId);
+            }
         }
     }
 
-    private void readContentPermissionSetObject(XMLStreamReader xmlReader)
-        throws XMLStreamException, FilterException, ConfigurationException
+    private void readContentPermissionSetObject(ConfluenceRecordReader r)
+        throws FilterException, ConfigurationException
     {
         ConfluenceProperties properties = new ConfluenceProperties();
 
-        long permissionSetId = readObjectProperties(xmlReader, properties);
+        Long permissionSetId = asLong(r.readRecord(properties));
+        if (permissionSetId != null) {
+            saveContentPermissionSetProperties(properties, permissionSetId);
 
-        saveContentPermissionSetProperties(properties, permissionSetId);
-
-        Long owningContentId = properties.getLong(KEY_CONTENT_PERMISSION_SET_OWNING_CONTENT, null);
-        if (owningContentId != null) {
-            saveInParent(properties, KEY_CONTENT_PERMISSION_SET_OWNING_CONTENT,
-                OBJECT_TYPE_PAGE, KEY_CONTENT_CONTENT_PERMISSION_SETS, permissionSetId);
+            Long owningContentId = properties.getLong(KEY_CONTENT_PERMISSION_SET_OWNING_CONTENT, null);
+            if (owningContentId != null) {
+                saveInParent(properties, KEY_CONTENT_PERMISSION_SET_OWNING_CONTENT,
+                        OBJECT_TYPE_PAGE, KEY_CONTENT_CONTENT_PERMISSION_SETS, permissionSetId);
+            }
         }
     }
 
-    private void readBodyContentObject(XMLStreamReader xmlReader)
-        throws XMLStreamException, ConfigurationException, FilterException
+    private void readBodyContentObject(ConfluenceRecordReader r)
+        throws ConfigurationException, FilterException
     {
         ConfluenceProperties properties = new ConfluenceProperties();
         properties.disableListDelimiter();
 
-        readObjectProperties(xmlReader, properties);
+        r.readRecord(properties);
 
         // We save properties of the body content object in the corresponding page object.
         Long parentId = properties.getLong(KEY_BODY_CONTENT_CONTENT, null);
@@ -2061,58 +2116,114 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private static String getBodyPropertyClass(ConfluenceProperties properties)
     {
-        return properties.getString(KEY_BODY_CONTENT_CONTENT + PROPERTY_CLASS_SUFFIX, null);
+        return properties.getAttributeClass(KEY_BODY_CONTENT_CONTENT);
     }
 
-    private static void setPropertyClass(ConfluenceProperties properties, String attributeName, String className)
-    {
-        properties.setProperty(attributeName + PROPERTY_CLASS_SUFFIX, className);
-    }
-
-    private void readSpaceDescriptorObject(XMLStreamReader xmlReader)
-        throws XMLStreamException, ConfigurationException, FilterException
+    private void readSpaceDescriptionObject(ConfluenceRecordReader r)
+            throws ConfigurationException, FilterException
     {
         ConfluenceProperties properties = new ConfluenceProperties();
 
         setClass(OBJECT_TYPE_SPACE_DESCRIPTION, properties);
+        Long id = asLong(r.readRecord(properties));
+        if (id != null) {
+            readSpaceDescriptionObject(properties, id);
+        }
+    }
 
-        long sdId = readObjectProperties(xmlReader, properties);
-
+    private void readSpaceDescriptionObject(ConfluenceProperties properties, long id) throws ConfigurationException
+    {
         Long spaceId = properties.getLong(KEY_PAGE_SPACE, null);
         if (spaceId != null && shouldIgnoreSpace(spaceId)) {
             return;
         }
 
-        saveSpaceDescriptorProperties(properties, sdId);
+        saveSpaceDescriptionProperties(properties, id);
     }
 
-    private void readPageObject(XMLStreamReader xmlReader)
-        throws XMLStreamException, ConfigurationException, FilterException
+    private static Long asLong(Object id)
     {
-        readPageObject(xmlReader, false);
+        if (id instanceof Long) {
+            return (Long) id;
+        }
+
+        if (id instanceof String) {
+            try {
+                return Long.parseLong((String) id);
+            } catch (NumberFormatException e) {
+                return null;
+            }
+        }
+
+        return null;
     }
 
-    private void readBlogPostObject(XMLStreamReader xmlReader)
-        throws XMLStreamException, ConfigurationException, FilterException
+    private void readContentObject(ConfluenceRecordReader r)
+        throws ConfigurationException, FilterException
     {
-        readPageObject(xmlReader, true);
+        // This is for CSV exports, XML exports don't have content objects, only sub types like Page, BlogPost, etc.
+        ConfluenceProperties properties = new ConfluenceProperties();
+        Long id = asLong(r.readRecord(properties));
+        if (id == null) {
+            logger.error("id is unexpectedly null, ignoring this content");
+            return;
+        }
+
+        boolean isBlog = false;
+        String ct = properties.getString("contenttype");
+        switch (ct) {
+            case "BLOGPOST":
+                isBlog = true;
+                /* fall-through */
+            case "PAGE":
+                readPageObject(properties, id, isBlog);
+                break;
+            case "ATTACHMENT":
+                readAttachmentObject(properties, id);
+                break;
+            case "SPACEDESCRIPTION":
+                readSpaceDescriptionObject(properties, id);
+                break;
+            case "COMMENT":
+                readCommentObject(properties, id);
+                break;
+            case "GLOBALDESCRIPTION":
+            case "WHITEBOARD":
+            case "DATABASE":
+            case "USERINFO":
+            case "FOLDER":
+            case "CUSTOM":
+                // ignore
+                break;
+            default:
+                logger.warn("Unknown content type [{}]", ct);
+        }
     }
 
-    private void readPageObject(XMLStreamReader xmlReader, boolean isBlog)
-        throws XMLStreamException, ConfigurationException, FilterException
+    private void readPageObject(ConfluenceRecordReader r, boolean isBlog)
+        throws ConfigurationException, FilterException
     {
         ConfluenceProperties properties = new ConfluenceProperties();
+        Long id = asLong(r.readRecord(properties));
+        if (id == null) {
+            logger.error("Page id is unexpectedly null, ignoring this object");
+            return;
+        }
+        readPageObject(properties, id, isBlog);
+    }
 
+    private void readPageObject(ConfluenceProperties properties, long pageId, boolean isBlog)
+            throws ConfigurationException
+    {
         setClass(OBJECT_TYPE_PAGE, properties);
-
-        long pageId = readObjectProperties(xmlReader, properties);
-
+        // NOTE: historical versions of pages don't necessarily have a space id.
         Long spaceId = properties.getLong(KEY_PAGE_SPACE, null);
         if (spaceId != null && shouldIgnoreSpace(spaceId)) {
             return;
         }
 
-        if (!mustIgnoreContent(properties) && properties.getLong(KEY_PAGE_ORIGINAL_VERSION, null) == null) {
+        long originalVersionId = getAttachmentOriginalVersionId(properties, -1);
+        if (!mustIgnoreContent(properties) && originalVersionId == -1) {
             // Register only current pages (they will take care of handling their history)
             if (spaceId == null) {
                 this.logger.error("Could not find space of page [{}]. Importing it may fail.", pageId);
@@ -2120,7 +2231,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
             }
             registerPage(isBlog, properties, pageId, spaceId);
         } else {
-            saveInParent(properties, KEY_PAGE_ORIGINAL_VERSION, OBJECT_TYPE_PAGE, KEY_PAGE_REVISIONS, pageId);
+            saveInParent(originalVersionId, OBJECT_TYPE_PAGE, KEY_PAGE_REVISIONS, pageId);
         }
 
         if (isBlog) {
@@ -2181,13 +2292,15 @@ public class ConfluenceXMLPackage implements AutoCloseable
         }
     }
 
-    private void readLabellingObject(XMLStreamReader xmlReader)
-        throws XMLStreamException, FilterException, ConfigurationException
+    private void readLabellingObject(ConfluenceRecordReader r)
+        throws FilterException, ConfigurationException
     {
         ConfluenceProperties properties = new ConfluenceProperties();
 
-        long labellingId = readObjectProperties(xmlReader, properties);
-
+        Long labellingId = asLong(r.readRecord(properties));
+        if (labellingId == null) {
+            return;
+        }
         // Since Confluence 8.0, the labellings are not part of the Page Object anymore (most probably because it can be
         // associated to a space or a PageTemplate object too).
         Long parentId = properties.getLong(KEY_LABELLING_CONTENT, null);
@@ -2219,50 +2332,57 @@ public class ConfluenceXMLPackage implements AutoCloseable
             }
         }
 
-        saveObjectProperties(properties, Long.toString(labellingId));
+        saveObjectProperties(properties, labellingId.toString());
     }
 
-    private void readInternalUserObject(XMLStreamReader xmlReader)
-        throws XMLStreamException, ConfigurationException, FilterException
+    private void readInternalUserObject(ConfluenceRecordReader r)
+        throws ConfigurationException, FilterException
     {
         ConfluenceProperties properties = new ConfluenceProperties();
 
-        long pageId = readObjectProperties(xmlReader, properties);
-
-        saveObjectProperties(FOLDER_INTERNALUSER, properties, Long.toString(pageId));
+        Object key = r.readRecord(properties);
+        if (key != null) {
+            saveObjectProperties(FOLDER_INTERNALUSER, properties, key.toString());
+        }
     }
 
-    private void readUserImplObject(XMLStreamReader xmlReader)
-        throws XMLStreamException, ConfigurationException, FilterException
+    private void readUserImplObject(ConfluenceRecordReader r)
+        throws ConfigurationException, FilterException
     {
         ConfluenceProperties properties = new ConfluenceProperties();
 
-        String key = readImplObjectProperties(xmlReader, properties);
-
-        saveObjectProperties(FOLDER_USERIMPL, properties, key);
+        Object key = r.readRecord(properties);
+        if (key != null) {
+            saveObjectProperties(FOLDER_USERIMPL, properties, key.toString());
+        }
     }
 
-    private void readGroupObject(XMLStreamReader xmlReader)
-        throws XMLStreamException, ConfigurationException, FilterException
+    private void readGroupObject(ConfluenceRecordReader r)
+        throws ConfigurationException, FilterException
     {
         ConfluenceProperties properties = new ConfluenceProperties();
 
-        long pageId = readObjectProperties(xmlReader, properties);
-
-        saveObjectProperties(FOLDER_GROUP, properties, Long.toString(pageId));
+        Object key = r.readRecord(properties);
+        if (key != null) {
+            saveObjectProperties(FOLDER_GROUP, properties, key.toString());
+        }
     }
 
-    private void readMembershipObject(XMLStreamReader xmlReader)
-        throws ConfigurationException, XMLStreamException, FilterException
+    private void readMembershipObject(ConfluenceRecordReader r)
+        throws ConfigurationException, FilterException
     {
         ConfluenceProperties properties = new ConfluenceProperties();
 
-        readObjectProperties(xmlReader, properties);
+        r.readRecord(properties);
 
         Long parentGroup = properties.getLong("parentGroup", null);
 
         if (parentGroup != null) {
             ConfluenceProperties groupProperties = getGroupProperties(parentGroup);
+            if (groupProperties == null) {
+                // should not happen
+                return;
+            }
 
             Long userMember = properties.getLong("userMember", null);
 
@@ -2286,115 +2406,14 @@ public class ConfluenceXMLPackage implements AutoCloseable
         }
     }
 
-    private Object readProperty(XMLStreamReader xmlReader) throws XMLStreamException, FilterException
-    {
-        Object res = null;
-        String propertyClass = xmlReader.getAttributeValue(null, ATTRIBUTE_CLASS);
-
-        if (propertyClass == null) {
-            try {
-                res = fixCDataAndNL(xmlReader.getElementText());
-            } catch (XMLStreamException e) {
-                // Probably an empty element
-            }
-        } else if (propertyClass.equals("java.util.List") || propertyClass.equals("java.util.Collection")) {
-            res = readListProperty(xmlReader);
-        } else if (propertyClass.equals("java.util.Set")) {
-            res = readSetProperty(xmlReader);
-        } else if (SUPPORTED_OBJECTS.contains(propertyClass)) {
-            res = readObjectReference(xmlReader);
-        } else if (propertyClass.equals(OBJECT_TYPE_CONFLUENCE_USER_IMPL)) {
-            res = readImplObjectReference(xmlReader);
-        }
-
-        if (res == null) {
-            StAXUtils.skipElement(xmlReader);
-        }
-
-        return res;
-    }
-
-    /**
-     * To protect content with cdata section inside cdata elements confluence adds a single space after two
-     * consecutive curly braces. we need to undo this patch as otherwise the content parser will complain about invalid
-     * content. Strictly speaking this needs only to be done for string valued properties.
-     * What's more, Confluence may export LS characters that don't mix well with ConfluenceProperties, so we replace
-     * them with regular new lines.
-     */
-    private String fixCDataAndNL(String elementText)
-    {
-        if (elementText == null) {
-            return null;
-        }
-        return FIND_BROKEN_CDATA_PATTERN.matcher(elementText).replaceAll(REPAIRED_CDATA_END)
-            .replace('\u2028', '\n')
-            .replace('\u2029', '\n');
-    }
-
     private String escapeWindowsFolderName(String folderName)
     {
         return FileSystem.getCurrent().toLegalFileName(folderName, '_');
     }
 
-    private Long readObjectReference(XMLStreamReader xmlReader) throws FilterException, XMLStreamException
-    {
-        xmlReader.nextTag();
-
-        checkIdElement(xmlReader);
-
-        Long id = Long.valueOf(xmlReader.getElementText());
-
-        xmlReader.nextTag();
-
-        return id;
-    }
-
-    private String readImplObjectReference(XMLStreamReader xmlReader) throws FilterException, XMLStreamException
-    {
-        xmlReader.nextTag();
-
-        checkIdElement(xmlReader);
-
-        String key = fixCDataAndNL(xmlReader.getElementText());
-
-        xmlReader.nextTag();
-
-        return key;
-    }
-
-    private static void checkIdElement(XMLStreamReader xmlReader) throws FilterException
-    {
-        if (!xmlReader.getLocalName().equals(KEY_ID)) {
-            throw new FilterException(
-                String.format("Was expecting id element but found [%s]", xmlReader.getLocalName()));
-        }
-    }
-
-    private List<Object> readListProperty(XMLStreamReader xmlReader) throws XMLStreamException, FilterException
-    {
-        List<Object> list = new ArrayList<>();
-
-        for (xmlReader.nextTag(); xmlReader.isStartElement(); xmlReader.nextTag()) {
-            list.add(readProperty(xmlReader));
-        }
-
-        return list;
-    }
-
-    private Set<Object> readSetProperty(XMLStreamReader xmlReader) throws XMLStreamException, FilterException
-    {
-        Set<Object> set = new LinkedHashSet<>();
-
-        for (xmlReader.nextTag(); xmlReader.isStartElement(); xmlReader.nextTag()) {
-            set.add(readProperty(xmlReader));
-        }
-
-        return set;
-    }
-
     private File getSpacesFolder()
     {
-        return new File(this.tree, "spaces");
+        return new File(this.tree, SPACES);
     }
 
     private File getContentPermissionSetsFolder()
@@ -2415,6 +2434,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private File getPagesFolder()
     {
         return new File(this.tree, "pages");
+    }
+
+    private File getContentsFolder()
+    {
+        return new File(this.tree, "contents");
     }
 
     private File getObjectsFolder(String folderName)
@@ -2450,6 +2474,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private File getPageFolder(long pageId)
     {
         return new File(getPagesFolder(), String.valueOf(pageId));
+    }
+
+    private File getContentFolder(long contentId)
+    {
+        return new File(getContentsFolder(), String.valueOf(contentId));
     }
 
     private File getObjectFolder(String folderName, String objectId)
@@ -2540,6 +2569,16 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return new File(getAttachmentsFolder(pageId), String.valueOf(attachmentId));
     }
 
+    private File getContentPropertiesFolder(long contentId)
+    {
+        return new File(getContentFolder(contentId), PROPERTIES);
+    }
+
+    private File getContentPropertiesFolder(long contentId, long propertyId)
+    {
+        return new File(getContentPropertiesFolder(contentId), String.valueOf(propertyId));
+    }
+
     private File getSpacePageTemplateFolder(long templateId)
     {
         return new File(new File(this.tree, FOLDER_SPACE_PAGE_TEMPLATE), String.valueOf(templateId));
@@ -2558,6 +2597,13 @@ public class ConfluenceXMLPackage implements AutoCloseable
     private File getAttachmentPropertiesFile(long pageId, long attachmentId)
     {
         File folder = getAttachmentFolder(pageId, attachmentId);
+
+        return new File(folder, PROPERTIES_FILENAME);
+    }
+
+    private File getContentPropertiesFile(long contentId, long propertyId)
+    {
+        File folder = getContentPropertiesFolder(contentId, propertyId);
 
         return new File(folder, PROPERTIES_FILENAME);
     }
@@ -2781,7 +2827,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
         }
 
         for (String parentProperty : PARENT_PROPERTIES) {
-            long parentId = properties.getLong(parentProperty, -1);
+            long parentId = properties.getLong(parentProperty, -1L);
             if (parentId != -1) {
                 return parentId;
             }
@@ -2952,6 +2998,25 @@ public class ConfluenceXMLPackage implements AutoCloseable
     }
 
     /**
+     * @param contentId the identifier of the content related to the property
+     * @param propertyId the identifier of the property
+     * @param create whether the properties should be created if they don't exist yet
+     * @return the properties containing information about the content property
+     * @throws ConfigurationException when failing to create the properties
+     * @since 9.96.0
+     */
+    public ConfluenceProperties getContentProperties(long contentId, long propertyId, boolean create)
+            throws ConfigurationException
+    {
+        File file = getContentPropertiesFile(contentId, propertyId);
+        if (!create && !file.exists()) {
+            file = getContentPropertiesFile(-1, propertyId);
+        }
+
+        return ConfluenceProperties.create(file);
+    }
+
+    /**
      * @param ignored the identifier of the space
      * @param templateId the identifier of the page template
      * @param create whether to create the properties if they don't exist yet
@@ -3035,10 +3100,14 @@ public class ConfluenceXMLPackage implements AutoCloseable
         return ConfluenceProperties.create(file);
     }
 
-    private void saveSpaceDescriptorProperties(ConfluenceProperties properties, long spaceDescriptorId)
+    private void saveSpaceDescriptionProperties(ConfluenceProperties properties, long spaceDescriptorId)
         throws ConfigurationException
     {
         ConfluenceProperties fileProperties = getSpaceDescriptorProperties(spaceDescriptorId, true);
+        if (fileProperties == null) {
+            // should not happen
+            return;
+        }
 
         fileProperties.copy(properties);
 
@@ -3063,6 +3132,10 @@ public class ConfluenceXMLPackage implements AutoCloseable
         throws ConfigurationException
     {
         ConfluenceProperties fileProperties = getObjectProperties(folder, objectKey, true);
+        if (fileProperties == null) {
+            // should not happen
+            return;
+        }
 
         fileProperties.copy(properties);
 
@@ -3079,10 +3152,25 @@ public class ConfluenceXMLPackage implements AutoCloseable
         fileProperties.save();
     }
 
+    private void saveContentPropertyProperties(ConfluenceProperties properties, long contentId, long propertyId)
+        throws ConfigurationException
+    {
+        ConfluenceProperties fileProperties = getContentProperties(contentId, propertyId, true);
+
+        fileProperties.copy(properties);
+
+        fileProperties.save();
+    }
+
+
     private void saveSpacePageTemplateProperties(ConfluenceProperties properties, long spaceId, long templateId)
         throws ConfigurationException
     {
         ConfluenceProperties fileProperties = getSpacePageTemplateProperties(spaceId, templateId, true);
+        if (fileProperties == null) {
+            // should not happen
+            return;
+        }
 
         fileProperties.copy(properties);
 
@@ -3171,6 +3259,26 @@ public class ConfluenceXMLPackage implements AutoCloseable
     }
 
     /**
+     * @return the Confluence instance type declared in the descriptor file (for XML backups),
+     *         or "cloud" if the backup is a CSV backup, or null if this can't be determined.
+     * @since 9.96.0
+     */
+    public String getConfluenceInstanceType()
+    {
+        return isCSV() ? "cloud" : getDescriptorField("source");
+    }
+
+    /**
+     * @return whether the backup package is actually a CSV backup (from Confluence Cloud)
+     * We currently determine this by trying to find the spaces.csv.gz file.
+     * @since 9.96.0
+     */
+    public boolean isCSV()
+    {
+        return ConfluenceCSVFile.exists(this.directory, SPACES);
+    }
+
+    /**
      * Read the tasks.
      *
      * @throws FilterException if there's an issue reading the tasks
@@ -3191,22 +3299,21 @@ public class ConfluenceXMLPackage implements AutoCloseable
             return;
         }
 
-        try (BufferedReader reader = Files.newBufferedReader(this.tasks.toPath(), StandardCharsets.UTF_8)) {
+        try {
             mkdirTree();
-            CSVParser p = CSVFormat.DEFAULT.builder().setHeader().setSkipHeaderRecord(true).build().parse(reader);
             logger.info("Reading tasks...");
-            for (CSVRecord r : p) {
-                readTask(r);
-            }
+            this.tasks.readRecords(progress, this::readTask);
             logger.info("Finished reading tasks.");
             this.tasks = null;
-        } catch (ConfigurationException | IOException e) {
+        } catch (ConfluenceCanceledException | ConfigurationException | IOException e) {
             throw new FilterException("Failed to read tasks", e);
         }
     }
 
-    private void readTask(CSVRecord r) throws ConfigurationException
+    private void readTask(ConfluenceRecordReader reader) throws FilterException, ConfluenceCanceledException
     {
+        getCancelledJob();
+        ConfluenceCSVFile r = (ConfluenceCSVFile) reader;
         try {
             long contentId = Long.parseLong(r.get(CONTENT_ID));
             long id = Long.parseLong(r.get(ID));
@@ -3221,6 +3328,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
             taskProperties.save();
         } catch (NumberFormatException e) {
             logger.error("Failed to parse task [{}], some details may be missing when importing it", r);
+        } catch (ConfigurationException | IOException e) {
+            throw new FilterException(e);
         }
     }
 
@@ -3246,26 +3355,101 @@ public class ConfluenceXMLPackage implements AutoCloseable
     }
 
     /**
-     * @param pageId the identifier of the page were the attachment is located
-     * @param attachmentId the identifier of the attachment
+     * @param stablePageId the stable identifier of the page were the attachment is located
+     * @param stableAttachmentId the identifier of the attachment
      * @param version the version of the attachment
      * @return the file containing the attachment content
      * @throws FileNotFoundException when failing to find the attachment content file
+     * @deprecated since 9.96.0
      */
-    public File getAttachmentFile(long pageId, long attachmentId, long version) throws FileNotFoundException
+    @Deprecated(since = "9.96.0")
+    public File getAttachmentFile(long stablePageId, long stableAttachmentId, long version) throws FileNotFoundException
+    {
+        try {
+            ConfluenceProperties attachmentProperties = getAttachmentProperties(stablePageId, stableAttachmentId);
+            return getAttachmentFile(stablePageId, attachmentProperties);
+        } catch (ConfigurationException e) {
+            throw new FileNotFoundException(e.getMessage());
+        }
+    }
+
+    // Attachments are sometimes found at:
+    //  - attachments/<stablePageId>/<stableAttachmentId>/<version> (xml backups)
+    //  - attachments/<stablePageId>/<attachmentId>/<version> (CSV space backups)
+    private File getAttachmentFileUsingAttachmentId(long stablePageId, long attachmentId, long stableAttachmentId,
+        long version) throws FileNotFoundException
     {
         File attachmentsFolder = new File(this.directory, ATTACHMENTS);
-        File attachmentsPageFolder = new File(attachmentsFolder, String.valueOf(pageId));
+        File attachmentsPageFolder = new File(attachmentsFolder, String.valueOf(stablePageId));
+
         File attachmentFolder = new File(attachmentsPageFolder, String.valueOf(attachmentId));
-
-        // In old version the file name is the version
         File file = new File(attachmentFolder, String.valueOf(version));
+        if (file.exists()) {
+            return file;
+        }
 
+        File stableAttachmentFolder = new File(attachmentsPageFolder, String.valueOf(stableAttachmentId));
+        file = new File(stableAttachmentFolder, String.valueOf(version));
         if (file.exists()) {
             return file;
         }
 
         throw new FileNotFoundException(file.getAbsolutePath());
+    }
+
+    /**
+     * @return the attachment file
+     * @param stablePageId the original version id of the page containing the attachment
+     * @param attachmentProperties the attachment properties of the attachment to get
+     * @throws FileNotFoundException if the attachment is not found
+     * @since 9.96.0
+     */
+    public File getAttachmentFile(long stablePageId, ConfluenceProperties attachmentProperties)
+            throws FileNotFoundException
+    {
+        try {
+            ConfluenceProperties contentProperties = getContentProperties(attachmentProperties, KEY_CONTENTPROPERTIES);
+            if (contentProperties != null) {
+                return getAttachmentFile(stablePageId, attachmentProperties, contentProperties);
+            }
+        } catch (ConfigurationException e) {
+            throw new FileNotFoundException(e.getMessage());
+        }
+
+        throw new FileNotFoundException();
+    }
+
+    /**
+     * @return the attachment file
+     * @param stablePageId the original version id of the page containing the attachment
+     * @param attachmentProperties the properties of the attachment
+     * @param attachmentContentProperties the content properties of the attachment
+     * @throws FileNotFoundException if the attachment file is not found
+     * @since 9.96.0
+     */
+    public File getAttachmentFile(long stablePageId, ConfluenceProperties attachmentProperties,
+            ConfluenceProperties attachmentContentProperties) throws FileNotFoundException
+    {
+        String filename = attachmentContentProperties.getString("FILESTORE_ID", "");
+        if (StringUtils.isNotEmpty(filename)) {
+            File attachmentsFolder = new File(this.directory, ATTACHMENTS);
+            File file = new File(attachmentsFolder, filename);
+            if (file.exists()) {
+                return file;
+            }
+        }
+
+        long attachmentId = attachmentProperties.getLong(KEY_ID, -1);
+        long stableAttachmentId = getAttachmentOriginalVersionId(attachmentProperties, -1);
+        if (stableAttachmentId == -1) {
+            stableAttachmentId = attachmentId;
+            if (stableAttachmentId == -1) {
+                throw new FileNotFoundException("Could not determine the ID of the attachment object");
+            }
+        }
+
+        long version = getAttachementVersion(attachmentProperties);
+        return getAttachmentFileUsingAttachmentId(stablePageId, attachmentId, stableAttachmentId, version);
     }
 
     /**
@@ -3328,9 +3512,9 @@ public class ConfluenceXMLPackage implements AutoCloseable
      */
     public Long getAttachementVersion(ConfluenceProperties attachmentProperties)
     {
-        Long version = getLong(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_VERSION, null);
+        Long version = attachmentProperties.getLong(ConfluenceXMLPackage.KEY_ATTACHMENT_VERSION, null);
         if (version == null) {
-            version = getLong(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_ATTACHMENTVERSION, null);
+            version = attachmentProperties.getLong(ConfluenceXMLPackage.KEY_ATTACHMENT_ATTACHMENTVERSION, null);
         }
 
         return version;
@@ -3344,9 +3528,9 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public long getAttachmentOriginalVersionId(ConfluenceProperties attachmentProperties, long def)
     {
         Long originalRevisionId =
-            getLong(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_ORIGINALVERSIONID, null);
+            attachmentProperties.getLong(ConfluenceXMLPackage.KEY_ATTACHMENT_ORIGINALVERSIONID, null);
         return originalRevisionId != null ? originalRevisionId
-            : getLong(attachmentProperties, ConfluenceXMLPackage.KEY_ATTACHMENT_ORIGINALVERSION, def);
+            : attachmentProperties.getLong(ConfluenceXMLPackage.KEY_ATTACHMENT_ORIGINALVERSION, def);
     }
 
     /**
@@ -3438,15 +3622,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
      * @param key the key
      * @param def the default value in case of error
      * @return the long value corresponding to the key or default
+     * @deprecated since 9.96.0
      */
+    @Deprecated(since = "9.96.0")
     public static Long getLong(ConfluenceProperties properties, String key, Long def)
     {
-        try {
-            return properties.getLong(key, def);
-        } catch (Exception e) {
-            // Usually mean the field does not have the expected format
-
-            return def;
-        }
+        return properties.getLong(key, def);
     }
 }

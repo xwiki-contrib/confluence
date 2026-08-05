@@ -29,8 +29,7 @@ import org.xwiki.filter.input.AbstractBeanInputFilterStreamFactory;
 import org.xwiki.filter.type.FilterStreamType;
 
 /**
- * A generic xml output filter implementation. This class can be used as a test bench to validate various XMLInputStream
- * wiki parsers.
+ * A generic input filter implementation for Confluence export packages.
  * 
  * @version $Id$
  * @since 9.0
@@ -53,7 +52,7 @@ public class ConfluenceInputFilterStreamFactory
     {
         super(FilterStreamType.CONFLUENCE_XML);
 
-        setName("Confluence XML input stream");
-        setDescription("Generates wiki events from Confluence XML package.");
+        setName("Confluence XML & CSV input stream");
+        setDescription("Generates wiki events from a Confluence XML or CSV package.");
     }
 }

@@ -35,6 +35,8 @@ import org.apache.commons.configuration2.ex.ConfigurationException;
  */
 public class ConfluenceProperties extends PropertiesConfiguration
 {
+    private static final String PROPERTY_CLASS_SUFFIX = "--class";
+
     private FileBasedConfigurationBuilder<ConfluenceProperties> builder;
 
     /**
@@ -88,5 +90,49 @@ public class ConfluenceProperties extends PropertiesConfiguration
     public void save() throws ConfigurationException
     {
         this.builder.save();
+    }
+
+    /**
+     * @param attributeName the attribute name
+     * @param className the class name
+     * @since 9.96.0
+     */
+    public void setAttributeClass(String attributeName, String className)
+    {
+        setProperty(attributeName + PROPERTY_CLASS_SUFFIX, className);
+    }
+
+    /**
+     * @param attributeName the attribute of which to get the class
+     * @return the class of this attribute, or null if unknown
+     * @since 9.96.0
+     */
+    public String getAttributeClass(String attributeName)
+    {
+        return getString(attributeName + PROPERTY_CLASS_SUFFIX, null);
+    }
+
+    @Override
+    public Long getLong(String key, Long defaultValue)
+    {
+        try {
+            return super.getLong(key, defaultValue);
+        } catch (Exception e) {
+            // Usually mean the field does not have the expected format
+            return defaultValue;
+        }
+    }
+
+    @Override
+    public long getLong(String key, long defaultValue)
+    {
+        return getLong(key, (Long) defaultValue);
+    }
+
+    @Override
+    @Deprecated(since = "9.96.0")
+    public long getLong(String key)
+    {
+        return super.getLong(key);
     }
 }

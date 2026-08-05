@@ -21,13 +21,11 @@ package org.xwiki.contrib.confluence.filter.internal.input;
 
 import org.apache.commons.lang3.StringUtils;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
+import org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage;
 import org.xwiki.contrib.confluence.filter.task.ConfluenceTask;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import static org.xwiki.contrib.confluence.filter.input.ConfluenceXMLPackage.DATE_FORMAT;
 
 /**
  * a Confluence task backed by a Confluence property.
@@ -56,7 +54,7 @@ public class PropertiesConfluenceTask implements ConfluenceTask
         }
 
         try {
-            return new SimpleDateFormat(DATE_FORMAT).parse(d);
+            return ConfluenceXMLPackage.parseDate(d);
         } catch (ParseException e) {
             // FIXME: maybe log something here?
         }

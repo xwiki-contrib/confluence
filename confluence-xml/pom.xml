@@ -28,13 +28,13 @@
     <version>9.95.2-SNAPSHOT</version>
   </parent>
   <artifactId>confluence-xml</artifactId>
-  <name>Confluence - XML Input Filter</name>
-  <description>Filter stream extension to parse a Confluence XML package</description>
+  <name>Confluence - XML and CSV Input Filter</name>
+  <description>Filter stream extension to parse a Confluence XML or CSV package</description>
   <properties>
     <xwiki.jacoco.instructionRatio>0.79</xwiki.jacoco.instructionRatio>
 
     <!-- Name to display by the Extension Manager -->
-    <xwiki.extension.name>Confluence XML</xwiki.extension.name>
+    <xwiki.extension.name>Confluence XML &amp; CSV</xwiki.extension.name>
 
     <!-- Old name -->
     <xwiki.extension.features>
@@ -179,6 +179,15 @@
       <groupId>org.xwiki.contrib.user-common</groupId>
       <artifactId>user-common-formatter</artifactId>
       <version>1.0.0</version>
+    </dependency>
+    <!-- the following is used to decompress body contents in CSV site exports
+         using this library through Apache Commons Compress doesn't work
+         because it lives in the root namespace, contrary to that dependency
+         and to confluence-xml. -->
+    <dependency>
+      <groupId>com.github.luben</groupId>
+      <artifactId>zstd-jni</artifactId>
+      <version>1.5.7-12</version>
     </dependency>
   </dependencies>
   <build>

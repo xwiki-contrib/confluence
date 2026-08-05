@@ -267,5 +267,13 @@ public enum SpacePermissionType
         return this.convertedTo[0];
     }
 
-    public Right[] toXWikiRights() { return this.convertedTo; }
+    /**
+     * @return the corresponding XWiki rights. Right.ILLEGAL means the permission should be converted to nothing.
+     *         null means the conversion should raise a warning.
+     * @since 9.96.0
+     */
+    public Right[] toXWikiRights()
+    {
+        return this.convertedTo;
+    }
 }
