@@ -1810,6 +1810,10 @@ public class ConfluenceXMLPackage implements AutoCloseable
             case OBJECT_TYPE_PAGE_TEMPLATE:
                 properties = getSpacePageTemplateProperties(id, false);
                 break;
+            case "Draft":
+            case "CustomContentEntityObject":
+                // don't care
+                break;
             default:
                 if (!emptyBody) {
                     // We don't complain about unexpected parent types for empty body that we can just discard
