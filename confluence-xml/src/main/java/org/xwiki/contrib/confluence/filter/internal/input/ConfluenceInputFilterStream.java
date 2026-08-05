@@ -1108,14 +1108,23 @@ public class ConfluenceInputFilterStream
         }
 
         if (type != null) {
-            Right right = type.toXWikiRight();
-            if (right == null) {
+            Right[] rights = type.toXWikiRights();
+            if (rights == null) {
                 this.logger.warn("Unknown permission type for space permission id [{}].", spacePermissionId);
-            } else if (right != Right.ILLEGAL) {
-                sendSpaceRight(proxyFilter, right, confluenceRight, addedRights);
+            } else if (rights[0] != Right.ILLEGAL) {
+                sendSpaceRights(proxyFilter, rights, confluenceRight, addedRights);
             }
         }
     }
+
+    private void sendSpaceRights(ConfluenceFilter proxyFilter, Right[] rights,
+        ConfluenceRight confluenceRight, Set<String> addedRights) throws FilterException
+    {
+        for (Right right : rights) {
+            sendSpaceRight(proxyFilter, right, confluenceRight, addedRights);
+        }
+    }
+
 
     private void sendSpaceRight(ConfluenceFilter proxyFilter, Right right,
         ConfluenceRight confluenceRight, Set<String> addedRights) throws FilterException
