@@ -49,6 +49,14 @@
     <object class="BodyContent" package="com.atlassian.confluence.core">
         <id name="id">461143607</id>
         <property name="body"><![CDATA[
+<ul>
+    <li><ac:inline-comment-marker ac:ref="b91c5c5b-ead9-49c6-ad84-e949fcc7f9f2">hello</ac:inline-comment-marker>
+        <ul>
+            <li><p class="auto-cursor-target">The pile of queued listeners shouldn't loop indefinitely.</p>
+                <p class="auto-cursor-target"><br/></p></li>
+        </ul>
+    </li>
+</ul>
 <div>
     <a href="https://perdu.com">
       <ac:structured-macro ac:name="random-macro">

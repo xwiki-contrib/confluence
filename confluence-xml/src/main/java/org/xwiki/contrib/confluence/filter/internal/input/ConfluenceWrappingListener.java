@@ -202,6 +202,8 @@ final class ConfluenceWrappingListener extends WrappingListener
         }
         if (queuedListeners.isEmpty()) {
             super.setWrappedListener(compositeListener);
+        } else if (super.getWrappedListener() == listenerToRemove) {
+            super.setWrappedListener(queuedListeners.peek());
         }
     }
 

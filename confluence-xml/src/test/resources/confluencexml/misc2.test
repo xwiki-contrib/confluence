@@ -68,7 +68,12 @@
               </entry>
               <entry>
                 <string>content</string>
-                <string>(((
+                <string>* hello
+** (((
+The pile of queued listeners shouldn't loop indefinitely.
+)))
+
+(((
 [[{{random-macro param="value"/}}>>url:https://perdu.com||shape="rect"]]
 )))
 
