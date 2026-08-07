@@ -54,6 +54,11 @@ public class IncludeMacroConverter extends AbstractMacroConverter
     {
         String v = confluenceParameters.get("");
         if (StringUtils.isEmpty(v)) {
+            if (StringUtils.isNotEmpty(confluenceParameters.get("isMissingRequiredParameters"))) {
+                throw new ConversionException(
+                    "The include macro is marked by Confluence as missing required parameters, "
+                        + "killing the macro conversion");
+            }
             throw new ConversionException("Missing parameter for the include macro, killing the macro conversion");
         }
 
