@@ -2037,13 +2037,11 @@ public class ConfluenceXMLPackage implements AutoCloseable
         ConfluenceProperties properties = new ConfluenceProperties();
 
         Long permissionId = asLong(r.readRecord(properties));
-        if (permissionId != null && properties.getBoolean(KEY_ACTIVE, true)) {
-            Long spaceId = properties.getLong(KEY_PAGE_SPACE, null);
-            if (spaceId != null && !shouldIgnoreSpace(spaceId)) {
-                saveSpacePermissionProperties(properties, spaceId, permissionId);
-                saveInParent(properties, KEY_SPACE_PERMISSION_SPACE, OBJECT_TYPE_SPACE,
-                        KEY_SPACE_PERMISSIONS, permissionId);
-            }
+        Long spaceId = properties.getLong(KEY_PAGE_SPACE, null);
+        if (permissionId != null && spaceId != null
+            && !shouldIgnoreSpace(spaceId) && properties.getBoolean(KEY_ACTIVE, true)
+        ) {
+            saveSpacePermissionProperties(properties, spaceId, permissionId);
         }
     }
 
@@ -3099,8 +3097,37 @@ public class ConfluenceXMLPackage implements AutoCloseable
     public ConfluenceProperties getSpaceProperties(long spaceId) throws ConfigurationException
     {
         File file = getSpacePropertiesFile(spaceId);
+        if (!file.exists()) {
+            return ConfluenceProperties.create(file);
+        }
 
-        return ConfluenceProperties.create(file);
+        return maybeUpdateSpacePermissions(spaceId, file);
+    }
+
+    private ConfluenceProperties maybeUpdateSpacePermissions(long spaceId, File file) throws ConfigurationException
+    {
+        // we formerly called saveInParent to update the space permissions properties each time we read space
+        // permissions. This is highly inefficient in case permissions are not already registered in the space object
+        // because it requires saving the space properties each time. It's usually not the case in XML exports (although
+        // apparently it can be), but it's a big issue for CSV exports. We now build the list when retrieving the space
+        // properties to avoid this expensive process altogether.
+        ConfluenceProperties spaceProperties = ConfluenceProperties.create(file);
+        File spacePermissionFolder = getSpacePermissionFolder(spaceId);
+        List<Object> knownPermissions = spaceProperties.getList(KEY_SPACE_PERMISSIONS);
+        int permCount = knownPermissions.size();
+        File[] permissions = spacePermissionFolder.listFiles();
+        if (permissions != null) {
+            Arrays.stream(permissions)
+                    .map(File::getName)
+                    .sorted()
+                    .collect(Collectors.toCollection(() -> knownPermissions));
+        }
+
+        if (knownPermissions.size() != permCount) {
+            spaceProperties.setProperty(KEY_SPACE_PERMISSIONS, knownPermissions);
+            spaceProperties.save();
+        }
+        return spaceProperties;
     }
 
     private void saveSpaceDescriptionProperties(ConfluenceProperties properties, long spaceDescriptorId)

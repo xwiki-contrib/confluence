@@ -4399,51 +4399,9 @@ In this sentence, there are two annotations that are nested and some words after
         </parameters>
       </p>
       <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value="XWiki.a031c360-2c22-439a-8f7a-1d87a1ad5765"/>
-      <wikiObjectProperty name="levels" value="comment"/>
-      <wikiObjectProperty name="users" value=""/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value="XWiki.bbc1bc06-23f8-49e8-a157-989c5c5db38b"/>
-      <wikiObjectProperty name="levels" value="comment"/>
-      <wikiObjectProperty name="users" value=""/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value="XWiki.b398bac4-8802-44d8-857d-841d00e99f2f"/>
-      <wikiObjectProperty name="levels" value="comment"/>
-      <wikiObjectProperty name="users" value=""/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value="XWiki.1ae1ce79-6d8b-4ecd-aff7-ee864d8694ea"/>
-      <wikiObjectProperty name="levels" value="comment"/>
-      <wikiObjectProperty name="users" value=""/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.5ec4fd28dd6b750c226d4d5d"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
@@ -4456,8 +4414,8 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="comment"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f80897523097801753189db971e45"/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.5ec4fd28dd6b750c226d4d5d"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
@@ -4470,8 +4428,8 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="comment"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f808a79c15d430179c1e126b30036"/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.5ec4fd28dd6b750c226d4d5d"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
@@ -4484,134 +4442,8 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="comment"/>
-      <wikiObjectProperty name="users" value="XWiki.5b113b2b4bec0e53fdb543cf"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="comment"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f808a77b510470177b5c9a763014b"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="comment"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f8089752f14b40175317a42d700d6"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="comment"/>
-      <wikiObjectProperty name="users" value="XWiki.6050b04f3adeca0067c8a55a"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="comment"/>
-      <wikiObjectProperty name="users" value="XWiki.557058:9cc2b393-709d-4cb4-9467-eeaee0f0ad3e"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="comment"/>
-      <wikiObjectProperty name="users" value="XWiki.5e1e00411f9cb50ca7f4c976"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="comment"/>
-      <wikiObjectProperty name="users" value="XWiki.5f05d6e25ee2c300233a3d33"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="comment"/>
-      <wikiObjectProperty name="users" value="XWiki.557058:8792eb6f-8d26-44c2-9109-246ccee8f1ab"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="comment"/>
-      <wikiObjectProperty name="users" value="XWiki.5b90bdf83846cb2bcd2aec3f"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="comment"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:ece4e5f7-99da-4cc6-9452-99e564b52691"/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.5ec4fd28dd6b750c226d4d5d"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
@@ -4638,8 +4470,50 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="comment"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:9178a860-9acd-4fc7-bb4b-3534f228e1bb"/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:c948a4c2-2a6f-49e7-b28d-253f0d5fc98e"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:c948a4c2-2a6f-49e7-b28d-253f0d5fc98e"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:c948a4c2-2a6f-49e7-b28d-253f0d5fc98e"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:c948a4c2-2a6f-49e7-b28d-253f0d5fc98e"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
@@ -4666,8 +4540,120 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f808a77d55ec70177d8759b5a00e9"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f808a77d55ec70177d8759b5a00e9"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f808a77d55ec70177d8759b5a00e9"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f808a77d55ec70177d8759b5a00e9"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
       <wikiObjectProperty name="levels" value="comment"/>
       <wikiObjectProperty name="users" value="XWiki.8a7f808a77d55ec70177d8759b5a00e9"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:18e32d08-e82b-4e16-98c2-5b252642940f"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:18e32d08-e82b-4e16-98c2-5b252642940f"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:18e32d08-e82b-4e16-98c2-5b252642940f"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:18e32d08-e82b-4e16-98c2-5b252642940f"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
@@ -4694,8 +4680,120 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.557058:403042db-7e36-4f27-8739-b3f5fef3d15d"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.557058:403042db-7e36-4f27-8739-b3f5fef3d15d"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.557058:403042db-7e36-4f27-8739-b3f5fef3d15d"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.557058:403042db-7e36-4f27-8739-b3f5fef3d15d"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
       <wikiObjectProperty name="levels" value="comment"/>
       <wikiObjectProperty name="users" value="XWiki.557058:403042db-7e36-4f27-8739-b3f5fef3d15d"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:8ce18a99-c8a3-4de0-98ce-06ae7ff42bb6"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:8ce18a99-c8a3-4de0-98ce-06ae7ff42bb6"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:8ce18a99-c8a3-4de0-98ce-06ae7ff42bb6"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:8ce18a99-c8a3-4de0-98ce-06ae7ff42bb6"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
@@ -4722,8 +4820,120 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f808a77b11ddd0177b4d10e050202"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f808a77b11ddd0177b4d10e050202"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f808a77b11ddd0177b4d10e050202"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f808a77b11ddd0177b4d10e050202"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
       <wikiObjectProperty name="levels" value="comment"/>
       <wikiObjectProperty name="users" value="XWiki.8a7f808a77b11ddd0177b4d10e050202"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:12ec3307-d2c3-41c8-baea-3e054fb49bf4"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:12ec3307-d2c3-41c8-baea-3e054fb49bf4"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:12ec3307-d2c3-41c8-baea-3e054fb49bf4"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:12ec3307-d2c3-41c8-baea-3e054fb49bf4"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
@@ -4750,8 +4960,120 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:ea73dba0-c839-4500-aa69-5acd4acaa534"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:ea73dba0-c839-4500-aa69-5acd4acaa534"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:ea73dba0-c839-4500-aa69-5acd4acaa534"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:ea73dba0-c839-4500-aa69-5acd4acaa534"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
       <wikiObjectProperty name="levels" value="comment"/>
       <wikiObjectProperty name="users" value="XWiki.712020:ea73dba0-c839-4500-aa69-5acd4acaa534"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.557058:8aa40f91-0e88-4683-84fb-676dd3ba65f2"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.557058:8aa40f91-0e88-4683-84fb-676dd3ba65f2"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.557058:8aa40f91-0e88-4683-84fb-676dd3ba65f2"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.557058:8aa40f91-0e88-4683-84fb-676dd3ba65f2"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
@@ -4778,8 +5100,246 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:12125af2-4abb-447a-84db-82283f2d7c99"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:12125af2-4abb-447a-84db-82283f2d7c99"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:12125af2-4abb-447a-84db-82283f2d7c99"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:12125af2-4abb-447a-84db-82283f2d7c99"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
       <wikiObjectProperty name="levels" value="comment"/>
       <wikiObjectProperty name="users" value="XWiki.712020:12125af2-4abb-447a-84db-82283f2d7c99"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.557058:9cc2b393-709d-4cb4-9467-eeaee0f0ad3e"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.557058:9cc2b393-709d-4cb4-9467-eeaee0f0ad3e"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.557058:9cc2b393-709d-4cb4-9467-eeaee0f0ad3e"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.557058:9cc2b393-709d-4cb4-9467-eeaee0f0ad3e"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.557058:9cc2b393-709d-4cb4-9467-eeaee0f0ad3e"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:ece4e5f7-99da-4cc6-9452-99e564b52691"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:ece4e5f7-99da-4cc6-9452-99e564b52691"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:ece4e5f7-99da-4cc6-9452-99e564b52691"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:ece4e5f7-99da-4cc6-9452-99e564b52691"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:ece4e5f7-99da-4cc6-9452-99e564b52691"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:6bb998dd-0698-4cd4-b1d2-9dbd44d3471d"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:6bb998dd-0698-4cd4-b1d2-9dbd44d3471d"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:6bb998dd-0698-4cd4-b1d2-9dbd44d3471d"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
@@ -4806,8 +5366,498 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:6bb998dd-0698-4cd4-b1d2-9dbd44d3471d"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.5f05d6e25ee2c300233a3d33"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.5f05d6e25ee2c300233a3d33"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f8089752f14b40175317a42d700d6"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f8089752f14b40175317a42d700d6"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f808a77b510470177b5c9a763014b"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f808a77b510470177b5c9a763014b"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.bbc1bc06-23f8-49e8-a157-989c5c5db38b"/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.bbc1bc06-23f8-49e8-a157-989c5c5db38b"/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.5b90bdf83846cb2bcd2aec3f"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.5b90bdf83846cb2bcd2aec3f"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.a031c360-2c22-439a-8f7a-1d87a1ad5765"/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.a031c360-2c22-439a-8f7a-1d87a1ad5765"/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.6050b04f3adeca0067c8a55a"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.6050b04f3adeca0067c8a55a"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.557058:8792eb6f-8d26-44c2-9109-246ccee8f1ab"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.557058:8792eb6f-8d26-44c2-9109-246ccee8f1ab"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.1ae1ce79-6d8b-4ecd-aff7-ee864d8694ea"/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.1ae1ce79-6d8b-4ecd-aff7-ee864d8694ea"/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f80897523097801753189db971e45"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f80897523097801753189db971e45"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f808a79c15d430179c1e126b30036"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f808a79c15d430179c1e126b30036"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.5b113b2b4bec0e53fdb543cf"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.5b113b2b4bec0e53fdb543cf"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.5e1e00411f9cb50ca7f4c976"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.5e1e00411f9cb50ca7f4c976"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f808a7abfd0aa017ac441ea4c0728"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f808a7abfd0aa017ac441ea4c0728"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f808a7abfd0aa017ac441ea4c0728"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f808a7abfd0aa017ac441ea4c0728"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
       <wikiObjectProperty name="levels" value="comment"/>
       <wikiObjectProperty name="users" value="XWiki.8a7f808a7abfd0aa017ac441ea4c0728"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.5de7d8e3ba60e10cfd68077e"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.5de7d8e3ba60e10cfd68077e"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.5de7d8e3ba60e10cfd68077e"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.5de7d8e3ba60e10cfd68077e"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
@@ -4834,7 +5884,91 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:9178a860-9acd-4fc7-bb4b-3534f228e1bb"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
       <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:9178a860-9acd-4fc7-bb4b-3534f228e1bb"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:9178a860-9acd-4fc7-bb4b-3534f228e1bb"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:9178a860-9acd-4fc7-bb4b-3534f228e1bb"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.712020:9178a860-9acd-4fc7-bb4b-3534f228e1bb"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value="XWiki.557058:9ab63286-11ed-497d-8147-88b76e6c8a56"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
       <wikiObjectProperty name="users" value="XWiki.557058:9ab63286-11ed-497d-8147-88b76e6c8a56"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
@@ -4849,426 +5983,6 @@ In this sentence, there are two annotations that are nested and some words after
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
       <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.557058:9cc2b393-709d-4cb4-9467-eeaee0f0ad3e"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.5b113b2b4bec0e53fdb543cf"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:ece4e5f7-99da-4cc6-9452-99e564b52691"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.5f05d6e25ee2c300233a3d33"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value="XWiki.a031c360-2c22-439a-8f7a-1d87a1ad5765"/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value=""/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value="XWiki.1ae1ce79-6d8b-4ecd-aff7-ee864d8694ea"/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value=""/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value="XWiki.bbc1bc06-23f8-49e8-a157-989c5c5db38b"/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value=""/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f8089752f14b40175317a42d700d6"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.6050b04f3adeca0067c8a55a"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f808a77b510470177b5c9a763014b"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.557058:8792eb6f-8d26-44c2-9109-246ccee8f1ab"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.5b90bdf83846cb2bcd2aec3f"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f80897523097801753189db971e45"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f808a79c15d430179c1e126b30036"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.5e1e00411f9cb50ca7f4c976"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.5ec4fd28dd6b750c226d4d5d"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:9178a860-9acd-4fc7-bb4b-3534f228e1bb"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:c948a4c2-2a6f-49e7-b28d-253f0d5fc98e"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f808a77d55ec70177d8759b5a00e9"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:18e32d08-e82b-4e16-98c2-5b252642940f"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.557058:403042db-7e36-4f27-8739-b3f5fef3d15d"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:8ce18a99-c8a3-4de0-98ce-06ae7ff42bb6"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f808a77b11ddd0177b4d10e050202"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:12ec3307-d2c3-41c8-baea-3e054fb49bf4"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:ea73dba0-c839-4500-aa69-5acd4acaa534"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.557058:8aa40f91-0e88-4683-84fb-676dd3ba65f2"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:12125af2-4abb-447a-84db-82283f2d7c99"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:6bb998dd-0698-4cd4-b1d2-9dbd44d3471d"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f808a7abfd0aa017ac441ea4c0728"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value="XWiki.5de7d8e3ba60e10cfd68077e"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="delete"/>
       <wikiObjectProperty name="users" value="XWiki.557058:9ab63286-11ed-497d-8147-88b76e6c8a56"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
@@ -5282,890 +5996,8 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.557058:9cc2b393-709d-4cb4-9467-eeaee0f0ad3e"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:ece4e5f7-99da-4cc6-9452-99e564b52691"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.5f05d6e25ee2c300233a3d33"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value="XWiki.a031c360-2c22-439a-8f7a-1d87a1ad5765"/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value=""/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f8089752f14b40175317a42d700d6"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.6050b04f3adeca0067c8a55a"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f808a77b510470177b5c9a763014b"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.557058:8792eb6f-8d26-44c2-9109-246ccee8f1ab"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value="XWiki.1ae1ce79-6d8b-4ecd-aff7-ee864d8694ea"/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value=""/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value="XWiki.bbc1bc06-23f8-49e8-a157-989c5c5db38b"/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value=""/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.5b90bdf83846cb2bcd2aec3f"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f80897523097801753189db971e45"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f808a79c15d430179c1e126b30036"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.5b113b2b4bec0e53fdb543cf"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value="XWiki.b398bac4-8802-44d8-857d-841d00e99f2f"/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value=""/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.5e1e00411f9cb50ca7f4c976"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.5ec4fd28dd6b750c226d4d5d"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:9178a860-9acd-4fc7-bb4b-3534f228e1bb"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:c948a4c2-2a6f-49e7-b28d-253f0d5fc98e"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f808a77d55ec70177d8759b5a00e9"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:18e32d08-e82b-4e16-98c2-5b252642940f"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.557058:403042db-7e36-4f27-8739-b3f5fef3d15d"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:8ce18a99-c8a3-4de0-98ce-06ae7ff42bb6"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f808a77b11ddd0177b4d10e050202"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:12ec3307-d2c3-41c8-baea-3e054fb49bf4"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:ea73dba0-c839-4500-aa69-5acd4acaa534"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.557058:8aa40f91-0e88-4683-84fb-676dd3ba65f2"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:12125af2-4abb-447a-84db-82283f2d7c99"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:6bb998dd-0698-4cd4-b1d2-9dbd44d3471d"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f808a7abfd0aa017ac441ea4c0728"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
-      <wikiObjectProperty name="users" value="XWiki.5de7d8e3ba60e10cfd68077e"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="levels" value="comment"/>
       <wikiObjectProperty name="users" value="XWiki.557058:9ab63286-11ed-497d-8147-88b76e6c8a56"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value="XWiki.b398bac4-8802-44d8-857d-841d00e99f2f"/>
-      <wikiObjectProperty name="levels" value="delete"/>
-      <wikiObjectProperty name="users" value=""/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value="XWiki.bbc1bc06-23f8-49e8-a157-989c5c5db38b"/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value=""/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value="XWiki.1ae1ce79-6d8b-4ecd-aff7-ee864d8694ea"/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value=""/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value="XWiki.a031c360-2c22-439a-8f7a-1d87a1ad5765"/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value=""/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value="XWiki.b398bac4-8802-44d8-857d-841d00e99f2f"/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value=""/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f80897523097801753189db971e45"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f808a79c15d430179c1e126b30036"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.5b113b2b4bec0e53fdb543cf"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f808a77b510470177b5c9a763014b"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f8089752f14b40175317a42d700d6"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.6050b04f3adeca0067c8a55a"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.557058:9cc2b393-709d-4cb4-9467-eeaee0f0ad3e"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.5e1e00411f9cb50ca7f4c976"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.5f05d6e25ee2c300233a3d33"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.557058:8792eb6f-8d26-44c2-9109-246ccee8f1ab"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.5b90bdf83846cb2bcd2aec3f"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:ece4e5f7-99da-4cc6-9452-99e564b52691"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.5ec4fd28dd6b750c226d4d5d"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:9178a860-9acd-4fc7-bb4b-3534f228e1bb"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:c948a4c2-2a6f-49e7-b28d-253f0d5fc98e"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f808a77d55ec70177d8759b5a00e9"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:18e32d08-e82b-4e16-98c2-5b252642940f"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.557058:403042db-7e36-4f27-8739-b3f5fef3d15d"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:8ce18a99-c8a3-4de0-98ce-06ae7ff42bb6"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f808a77b11ddd0177b4d10e050202"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:12ec3307-d2c3-41c8-baea-3e054fb49bf4"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:ea73dba0-c839-4500-aa69-5acd4acaa534"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.557058:8aa40f91-0e88-4683-84fb-676dd3ba65f2"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:12125af2-4abb-447a-84db-82283f2d7c99"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:6bb998dd-0698-4cd4-b1d2-9dbd44d3471d"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f808a7abfd0aa017ac441ea4c0728"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="admin"/>
-      <wikiObjectProperty name="users" value="XWiki.5de7d8e3ba60e10cfd68077e"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
@@ -6206,6 +6038,160 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value="XWiki.bbc1bc06-23f8-49e8-a157-989c5c5db38b"/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.b398bac4-8802-44d8-857d-841d00e99f2f"/>
+      <wikiObjectProperty name="levels" value="delete"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.1ae1ce79-6d8b-4ecd-aff7-ee864d8694ea"/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.a031c360-2c22-439a-8f7a-1d87a1ad5765"/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.bbc1bc06-23f8-49e8-a157-989c5c5db38b"/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.b398bac4-8802-44d8-857d-841d00e99f2f"/>
+      <wikiObjectProperty name="levels" value="edit"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f80897523097801753189db971e45"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f80897523097801753189db971e45"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.a031c360-2c22-439a-8f7a-1d87a1ad5765"/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.b398bac4-8802-44d8-857d-841d00e99f2f"/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f80897523097801753189db971e45"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.bbc1bc06-23f8-49e8-a157-989c5c5db38b"/>
       <wikiObjectProperty name="levels" value="view"/>
       <wikiObjectProperty name="users" value=""/>
     </wikiObject>
@@ -6234,6 +6220,34 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value="XWiki.1ae1ce79-6d8b-4ecd-aff7-ee864d8694ea"/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.b398bac4-8802-44d8-857d-841d00e99f2f"/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value=""/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value="XWiki.1ae1ce79-6d8b-4ecd-aff7-ee864d8694ea"/>
       <wikiObjectProperty name="levels" value="view"/>
       <wikiObjectProperty name="users" value=""/>
     </wikiObject>
@@ -6249,7 +6263,7 @@ In this sentence, there are two annotations that are nested and some words after
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
       <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f80897523097801753189db971e45"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f808a79c15d430179c1e126b30036"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
@@ -6262,7 +6276,21 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f808a79c15d430179c1e126b30036"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
       <wikiObjectProperty name="users" value="XWiki.8a7f808a79c15d430179c1e126b30036"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
@@ -6290,7 +6318,63 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.5b113b2b4bec0e53fdb543cf"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.5b113b2b4bec0e53fdb543cf"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
       <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f808a77b510470177b5c9a763014b"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f808a77b510470177b5c9a763014b"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
       <wikiObjectProperty name="users" value="XWiki.8a7f808a77b510470177b5c9a763014b"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
@@ -6318,6 +6402,34 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f8089752f14b40175317a42d700d6"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.8a7f8089752f14b40175317a42d700d6"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
       <wikiObjectProperty name="levels" value="view"/>
       <wikiObjectProperty name="users" value="XWiki.6050b04f3adeca0067c8a55a"/>
     </wikiObject>
@@ -6332,8 +6444,22 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.557058:9cc2b393-709d-4cb4-9467-eeaee0f0ad3e"/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.6050b04f3adeca0067c8a55a"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.6050b04f3adeca0067c8a55a"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
@@ -6347,6 +6473,34 @@ In this sentence, there are two annotations that are nested and some words after
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
       <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.5e1e00411f9cb50ca7f4c976"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.5e1e00411f9cb50ca7f4c976"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
       <wikiObjectProperty name="users" value="XWiki.5e1e00411f9cb50ca7f4c976"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
@@ -6374,7 +6528,63 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.5f05d6e25ee2c300233a3d33"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.5f05d6e25ee2c300233a3d33"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
       <wikiObjectProperty name="levels" value="view"/>
+      <wikiObjectProperty name="users" value="XWiki.557058:8792eb6f-8d26-44c2-9109-246ccee8f1ab"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.557058:8792eb6f-8d26-44c2-9109-246ccee8f1ab"/>
+    </wikiObject>
+    <wikiObject name="XWiki.XWikiGlobalRights">
+      <p>
+        <parameters>
+          <entry>
+            <string>class_reference</string>
+            <string>XWiki.XWikiGlobalRights</string>
+          </entry>
+        </parameters>
+      </p>
+      <wikiObjectProperty name="allow" value="1"/>
+      <wikiObjectProperty name="groups" value=""/>
+      <wikiObjectProperty name="levels" value="admin"/>
       <wikiObjectProperty name="users" value="XWiki.557058:8792eb6f-8d26-44c2-9109-246ccee8f1ab"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
@@ -6402,8 +6612,8 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:ece4e5f7-99da-4cc6-9452-99e564b52691"/>
+      <wikiObjectProperty name="levels" value="comment"/>
+      <wikiObjectProperty name="users" value="XWiki.5b90bdf83846cb2bcd2aec3f"/>
     </wikiObject>
     <wikiObject name="XWiki.XWikiGlobalRights">
       <p>
@@ -6416,218 +6626,8 @@ In this sentence, there are two annotations that are nested and some words after
       </p>
       <wikiObjectProperty name="allow" value="1"/>
       <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.5ec4fd28dd6b750c226d4d5d"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:9178a860-9acd-4fc7-bb4b-3534f228e1bb"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:c948a4c2-2a6f-49e7-b28d-253f0d5fc98e"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f808a77d55ec70177d8759b5a00e9"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:18e32d08-e82b-4e16-98c2-5b252642940f"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.557058:403042db-7e36-4f27-8739-b3f5fef3d15d"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:8ce18a99-c8a3-4de0-98ce-06ae7ff42bb6"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f808a77b11ddd0177b4d10e050202"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:12ec3307-d2c3-41c8-baea-3e054fb49bf4"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:ea73dba0-c839-4500-aa69-5acd4acaa534"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.557058:8aa40f91-0e88-4683-84fb-676dd3ba65f2"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:12125af2-4abb-447a-84db-82283f2d7c99"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.712020:6bb998dd-0698-4cd4-b1d2-9dbd44d3471d"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.8a7f808a7abfd0aa017ac441ea4c0728"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.5de7d8e3ba60e10cfd68077e"/>
-    </wikiObject>
-    <wikiObject name="XWiki.XWikiGlobalRights">
-      <p>
-        <parameters>
-          <entry>
-            <string>class_reference</string>
-            <string>XWiki.XWikiGlobalRights</string>
-          </entry>
-        </parameters>
-      </p>
-      <wikiObjectProperty name="allow" value="1"/>
-      <wikiObjectProperty name="groups" value=""/>
-      <wikiObjectProperty name="levels" value="view"/>
-      <wikiObjectProperty name="users" value="XWiki.557058:9ab63286-11ed-497d-8147-88b76e6c8a56"/>
+      <wikiObjectProperty name="levels" value="admin"/>
+      <wikiObjectProperty name="users" value="XWiki.5b90bdf83846cb2bcd2aec3f"/>
     </wikiObject>
   </wikiDocument>
   <wikiSpace name="Templates">
@@ -6687,34 +6687,6 @@ In this sentence, there are two annotations that are nested and some words after
         <wikiObjectProperty name="allow" value="1"/>
         <wikiObjectProperty name="groups" value=""/>
         <wikiObjectProperty name="levels" value="edit"/>
-        <wikiObjectProperty name="users" value="XWiki.712020:9178a860-9acd-4fc7-bb4b-3534f228e1bb"/>
-      </wikiObject>
-      <wikiObject name="XWiki.XWikiGlobalRights">
-        <p>
-          <parameters>
-            <entry>
-              <string>class_reference</string>
-              <string>XWiki.XWikiGlobalRights</string>
-            </entry>
-          </parameters>
-        </p>
-        <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value=""/>
-        <wikiObjectProperty name="levels" value="delete"/>
-        <wikiObjectProperty name="users" value="XWiki.712020:9178a860-9acd-4fc7-bb4b-3534f228e1bb"/>
-      </wikiObject>
-      <wikiObject name="XWiki.XWikiGlobalRights">
-        <p>
-          <parameters>
-            <entry>
-              <string>class_reference</string>
-              <string>XWiki.XWikiGlobalRights</string>
-            </entry>
-          </parameters>
-        </p>
-        <wikiObjectProperty name="allow" value="1"/>
-        <wikiObjectProperty name="groups" value=""/>
-        <wikiObjectProperty name="levels" value="edit"/>
         <wikiObjectProperty name="users" value="XWiki.5f05d6e25ee2c300233a3d33"/>
       </wikiObject>
       <wikiObject name="XWiki.XWikiGlobalRights">
@@ -7514,6 +7486,34 @@ In this sentence, there are two annotations that are nested and some words after
         <wikiObjectProperty name="groups" value=""/>
         <wikiObjectProperty name="levels" value="delete"/>
         <wikiObjectProperty name="users" value="XWiki.5de7d8e3ba60e10cfd68077e"/>
+      </wikiObject>
+      <wikiObject name="XWiki.XWikiGlobalRights">
+        <p>
+          <parameters>
+            <entry>
+              <string>class_reference</string>
+              <string>XWiki.XWikiGlobalRights</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObjectProperty name="allow" value="1"/>
+        <wikiObjectProperty name="groups" value=""/>
+        <wikiObjectProperty name="levels" value="edit"/>
+        <wikiObjectProperty name="users" value="XWiki.712020:9178a860-9acd-4fc7-bb4b-3534f228e1bb"/>
+      </wikiObject>
+      <wikiObject name="XWiki.XWikiGlobalRights">
+        <p>
+          <parameters>
+            <entry>
+              <string>class_reference</string>
+              <string>XWiki.XWikiGlobalRights</string>
+            </entry>
+          </parameters>
+        </p>
+        <wikiObjectProperty name="allow" value="1"/>
+        <wikiObjectProperty name="groups" value=""/>
+        <wikiObjectProperty name="levels" value="delete"/>
+        <wikiObjectProperty name="users" value="XWiki.712020:9178a860-9acd-4fc7-bb4b-3534f228e1bb"/>
       </wikiObject>
       <wikiObject name="XWiki.XWikiGlobalRights">
         <p>
