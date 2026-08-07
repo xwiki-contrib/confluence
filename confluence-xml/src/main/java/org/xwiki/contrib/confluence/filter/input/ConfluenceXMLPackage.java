@@ -1194,7 +1194,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
             Files.createTempDirectory(this.environment.getTemporaryDirectory().toPath(), "confluencexml").toFile();
         this.temporaryDirectory = true;
 
-        // Extract the zip
+        logger.info("Extracting the Confluence backup to [{}]...", this.directory);
         ZipArchiveInputStream zais = new ZipArchiveInputStream(stream);
         for (ZipArchiveEntry zipEntry = zais.getNextZipEntry(); zipEntry != null; zipEntry = zais.getNextZipEntry()) {
             if (!zipEntry.isDirectory()) {
@@ -1204,6 +1204,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
                 FileUtils.copyInputStreamToFile(CloseShieldInputStream.wrap(zais), file);
             }
         }
+        logger.info("Done extracting.");
     }
 
     /**
@@ -1624,6 +1625,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
         if (!this.tree.isDirectory() && !this.tree.mkdir()) {
             throw new IOException("Could not create the working directory to extract the Confluence package");
         }
+
+        logger.info("Working directory: [{}]", this.tree);
     }
 
     private void getJobStatus()
