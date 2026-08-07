@@ -35,10 +35,6 @@
               <date>2023-09-27 17:02:26.883 UTC</date>
             </entry>
             <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
               <string>title</string>
               <string>SpaceA</string>
             </entry>
@@ -583,10 +579,6 @@
               <entry>
                 <string>revision_date</string>
                 <date>2023-09-27 17:02:59.635 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>

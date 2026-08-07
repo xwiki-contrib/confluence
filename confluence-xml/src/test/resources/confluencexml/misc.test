@@ -67,10 +67,6 @@
                 <date>2013-12-12 13:30:15.120 UTC</date>
               </entry>
               <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
                 <string>title</string>
                 <string>with [[braces]] (and [single brace])</string>
               </entry>
@@ -108,10 +104,6 @@ in [[code block]]
               <entry>
                 <string>revision_date</string>
                 <date>2013-12-12 13:38:02.510 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>
@@ -196,10 +188,6 @@ in //ex//cerpt
                     <entry>
                       <string>revision_author</string>
                       <string>XWiki.clemens</string>
-                    </entry>
-                    <entry>
-                      <string>revision_comment</string>
-                      <string></string>
                     </entry>
                   </parameters>
                 </p>

@@ -33,10 +33,6 @@
               <date>2024-03-20 14:26:03.47 UTC</date>
             </entry>
             <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
               <string>title</string>
               <string>viewpropagate</string>
             </entry>
@@ -91,10 +87,6 @@
                 <date>2024-03-20 14:29:16.174 UTC</date>
               </entry>
               <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
                 <string>title</string>
                 <string>WithViewRights</string>
               </entry>
@@ -146,10 +138,6 @@
                 <entry>
                   <string>revision_date</string>
                   <date>2024-03-20 14:30:15.289 UTC</date>
-                </entry>
-                <entry>
-                  <string>revision_comment</string>
-                  <string></string>
                 </entry>
                 <entry>
                   <string>title</string>
@@ -231,10 +219,6 @@
                   <entry>
                     <string>revision_date</string>
                     <date>2024-03-20 14:30:47.245 UTC</date>
-                  </entry>
-                  <entry>
-                    <string>revision_comment</string>
-                    <string></string>
                   </entry>
                   <entry>
                     <string>title</string>

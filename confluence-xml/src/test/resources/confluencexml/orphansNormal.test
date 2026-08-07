@@ -33,10 +33,6 @@
               <date>2025-01-29 15:18:26.277 UTC</date>
             </entry>
             <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
               <string>title</string>
               <string>Orphans</string>
             </entry>
@@ -74,10 +70,6 @@
               <entry>
                 <string>revision_date</string>
                 <date>2025-01-29 15:19:10.571 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>
@@ -118,10 +110,6 @@
               <entry>
                 <string>revision_date</string>
                 <date>2025-01-29 15:14:28.734 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>
@@ -178,10 +166,6 @@
                   <date>2025-01-29 15:17:22.212 UTC</date>
                 </entry>
                 <entry>
-                  <string>revision_comment</string>
-                  <string></string>
-                </entry>
-                <entry>
                   <string>title</string>
                   <string>Orphan</string>
                 </entry>
@@ -234,10 +218,6 @@
                   <entry>
                     <string>revision_date</string>
                     <date>2025-01-29 15:17:41.254 UTC</date>
-                  </entry>
-                  <entry>
-                    <string>revision_comment</string>
-                    <string></string>
                   </entry>
                   <entry>
                     <string>title</string>
@@ -294,10 +274,6 @@
                 <entry>
                   <string>revision_date</string>
                   <date>2025-01-29 15:18:12.893 UTC</date>
-                </entry>
-                <entry>
-                  <string>revision_comment</string>
-                  <string></string>
                 </entry>
                 <entry>
                   <string>title</string>
@@ -432,10 +408,6 @@
                 <date>2025-01-29 15:34:19.599 UTC</date>
               </entry>
               <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
                 <string>title</string>
                 <string>Post 1</string>
               </entry>
@@ -499,10 +471,6 @@
               <entry>
                 <string>revision_date</string>
                 <date>2025-01-29 15:34:31.580 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>

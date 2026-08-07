@@ -151,10 +151,6 @@
               <date>2013-10-14 15:37:24.463 UTC</date>
             </entry>
             <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
               <string>title</string>
               <string>privatespace</string>
             </entry>
@@ -261,10 +257,6 @@ To help you on your way, we've inserted some of our favourite macros on this hom
               <entry>
                 <string>revision_date</string>
                 <date>2013-10-14 15:37:52.357 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>
@@ -411,10 +403,6 @@ To help you on your way, we've inserted some of our favourite macros on this hom
             <entry>
               <string>revision_date</string>
               <date>2013-10-14 15:32:33.982 UTC</date>
-            </entry>
-            <entry>
-              <string>revision_comment</string>
-              <string></string>
             </entry>
             <entry>
               <string>title</string>
@@ -585,10 +573,6 @@ To help you on your way, we've inserted some of our favourite macros on this hom
                 <date>2013-10-14 15:33:07.495 UTC</date>
               </entry>
               <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
                 <string>title</string>
                 <string>Page 2</string>
               </entry>
@@ -622,10 +606,6 @@ Link to page 1 [[here>>doc:SPACE1.Page 1.WebHome]]</string>
               <entry>
                 <string>revision_date</string>
                 <date>2013-10-14 15:35:10.951 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>
@@ -874,10 +854,6 @@ Link to page 1 [[here>>doc:SPACE1.Page 1.WebHome]]</string>
               <date>2013-10-14 14:53:25.501 UTC</date>
             </entry>
             <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
               <string>title</string>
               <string>space1</string>
             </entry>
@@ -1001,10 +977,6 @@ This space is in favourit</value>
               <entry>
                 <string>revision_date</string>
                 <date>2013-10-14 15:07:38.580 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>
@@ -1169,10 +1141,6 @@ Some wiki text with **bold** content
               <entry>
                 <string>revision_date</string>
                 <date>2013-10-14 15:28:41.980 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>
@@ -1478,10 +1446,6 @@ content
               <entry>
                 <string>revision_date</string>
                 <date>2013-10-14 15:30:07.55 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>
@@ -2098,10 +2062,6 @@ content
                 <date>2013-10-14 15:30:33.783 UTC</date>
               </entry>
               <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
                 <string>title</string>
                 <string>Page 1</string>
               </entry>
@@ -2407,10 +2367,6 @@ content
                 <date>2013-10-14 15:32:14.75 UTC</date>
               </entry>
               <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
                 <string>title</string>
                 <string>Page 1</string>
               </entry>
@@ -2714,10 +2670,6 @@ content
               <entry>
                 <string>revision_date</string>
                 <date>2013-10-14 15:34:06.749 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>
@@ -3040,10 +2992,6 @@ content
                   <string>revision_author</string>
                   <string>XWiki.Admin</string>
                 </entry>
-                <entry>
-                  <string>revision_comment</string>
-                  <string></string>
-                </entry>
               </parameters>
             </p>
           </wikiAttachment>
@@ -3075,10 +3023,6 @@ content
                   <string>revision_author</string>
                   <string>XWiki.Admin</string>
                 </entry>
-                <entry>
-                  <string>revision_comment</string>
-                  <string></string>
-                </entry>
               </parameters>
             </p>
           </wikiAttachment>
@@ -3109,10 +3053,6 @@ content
                 <entry>
                   <string>revision_author</string>
                   <string>XWiki.Admin</string>
-                </entry>
-                <entry>
-                  <string>revision_comment</string>
-                  <string></string>
                 </entry>
               </parameters>
             </p>

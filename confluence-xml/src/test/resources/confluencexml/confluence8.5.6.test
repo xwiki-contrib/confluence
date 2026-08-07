@@ -24,10 +24,6 @@
               <date>2024-04-22 16:35:21.231 UTC</date>
             </entry>
             <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
               <string>title</string>
               <string>Home Test</string>
             </entry>
@@ -94,10 +90,6 @@
                 <date>2024-04-23 12:00:33.593 UTC</date>
               </entry>
               <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
                 <string>title</string>
                 <string>Page With Comment</string>
               </entry>
@@ -154,10 +146,6 @@
               <entry>
                 <string>revision_date</string>
                 <date>2024-04-22 16:47:04.527 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>

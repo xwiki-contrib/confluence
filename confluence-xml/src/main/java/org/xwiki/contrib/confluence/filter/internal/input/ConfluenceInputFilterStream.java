@@ -2440,9 +2440,9 @@ public class ConfluenceInputFilterStream
                     createPageIdentifier(pageProperties), e);
             }
         }
-        if (pageProperties.containsKey(ConfluenceXMLPackage.KEY_PAGE_REVISION_COMMENT)) {
-            documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_REVISION_COMMENT,
-                pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION_COMMENT));
+        String revComment = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_REVISION_COMMENT, null);
+        if (StringUtils.isNotEmpty(revComment)) {
+            documentRevisionParameters.put(WikiDocumentFilter.PARAMETER_REVISION_COMMENT, revComment);
         }
 
         String title = (!this.properties.isSpaceTitleFromHomePage()
@@ -2901,9 +2901,9 @@ public class ConfluenceInputFilterStream
         attachmentParameters.put(WikiAttachmentFilter.PARAMETER_REVISION, Long.toString(version));
         fillAttachmentMediaType(attachmentContentProperties, attachmentParameters);
         fillAttachmentAuthor(attachmentProperties, attachmentParameters);
-        if (attachmentProperties.containsKey(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_COMMENT)) {
-            attachmentParameters.put(WikiAttachmentFilter.PARAMETER_REVISION_COMMENT,
-                attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_COMMENT));
+        String revComment = attachmentProperties.getString(ConfluenceXMLPackage.KEY_ATTACHMENT_REVISION_COMMENT, null);
+        if (StringUtils.isNotEmpty(revComment)) {
+            attachmentParameters.put(WikiAttachmentFilter.PARAMETER_REVISION_COMMENT, revComment);
         }
 
         return new AttachmentInfo(attachmentId, attachmentSize, contentFile, version, attachmentParameters);

@@ -34,10 +34,6 @@
                 <date>2024-02-12 08:05:02.261 UTC</date>
               </entry>
               <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
                 <string>title</string>
                 <string>Small Nested Home</string>
               </entry>
@@ -104,10 +100,6 @@ Spaces help your team structure, organize, and share work, so every team member 
                 <date>2024-02-12 08:05:30.967 UTC</date>
               </entry>
               <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
                 <string>title</string>
                 <string>Small Nested</string>
               </entry>
@@ -160,10 +152,6 @@ Spaces help your team structure, organize, and share work, so every team member 
                 <entry>
                   <string>revision_date</string>
                   <date>2024-02-12 08:06:14.40 UTC</date>
-                </entry>
-                <entry>
-                  <string>revision_comment</string>
-                  <string></string>
                 </entry>
                 <entry>
                   <string>title</string>
@@ -220,10 +208,6 @@ Spaces help your team structure, organize, and share work, so every team member 
                     <date>2024-02-12 08:06:48.48 UTC</date>
                   </entry>
                   <entry>
-                    <string>revision_comment</string>
-                    <string></string>
-                  </entry>
-                  <entry>
                     <string>title</string>
                     <string>Under Page A</string>
                   </entry>
@@ -255,10 +239,6 @@ Spaces help your team structure, organize, and share work, so every team member 
                   <entry>
                     <string>revision_date</string>
                     <date>2024-02-12 08:12:09.747 UTC</date>
-                  </entry>
-                  <entry>
-                    <string>revision_comment</string>
-                    <string></string>
                   </entry>
                   <entry>
                     <string>title</string>
@@ -321,10 +301,6 @@ This is an excerpt
                   <date>2024-02-12 08:07:39.440 UTC</date>
                 </entry>
                 <entry>
-                  <string>revision_comment</string>
-                  <string></string>
-                </entry>
-                <entry>
                   <string>title</string>
                   <string>Page B</string>
                 </entry>
@@ -377,10 +353,6 @@ This is an excerpt
                   <entry>
                     <string>revision_date</string>
                     <date>2024-02-12 08:13:00.739 UTC</date>
-                  </entry>
-                  <entry>
-                    <string>revision_comment</string>
-                    <string></string>
                   </entry>
                   <entry>
                     <string>title</string>

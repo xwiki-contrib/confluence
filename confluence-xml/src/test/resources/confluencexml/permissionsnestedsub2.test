@@ -118,10 +118,6 @@
                   <date>2023-01-26 09:33:59.0 UTC</date>
                 </entry>
                 <entry>
-                  <string>revision_comment</string>
-                  <string></string>
-                </entry>
-                <entry>
                   <string>title</string>
                   <string>The Nice Web Team</string>
                 </entry>
@@ -161,10 +157,6 @@
                     <date>2023-01-26 09:38:54.0 UTC</date>
                   </entry>
                   <entry>
-                    <string>revision_comment</string>
-                    <string></string>
-                  </entry>
-                  <entry>
                     <string>title</string>
                     <string>Archive</string>
                   </entry>
@@ -202,10 +194,6 @@
                     <entry>
                       <string>revision_date</string>
                       <date>2015-09-21 16:28:55.0 UTC</date>
-                    </entry>
-                    <entry>
-                      <string>revision_comment</string>
-                      <string></string>
                     </entry>
                     <entry>
                       <string>title</string>

@@ -33,10 +33,6 @@
               <date>2023-12-06 09:38:14.660 UTC</date>
             </entry>
             <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
               <string>title</string>
               <string>Test space</string>
             </entry>
@@ -89,10 +85,6 @@
               <entry>
                 <string>revision_date</string>
                 <date>2018-01-30 10:14:40.702 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>

@@ -129,10 +129,6 @@
               <date>2016-05-10 15:00:05.364 UTC</date>
             </entry>
             <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
               <string>title</string>
               <string>Demonstration Space</string>
             </entry>
@@ -249,10 +245,6 @@
                 <date>2016-05-10 15:00:05.362 UTC</date>
               </entry>
               <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
                 <string>title</string>
                 <string>What is Confluence? (step 1 of 9)</string>
               </entry>
@@ -347,10 +339,6 @@ Confluence puts your content online in a central place where your team can searc
               <entry>
                 <string>revision_date</string>
                 <date>2016-05-10 15:00:05.365 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>
@@ -533,10 +521,6 @@ When// y//ou're ready, click **Save** and go to the next step or back to the sp
                 <date>2016-05-10 15:00:05.384 UTC</date>
               </entry>
               <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
                 <string>title</string>
                 <string>A quick look at the editor (step 2 of 9)</string>
               </entry>
@@ -717,10 +701,6 @@ You can type into the editor as you would in any document, apply formatting, and
               <entry>
                 <string>revision_date</string>
                 <date>2016-05-10 15:00:05.386 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>
@@ -948,10 +928,6 @@ The Files button is not just for images, you can insert and preview a wide range
                 <date>2016-05-10 15:00:05.388 UTC</date>
               </entry>
               <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
                 <string>title</string>
                 <string>Lay out your page (step 6 of 9)</string>
               </entry>
@@ -1095,10 +1071,6 @@ You can add as many sections as you need, and each section can have a different 
               <entry>
                 <string>revision_date</string>
                 <date>2016-05-10 15:00:05.389 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>
@@ -1268,10 +1240,6 @@ Add, remove, cut, and paste rows and columns – this makes working with tables 
                 <date>2016-05-10 15:00:05.391 UTC</date>
               </entry>
               <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
                 <string>title</string>
                 <string>Tell people what you think in a comment (step 8 of 9)</string>
               </entry>
@@ -1376,10 +1344,6 @@ The user will be notified that you mentioned them.
                 <date>2016-05-10 17:03:03.979 UTC</date>
               </entry>
               <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
                 <string>title</string>
                 <string>toto</string>
               </entry>
@@ -1431,10 +1395,6 @@ See yo</string>
               <entry>
                 <string>revision_date</string>
                 <date>2016-05-10 15:00:05.392 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>
@@ -1541,10 +1501,6 @@ Flickr photo streams, Twitter streams, Google maps and many more.
               <entry>
                 <string>revision_date</string>
                 <date>2016-05-10 15:00:05.393 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>

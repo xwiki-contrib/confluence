@@ -62,10 +62,6 @@
                 <date>2022-01-14 01:45:25.0 UTC</date>
               </entry>
               <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
                 <string>title</string>
                 <string>Without parent Home</string>
               </entry>
@@ -103,10 +99,6 @@
                 <entry>
                   <string>revision_date</string>
                   <date>2021-03-31 11:39:54.0 UTC</date>
-                </entry>
-                <entry>
-                  <string>revision_comment</string>
-                  <string></string>
                 </entry>
                 <entry>
                   <string>title</string>
@@ -150,10 +142,6 @@
                 <date>2022-01-14 01:45:25.0 UTC</date>
               </entry>
               <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
                 <string>title</string>
                 <string>Second page without parent</string>
               </entry>
@@ -192,10 +180,6 @@
               <entry>
                 <string>revision_date</string>
                 <date>2022-01-14 01:45:25.0 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>

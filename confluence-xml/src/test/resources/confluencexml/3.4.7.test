@@ -32,10 +32,6 @@
               <date>2018-10-23 15:28:48.158 UTC</date>
             </entry>
             <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
               <string>title</string>
               <string>TestDemo</string>
             </entry>
@@ -105,10 +101,6 @@ h6. Navigate space
               <entry>
                 <string>revision_date</string>
                 <date>2018-10-23 15:33:59.264 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>

@@ -33,10 +33,6 @@
               <date>2025-01-14 13:03:38.551 UTC</date>
             </entry>
             <entry>
-              <string>revision_comment</string>
-              <string></string>
-            </entry>
-            <entry>
               <string>title</string>
               <string>Remove</string>
             </entry>
@@ -113,10 +109,6 @@
                 <date>2025-01-14 13:08:11.166 UTC</date>
               </entry>
               <entry>
-                <string>revision_comment</string>
-                <string></string>
-              </entry>
-              <entry>
                 <string>title</string>
                 <string>PageWithInlineComments</string>
               </entry>
@@ -162,10 +154,6 @@ Line 8</string>
               <entry>
                 <string>revision_date</string>
                 <date>2025-01-14 13:08:11.166 UTC</date>
-              </entry>
-              <entry>
-                <string>revision_comment</string>
-                <string></string>
               </entry>
               <entry>
                 <string>title</string>
