@@ -581,7 +581,7 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @since 9.6
      */
     @PropertyName("Import users")
-    @PropertyDescription("Import the users found in the confluence package.")
+    @PropertyDescription("Import the users found in the confluence package (note: unavailable in space backups).")
     public boolean isUsersEnabled()
     {
         return this.usersEnabled;
@@ -601,7 +601,8 @@ public class ConfluenceInputProperties extends DefaultFilterStreamProperties
      * @since 9.38.0
      */
     @PropertyName("Import groups")
-    @PropertyDescription("Import the groups found in the confluence package.")
+    @PropertyDescription("Import the groups found in the confluence package. "
+        + "(note: unavailable in space backups and in CSV backups)")
     public boolean isGroupsEnabled()
     {
         return this.groupsEnabled;
