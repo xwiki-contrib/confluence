@@ -52,6 +52,12 @@
       <timezone>+1</timezone>
     </developer>
     <developer>
+      <id>rjakse</id>
+      <name>Raphaël Jakse</name>
+      <email>raphael.jakse at xwiki.com</email>
+      <timezone>+1</timezone>
+    </developer>
+    <developer>
       <id>xwikidev</id>
       <name>XWiki Development Team</name>
     </developer>
