@@ -781,6 +781,7 @@ public class ConfluenceXMLPackage implements AutoCloseable
     };
 
     private static final String SPACES = "spaces";
+    private static final String KEY_SPACEPERMISSIONSUPDATED = "spacepermissionsupdated";
 
     @Inject
     private Environment environment;
@@ -840,6 +841,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private String spaceKeyToImport;
     private long spaceIdToImport;
+
+    private boolean doneReadingSpacePermissions = true;
 
     /**
      * @return the content permission sets of the given page properties.
@@ -1505,10 +1508,12 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
     private void readObjects() throws FilterException, ConfluenceCanceledException
     {
+        doneReadingSpacePermissions = false;
         if (isCSV()) {
             readCSVObjects();
         } else {
             ConfluenceXMLStreamReader.readRecords(progress, entities, this::readXMLObject);
+            doneReadingSpacePermissions = true;
         }
         cleanUpUnwantedSpaces();
         try {
@@ -1522,6 +1527,8 @@ public class ConfluenceXMLPackage implements AutoCloseable
     {
         progress.pushLevelProgress(ConfluenceCSVTable.values().length, this);
         try {
+            readCSVTable(ConfluenceCSVTable.spacepermissions.name(), this::readSpacePermissionObject);
+            doneReadingSpacePermissions = true;
             readCSVTable(ConfluenceCSVTable.bodycontent.name(), this::readBodyContentObject);
             readCSVTable(ConfluenceCSVTable.content.name(), this::readContentObject);
             readCSVTable(ConfluenceCSVTable.content_label.name(), this::readLabellingObject);
@@ -1530,7 +1537,6 @@ public class ConfluenceXMLPackage implements AutoCloseable
             readCSVTable(ConfluenceCSVTable.contentproperties.name(), this::readContentPropertyObject);
             readCSVTable(ConfluenceCSVTable.label.name(), this::readLabelObject);
             readCSVTable(ConfluenceCSVTable.pagetemplates.name(), this::readPageTemplateObject);
-            readCSVTable(ConfluenceCSVTable.spacepermissions.name(), this::readSpacePermissionObject);
             readCSVTable(ConfluenceCSVTable.spaces.name(), this::readSpaceObject);
             readCSVTable(ConfluenceCSVTable.user_mapping.name(), this::readUserImplObject);
         } catch (IOException | ConfigurationException e) {
@@ -3112,19 +3118,24 @@ public class ConfluenceXMLPackage implements AutoCloseable
         // apparently it can be), but it's a big issue for CSV exports. We now build the list when retrieving the space
         // properties to avoid this expensive process altogether.
         ConfluenceProperties spaceProperties = ConfluenceProperties.create(file);
-        File spacePermissionFolder = getSpacePermissionFolder(spaceId);
-        List<Object> knownPermissions = spaceProperties.getList(KEY_SPACE_PERMISSIONS);
-        int permCount = knownPermissions.size();
-        File[] permissions = spacePermissionFolder.listFiles();
-        if (permissions != null) {
-            Arrays.stream(permissions)
-                    .map(File::getName)
-                    .sorted()
-                    .collect(Collectors.toCollection(() -> knownPermissions));
-        }
+        boolean spacePermissionsUpdated = spaceProperties.getBoolean(KEY_SPACEPERMISSIONSUPDATED, false);
+        if (!spacePermissionsUpdated || !doneReadingSpacePermissions) {
+            File spacePermissionFolder = getSpacePermissionFolder(spaceId);
+            Set<Object> knownPermissions = new LinkedHashSet<>(spaceProperties.getList(KEY_SPACE_PERMISSIONS));
+            int permCount = knownPermissions.size();
+            File[] permissions = spacePermissionFolder.listFiles();
+            if (permissions != null) {
+                Arrays.stream(permissions)
+                        .map(File::getName)
+                        .sorted()
+                        .collect(Collectors.toCollection(() -> knownPermissions));
+            }
 
-        if (knownPermissions.size() != permCount) {
-            spaceProperties.setProperty(KEY_SPACE_PERMISSIONS, knownPermissions);
+            if (knownPermissions.size() != permCount) {
+                spaceProperties.setProperty(KEY_SPACE_PERMISSIONS, knownPermissions);
+            }
+
+            spaceProperties.setProperty(KEY_SPACEPERMISSIONSUPDATED, true);
             spaceProperties.save();
         }
         return spaceProperties;
