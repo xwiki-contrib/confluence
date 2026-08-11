@@ -1808,102 +1808,6 @@ Content by label:
       </wikiDocumentRevision>
     </wikiDocumentLocale>
   </wikiDocument>
-  <wikiSpace name="Includer">
-    <wikiDocument name="WebHome">
-      <wikiDocumentLocale>
-        <p>
-          <parameters>
-            <entry>
-              <string>creation_author</string>
-              <string>XWiki.5f899c1406d16d006fb77ea9</string>
-            </entry>
-            <entry>
-              <string>creation_date</string>
-              <date>2023-10-24 11:49:43.59 UTC</date>
-            </entry>
-            <entry>
-              <string>lastrevision</string>
-              <string>2</string>
-            </entry>
-          </parameters>
-        </p>
-        <wikiDocumentRevision revision="1">
-          <p>
-            <parameters>
-              <entry>
-                <string>revision_author</string>
-                <string>XWiki.5f899c1406d16d006fb77ea9</string>
-              </entry>
-              <entry>
-                <string>revision_date</string>
-                <date>2023-10-24 11:50:27.396 UTC</date>
-              </entry>
-              <entry>
-                <string>title</string>
-                <string>Includer</string>
-              </entry>
-              <entry>
-                <string>content</string>
-                <string>This page includes another page:
-
-{{display reference="RJTest.Included page.WebHome"/}}
-
-Thanks for your attention.</string>
-              </entry>
-              <entry>
-                <string>syntax</string>
-                <org.xwiki.rendering.syntax.Syntax>
-                  <type>
-                    <name>XWiki</name>
-                    <id>xwiki</id>
-                    <variants class="empty-list"/>
-                  </type>
-                  <version>2.1</version>
-                </org.xwiki.rendering.syntax.Syntax>
-              </entry>
-            </parameters>
-          </p>
-        </wikiDocumentRevision>
-        <wikiDocumentRevision revision="2">
-          <p>
-            <parameters>
-              <entry>
-                <string>revision_author</string>
-                <string>XWiki.5f899c1406d16d006fb77ea9</string>
-              </entry>
-              <entry>
-                <string>revision_date</string>
-                <date>2023-10-25 10:13:01.882 UTC</date>
-              </entry>
-              <entry>
-                <string>title</string>
-                <string>Includer</string>
-              </entry>
-              <entry>
-                <string>content</string>
-                <string>This page includes another page:
-
-{{display reference="confluencePage:page:TEST.Page with excerpt to be included"/}}
-
-Thanks for your attention.</string>
-              </entry>
-              <entry>
-                <string>syntax</string>
-                <org.xwiki.rendering.syntax.Syntax>
-                  <type>
-                    <name>XWiki</name>
-                    <id>xwiki</id>
-                    <variants class="empty-list"/>
-                  </type>
-                  <version>2.1</version>
-                </org.xwiki.rendering.syntax.Syntax>
-              </entry>
-            </parameters>
-          </p>
-        </wikiDocumentRevision>
-      </wikiDocumentLocale>
-    </wikiDocument>
-  </wikiSpace>
   <wikiSpace name="1.5">
     <wikiDocument name="WebHome">
       <wikiDocumentLocale>
@@ -2199,6 +2103,102 @@ Thanks for your attention.</string>
         </wikiDocumentRevision>
       </wikiDocumentLocale>
     </wikiDocument>
+    <wikiSpace name="Includer">
+      <wikiDocument name="WebHome">
+        <wikiDocumentLocale>
+          <p>
+            <parameters>
+              <entry>
+                <string>creation_author</string>
+                <string>XWiki.5f899c1406d16d006fb77ea9</string>
+              </entry>
+              <entry>
+                <string>creation_date</string>
+                <date>2023-10-24 11:49:43.59 UTC</date>
+              </entry>
+              <entry>
+                <string>lastrevision</string>
+                <string>2</string>
+              </entry>
+            </parameters>
+          </p>
+          <wikiDocumentRevision revision="1">
+            <p>
+              <parameters>
+                <entry>
+                  <string>revision_author</string>
+                  <string>XWiki.5f899c1406d16d006fb77ea9</string>
+                </entry>
+                <entry>
+                  <string>revision_date</string>
+                  <date>2023-10-24 11:50:27.396 UTC</date>
+                </entry>
+                <entry>
+                  <string>title</string>
+                  <string>Includer</string>
+                </entry>
+                <entry>
+                  <string>content</string>
+                  <string>This page includes another page:
+
+{{display reference="RJTest.Included page.WebHome"/}}
+
+Thanks for your attention.</string>
+                </entry>
+                <entry>
+                  <string>syntax</string>
+                  <org.xwiki.rendering.syntax.Syntax>
+                    <type>
+                      <name>XWiki</name>
+                      <id>xwiki</id>
+                      <variants class="empty-list"/>
+                    </type>
+                    <version>2.1</version>
+                  </org.xwiki.rendering.syntax.Syntax>
+                </entry>
+              </parameters>
+            </p>
+          </wikiDocumentRevision>
+          <wikiDocumentRevision revision="2">
+            <p>
+              <parameters>
+                <entry>
+                  <string>revision_author</string>
+                  <string>XWiki.5f899c1406d16d006fb77ea9</string>
+                </entry>
+                <entry>
+                  <string>revision_date</string>
+                  <date>2023-10-25 10:13:01.882 UTC</date>
+                </entry>
+                <entry>
+                  <string>title</string>
+                  <string>Includer</string>
+                </entry>
+                <entry>
+                  <string>content</string>
+                  <string>This page includes another page:
+
+{{display reference="confluencePage:page:TEST.Page with excerpt to be included"/}}
+
+Thanks for your attention.</string>
+                </entry>
+                <entry>
+                  <string>syntax</string>
+                  <org.xwiki.rendering.syntax.Syntax>
+                    <type>
+                      <name>XWiki</name>
+                      <id>xwiki</id>
+                      <variants class="empty-list"/>
+                    </type>
+                    <version>2.1</version>
+                  </org.xwiki.rendering.syntax.Syntax>
+                </entry>
+              </parameters>
+            </p>
+          </wikiDocumentRevision>
+        </wikiDocumentLocale>
+      </wikiDocument>
+    </wikiSpace>
   </wikiSpace>
   <wikiSpace name="Sub page containing livesearch in current space">
     <wikiDocument name="WebHome">
@@ -4367,7 +4367,6 @@ In this sentence, there are two annotations that are nested and some words after
       <wikiObjectProperty name="pinnedChildPages">
         <p>
           <value t="java.util.ArrayList">
-            <string>Includer/</string>
             <string>Included page/</string>
             <string>Sub page containing livesearch in current space/</string>
             <string>Multiple excerpts/</string>

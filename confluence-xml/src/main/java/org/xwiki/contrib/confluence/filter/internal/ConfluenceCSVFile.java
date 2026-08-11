@@ -24,6 +24,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.input.BoundedInputStream;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xwiki.contrib.confluence.filter.input.ConfluenceProperties;
@@ -247,11 +248,15 @@ public class ConfluenceCSVFile implements ConfluenceRecordReader
                 return currentRecord.get(0);
             }
 
-            for (Map.Entry<String, String> csvXmlPair : fieldMapping.entrySet()) {
-                String csvField = csvXmlPair.getValue();
-                if (currentRecord.isSet(csvField)) {
-                    String value = get(csvField);
-                    properties.addProperty(csvXmlPair.getKey(), value);
+            for (Map.Entry<String, String[]> csvXmlPair : fieldMapping.entrySet()) {
+                for (String csvField : csvXmlPair.getValue()) {
+                    if (currentRecord.isSet(csvField)) {
+                        String value = get(csvField);
+                        String key = csvXmlPair.getKey();
+                        if (!StringUtils.isEmpty(value) || StringUtils.isEmpty(properties.getString(key, null))) {
+                            properties.addProperty(key, value);
+                        }
+                    }
                 }
             }
 

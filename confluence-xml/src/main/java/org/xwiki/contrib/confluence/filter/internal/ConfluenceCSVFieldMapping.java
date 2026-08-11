@@ -19,6 +19,7 @@
  */
 package org.xwiki.contrib.confluence.filter.internal;
 
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -28,7 +29,7 @@ import java.util.HashMap;
  * @since 9.96.0
  * @version $Id$
  */
-public class ConfluenceCSVFieldMapping extends HashMap<String, String>
+public class ConfluenceCSVFieldMapping extends HashMap<String, String[]>
 {
     private final String csvFieldId;
 
@@ -37,7 +38,15 @@ public class ConfluenceCSVFieldMapping extends HashMap<String, String>
         this.csvFieldId = csvFieldId;
 
         for (int i = 0; i < xmlAndCsvFieldPairs.length; i += 2) {
-            put(xmlAndCsvFieldPairs[i], xmlAndCsvFieldPairs[i + 1]);
+            String v = xmlAndCsvFieldPairs[i + 1];
+            String[] a = get(xmlAndCsvFieldPairs[i]);
+            if (a == null) {
+                a = new String[] {v};
+            } else {
+                a = Arrays.copyOf(a, a.length + 1);
+                a[a.length - 1] = v;
+            }
+            put(xmlAndCsvFieldPairs[i], a);
         }
     }
 
