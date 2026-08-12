@@ -145,7 +145,8 @@
 
 <p><ac:link ac:tooltip="an empty link"><ac:plain-text-link-body><![CDATA[this page]] ></ac:plain-text-link-body></ac:link></p>
 
-<ac:structured-macro ac:name="mathblock" ac:schema-version="1" ac:macro-id="f2b55061-df1f-4e70-9dfb-f99a6d4b1ebc"><ac:plain-text-body><![CDATA[1337 = x \times 42\\]] ></ac:plain-text-body></ac:structured-macro>
+<p><ac:structured-macro ac:name="mathblock" ac:schema-version="1" ac:macro-id="c91a7dbb-6cbc-4202-abca-73498b7e94ee"><ac:plain-text-body><![CDATA[a^2 + b^2 = c^2
+\tag{1}]] ></ac:plain-text-body></ac:structured-macro></p>
 
 Math block with an align environment:
 

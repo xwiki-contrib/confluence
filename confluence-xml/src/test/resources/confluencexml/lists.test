@@ -80,8 +80,10 @@
 * (((
 {{mathjax}}
 \begin{aligned}
+\begin{align}
 \label{myanchor}
 1337=k\times 42
+\end{align}
 \end{aligned}
 {{/mathjax}}
 )))
@@ -131,11 +133,14 @@ A urlencoded inline math with + signs: {{mathjax}}\(K_\text{S}\to\pi^-\pi^+\){{/
 
 {{mathjax}}
 \begin{aligned}
-1337 = x \times 42\\
+\begin{align}
+a^2 + b^2 = c^2
+\tag{1}
+\end{align}
 \end{aligned}
 {{/mathjax}}
 
- Math block with an align environment: 
+Math block with an align environment: 
 
 {{mathjax}}
 \begin{align}
@@ -150,8 +155,10 @@ label{myanchor}
 
 {{mathjax}}
 \begin{aligned}
+\begin{align}
 |E_1|^2 &amp;=&amp; \frac 12m_1v_1p^2\\
 |E_2|^2 &amp;=&amp; \frac 12m_2v_2p^2.
+\end{align}
 \end{aligned}
 {{/mathjax}}</string>
             </entry>

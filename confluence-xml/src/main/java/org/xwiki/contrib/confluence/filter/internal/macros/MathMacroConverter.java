@@ -93,7 +93,7 @@ public class MathMacroConverter extends AbstractMacroConverter
                     content = content.replaceFirst("\\\\begin[\\s]*\\{[^}]+}", "$0\n" + label);
                 }
             } else {
-                content = "\\begin{aligned}\n" + label + content + "\n\\end{aligned}";
+                content = "\\begin{aligned}\n\\begin{align}\n" + label + content + "\n\\end{align}\n\\end{aligned}";
             }
         }
 

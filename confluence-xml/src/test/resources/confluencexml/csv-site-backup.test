@@ -5459,8 +5459,10 @@ AsciiMath
 
 {{mathjax}}
 \begin{aligned}
+\begin{align}
 \label{stefana}
 E = mc^2
+\end{align}
 \end{aligned}
 {{/mathjax}}
 
@@ -5470,8 +5472,10 @@ Macro with aligned left and anchor2
 
 {{mathjax}}
 \begin{aligned}
+\begin{align}
 \label{anchor2}
 E = mc^2
+\end{align}
 \end{aligned}
 {{/mathjax}}
 
