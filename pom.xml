@@ -30,8 +30,8 @@
   <groupId>org.xwiki.contrib.confluence</groupId>
   <artifactId>confluence</artifactId>
   <version>9.96.3-SNAPSHOT</version>
-  <name>Confluence - Parent POM</name>
-  <description>Parent POM for Confluence modules</description>
+  <name>Confluence</name>
+  <description>Confluence import and syntax support</description>
   <packaging>pom</packaging>
   <properties>
     <xwiki.release.jira.skip>false</xwiki.release.jira.skip>
