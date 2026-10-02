@@ -2347,7 +2347,11 @@ public class ConfluenceInputFilterStream
         }
 
         try {
-            readAttachments(pageProperties, attachments, proxyFilter);
+            if (Locale.ROOT.equals(locale)) {
+                // don't send attachments on translations as this breaks the attachments in addition to sending them
+                // several times
+                readAttachments(pageProperties, attachments, proxyFilter);
+            }
             readPageTags(pageProperties, proxyFilter);
             readComments(pageProperties, docRef, proxyFilter);
             String title = pageProperties.getString(ConfluenceXMLPackage.KEY_PAGE_TITLE, null);

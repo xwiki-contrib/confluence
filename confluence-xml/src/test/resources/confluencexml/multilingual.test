@@ -238,6 +238,29 @@ This text is also unconditionally present.</string>
               </entry>
             </parameters>
           </p>
+          <wikiAttachment name="hello.txt" size="5">
+            <p>
+              <content>aGVsbG8=</content>
+              <parameters>
+                <entry>
+                  <string>creation_date</string>
+                  <date>2026-10-02 11:36:01.284 UTC</date>
+                </entry>
+                <entry>
+                  <string>revision_date</string>
+                  <date>2026-10-02 11:36:01.284 UTC</date>
+                </entry>
+                <entry>
+                  <string>revision</string>
+                  <string>1</string>
+                </entry>
+                <entry>
+                  <string>revision_author</string>
+                  <string>XWiki.712020:e1bd3d55-3ddc-454f-b4b0-2dde7bea2b85</string>
+                </entry>
+              </parameters>
+            </p>
+          </wikiAttachment>
           <wikiObject name="Confluence.Code.ConfluencePageClass">
             <p>
               <parameters>

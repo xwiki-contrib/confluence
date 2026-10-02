@@ -5,6 +5,26 @@
     <property name="name"><![CDATA[TestSpace]]></property>
     <property name="key"><![CDATA[TestSpace]]></property>
   </object>
+  <object class="Attachment" package="com.atlassian.confluence.pages">
+    <id name="id">1280540674</id>
+    <property name="hibernateVersion">1</property>
+    <property name="title"><![CDATA[hello.txt]]></property>
+    <property name="lowerTitle"><![CDATA[hello.txt]]></property>
+    <property name="version">1</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[712020:e1bd3d55-3ddc-454f-b4b0-2dde7bea2b85]]></id>
+    </property>
+    <property name="agentCreatorAaid"/><property name="creationDate">2026-10-02 11:36:01.284</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[712020:e1bd3d55-3ddc-454f-b4b0-2dde7bea2b85]]></id>
+    </property>
+    <property name="agentLastModifierAaid"/><property name="lastModificationDate">2026-10-02 11:36:01.284</property>
+    <property name="versionComment"><![CDATA[]]></property>
+    <property name="originalVersionId"/><property name="contentStatus"><![CDATA[current]]></property>
+    <property name="navigationType">0</property>
+    <property name="containerContent" class="Page" package="com.atlassian.confluence.pages"><id name="id">95917606</id>
+    </property>
+    <property name="entitySubType"/><property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">73990168</id>
+    </property>
+  </object>
   <object class="Page" package="com.atlassian.confluence.pages">
     <id name="id">95917606</id>
     <property name="space" class="Space" package="com.atlassian.confluence.spaces">
@@ -17,6 +37,9 @@
     <property name="lastModifierName"><![CDATA[408010]]></property>
     <property name="lastModificationDate">2016-04-14 17:59:20.000</property>
     <property name="versionComment"><![CDATA[comment 3]]></property>
+    <collection name="attachments" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.attachments)"><element class="Attachment" package="com.atlassian.confluence.pages"><id name="id">1280540674</id>
+    </element>
+    </collection>
     <collection name="historicalVersions">
       <element class="Page" package="com.atlassian.confluence.pages">
         <id name="id">12</id>
