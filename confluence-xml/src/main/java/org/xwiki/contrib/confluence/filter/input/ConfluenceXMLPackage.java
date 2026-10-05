@@ -2044,6 +2044,9 @@ public class ConfluenceXMLPackage implements AutoCloseable
 
         Long permissionId = asLong(r.readRecord(properties));
         Long spaceId = properties.getLong(KEY_PAGE_SPACE, null);
+        if (spaceId == null) {
+            spaceId = properties.getLong("spaceId", null);
+        }
         if (permissionId != null && spaceId != null
             && !shouldIgnoreSpace(spaceId) && properties.getBoolean(KEY_ACTIVE, true)
         ) {

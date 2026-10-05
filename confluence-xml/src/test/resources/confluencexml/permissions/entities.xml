@@ -2734,9 +2734,7 @@
   </object>
   <object class="SpacePermission" package="com.atlassian.confluence.security">
     <id name="id">617742337</id>
-    <property name="space" class="Space" package="com.atlassian.confluence.spaces">
-      <id name="id">622593</id>
-    </property>
+    <property name="spaceId">622593</property>
     <property name="type"><![CDATA[COMMENT]]></property>
     <property name="group"/>
     <property name="allUsersSubject"><![CDATA[anonymous-users]]></property>
