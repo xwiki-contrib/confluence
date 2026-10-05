@@ -1057,9 +1057,6 @@ public class ConfluenceInputFilterStream
         ConfluenceProperties homePageProperties) throws FilterException
     {
         Collection<Object> spacePermissions = spaceProperties.getList(ConfluenceXMLPackage.KEY_SPACE_PERMISSIONS);
-        if (spacePermissions.isEmpty()) {
-            return;
-        }
 
         // This lets us avoid duplicate XWiki right objects. For instance, REMOVEPAGE and REMOVEBLOG are both
         // mapped to DELETE, and EDITPAGE and EDITBLOG are both mapped to EDIT. In each of these cases,
