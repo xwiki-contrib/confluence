@@ -3121,8 +3121,15 @@ public class ConfluenceXMLPackage implements AutoCloseable
         // apparently it can be), but it's a big issue for CSV exports. We now build the list when retrieving the space
         // properties to avoid this expensive process altogether.
         ConfluenceProperties spaceProperties = ConfluenceProperties.create(file);
-        boolean spacePermissionsUpdated = spaceProperties.getBoolean(KEY_SPACEPERMISSIONSUPDATED, false);
-        if (!spacePermissionsUpdated || !doneReadingSpacePermissions) {
+        if (doneReadingSpacePermissions) {
+            // We only consider updating the space permissions property after we know we've read all the permissions.
+            // Otherwise, we risk missing some permissions in the list, and marking the permissions as already updated
+            // while they still need to be updated in the future.
+            if (spaceProperties.getBoolean(KEY_SPACEPERMISSIONSUPDATED, false)) {
+                // We've already updated permissions property after reading all the permissions, no need to do it again.
+                return spaceProperties;
+            }
+
             File spacePermissionFolder = getSpacePermissionFolder(spaceId);
             Set<Object> knownPermissions = new LinkedHashSet<>(spaceProperties.getList(KEY_SPACE_PERMISSIONS));
             int permCount = knownPermissions.size();
