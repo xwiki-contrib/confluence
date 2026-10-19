@@ -13737,6 +13737,32 @@
     </property>
     <property name="lastModificationDate">2008-07-14 16:07:11.000</property>
   </object>
+  <object class="SpacePermission" package="com.atlassian.confluence.security">
+  <id name="id">51675214</id>
+  <property name="spaceId">622593</property>
+  <property name="type"><![CDATA[SETPAGEPERMISSIONS]]></property>
+  <property name="group"/><property name="allUsersSubject"><![CDATA[all-licensed-users]]></property>
+  <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[712020:4db55baf-05d5-46ae-b0bd-21d258882738]]></id>
+  </property>
+  <property name="creationDate">2026-10-15 15:22:38.660</property>
+  <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[712020:4db55baf-05d5-46ae-b0bd-21d258882738]]></id>
+  </property>
+  <property name="lastModificationDate">2026-10-15 15:22:38.660</property>
+  <property name="active">true</property>
+  </object>
+  <object class="SpacePermission" package="com.atlassian.confluence.security">
+  <id name="id">52527187</id>
+  <property name="spaceId">622593</property>
+  <property name="type"><![CDATA[EDIT_NATIVE_CONTENT]]></property>
+  <property name="group"/><property name="allUsersSubject"><![CDATA[all-product-admins]]></property>
+  <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[712020:8925b70a-ef6e-4c86-95ef-99cccea589b9]]></id>
+  </property>
+  <property name="creationDate">2026-10-16 09:12:03.695</property>
+  <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[712020:8925b70a-ef6e-4c86-95ef-99cccea589b9]]></id>
+  </property>
+  <property name="lastModificationDate">2026-10-16 09:12:03.695</property>
+  <property name="active">true</property>
+  </object>
   <object class="Page" package="com.atlassian.confluence.pages">
     <id name="id">589826</id>
     <property name="hibernateVersion">548</property>

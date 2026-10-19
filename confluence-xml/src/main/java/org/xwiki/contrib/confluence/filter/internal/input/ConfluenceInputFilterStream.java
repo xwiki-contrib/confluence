@@ -190,6 +190,8 @@ public class ConfluenceInputFilterStream
     private static final String EDITBLOG = "EDITBLOG";
     private static final List<String> BLOG_PERMISSIONS = List.of(EDITBLOG, REMOVEBLOG);
 
+    private static final String ANONYMOUS_USERS = "anonymous-users";
+
     @Inject
     @Named(ConfluenceInputStreamParser.COMPONENT_NAME)
     private StreamParser confluenceWIKIParser;
@@ -1207,9 +1209,18 @@ public class ConfluenceInputFilterStream
     private String getConfluenceGroupRightData(ConfluenceProperties permProperties)
     {
         String groupStr = permProperties.getString(ConfluenceXMLPackage.KEY_SPACEPERMISSION_GROUP, null);
-        if (groupStr == null || groupStr.isEmpty()) {
+        if (StringUtils.isEmpty(groupStr)) {
             groupStr = permProperties.getString(ConfluenceXMLPackage.KEY_CONTENTPERMISSION_GROUP, null);
         }
+
+        if (StringUtils.isEmpty(groupStr)) {
+            String allUsersSubject = permProperties.getString(
+                ConfluenceXMLPackage.KEY_PERMISSION_ALLUSERSSUBJECT, null);
+            if (StringUtils.isNotEmpty(allUsersSubject) && !ANONYMOUS_USERS.equals(allUsersSubject)) {
+                groupStr = allUsersSubject;
+            }
+        }
+
         return (groupStr == null || groupStr.isEmpty())
             ? ""
             : (confluenceConverter.toGroupReference(groupStr));
@@ -1220,7 +1231,7 @@ public class ConfluenceInputFilterStream
         String users = "";
 
         String allUsersSubject = permProperties.getString(ConfluenceXMLPackage.KEY_PERMISSION_ALLUSERSSUBJECT, null);
-        if ("anonymous-users".equals(allUsersSubject)) {
+        if (ANONYMOUS_USERS.equals(allUsersSubject)) {
             users = confluenceConverter.getGuestUser();
         }
 
