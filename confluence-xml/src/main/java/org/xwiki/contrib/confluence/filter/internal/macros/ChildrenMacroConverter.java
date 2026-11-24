@@ -110,7 +110,9 @@ public class ChildrenMacroConverter extends AbstractWithSortAndReverseMacroConve
             markUnhandledParameterValue(confluenceParameters, ALL_CHILDREN);
         }
 
-        handleSortParameter(confluenceParameters, parameters);
+        // The children macro only reads "sort", while the documentTree macro reads "sortDocumentsBy".
+        handleSortParameter(confluenceParameters, parameters,
+            shouldConvertToDocumentTree(confluenceParameters) ? "sortDocumentsBy" : "sort");
         return parameters;
     }
 }
