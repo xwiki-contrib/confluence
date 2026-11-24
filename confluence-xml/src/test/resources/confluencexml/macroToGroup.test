@@ -67,7 +67,7 @@ Some text
 
 = {{id name="MySpaceHome-UL"/}}UL =
 
-(% id="someId" class="confluence_ul_content SomeClass" %)
+(% style="width: 150px" id="someId" class="confluence_ul_content SomeClass" %)
 (((
 Something
 
