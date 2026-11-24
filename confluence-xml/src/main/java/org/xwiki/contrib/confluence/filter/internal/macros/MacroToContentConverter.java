@@ -32,13 +32,13 @@ import org.xwiki.contrib.confluence.filter.ConversionException;
 import org.xwiki.rendering.listener.Listener;
 
 /**
- * Converts a macro call to a group, retaining the id, class and content.
+ * Converts a macro call to a group, retaining the id, class, style and content.
  *
  * @version $Id$
  * @since 9.51.1
  */
 @Component(hints = { "ul", "legend", "auihorizontalnav", "auibuttongroup", "auihorizontalnavpage", "tableenhancer",
-    "footnote" })
+    "footnote", "divbox" })
 @Singleton
 public class MacroToContentConverter extends AbstractParseContentMacroConverter
 {
@@ -47,6 +47,8 @@ public class MacroToContentConverter extends AbstractParseContentMacroConverter
     private static final String HTML_ATTRIBUTE_ID = "id";
 
     private static final String HTML_ATTRIBUTE_CLASS = "class";
+
+    private static final String HTML_ATTRIBUTE_STYLE = "style";
 
     @Override
     public String toXWikiId(String confluenceId, Map<String, String> confluenceParameters, String confluenceContent,
@@ -113,6 +115,11 @@ public class MacroToContentConverter extends AbstractParseContentMacroConverter
         String id = confluenceParameters.get(HTML_ATTRIBUTE_ID);
         if (StringUtils.isNotEmpty(id)) {
             divWrapperParams.put(HTML_ATTRIBUTE_ID, id);
+        }
+
+        String style = confluenceParameters.get(HTML_ATTRIBUTE_STYLE);
+        if (StringUtils.isNotEmpty(style)) {
+            divWrapperParams.put(HTML_ATTRIBUTE_STYLE, style);
         }
         return divWrapperParams;
     }

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hibernate-generic datetime="2023-10-02 11:40:11">
+  <object class="ConfluenceUserImpl" package="com.atlassian.confluence.user">
+    <id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    <property name="name"><![CDATA[Teo]]></property>
+    <property name="lowerName"><![CDATA[Smecherus]]></property>
+    <property name="email"><![CDATA[teo@email.com]]></property>
+  </object>
+  <object class="Page" package="com.atlassian.confluence.spaces">
+    <id name="id">45809845</id>
+    <property name="hibernateVersion">5</property>
+    <property name="title">My Space Home</property>
+    <property name="lowerTitle">my space home</property>
+    <collection name="bodyContents" class="java.util.Collection"><element class="BodyContent" package="com.atlassian.confluence.core"><id name="id">156868656</id>
+    </element>
+    </collection>
+    <property name="version">1</property>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="creationDate">2012-08-21 15:37:47.000</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="lastModificationDate">2016-10-11 14:47:37.000</property>
+    <property name="versionComment"><![CDATA[]]></property>
+    <property name="contentStatus"><![CDATA[current]]></property>
+    <collection name="labellings" class="java.util.Collection"></collection>
+    <property name="space" class="Space" package="com.atlassian.confluence.spaces"><id name="id">46268417</id>
+    </property>
+    <collection name="attachments" class="java.util.Collection(com.atlassian.confluence.core.ContentEntityObject.attachments)"><element class="Attachment" package="com.atlassian.confluence.pages"><id name="id">134204920</id></element></collection>
+  </object>
+  <object class="Space" package="com.atlassian.confluence.spaces">
+    <id name="id">46268417</id>
+    <property name="name"><![CDATA[My Space]]></property>
+    <property name="key"><![CDATA[MySpace]]></property>
+    <property name="lowerKey"><![CDATA[myspace]]></property>
+    <property name="homePage" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809845</id></property>
+    <collection name="permissions" class="java.util.Collection"></collection>
+    <property name="creator" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="creationDate">2012-08-21 15:37:47.000</property>
+    <property name="lastModifier" class="ConfluenceUserImpl" package="com.atlassian.confluence.user"><id name="key"><![CDATA[01f7c1cc638e0d8c0163d05ca6f60124]]></id>
+    </property>
+    <property name="lastModificationDate">2016-10-11 14:47:37.000</property>
+    <property name="spaceType">global</property>
+    <property name="spaceStatus" enum-class="SpaceStatus" package="com.atlassian.confluence.spaces">CURRENT</property>
+  </object>
+  <object class="BodyContent" package="com.atlassian.confluence.core">
+    <id name="id">156868656</id>
+    <property name="body"><![CDATA[
+    <h1>ClassAndStyle</h1>
+    <ac:structured-macro ac:name="divbox" ac:schema-version="1"
+        ac:macro-id="5b1f6a0e-2f4c-4d8e-9a51-0c3d7e8f1a21">
+        <ac:parameter ac:name="style">border:5px solid red; background:yellow;</ac:parameter>
+        <ac:parameter ac:name="class">testclass</ac:parameter>
+        <ac:rich-text-body>
+            <p>Some content</p>
+            <ac:structured-macro ac:name="divbox" ac:schema-version="1"
+                ac:macro-id="8c2e4b7d-6a1f-4e3c-b0d9-2f5a7c9e1b34">
+                <ac:parameter ac:name="style">border:5px solid blue;</ac:parameter>
+                <ac:parameter ac:name="class">highlight</ac:parameter>
+                <ac:rich-text-body>
+                    <p>Nested content</p>
+                </ac:rich-text-body>
+            </ac:structured-macro>
+        </ac:rich-text-body>
+    </ac:structured-macro>
+    <h1>StyleOnly</h1>
+    <ac:structured-macro ac:name="divbox" ac:schema-version="1"
+        ac:macro-id="d4a9c1e2-7b3f-4f60-8e2a-9b1c3d5e7f80">
+        <ac:parameter ac:name="style">width:600px; margin:auto;</ac:parameter>
+        <ac:rich-text-body>
+            <p>Some <strong>rich</strong> content</p>
+            <ul>
+                <li>Item</li>
+            </ul>
+        </ac:rich-text-body>
+    </ac:structured-macro>
+    <h1>NoParameter</h1>
+    <ac:structured-macro ac:name="divbox" ac:schema-version="1"
+        ac:macro-id="e7b2d4f6-1c3a-4b5d-9e8f-0a2c4e6b8d13">
+        <ac:rich-text-body>
+            <p>Plain content</p>
+        </ac:rich-text-body>
+    </ac:structured-macro>]]></property>
+    <property name="content" class="Page" package="com.atlassian.confluence.pages"><id name="id">45809845</id></property>
+    <property name="bodyType">2</property>
+  </object>
+</hibernate-generic>
