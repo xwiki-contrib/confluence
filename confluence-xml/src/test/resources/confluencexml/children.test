@@ -40,17 +40,17 @@
               <string>content</string>
               <string>{{documentTree root="document:WebHome" limit="5"/}}
 
-{{children sortDocumentsBy="title"/}}
+{{children sort="title"/}}
 
-{{children sortDocumentsBy="title:desc"/}}
+{{children sort="title:desc"/}}
 
-{{children sortDocumentsBy="creationDate:desc"/}}
+{{children sort="creationDate:desc"/}}
 
-{{children sortDocumentsBy="creationDate"/}}
+{{children sort="creationDate"/}}
 
-{{children sortDocumentsBy="date:desc"/}}
+{{children sort="date:desc"/}}
 
-{{children sortDocumentsBy="date"/}}</string>
+{{children sort="date"/}}</string>
             </entry>
             <entry>
               <string>syntax</string>

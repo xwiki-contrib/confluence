@@ -24,18 +24,16 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.contrib.confluence.filter.ConfluenceFilterReferenceConverter;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Children Macro converter.
+ * Converts the Confluence children macro and Refined's ui-children and ui-children-cards macros.
  * @since 6.62.0
  * @version $Id$
  */
-@Component
-@Named("children")
+@Component(hints = { "children", "ui-children", "ui-children-cards" })
 @Singleton
 public class ChildrenMacroConverter extends AbstractWithSortAndReverseMacroConverter
 {
@@ -56,6 +54,13 @@ public class ChildrenMacroConverter extends AbstractWithSortAndReverseMacroConve
     public InlineSupport supportsInlineMode(String id, Map<String, String> parameters, String content)
     {
         return InlineSupport.NO;
+    }
+
+    private void markUnhandledIfSet(Map<String, String> confluenceParameters, String name)
+    {
+        if (StringUtils.isNotEmpty(confluenceParameters.get(name))) {
+            markUnhandledParameterValue(confluenceParameters, name);
+        }
     }
 
     private static boolean shouldConvertToDocumentTree(Map<String, String> confluenceParameters)
@@ -110,7 +115,14 @@ public class ChildrenMacroConverter extends AbstractWithSortAndReverseMacroConve
             markUnhandledParameterValue(confluenceParameters, ALL_CHILDREN);
         }
 
-        handleSortParameter(confluenceParameters, parameters);
+        // The children macro only reads "sort", while the documentTree macro reads "sortDocumentsBy".
+        handleSortParameter(confluenceParameters, parameters,
+            shouldConvertToDocumentTree(confluenceParameters) ? "sortDocumentsBy" : "sort");
+
+        // Refined's ui-children and ui-children-cards options that have no XWiki equivalent
+        markUnhandledIfSet(confluenceParameters, "columns");
+        markUnhandledIfSet(confluenceParameters, "display");
+        markUnhandledIfSet(confluenceParameters, "excludeAvatars");
         return parameters;
     }
 }

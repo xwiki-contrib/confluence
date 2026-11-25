@@ -515,17 +515,17 @@ Nunc bibendum imperdiet ligula vel vulputate. Maecenas imperdiet a lacus et plac
               </entry>
               <entry>
                 <string>content</string>
-                <string>{{children sortDocumentsBy="title"/}}
+                <string>{{children sort="title"/}}
 
-{{children sortDocumentsBy="title:desc"/}}
+{{children sort="title:desc"/}}
 
-{{children sortDocumentsBy="creationDate:desc"/}}
+{{children sort="creationDate:desc"/}}
 
-{{children sortDocumentsBy="creationDate"/}}
+{{children sort="creationDate"/}}
 
-{{children sortDocumentsBy="date:desc"/}}
+{{children sort="date:desc"/}}
 
-{{children sortDocumentsBy="date"/}}</string>
+{{children sort="date"/}}</string>
               </entry>
               <entry>
                 <string>syntax</string>
@@ -2346,7 +2346,7 @@ With a roof height of 612 feet (187 m), the Singer Tower was the [[tallest bui
               </entry>
               <entry>
                 <string>content</string>
-                <string>{{children sortDocumentsBy="title"/}}</string>
+                <string>{{children sort="title"/}}</string>
               </entry>
               <entry>
                 <string>syntax</string>
@@ -3486,7 +3486,7 @@ Phasellus purus neque, tincidunt id pulvinar id, laoreet eu turpis. Proin porta 
                 </entry>
                 <entry>
                   <string>content</string>
-                  <string>{{children sortDocumentsBy="title"/}}
+                  <string>{{children sort="title"/}}
 
 {{documentTree sortDocumentsBy="title" root="document:FOS.Macros.WebHome"/}}</string>
                 </entry>

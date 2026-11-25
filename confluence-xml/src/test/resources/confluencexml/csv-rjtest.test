@@ -1899,17 +1899,17 @@ Content by label:
               </entry>
               <entry>
                 <string>content</string>
-                <string>{{children sortDocumentsBy="title"/}}
+                <string>{{children sort="title"/}}
 
-{{children sortDocumentsBy="title:desc"/}}
+{{children sort="title:desc"/}}
 
-{{children sortDocumentsBy="creationDate:desc"/}}
+{{children sort="creationDate:desc"/}}
 
-{{children sortDocumentsBy="creationDate"/}}
+{{children sort="creationDate"/}}
 
-{{children sortDocumentsBy="date:desc"/}}
+{{children sort="date:desc"/}}
 
-{{children sortDocumentsBy="date"/}}</string>
+{{children sort="date"/}}</string>
               </entry>
               <entry>
                 <string>syntax</string>

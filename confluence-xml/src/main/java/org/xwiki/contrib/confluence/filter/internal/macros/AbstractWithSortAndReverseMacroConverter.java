@@ -32,6 +32,12 @@ abstract class AbstractWithSortAndReverseMacroConverter extends AbstractMacroCon
 
     void handleSortParameter(Map<String, String> confluenceParameters, Map<String, String> parameters)
     {
+        handleSortParameter(confluenceParameters, parameters, "sortDocumentsBy");
+    }
+
+    void handleSortParameter(Map<String, String> confluenceParameters, Map<String, String> parameters,
+        String xwikiSortParameter)
+    {
         String sortAndReverse = confluenceParameters.get(SORT_AND_REVERSE);
         String[] sortReverse = StringUtils.isEmpty(sortAndReverse) ? null : sortAndReverse.split("\\.");
 
@@ -42,7 +48,7 @@ abstract class AbstractWithSortAndReverseMacroConverter extends AbstractMacroCon
             if (reverse) {
                 convertedSort += ":desc";
             }
-            parameters.put("sortDocumentsBy", convertedSort);
+            parameters.put(xwikiSortParameter, convertedSort);
         }
     }
 
