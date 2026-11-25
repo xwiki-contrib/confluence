@@ -29,11 +29,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Converts the Confluence children macro and Refined's ui-children macro.
+ * Converts the Confluence children macro and Refined's ui-children and ui-children-cards macros.
  * @since 6.62.0
  * @version $Id$
  */
-@Component(hints = { "children", "ui-children" })
+@Component(hints = { "children", "ui-children", "ui-children-cards" })
 @Singleton
 public class ChildrenMacroConverter extends AbstractWithSortAndReverseMacroConverter
 {
@@ -119,9 +119,10 @@ public class ChildrenMacroConverter extends AbstractWithSortAndReverseMacroConve
         handleSortParameter(confluenceParameters, parameters,
             shouldConvertToDocumentTree(confluenceParameters) ? "sortDocumentsBy" : "sort");
 
-        // Refined's ui-children options that have no XWiki equivalent
+        // Refined's ui-children and ui-children-cards options that have no XWiki equivalent
         markUnhandledIfSet(confluenceParameters, "columns");
         markUnhandledIfSet(confluenceParameters, "display");
+        markUnhandledIfSet(confluenceParameters, "excludeAvatars");
         return parameters;
     }
 }
